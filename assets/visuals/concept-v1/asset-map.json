@@ -1,0 +1,34 @@
+{
+  "version": "concept-v1",
+  "status": "figma-concept",
+  "productionReady": false,
+  "figmaFile": "m831QH99zcv2SpkaFMPo01",
+  "sources": {
+    "hero": "10:103",
+    "barrel": "10:205",
+    "quadro": "10:309",
+    "frame": "10:408",
+    "trailer": "10:511"
+  },
+  "targets": {
+    "desktopHero": "5:58",
+    "mobileHero": "5:303",
+    "formatBarrel": "5:114",
+    "formatQuadro": "5:120",
+    "formatFrame": "5:126",
+    "formatTrailer": "5:132",
+    "projectMain": "5:188",
+    "mobileBarrel": "5:328",
+    "mobileFrame": "5:334",
+    "mobileProject": "5:371",
+    "productMain": "5:385",
+    "productThumbs": ["5:386", "5:387", "5:388"],
+    "finalCta": "5:273"
+  },
+  "replacementPolicy": {
+    "verifiedCompanyPhotoRequired": true,
+    "preserveCropRole": true,
+    "preserveWarmInteriorCoolExterior": true,
+    "inventedFeaturesAllowed": false
+  }
+}
