@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "status": "figma-concept",
+  "sourcePolicy": "Concept imagery is stored in the Figma prototype and must not be represented as verified company photography.",
+  "figmaFile": "https://www.figma.com/design/m831QH99zcv2SpkaFMPo01/Untitled",
+  "assets": [
+    {
+      "id": "hero-north-steam",
+      "repositoryFile": null,
+      "role": "homepage-hero",
+      "figmaLayer": "IMAGE / HERO_DESKTOP",
+      "aspectRatio": "16:9",
+      "focus": { "x": 0.68, "y": 0.48 },
+      "replaceWithRealPhoto": true
+    },
+    {
+      "id": "format-barrel",
+      "repositoryFile": null,
+      "role": "format-card",
+      "figmaLayer": "IMAGE / BARREL",
+      "aspectRatio": "3:2",
+      "replaceWithRealPhoto": true
+    },
+    {
+      "id": "format-quadro",
+      "repositoryFile": null,
+      "role": "format-card",
+      "figmaLayer": "IMAGE / QUADRO",
+      "aspectRatio": "3:2",
+      "replaceWithRealPhoto": true
+    },
+    {
+      "id": "format-frame",
+      "repositoryFile": null,
+      "role": "format-card",
+      "figmaLayer": "IMAGE / FRAME",
+      "aspectRatio": "3:2",
+      "replaceWithRealPhoto": true
+    },
+    {
+      "id": "format-trailer",
+      "repositoryFile": null,
+      "role": "format-card",
+      "figmaLayer": "IMAGE / TRAILER",
+      "aspectRatio": "3:2",
+      "replaceWithRealPhoto": true
+    },
+    {
+      "id": "product-frame-main",
+      "repositoryFile": null,
+      "role": "product-detail",
+      "figmaLayer": "IMAGE / PRODUCT_MAIN",
+      "aspectRatio": "1:1",
+      "replaceWithRealPhoto": true
+    }
+  ]
+}
