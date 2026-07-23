@@ -14,6 +14,8 @@
 
 - [Figma-макет](https://www.figma.com/design/m831QH99zcv2SpkaFMPo01/Untitled)
 - [Группа «Гарант Бани» во ВКонтакте](https://vk.ru/garant_bani)
+- [Визуальная система бань](docs/visuals/README.md)
+- [Карта ассетов для Figma](docs/visuals/figma-mapping.md)
 
 ## План PR
 
