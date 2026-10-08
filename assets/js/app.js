@@ -76,7 +76,7 @@ function renderStepContent(){const model=getModel(state.modelId),step=state.step
   $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
   $$('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
   $$('[data-option]').forEach(btn=>btn.addEventListener('click',()=>toggleOption(btn.dataset.option)));
-  $$('[data-flow]', $('#builderStepContent')).forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
+  // Form entry points are handled by one delegated listener in initForms().
 }
 function toggleOption(id){const option=getOption(id);if(!option)return;
   if(state.optionIds.includes(id)){state.optionIds=state.optionIds.filter(x=>x!==id);}
@@ -96,12 +96,38 @@ function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click
  $$('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{state.view=btn.dataset.view;renderSummary();}));}
 function initWeather(){$$('[data-weather]').forEach(btn=>btn.addEventListener('click',()=>{const rain=btn.dataset.weather==='rain';$$('[data-weather]').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-pressed',String(b===btn));});$('#heroMedia').dataset.slot=rain?'hero-rain-desktop':'hero-sun-desktop';$('#heroPhotoId').textContent=rain?'ФОТОСЛОТ / ДОЖДЬ':'ФОТОСЛОТ / СОЛНЦЕ';$('#heroPhotoCaption').textContent=rain?'Здесь будет та же баня на том же участке во время дождя':'Здесь будет солнечная фотография той же модели';$('#heroMedia').setAttribute('aria-label',rain?'Место для снимка той же бани на даче в дождливый день':'Место для снимка бани на даче в солнечный день');$('#heroTitle').innerHTML=rain?'За окном дождь.<br>А у вас —<br><em>своя баня.</em>':'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';$('#heroLead').textContent=rain?'Пусть дождь идёт за окном. В своей бане тепло, рядом близкие, а рабочая неделя уже позади.':'Пятничный вечер, близкие рядом, любимая дача. Вашу баню изготовят заранее и привезут готовым изделием — без затяжной стройки на участке.';}));}
 function initMobileMenu(){const toggle=$('#menuToggle');toggle.addEventListener('click',()=>{const opened=$('#primaryNav').classList.toggle('open');toggle.setAttribute('aria-expanded',String(opened));toggle.setAttribute('aria-label',opened?'Закрыть меню':'Открыть меню');});$$('#primaryNav a').forEach(link=>link.addEventListener('click',()=>{$('#primaryNav').classList.remove('open');toggle.setAttribute('aria-expanded','false');}));}
-function isRussianMobile(value){let d=String(value).replace(/\D/g,'');if(d.length===10&&d.startsWith('9'))d='7'+d;if(d.length===11&&d.startsWith('8'))d='7'+d.slice(1);return /^79\d{9}$/.test(d)&&!/^7(\d)\1{9}$/.test(d);}
+function normalizeRussianMobile(value){
+  let digits=String(value).replace(/\D/g,'');
+  if(digits.startsWith('8'))digits='7'+digits.slice(1);
+  if(digits.startsWith('9'))digits='7'+digits;
+  return digits;
+}
+function isRussianMobile(value){
+  const digits=normalizeRussianMobile(value);
+  return /^79\d{9}$/.test(digits)&&!/^7(\d)\1{9}$/.test(digits);
+}
+function formatRussianMobile(value){
+  const digits=normalizeRussianMobile(value);
+  if(!digits)return '';
+  if(!digits.startsWith('7'))return value;
+  const d=digits.slice(1,11);
+  return '+7'+(d.length?' ('+d.slice(0,3):'')+
+    (d.length>=3?') '+d.slice(3,6):'')+
+    (d.length>=7?'-'+d.slice(6,8):'')+
+    (d.length>=9?'-'+d.slice(8,10):'');
+}
+function validMessengerContact(channel,account){
+  if(channel==='phone')return account==='';
+  if(!/^(@[a-zA-Z0-9_.-]{3,60}|https:\/\/(?:t\.me|max\.ru)\/[a-zA-Z0-9_\/-]{3,110})$/.test(account))return false;
+  if(channel==='telegram'&&account.startsWith('https://max.ru/'))return false;
+  if(channel==='max'&&account.startsWith('https://t.me/'))return false;
+  return channel==='telegram'||channel==='max';
+}
 function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${q.sizeId[0]} м</b><br>Допы: ${q.options.length} · ${money(q.total)} (демо)<br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
 function openForm(flow='quote'){
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
   const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactAccountField').hidden=true;$('#contactForm').elements.contactAccount.required=false;$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
@@ -112,36 +138,92 @@ function initForms(){
   const result=$('#formResult');
   const error=$('#formError');
   const back=$('#formBack');
-  $('[data-flow]').forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
+  const phone=form.elements.phone;
+  const phoneHint=$('#phoneHint');
+  const channel=form.elements.contactChannel;
+  const account=form.elements.contactAccount;
+  const accountField=$('#contactAccountField');
+  function showError(message,focusField){
+    error.textContent=message;
+    error.scrollIntoView({block:'nearest'});
+    if(focusField)focusField.focus({preventScroll:true});
+  }
+  function updatePhoneHint(validateEmpty=false){
+    const current=phone.value.trim();
+    const valid=isRussianMobile(current);
+    phoneHint.dataset.valid=valid?'true':(current||validateEmpty?'false':'');
+    phoneHint.textContent=valid?'Формат номера корректен.':
+      current||validateEmpty?'Проверьте номер: требуется +7 (9XX) XXX-XX-XX.':
+      'Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';
+    if(valid)phone.removeAttribute('aria-invalid');
+    else if(current||validateEmpty)phone.setAttribute('aria-invalid','true');
+    else phone.removeAttribute('aria-invalid');
+    return valid;
+  }
+  function updateContactChannel(){
+    const selected=channel.value;
+    accountField.hidden=selected==='phone';
+    account.required=selected!=='phone';
+    if(selected==='phone')account.value='';
+    account.placeholder=selected==='telegram'?'@username или https://t.me/username':
+      '@username или https://max.ru/id...';
+  }
+  document.addEventListener('click',event=>{
+    const trigger=event.target.closest('[data-flow]');
+    if(trigger)openForm(trigger.dataset.flow);
+  });
   $('#dialogClose').addEventListener('click',()=>dialog.close());
-  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+  dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
   back.addEventListener('click',()=>{
     if(submitted){dialog.close();return;}
-    result.hidden=true;form.hidden=false;
+    result.hidden=true;
+    form.hidden=false;
   });
+  phone.addEventListener('input',()=>{
+    const formatted=formatRussianMobile(phone.value);
+    if(phone.value!==formatted)phone.value=formatted;
+    updatePhoneHint();
+  });
+  phone.addEventListener('blur',()=>updatePhoneHint(true));
+  channel.addEventListener('change',updateContactChannel);
   form.addEventListener('submit',async event=>{
     event.preventDefault();
     if(submit.disabled)return;
     error.textContent='';
     const f=event.currentTarget;
     const name=f.elements.customerName.value.trim();
-    const phone=f.elements.phone.value.trim();
+    const phoneValue=phone.value.trim();
+    const contactChannel=channel.value;
+    const contactAccount=account.value.trim();
     const district=f.elements.district.value.trim();
     const comment=f.elements.comment.value.trim();
-    if(formFlow==='quote'&&name.length<2){error.textContent='Напишите имя — минимум две буквы.';f.elements.customerName.focus();return;}
-    if(name&&name.length<2){error.textContent='Если указываете имя, напишите минимум две буквы.';f.elements.customerName.focus();return;}
-    if(!isRussianMobile(phone)){error.textContent='Укажите российский мобильный номер: +7 9XX XXX-XX-XX.';f.elements.phone.focus();return;}
-    if(formFlow==='quote'&&district.length<2){error.textContent='Укажите город или район доставки.';f.elements.district.focus();return;}
-    if(!f.elements.leadConsent.checked){error.textContent='Нужно согласие на передачу данных по заявке.';f.elements.leadConsent.focus();return;}
-    const payload={flow:formFlow,name,phone,comment,consent:true,website:f.elements.website.value};
+    if(formFlow==='quote'&&name.length<2){showError('Укажите имя — минимум два символа.',f.elements.customerName);return;}
+    if(name&&name.length<2){showError('Если указываете имя, напишите минимум два символа.',f.elements.customerName);return;}
+    if(!updatePhoneHint(true)){showError('Проверьте мобильный номер: +7 (9XX) XXX-XX-XX.',phone);return;}
+    if(!validMessengerContact(contactChannel,contactAccount)){
+      showError('Укажите корректный @username или ссылку на профиль в выбранном мессенджере.',account);return;
+    }
+    if(formFlow==='quote'&&district.length<2){
+      showError('Укажите город или район доставки.',f.elements.district);return;
+    }
+    if(!f.elements.leadConsent.checked){
+      showError('Подтвердите согласие на передачу данных по заявке.',f.elements.leadConsent);return;
+    }
+    const payload={
+      flow:formFlow,name,phone:phoneValue,contactChannel,contactAccount,
+      comment,consent:true,website:f.elements.website.value
+    };
     if(formFlow==='quote'){
       payload.district=district;
       payload.base=f.elements.base.value;
       payload.access=f.elements.access.value;
-      payload.configuration={modelId:formQuote.modelId,sizeId:formQuote.sizeId,optionIds:[...formQuote.optionIds],bundleId:state.bundleId};
+      payload.configuration={
+        modelId:formQuote.modelId,sizeId:formQuote.sizeId,
+        optionIds:[...formQuote.optionIds],bundleId:state.bundleId
+      };
     }
     submit.disabled=true;
-    const previousLabel=submit.textContent;
+    const originalLabel=submit.textContent;
     submit.textContent='Отправляем заявку…';
     try{
       const response=await fetch(new URL('api/lead',document.baseURI),{
@@ -153,19 +235,28 @@ function initForms(){
       const receipt=await response.json().catch(()=>null);
       if(!response.ok||receipt?.ok!==true||receipt?.delivered!==true){
         if(response.status===429)throw new Error('RATE_LIMITED');
+        if(response.status===401)throw new Error('AUTH_REQUIRED');
+        if(response.status===400)throw new Error('INVALID_REQUEST');
         throw new Error('DELIVERY_FAILED');
       }
       submitted=true;
       result.querySelector('strong').textContent='Заявка отправлена';
-      result.querySelector('p').textContent='Заявка доставлена менеджеру «Гарант Бани» в MAX. Мы свяжемся с вами, чтобы уточнить детали.';
+      result.querySelector('p').textContent='Заявка доставлена менеджеру «Гарант Бани» в MAX. Мы свяжемся с вами выбранным способом.';
       back.textContent='Закрыть';
-      f.hidden=true;result.hidden=false;
+      form.hidden=true;
+      result.hidden=false;
     }catch(cause){
-      error.textContent=cause.message==='RATE_LIMITED'?'Слишком много попыток. Повторите чуть позже.':
-        'Не удалось подтвердить доставку заявки. Проверьте соединение и попробуйте ещё раз.';
+      const messages={
+        RATE_LIMITED:'Слишком много попыток. Повторите чуть позже.',
+        AUTH_REQUIRED:'Требуется повторный вход на закрытый сайт. Обновите страницу и войдите снова.',
+        INVALID_REQUEST:'Сервер не принял данные формы. Проверьте все поля и попробуйте ещё раз.',
+        DELIVERY_FAILED:'Не удалось доставить заявку в MAX. Попробуйте повторно чуть позже.'
+      };
+      showError(messages[cause.message]||
+        'Не удалось подтвердить доставку. Проверьте соединение и попробуйте ещё раз.');
     }finally{
       submit.disabled=false;
-      submit.textContent=previousLabel;
+      submit.textContent=originalLabel;
     }
   });
 }
