@@ -17,3 +17,15 @@ test('S11 success only on delivery receipt; consent mandatory',()=>{assert.match
 test('S12 no unconditional price valid statement',()=>assert.match(html,/не оферта/));
 
 test('S13 protected preview noindex and honeypot',()=>{assert.match(html,/name="robots" content="noindex,nofollow"/);assert.match(html,/name="website" tabindex="-1"/);assert.match(css,/\.honeypot/);});
+
+test('S14 contact channel selection, masked phone and discoverable errors',()=>{
+  for(const channel of ['phone','telegram','max'])assert.match(html,new RegExp('value="'+channel+'"'));
+  assert.match(html,/id="phoneHint"/);
+  assert.match(html,/id="contactAccountField" hidden/);
+  assert.match(script,/formatRussianMobile/);
+  assert.match(script,/phone\.addEventListener\('blur'/);
+  assert.match(script,/showError\(/);
+  assert.match(script,/document\.addEventListener\('click'/);
+  assert.match(script,/contactChannel,contactAccount/);
+  assert.match(css,/\.phone-hint\[data-valid="false"\]/);
+});
