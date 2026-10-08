@@ -7,6 +7,8 @@ import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
 const allowedBases = new Set(['unknown','ready','advice']);
 const allowedAccess = new Set(['unknown','yes','advice']);
+const allowedChannels = new Set(['phone','telegram','max']);
+const channelNames = {phone:'Телефонный звонок',telegram:'Telegram',max:'MAX'};
 const bases = {unknown:'Нужно уточнить',ready:'Готово',advice:'Нужна консультация'};
 const accessNames = {unknown:'Нужно уточнить',yes:'Есть подъезд',advice:'Нужна консультация'};
 const MAX_BODY_BYTES = 8192;
@@ -31,8 +33,17 @@ export function validateBaniLead(value) {
   const mobile=digits.length===10 && digits.startsWith('9')?'7'+digits:
     digits.length===11 && digits.startsWith('8')?'7'+digits.slice(1):digits;
   if(!/^79\d{9}$/.test(mobile) || /^7(\d)\1{9}$/.test(mobile)) throw new Error('INVALID_PHONE');
+  const contactChannel=value.contactChannel??'phone';
+  if(!allowedChannels.has(contactChannel))throw new Error('INVALID_CONTACT_CHANNEL');
+  const contactAccount=field(value.contactAccount??'',140);
+  if(contactChannel!=='phone'){
+    if(contactAccount.length<3)throw new Error('CONTACT_ACCOUNT_REQUIRED');
+    if(!/^(@[a-zA-Z0-9_.-]{3,60}|https:\/\/(?:t\.me|max\.ru)\/[a-zA-Z0-9_\/-]{3,110})$/.test(contactAccount))throw new Error('INVALID_CONTACT_ACCOUNT');
+    if(contactChannel==='telegram' && contactAccount.startsWith('https://max.ru/'))throw new Error('WRONG_CONTACT_NETWORK');
+    if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
+  }else if(contactAccount)throw new Error('UNEXPECTED_CONTACT_ACCOUNT');
   const comment=field(value.comment??'',500);
-  const lead={flow:value.flow,name,phone:'+'+mobile,comment};
+  const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment};
   if(value.flow==='quote') {
     const district=field(value.district,140);
     if(district.length<2) throw new Error('INVALID_DISTRICT');
@@ -55,7 +66,8 @@ export function formatBaniLead(lead) {
     'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
     'Имя: '+(lead.name||'Не указано'),
-    'Телефон: '+lead.phone
+    'Телефон: '+lead.phone,
+    'Связаться: '+channelNames[lead.contactChannel||'phone']
   ];
   if(lead.estimate) {
     const q=lead.estimate;
@@ -69,6 +81,7 @@ export function formatBaniLead(lead) {
       'Подъезд: '+accessNames[lead.access]
     );
   }
+  if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
   text.push('Источник: защищённый сайт /bani-preview/');
   return text.join('\n');
@@ -155,6 +168,10 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       }
     } catch(error) {
       const code=error.message==='BODY_TOO_LARGE'?'BODY_TOO_LARGE':'VALIDATION_ERROR';
+      log(JSON.stringify({event:'bani_lead_rejected',reason:code,category:
+        ['INVALID_JSON','INVALID_PHONE','INVALID_CONTACT_CHANNEL','INVALID_CONTACT_ACCOUNT',
+         'CONTACT_ACCOUNT_REQUIRED','INVALID_DISTRICT','CONSENT_REQUIRED','BODY_TOO_LARGE'].includes(error.message)
+          ?error.message:'OTHER'}));
       return json(res,code==='BODY_TOO_LARGE'?413:400,{ok:false,code});
     }
   };
