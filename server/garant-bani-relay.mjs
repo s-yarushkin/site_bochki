@@ -1,5 +1,6 @@
 import {createServer} from 'node:http';
-import {readFileSync} from 'node:fs';
+import {readFileSync,realpathSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 
@@ -159,7 +160,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
   };
 }
 
-if(process.argv[1] && import.meta.url===new URL('file://'+process.argv[1]).href) {
+if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.url)) {
   const config=loadRelayConfig();
   const server=createServer(createRelayHandler({config}));
   server.requestTimeout=15000;
