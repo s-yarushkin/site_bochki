@@ -58,6 +58,9 @@ with sync_playwright() as p:
         page.locator('#contactForm button[type=submit]').click()
         assert 'номер' in page.locator('#formError').inner_text().lower()
         page.locator('#contactForm input[name="phone"]').fill('+7 999 123-45-67')
+        assert page.locator('#contactForm input[name="phone"]').input_value()=='+7 (999) 123-45-67'
+        assert page.locator('#phoneHint').get_attribute('data-valid')=='true'
+        assert page.locator('#contactChannel option').count()==3
         page.locator('#contactForm button[type=submit]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
@@ -68,6 +71,8 @@ with sync_playwright() as p:
         form.locator('[name="customerName"]').fill('Тестовый клиент')
         form.locator('[name="phone"]').fill('+7 999 123-45-67')
         form.locator('[name="district"]').fill('Вологодский район')
+        form.locator('[name="contactChannel"]').select_option('max')
+        form.locator('[name="contactAccount"]').fill('https://max.ru/id1234567')
         form.locator('[name="leadConsent"]').check()
         form.locator('button[type="submit"]').click()
         page.locator('#formResult').wait_for(state='visible')
@@ -77,6 +82,9 @@ with sync_playwright() as p:
         assert calls[0]['data']['flow']=='callback',calls
         assert calls[1]['data']['flow']=='quote',calls
         assert calls[1]['data']['configuration']['modelId']=='kvadro-house',calls
+        assert calls[0]['data']['contactChannel']=='phone',calls
+        assert calls[1]['data']['contactChannel']=='max',calls
+        assert calls[1]['data']['contactAccount']=='https://max.ru/id1234567',calls
         assert calls[0]['url'].endswith('/api/lead'),calls
         assert posts==[],posts
         page.locator('#dialogClose').click()
