@@ -1,0 +1,35 @@
+[Unit]
+Description=Garant Bani isolated MAX lead relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+WorkingDirectory=/srv/sites/garant-bani-preview/current
+ExecStart=/usr/bin/node /srv/sites/garant-bani-preview/current/server/garant-bani-relay.mjs
+EnvironmentFile=/etc/garant-bani-preview/relay.env
+Environment=NODE_EXTRA_CA_CERTS=/etc/design-zavod/ca/russian-trusted-ca-bundle.pem
+LoadCredential=max-token:/etc/garant-bani-preview/max-token
+ExecStartPre=/usr/bin/test -r /etc/design-zavod/ca/russian-trusted-ca-bundle.pem
+Restart=on-failure
+RestartSec=3
+TimeoutStartSec=20
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+AmbientCapabilities=
+LockPersonality=yes
+UMask=0077
+TasksMax=64
+MemoryMax=150M
+
+[Install]
+WantedBy=multi-user.target
