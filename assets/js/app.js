@@ -8,6 +8,7 @@ const stepNames=['Выберите модель','Выберите размер'
 const state={step:0,modelId:'kvadro-house',sizeId:'500',optionIds:[],bundleId:null,finish:'natural',view:'outside',region:'',base:'unknown',access:'unknown'};
 let formFlow='quote';
 let formQuote=null;
+let submitted=false;
 const money=formatMoney;
 const bundle=PRICEBOOK.bundle;
 
@@ -100,7 +101,7 @@ function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${esc
 function openForm(flow='quote'){
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
   const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
@@ -111,8 +112,7 @@ function initForms(){
   const result=$('#formResult');
   const error=$('#formError');
   const back=$('#formBack');
-  let submitted=false;
-  $$('[data-flow]').forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
+  $('[data-flow]').forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
   $('#dialogClose').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
   back.addEventListener('click',()=>{
