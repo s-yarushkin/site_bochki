@@ -1,0 +1,179 @@
+{
+  "version": "2026-10-demo-v4",
+  "purpose": "Photo placeholders for GARANT BANI prototype; NO product photos confirmed",
+  "placeholder": "assets/images/placeholder.svg",
+  "defaultStatus": "placeholder",
+  "slots": [
+    {
+      "id": "hero-sun-desktop",
+      "label": "Главный экран · солнце",
+      "aspectRatio": "16/9",
+      "requirement": "Одна реальная баня на дачном участке",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Главный экран · солнце"
+    },
+    {
+      "id": "hero-sun-mobile",
+      "label": "Главный экран · солнце · мобильная",
+      "aspectRatio": "4/5",
+      "requirement": "Кроп той же сцены",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Главный экран · солнце · мобильная"
+    },
+    {
+      "id": "hero-rain-desktop",
+      "label": "Главный экран · дождь",
+      "aspectRatio": "16/9",
+      "requirement": "То же изделие и участок",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Главный экран · дождь"
+    },
+    {
+      "id": "hero-rain-mobile",
+      "label": "Главный экран · дождь · мобильная",
+      "aspectRatio": "4/5",
+      "requirement": "Кроп той же сцены",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Главный экран · дождь · мобильная"
+    },
+    {
+      "id": "catalog-kvadro",
+      "label": "Каталог · Квадро",
+      "aspectRatio": "3/2",
+      "requirement": "Точное семейство изделия",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Каталог · Квадро"
+    },
+    {
+      "id": "catalog-parus",
+      "label": "Каталог · Парус",
+      "aspectRatio": "3/2",
+      "requirement": "Точное семейство изделия",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Каталог · Парус"
+    },
+    {
+      "id": "catalog-viking",
+      "label": "Каталог · Викинг",
+      "aspectRatio": "3/2",
+      "requirement": "Точное семейство изделия",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Каталог · Викинг"
+    },
+    {
+      "id": "catalog-kvadro-house",
+      "label": "Каталог · Квадро Хаус",
+      "aspectRatio": "3/2",
+      "requirement": "Точное семейство изделия",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Каталог · Квадро Хаус"
+    },
+    {
+      "id": "product-front",
+      "label": "Карточка модели · торец",
+      "aspectRatio": "3/2",
+      "requirement": "Реальный вид спереди",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Карточка модели · торец"
+    },
+    {
+      "id": "product-side",
+      "label": "Карточка модели · бок",
+      "aspectRatio": "3/2",
+      "requirement": "Реальный вид с входом",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Карточка модели · бок"
+    },
+    {
+      "id": "product-interior",
+      "label": "Комната отдыха",
+      "aspectRatio": "4/3",
+      "requirement": "Реальный интерьер",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Комната отдыха"
+    },
+    {
+      "id": "product-steam",
+      "label": "Парная",
+      "aspectRatio": "4/3",
+      "requirement": "Настоящая парная этой модели",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Парная"
+    },
+    {
+      "id": "polok-backlight",
+      "label": "Опция · полок с подсветкой",
+      "aspectRatio": "4/3",
+      "requirement": "Фактическая опция",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Опция · полок с подсветкой"
+    },
+    {
+      "id": "stove-water-tank",
+      "label": "Опция · печь и бак",
+      "aspectRatio": "4/3",
+      "requirement": "Фактическая опция",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Опция · печь и бак"
+    },
+    {
+      "id": "delivery-truck",
+      "label": "Привозят готовым изделием",
+      "aspectRatio": "3/2",
+      "requirement": "Реальная разгрузка",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Привозят готовым изделием"
+    },
+    {
+      "id": "installation-base",
+      "label": "Основание и установка",
+      "aspectRatio": "3/2",
+      "requirement": "Условия монтажа",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Основание и установка"
+    },
+    {
+      "id": "installed-result",
+      "label": "Баня после установки",
+      "aspectRatio": "3/2",
+      "requirement": "Реальный итог",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Баня после установки"
+    },
+    {
+      "id": "bundle-comfort",
+      "label": "Готовый набор · Комфорт+",
+      "aspectRatio": "3/2",
+      "requirement": "Комплектация под подтверждение",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Готовый набор · Комфорт+"
+    },
+    {
+      "id": "cta-rain-cozy",
+      "label": "Финальный блок · уют",
+      "aspectRatio": "16/9",
+      "requirement": "Дождь снаружи, тепло внутри",
+      "src": null,
+      "status": "placeholder",
+      "alt": "Здесь будет фотография: Финальный блок · уют"
+    }
+  ]
+}
