@@ -1,4 +1,4 @@
-"""Local browser smoke; no network requests with personal data."""
+"""Local browser smoke; intercepts personal-data POSTs with a test receipt."""
 import contextlib, functools, http.server, threading, json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -30,6 +30,13 @@ with sync_playwright() as p:
         js=js.replace("import {PRICEBOOK} from '../../data/pricebook.js';",'').replace("import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';",'')
         page.add_script_tag(content=pb+'\n'+qe+'\n'+js)
         
+        page.evaluate("""() => {
+          window.__leadCalls = [];
+          window.fetch = async (url, options) => {
+            window.__leadCalls.push({url:String(url), data:JSON.parse(options.body)});
+            return {ok:true,status:200,json:async()=>({ok:true,delivered:true})};
+          };
+        }""")
         page.wait_for_selector('#catalogGrid .product-card')
         page.locator('[data-weather="rain"]').click()
         assert 'За окном дождь' in page.locator('#heroTitle').inner_text()
@@ -43,17 +50,17 @@ with sync_playwright() as p:
         page.locator('#builderBack').click()  # comfort options
         page.locator('[data-option="window"]').click()
         assert '857' not in page.locator('#quoteTotal').inner_text()
-        # Test modal from summary; actual private inputs never leave browser.
+        # Test callback flow; mock delivery captures data without contacting a live server.
         page.locator('.faq [data-flow="callback"]').click()
         assert page.locator('#contactDialog').evaluate('(d)=>d.open')
         page.locator('#contactForm input[name="phone"]').fill('abc')
-        page.locator('#contactForm input[name="demoAck"]').check()
+        page.locator('#contactForm input[name="leadConsent"]').check()
         page.locator('#contactForm button[type=submit]').click()
         assert 'номер' in page.locator('#formError').inner_text().lower()
         page.locator('#contactForm input[name="phone"]').fill('+7 999 123-45-67')
         page.locator('#contactForm button[type=submit]').click()
-        assert not page.locator('#formResult').is_hidden()
-        assert 'не отправлена' in page.locator('#formResult').inner_text()
+        page.locator('#formResult').wait_for(state='visible')
+        assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
         page.locator('#dialogClose').click()
         # full quote, ensure no public contact info and full validation
         page.locator('.builder-aside [data-flow="quote"]').click()
@@ -61,9 +68,16 @@ with sync_playwright() as p:
         form.locator('[name="customerName"]').fill('Тестовый клиент')
         form.locator('[name="phone"]').fill('+7 999 123-45-67')
         form.locator('[name="district"]').fill('Вологодский район')
-        form.locator('[name="demoAck"]').check()
+        form.locator('[name="leadConsent"]').check()
         form.locator('button[type="submit"]').click()
-        assert 'не отправлена' in page.locator('#formResult').inner_text()
+        page.locator('#formResult').wait_for(state='visible')
+        assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
+        calls=page.evaluate('window.__leadCalls')
+        assert len(calls)==2,calls
+        assert calls[0]['data']['flow']=='callback',calls
+        assert calls[1]['data']['flow']=='quote',calls
+        assert calls[1]['data']['configuration']['modelId']=='kvadro-house',calls
+        assert calls[0]['url'].endswith('/api/lead'),calls
         assert posts==[],posts
         page.locator('#dialogClose').click()
         bounds=page.evaluate('({viewport:innerWidth,document:document.documentElement.scrollWidth,body:document.body.scrollWidth})')
