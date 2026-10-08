@@ -6,8 +6,8 @@ Wants=network-online.target
 [Service]
 Type=simple
 DynamicUser=yes
-WorkingDirectory=/srv/sites/garant-bani-preview/current
-ExecStart=/usr/bin/node /srv/sites/garant-bani-preview/current/server/garant-bani-relay.mjs
+WorkingDirectory=/srv/services/garant-bani-relay/current
+ExecStart=/usr/bin/node /srv/services/garant-bani-relay/current/server/garant-bani-relay.mjs
 EnvironmentFile=/etc/garant-bani-preview/relay.env
 Environment=NODE_EXTRA_CA_CERTS=/etc/design-zavod/ca/russian-trusted-ca-bundle.pem
 LoadCredential=max-token:/etc/garant-bani-preview/max-token
