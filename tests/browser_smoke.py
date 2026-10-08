@@ -21,7 +21,7 @@ with sync_playwright() as p:
         html=re.sub(r'<link[^>]+(?:fonts.googleapis|fonts.gstatic|assets/css/site.css)[^>]*>', '', html)
         html=html.replace('<script type="module" src="assets/js/app.js"></script>', '')
         page.goto('about:blank')
-        page.set_content(html)
+        page.set_content(html.replace('<head>', '<head><base href="https://xn----7sbbigeqcfm8bq.xn--p1ai/bani-preview/">', 1))
         css=(ROOT/'assets/css/site.css').read_text(encoding='utf-8')
         page.add_style_tag(content=css)
         pb=(ROOT/'data/pricebook.js').read_text(encoding='utf-8').replace('export const PRICEBOOK', 'const PRICEBOOK')
