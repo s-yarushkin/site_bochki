@@ -99,25 +99,74 @@ function isRussianMobile(value){let d=String(value).replace(/\D/g,'');if(d.lengt
 function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${q.sizeId[0]} м</b><br>Допы: ${q.options.length} · ${money(q.total)} (демо)<br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
 function openForm(flow='quote'){
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
-  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Укажите номер, чтобы мы могли связаться после запуска приёма заявок. Сейчас это только проверка формы.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после подключения приёма заявок.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Проверить заявку · демо';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();
+  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
 function initForms(){
+  const dialog=$('#contactDialog');
+  const form=$('#contactForm');
+  const submit=$('#submitButton');
+  const result=$('#formResult');
+  const error=$('#formError');
+  const back=$('#formBack');
+  let submitted=false;
   $$('[data-flow]').forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
-  $('#dialogClose').addEventListener('click',()=>$('#contactDialog').close());
-  $('#contactDialog').addEventListener('click',e=>{if(e.target===$('#contactDialog'))$('#contactDialog').close();});
-  $('#formBack').addEventListener('click',()=>{$('#formResult').hidden=true;$('#contactForm').hidden=false;});
-  $('#contactForm').addEventListener('submit',event=>{event.preventDefault();const f=event.currentTarget, err=$('#formError');err.textContent='';
-    const name=f.elements.customerName.value.trim(),phone=f.elements.phone.value.trim();
-    if(formFlow==='quote'&&name.length<2){err.textContent='Напишите имя — минимум две буквы.';f.elements.customerName.focus();return;}
-    if(name&&name.length<2){err.textContent='Если указываете имя, напишите минимум две буквы.';f.elements.customerName.focus();return;}
-    if(!isRussianMobile(phone)){err.textContent='Укажите российский мобильный номер: +7 9XX XXX-XX-XX.';f.elements.phone.focus();return;}
-    if(formFlow==='quote'&&f.elements.district.value.trim().length<2){err.textContent='Укажите город или район доставки.';f.elements.district.focus();return;}
-    if(!f.elements.demoAck.checked){err.textContent='Подтвердите, что понимаете демонстрационный режим формы.';f.elements.demoAck.focus();return;}
-    // NO HTTP requests, NO analytics, NO persistence, NO clipboard of personal data.
-    f.hidden=true;$('#formResult').hidden=false;
+  $('#dialogClose').addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+  back.addEventListener('click',()=>{
+    if(submitted){dialog.close();return;}
+    result.hidden=true;form.hidden=false;
+  });
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();
+    if(submit.disabled)return;
+    error.textContent='';
+    const f=event.currentTarget;
+    const name=f.elements.customerName.value.trim();
+    const phone=f.elements.phone.value.trim();
+    const district=f.elements.district.value.trim();
+    const comment=f.elements.comment.value.trim();
+    if(formFlow==='quote'&&name.length<2){error.textContent='Напишите имя — минимум две буквы.';f.elements.customerName.focus();return;}
+    if(name&&name.length<2){error.textContent='Если указываете имя, напишите минимум две буквы.';f.elements.customerName.focus();return;}
+    if(!isRussianMobile(phone)){error.textContent='Укажите российский мобильный номер: +7 9XX XXX-XX-XX.';f.elements.phone.focus();return;}
+    if(formFlow==='quote'&&district.length<2){error.textContent='Укажите город или район доставки.';f.elements.district.focus();return;}
+    if(!f.elements.leadConsent.checked){error.textContent='Нужно согласие на передачу данных по заявке.';f.elements.leadConsent.focus();return;}
+    const payload={flow:formFlow,name,phone,comment,consent:true,website:f.elements.website.value};
+    if(formFlow==='quote'){
+      payload.district=district;
+      payload.base=f.elements.base.value;
+      payload.access=f.elements.access.value;
+      payload.configuration={modelId:formQuote.modelId,sizeId:formQuote.sizeId,optionIds:[...formQuote.optionIds],bundleId:state.bundleId};
+    }
+    submit.disabled=true;
+    const previousLabel=submit.textContent;
+    submit.textContent='Отправляем заявку…';
+    try{
+      const response=await fetch(new URL('api/lead',document.baseURI),{
+        method:'POST',credentials:'same-origin',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload),
+        signal:AbortSignal.timeout(15000)
+      });
+      const receipt=await response.json().catch(()=>null);
+      if(!response.ok||receipt?.ok!==true||receipt?.delivered!==true){
+        if(response.status===429)throw new Error('RATE_LIMITED');
+        throw new Error('DELIVERY_FAILED');
+      }
+      submitted=true;
+      result.querySelector('strong').textContent='Заявка отправлена';
+      result.querySelector('p').textContent='Заявка доставлена менеджеру «Гарант Бани» в MAX. Мы свяжемся с вами, чтобы уточнить детали.';
+      back.textContent='Закрыть';
+      f.hidden=true;result.hidden=false;
+    }catch(cause){
+      error.textContent=cause.message==='RATE_LIMITED'?'Слишком много попыток. Повторите чуть позже.':
+        'Не удалось подтвердить доставку заявки. Проверьте соединение и попробуйте ещё раз.';
+    }finally{
+      submit.disabled=false;
+      submit.textContent=previousLabel;
+    }
   });
 }
 function boot(){renderCatalog();renderBundle();initWeather();initBuilder();initMobileMenu();initForms();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
