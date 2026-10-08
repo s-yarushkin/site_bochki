@@ -1,0 +1,124 @@
+import {PRICEBOOK} from '../../data/pricebook.js';
+import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
+
+const $=(selector,scope=document)=>scope.querySelector(selector);
+const $$=(selector,scope=document)=>[...scope.querySelectorAll(selector)];
+const escaped=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const stepNames=['Выберите модель','Выберите размер','Внешний вид','Парная и тепло','Удобства','Ваш участок','Ваша комплектация'];
+const state={step:0,modelId:'kvadro-house',sizeId:'500',optionIds:[],bundleId:null,finish:'natural',view:'outside',region:'',base:'unknown',access:'unknown'};
+let formFlow='quote';
+let formQuote=null;
+const money=formatMoney;
+const bundle=PRICEBOOK.bundle;
+
+function choice({title,detail='',selected=false,attributes='',price='',icon='⌂'}){
+  return `<button type="button" class="choice ${selected?'selected':''}" ${attributes} aria-pressed="${selected}"><span class="choice-icon" aria-hidden="true">${icon}</span><strong>${escaped(title)}</strong>${detail?`<small>${escaped(detail)}</small>`:''}${price?`<small>${escaped(price)}</small>`:''}</button>`;
+}
+function renderCatalog(){
+  $('#catalogGrid').innerHTML=PRICEBOOK.models.map(model=>{
+    const low=Math.min(...Object.values(model.sizes));
+    return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>демо от</small>${money(low)}</div><div class="product-sizes">${Object.keys(model.sizes).map(x=>`${x[0]} м`).join(' / ')}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
+  }).join('');
+  $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
+    const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
+    renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
+  }));
+  $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+    const value=btn.dataset.filter;
+    $$('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
+    $$('.product-card').forEach(card=>card.hidden=value!=='all'&&card.dataset.model!==value);
+  }));
+}
+function renderBundle(){
+  const options=bundle.optionIds.map(id=>getOption(id));
+  $('#bundleOptions').innerHTML=options.map(o=>`<div class="bundle-item">${escaped(o.name)}</div>`).join('');
+  const quote=calculateQuote({modelId:bundle.modelId,sizeId:bundle.sizeId,optionIds:bundle.optionIds,bundleId:bundle.id});
+  $('#bundleOld').textContent=money(quote.beforeDiscount);
+  $('#bundleNew').textContent=money(quote.total);
+  $('#bundleSaving').textContent=`Выгода −${money(quote.discount)} · демо`;
+  $$('[data-bundle]').forEach(btn=>btn.addEventListener('click',()=>{
+    state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=btn.dataset.bundle==='summary'?6:3;
+    renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
+  }));
+}
+function quote(){return calculateQuote({modelId:state.modelId,sizeId:state.sizeId,optionIds:state.optionIds,bundleId:state.bundleId});}
+function priceLine(label,value,css=''){return `<div class="quote-row ${css}"><span>${escaped(label)}</span><strong>${escaped(value)}</strong></div>`;}
+function renderSummary(){
+  const q=quote(),model=getModel(state.modelId);
+  const length=Number(state.sizeId[0]);
+  $('#previewModelName').textContent=`${model.name} · ${length} м`;
+  $('#quoteTotal').textContent=money(q.total);
+  const chosen=q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт+':''}`:'Пока без дополнительных опций';
+  $('#previewOptionsText').textContent=chosen;
+  $('#quoteBreakdown').innerHTML=priceLine('Готовая баня',money(q.basePrice))+priceLine(`Дополнения (${q.options.length})`,money(q.optionsSubtotal))+(q.discount?priceLine(q.bundleApplied?'Выгода комплекта':'Скидка на допы',`−${money(q.discount)}`,'discount'):'');
+  $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
+  const slot=state.view==='outside'?model.slot:state.view==='inside'?'product-interior':'product-front';
+  $('#previewImage').dataset.slot=slot;
+  $('#previewImage').setAttribute('aria-label',`Изображение: ${model.name}, ${length} м. Фото пока не согласовано`);
+  $('#previewCaption').textContent=state.view==='outside'?`Фото модели «${model.name}» будет здесь`:state.view==='inside'?'Здесь появится интерьер выбранной модели':'Здесь появится схема с подтверждёнными размерами';
+  $$('[data-view]').forEach(btn=>{const selected=btn.dataset.view===state.view;btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));});
+}
+function optionCard(o){const selected=state.optionIds.includes(o.id);return `<button type="button" class="option-row ${selected?'selected':''}" data-option="${o.id}" aria-pressed="${selected}"><span class="option-check" aria-hidden="true">${selected?'✓':''}</span><span class="option-main"><strong>${escaped(o.name)}</strong><small>${escaped(o.benefit)} · совместимость уточним</small></span><span class="option-cost">+${money(o.price)}</span></button>`;}
+function renderOptions(category){const chosen=PRICEBOOK.options.filter(o=>o.category===category);return `<div class="options-grid">${chosen.map(optionCard).join('')}</div><p class="builder-insight">Все цены демонстрационные. Техническую возможность установки опций подтвердит производитель.</p>`;}
+function renderQuoteTable(){const q=quote();return `<div class="summary-table"><div class="quote-row"><b>${escaped(q.modelName)} · ${state.sizeId[0]} м</b><b>${money(q.basePrice)}</b></div>${q.options.map(o=>priceLine(o.name,money(o.price))).join('')}${q.discount?priceLine(q.bundleApplied?'Демовыгода готового комплекта':`Скидка ${q.discountRate}% на допы`,`−${money(q.discount)}`,'discount'):''}<div class="quote-row"><b>Предварительно</b><b>${money(q.total)}</b></div></div><p class="builder-insight">Не включены неподтверждённые доставка, разгрузка, основание и подключения. Это демосмета, а не окончательная цена.</p><button type="button" class="btn btn-accent btn-full" data-flow="quote">Получить расчёт для моего участка ↗</button>`;}
+function renderStepContent(){const model=getModel(state.modelId),step=state.step;let body='';
+  if(step===0){body=`<h3 class="builder-title">Какая баня станет вашей?</h3><p class="builder-help">Выберите модель. Потом подберём размер и дополнения.</p><div class="choice-grid">${PRICEBOOK.models.map(m=>choice({title:m.name,detail:m.subtitle,selected:state.modelId===m.id,attributes:`data-choose-model="${m.id}"`,icon:'⌂'})).join('')}</div>`;}
+  if(step===1){body=`<h3 class="builder-title">Какой размер нужен?</h3><p class="builder-help">Доступные размеры в демонстрационном каталоге ${escaped(model.name)}.</p><div class="size-choices">${Object.keys(model.sizes).map(sz=>choice({title:sz[0]+' м',detail:sz+' · демо',price:money(model.sizes[sz]),selected:state.sizeId===sz,attributes:`data-choose-size="${sz}"`,icon:'↔'})).join('')}</div>`;}
+  if(step===2){const finishes=[['natural','Натуральное дерево','#cda86c'],['walnut','Тёплый орех','#796246'],['graphite','Графит','#525754']];body=`<h3 class="builder-title">Каким будет внешний вид?</h3><p class="builder-help">Выберите настроение оформления. Доступные цвета и доплату подтвердим перед заказом.</p><div class="color-choices">${finishes.map(([id,title,color])=>`<button type="button" class="color-choice ${state.finish===id?'selected':''}" data-finish="${id}" aria-pressed="${state.finish===id}"><span class="color-swatch" style="background:${color}"></span>${title}</button>`).join('')}</div><div class="color-hint">Цвет — визуальное пожелание. Он не меняет расчёт, пока у нас нет утверждённого прайса отделки.</div>`;}
+  if(step===3){body=`<h3 class="builder-title">Тепло начинается с деталей</h3><p class="builder-help">Подсветка полка, топка, отделка: выберите то, что сделает вашу парную особенной.</p>${renderOptions('steam')}`;}
+  if(step===4){body=`<h3 class="builder-title">Добавим немного удобства</h3><p class="builder-help">Вода, крыльцо, окна и дополнительные мелочи для долгожданного отдыха.</p>${renderOptions('comfort')}`;}
+  if(step===5){body=`<h3 class="builder-title">Расскажите об участке</h3><p class="builder-help">Это поможет затем уточнить доставку и установку. В демо данные остаются в браузере.</p><div class="site-fields"><label>Где ваша дача? <input id="regionInput" maxlength="140" placeholder="Город / район" value="${escaped(state.region)}"></label><label>Основание под баню<select id="baseSelect"><option value="unknown">Пока не знаю</option><option value="ready">Подготовлено</option><option value="advice">Нужна консультация</option></select></label><label>Подъезд транспорта<select id="accessSelect"><option value="unknown">Нужно уточнить</option><option value="yes">Есть подъезд</option><option value="advice">Нужна консультация</option></select></label></div><p class="builder-insight">Доставка и основание сейчас не включены в стоимость. Менеджер уточнит детали позже.</p>`;}
+  if(step===6){body=`<h3 class="builder-title">Вы уже собрали свою баню</h3><p class="builder-help">Вот ваш предварительный комплект. Если хотите, вернитесь назад и измените детали.</p>${renderQuoteTable()}`;}
+  $('#builderStepContent').innerHTML=body;
+  if(step===5){$('#baseSelect').value=state.base;$('#accessSelect').value=state.access;$('#regionInput').addEventListener('input',e=>state.region=e.target.value);$('#baseSelect').addEventListener('change',e=>state.base=e.target.value);$('#accessSelect').addEventListener('change',e=>state.access=e.target.value);}
+  $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;}renderBuilder();}));
+  $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
+  $$('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
+  $$('[data-option]').forEach(btn=>btn.addEventListener('click',()=>toggleOption(btn.dataset.option)));
+  $$('[data-flow]', $('#builderStepContent')).forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
+}
+function toggleOption(id){const option=getOption(id);if(!option)return;
+  if(state.optionIds.includes(id)){state.optionIds=state.optionIds.filter(x=>x!==id);}
+  else {if(option.mutex)state.optionIds=state.optionIds.filter(x=>getOption(x).mutex!==option.mutex);state.optionIds.push(id);}
+  // Bundle is intentionally retained as an eligibility intent; removing a required option
+  // suspends it until re-added; no stacking with progressive discount.
+  renderBuilder();
+}
+function renderBuilder(){if(!Object.hasOwn(getModel(state.modelId).sizes,state.sizeId)){state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];state.bundleId=null;}
+  $('#builderStepLabel').textContent=`ШАГ ${state.step+1} ИЗ 7`;$('#builderStepName').textContent=stepNames[state.step];$('#builderProgress').style.width=`${((state.step+1)/7)*100}%`;
+  renderStepContent();renderSummary();$('#builderBack').disabled=state.step===0;$('#builderBack').style.visibility=state.step===0?'hidden':'visible';$('#builderNext').textContent=state.step===6?'Начать заново ↺':'Далее →';
+}
+function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
+  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='natural';state.region='';state.base='unknown';state.access='unknown';}
+  else state.step++;renderBuilder();
+ });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
+ $$('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{state.view=btn.dataset.view;renderSummary();}));}
+function initWeather(){$$('[data-weather]').forEach(btn=>btn.addEventListener('click',()=>{const rain=btn.dataset.weather==='rain';$$('[data-weather]').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-pressed',String(b===btn));});$('#heroMedia').dataset.slot=rain?'hero-rain-desktop':'hero-sun-desktop';$('#heroPhotoId').textContent=rain?'ФОТОСЛОТ / ДОЖДЬ':'ФОТОСЛОТ / СОЛНЦЕ';$('#heroPhotoCaption').textContent=rain?'Здесь будет та же баня на том же участке во время дождя':'Здесь будет солнечная фотография той же модели';$('#heroMedia').setAttribute('aria-label',rain?'Место для снимка той же бани на даче в дождливый день':'Место для снимка бани на даче в солнечный день');$('#heroTitle').innerHTML=rain?'За окном дождь.<br>А у вас —<br><em>своя баня.</em>':'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';$('#heroLead').textContent=rain?'Пусть дождь идёт за окном. В своей бане тепло, рядом близкие, а рабочая неделя уже позади.':'Пятничный вечер, близкие рядом, любимая дача. Вашу баню изготовят заранее и привезут готовым изделием — без затяжной стройки на участке.';}));}
+function initMobileMenu(){const toggle=$('#menuToggle');toggle.addEventListener('click',()=>{const opened=$('#primaryNav').classList.toggle('open');toggle.setAttribute('aria-expanded',String(opened));toggle.setAttribute('aria-label',opened?'Закрыть меню':'Открыть меню');});$$('#primaryNav a').forEach(link=>link.addEventListener('click',()=>{$('#primaryNav').classList.remove('open');toggle.setAttribute('aria-expanded','false');}));}
+function isRussianMobile(value){let d=String(value).replace(/\D/g,'');if(d.length===10&&d.startsWith('9'))d='7'+d;if(d.length===11&&d.startsWith('8'))d='7'+d.slice(1);return /^79\d{9}$/.test(d)&&!/^7(\d)\1{9}$/.test(d);}
+function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${q.sizeId[0]} м</b><br>Допы: ${q.options.length} · ${money(q.total)} (демо)<br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
+function openForm(flow='quote'){
+  formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
+  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Укажите номер, чтобы мы могли связаться после запуска приёма заявок. Сейчас это только проверка формы.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после подключения приёма заявок.';
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Проверить заявку · демо';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();
+  if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
+  setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
+}
+function initForms(){
+  $$('[data-flow]').forEach(btn=>btn.addEventListener('click',()=>openForm(btn.dataset.flow)));
+  $('#dialogClose').addEventListener('click',()=>$('#contactDialog').close());
+  $('#contactDialog').addEventListener('click',e=>{if(e.target===$('#contactDialog'))$('#contactDialog').close();});
+  $('#formBack').addEventListener('click',()=>{$('#formResult').hidden=true;$('#contactForm').hidden=false;});
+  $('#contactForm').addEventListener('submit',event=>{event.preventDefault();const f=event.currentTarget, err=$('#formError');err.textContent='';
+    const name=f.elements.customerName.value.trim(),phone=f.elements.phone.value.trim();
+    if(formFlow==='quote'&&name.length<2){err.textContent='Напишите имя — минимум две буквы.';f.elements.customerName.focus();return;}
+    if(name&&name.length<2){err.textContent='Если указываете имя, напишите минимум две буквы.';f.elements.customerName.focus();return;}
+    if(!isRussianMobile(phone)){err.textContent='Укажите российский мобильный номер: +7 9XX XXX-XX-XX.';f.elements.phone.focus();return;}
+    if(formFlow==='quote'&&f.elements.district.value.trim().length<2){err.textContent='Укажите город или район доставки.';f.elements.district.focus();return;}
+    if(!f.elements.demoAck.checked){err.textContent='Подтвердите, что понимаете демонстрационный режим формы.';f.elements.demoAck.focus();return;}
+    // NO HTTP requests, NO analytics, NO persistence, NO clipboard of personal data.
+    f.hidden=true;$('#formResult').hidden=false;
+  });
+}
+function boot(){renderCatalog();renderBundle();initWeather();initBuilder();initMobileMenu();initForms();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
+boot();
