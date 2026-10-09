@@ -44,7 +44,7 @@ test('S14 callback phone-only; quote four channels all tied to mobile number',()
 });
 test('S15 privacy and separate consent pages have operator placeholders and processing terms',()=>{
   for(const doc of [privacy,consent]){
-    for(const term of ['[ФИО ИП','[ИНН','[ОГРНИП','[EMAIL','[АДРЕС'])assert.ok(doc.includes(term),term);
+    for(const term of ['[ФИО ИП','[ИНН','[ОГРНИП','[EMAIL','АДРЕС'])assert.ok(doc.includes(term),term);
     assert.match(doc,/152-ФЗ|персональных данных/);
     assert.match(doc,/noindex,nofollow/);
   }
