@@ -187,7 +187,11 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       if(store){
         const requestId=payload.requestId===undefined?randomUUID():payload.requestId;
         if(typeof requestId!=='string'||!/^[a-f0-9-]{16,80}$/i.test(requestId))throw new Error('INVALID_REQUEST_ID');
-        try{record=store.create(lead,requestId).lead;}
+        try{
+          record=store.create(lead,requestId).lead;
+          if(JSON.stringify(record.detail)!==JSON.stringify(lead))
+            return json(res,409,{ok:false,code:'REQUEST_ID_CONFLICT'});
+        }
         catch{
           log(JSON.stringify({event:'bani_storage_failed'}));
           return json(res,503,{ok:false,code:'STORAGE_UNAVAILABLE'});
