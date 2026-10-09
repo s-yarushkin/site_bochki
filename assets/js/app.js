@@ -116,18 +116,11 @@ function formatRussianMobile(value){
     (d.length>=7?'-'+d.slice(6,8):'')+
     (d.length>=9?'-'+d.slice(8,10):'');
 }
-function validMessengerContact(channel,account){
-  if(channel==='phone')return account==='';
-  if(!/^(@[a-zA-Z0-9_.-]{3,60}|https:\/\/(?:t\.me|max\.ru)\/[a-zA-Z0-9_\/-]{3,110})$/.test(account))return false;
-  if(channel==='telegram'&&account.startsWith('https://max.ru/'))return false;
-  if(channel==='max'&&account.startsWith('https://t.me/'))return false;
-  return channel==='telegram'||channel==='max';
-}
 function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${q.sizeId[0]} м</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (демо)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
 function openForm(flow='quote'){
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
   const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactAccountField').hidden=true;$('#contactForm').elements.contactAccount.required=false;$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
@@ -141,8 +134,6 @@ function initForms(){
   const phone=form.elements.phone;
   const phoneHint=$('#phoneHint');
   const channel=form.elements.contactChannel;
-  const account=form.elements.contactAccount;
-  const accountField=$('#contactAccountField');
   function showError(message,focusField){
     error.textContent=message;
     error.scrollIntoView({block:'nearest'});
@@ -159,14 +150,6 @@ function initForms(){
     else if(current||validateEmpty)phone.setAttribute('aria-invalid','true');
     else phone.removeAttribute('aria-invalid');
     return valid;
-  }
-  function updateContactChannel(){
-    const selected=channel.value;
-    accountField.hidden=selected==='phone';
-    account.required=selected!=='phone';
-    if(selected==='phone')account.value='';
-    account.placeholder=selected==='telegram'?'@username или https://t.me/username':
-      '@username или https://max.ru/id...';
   }
   document.addEventListener('click',event=>{
     const trigger=event.target.closest('[data-flow]');
@@ -185,7 +168,6 @@ function initForms(){
     updatePhoneHint();
   });
   phone.addEventListener('blur',()=>updatePhoneHint(true));
-  channel.addEventListener('change',updateContactChannel);
   form.addEventListener('submit',async event=>{
     event.preventDefault();
     if(submit.disabled)return;
@@ -193,24 +175,17 @@ function initForms(){
     const f=event.currentTarget;
     const name=f.elements.customerName.value.trim();
     const phoneValue=phone.value.trim();
-    const contactChannel=channel.value;
-    const contactAccount=account.value.trim();
+    const contactChannel=formFlow==='callback'?'phone':channel.value;
     const district=f.elements.district.value.trim();
     const comment=f.elements.comment.value.trim();
     if(formFlow==='quote'&&name.length<2){showError('Укажите имя — минимум два символа.',f.elements.customerName);return;}
     if(name&&name.length<2){showError('Если указываете имя, напишите минимум два символа.',f.elements.customerName);return;}
     if(!updatePhoneHint(true)){showError('Проверьте мобильный номер: +7 (9XX) XXX-XX-XX.',phone);return;}
-    if(!validMessengerContact(contactChannel,contactAccount)){
-      showError('Укажите корректный @username или ссылку на профиль в выбранном мессенджере.',account);return;
-    }
     if(formFlow==='quote'&&district.length<2){
       showError('Укажите город или район доставки.',f.elements.district);return;
     }
-    if(!f.elements.leadConsent.checked){
-      showError('Подтвердите согласие на передачу данных по заявке.',f.elements.leadConsent);return;
-    }
     const payload={
-      flow:formFlow,name,phone:phoneValue,contactChannel,contactAccount,
+      flow:formFlow,name,phone:phoneValue,contactChannel,
       comment,consent:true,website:f.elements.website.value
     };
     if(formFlow==='quote'){
