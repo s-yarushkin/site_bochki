@@ -42,6 +42,13 @@ test('S14 callback phone-only; quote four channels all tied to mobile number',()
   assert.doesNotMatch(script,/contactAccount/);
   assert.match(css,/\.phone-hint\[data-valid="false"\]/);
 });
+test('S15 mobile validation feedback clears on edit; required marker remains inline',()=>{
+  assert.match(script,/form\.addEventListener\('input'/);
+  assert.match(script,/form\.addEventListener\('change'/);
+  assert.match(css,/\.contact-dialog label:not\(\.demo-consent\)\{display:block\}/);
+  assert.match(css,/\.contact-dialog label b\{display:inline\}/);
+  assert.match(css,/\.contact-dialog \.form-error:empty\{display:none\}/);
+});
 test('S15 privacy and separate consent pages have operator placeholders and processing terms',()=>{
   for(const doc of [privacy,consent]){
     for(const term of ['[ФИО ИП','[ИНН','[ОГРНИП','[EMAIL','АДРЕС'])assert.ok(doc.includes(term),term);
