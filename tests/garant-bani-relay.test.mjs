@@ -25,19 +25,29 @@ test('validates callback contact and explicit personal-data consent',()=>{
   assert.throws(()=>validateBaniLead({...callback,phone:'112'}),/PHONE/);
   assert.throws(()=>validateBaniLead({...callback,comment:'x'.repeat(501)}),/LONG|FIELD/);
 });
-test('contact preference is validated and included in MAX lead text',()=>{
-  const telegram=validateBaniLead({...callback,contactChannel:'telegram',contactAccount:'@buyer_test'});
-  assert.equal(telegram.contactChannel,'telegram');
-  assert.match(formatBaniLead(telegram),/Связаться: Telegram/);
-  assert.match(formatBaniLead(telegram),/@buyer_test/);
-  const max=validateBaniLead({...quote,contactChannel:'max',contactAccount:'https://max.ru/id1234567'});
-  assert.match(formatBaniLead(max),/Связаться: MAX/);
-  assert.throws(()=>validateBaniLead({...callback,contactChannel:'max',contactAccount:''}),/CONTACT_ACCOUNT_REQUIRED/);
-  assert.throws(()=>validateBaniLead({...callback,contactChannel:'telegram',contactAccount:'https://max.ru/id1234567'}),/WRONG_CONTACT_NETWORK/);
-  assert.throws(()=>validateBaniLead({...callback,contactChannel:'fax'}),/INVALID_CONTACT_CHANNEL/);
-  assert.throws(()=>validateBaniLead({...callback,phone:'12345'}),/INVALID_PHONE/);
-  assert.throws(()=>validateBaniLead({...callback,phone:'+7 000 123-45-67'}),/INVALID_PHONE/);
-  assert.equal(validateBaniLead({...callback,phone:'8 (999) 111-22-33'}).phone,'+79991112233');
+test('callback is strictly phone-only; quote channels need only a mobile number',()=>{
+  const callbackLead=validateBaniLead({...callback,contactChannel:'phone'});
+  assert.equal(callbackLead.contactChannel,'phone');
+  assert.match(formatBaniLead(callbackLead),/Связаться: Телефонный звонок по номеру телефона/);
+  for(const channel of ['telegram','max','whatsapp']){
+    const request={...quote,contactChannel:channel};
+    const lead=validateBaniLead(request);
+    assert.equal(lead.phone,'+79991112233');
+    assert.equal(lead.contactChannel,channel);
+    assert.equal(lead.contactAccount,'');
+    assert.match(formatBaniLead(lead),new RegExp('Связаться: '+({telegram:'Telegram',max:'MAX',whatsapp:'WhatsApp'}[channel])+' по номеру телефона'));
+  }
+  assert.throws(()=>validateBaniLead({...callback,contactChannel:'whatsapp'}),/CALLBACK_MUST_BE_PHONE/);
+  assert.throws(()=>validateBaniLead({...callback,contactChannel:'max'}),/CALLBACK_MUST_BE_PHONE/);
+  assert.throws(()=>validateBaniLead({...quote,contactChannel:'fax'}),/INVALID_CONTACT_CHANNEL/);
+  assert.throws(()=>validateBaniLead({...quote,phone:'12345'}),/INVALID_PHONE/);
+  assert.throws(()=>validateBaniLead({...quote,phone:'+7 000 123-45-67'}),/INVALID_PHONE/);
+  assert.equal(validateBaniLead({...quote,phone:'8 (999) 111-22-33'}).phone,'+79991112233');
+});
+test('legacy clients with messenger profile continue to work during rolling deploy',()=>{
+  const lead=validateBaniLead({...quote,contactChannel:'max',contactAccount:'https://max.ru/id1234567'});
+  assert.match(formatBaniLead(lead),/Контакт в мессенджере/);
+  assert.throws(()=>validateBaniLead({...quote,contactChannel:'phone',contactAccount:'@legacy'}),/UNEXPECTED_CONTACT_ACCOUNT/);
 });
 test('quotes recompute trusted demo pricing on server; unsupported catalog rejected',()=>{
   const value=validateBaniLead(quote);
@@ -48,18 +58,18 @@ test('quotes recompute trusted demo pricing on server; unsupported catalog rejec
   assert.throws(()=>validateBaniLead({...quote,district:''}),/DISTRICT/);
 });
 test('multi-option real quote includes every add-on and server-calculated price',()=>{
-  const selection={...quote,contactChannel:'max',contactAccount:'https://max.ru/id1234567',
+  const selection={...quote,contactChannel:'whatsapp',
     configuration:{modelId:'kvadro-house',sizeId:'500',
       optionIds:['aspen','water-piping','steam-led','porch','window'],bundleId:null}};
   const lead=validateBaniLead(selection);
   assert.equal(lead.estimate.options.length,5);
   assert.equal(lead.estimate.modelId,'kvadro-house');
-  assert.equal(lead.contactChannel,'max');
+  assert.equal(lead.contactChannel,'whatsapp');
   assert.ok(lead.estimate.total>lead.estimate.basePrice);
   const message=formatBaniLead(lead);
   for(const name of lead.estimate.options.map(x=>x.name))assert.ok(message.includes(name),name);
-  assert.match(message,/Связаться: MAX/);
-  assert.match(message,/Контакт в мессенджере: https:\/\/max.ru\/id1234567/);
+  assert.match(message,/Связаться: WhatsApp по номеру телефона/);
+  assert.doesNotMatch(message,/Контакт в мессенджере/);
   assert.match(message,/цена не подтверждена/);
 });
 test('reads MAX token only from protected credentials path',()=>{
