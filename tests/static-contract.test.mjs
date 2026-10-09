@@ -68,6 +68,8 @@ test('S15 privacy and separate consent pages have operator placeholders and proc
 
 test('S16 protected manager interface has separate login, full quote and status editor',()=>{
   assert.match(manager,/id="loginForm"/);
+  assert.match(manager,/id="managerPhone"/);
+  assert.match(manager,/id="activeManager"/);
   assert.match(manager,/id="leadsList"/);
   assert.match(manager,/id="selectedOptions"/);
   assert.match(manager,/id="editStatus"/);
@@ -83,7 +85,8 @@ test('S17 lead snapshots include finish and request id; service persists SQLite 
   assert.match(script,/requestId:formRequestId/);
   assert.match(script,/finish:state\.finish/);
   assert.match(systemd,/StateDirectory=garant-bani-relay/);
-  assert.match(systemd,/LoadCredential=manager-password-hash/);
+  assert.doesNotMatch(systemd,/LoadCredential=manager-password-hash/);
+  assert.match(systemd,/LoadCredential=manager-accounts/);
   assert.match(systemd,/LoadCredential=manager-session-secret/);
   assert.match(systemd,/LEADS_DB_PATH=\/var\/lib\/garant-bani-relay\/leads\.sqlite/);
 });
