@@ -47,6 +47,21 @@ test('quotes recompute trusted demo pricing on server; unsupported catalog rejec
   assert.throws(()=>validateBaniLead({...quote,configuration:{...quote.configuration,modelId:'injected'}}),/UNKNOWN_MODEL/);
   assert.throws(()=>validateBaniLead({...quote,district:''}),/DISTRICT/);
 });
+test('multi-option real quote includes every add-on and server-calculated price',()=>{
+  const selection={...quote,contactChannel:'max',contactAccount:'https://max.ru/id1234567',
+    configuration:{modelId:'kvadro-house',sizeId:'500',
+      optionIds:['aspen','water-piping','steam-led','porch','window'],bundleId:null}};
+  const lead=validateBaniLead(selection);
+  assert.equal(lead.estimate.options.length,5);
+  assert.equal(lead.estimate.modelId,'kvadro-house');
+  assert.equal(lead.contactChannel,'max');
+  assert.ok(lead.estimate.total>lead.estimate.basePrice);
+  const message=formatBaniLead(lead);
+  for(const name of lead.estimate.options.map(x=>x.name))assert.ok(message.includes(name),name);
+  assert.match(message,/Связаться: MAX/);
+  assert.match(message,/Контакт в мессенджере: https:\/\/max.ru\/id1234567/);
+  assert.match(message,/цена не подтверждена/);
+});
 test('reads MAX token only from protected credentials path',()=>{
   const cfg=loadRelayConfig({HOST:'127.0.0.1',PORT:'3301',ALLOWED_ORIGIN:origin,MAX_CHAT_ID:'-79890208563249',CREDENTIALS_DIRECTORY:'/run/credentials/unit'},(path)=>{
     assert.equal(path,'/run/credentials/unit/max-token');return 'test-token-value';
