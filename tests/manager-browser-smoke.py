@@ -95,7 +95,7 @@ with sync_playwright() as pw:
         page.locator('#editAssignee').fill('Иван')
         page.locator('#editNote').fill('Позвонил покупателю, уточняем доставку')
         page.locator('#saveButton').click()
-        page.wait_for_function("document.querySelector('#saveStatus').textContent === 'Изменения сохранены.'")
+        page.locator('#saveStatus').get_by_text('Изменения сохранены.',exact=True).wait_for(state='visible')
         assert edits and edits[-1]['status']=='in_progress'
         page.locator('#logoutButton').click()
         assert page.locator('#loginView').is_visible()
@@ -109,7 +109,7 @@ with sync_playwright() as pw:
         assert page.locator('#leadDetail').is_visible()
         page.locator('#editStatus').select_option('quote_sent')
         page.locator('#saveButton').click()
-        page.wait_for_function("document.querySelector('#saveStatus').textContent === 'Изменения сохранены.'")
+        page.locator('#saveStatus').get_by_text('Изменения сохранены.',exact=True).wait_for(state='visible')
         assert edits[-1]['status']=='quote_sent'
         assert errors==[],errors
         bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
