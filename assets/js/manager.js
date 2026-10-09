@@ -172,7 +172,7 @@ function renderDetail(record){
   const history=$('#eventsList');history.replaceChildren();
   for(const event of record.events){
     const item=el('li');
-    item.append(el('span','',event.detail||event.action),el('time','event-date',date(event.at)+' · '+(event.actor==='system'?'Система':'Менеджер')));
+    item.append(el('span','',event.detail||event.action),el('time','event-date',date(event.at)+' · '+(event.actor==='system'?'Система':event.actor||'Менеджер')));
     history.append(item);
   }
   for(const row of document.querySelectorAll('.lead-item'))row.setAttribute('aria-current',String(row.dataset.id===record.id));
