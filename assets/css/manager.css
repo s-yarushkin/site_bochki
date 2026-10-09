@@ -88,3 +88,5 @@ textarea{resize:vertical}.login form{display:grid;gap:14px;margin:20px 0}
  .leads-pane,.detail-pane{padding:12px}
  .topbar-inner{gap:8px}
 }
+.active-manager{font-size:12px;color:#d2ddcf;white-space:nowrap}
+@media(max-width:690px){.active-manager{font-size:12px;max-width:45%;overflow:hidden;text-overflow:ellipsis}}
