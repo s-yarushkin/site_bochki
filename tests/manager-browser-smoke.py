@@ -1,5 +1,6 @@
 """Offline manager dashboard acceptance with only mocked local API responses."""
 import functools, http.server, json, os, shutil, sys, tempfile, threading
+from copy import deepcopy
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
@@ -27,6 +28,7 @@ lead={
  ]}},
  'events':[{'seq':1,'at':'2026-10-09T12:00:00Z','actor':'system','action':'created','detail':'Получена заявка'}]
 }
+initial_lead=deepcopy(lead)
 results=[]
 with sync_playwright() as pw:
     binary=os.environ.get('CHROME_BIN') or shutil.which('chromium') or shutil.which('chromium-browser')
@@ -42,6 +44,7 @@ with sync_playwright() as pw:
     if binary:opts['executable_path']=binary
     browser=pw.chromium.launch(**opts)
     for width,height,label in [(1440,900,'desktop'),(390,844,'mobile'),(320,720,'compact')]:
+        lead=deepcopy(initial_lead)
         context=browser.new_context(viewport={'width':width,'height':height})
         page=context.new_page()
         errors=[]
@@ -94,23 +97,32 @@ with sync_playwright() as pw:
         page.locator('#editStatus').select_option('in_progress')
         page.locator('#editAssignee').fill('Иван')
         page.locator('#editNote').fill('Позвонил покупателю, уточняем доставку')
-        page.locator('#saveButton').click()
+        with page.expect_response(lambda r: r.request.method=='PATCH' and '/api/manager/leads/' in r.url and r.status==200) as first_save:
+            page.locator('#saveButton').click()
+        assert first_save.value.json()['lead']['status']=='in_progress'
         expect(page.locator('#saveStatus')).to_have_text('Изменения сохранены.')
-        assert edits and edits[-1]['status']=='in_progress'
+        assert len(edits)==1 and edits[-1]['status']=='in_progress'
         page.locator('#logoutButton').click()
-        assert page.locator('#loginView').is_visible()
+        expect(page.locator('#loginView')).to_be_visible()
+        expect(page.locator('#leadDetail')).to_be_hidden()
+        expect(page.locator('#saveStatus')).to_be_empty()
+        expect(page.locator('#leadsList')).to_be_empty()
         page.locator('#managerPhone').fill('+79992223344')
         page.locator('#managerPassword').fill('second-manager-password-2026')
         page.locator('#loginButton').click()
         page.locator('.lead-item').wait_for(state='visible')
         assert page.locator('#countTotal').inner_text()=='1'
         assert page.locator('#activeManager').inner_text()=='+79992223344'
+        expect(page.locator('#leadDetail')).to_be_hidden()
         page.locator('.lead-item').click()
-        assert page.locator('#leadDetail').is_visible()
+        expect(page.locator('#leadDetail')).to_be_visible()
+        expect(page.locator('#editStatus')).to_have_value('in_progress')
         page.locator('#editStatus').select_option('quote_sent')
-        page.locator('#saveButton').click()
+        with page.expect_response(lambda r: r.request.method=='PATCH' and '/api/manager/leads/' in r.url and r.status==200) as second_save:
+            page.locator('#saveButton').click()
+        assert second_save.value.json()['lead']['status']=='quote_sent'
         expect(page.locator('#saveStatus')).to_have_text('Изменения сохранены.')
-        assert edits[-1]['status']=='quote_sent'
+        assert len(edits)==2 and edits[-1]['status']=='quote_sent'
         assert errors==[],errors
         bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
         assert bounds['scroll']<=bounds['width']+1,(label,bounds)
