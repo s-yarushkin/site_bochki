@@ -7,7 +7,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
 httpd = http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
-base='about:blank'
+base='http://127.0.0.1:'+str(httpd.server_address[1])+'/'
 SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-mobile-qa'
 SHOT_DIR.mkdir(parents=True,exist_ok=True)
 results=[]
@@ -28,30 +28,22 @@ with sync_playwright() as p:
     browser=p.chromium.launch(**launch_args)
     for width,height,label in [(1440,900,'desktop'),(390,844,'mobile'),(320,720,'compact')]:
         page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
-        errors=[];posts=[]
+        errors=[];posts=[];calls=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
         page.on('request',lambda req:posts.append(req.url) if req.method=='POST' else None)
-        html=(ROOT/'index.html').read_text(encoding='utf-8')
-        import re
-        html=re.sub(r'<link[^>]+(?:fonts.googleapis|fonts.gstatic|assets/css/site.css)[^>]*>', '', html)
-        html=html.replace('<script type="module" src="assets/js/app.js"></script>', '')
-        page.goto('about:blank')
-        page.set_content(html.replace('<head>', '<head><base href="https://xn----7sbbigeqcfm8bq.xn--p1ai/bani-preview/">', 1))
-        css=(ROOT/'assets/css/site.css').read_text(encoding='utf-8')
-        page.add_style_tag(content=css)
-        pb=(ROOT/'data/pricebook.js').read_text(encoding='utf-8').replace('export const PRICEBOOK', 'const PRICEBOOK')
-        qe=(ROOT/'assets/js/quote-engine.js').read_text(encoding='utf-8').replace("import {PRICEBOOK} from '../../data/pricebook.js';",'').replace('export const ', 'const ').replace('export function ','function ')
-        js=(ROOT/'assets/js/app.js').read_text(encoding='utf-8')
-        js=js.replace("import {PRICEBOOK} from '../../data/pricebook.js';",'').replace("import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';",'')
-        page.add_script_tag(content=pb+'\n'+qe+'\n'+js)
-        
-        page.evaluate("""() => {
-          window.__leadCalls = [];
-          window.fetch = async (url, options) => {
-            window.__leadCalls.push({url:String(url), data:JSON.parse(options.body)});
-            return {ok:true,status:200,json:async()=>({ok:true,delivered:true})};
-          };
-        }""")
+        # Fully exercise actual HTML, stylesheet, and ES module imports via local HTTP.
+        # No requests to the production website or real MAX service.
+        page.route('https://fonts.googleapis.com/**',lambda route:route.abort())
+        page.route('https://fonts.gstatic.com/**',lambda route:route.abort())
+        def mock_lead(route):
+            request=route.request
+            assert request.method=='POST',request.method
+            assert request.url.startswith(base),request.url
+            calls.append({'url':request.url,'data':request.post_data_json})
+            route.fulfill(status=200,content_type='application/json',
+                          body='{"ok":true,"delivered":true}')
+        page.route('**/api/lead',mock_lead)
+        page.goto(base,wait_until='domcontentloaded')
         page.wait_for_selector('#catalogGrid .product-card')
         assert page.locator('.footer-legal a').count()==2
         assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
@@ -117,7 +109,6 @@ with sync_playwright() as p:
         form.locator('button[type="submit"]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
-        calls=page.evaluate('window.__leadCalls')
         assert len(calls)==2,calls
         assert calls[0]['data']['flow']=='callback',calls
         assert calls[1]['data']['flow']=='quote',calls
@@ -129,7 +120,8 @@ with sync_playwright() as p:
         assert 'contactAccount' not in calls[1]['data'],calls
         assert 'contactAccount' not in calls[0]['data'],calls
         assert calls[0]['url'].endswith('/api/lead'),calls
-        assert posts==[],posts
+        assert len(posts)==2,posts
+        assert all(url.startswith(base) for url in posts),posts
         page.locator('#dialogClose').click()
         bounds=page.evaluate('({viewport:innerWidth,document:document.documentElement.scrollWidth,body:document.body.scrollWidth})')
         assert bounds['document']<=bounds['viewport']+1,bounds
@@ -140,7 +132,7 @@ with sync_playwright() as p:
         page.close()
     for doc in ['privacy.html','consent.html']:
         page=browser.new_page(viewport={'width':320,'height':720})
-        page.goto('http://127.0.0.1:'+str(httpd.server_address[1])+'/'+doc)
+        page.goto(base+doc,wait_until='domcontentloaded')
         assert page.locator('h1').is_visible(),doc
         bounds=page.evaluate('({viewport:innerWidth,document:document.documentElement.scrollWidth})')
         assert bounds['document']<=bounds['viewport']+1,(doc,bounds)
