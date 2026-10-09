@@ -50,6 +50,7 @@ with sync_playwright() as pw:
         errors=[]
         page.on('pageerror',lambda err:errors.append(str(err)))
         edits=[]
+        auth_state={'phone':None}
         def handler(route):
             path=route.request.url.split('/api/manager/')[1]
             if path=='session':
@@ -60,9 +61,11 @@ with sync_playwright() as pw:
                     ('+79991112233','first-manager-password-2026'),
                     ('+79992223344','second-manager-password-2026')
                 ]
+                auth_state['phone']=request['phone']
                 route.fulfill(status=200,content_type='application/json',body=json.dumps(
                     {'ok':True,'phone':request['phone'],'role':'manager'}))
             elif path=='logout' and route.request.method=='POST':
+                auth_state['phone']=None
                 route.fulfill(status=200,content_type='application/json',body='{"ok":true}')
             elif path.startswith('leads?'):
                 body={'ok':True,'leads':[lead],'total':1,'limit':30,'offset':0,
@@ -74,6 +77,8 @@ with sync_playwright() as pw:
                 update=route.request.post_data_json
                 edits.append(update)
                 lead.update(status=update['status'],assignee=update['assignee'],managerNote=update['managerNote'])
+                lead['events'].append({'seq':len(lead['events'])+1,'at':'2026-10-09T12:05:00Z',
+                    'actor':auth_state['phone'],'action':'status','detail':'Статус '+update['status']})
                 body={'ok':True,'lead':lead}
                 route.fulfill(status=200,content_type='application/json',body=json.dumps(body,ensure_ascii=False))
             else:
@@ -102,6 +107,7 @@ with sync_playwright() as pw:
         assert first_save.value.json()['lead']['status']=='in_progress'
         expect(page.locator('#saveStatus')).to_have_text('Изменения сохранены.')
         assert len(edits)==1 and edits[-1]['status']=='in_progress'
+        expect(page.locator('#eventsList')).to_contain_text('+79991112233')
         page.locator('#logoutButton').click()
         expect(page.locator('#loginView')).to_be_visible()
         expect(page.locator('#leadDetail')).to_be_hidden()
@@ -123,6 +129,7 @@ with sync_playwright() as pw:
         assert second_save.value.json()['lead']['status']=='quote_sent'
         expect(page.locator('#saveStatus')).to_have_text('Изменения сохранены.')
         assert len(edits)==2 and edits[-1]['status']=='quote_sent'
+        expect(page.locator('#eventsList')).to_contain_text('+79992223344')
         assert errors==[],errors
         bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
         assert bounds['scroll']<=bounds['width']+1,(label,bounds)
