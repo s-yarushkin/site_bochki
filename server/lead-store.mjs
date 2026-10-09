@@ -1,7 +1,7 @@
 import {DatabaseSync} from 'node:sqlite';
 import {randomBytes} from 'node:crypto';
 import {mkdirSync} from 'node:fs';
-import {dirname} from 'node:path';
+import {dirname,isAbsolute} from 'node:path';
 
 export const LEAD_STATUSES = Object.freeze([
   'new','in_progress','awaiting_customer','quote_sent','won','lost'
@@ -23,7 +23,7 @@ function asLead(row) {
   }:null;
 }
 export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
-  if(typeof path!=='string'||!path||(!path.startsWith('/')&&path!==':memory:'))throw new Error('INVALID_DATABASE_PATH');
+  if(typeof path!=='string'||!path||(path!==':memory:'&&!isAbsolute(path)))throw new Error('INVALID_DATABASE_PATH');
   if(path!==':memory:')mkdirSync(dirname(path),{recursive:true,mode:0o700});
   const db=new DatabaseSync(path);
   db.exec('PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; PRAGMA foreign_keys=ON;');
