@@ -52,7 +52,7 @@ test('legacy clients with messenger profile continue to work during rolling depl
 test('quotes recompute trusted demo pricing on server; unsupported catalog rejected',()=>{
   const value=validateBaniLead(quote);
   assert.ok(value.estimate.total>0);
-  assert.match(formatBaniLead(value),/цена не подтверждена/i);
+  assert.match(formatBaniLead(value),/ИТОГО: .*предварительно/i);
   assert.match(formatBaniLead(value),/Вологодский район/);
   assert.throws(()=>validateBaniLead({...quote,configuration:{...quote.configuration,modelId:'injected'}}),/UNKNOWN_MODEL/);
   assert.throws(()=>validateBaniLead({...quote,district:''}),/DISTRICT/);
@@ -70,7 +70,7 @@ test('multi-option real quote includes every add-on and server-calculated price'
   for(const name of lead.estimate.options.map(x=>x.name))assert.ok(message.includes(name),name);
   assert.match(message,/Связаться: WhatsApp по номеру телефона/);
   assert.doesNotMatch(message,/Контакт в мессенджере/);
-  assert.match(message,/цена не подтверждена/);
+  assert.match(message,/ИТОГО: .*предварительно/);
 });
 test('reads MAX token only from protected credentials path',()=>{
   const cfg=loadRelayConfig({HOST:'127.0.0.1',PORT:'3301',ALLOWED_ORIGIN:origin,MAX_CHAT_ID:'-79890208563249',CREDENTIALS_DIRECTORY:'/run/credentials/unit'},(path)=>{
