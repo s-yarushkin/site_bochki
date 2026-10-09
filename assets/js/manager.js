@@ -1,7 +1,7 @@
 'use strict';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
-const state={offset:0,limit:30,selected:null,busy:false};
+const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0};
 const statuses={
   new:'Новая',in_progress:'В работе',awaiting_customer:'Ждём клиента',
   quote_sent:'КП отправлено',won:'Продано',lost:'Закрыто без продажи'
@@ -34,7 +34,20 @@ async function api(path='',options={}){
   if(!response.ok||!body?.ok)throw new Error(body?.code||'REQUEST_FAILED');
   return body;
 }
+function clearLeadView(){
+  state.selected=null;
+  state.offset=0;
+  state.busy=false;
+  $('#leadDetail').hidden=true;
+  $('#noSelection').hidden=false;
+  for(const id of ['leadId','leadName','leadCreated','saveStatus','listSummary'])$('#'+id).textContent='';
+  for(const id of ['contactInfo','configurationInfo','selectedOptions','quoteLines','propertyInfo','eventsList','leadsList'])$('#'+id).replaceChildren();
+  $('#editAssignee').value='';
+  $('#editNote').value='';
+}
 function showLogin(message=''){
+  state.sessionEpoch++;
+  clearLeadView();
   $('#loginView').hidden=false;$('#dashboard').hidden=true;$('#logoutButton').hidden=true;
   $('#loginError').textContent=message;
   $('#managerPassword').value='';
@@ -42,6 +55,8 @@ function showLogin(message=''){
   $('#activeManager').textContent='';
 }
 function showDashboard(phone){
+  state.sessionEpoch++;
+  clearLeadView();
   $('#loginView').hidden=true;$('#dashboard').hidden=false;$('#logoutButton').hidden=false;
   $('#activeManager').textContent=phone||'';
   $('#activeManager').hidden=!phone;
@@ -89,15 +104,16 @@ function renderList(data){
 async function loadList(){
   if(state.busy)return;
   state.busy=true;
+  const epoch=state.sessionEpoch;
   try{
     const query=new URLSearchParams({
       limit:String(state.limit),offset:String(state.offset),
       status:$('#statusFilter').value,q:$('#leadSearch').value.trim()
     });
     const data=await api('leads?'+query);
-    renderList(data);
-  }catch(error){fail(error,$('#listSummary'));}
-  finally{state.busy=false;}
+    if(epoch===state.sessionEpoch)renderList(data);
+  }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#listSummary'));}
+  finally{if(epoch===state.sessionEpoch)state.busy=false;}
 }
 function renderDetail(record){
   $('#noSelection').hidden=true;$('#leadDetail').hidden=false;
@@ -165,11 +181,13 @@ function renderDetail(record){
   }
 }
 async function loadDetail(id){
+  const epoch=state.sessionEpoch;
   try{
     const data=await api('leads/'+encodeURIComponent(id));
+    if(epoch!==state.sessionEpoch||$('#dashboard').hidden)return;
     state.selected=id;
     renderDetail(data.lead);
-  }catch(error){fail(error,$('#listSummary'));}
+  }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#listSummary'));}
 }
 async function login(event){
   event.preventDefault();
@@ -186,15 +204,18 @@ async function login(event){
 async function save(event){
   event.preventDefault();
   if(!state.selected)return;
+  const epoch=state.sessionEpoch;
+  const selectedId=state.selected;
   const button=$('#saveButton');button.disabled=true;
   $('#saveStatus').textContent='Сохраняем…';
   try{
     const payload={status:$('#editStatus').value,assignee:$('#editAssignee').value,managerNote:$('#editNote').value};
-    const response=await api('leads/'+encodeURIComponent(state.selected),{method:'PATCH',body:JSON.stringify(payload)});
+    const response=await api('leads/'+encodeURIComponent(selectedId),{method:'PATCH',body:JSON.stringify(payload)});
+    if(epoch!==state.sessionEpoch)return;
     renderDetail(response.lead);
     $('#saveStatus').textContent='Изменения сохранены.';
     await loadList();
-  }catch(error){fail(error,$('#saveStatus'));}
+  }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#saveStatus'));}
   finally{button.disabled=false;}
 }
 $('#loginForm').addEventListener('submit',login);
