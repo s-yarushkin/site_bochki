@@ -1,5 +1,5 @@
 """Local browser smoke; intercepts personal-data POSTs with a test receipt."""
-import contextlib, functools, http.server, threading, json
+import contextlib, functools, http.server, threading, json, os, sys, shutil, tempfile
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
@@ -8,9 +8,24 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 httpd = http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
 base='about:blank'
+SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-mobile-qa'
+SHOT_DIR.mkdir(parents=True,exist_ok=True)
 results=[]
 with sync_playwright() as p:
-    browser=p.chromium.launch(headless=True,executable_path='/usr/bin/chromium',args=['--no-sandbox','--disable-dev-shm-usage','--allow-file-access-from-files'])
+    binary=os.environ.get('CHROME_BIN') or shutil.which('chromium') or shutil.which('chromium-browser')
+    if not binary and sys.platform.startswith('win'):
+        for candidate in [
+            Path(os.environ.get('PROGRAMFILES',r'C:\Program Files'))/'Google'/'Chrome'/'Application'/'chrome.exe',
+            Path(os.environ.get('PROGRAMFILES(X86)',r'C:\Program Files (x86)'))/'Google'/'Chrome'/'Application'/'chrome.exe',
+            Path(os.environ.get('LOCALAPPDATA',''))/'Google'/'Chrome'/'Application'/'chrome.exe',
+            Path(os.environ.get('PROGRAMFILES',r'C:\Program Files'))/'Microsoft'/'Edge'/'Application'/'msedge.exe'
+        ]:
+            if candidate.is_file():
+                binary=str(candidate)
+                break
+    launch_args={'headless':True,'args':['--no-sandbox','--disable-dev-shm-usage']}
+    if binary: launch_args['executable_path']=binary
+    browser=p.chromium.launch(**launch_args)
     for width,height,label in [(1440,900,'desktop'),(390,844,'mobile'),(320,720,'compact')]:
         page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
         errors=[];posts=[]
@@ -38,6 +53,18 @@ with sync_playwright() as p:
           };
         }""")
         page.wait_for_selector('#catalogGrid .product-card')
+        assert page.locator('.footer-legal a').count()==2
+        assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
+        assert page.locator('.footer-legal a[href="consent.html"]').count()==1
+        assert page.locator('input[name="leadConsent"]').count()==0
+        assert page.locator('input[name="contactAccount"]').count()==0
+        if label!='desktop':
+            assert page.locator('#menuToggle').is_visible()
+            page.locator('#menuToggle').click()
+            assert page.locator('#menuToggle').get_attribute('aria-expanded')=='true'
+            page.locator('.primary-nav a[href="#builder"]').click()
+            assert page.locator('#menuToggle').get_attribute('aria-expanded')=='false'
+            page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-main.png')),full_page=True)
         page.locator('[data-weather="rain"]').click()
         assert 'За окном дождь' in page.locator('#heroTitle').inner_text()
         page.locator('[data-weather="sun"]').click()
@@ -60,6 +87,13 @@ with sync_playwright() as p:
         assert page.locator('#contactForm input[name="phone"]').input_value()=='+7 (999) 123-45-67'
         assert page.locator('#phoneHint').get_attribute('data-valid')=='true'
         assert page.locator('#contactChannelField').is_hidden()
+        assert page.locator('#contactForm a[href="privacy.html"]').count()==1
+        assert page.locator('#contactForm a[href="consent.html"]').count()==1
+        if label!='desktop':
+            box=page.locator('#contactDialog').bounding_box()
+            assert box and box['x']>=-1 and box['x']+box['width']<=width+1,box
+            assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
+            page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-callback.png')),full_page=False)
         page.locator('#contactForm button[type=submit]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
@@ -73,6 +107,13 @@ with sync_playwright() as p:
         assert form.locator('#contactChannelField').is_visible()
         assert form.locator('[name="contactChannel"] option').count()==4
         form.locator('[name="contactChannel"]').select_option('whatsapp')
+        assert form.locator('[name="phone"]').input_value()=='+7 (999) 123-45-67'
+        chosen=page.evaluate('window.__GARANT_DEMO__.quote().options.map(x=>x.name)')
+        summary=page.locator('#formQuote').inner_text()
+        assert chosen and all(x in summary for x in chosen),(chosen,summary)
+        if label!='desktop':
+            assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
+            page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-quote.png')),full_page=False)
         form.locator('button[type="submit"]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
@@ -94,11 +135,17 @@ with sync_playwright() as p:
         assert bounds['document']<=bounds['viewport']+1,bounds
         assert errors==[],errors
         if label=='desktop':
-            page.screenshot(path=str(ROOT/'docs'/'qa-desktop.png'),full_page=True)
-        if label=='mobile':
-            page.screenshot(path=str(ROOT/'docs'/'qa-mobile.png'),full_page=True)
+            page.screenshot(path=str(SHOT_DIR/'garant-bani-desktop-main.png'),full_page=True)
         results.append({'viewport':width,'weather':True,'bundle':True,'forms':True,'post_count':len(posts),'js_errors':errors,'scroll':bounds})
+        page.close()
+    for doc in ['privacy.html','consent.html']:
+        page=browser.new_page(viewport={'width':320,'height':720})
+        page.goto('http://127.0.0.1:'+str(httpd.server_address[1])+'/'+doc)
+        assert page.locator('h1').is_visible(),doc
+        bounds=page.evaluate('({viewport:innerWidth,document:document.documentElement.scrollWidth})')
+        assert bounds['document']<=bounds['viewport']+1,(doc,bounds)
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+doc+'.png')),full_page=True)
         page.close()
     browser.close()
 httpd.shutdown()
-print(json.dumps({'status':'PASS','views':results},ensure_ascii=False))
+print(json.dumps({'status':'PASS','views':results,'screenshots':str(SHOT_DIR)},ensure_ascii=False))
