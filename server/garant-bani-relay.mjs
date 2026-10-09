@@ -1,7 +1,10 @@
 import {createServer} from 'node:http';
 import {readFileSync,realpathSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
-import {createHash} from 'node:crypto';
+import {createHash,randomUUID} from 'node:crypto';
+import {openLeadStore} from './lead-store.mjs';
+import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
+import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
@@ -14,6 +17,7 @@ const accessNames = {unknown:'Нужно уточнить',yes:'Есть под�
 const MAX_BODY_BYTES = 8192;
 const RATE_WINDOW_MS = 600000;
 const RATE_MAX = 5;
+const finishLabels = {natural:'Натуральное дерево',walnut:'Тёплый орех',graphite:'Графит'};
 
 function field(value,max) {
   if(typeof value!=='string' || value.length>max*3) throw new Error('INVALID_FIELD');
@@ -50,21 +54,26 @@ export function validateBaniLead(value) {
     if(district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
-    const {modelId,sizeId,optionIds,bundleId}=value.configuration;
+    const {modelId,sizeId,optionIds,bundleId,finish}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
+    if(finish!==undefined && !Object.hasOwn(finishLabels,finish)) throw new Error('INVALID_FINISH');
     const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId});
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
+    lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,
+      finishId:finish??null,finishName:finish===undefined?'Не указана':finishLabels[finish]};
     lead.estimate=estimate;
   }
   return lead;
 }
 
-export function formatBaniLead(lead) {
+export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   const text=[
     'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
+    ...(id?['Номер: '+id]:[]),
+    ...(createdAt?['Создана: '+createdAt]:[]),
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
     'Имя: '+(lead.name||'Не указано'),
     'Телефон: '+lead.phone,
@@ -73,11 +82,24 @@ export function formatBaniLead(lead) {
   if(lead.estimate) {
     const q=lead.estimate;
     text.push(
+      '',
+      'КОМПЛЕКТАЦИЯ',
       'Модель: '+q.modelName,
-      'Размер: '+q.sizeId,
-      'Дополнения: '+(q.options.map(x=>x.name).join(', ')||'Нет'),
-      'Предварительная демосмета: '+formatMoney(q.total)+' (цена не подтверждена)',
-      'Участок: '+lead.district,
+      'Размер: '+q.sizeId+' (код; длина '+q.sizeId[0]+' м)',
+      'Внешняя отделка: '+(lead.configuration?.finishName||'Не указана'),
+      'Стоимость модели: '+formatMoney(q.basePrice)+' (демо)',
+      'Дополнительные опции ('+q.options.length+'):'
+    );
+    if(q.options.length)for(const option of q.options)text.push('  • '+option.name+' — '+formatMoney(option.price));
+    else text.push('  Нет');
+    text.push(
+      'Сумма опций: '+formatMoney(q.optionsSubtotal),
+      'Скидка: −'+formatMoney(q.discount)+(q.bundleApplied?' (комплект)':q.discountRate?' ('+q.discountRate+'%)':''),
+      'ИТОГО: '+formatMoney(q.total)+' (предварительно; доставка не включена)',
+      'Версия прайса: '+q.pricebookVersion+' ('+q.pricebookStatus+')',
+      '',
+      'УЧАСТОК',
+      'Район: '+lead.district,
       'Основание: '+bases[lead.base],
       'Подъезд: '+accessNames[lead.access]
     );
@@ -103,14 +125,14 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   return {host,port,allowedOrigin,chatId,token};
 }
 
-export async function deliverBaniLead(lead,config,fetchImpl=fetch) {
+export async function deliverBaniLead(lead,config,fetchImpl=fetch,meta={}) {
   const url=new URL('/messages',MAX_ORIGIN);
   url.searchParams.set('chat_id',config.chatId);
   url.searchParams.set('disable_link_preview','true');
   const response=await fetchImpl(url,{
     method:'POST',
     headers:{Authorization:config.token,'Content-Type':'application/json'},
-    body:JSON.stringify({text:formatBaniLead(lead),notify:true}),
+    body:JSON.stringify({text:formatBaniLead(lead,meta),notify:true}),
     signal:AbortSignal.timeout(9000)
   });
   const body=await response.json().catch(()=>({}));
@@ -122,12 +144,18 @@ function json(res,status,data,extra={}) {
   res.end(JSON.stringify(data));
 }
 
-export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Date.now(),log=console.error}={}) {
+export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Date.now(),log=console.error,store=null,managerApi=null}={}) {
   const quotas=new Map();
   const recent=new Map();
   let active=0;
+  const sending=new Set();
   return async (req,res)=>{
     if(req.method==='GET' && req.url==='/health')return json(res,200,{ok:true});
+    if(req.url?.startsWith('/api/manager/')){
+      if(!managerApi)return json(res,404,{ok:false,code:'NOT_FOUND'});
+      await managerApi(req,res);
+      return;
+    }
     if(req.url!=='/api/lead')return json(res,404,{ok:false,code:'NOT_FOUND'});
     if(req.method!=='POST')return json(res,405,{ok:false,code:'METHOD_NOT_ALLOWED'},{Allow:'POST'});
     if(req.headers.origin!==config.allowedOrigin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
@@ -155,16 +183,35 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       const lead=validateBaniLead(payload);
       const fingerprint=createHash('sha256').update(JSON.stringify(lead)).digest('hex');
       if(recent.has(fingerprint))return json(res,200,{ok:true,delivered:true,duplicate:true});
+      let record=null;
+      if(store){
+        const requestId=payload.requestId===undefined?randomUUID():payload.requestId;
+        if(typeof requestId!=='string'||!/^[a-f0-9-]{16,80}$/i.test(requestId))throw new Error('INVALID_REQUEST_ID');
+        try{record=store.create(lead,requestId).lead;}
+        catch{
+          log(JSON.stringify({event:'bani_storage_failed'}));
+          return json(res,503,{ok:false,code:'STORAGE_UNAVAILABLE'});
+        }
+        if(record.notificationStatus==='delivered'){
+          recent.set(fingerprint,now+120000);
+          return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id});
+        }
+        if(sending.has(record.id))return json(res,409,{ok:false,code:'DELIVERY_IN_PROGRESS'});
+      }
+      if(record)sending.add(record.id);
       active++;
       try {
-        await deliver(lead,config);
+        await deliver(lead,config,fetch,{id:record?.id,createdAt:record?.createdAt});
+        if(record)store.delivery(record.id,'delivered');
         recent.set(fingerprint,now+120000);
-        log(JSON.stringify({event:'bani_lead_delivered',flow:lead.flow}));
-        return json(res,200,{ok:true,delivered:true});
+        log(JSON.stringify({event:'bani_lead_delivered',flow:lead.flow,leadId:record?.id||null}));
+        return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id}:{})});
       } catch {
-        log(JSON.stringify({event:'bani_delivery_failed'}));
-        return json(res,502,{ok:false,code:'DELIVERY_UNAVAILABLE'});
+        if(record)try{store.delivery(record.id,'failed');}catch{}
+        log(JSON.stringify({event:'bani_delivery_failed',leadId:record?.id||null}));
+        return json(res,502,{ok:false,code:'DELIVERY_UNAVAILABLE',...(record?{leadId:record.id}:{})});
       } finally {
+        if(record)sending.delete(record.id);
         active--;
       }
     } catch(error) {
@@ -180,7 +227,13 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
 
 if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.url)) {
   const config=loadRelayConfig();
-  const server=createServer(createRelayHandler({config}));
+  const databasePath=process.env.LEADS_DB_PATH;
+  if(!databasePath||!databasePath.startsWith('/var/lib/garant-bani-relay/'))throw new Error('UNSAFE_DATABASE_PATH');
+  const store=openLeadStore(databasePath);
+  const managerConfig=loadManagerConfig();
+  const auth=createManagerAuth(managerConfig);
+  const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error});
+  const server=createServer(createRelayHandler({config,store,managerApi}));
   server.requestTimeout=15000;
   server.headersTimeout=12000;
   server.listen(config.port,config.host,()=>console.log(JSON.stringify({event:'bani_relay_listening',port:config.port})));
