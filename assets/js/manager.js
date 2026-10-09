@@ -38,9 +38,13 @@ function showLogin(message=''){
   $('#loginView').hidden=false;$('#dashboard').hidden=true;$('#logoutButton').hidden=true;
   $('#loginError').textContent=message;
   $('#managerPassword').value='';
+  $('#activeManager').hidden=true;
+  $('#activeManager').textContent='';
 }
-function showDashboard(){
+function showDashboard(phone){
   $('#loginView').hidden=true;$('#dashboard').hidden=false;$('#logoutButton').hidden=false;
+  $('#activeManager').textContent=phone||'';
+  $('#activeManager').hidden=!phone;
 }
 function fail(error,target){
   if(error.message==='LOGIN_REQUIRED'){showLogin('Сеанс завершён. Войдите снова.');return;}
@@ -172,9 +176,9 @@ async function login(event){
   const button=$('#loginButton');button.disabled=true;
   $('#loginError').textContent='';
   try{
-    await api('login',{method:'POST',body:JSON.stringify({password:$('#managerPassword').value})});
+    const session=await api('login',{method:'POST',body:JSON.stringify({phone:$('#managerPhone').value,password:$('#managerPassword').value})});
     $('#managerPassword').value='';
-    showDashboard();
+    showDashboard(session.phone);
     await loadList();
   }catch(error){if(error.message==='LOGIN_REQUIRED')showLogin('Пароль неверный или доступ ограничен.');else fail(error,$('#loginError'));}
   finally{button.disabled=false;}
@@ -203,5 +207,5 @@ $('#logoutButton').addEventListener('click',async()=>{
   try{await api('logout',{method:'POST'});}catch{}
   showLogin('');
 });
-api('session').then(async()=>{showDashboard();await loadList();})
+api('session').then(async session=>{showDashboard(session.phone);await loadList();})
   .catch(()=>showLogin());
