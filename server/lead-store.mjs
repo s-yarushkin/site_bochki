@@ -79,7 +79,7 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
           db.exec('COMMIT');
           return {lead:asLead(getById.get(id)),created:true};
         } catch(err) {
-          if(db.isTransaction)db.exec('ROLLBACK');
+          try{db.exec('ROLLBACK');}catch{}
           const concurrent=getByRequest.get(requestId);
           if(concurrent)return {lead:asLead(concurrent),created:false};
           if(err.code!=='ERR_SQLITE_ERROR'||!String(err.message).includes('UNIQUE constraint failed: leads.id'))throw err;
@@ -102,7 +102,7 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
         insertEvent.run(id,time,'system',state==='delivered'?'max_delivered':'max_delivery_failed',
           state==='delivered'?'Уведомление доставлено в MAX':'Ошибка уведомления MAX; заявка сохранена');
         db.exec('COMMIT');
-      }catch(err){if(db.isTransaction)db.exec('ROLLBACK');throw err;}
+      }catch(err){try{db.exec('ROLLBACK');}catch{}throw err;}
       return asLead(getById.get(id));
     },
     list({status='all',q='',limit=50,offset=0}={}){
@@ -150,7 +150,7 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
         setEdited.run(status,assignee,managerNote,time,id);
         for(const [action,detail] of changes)insertEvent.run(id,time,actor,action,detail);
         db.exec('COMMIT');
-      }catch(err){if(db.isTransaction)db.exec('ROLLBACK');throw err;}
+      }catch(err){try{db.exec('ROLLBACK');}catch{}throw err;}
       return this.detail(id);
     }
   };
