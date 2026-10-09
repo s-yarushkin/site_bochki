@@ -53,7 +53,13 @@ with sync_playwright() as pw:
                 route.fulfill(status=401,content_type='application/json',body='{"ok":false,"code":"LOGIN_REQUIRED"}')
             elif path=='login' and route.request.method=='POST':
                 request=route.request.post_data_json
-                assert request.get('password')=='test-password'
+                assert (request.get('phone'),request.get('password')) in [
+                    ('+79991112233','first-manager-password-2026'),
+                    ('+79992223344','second-manager-password-2026')
+                ]
+                route.fulfill(status=200,content_type='application/json',body=json.dumps(
+                    {'ok':True,'phone':request['phone'],'role':'manager'}))
+            elif path=='logout' and route.request.method=='POST':
                 route.fulfill(status=200,content_type='application/json',body='{"ok":true}')
             elif path.startswith('leads?'):
                 body={'ok':True,'leads':[lead],'total':1,'limit':30,'offset':0,
@@ -73,10 +79,12 @@ with sync_playwright() as pw:
         page.goto(base+'manager.html')
         assert page.locator('#loginView').is_visible()
         assert page.locator('#dashboard').is_hidden()
-        page.locator('#managerPassword').fill('test-password')
+        page.locator('#managerPhone').fill('+79991112233')
+        page.locator('#managerPassword').fill('first-manager-password-2026')
         page.locator('#loginButton').click()
         page.locator('.lead-item').wait_for(state='visible')
         assert page.locator('#countTotal').inner_text()=='1'
+        assert page.locator('#activeManager').inner_text()=='+79991112233'
         page.locator('.lead-item').click()
         page.locator('#leadDetail').wait_for(state='visible')
         assert 'Тёплый орех' in page.locator('#configurationInfo').inner_text()
@@ -89,6 +97,20 @@ with sync_playwright() as pw:
         page.locator('#saveButton').click()
         page.wait_for_function("document.querySelector('#saveStatus').textContent === 'Изменения сохранены.'")
         assert edits and edits[-1]['status']=='in_progress'
+        page.locator('#logoutButton').click()
+        assert page.locator('#loginView').is_visible()
+        page.locator('#managerPhone').fill('+79992223344')
+        page.locator('#managerPassword').fill('second-manager-password-2026')
+        page.locator('#loginButton').click()
+        page.locator('.lead-item').wait_for(state='visible')
+        assert page.locator('#countTotal').inner_text()=='1'
+        assert page.locator('#activeManager').inner_text()=='+79992223344'
+        page.locator('.lead-item').click()
+        assert page.locator('#leadDetail').is_visible()
+        page.locator('#editStatus').select_option('quote_sent')
+        page.locator('#saveButton').click()
+        page.wait_for_function("document.querySelector('#saveStatus').textContent === 'Изменения сохранены.'")
+        assert edits[-1]['status']=='quote_sent'
         assert errors==[],errors
         bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
         assert bounds['scroll']<=bounds['width']+1,(label,bounds)
