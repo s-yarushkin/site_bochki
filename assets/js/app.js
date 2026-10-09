@@ -9,6 +9,7 @@ const state={step:0,modelId:'kvadro-house',sizeId:'500',optionIds:[],bundleId:nu
 let formFlow='quote';
 let formQuote=null;
 let submitted=false;
+let formRequestId=null;
 const money=formatMoney;
 const bundle=PRICEBOOK.bundle;
 
@@ -118,6 +119,7 @@ function formatRussianMobile(value){
 }
 function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${q.sizeId[0]} м</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (демо)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
 function openForm(flow='quote'){
+  formRequestId=crypto.randomUUID();
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
   const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
   $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
@@ -188,7 +190,7 @@ function initForms(){
     }
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:true,website:f.elements.website.value
+      comment,consent:true,requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
@@ -196,7 +198,7 @@ function initForms(){
       payload.access=f.elements.access.value;
       payload.configuration={
         modelId:formQuote.modelId,sizeId:formQuote.sizeId,
-        optionIds:[...formQuote.optionIds],bundleId:state.bundleId
+        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish
       };
     }
     submit.disabled=true;
