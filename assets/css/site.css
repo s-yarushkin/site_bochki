@@ -12,3 +12,12 @@
 .footer-legal{display:flex;gap:14px 20px;flex-wrap:wrap;align-items:center}
 .footer-bottom{gap:12px;flex-wrap:wrap}
 #contactChannelField[hidden]{display:none!important}
+
+/* Mobile form acceptance: keep required marks on label line and hide empty errors. */
+.contact-dialog label:not(.demo-consent){display:block}
+.contact-dialog label:not(.demo-consent)>input:not([type=checkbox]),
+.contact-dialog label:not(.demo-consent)>select,
+.contact-dialog label:not(.demo-consent)>textarea{display:block;margin-top:7px}
+.contact-dialog label b{display:inline}
+.contact-dialog .phone-hint{display:block;margin-top:5px}
+.contact-dialog .form-error:empty{display:none}
