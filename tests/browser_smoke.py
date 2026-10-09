@@ -48,6 +48,8 @@ with sync_playwright() as p:
         assert page.locator('.footer-legal a').count()==2
         assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
         assert page.locator('.footer-legal a[href="consent.html"]').count()==1
+        assert page.locator('.footer-links a[href="manager.html"]').count()==1
+        assert page.locator('.footer-legal a[href="manager.html"]').count()==0
         assert page.locator('input[name="leadConsent"]').count()==0
         assert page.locator('input[name="contactAccount"]').count()==0
         if label!='desktop':
