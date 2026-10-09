@@ -5,6 +5,11 @@ const css=readFileSync(new URL('../assets/css/site.css',import.meta.url),'utf8')
 const data=readFileSync(new URL('../data/pricebook.js',import.meta.url),'utf8');
 const privacy=readFileSync(new URL('../privacy.html',import.meta.url),'utf8');
 const consent=readFileSync(new URL('../consent.html',import.meta.url),'utf8');
+const manager=readFileSync(new URL('../manager.html',import.meta.url),'utf8');
+const managerJs=readFileSync(new URL('../assets/js/manager.js',import.meta.url),'utf8');
+const managerCss=readFileSync(new URL('../assets/css/manager.css',import.meta.url),'utf8');
+const systemd=readFileSync(new URL('../ops/systemd/garant-bani-relay.service',import.meta.url),'utf8');
+
 
 test('S01 main publicly visible phone or tel link absent',()=>{assert.doesNotMatch(html,/\+7\s?9\d{2}\s?\d{3}/);assert.doesNotMatch(html,/href\s*=\s*["']tel:/i);});
 test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.me\/|max\.ru\/|vk\.ru\/)/));
@@ -59,4 +64,26 @@ test('S15 privacy and separate consent pages have operator placeholders and proc
   assert.match(privacy,/Сроки обработки и хранения/);
   assert.match(consent,/Отзыв согласия/);
   assert.match(html,/footer-legal/);
+});
+
+test('S16 protected manager interface has separate login, full quote and status editor',()=>{
+  assert.match(manager,/id="loginForm"/);
+  assert.match(manager,/id="leadsList"/);
+  assert.match(manager,/id="selectedOptions"/);
+  assert.match(manager,/id="editStatus"/);
+  assert.match(manager,/id="editNote"/);
+  assert.match(manager,/noindex,nofollow,noarchive/);
+  assert.match(manager,/default-src 'none'/);
+  assert.match(managerJs,/\.textContent/);
+  assert.doesNotMatch(managerJs,/innerHTML|localStorage|sessionStorage/);
+  assert.match(managerCss,/@media\(max-width:690px\)/);
+  assert.match(html,/href="manager\.html"/);
+});
+test('S17 lead snapshots include finish and request id; service persists SQLite separately from public files',()=>{
+  assert.match(script,/requestId:formRequestId/);
+  assert.match(script,/finish:state\.finish/);
+  assert.match(systemd,/StateDirectory=garant-bani-relay/);
+  assert.match(systemd,/LoadCredential=manager-password-hash/);
+  assert.match(systemd,/LoadCredential=manager-session-secret/);
+  assert.match(systemd,/LEADS_DB_PATH=\/var\/lib\/garant-bani-relay\/leads\.sqlite/);
 });
