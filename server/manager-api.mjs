@@ -40,19 +40,20 @@ export function createManagerApi({store,auth,origin,log=()=>{}}){
           answer(res,415,{ok:false,code:'JSON_REQUIRED'});return true;
         }
         const body=await readJson(req);
-        const result=auth.login(body?.password,clientIp(req));
+        const result=auth.login(body?.phone,body?.password,clientIp(req));
         if(!result.ok){
           answer(res,result.limited?429:401,{ok:false,code:result.limited?'RATE_LIMITED':'INVALID_CREDENTIALS'});
           return true;
         }
         log(JSON.stringify({event:'bani_manager_login'}));
-        answer(res,200,{ok:true},{'Set-Cookie':result.cookie});return true;
+        answer(res,200,{ok:true,phone:result.phone,role:'manager'},{'Set-Cookie':result.cookie});return true;
       }
-      if(!auth.authenticated(req)){
+      const session=auth.session(req);
+      if(!session){
         answer(res,401,{ok:false,code:'LOGIN_REQUIRED'});return true;
       }
       if(path==='/api/manager/session'&&req.method==='GET'){
-        answer(res,200,{ok:true,role:'manager'});return true;
+        answer(res,200,{ok:true,role:'manager',phone:session.phone});return true;
       }
       if(path==='/api/manager/logout'&&req.method==='POST'){
         answer(res,200,{ok:true},{'Set-Cookie':auth.logoutCookie()});return true;
@@ -85,7 +86,7 @@ export function createManagerApi({store,auth,origin,log=()=>{}}){
           }
           const lead=store.update(id,{
             status:body.status,assignee:body.assignee,managerNote:body.managerNote
-          });
+          },session.phone);
           answer(res,lead?200:404,lead?{ok:true,lead}:{ok:false,code:'NOT_FOUND'});
           if(lead)log(JSON.stringify({event:'bani_manager_updated',leadId:id}));
           return true;
