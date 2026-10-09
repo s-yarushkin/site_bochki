@@ -1,7 +1,7 @@
 """Offline manager dashboard acceptance with only mocked local API responses."""
 import functools, http.server, json, os, shutil, sys, tempfile, threading
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
 class QuietHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
@@ -95,7 +95,7 @@ with sync_playwright() as pw:
         page.locator('#editAssignee').fill('Иван')
         page.locator('#editNote').fill('Позвонил покупателю, уточняем доставку')
         page.locator('#saveButton').click()
-        page.locator('#saveStatus').get_by_text('Изменения сохранены.',exact=True).wait_for(state='visible')
+        expect(page.locator('#saveStatus')).to_have_text('Изменения сохранены.')
         assert edits and edits[-1]['status']=='in_progress'
         page.locator('#logoutButton').click()
         assert page.locator('#loginView').is_visible()
@@ -109,7 +109,7 @@ with sync_playwright() as pw:
         assert page.locator('#leadDetail').is_visible()
         page.locator('#editStatus').select_option('quote_sent')
         page.locator('#saveButton').click()
-        page.locator('#saveStatus').get_by_text('Изменения сохранены.',exact=True).wait_for(state='visible')
+        expect(page.locator('#saveStatus')).to_have_text('Изменения сохранены.')
         assert edits[-1]['status']=='quote_sent'
         assert errors==[],errors
         bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
