@@ -77,6 +77,8 @@ with sync_playwright() as p:
         assert 'номер' in page.locator('#formError').inner_text().lower()
         page.locator('#contactForm input[name="phone"]').fill('+7 999 123-45-67')
         assert page.locator('#contactForm input[name="phone"]').input_value()=='+7 (999) 123-45-67'
+        assert page.locator('#formError').inner_text()==''  # stale red error must clear
+        assert page.locator('#formError').is_hidden()
         assert page.locator('#phoneHint').get_attribute('data-valid')=='true'
         assert page.locator('#contactChannelField').is_hidden()
         assert page.locator('#contactForm a[href="privacy.html"]').count()==1
@@ -85,6 +87,16 @@ with sync_playwright() as p:
             box=page.locator('#contactDialog').bounding_box()
             assert box and box['x']>=-1 and box['x']+box['width']<=width+1,box
             assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
+            # Inline required marker must share the label's line on narrow screens.
+            assert page.locator('#contactForm label').filter(has=page.locator('input[name="phone"]')).evaluate("""label=>{
+                const star=label.querySelector('b');
+                const text=label.firstChild;
+                const range=document.createRange();
+                range.selectNodeContents(text);
+                const rect=range.getBoundingClientRect();
+                return Math.abs(star.getBoundingClientRect().top-rect.top)<8;
+            }"""),'REQUIRED_STAR_WRAPPED'
+            page.locator('#contactDialog').evaluate('(el)=>{el.scrollTop=0}')
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-callback.png')),full_page=False)
         page.locator('#contactForm button[type=submit]').click()
         page.locator('#formResult').wait_for(state='visible')
@@ -105,7 +117,12 @@ with sync_playwright() as p:
         assert chosen and all(x in summary for x in chosen),(chosen,summary)
         if label!='desktop':
             assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
+            page.locator('#contactDialog').evaluate('(el)=>{el.scrollTop=0}')
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-quote.png')),full_page=False)
+            page.locator('#contactDialog').evaluate('(el)=>{el.scrollTop=el.scrollHeight}')
+            assert form.locator('a[href="privacy.html"]').is_visible()
+            assert form.locator('a[href="consent.html"]').is_visible()
+            page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-quote-bottom.png')),full_page=False)
         form.locator('button[type="submit"]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
