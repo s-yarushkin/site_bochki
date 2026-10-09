@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import {openLeadStore} from '../server/lead-store.mjs';
-import {hashManagerPassword,verifyManagerPassword,createManagerAuth} from '../server/manager-auth.mjs';
+import {hashManagerPassword,verifyManagerPassword,createManagerAuth,normalizeManagerPhone,loadManagerConfig} from '../server/manager-auth.mjs';
 import {createManagerApi} from '../server/manager-api.mjs';
 import {createRelayHandler,formatBaniLead,validateBaniLead} from '../server/garant-bani-relay.mjs';
 
@@ -36,6 +36,39 @@ test('manager password is salted, strong, verified without storing cleartext',()
   assert.ok(verifyManagerPassword('StrongExamplePassword-2026!',hash));
   assert.equal(verifyManagerPassword('invalid-password',hash),false);
   assert.throws(()=>hashManagerPassword('weak'),/WEAK_MANAGER_PASSWORD/);
+});
+test('exactly two distinct phone logins, separate passwords, identity sessions and lockout',()=>{
+  const one='+79991112233',two='+79992223344';
+  const password1='StrongPasswordFirst-2026!';
+  const password2='SecondPasswordStrong-2026!';
+  const accounts=[
+    {phone:one,hash:hashManagerPassword(password1)},
+    {phone:two,hash:hashManagerPassword(password2)}
+  ];
+  assert.equal(normalizeManagerPhone('8 (999) 111-22-33'),one);
+  assert.equal(normalizeManagerPhone('+79992223344'),two);
+  assert.equal(normalizeManagerPhone('+71234567890'),null);
+  assert.throws(()=>createManagerAuth({accounts:[accounts[0]],sessionSecret:'a'.repeat(96)}),/EXACTLY_TWO/);
+  assert.throws(()=>createManagerAuth({accounts:[accounts[0],accounts[0]],sessionSecret:'a'.repeat(96)}),/DUPLICATE/);
+  const c=loadManagerConfig({CREDENTIALS_DIRECTORY:'/run/testing'},path=>{
+    if(path.endsWith('/manager-accounts'))return JSON.stringify(accounts);
+    if(path.endsWith('/manager-session-secret'))return 'a'.repeat(96);
+    throw Error('UNEXPECTED_CREDENTIAL');
+  });
+  const auth=createManagerAuth(c);
+  const login1=auth.login('8 (999) 111-22-33',password1,'192.0.2.1');
+  assert.equal(login1.ok,true);
+  assert.equal(login1.phone,one);
+  assert.equal(auth.session({headers:{cookie:login1.cookie.split(';')[0]}}).phone,one);
+  const login2=auth.login(two,password2,'192.0.2.2');
+  assert.equal(login2.ok,true);
+  assert.equal(auth.session({headers:{cookie:login2.cookie.split(';')[0]}}).phone,two);
+  assert.equal(auth.login(one,password2,'192.0.2.3').ok,false);
+  assert.equal(auth.login(two,password1,'192.0.2.4').ok,false);
+  assert.equal(auth.login('+79999999999',password1,'192.0.2.5').ok,false);
+  for(let i=0;i<5;i++)assert.equal(auth.login(one,'wrong-password','192.0.2.6').ok,false);
+  assert.equal(auth.login(one,password1,'192.0.2.6').limited,true);
+  assert.equal(auth.session({headers:{cookie:login1.cookie.split(';')[0]+'tampered'}}),null);
 });
 test('SQLite keeps full server-calculated snapshot, notes and immutable events after restart',()=>{
   const temp=mkdtempSync(join(tmpdir(),'bani-lead-store-'));
@@ -115,8 +148,10 @@ test('lead intake stores before MAX delivery; unavailable MAX leaves visible fai
 test('manager API blocks anonymous users and CSRF, accepts login and audits status update',async()=>{
   const store=openLeadStore(':memory:');
   const password='VeryStrongManagerPassword-2026';
+  const phone1='+79991112233',phone2='+79992223344';
   const auth=createManagerAuth({
-    passwordHash:hashManagerPassword(password),
+    accounts:[{phone:phone1,hash:hashManagerPassword(password)},
+              {phone:phone2,hash:hashManagerPassword('SecondManagerPassword-2026')}],
     sessionSecret:'a'.repeat(64)
   });
   const managerApi=createManagerApi({store,auth,origin});
@@ -129,19 +164,27 @@ test('manager API blocks anonymous users and CSRF, accepts login and audits stat
       assert.equal(anon.status,401);
       const forged=await fetch(base+'/api/manager/login',{method:'POST',
         headers:{origin:'https://evil.example','content-type':'application/json'},
-        body:JSON.stringify({password})});
+        body:JSON.stringify({phone:phone1,password})});
       assert.equal(forged.status,403);
       const wrong=await fetch(base+'/api/manager/login',{method:'POST',
         headers:{origin,'content-type':'application/json'},
-        body:JSON.stringify({password:'wrong'})});
+        body:JSON.stringify({phone:phone1,password:'wrong'})});
       assert.equal(wrong.status,401);
       const login=await fetch(base+'/api/manager/login',{method:'POST',
         headers:{origin,'content-type':'application/json'},
-        body:JSON.stringify({password})});
+        body:JSON.stringify({phone:phone1,password})});
       assert.equal(login.status,200);
       const rawCookie=login.headers.get('set-cookie');
       assert.match(rawCookie,/HttpOnly; Secure; SameSite=Strict/);
       const cookie=rawCookie.split(';')[0];
+      assert.equal((await login.json()).phone,phone1);
+      const loginSecond=await fetch(base+'/api/manager/login',{method:'POST',
+        headers:{origin,'content-type':'application/json'},
+        body:JSON.stringify({phone:phone2,password:'SecondManagerPassword-2026'})});
+      assert.equal(loginSecond.status,200);
+      const secondCookie=loginSecond.headers.get('set-cookie').split(';')[0];
+      const sessionSecond=await fetch(base+'/api/manager/session',{headers:{cookie:secondCookie}});
+      assert.equal((await sessionSecond.json()).phone,phone2);
       const ls=await fetch(base+'/api/manager/leads',{headers:{cookie}});
       assert.equal(ls.status,200);
       const listing=await ls.json();
@@ -153,12 +196,13 @@ test('manager API blocks anonymous users and CSRF, accepts login and audits stat
         body:JSON.stringify({status:'quote_sent',assignee:'Иван',managerNote:'КП отправлено'})});
       assert.equal(noOrigin.status,403);
       const patch=await fetch(base+'/api/manager/leads/'+id,{method:'PATCH',
-        headers:{cookie,origin,'content-type':'application/json'},
+        headers:{cookie:secondCookie,origin,'content-type':'application/json'},
         body:JSON.stringify({status:'quote_sent',assignee:'Иван',managerNote:'КП отправлено'})});
       assert.equal(patch.status,200);
       const edited=(await patch.json()).lead;
       assert.equal(edited.assignee,'Иван');
       assert.equal(edited.events.at(-1).action,'note');
+      assert.equal(edited.events.at(-1).actor,phone2);
       const tampered=await fetch(base+'/api/manager/leads',{headers:{cookie:cookie+'tamper'}});
       assert.equal(tampered.status,401);
     });
