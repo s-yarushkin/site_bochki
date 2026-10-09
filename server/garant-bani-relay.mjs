@@ -182,7 +182,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       try{payload=JSON.parse(raw);}catch{throw new Error('INVALID_JSON');}
       const lead=validateBaniLead(payload);
       const fingerprint=createHash('sha256').update(JSON.stringify(lead)).digest('hex');
-      if(recent.has(fingerprint))return json(res,200,{ok:true,delivered:true,duplicate:true});
+      if(!store && recent.has(fingerprint))return json(res,200,{ok:true,delivered:true,duplicate:true});
       let record=null;
       if(store){
         const requestId=payload.requestId===undefined?randomUUID():payload.requestId;
