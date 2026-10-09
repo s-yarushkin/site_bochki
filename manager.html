@@ -14,7 +14,7 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="./">ГАРАНТ БАНИ</a>
-    <span class="top-label">Кабинет менеджера · Заявки</span>
+    <span class="top-label">Кабинет главного менеджера · Заявки</span><span id="activeManager" class="active-manager" hidden></span>
     <button id="logoutButton" class="btn subtle" hidden type="button">Выйти</button>
   </div>
 </header>
@@ -23,13 +23,14 @@
     <div class="login-panel">
       <p class="eyebrow">ДОСТУП СОТРУДНИКА</p>
       <h1>Кабинет заявок</h1>
-      <p class="muted">Заявки покупателей и полные комплектации доступны только после входа для менеджеров.</p>
+      <p class="muted">Доступ к полной базе заявок имеют две технические учётные записи главных менеджеров.</p>
       <form id="loginForm" autocomplete="on">
-        <label>Пароль менеджера <input id="managerPassword" type="password" autocomplete="current-password" minlength="14" required></label>
+        <label>Телефон — логин <input id="managerPhone" type="tel" inputmode="tel" autocomplete="username" maxlength="45" placeholder="+7 (999) 123-45-67" required></label>
+        <label>Пароль <input id="managerPassword" type="password" autocomplete="current-password" minlength="14" required></label>
         <button class="btn primary" type="submit" id="loginButton">Войти</button>
         <p id="loginError" class="error" role="alert" aria-live="polite"></p>
       </form>
-      <p class="muted fine">Пароль от предпросмотра сайта не открывает клиентские данные. Для кабинета используется отдельный пароль.</p>
+      <p class="muted fine">Вводите логин и пароль своей учётной записи. Пароль от предпросмотра сайта сюда не подходит.</p>
     </div>
   </section>
 
