@@ -168,6 +168,8 @@ function initForms(){
     updatePhoneHint();
   });
   phone.addEventListener('blur',()=>updatePhoneHint(true));
+  form.addEventListener('input',()=>{if(error.textContent)error.textContent='';});
+  form.addEventListener('change',()=>{if(error.textContent)error.textContent='';});
   form.addEventListener('submit',async event=>{
     event.preventDefault();
     if(submit.disabled)return;
