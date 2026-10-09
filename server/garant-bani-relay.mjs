@@ -7,8 +7,8 @@ import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
 const allowedBases = new Set(['unknown','ready','advice']);
 const allowedAccess = new Set(['unknown','yes','advice']);
-const allowedChannels = new Set(['phone','telegram','max']);
-const channelNames = {phone:'Телефонный звонок',telegram:'Telegram',max:'MAX'};
+const allowedChannels = new Set(['phone','telegram','max','whatsapp']);
+const channelNames = {phone:'Телефонный звонок',telegram:'Telegram',max:'MAX',whatsapp:'WhatsApp'};
 const bases = {unknown:'Нужно уточнить',ready:'Готово',advice:'Нужна консультация'};
 const accessNames = {unknown:'Нужно уточнить',yes:'Есть подъезд',advice:'Нужна консультация'};
 const MAX_BODY_BYTES = 8192;
@@ -35,13 +35,14 @@ export function validateBaniLead(value) {
   if(!/^79\d{9}$/.test(mobile) || /^7(\d)\1{9}$/.test(mobile)) throw new Error('INVALID_PHONE');
   const contactChannel=value.contactChannel??'phone';
   if(!allowedChannels.has(contactChannel))throw new Error('INVALID_CONTACT_CHANNEL');
+  if(value.flow==='callback' && contactChannel!=='phone')throw new Error('CALLBACK_MUST_BE_PHONE');
+  // Legacy clients can still submit an optional messenger profile during the rollout.
+  // New clients only send a verified phone number for every contact channel.
   const contactAccount=field(value.contactAccount??'',140);
-  if(contactChannel!=='phone'){
-    if(contactAccount.length<3)throw new Error('CONTACT_ACCOUNT_REQUIRED');
-    if(!/^(@[a-zA-Z0-9_.-]{3,60}|https:\/\/(?:t\.me|max\.ru)\/[a-zA-Z0-9_\/-]{3,110})$/.test(contactAccount))throw new Error('INVALID_CONTACT_ACCOUNT');
-    if(contactChannel==='telegram' && contactAccount.startsWith('https://max.ru/'))throw new Error('WRONG_CONTACT_NETWORK');
-    if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
-  }else if(contactAccount)throw new Error('UNEXPECTED_CONTACT_ACCOUNT');
+  if(contactAccount && !/^(@[a-zA-Z0-9_.-]{3,60}|https:\/\/(?:t\.me|max\.ru)\/[a-zA-Z0-9_\/-]{3,110})$/.test(contactAccount))throw new Error('INVALID_CONTACT_ACCOUNT');
+  if(contactChannel==='phone' && contactAccount)throw new Error('UNEXPECTED_CONTACT_ACCOUNT');
+  if(contactChannel==='telegram' && contactAccount.startsWith('https://max.ru/'))throw new Error('WRONG_CONTACT_NETWORK');
+  if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
   const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment};
   if(value.flow==='quote') {
@@ -67,7 +68,7 @@ export function formatBaniLead(lead) {
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
     'Имя: '+(lead.name||'Не указано'),
     'Телефон: '+lead.phone,
-    'Связаться: '+channelNames[lead.contactChannel||'phone']
+    'Связаться: '+channelNames[lead.contactChannel||'phone']+' по номеру телефона'
   ];
   if(lead.estimate) {
     const q=lead.estimate;
