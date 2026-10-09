@@ -87,7 +87,7 @@ with sync_playwright() as pw:
         page.locator('#editAssignee').fill('Иван')
         page.locator('#editNote').fill('Позвонил покупателю, уточняем доставку')
         page.locator('#saveButton').click()
-        page.locator('#saveStatus').get_by_text('Изменения сохранены.').wait_for()
+        page.wait_for_function("document.querySelector('#saveStatus').textContent === 'Изменения сохранены.'")
         assert edits and edits[-1]['status']=='in_progress'
         assert errors==[],errors
         bounds=page.evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth})')
