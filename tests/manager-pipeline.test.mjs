@@ -138,6 +138,10 @@ test('lead intake stores before MAX delivery; unavailable MAX leaves visible fai
       assert.equal((await again.json()).duplicate,true);
       assert.equal(store.stats().total,1);
       assert.equal(sends,2);
+      const conflicting=await post(base,{...payload,comment:'Другой текст с тем же requestId'});
+      assert.equal(conflicting.status,409);
+      assert.equal((await conflicting.json()).code,'REQUEST_ID_CONFLICT');
+      assert.equal(store.stats().total,1);
       const second=await post(base,{...payload,requestId:randomUUID()});
       assert.equal(second.status,200);
       assert.equal(store.stats().total,2,'identical data from another submission must not be discarded');
