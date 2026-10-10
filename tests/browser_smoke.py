@@ -59,6 +59,10 @@ with sync_playwright() as p:
             assert image.evaluate('(img)=>img.decode().then(()=>img.naturalWidth>0).catch(()=>false)'), 'CATALOG_MEDIA_BROKEN'
             catalog_src.append(image.get_attribute('src'))
         assert len(catalog_src)==4 and len(set(catalog_src))==4, catalog_src
+        for image in page.locator('.media-frame img[data-v5-photo]').all():
+            image.scroll_into_view_if_needed()
+            assert image.evaluate('(img)=>img.decode().then(()=>img.naturalWidth>0).catch(()=>false)'), 'V5_PHOTO_FAILED_TO_LOAD'
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-sun.png')),full_page=True)
         assert page.locator('.footer-legal a').count()==2
         assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
         assert page.locator('.footer-legal a[href="consent.html"]').count()==1
@@ -112,6 +116,7 @@ with sync_playwright() as p:
         })""")
         for section in ('page','catalog','builder','footer'):
             assert sun_colors[section]!=rain_colors[section], (section,sun_colors,rain_colors)
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
         page.locator('[data-weather="sun"]').click()
         assert 'Растопили баню' in page.locator('#heroTitle').inner_text()
         assert page.locator('html').get_attribute('data-theme')=='sun'
