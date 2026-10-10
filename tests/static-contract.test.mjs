@@ -118,13 +118,15 @@ test('S17 lead snapshots include finish and request id; service persists SQLite 
 test('S18 full SUN/RAIN layer and off-photo switcher',()=>{
   assert.match(html,/<html lang="ru" data-theme="sun">/);
   assert.match(html,/href="assets\/css\/themes-v5\.css"/);
-  const hero=html.indexOf('<section class="hero"');
+  const hero=html.search(/<section\s+class="hero(?:\s[^\"]*)?"/);
   const toolbar=html.indexOf('class="container hero-toolbar"');
   const toggle=html.indexOf('<div class="hero-weather">');
   const copy=html.indexOf('<div class="hero-copy">');
   const art=html.indexOf('<div class="hero-art">');
   assert.ok(hero>=0&&toolbar>hero&&toggle>toolbar&&toggle<copy&&copy<art,
     'weather switch must be in a standalone toolbar before hero product grid');
+  assert.ok(html.slice(hero,toolbar).includes('class="weather-sky"'),
+    'V6 decorative sky must precede toolbar and never intercept the switch');
   assert.match(themeCss,/\.hero-toolbar\{display:flex/);
   assert.match(themeCss,/\.hero-grid\{grid-template-columns:minmax\(0,1\.03fr\)/);
   assert.match(script,/document\.documentElement\.dataset\.theme=weather/);
