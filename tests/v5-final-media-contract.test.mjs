@@ -26,18 +26,22 @@ test('V5 site loads third layer and photographic image controller',()=>{
   assert.match(css,/\.media-frame\.media-ready \.v5-photo/);
 });
 
-test('V5 four models have the SAME photographic file in SUN and RAIN',()=>{
-  for(const series of ['kvadro','parus','viking','kvadro-house']){
+test('V6.1.1 photo policy: three untouched models; Kvadro House has one approved day/dusk pair',()=>{
+  for(const series of ['kvadro','parus','viking']){
     const key='catalog-'+series;
     assert.ok(resolveMedia(key),'Missing '+key);
     assert.equal(resolveMedia(key),MEDIA_SLOTS[key]);
     assert.equal(Object.keys(MEDIA_SLOTS).filter(v=>v===key+'-rain').length,0);
     assert.equal(Object.keys(MEDIA_SLOTS).filter(v=>v===key+'-sun').length,0);
   }
-  assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
-  assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('catalog-kvadro-house').file);
-  assert.equal(resolveMedia('catalog-kvadro-house').file,resolveMedia('bundle-comfort').file);
-  assert.match(resolveMedia('hero-rain-desktop').alt,/визуализирован/);
+  for(const key of ['hero-sun-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
+    assert.equal(resolveMedia(key).file,'hero-sun.webp',key);
+  }
+  for(const key of ['hero-rain-desktop','catalog-kvadro-house-rain','bundle-comfort-rain','side-kvadro-house-rain']){
+    assert.equal(resolveMedia(key).file,'hero-rain.webp',key);
+    assert.match(resolveMedia(key).alt,/вечерн|подсветк/);
+  }
+  assert.notEqual(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
 });
 
 test('V5 no invented plan photo or fabricated builder model interior',()=>{
