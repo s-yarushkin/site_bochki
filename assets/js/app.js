@@ -23,7 +23,7 @@ function renderCatalog(){
     return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>демо от</small>${money(low)}</div><div class="product-sizes">${Object.keys(model.sizes).map(x=>`${x[0]} м`).join(' / ')}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
   }).join('');
   syncMedia();
-  $('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
+  $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
     const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
