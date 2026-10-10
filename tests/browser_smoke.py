@@ -99,6 +99,9 @@ with sync_playwright() as p:
         assert toolbar and toolbar['y']+toolbar['height']<=media['y']+1, (
             f'WEATHER_TOOLBAR_NOT_SEPARATE width={width} toolbar={toolbar} media={media}')
         assert page.locator('html').get_attribute('data-theme')=='sun'
+        sun_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
+        assert 'hero-sun.webp' in sun_cta, ('SUN_CTA_WRONG_IMAGE',width,sun_cta)
+        assert 'side-kvadro-house.webp' not in sun_cta, ('SUN_CTA_OLD_IMAGE',width,sun_cta)
         assert page.locator('.weather-window').count()==2
         assert page.locator('.atmos-rain').count()==0
         assert page.locator('.site-clouds .cloud-bank').count()==2
@@ -126,6 +129,8 @@ with sync_playwright() as p:
         page.locator('[data-weather="rain"]').click()
         expect(page.locator('#heroTitle')).to_contain_text('Небо затянуло тучами')
         assert page.locator('html').get_attribute('data-theme')=='rain'
+        rain_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
+        assert 'mood-evening.webp' in rain_cta, ('RAIN_CTA_IMAGE_REGRESSED',width,rain_cta)
         assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
         assert 'Тучи над дачей' in page.locator('#skylineTitle').inner_text()
         cloud_motion=page.evaluate("""() => getComputedStyle(
