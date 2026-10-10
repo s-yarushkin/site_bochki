@@ -78,7 +78,12 @@ export async function exportReview(report,dir,fetchImpl=fetch){
       if(bytes.length>MAX_SIZE||!validImage(bytes,mime))throw new Error('INVALID_OR_OVERSIZE_IMAGE');
       await writeFile(join(dir,item.local),bytes,{flag:'w'});
       record.saved=true;record.bytes=bytes.length;record.sha256=hash(bytes);
-    }catch(error){record.error=String(error.message||error).slice(0,120);}
+    }catch(error){
+      const reason=String(error?.message||error);
+      const causeCode=String(error?.cause?.code||'');
+      const causeMessage=String(error?.cause?.message||'');
+      record.error=[reason,causeCode,causeMessage].filter(Boolean).join(' | ').slice(0,280);
+    }
     output.push(record);
     console.log((record.saved?'SAVED ':'SKIPPED ')+record.id+' '+record.sourcePage+' '+(record.error||record.bytes));
   }
