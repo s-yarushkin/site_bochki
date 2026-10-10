@@ -34,6 +34,13 @@ test('S06 real asset slots for catalog and story',()=>{
   }
   assert.doesNotMatch(html,/data-slot="(?:stove-water-tank|polok-backlight)"/);
 });
+test('S06b catalog buttons are registered as a collection and full startup remains reachable',()=>{
+  // A single querySelector result has no forEach; this silently broke all
+  // startup handlers including SUN/RAIN despite 77/77 passing previously.
+  assert.match(script,/\$\$\('\[data-catalog-select\]'\)\.forEach/);
+  assert.doesNotMatch(script,/(?<!\$)\$\('\[data-catalog-select\]'\)\.forEach/);
+  assert.match(script,/function boot\(\)\{renderCatalog\(\);renderBundle\(\);initWeather\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
+});
 test('S07 seven defined screens',()=>assert.match(script,/const stepNames=\[[^;]+\];/));
 test('S08 keyboard and motion accessibility',()=>{assert.match(css,/:focus-visible/);assert.match(css,/prefers-reduced-motion/);});
 test('S09 no pricing engine embedded directly in UI',()=>assert.match(script,/from '\.\/quote-engine\.js'/));
