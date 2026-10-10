@@ -128,6 +128,10 @@ with sync_playwright() as p:
         assert page.locator('html').get_attribute('data-theme')=='sun'
         assert page.locator('[data-weather="sun"]').get_attribute('aria-pressed')=='true'
         expect(page.locator('body')).to_have_css('background-color','rgb(248, 246, 241)')
+        # Full boot also needs working catalog selection; a static card alone is insufficient.
+        page.locator('[data-catalog-select="viking"]').click()
+        model_after_catalog=page.evaluate('window.__GARANT_DEMO__.getState()')
+        assert model_after_catalog['modelId']=='viking' and model_after_catalog['step']==1, model_after_catalog
         page.locator('[data-bundle="summary"]').click()
         state=page.evaluate('window.__GARANT_DEMO__.getState()')
         assert state['step']==6 and len(state['optionIds'])==5 and state['bundleId']=='family-comfort-demo',state
