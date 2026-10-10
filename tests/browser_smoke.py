@@ -99,7 +99,7 @@ with sync_playwright() as p:
         sun_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
-          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundImage,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         page.locator('[data-weather="rain"]').click()
@@ -117,7 +117,7 @@ with sync_playwright() as p:
         rain_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
-          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundImage,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         for section in ('page','catalog','builder','footer'):
