@@ -60,7 +60,7 @@ h1 em,h2 em,h3 em,.quiet-link,.text-link{color:var(--forest)}
 .hero-toolbar .hero-weather{margin:0}
 .hero-grid{grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr)}
 .hero-copy,.hero-art{min-width:0}
-/* The weather control is part of copy composition; never overlays the product. */
+/* The weather selector uses a compact segmented control, inside the independent hero toolbar. */
 .hero-weather{position:static;inset:auto;max-width:100%;width:max-content;display:flex;align-items:center;gap:17px;margin-top:29px;padding:10px 12px 10px 19px;border:1px solid var(--v5-border);border-radius:16px;background:var(--v5-surface);color:var(--v5-text);box-shadow:0 7px 32px rgba(16,29,20,.07)}
 .weather-caption{margin:0;max-width:135px;line-height:1.35;font-size:12px;letter-spacing:.01em;color:var(--v5-muted)}
 .weather-group{padding:3px;border-radius:11px;gap:3px;background:var(--v5-surface-alt)}
@@ -170,6 +170,8 @@ h1 em,h2 em,h3 em,.quiet-link,.text-link{color:var(--forest)}
   .mobile-cta{background:var(--v5-sticky)}
 }
 @media(max-width:550px){
+  /* Avoid aspect-ratio min-height forcing 320px media out of its grid track. */
+  .hero-image{min-height:0}
   .hero-toolbar .hero-weather{width:100%}
   .hero-weather{padding:9px;gap:9px;width:100%;border-radius:12px}
   .weather-caption{font-size:11px;max-width:95px;padding-left:4px}
