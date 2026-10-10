@@ -1,12 +1,12 @@
 /**
  * V5 preview photography. The assets are local to this static site, not CDN.
- * Only the hero has a curated SUN/RAIN pair (RAIN is a weather illustration).
+ * Only the hero has an owner-approved landscaping SUN/RAIN artistic pair; the real bathhouse is unchanged.
  * All other models deliberately use the SAME REAL image in both themes.
  * Non-image product configuration data is unaffected.
  */
 export const MEDIA_SLOTS=Object.freeze({
-  'hero-sun-desktop':{file:'hero-sun.webp',alt:'Квадро Хаус на дачном участке днём — реальное фото'},
-  'hero-rain-desktop':{file:'hero-rain.webp',alt:'Та же баня на даче в дождливый вечер — художественная обработка фото'},
+  'hero-sun-desktop':{file:'hero-sun.webp',alt:'Реальная баня Квадро Хаус днём. Газон и мостки художественно визуализированы'},
+  'hero-rain-desktop':{file:'hero-rain.webp',alt:'Та же реальная баня в дождь — художественная обработка фото и визуализация благоустройства участка'},
   'catalog-kvadro':{file:'catalog-kvadro.webp',alt:'Модель «Квадро» на участке, реальное фото'},
   'catalog-parus':{file:'catalog-parus.webp',alt:'Модель «Парус» на участке, реальное фото'},
   'catalog-viking':{file:'catalog-viking.webp',alt:'Модель «Викинг» на участке, реальное фото'},

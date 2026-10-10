@@ -96,6 +96,11 @@ with sync_playwright() as p:
         assert toolbar and toolbar['y']+toolbar['height']<=media['y']+1, (
             f'WEATHER_TOOLBAR_NOT_SEPARATE width={width} toolbar={toolbar} media={media}')
         assert page.locator('html').get_attribute('data-theme')=='sun'
+        assert page.locator('.weather-window').count()==2
+        assert page.locator('#heroMedia > .atmos-rain').count()==1
+        assert page.locator('.product-card .atmos-rain').count()==0
+        assert 'Солнце на участке' in page.locator('#skylineTitle').inner_text()
+        expect(page.locator('html')).to_have_attribute('data-motion','on')
         sun_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
@@ -106,6 +111,13 @@ with sync_playwright() as p:
         expect(page.locator('#heroTitle')).to_contain_text('За окном дождь')
         assert page.locator('html').get_attribute('data-theme')=='rain'
         assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
+        assert 'Дождь за окном' in page.locator('#skylineTitle').inner_text()
+        page.locator('#heroMedia').scroll_into_view_if_needed()
+        page.wait_for_function("""() => document.getElementById('heroMedia').classList.contains('is-scene-visible')""")
+        rain_motion=page.evaluate("""() => getComputedStyle(
+          document.querySelector('#heroMedia > .atmos-rain'),'::before'
+        ).animationName""")
+        assert 'v6-rain-fall' in rain_motion, f'RAIN_NOT_ANIMATING: {rain_motion}'
         page.wait_for_function("""() => {
           const img=document.querySelector('#heroMedia img[data-v5-photo]');
           return img && img.complete && img.naturalWidth>0;
@@ -113,7 +125,7 @@ with sync_playwright() as p:
         assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')!=sun_hero_src
         assert [c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]==catalog_src, 'CATALOG_IMAGE_CHANGED_WITH_WEATHER'
         # Wait for CSS transition completion before sampling computed colors.
-        expect(page.locator('body')).to_have_css('background-color','rgb(21, 31, 26)')
+        expect(page.locator('body')).to_have_css('background-color','rgb(12, 25, 42)')
         rain_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
@@ -123,11 +135,20 @@ with sync_playwright() as p:
         for section in ('page','catalog','builder','footer'):
             assert sun_colors[section]!=rain_colors[section], (section,sun_colors,rain_colors)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
+        if label=='mobile':
+            page.emulate_media(reduced_motion='reduce')
+            expect(page.locator('html')).to_have_attribute('data-motion','off')
+            reduced_rain=page.evaluate("""() => getComputedStyle(
+              document.querySelector('#heroMedia > .atmos-rain'),'::before'
+            ).animationName""")
+            assert reduced_rain=='none', f'REDUCED_MOTION_STILL_ANIMATING: {reduced_rain}'
+            page.emulate_media(reduced_motion='no-preference')
+            expect(page.locator('html')).to_have_attribute('data-motion','on')
         page.locator('[data-weather="sun"]').click()
         assert 'Растопили баню' in page.locator('#heroTitle').inner_text()
         assert page.locator('html').get_attribute('data-theme')=='sun'
         assert page.locator('[data-weather="sun"]').get_attribute('aria-pressed')=='true'
-        expect(page.locator('body')).to_have_css('background-color','rgb(248, 246, 241)')
+        expect(page.locator('body')).to_have_css('background-color','rgb(247, 250, 249)')
         # Full boot also needs working catalog selection; a static card alone is insufficient.
         page.locator('[data-catalog-select="viking"]').click()
         model_after_catalog=page.evaluate('window.__GARANT_DEMO__.getState()')

@@ -1,23 +1,23 @@
 {
-  "kind": "GARANT_BANI_V5_RELEASE_PHOTOS",
+  "kind": "GARANT_BANI_V6_APPROVED_HERO_LANDSCAPING_AND_V5_GALLERY",
   "status": "PREVIEW_ONLY_OWNER_REVIEW_PENDING",
   "photos": [
     {
       "file": "hero-sun.webp",
-      "source": "real Tilda photo / GBV5-85FFBEBE5",
-      "width": 1600,
-      "height": 1200,
-      "bytes": 457144,
-      "sha256": "3bebba7b912071505431f3d7019b7f7c2f73c08e4f584e430b4af44488087017",
+      "source": "Owner-approved AI landscaping edit (lawn, wood walkways) over real photo of bathhouse, SUN; garden features are a visualization, not installed facilities",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 439798,
+      "sha256": "948fe57468fac1994e86245eb91f002606f7d3b4d21b2d67a8367a91cf80f857",
       "rights": "PENDING_OWNER_CONFIRMATION"
     },
     {
       "file": "hero-rain.webp",
-      "source": "AI-edited rainy rendering derived from owner site photo, not unedited photography",
+      "source": "Owner-approved AI landscaping edit of RAIN weather visualization; wood walkways and lawn are concepts, not verified installed features",
       "width": 1448,
       "height": 1086,
-      "bytes": 289066,
-      "sha256": "9733393cc2820ad60b8d7781a1933485a714881d7215679335a6d37b555a34cd",
+      "bytes": 350516,
+      "sha256": "0c1cd6c1be653d68a6d9ed27043954fa1f8367fa215b6fca8b8448eebc0c1ae2",
       "rights": "PENDING_OWNER_CONFIRMATION"
     },
     {
@@ -111,5 +111,5 @@
       "rights": "PENDING_OWNER_CONFIRMATION"
     }
   ],
-  "rule": "Same unchanged catalog photo in SUN/RAIN if no verified pair. Hero rain is owner-requested edited weather visualization."
+  "rule": "SUN and RAIN hero are owner-approved artistic presentations of a real bathhouse with conceptual lawn/deck landscaping; never represent landscaping as installed fact. Catalog photos remain identical across both themes."
 }
