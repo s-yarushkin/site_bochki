@@ -1,6 +1,7 @@
 import {PRICEBOOK} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
+import {initAtmosphere,syncAtmosphereText} from './weather-v6.js';
 
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>[...scope.querySelectorAll(selector)];
@@ -106,7 +107,7 @@ function setWeather(weather){
   // Weather is presentation only; never mutate configuration, quote or form state.
   document.documentElement.dataset.theme=weather;
   const meta=$('meta[name="theme-color"]');
-  if(meta)meta.setAttribute('content',rain?'#151f1a':'#f8f6f1');
+  if(meta)meta.setAttribute('content',rain?'#0c192a':'#f7faf9');
   $$('[data-weather]').forEach(button=>{
     const active=button.dataset.weather===weather;
     button.classList.toggle('active',active);
@@ -127,6 +128,7 @@ function setWeather(weather){
     ?'Пусть за окном дождь. Своя баня, тёплый вечер и близкие рядом. Изготовим заранее и доставим готовым изделием — условия установки согласуем под ваш участок.'
     :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее и доставят готовым изделием — без затяжной стройки на участке.';
   syncMedia();
+  syncAtmosphereText(weather);
 }
 function initWeather(){
   $$('[data-weather]').forEach(button=>{
@@ -277,5 +279,5 @@ function initForms(){
     }
   });
 }
-function boot(){renderCatalog();renderBundle();initWeather();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
+function boot(){renderCatalog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
 boot();
