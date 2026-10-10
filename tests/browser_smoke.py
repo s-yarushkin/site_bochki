@@ -45,6 +45,30 @@ with sync_playwright() as p:
         page.route('**/api/lead',mock_lead)
         page.goto(base,wait_until='domcontentloaded')
         page.wait_for_selector('#catalogGrid .product-card')
+        # Catalog markup may render before boot crashes: verify all init steps ran.
+        page.wait_for_function(
+            "() => Boolean(window.__GARANT_DEMO__ && typeof window.__GARANT_DEMO__.quote === 'function')",
+            timeout=10000
+        )
+        assert errors==[], f'V5_BOOT_JAVASCRIPT_ERRORS: {errors}'
+        # V5: the actual local media pack must be present before deployment.
+        page.wait_for_function("""() => {
+          const hero=document.querySelector('#heroMedia img[data-v5-photo]');
+          return hero && hero.complete && hero.naturalWidth>0;
+        }""",timeout=10000)
+        sun_hero_src=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
+        catalog_src=[]
+        for card in page.locator('#catalogGrid .product-card').all():
+            card.scroll_into_view_if_needed()
+            image=card.locator('img[data-v5-photo]')
+            image.wait_for(state='visible')
+            assert image.evaluate('(img)=>img.decode().then(()=>img.naturalWidth>0).catch(()=>false)'), 'CATALOG_MEDIA_BROKEN'
+            catalog_src.append(image.get_attribute('src'))
+        assert len(catalog_src)==4 and len(set(catalog_src))==4, catalog_src
+        for image in page.locator('.media-frame img[data-v5-photo]').all():
+            image.scroll_into_view_if_needed()
+            assert image.evaluate('(img)=>img.decode().then(()=>img.naturalWidth>0).catch(()=>false)'), 'V5_PHOTO_FAILED_TO_LOAD'
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-sun.png')),full_page=True)
         assert page.locator('.footer-legal a').count()==2
         assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
         assert page.locator('.footer-legal a[href="consent.html"]').count()==1
@@ -75,28 +99,39 @@ with sync_playwright() as p:
         sun_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
-          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundImage,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         page.locator('[data-weather="rain"]').click()
-        assert 'За окном дождь' in page.locator('#heroTitle').inner_text()
+        expect(page.locator('#heroTitle')).to_contain_text('За окном дождь')
         assert page.locator('html').get_attribute('data-theme')=='rain'
         assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
+        page.wait_for_function("""() => {
+          const img=document.querySelector('#heroMedia img[data-v5-photo]');
+          return img && img.complete && img.naturalWidth>0;
+        }""",timeout=10000)
+        assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')!=sun_hero_src
+        assert [c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]==catalog_src, 'CATALOG_IMAGE_CHANGED_WITH_WEATHER'
         # Wait for CSS transition completion before sampling computed colors.
         expect(page.locator('body')).to_have_css('background-color','rgb(21, 31, 26)')
         rain_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
-          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundImage,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         for section in ('page','catalog','builder','footer'):
             assert sun_colors[section]!=rain_colors[section], (section,sun_colors,rain_colors)
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
         page.locator('[data-weather="sun"]').click()
         assert 'Растопили баню' in page.locator('#heroTitle').inner_text()
         assert page.locator('html').get_attribute('data-theme')=='sun'
         assert page.locator('[data-weather="sun"]').get_attribute('aria-pressed')=='true'
         expect(page.locator('body')).to_have_css('background-color','rgb(248, 246, 241)')
+        # Full boot also needs working catalog selection; a static card alone is insufficient.
+        page.locator('[data-catalog-select="viking"]').click()
+        model_after_catalog=page.evaluate('window.__GARANT_DEMO__.getState()')
+        assert model_after_catalog['modelId']=='viking' and model_after_catalog['step']==1, model_after_catalog
         page.locator('[data-bundle="summary"]').click()
         state=page.evaluate('window.__GARANT_DEMO__.getState()')
         assert state['step']==6 and len(state['optionIds'])==5 and state['bundleId']=='family-comfort-demo',state

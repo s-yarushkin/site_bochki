@@ -17,7 +17,30 @@ test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.m
 test('S03 only designated same-origin lead endpoint in forms',()=>{assert.match(script,/fetch\(new URL\('api\/lead',document\.baseURI\)/);assert.doesNotMatch(script,/XMLHttpRequest|sendBeacon|localStorage|sessionStorage/);});
 test('S04 demo prices explicit, MAX forms declared',()=>{assert.match(html,/Цены и скидки условные/);assert.match(html,/Заявки принимаются через MAX/);});
 test('S05 full and short callback flows',()=>{assert.match(html,/data-flow="quote"/);assert.match(html,/data-flow="callback"/);});
-test('S06 asset slots for catalog and story',()=>{for(const item of ['catalog-kvadro','catalog-parus','catalog-viking','catalog-kvadro-house','hero-sun-desktop','hero-rain-desktop','stove-water-tank','polok-backlight','bundle-comfort'])assert.ok(html.includes(item)||script.includes(item)||data.includes(item),item);});
+test('S06 real asset slots for catalog and story',()=>{
+  // The former unverified polok/stove image slots are replaced by documented
+  // real-object/interior photography. Do not reintroduce misleading placeholders.
+  const staticSlots=['hero-sun-desktop','bundle-comfort','cta-evening-cozy',
+    'product-steam','product-interior','site-example','side-kvadro-house'];
+  for(const slot of staticSlots)assert.ok(
+    html.includes('data-slot="'+slot+'"'), 'Missing real-page slot '+slot);
+  for(const slot of ['catalog-kvadro','catalog-parus','catalog-viking','catalog-kvadro-house']){
+    assert.ok(data.includes("slot:'"+slot+"'"),'Missing catalog model slot '+slot);
+  }
+  const media=readFileSync(new URL('../assets/js/media-v5.js',import.meta.url),'utf8');
+  for(const slot of [...staticSlots.filter(v=>v!=='hero-sun-desktop'),'hero-sun-desktop','hero-rain-desktop',
+      'catalog-kvadro','catalog-parus','catalog-viking','catalog-kvadro-house']){
+    assert.ok(media.includes("'"+slot+"'"),'Missing local media mapping '+slot);
+  }
+  assert.doesNotMatch(html,/data-slot="(?:stove-water-tank|polok-backlight)"/);
+});
+test('S06b catalog buttons are registered as a collection and full startup remains reachable',()=>{
+  // A single querySelector result has no forEach; this silently broke all
+  // startup handlers including SUN/RAIN despite 77/77 passing previously.
+  assert.match(script,/\$\$\('\[data-catalog-select\]'\)\.forEach/);
+  assert.doesNotMatch(script,/(?<!\$)\$\('\[data-catalog-select\]'\)\.forEach/);
+  assert.match(script,/function boot\(\)\{renderCatalog\(\);renderBundle\(\);initWeather\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
+});
 test('S07 seven defined screens',()=>assert.match(script,/const stepNames=\[[^;]+\];/));
 test('S08 keyboard and motion accessibility',()=>{assert.match(css,/:focus-visible/);assert.match(css,/prefers-reduced-motion/);});
 test('S09 no pricing engine embedded directly in UI',()=>assert.match(script,/from '\.\/quote-engine\.js'/));

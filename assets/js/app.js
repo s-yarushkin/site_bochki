@@ -1,5 +1,6 @@
 import {PRICEBOOK} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
+import {syncMedia} from './media-v5.js';
 
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>[...scope.querySelectorAll(selector)];
@@ -21,6 +22,7 @@ function renderCatalog(){
     const low=Math.min(...Object.values(model.sizes));
     return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>демо от</small>${money(low)}</div><div class="product-sizes">${Object.keys(model.sizes).map(x=>`${x[0]} м`).join(' / ')}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
   }).join('');
+  syncMedia();
   $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
     const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
@@ -56,8 +58,11 @@ function renderSummary(){
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
   const slot=state.view==='outside'?model.slot:state.view==='inside'?'product-interior':'product-front';
   $('#previewImage').dataset.slot=slot;
-  $('#previewImage').setAttribute('aria-label',`Изображение: ${model.name}, ${length} м. Фото пока не согласовано`);
-  $('#previewCaption').textContent=state.view==='outside'?`Фото модели «${model.name}» будет здесь`:state.view==='inside'?'Здесь появится интерьер выбранной модели':'Здесь появится схема с подтверждёнными размерами';
+  $('#previewImage').setAttribute('aria-label',state.view==='outside'
+    ?`Фотография семейства «${model.name}». Иллюстрация формы, размеры и отделка конкретного заказа могут отличаться.`
+    :state.view==='inside'?'Пример интерьера одной из бань. Не визуализация выбранной комплектации.':'Схема выбранной модели будет уточнена.');
+  $('#previewCaption').textContent=state.view==='outside'?`Фото модели «${model.name}»`:state.view==='inside'?'Пример интерьера, комплектация может отличаться':'Размерная схема уточняется для заказа';
+  syncMedia();
   $$('[data-view]').forEach(btn=>{const selected=btn.dataset.view===state.view;btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));});
 }
 function optionCard(o){const selected=state.optionIds.includes(o.id);return `<button type="button" class="option-row ${selected?'selected':''}" data-option="${o.id}" aria-pressed="${selected}"><span class="option-check" aria-hidden="true">${selected?'✓':''}</span><span class="option-main"><strong>${escaped(o.name)}</strong><small>${escaped(o.benefit)} · совместимость уточним</small></span><span class="option-cost">+${money(o.price)}</span></button>`;}
@@ -108,19 +113,20 @@ function setWeather(weather){
     button.setAttribute('aria-pressed',String(active));
   });
   $('#heroMedia').dataset.slot=rain?'hero-rain-desktop':'hero-sun-desktop';
-  $('#heroPhotoId').textContent=rain?'ФОТОСЛОТ / ДОЖДЬ':'ФОТОСЛОТ / СОЛНЦЕ';
+  $('#heroPhotoId').textContent=rain?'ВИЗУАЛИЗАЦИЯ · ДОЖДЬ':'РЕАЛЬНЫЙ ОБЪЕКТ';
   $('#heroPhotoCaption').textContent=rain
-    ?'Фото этой же бани в дождь добавим после согласования'
-    :'Фото готовой бани на даче добавим после согласования';
+    ?'Дождливая атмосфера · обработка исходной фотографии'
+    :'Готовая баня на настоящем участке';
   $('#heroMedia').setAttribute('aria-label',rain
-    ?'Место для подтверждённой фотографии бани в дождливый вечер'
-    :'Место для подтверждённой фотографии бани в солнечный день');
+    ?'Иллюстрация бани в дождливый вечер на основе реальной фотографии'
+    :'Квадро Хаус: реальная фотография установленной бани на участке');
   $('#heroTitle').innerHTML=rain
     ?'За окном дождь.<br>А у вас —<br><em>своя баня.</em>'
     :'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';
   $('#heroLead').textContent=rain
     ?'Пусть за окном дождь. Своя баня, тёплый вечер и близкие рядом. Изготовим заранее и доставим готовым изделием — условия установки согласуем под ваш участок.'
-    :'Пятничный вечер, близкие рядом, любимая дача. Вашу баню изготовят заранее и привезут готовым изделием — без затяжной стройки на участке.';
+    :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее и доставят готовым изделием — без затяжной стройки на участке.';
+  syncMedia();
 }
 function initWeather(){
   $$('[data-weather]').forEach(button=>{
@@ -271,5 +277,5 @@ function initForms(){
     }
   });
 }
-function boot(){renderCatalog();renderBundle();initWeather();initBuilder();initMobileMenu();initForms();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
+function boot(){renderCatalog();renderBundle();initWeather();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
 boot();
