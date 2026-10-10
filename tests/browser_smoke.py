@@ -59,14 +59,47 @@ with sync_playwright() as p:
             page.locator('.primary-nav a[href="#builder"]').click()
             assert page.locator('#menuToggle').get_attribute('aria-expanded')=='false'
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-main.png')),full_page=True)
+        # SUN/RAIN is a site-wide theme, not a hero-only picture/text swap.
+        toggle=page.locator('.hero-weather').bounding_box()
+        media=page.locator('#heroMedia').bounding_box()
+        assert toggle and media, 'WEATHER_LAYOUT_MISSING'
+        intersects=(toggle['x']<media['x']+media['width'] and
+                    toggle['x']+toggle['width']>media['x'] and
+                    toggle['y']<media['y']+media['height'] and
+                    toggle['y']+toggle['height']>media['y'])
+        assert not intersects, 'WEATHER_SWITCH_OVERLAPS_PRODUCT'
+        assert page.locator('html').get_attribute('data-theme')=='sun'
+        sun_colors=page.evaluate("""() => ({
+          page:getComputedStyle(document.body).backgroundColor,
+          catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
+          footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
+        })""")
         page.locator('[data-weather="rain"]').click()
         assert 'За окном дождь' in page.locator('#heroTitle').inner_text()
+        assert page.locator('html').get_attribute('data-theme')=='rain'
+        assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
+        rain_colors=page.evaluate("""() => ({
+          page:getComputedStyle(document.body).backgroundColor,
+          catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
+          footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
+        })""")
+        for section in ('page','catalog','builder','footer'):
+            assert sun_colors[section]!=rain_colors[section], (section,sun_colors,rain_colors)
         page.locator('[data-weather="sun"]').click()
         assert 'Растопили баню' in page.locator('#heroTitle').inner_text()
+        assert page.locator('html').get_attribute('data-theme')=='sun'
+        assert page.locator('[data-weather="sun"]').get_attribute('aria-pressed')=='true'
         page.locator('[data-bundle="summary"]').click()
         state=page.evaluate('window.__GARANT_DEMO__.getState()')
         assert state['step']==6 and len(state['optionIds'])==5 and state['bundleId']=='family-comfort-demo',state
         assert '857' in page.locator('#quoteTotal').inner_text()
+        total_before_theme_change=page.locator('#quoteTotal').inner_text()
+        page.locator('[data-weather="rain"]').click()
+        assert page.locator('#quoteTotal').inner_text()==total_before_theme_change, 'THEME_CHANGED_PRICE'
+        assert page.evaluate('window.__GARANT_DEMO__.getState()')['optionIds']==state['optionIds'], 'THEME_CHANGED_OPTIONS'
+        page.locator('[data-weather="sun"]').click()
         page.locator('#builderBack').click()  # go back from summary to delivery
         page.locator('#builderBack').click()  # comfort options
         page.locator('[data-option="window"]').click()
