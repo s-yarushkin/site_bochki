@@ -139,37 +139,10 @@ body{background:var(--v5-page);color:var(--v5-text)}
 :root[data-motion="on"][data-theme="sun"] .is-scene-visible>.weather-sky::after{animation:v6-cloud-drift 75s ease-in-out infinite alternate-reverse}
 :root[data-motion="on"][data-theme="rain"] .is-scene-visible>.weather-sky::before{animation:v6-cloud-drift 50s ease-in-out infinite alternate}
 @keyframes v6-cloud-drift{from{transform:translate3d(-1.5%,0,0)}to{transform:translate3d(4%,.8%,0)}}
-/* Real photographs are never touched or recolored. Animated overlays are separate DOM layers.
-   Only hero/bundle/outdoor mood images have rain; product catalog, interiors and builder remain clean. */
-.atmos-rain{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;border-radius:inherit;opacity:0;transition:opacity .45s ease}
-:root[data-theme="rain"] .atmos-rain{opacity:.72}
-.atmos-rain::before,.atmos-rain::after{
- content:"";position:absolute;inset:-80% -35%;
- pointer-events:none;will-change:auto;
-}
-.atmos-rain::before{
- background-image:repeating-linear-gradient(101deg,transparent 0px,transparent 19px,rgba(205,223,245,.26) 19.6px,transparent 20.6px,transparent 34px);
- background-size:170px 310px;opacity:.56;
- transform:translate3d(0,-12%,0);
-}
-.atmos-rain::after{
- background-image:repeating-linear-gradient(99deg,transparent 0px,transparent 54px,rgba(235,244,255,.25) 55px,transparent 56px,transparent 91px);
- background-size:350px 490px;opacity:.48;
- filter:blur(.55px);transform:translate3d(0,-15%,0);
-}
-:root[data-motion="on"][data-theme="rain"] .is-scene-visible>.atmos-rain::before{animation:v6-rain-fall 1.2s linear infinite;will-change:transform}
-:root[data-motion="on"][data-theme="rain"] .is-scene-visible>.atmos-rain::after{animation:v6-rain-fall 2.1s linear infinite reverse;will-change:transform}
-@keyframes v6-rain-fall{from{transform:translate3d(0,-13%,0)}to{transform:translate3d(-4%,18%,0)}}
-:root[data-theme="rain"] .hero-image::after{
- content:"";pointer-events:none;position:absolute;inset:0;z-index:1;
- background:linear-gradient(110deg,rgba(15,28,46,.09),transparent 56%,rgba(12,26,43,.16));
-}
-:root[data-theme="rain"] .hero-image{box-shadow:0 24px 85px rgba(2,9,22,.48)}
-:root[data-theme="sun"] .hero-image{box-shadow:0 22px 64px rgba(48,111,158,.18)}
 /* The atmospheric windows become the 'weather journey' while scrolling.
    Scenic textures are CSS-only sky/rain, never fake photos of actual bathhouses. */
 .weather-window{
- position:relative;isolation:isolate;min-height:245px;overflow:hidden;
+ position:relative;isolation:isolate;min-height:0;overflow:hidden;
  display:flex;align-items:center;
  border-top:1px solid rgba(255,255,255,.25);
  border-bottom:1px solid rgba(255,255,255,.25);
@@ -186,8 +159,6 @@ body{background:var(--v5-page);color:var(--v5-text)}
   linear-gradient(180deg,#172e49 0%,#10263e 69%,#0b1e33 100%);
 }
 .weather-window>.weather-sky{z-index:0;inset:-15% -12%}
-.weather-window>.atmos-rain{z-index:1;opacity:0}
-:root[data-theme="rain"] .weather-window>.atmos-rain{opacity:.74}
 .weather-window::before{
  content:"";position:absolute;bottom:-62px;left:-5%;right:-5%;height:145px;z-index:1;
  clip-path:polygon(0 75%,8% 56%,16% 64%,27% 38%,37% 61%,48% 49%,59% 74%,67% 46%,78% 56%,91% 23%,100% 56%,100% 100%,0 100%);
@@ -275,25 +246,117 @@ body{background:var(--v5-page);color:var(--v5-text)}
 :root[data-theme="rain"] .contact-dialog input::placeholder,
 :root[data-theme="rain"] .contact-dialog textarea::placeholder{color:#b7c8d9}
 @media(max-width:850px){
-  .weather-window{min-height:215px}
+  .weather-window{min-height:0}
   .weather-window-content{padding:34px 0 46px}
   .weather-window-content h2{font-size:clamp(28px,6vw,42px)}
 }
 @media(max-width:550px){
   .hero{padding-top:14px}
-  .weather-window{min-height:190px}
+  .weather-window{min-height:0}
   .weather-window-content{padding:27px 0 42px}
   .weather-window-content h2{font-size:clamp(26px,7.6vw,34px)}
   .weather-window-content p{font-size:14px}
-  .atmos-rain::before{opacity:.40}
-  .atmos-rain::after{opacity:.28}
+}
+
+/* === V6.1 art direction: a quiet overcast sky BEHIND every section ===
+   Rain streaks are removed entirely. The product, typography and buttons are not
+   affected by motion. Final CTA composition/background intentionally unchanged. */
+.site-clouds{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  opacity:0;visibility:hidden;
+  transform:translate3d(0,var(--v61-cloud-scroll,0px),0);
+  transition:opacity .6s ease,visibility .6s;
+}
+:root[data-theme="rain"] .site-clouds{opacity:1;visibility:visible}
+.cloud-bank{
+  position:absolute;left:-35%;width:170%;height:58%;pointer-events:none;
+  background-repeat:no-repeat;filter:blur(34px);will-change:auto;
+}
+.cloud-bank-near{
+  top:-16%;
+  background-image:
+    radial-gradient(ellipse 27% 29% at 19% 42%,rgba(92,116,148,.23),transparent 95%),
+    radial-gradient(ellipse 33% 32% at 58% 43%,rgba(111,132,162,.20),transparent 96%),
+    radial-gradient(ellipse 25% 31% at 85% 36%,rgba(79,104,139,.25),transparent 94%);
+}
+.cloud-bank-far{
+  top:39%;opacity:.75;
+  background-image:
+    radial-gradient(ellipse 34% 28% at 39% 41%,rgba(73,105,142,.18),transparent 94%),
+    radial-gradient(ellipse 30% 27% at 81% 28%,rgba(115,134,162,.16),transparent 96%);
+}
+@keyframes v61-cloud-drift-near{
+  from{transform:translate3d(-1.5%,0,0)}
+  to{transform:translate3d(4.5%,1%,0)}
+}
+@keyframes v61-cloud-drift-far{
+  from{transform:translate3d(3%,0,0)}
+  to{transform:translate3d(-4%,1.5%,0)}
+}
+:root[data-theme="rain"][data-motion="on"] .cloud-bank-near{animation:v61-cloud-drift-near 92s ease-in-out infinite alternate}
+:root[data-theme="rain"][data-motion="on"] .cloud-bank-far{animation:v61-cloud-drift-far 116s ease-in-out infinite alternate-reverse}
+main{position:relative;z-index:1}
+:root[data-theme="rain"] .hero,
+:root[data-theme="rain"] .weather-window{
+  background:linear-gradient(180deg,rgba(19,40,64,.84),rgba(10,26,45,.80));
+}
+:root[data-theme="rain"] .hero::before{opacity:.32}
+:root[data-theme="rain"] .weather-sky{opacity:0}
+:root[data-theme="rain"] .pain{background:rgba(16,38,61,.92)}
+:root[data-theme="rain"] .catalog{background:rgba(13,30,50,.93)}
+:root[data-theme="rain"] .bundle-section{background:rgba(20,42,65,.90)}
+:root[data-theme="rain"] .mood{background:rgba(14,34,56,.92)}
+:root[data-theme="rain"] .delivery{background:rgba(17,37,58,.92)}
+:root[data-theme="rain"] .builder-section{background:linear-gradient(145deg,rgba(24,50,75,.94),rgba(16,36,59,.92))}
+:root[data-theme="rain"] .details{background:rgba(13,29,48,.92)}
+:root[data-theme="rain"] .faq{background:rgba(18,40,63,.92)}
+:root[data-theme="rain"] .weather-window::before{opacity:.28}
+:root[data-theme="rain"] .hero-image::after{content:none}
+:root[data-theme="rain"] .media-frame .v5-photo{filter:none}
+:root[data-theme="rain"] .weather-window-content{ text-shadow:none }
+/* All viewports share the same content rail; no full-bleed text. */
+.container{width:min(1200px,calc(100% - 80px))}
+.section{padding-top:88px;padding-bottom:88px}
+.hero{padding-top:18px;padding-bottom:62px}
+.hero-proof{margin-top:30px}
+.hero-copy{padding-bottom:18px}
+.pain.section{padding-top:72px;padding-bottom:72px}
+.mood.section,.delivery.section,.faq.section{padding-top:80px;padding-bottom:80px}
+.weather-window-content{
+  padding:36px 0 42px; /* width is inherited solely from .container */
+}
+.weather-window-content h2{font-size:clamp(30px,3vw,45px);max-width:800px;margin-bottom:12px}
+.weather-window-content p{max-width:680px}
+.weather-window-content .v6-kicker{margin-bottom:14px}
+:root[data-theme="rain"] .weather-window{border-color:rgba(159,184,208,.11)}
+:root[data-theme="rain"] .weather-window .v6-kicker{background:rgba(13,32,54,.65)}
+/* A single visual treatment for the Kvadro House customer journey. */
+[data-slot="catalog-kvadro-house"] .v5-photo{object-position:52% 54%}
+[data-slot="bundle-comfort"] .v5-photo{object-position:55% 51%}
+[data-slot="side-kvadro-house"] .v5-photo{object-position:65% 55%}
+@media(max-width:850px){
+  .container{width:min(680px,calc(100% - 48px))}
+  .section{padding-top:70px;padding-bottom:70px}
+  .pain.section,.mood.section,.delivery.section,.faq.section{padding-top:64px;padding-bottom:64px}
+  .weather-window-content{padding:32px 0 38px}
+  .hero{padding-top:12px;padding-bottom:48px}
+  .hero-proof{margin-top:22px}
+}
+@media(max-width:550px){
+  .container{width:calc(100% - 32px)}
+  .section{padding-top:56px;padding-bottom:56px}
+  .pain.section,.mood.section,.delivery.section,.faq.section{padding-top:52px;padding-bottom:52px}
+  .weather-window-content{padding:28px 0 34px}
+  .weather-window-content h2{font-size:clamp(26px,7.1vw,34px);line-height:1.13}
+  .hero{padding-top:10px;padding-bottom:38px}
+  .hero-proof{margin-top:19px}
+  .cloud-bank{filter:blur(24px)}
 }
 @media(prefers-reduced-motion:reduce){
-  .atmos-rain,.atmos-rain::before,.atmos-rain::after,.weather-sky::before,.weather-sky::after{
+  .site-clouds,.cloud-bank,.weather-sky::before,.weather-sky::after{
     animation:none!important;transition:none!important;will-change:auto!important;
   }
 }
-:root[data-motion="off"] .atmos-rain::before,
-:root[data-motion="off"] .atmos-rain::after,
+:root[data-motion="off"] .cloud-bank,
 :root[data-motion="off"] .weather-sky::before,
 :root[data-motion="off"] .weather-sky::after{animation:none!important;will-change:auto}
