@@ -74,6 +74,15 @@ test('V6.1 scroll-bound clouds pause when hidden or reduced-motion',()=>{
   assert.doesNotMatch(motion,/fetch\(|WebSocket|XMLHttpRequest|localStorage|sessionStorage|setInterval|setTimeout/);
 });
 
+test('V6.1 SUN final CTA uses the approved Kvadro House image without changing composition',()=>{
+  const cta=css.match(/:root\[data-theme="sun"\] \.final-cta\{([\s\S]*?)\}/);
+  assert.ok(cta,'Missing SUN final CTA');
+  assert.match(cta[1],/url\('\.\.\/media-v5\/hero-sun\.webp'\)/);
+  assert.doesNotMatch(cta[1],/side-kvadro-house\.webp/);
+  assert.match(cta[1],/linear-gradient\(100deg,rgba\(24,54,56,\.86\),rgba\(22,66,65,\.48\) 80%\)/);
+  assert.match(cta[1],/center\/cover no-repeat/);
+});
+
 test('V6.1 preserves owner-approved final CTA',()=>{
   assert.match(html,/ВАША ДАЧА\. ВАШ ВЕЧЕР\./);
   assert.match(html,/Хорошие выходные<br><em>не нужно откладывать\.<\/em>/);
