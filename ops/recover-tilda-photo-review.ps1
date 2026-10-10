@@ -44,7 +44,8 @@ foreach ($item in @($Data.items)) {
       [string]$item.local -notmatch '^photos/GBV5-[A-F0-9]{9}\.(webp|png|jpe?g|avif|gif)$') {
     throw 'UNSAFE_MEDIA_SOURCE_OR_DESTINATION'
   }
-  $target = Join-Path $ReviewDir ([string]$item.local).Replace('/', [IO.Path]::DirectorySeparatorChar)
+  $relativePath = ([string]$item.local).Replace('/', [IO.Path]::DirectorySeparatorChar)
+  $target = Join-Path -Path $ReviewDir -ChildPath $relativePath
   if (([bool]$item.saved) -and (Test-ActualImage $target)) {
     $Saved++
     continue
@@ -59,7 +60,10 @@ foreach ($item in @($Data.items)) {
     $ok = Test-ActualImage $tmp
     if (!$ok) { $errorWindows = 'INVALID_IMAGE_AFTER_WINDOWS_DOWNLOAD' }
   }
-  catch { $errorWindows = $_.Exception.Message }
+  catch {
+    $errorWindows = $_.Exception.Message
+    if ($_.Exception.InnerException) { $errorWindows += ' (inner: ' + $_.Exception.InnerException.Message + ')' }
+  }
   if (!$ok -and (Get-Command curl.exe -ErrorAction SilentlyContinue)) {
     if (Test-Path -LiteralPath $tmp) { Remove-Item -LiteralPath $tmp -Force }
     try {
