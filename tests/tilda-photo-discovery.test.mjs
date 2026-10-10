@@ -43,3 +43,25 @@ test('auditor handles failed pages without fabricating photos or exposing them a
   assert.equal(out.records[0].candidates[0].publishable,false);
   assert.match(out.kind,/NOT_PUBLISH_APPROVAL/);
 });
+
+test('real-world Tilda resizeb/20x, 504px previews, and platform logo never count as originals',()=>{
+  const html=[
+    '<img src="https://thb.tildacdn.com/tildxyz/-/resizeb/20x/object.webp">',
+    '<img src="https://thb.tildacdn.com/tildxyz/-/resize/504x/object.webp">',
+    '<img src="https://static.tildacdn.com/img/tildacopy_black.png">',
+    '<img data-original="https://static.tildacdn.com/tildxyz/object.webp">'
+  ].join('');
+  const items=extractTildaPhotoCandidates(html,'kvadro');
+  assert.equal(items.length,1,items.map(v=>v.sourceUrl).join(';'));
+  assert.equal(items[0].sourceUrl,'https://static.tildacdn.com/tildxyz/object.webp');
+  assert.equal(items[0].publishable,false);
+});
+
+test('only exact original Tilda host is accepted, never lookalike domains',()=>{
+  const html='<img src="https://static.tildacdn.com.evil.test/photo.webp">'+
+             '<img src="https://example.net/x.webp">'+
+             '<img src="https://static.tildacdn.com/tildabcd/real.webp">';
+  const items=extractTildaPhotoCandidates(html,'home');
+  assert.equal(items.length,1);
+  assert.ok(items[0].sourceUrl.startsWith('https://static.tildacdn.com/'));
+});
