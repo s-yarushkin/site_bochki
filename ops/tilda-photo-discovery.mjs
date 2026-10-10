@@ -5,7 +5,9 @@
  */
 const SOURCE_HOST='static.tildacdn.com';
 const IMAGE_FILE=/\.(?:jpe?g|png|webp|avif|gif)(?:$|[?#])/i;
-// In this workflow we only inventory the source/original Tilda host.\n// Resized thb.tildacdn.com assets (including /-/resizeb/20x/)\n// are derivative previews, not additional product photographs.
+// In this workflow we only inventory the original static.tildacdn.com host.
+// Resized thb.tildacdn.com assets (including /-/resizeb/20x/)
+// are derivative previews, not additional product photographs.
 
 export const TILDA_PAGES=Object.freeze([
   {id:'home',url:'https://www.garant-bany.ru/'},
@@ -40,8 +42,7 @@ export function extractTildaPhotoCandidates(html,pageId='unknown'){
   for(const [raw] of normalized.matchAll(pattern)){
     const url=normalizeCandidate(raw);
     if(!url)continue;
-    // Tilda may serve the same photo using multiple resize/crop variants.
-    // Keep exact observed URL; dedup happens by exact address only.
+    // Deduplicate by exact URL of the original static.tildacdn.com asset.
     if(!unique.has(url))unique.set(url,{
       sourcePageId:pageId,sourceUrl:url,rights:'UNVERIFIED',
       model:'UNVERIFIED',status:'DISCOVERED',publishable:false
