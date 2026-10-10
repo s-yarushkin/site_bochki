@@ -8,7 +8,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 httpd = http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
 base='http://127.0.0.1:'+str(httpd.server_address[1])+'/'
-SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-mobile-qa'
+SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-v61-mobile-qa'
 SHOT_DIR.mkdir(parents=True,exist_ok=True)
 results=[]
 with sync_playwright() as p:
