@@ -25,8 +25,8 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'V61_MANAGER_QA_FAILED' }
   Write-Host 'V61_MANAGER_QA=PASS'
 
-  $SunRain=Join-Path $env:TEMP 'garant-bani-mobile-qa'
-  $Manager=Join-Path $env:TEMP 'garant-bani-manager-qa'
+  $SunRain=Join-Path $env:TEMP 'garant-bani-v61-mobile-qa'
+  $Manager=Join-Path $env:TEMP 'garant-bani-v61-manager-qa'
   if (!(Test-Path -LiteralPath $SunRain) -or !(Test-Path -LiteralPath $Manager)) { throw 'V61_SCREENSHOTS_NOT_FOUND' }
   $Screenshots=Join-Path $DestinationDirectory ("GB-V61-CLOUDS-QA-"+$Sha.Substring(0,12)+".zip")
   Compress-Archive -LiteralPath $SunRain,$Manager -DestinationPath $Screenshots -Force
