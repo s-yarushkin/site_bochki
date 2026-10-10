@@ -45,6 +45,12 @@ with sync_playwright() as p:
         page.route('**/api/lead',mock_lead)
         page.goto(base,wait_until='domcontentloaded')
         page.wait_for_selector('#catalogGrid .product-card')
+        # Catalog markup may render before boot crashes: verify all init steps ran.
+        page.wait_for_function(
+            "() => Boolean(window.__GARANT_DEMO__ && typeof window.__GARANT_DEMO__.quote === 'function')",
+            timeout=10000
+        )
+        assert errors==[], f'V5_BOOT_JAVASCRIPT_ERRORS: {errors}'
         # V5: the actual local media pack must be present before deployment.
         page.wait_for_function("""() => {
           const hero=document.querySelector('#heroMedia img[data-v5-photo]');
@@ -97,7 +103,7 @@ with sync_playwright() as p:
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         page.locator('[data-weather="rain"]').click()
-        assert 'За окном дождь' in page.locator('#heroTitle').inner_text()
+        expect(page.locator('#heroTitle')).to_contain_text('За окном дождь')
         assert page.locator('html').get_attribute('data-theme')=='rain'
         assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
         page.wait_for_function("""() => {
