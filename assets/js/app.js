@@ -95,7 +95,39 @@ function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
  $$('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{state.view=btn.dataset.view;renderSummary();}));}
-function initWeather(){$$('[data-weather]').forEach(btn=>btn.addEventListener('click',()=>{const rain=btn.dataset.weather==='rain';$$('[data-weather]').forEach(b=>{b.classList.toggle('active',b===btn);b.setAttribute('aria-pressed',String(b===btn));});$('#heroMedia').dataset.slot=rain?'hero-rain-desktop':'hero-sun-desktop';$('#heroPhotoId').textContent=rain?'ФОТОСЛОТ / ДОЖДЬ':'ФОТОСЛОТ / СОЛНЦЕ';$('#heroPhotoCaption').textContent=rain?'Здесь будет та же баня на том же участке во время дождя':'Здесь будет солнечная фотография той же модели';$('#heroMedia').setAttribute('aria-label',rain?'Место для снимка той же бани на даче в дождливый день':'Место для снимка бани на даче в солнечный день');$('#heroTitle').innerHTML=rain?'За окном дождь.<br>А у вас —<br><em>своя баня.</em>':'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';$('#heroLead').textContent=rain?'Пусть дождь идёт за окном. В своей бане тепло, рядом близкие, а рабочая неделя уже позади.':'Пятничный вечер, близкие рядом, любимая дача. Вашу баню изготовят заранее и привезут готовым изделием — без затяжной стройки на участке.';}));}
+function setWeather(weather){
+  if(weather!=='sun'&&weather!=='rain')return;
+  const rain=weather==='rain';
+  // Weather is presentation only; never mutate configuration, quote or form state.
+  document.documentElement.dataset.theme=weather;
+  const meta=$('meta[name="theme-color"]');
+  if(meta)meta.setAttribute('content',rain?'#151f1a':'#f8f6f1');
+  $$('[data-weather]').forEach(button=>{
+    const active=button.dataset.weather===weather;
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  $('#heroMedia').dataset.slot=rain?'hero-rain-desktop':'hero-sun-desktop';
+  $('#heroPhotoId').textContent=rain?'ФОТОСЛОТ / ДОЖДЬ':'ФОТОСЛОТ / СОЛНЦЕ';
+  $('#heroPhotoCaption').textContent=rain
+    ?'Фото этой же бани в дождь добавим после согласования'
+    :'Фото готовой бани на даче добавим после согласования';
+  $('#heroMedia').setAttribute('aria-label',rain
+    ?'Место для подтверждённой фотографии бани в дождливый вечер'
+    :'Место для подтверждённой фотографии бани в солнечный день');
+  $('#heroTitle').innerHTML=rain
+    ?'За окном дождь.<br>А у вас —<br><em>своя баня.</em>'
+    :'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';
+  $('#heroLead').textContent=rain
+    ?'Пусть за окном дождь. Своя баня, тёплый вечер и близкие рядом. Изготовим заранее и доставим готовым изделием — условия установки согласуем под ваш участок.'
+    :'Пятничный вечер, близкие рядом, любимая дача. Вашу баню изготовят заранее и привезут готовым изделием — без затяжной стройки на участке.';
+}
+function initWeather(){
+  $$('[data-weather]').forEach(button=>{
+    button.addEventListener('click',()=>setWeather(button.dataset.weather));
+  });
+  setWeather('sun');
+}
 function initMobileMenu(){const toggle=$('#menuToggle');toggle.addEventListener('click',()=>{const opened=$('#primaryNav').classList.toggle('open');toggle.setAttribute('aria-expanded',String(opened));toggle.setAttribute('aria-label',opened?'Закрыть меню':'Открыть меню');});$$('#primaryNav a').forEach(link=>link.addEventListener('click',()=>{$('#primaryNav').classList.remove('open');toggle.setAttribute('aria-expanded','false');}));}
 function normalizeRussianMobile(value){
   let digits=String(value).replace(/\D/g,'');

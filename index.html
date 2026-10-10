@@ -1,14 +1,15 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="sun">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#1c2521"><meta name="robots" content="noindex,nofollow">
 <meta name="description" content="Готовая баня для дачи без затяжной стройки на участке. Соберите свою баню, выберите комплектацию и увидьте демонстрационный расчёт.">
-<title>Гарант Бани — ваши выходные начинаются здесь · прототип</title>
+<title>Гарант Бани — готовые бани для дачи</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/images/placeholder.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/themes-v5.css">
 <script type="module" src="assets/js/app.js"></script>
 </head>
 <body>
@@ -21,6 +22,9 @@
 </div></header>
 <main>
 <section class="hero" aria-labelledby="heroTitle">
+  <div class="container hero-toolbar" aria-label="Настроение сайта">
+    <div class="hero-weather"><span class="weather-caption">Настроение вашей дачи</span><div class="weather-group" aria-label="Показать настроение сайта" role="group"><button type="button" class="weather-btn active" data-weather="sun" aria-pressed="true">☀ Солнце</button><button type="button" class="weather-btn" data-weather="rain" aria-pressed="false">☂ Дождь</button></div></div>
+  </div>
   <div class="container hero-grid">
     <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> СВОЯ БАНЯ · СВОИ ВЫХОДНЫЕ</span>
       <h1 id="heroTitle">Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em></h1>
@@ -30,7 +34,7 @@
     </div>
     <div class="hero-art">
       <div class="media-frame hero-image" id="heroMedia" data-slot="hero-sun-desktop" data-image-status="placeholder" role="img" aria-label="Здесь будет фотография готовой бани на дачном участке в солнечный день"><div class="media-watermark"><span class="media-camera" aria-hidden="true">▧</span><b>РЕАЛЬНАЯ БАНЯ.<br>РЕАЛЬНЫЙ УЧАСТОК.</b><span id="heroPhotoCaption">Здесь будет солнечная фотография модели</span></div><span class="media-id" id="heroPhotoId">ФОТОСЛОТ / СОЛНЦЕ</span></div>
-      <div class="hero-weather"><span class="weather-caption">Ваша баня — в любую погоду</span><div class="weather-group" aria-label="Выберите погоду" role="group"><button type="button" class="weather-btn active" data-weather="sun" aria-pressed="true">☀ Солнце</button><button type="button" class="weather-btn" data-weather="rain" aria-pressed="false">☂ Дождь</button></div></div>
+      
       <div class="hero-art-note">Один будущий объект. Два настроения. Фото добавим после согласования.</div>
     </div>
   </div>

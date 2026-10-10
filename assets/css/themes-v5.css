@@ -1,0 +1,189 @@
+/* Garant Bani V5 / Theme foundation.
+ * Separate from the legacy stylesheet to keep this release reversible.
+ * All existing quote, lead and manager APIs are intentionally unchanged.
+ */
+:root,
+:root[data-theme="sun"] {
+  color-scheme:light;
+  --pine:#243d2e; --forest:#2d5640; --forest2:#3c6049;
+  --accent:#e8b97d; --accentHover:#f4cca0;
+  --cream:#f2eee5; --paper:#f8f6f1; --fog:#e7e9df;
+  --line:#d6ddd1; --muted:#56675d; --ink:#24372b;
+  --shadow:0 22px 65px rgba(32,49,36,.11);
+  --v5-page:#f8f6f1; --v5-surface:#fffefa; --v5-surface-alt:#edece2;
+  --v5-surface-soft:#f2f2ea; --v5-text:#24372b; --v5-muted:#526459;
+  --v5-border:#d3dbce; --v5-feature:#e8eee4; --v5-input:#fffefa;
+  --v5-hero-text:#24372b; --v5-rule:#d0d8ce;
+  --v5-hero-photo:linear-gradient(135deg,#d5e1d1 0%,#f0ebe0 45%,#bdcbbb 100%);
+  --v5-media-bg:#e2e9df; --v5-media-text:#486650;
+  --v5-header:rgba(248,246,241,.96); --v5-sticky:rgba(248,246,241,.97);
+  --v5-success:#28643e; --v5-error:#a3342d;
+}
+:root[data-theme="rain"] {
+  color-scheme:dark;
+  --pine:#203b2b; --forest:#edc393; --forest2:#e6b578;
+  --accent:#e9b981; --accentHover:#f3cda1;
+  --cream:#1b2822; --paper:#151f1a; --fog:#2e4137;
+  --line:#415448; --muted:#c2cec2; --ink:#f6f1e7;
+  --shadow:0 22px 70px rgba(0,0,0,.27);
+  --v5-page:#151f1a; --v5-surface:#213027; --v5-surface-alt:#26382e;
+  --v5-surface-soft:#1d2b24; --v5-text:#f6f1e7; --v5-muted:#c2cec2;
+  --v5-border:#475b4c; --v5-feature:#263a2f; --v5-input:#2c3e32;
+  --v5-hero-text:#faf3e7; --v5-rule:#496052;
+  --v5-hero-photo:linear-gradient(145deg,#2e4035 0%,#25352f 48%,#12211c 100%);
+  --v5-media-bg:#304238; --v5-media-text:#d9cfb2;
+  --v5-header:rgba(21,31,26,.96); --v5-sticky:rgba(21,31,26,.97);
+  --v5-success:#a8e3b4; --v5-error:#ffb4a4;
+}
+body{background:var(--v5-page);color:var(--v5-text);transition:background-color .26s ease,color .26s ease}
+.header{background:var(--v5-header);border-color:var(--v5-border);color:var(--v5-text)}
+.brand-mark{background:var(--pine)}
+.brand small,.eyebrow,.muted,.section-description{color:var(--v5-muted)}
+.eyebrow{color:var(--forest)}
+h1 em,h2 em,h3 em,.quiet-link,.text-link{color:var(--forest)}
+.btn-dark{background:var(--pine);color:#fff}
+.btn-dark:hover{background:#365a43}
+.btn-accent{background:var(--accent);color:#192a20}
+.btn-line{color:var(--v5-text);border-color:var(--v5-border);background:transparent}
+.btn-line:hover{background:var(--v5-feature)}
+.menu-toggle{color:var(--v5-text);border-color:var(--v5-border)}
+.primary-nav a:hover{color:var(--forest)}
+.hero{background:radial-gradient(ellipse at 94% 8%,rgba(190,166,111,.10),transparent 46%),var(--cream)}
+.hero-copy h1 em{color:var(--forest)}
+.hero-lead,.pain-right>p,.mood-head p,.faq-layout>div>p{color:var(--v5-muted)}
+.hero-proof{color:var(--v5-muted);border-color:var(--v5-rule)}
+.hero-proof b{color:var(--forest)}
+/* The weather selector is in a dedicated normal-flow toolbar BEFORE the
+   two-column hero grid: it can never overlay the bathhouse photo, regardless
+   of content wrapping or mobile text expansion. */
+.hero-toolbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:22px;min-width:0}
+.hero-toolbar .hero-weather{margin:0}
+.hero-grid{grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr)}
+.hero-copy,.hero-art{min-width:0}
+/* The weather selector uses a compact segmented control, inside the independent hero toolbar. */
+.hero-weather{position:static;inset:auto;max-width:100%;width:max-content;display:flex;align-items:center;gap:17px;margin-top:29px;padding:10px 12px 10px 19px;border:1px solid var(--v5-border);border-radius:16px;background:var(--v5-surface);color:var(--v5-text);box-shadow:0 7px 32px rgba(16,29,20,.07)}
+.weather-caption{margin:0;max-width:135px;line-height:1.35;font-size:12px;letter-spacing:.01em;color:var(--v5-muted)}
+.weather-group{padding:3px;border-radius:11px;gap:3px;background:var(--v5-surface-alt)}
+.weather-btn{min-width:91px;min-height:44px;padding:10px 14px;background:transparent;color:var(--v5-text);border:1px solid transparent;border-radius:9px;transition:background .2s ease,color .2s ease,box-shadow .2s ease}
+.weather-btn.active{background:var(--accent);border-color:var(--accent);color:#1a2d20;box-shadow:0 3px 10px rgba(0,0,0,.09)}
+.weather-btn:not(.active):hover{background:var(--v5-feature)}
+.hero-image{background:var(--v5-hero-photo);border-color:var(--v5-border)}
+.hero-art-note{color:var(--v5-muted)}
+.media-frame{background:var(--v5-media-bg);color:var(--v5-media-text);border-color:var(--v5-border)}
+.media-frame:before{border-color:var(--v5-border)}
+.media-watermark b,.media-id,.slot-name,.photo-placeholder-symbol{color:var(--v5-media-text)}
+.hero-image{background:var(--v5-hero-photo)}
+.pain{background:var(--v5-surface)}
+.rule-line{color:var(--forest);border-color:var(--v5-border)}
+.catalog{background:var(--v5-page)}
+.filter{background:var(--v5-surface);color:var(--v5-text);border-color:var(--v5-border)}
+.filter.active{background:var(--pine);color:#fff;border-color:var(--pine)}
+.filter:not(.active):hover{background:var(--v5-feature)}
+.product-card{background:var(--v5-surface);border-color:var(--v5-border);color:var(--v5-text)}
+.product-card:hover{box-shadow:var(--shadow)}
+.product-media,.bundle-photo,.small-media,.detail-photo,.builder-preview-image{background:var(--v5-media-bg)}
+.product-body p,.product-sizes{color:var(--v5-muted)}
+.demo-badge,.builder-demo-pill{background:var(--v5-feature);border-color:var(--v5-border);color:var(--v5-text)}
+.bundle-section{background:var(--v5-feature)}
+.bundle-card{background:var(--v5-surface);color:var(--v5-text)}
+.bundle-photo strong,.bundle-photo small,.bundle-item,.bundle-prices s{color:var(--v5-text)}
+.bundle-item:before{color:var(--forest)}
+.bundle-prices{border-color:var(--v5-border)}
+.discount-pill{background:var(--v5-feature);color:var(--v5-text);border:1px solid var(--v5-border)}
+.mood{background:var(--cream)}
+.delivery{background:var(--v5-surface)}
+.step{border-color:var(--v5-border)}
+.step>span,.step-icon{color:var(--forest)}
+.step p,.delivery-note span{color:var(--v5-muted)}
+.delivery-note{background:var(--v5-feature);color:var(--v5-text)}
+/* The calculator belongs to the same theme rather than remaining permanently dark. */
+.builder-section{background:var(--v5-feature);color:var(--v5-text)}
+.builder-section h2 em{color:var(--forest)}
+.builder-section .light-copy{color:var(--v5-muted)}
+.builder-demo-pill{background:var(--v5-surface-alt);border-color:var(--v5-border);color:var(--v5-text)}
+.builder-main,.builder-preview,.quote-box{background:var(--v5-surface);color:var(--v5-text);border:1px solid var(--v5-border)}
+.builder-topline,.builder-help,.choice small,.option-main small,.preview-top,.preview-description,.quote-label,.quote-breakdown,.quote-disclaimer,.breakdown-line,.builder-main .muted{color:var(--v5-muted)}
+.progress-track{background:var(--v5-surface-alt)}
+.progress-fill{background:var(--accent)}
+.choice,.option-row,.color-choice{background:var(--v5-input);border-color:var(--v5-border);color:var(--v5-text)}
+.choice.selected,.option-row.selected,.color-choice.selected{border-color:var(--forest);background:var(--v5-feature)}
+.choice:hover,.option-row:hover,.color-choice:hover{background:var(--v5-feature)}
+.choice-icon,.color-hint{background:var(--v5-feature);color:var(--v5-muted)}
+.option-check{border-color:var(--v5-muted)}
+.option-row.selected .option-check{background:var(--pine);border-color:var(--pine);color:white}
+.builder-navigation,.quote-disclaimer,.summary-table{border-color:var(--v5-border)}
+.builder-navigation .btn-line-dark{color:var(--v5-text);background:transparent;border-color:var(--v5-border)}
+.builder-navigation .btn-line-dark:hover{background:var(--v5-feature)}
+.builder-preview-image{color:var(--v5-media-text)}
+.preview-tab{color:var(--v5-text);border-color:var(--v5-border)}
+.preview-tab.active{background:var(--pine);color:#fff}
+.quote-row.discount,.phone-hint[data-valid="true"]{color:var(--v5-success)}
+.quote-details-toggle{color:var(--forest)}
+.builder-insight{background:var(--v5-surface-alt);color:var(--v5-text);border-color:var(--accent)}
+.site-fields label,.contact-dialog label{color:var(--v5-text)}
+.site-fields input,.site-fields select,.contact-dialog input:not([type=checkbox]),.contact-dialog select,.contact-dialog textarea{background:var(--v5-input);color:var(--v5-text);border-color:var(--v5-border)}
+.summary-table{background:var(--v5-surface)}
+.summary-table .quote-row{border-color:var(--v5-border)}
+.details{background:var(--v5-page)}
+.detail-card p{color:var(--v5-muted)}
+.faq{background:var(--v5-surface)}
+.faq-items,.faq-items details{border-color:var(--v5-border)}
+.faq-items details p{color:var(--v5-muted)}
+.faq-items summary:after{color:var(--forest)}
+.final-cta{background:var(--v5-surface-alt);color:var(--v5-text)}
+.final-layout h2 em{color:var(--forest)}
+.final-layout p{color:var(--v5-muted)}
+.footer{background:var(--v5-surface-soft);color:var(--v5-text);border-top:1px solid var(--v5-border)}
+.footer .brand strong,.footer .brand small,.footer-main p,.footer-bottom,.footer-ask small{color:var(--v5-text)}
+.footer .brand-mark{background:var(--pine)}
+.footer-links a:hover{color:var(--forest)}
+.footer-ask .btn{color:var(--v5-text);border-color:var(--v5-border)}
+.footer-bottom{border-color:var(--v5-border)}
+.mobile-cta{background:var(--v5-sticky);border-color:var(--v5-border)}
+.contact-dialog{background:var(--v5-surface);color:var(--v5-text);border:1px solid var(--v5-border)}
+.contact-dialog::backdrop{background:rgba(7,16,12,.76)}
+.dialog-close{background:var(--v5-feature);color:var(--v5-text)}
+.contact-desc,.phone-hint,.form-footnote,.form-legal-notice{color:var(--v5-muted)!important}
+.form-quote,.form-result{background:var(--v5-feature);color:var(--v5-text);border:1px solid var(--v5-border)}
+.form-error,.phone-hint[data-valid="false"]{color:var(--v5-error)}
+.contact-dialog input[aria-invalid="true"]{border-color:var(--v5-error)}
+.contact-dialog .demo-consent input{accent-color:var(--forest)}
+.form-legal-notice a:hover,.footer-legal a:hover{color:var(--forest)}
+/* Dark-time atmosphere: quiet pools of warm glow, not fabricated photos. */
+:root[data-theme="rain"] .hero{background:radial-gradient(ellipse at 86% 35%,rgba(201,148,82,.13),transparent 48%),linear-gradient(145deg,#19271f,#141f19 78%)}
+:root[data-theme="rain"] .hero-image{box-shadow:0 32px 70px rgba(0,0,0,.36),0 0 65px rgba(224,172,105,.07)}
+:root[data-theme="rain"] .hero-weather{box-shadow:0 16px 45px rgba(0,0,0,.28)}
+:root[data-theme="rain"] .brand-mark,:root[data-theme="rain"] .btn-dark,:root[data-theme="rain"] .filter.active,:root[data-theme="rain"] .preview-tab.active{background:#3b654a}
+:root[data-theme="rain"] .btn-dark:hover{background:#4a7958}
+:root[data-theme="rain"] .builder-section{background:linear-gradient(160deg,#1c2c23,#24372c)}
+:root[data-theme="rain"] .final-cta{background:radial-gradient(ellipse at 90% 20%,rgba(215,161,93,.12),transparent 50%),#1a2921}
+:root[data-theme="rain"] .demo-rail{background:#9b713f;color:#fff8ef}
+:root[data-theme="sun"] .demo-rail{background:#ead2ae;color:#263b2d}
+/* Focus ring follows active theme and remains visible on all surfaces. */
+:root :where(button,a,input,textarea,select,summary):focus-visible{outline:3px solid var(--forest);outline-offset:3px}
+:root[data-theme="rain"] :where(button,a,input,textarea,select,summary):focus-visible{outline-color:#f1c893}
+@media(max-width:850px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-toolbar{justify-content:flex-start;margin-bottom:0}
+  .primary-nav{background:var(--v5-surface);box-shadow:var(--shadow)}
+  .hero-weather{position:static;max-width:100%;margin:24px 0 0}
+  .mobile-cta{background:var(--v5-sticky)}
+}
+@media(max-width:550px){
+  /* Avoid aspect-ratio min-height forcing 320px media out of its grid track. */
+  .hero-image{min-height:0}
+  .hero-toolbar .hero-weather{width:100%}
+  .hero-weather{padding:9px;gap:9px;width:100%;border-radius:12px}
+  .weather-caption{font-size:11px;max-width:95px;padding-left:4px}
+  .weather-group{margin-left:auto;flex-shrink:0}
+  .weather-btn{min-width:77px;padding:9px 10px;font-size:13px}
+}
+@media(max-width:360px){
+  .hero-weather{flex-wrap:wrap}
+  .weather-caption{max-width:none;padding:2px 7px}
+  .weather-group{width:100%}
+  .weather-btn{flex:1}
+}
+@media(prefers-reduced-motion:reduce){
+  body,.weather-btn{transition:none!important}
+}

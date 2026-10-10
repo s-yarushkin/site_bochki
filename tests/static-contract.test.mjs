@@ -2,6 +2,7 @@ import {test} from 'node:test';import assert from 'node:assert/strict';import {r
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const script=readFileSync(new URL('../assets/js/app.js',import.meta.url),'utf8');
 const css=readFileSync(new URL('../assets/css/site.css',import.meta.url),'utf8');
+const themeCss=readFileSync(new URL('../assets/css/themes-v5.css',import.meta.url),'utf8');
 const data=readFileSync(new URL('../data/pricebook.js',import.meta.url),'utf8');
 const privacy=readFileSync(new URL('../privacy.html',import.meta.url),'utf8');
 const consent=readFileSync(new URL('../consent.html',import.meta.url),'utf8');
@@ -89,4 +90,26 @@ test('S17 lead snapshots include finish and request id; service persists SQLite 
   assert.match(systemd,/LoadCredential=manager-accounts/);
   assert.match(systemd,/LoadCredential=manager-session-secret/);
   assert.match(systemd,/LEADS_DB_PATH=\/var\/lib\/garant-bani-relay\/leads\.sqlite/);
+});
+
+test('S18 full SUN/RAIN layer and off-photo switcher',()=>{
+  assert.match(html,/<html lang="ru" data-theme="sun">/);
+  assert.match(html,/href="assets\/css\/themes-v5\.css"/);
+  const hero=html.indexOf('<section class="hero"');
+  const toolbar=html.indexOf('class="container hero-toolbar"');
+  const toggle=html.indexOf('<div class="hero-weather">');
+  const copy=html.indexOf('<div class="hero-copy">');
+  const art=html.indexOf('<div class="hero-art">');
+  assert.ok(hero>=0&&toolbar>hero&&toggle>toolbar&&toggle<copy&&copy<art,
+    'weather switch must be in a standalone toolbar before hero product grid');
+  assert.match(themeCss,/\.hero-toolbar\{display:flex/);
+  assert.match(themeCss,/\.hero-grid\{grid-template-columns:minmax\(0,1\.03fr\)/);
+  assert.match(script,/document\.documentElement\.dataset\.theme=weather/);
+  assert.match(themeCss,/:root\[data-theme="sun"\]/);
+  assert.match(themeCss,/:root\[data-theme="rain"\]/);
+  assert.match(themeCss,/\.hero-weather\{position:static/);
+  for(const section of ['hero','catalog','builder-section','faq','final-cta','footer','contact-dialog']){
+    assert.ok(themeCss.includes('.'+section),section);
+  }
+  assert.doesNotMatch(script,/localStorage|sessionStorage/);
 });
