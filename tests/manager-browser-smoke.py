@@ -9,7 +9,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 server=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=server.serve_forever,daemon=True).start()
 base=f'http://127.0.0.1:{server.server_address[1]}/'
-screens=Path(tempfile.gettempdir())/'garant-bani-manager-qa'
+screens=Path(tempfile.gettempdir())/'garant-bani-v61-manager-qa'
 screens.mkdir(parents=True,exist_ok=True)
 lead={
 'id':'GB-20261009-AABBCCDD','createdAt':'2026-10-09T12:00:00Z','updatedAt':'2026-10-09T12:00:00Z',

@@ -34,15 +34,17 @@ test('V5 four models have the SAME photographic file in SUN and RAIN',()=>{
     assert.equal(Object.keys(MEDIA_SLOTS).filter(v=>v===key+'-rain').length,0);
     assert.equal(Object.keys(MEDIA_SLOTS).filter(v=>v===key+'-sun').length,0);
   }
-  assert.notEqual(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
-  assert.match(resolveMedia('hero-rain-desktop').alt,/обработка фото/);
+  assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
+  assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('catalog-kvadro-house').file);
+  assert.equal(resolveMedia('catalog-kvadro-house').file,resolveMedia('bundle-comfort').file);
+  assert.match(resolveMedia('hero-rain-desktop').alt,/визуализирован/);
 });
 
 test('V5 no invented plan photo or fabricated builder model interior',()=>{
   assert.equal(resolveMedia('product-front'),null);
   assert.match(js,/Пример интерьера одной из бань/);
   assert.match(html,/Фотография модели. Представленная комплектация демонстрационная/);
-  assert.match(html,/Дождливый вариант — художественная обработка фотографии/);
+  assert.match(html,/Газон и деревянные дорожки на изображении — визуализация благоустройства/);
 });
 
 test('V5 static assets are present, sized and match owner media manifest before release',()=>{

@@ -8,7 +8,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 httpd = http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
 base='http://127.0.0.1:'+str(httpd.server_address[1])+'/'
-SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-mobile-qa'
+SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-v61-mobile-qa'
 SHOT_DIR.mkdir(parents=True,exist_ok=True)
 results=[]
 with sync_playwright() as p:
@@ -26,7 +26,7 @@ with sync_playwright() as p:
     launch_args={'headless':True,'args':['--no-sandbox','--disable-dev-shm-usage']}
     if binary: launch_args['executable_path']=binary
     browser=p.chromium.launch(**launch_args)
-    for width,height,label in [(1440,900,'desktop'),(390,844,'mobile'),(320,720,'compact')]:
+    for width,height,label in [(1440,900,'desktop'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
         page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
         errors=[];posts=[];calls=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
@@ -76,7 +76,10 @@ with sync_playwright() as p:
         assert page.locator('.footer-legal a[href="manager.html"]').count()==0
         assert page.locator('input[name="leadConsent"]').count()==0
         assert page.locator('input[name="contactAccount"]').count()==0
-        if label!='desktop':
+        # The breakpoint is CSS max-width:850px, not the viewport label.
+        # A 1920px 'wide' viewport must retain desktop navigation.
+        assert page.locator('#menuToggle').is_visible()==(width<=850), ('MENU_BREAKPOINT',width)
+        if width<=850:
             assert page.locator('#menuToggle').is_visible()
             page.locator('#menuToggle').click()
             assert page.locator('#menuToggle').get_attribute('aria-expanded')=='true'
@@ -96,9 +99,25 @@ with sync_playwright() as p:
         assert toolbar and toolbar['y']+toolbar['height']<=media['y']+1, (
             f'WEATHER_TOOLBAR_NOT_SEPARATE width={width} toolbar={toolbar} media={media}')
         assert page.locator('html').get_attribute('data-theme')=='sun'
+        sun_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
+        assert 'hero-sun.webp' in sun_cta, ('SUN_CTA_WRONG_IMAGE',width,sun_cta)
+        assert 'side-kvadro-house.webp' not in sun_cta, ('SUN_CTA_OLD_IMAGE',width,sun_cta)
         assert page.locator('.weather-window').count()==2
-        assert page.locator('#heroMedia > .atmos-rain').count()==1
-        assert page.locator('.product-card .atmos-rain').count()==0
+        assert page.locator('.atmos-rain').count()==0
+        assert page.locator('.site-clouds .cloud-bank').count()==2
+        assert page.locator('.site-clouds').evaluate("(n)=>getComputedStyle(n).pointerEvents")=='none'
+        # Each weather window uses the exact common content rail, not viewport width.
+        rails=page.evaluate("""() => {
+          const reference=document.querySelector('.hero-grid').getBoundingClientRect();
+          return [...document.querySelectorAll('.weather-window-content')].map(n=>{
+            const r=n.getBoundingClientRect();
+            return {left:r.left,right:r.right,refLeft:reference.left,refRight:reference.right};
+          });
+        }""")
+        for rail in rails:
+            assert abs(rail['left']-rail['refLeft'])<=2, (width,rail)
+            assert abs(rail['right']-rail['refRight'])<=2, (width,rail)
+            assert rail['left']>=14,(width,rail)
         assert 'Солнце на участке' in page.locator('#skylineTitle').inner_text()
         expect(page.locator('html')).to_have_attribute('data-motion','on')
         sun_colors=page.evaluate("""() => ({
@@ -108,21 +127,29 @@ with sync_playwright() as p:
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         page.locator('[data-weather="rain"]').click()
-        expect(page.locator('#heroTitle')).to_contain_text('За окном дождь')
+        expect(page.locator('#heroTitle')).to_contain_text('Небо затянуло тучами')
         assert page.locator('html').get_attribute('data-theme')=='rain'
+        rain_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
+        assert 'mood-evening.webp' in rain_cta, ('RAIN_CTA_IMAGE_REGRESSED',width,rain_cta)
         assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
-        assert 'Дождь за окном' in page.locator('#skylineTitle').inner_text()
-        page.locator('#heroMedia').scroll_into_view_if_needed()
-        page.wait_for_function("""() => document.getElementById('heroMedia').classList.contains('is-scene-visible')""")
-        rain_motion=page.evaluate("""() => getComputedStyle(
-          document.querySelector('#heroMedia > .atmos-rain'),'::before'
+        assert 'Тучи над дачей' in page.locator('#skylineTitle').inner_text()
+        cloud_motion=page.evaluate("""() => getComputedStyle(
+          document.querySelector('.cloud-bank-near')
         ).animationName""")
-        assert 'v6-rain-fall' in rain_motion, f'RAIN_NOT_ANIMATING: {rain_motion}'
+        assert 'v61-cloud-drift-near' in cloud_motion, f'CLOUDS_NOT_ANIMATING: {cloud_motion}'
+        page.locator('#bundle').scroll_into_view_if_needed()
+        page.wait_for_function("""() => parseFloat(
+          document.documentElement.style.getPropertyValue('--v61-cloud-scroll')
+        )>0""",timeout=10000)
+        # Cloud motion is background-only, never injected on bathhouse photography.
+        assert page.locator('.media-frame .cloud-bank').count()==0
         page.wait_for_function("""() => {
           const img=document.querySelector('#heroMedia img[data-v5-photo]');
           return img && img.complete && img.naturalWidth>0;
         }""",timeout=10000)
-        assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')!=sun_hero_src
+        assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')==sun_hero_src, 'WEATHER_CHANGED_BATHHOUSE_PHOTO'
+        assert page.locator('[data-slot="bundle-comfort"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
+        assert page.locator('#catalogGrid [data-slot="catalog-kvadro-house"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
         assert [c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]==catalog_src, 'CATALOG_IMAGE_CHANGED_WITH_WEATHER'
         # Wait for CSS transition completion before sampling computed colors.
         expect(page.locator('body')).to_have_css('background-color','rgb(12, 25, 42)')
@@ -138,10 +165,12 @@ with sync_playwright() as p:
         if label=='mobile':
             page.emulate_media(reduced_motion='reduce')
             expect(page.locator('html')).to_have_attribute('data-motion','off')
-            reduced_rain=page.evaluate("""() => getComputedStyle(
-              document.querySelector('#heroMedia > .atmos-rain'),'::before'
-            ).animationName""")
-            assert reduced_rain=='none', f'REDUCED_MOTION_STILL_ANIMATING: {reduced_rain}'
+            reduced_cloud=page.evaluate("""() => ({
+              animation:getComputedStyle(document.querySelector('.cloud-bank-near')).animationName,
+              shift:getComputedStyle(document.documentElement).getPropertyValue('--v61-cloud-scroll')
+            })""")
+            assert reduced_cloud['animation']=='none', f'REDUCED_MOTION_STILL_ANIMATING: {reduced_cloud}'
+            assert float(reduced_cloud['shift'].strip().replace('px','') or '0')==0, reduced_cloud
             page.emulate_media(reduced_motion='no-preference')
             expect(page.locator('html')).to_have_attribute('data-motion','on')
         page.locator('[data-weather="sun"]').click()
@@ -180,7 +209,7 @@ with sync_playwright() as p:
         assert page.locator('#contactChannelField').is_hidden()
         assert page.locator('#contactForm a[href="privacy.html"]').count()==1
         assert page.locator('#contactForm a[href="consent.html"]').count()==1
-        if label!='desktop':
+        if width<=850:
             box=page.locator('#contactDialog').bounding_box()
             assert box and box['x']>=-1 and box['x']+box['width']<=width+1,box
             assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
@@ -212,7 +241,7 @@ with sync_playwright() as p:
         chosen=page.evaluate('window.__GARANT_DEMO__.quote().options.map(x=>x.name)')
         summary=page.locator('#formQuote').inner_text()
         assert chosen and all(x in summary for x in chosen),(chosen,summary)
-        if label!='desktop':
+        if width<=850:
             assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
             page.locator('#contactDialog').evaluate('(el)=>{el.scrollTop=0}')
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-quote.png')),full_page=False)
