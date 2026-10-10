@@ -67,7 +67,10 @@ with sync_playwright() as p:
                     toggle['x']+toggle['width']>media['x'] and
                     toggle['y']<media['y']+media['height'] and
                     toggle['y']+toggle['height']>media['y'])
-        assert not intersects, 'WEATHER_SWITCH_OVERLAPS_PRODUCT'
+        assert not intersects, f'WEATHER_SWITCH_OVERLAPS_PRODUCT width={width} switch={toggle} media={media}'
+        toolbar=page.locator('.hero-toolbar').bounding_box()
+        assert toolbar and toolbar['y']+toolbar['height']<=media['y']+1, (
+            f'WEATHER_TOOLBAR_NOT_SEPARATE width={width} toolbar={toolbar} media={media}')
         assert page.locator('html').get_attribute('data-theme')=='sun'
         sun_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
