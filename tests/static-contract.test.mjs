@@ -39,7 +39,7 @@ test('S06b catalog buttons are registered as a collection and full startup remai
   // startup handlers including SUN/RAIN despite 77/77 passing previously.
   assert.match(script,/\$\$\('\[data-catalog-select\]'\)\.forEach/);
   assert.doesNotMatch(script,/(?<!\$)\$\('\[data-catalog-select\]'\)\.forEach/);
-  assert.match(script,/function boot\(\)\{renderCatalog\(\);renderBundle\(\);initWeather\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
+  assert.match(script,/function boot\(\)\{renderCatalog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
 });
 test('S07 seven defined screens',()=>assert.match(script,/const stepNames=\[[^;]+\];/));
 test('S08 keyboard and motion accessibility',()=>{assert.match(css,/:focus-visible/);assert.match(css,/prefers-reduced-motion/);});
