@@ -1,7 +1,7 @@
 """Local browser smoke; intercepts personal-data POSTs with a test receipt."""
 import contextlib, functools, http.server, threading, json, os, sys, shutil, tempfile
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 ROOT = Path(__file__).resolve().parents[1]
 class QuietHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args): pass
@@ -72,17 +72,19 @@ with sync_playwright() as p:
         sun_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
-          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundImage,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         page.locator('[data-weather="rain"]').click()
         assert 'За окном дождь' in page.locator('#heroTitle').inner_text()
         assert page.locator('html').get_attribute('data-theme')=='rain'
         assert page.locator('[data-weather="rain"]').get_attribute('aria-pressed')=='true'
+        # Wait for CSS transition completion before sampling computed colors.
+        expect(page.locator('body')).to_have_css('background-color','rgb(21, 31, 26)')
         rain_colors=page.evaluate("""() => ({
           page:getComputedStyle(document.body).backgroundColor,
           catalog:getComputedStyle(document.querySelector('.catalog')).backgroundColor,
-          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
+          builder:getComputedStyle(document.querySelector('.builder-section')).backgroundImage,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
         for section in ('page','catalog','builder','footer'):
@@ -91,6 +93,7 @@ with sync_playwright() as p:
         assert 'Растопили баню' in page.locator('#heroTitle').inner_text()
         assert page.locator('html').get_attribute('data-theme')=='sun'
         assert page.locator('[data-weather="sun"]').get_attribute('aria-pressed')=='true'
+        expect(page.locator('body')).to_have_css('background-color','rgb(248, 246, 241)')
         page.locator('[data-bundle="summary"]').click()
         state=page.evaluate('window.__GARANT_DEMO__.getState()')
         assert state['step']==6 and len(state['optionIds'])==5 and state['bundleId']=='family-comfort-demo',state
