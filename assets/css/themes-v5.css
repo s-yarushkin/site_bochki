@@ -53,6 +53,13 @@ h1 em,h2 em,h3 em,.quiet-link,.text-link{color:var(--forest)}
 .hero-lead,.pain-right>p,.mood-head p,.faq-layout>div>p{color:var(--v5-muted)}
 .hero-proof{color:var(--v5-muted);border-color:var(--v5-rule)}
 .hero-proof b{color:var(--forest)}
+/* The weather selector is in a dedicated normal-flow toolbar BEFORE the
+   two-column hero grid: it can never overlay the bathhouse photo, regardless
+   of content wrapping or mobile text expansion. */
+.hero-toolbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:22px;min-width:0}
+.hero-toolbar .hero-weather{margin:0}
+.hero-grid{grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr)}
+.hero-copy,.hero-art{min-width:0}
 /* The weather control is part of copy composition; never overlays the product. */
 .hero-weather{position:static;inset:auto;max-width:100%;width:max-content;display:flex;align-items:center;gap:17px;margin-top:29px;padding:10px 12px 10px 19px;border:1px solid var(--v5-border);border-radius:16px;background:var(--v5-surface);color:var(--v5-text);box-shadow:0 7px 32px rgba(16,29,20,.07)}
 .weather-caption{margin:0;max-width:135px;line-height:1.35;font-size:12px;letter-spacing:.01em;color:var(--v5-muted)}
@@ -156,11 +163,14 @@ h1 em,h2 em,h3 em,.quiet-link,.text-link{color:var(--forest)}
 :root :where(button,a,input,textarea,select,summary):focus-visible{outline:3px solid var(--forest);outline-offset:3px}
 :root[data-theme="rain"] :where(button,a,input,textarea,select,summary):focus-visible{outline-color:#f1c893}
 @media(max-width:850px){
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .hero-toolbar{justify-content:flex-start;margin-bottom:0}
   .primary-nav{background:var(--v5-surface);box-shadow:var(--shadow)}
   .hero-weather{position:static;max-width:100%;margin:24px 0 0}
   .mobile-cta{background:var(--v5-sticky)}
 }
 @media(max-width:550px){
+  .hero-toolbar .hero-weather{width:100%}
   .hero-weather{padding:9px;gap:9px;width:100%;border-radius:12px}
   .weather-caption{font-size:11px;max-width:95px;padding-left:4px}
   .weather-group{margin-left:auto;flex-shrink:0}
