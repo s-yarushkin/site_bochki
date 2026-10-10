@@ -3,9 +3,9 @@
  * publicly accessible Tilda pages. A candidate is NOT a licensed/verified
  * model photo; publish only after rights + identity + owner approval.
  */
-const CDN_HOSTS=new Set(['static.tildacdn.com','thb.tildacdn.com','thumb.tildacdn.com']);
+const SOURCE_HOST='static.tildacdn.com';
 const IMAGE_FILE=/\.(?:jpe?g|png|webp|avif|gif)(?:$|[?#])/i;
-const PIXEL_THUMB=/\/resize\/(?:[12]?\d|30|40|50)x(?:\/|$)/i;
+// In this workflow we only inventory the source/original Tilda host.\n// Resized thb.tildacdn.com assets (including /-/resizeb/20x/)\n// are derivative previews, not additional product photographs.
 
 export const TILDA_PAGES=Object.freeze([
   {id:'home',url:'https://www.garant-bany.ru/'},
@@ -22,8 +22,8 @@ function normalizeCandidate(raw){
     .replace(/[),;]+$/,'');
   try{
     const url=new URL(cleaned);
-    if(url.protocol!=='https:'||!CDN_HOSTS.has(url.hostname.toLowerCase()))return null;
-    if(!IMAGE_FILE.test(url.pathname)||PIXEL_THUMB.test(url.pathname))return null;
+    if(url.protocol!=='https:'||url.hostname.toLowerCase()!==SOURCE_HOST)return null;
+    if(!IMAGE_FILE.test(url.pathname))return null;
     url.hash='';
     // Retain query parameters as part of the factual observed source.
     return url.toString();
