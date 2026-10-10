@@ -38,6 +38,13 @@ try {
     py -3 tests/manager-browser-smoke.py
     if ($LASTEXITCODE -ne 0) { throw 'V5_MANAGER_BROWSER_QA_FAILED' }
     Write-Host 'V5_MANAGER_BROWSER=PASS'
+    $CustomerShots=Join-Path $env:TEMP 'garant-bani-mobile-qa'
+    $ManagerShots=Join-Path $env:TEMP 'garant-bani-manager-qa'
+    $QAZip=Join-Path $env:USERPROFILE 'Downloads\GB-V5-SUN-RAIN-QA-screenshots.zip'
+    if (!(Test-Path -LiteralPath $CustomerShots) -or !(Test-Path -LiteralPath $ManagerShots)) { throw 'QA_SCREENSHOTS_MISSING' }
+    Compress-Archive -LiteralPath $CustomerShots,$ManagerShots -DestinationPath $QAZip -Force
+    if (!(Test-Path -LiteralPath $QAZip)) { throw 'QA_ZIP_NOT_CREATED' }
+    Write-Host ('V5_QA_SCREENSHOTS='+$QAZip)
   }finally{ Pop-Location }
   git -C $Root add -- assets/media-v5
   if ($LASTEXITCODE -ne 0) { throw 'GIT_ADD_FAILED' }
