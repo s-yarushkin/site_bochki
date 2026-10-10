@@ -141,7 +141,7 @@ with sync_playwright() as p:
         }""",timeout=10000)
         assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')==sun_hero_src, 'WEATHER_CHANGED_BATHHOUSE_PHOTO'
         assert page.locator('[data-slot="bundle-comfort"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
-        assert page.locator('[data-slot="catalog-kvadro-house"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
+        assert page.locator('#catalogGrid [data-slot="catalog-kvadro-house"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
         assert [c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]==catalog_src, 'CATALOG_IMAGE_CHANGED_WITH_WEATHER'
         # Wait for CSS transition completion before sampling computed colors.
         expect(page.locator('body')).to_have_css('background-color','rgb(12, 25, 42)')
