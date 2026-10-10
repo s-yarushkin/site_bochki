@@ -9,7 +9,7 @@ if ($LASTEXITCODE -ne 0 -or $Sha -notmatch '^[0-9a-f]{40}$') { throw 'INVALID_SO
 if (@(git -C $Repo status --porcelain).Count -gt 0) { throw 'SOURCE_WORKTREE_NOT_CLEAN' }
 $Id=$Sha.Substring(0,12)
 $Out=Join-Path $DestinationDirectory ("GB-V61-static-preview-"+$Id+".zip")
-$ManifestOutput=Join-Path $DestinationDirectory ("GB-V6-static-preview-"+$Id+".sha256.txt")
+$ManifestOutput=Join-Path $DestinationDirectory ("GB-V61-static-preview-"+$Id+".sha256.txt")
 $Temp=Join-Path $env:TEMP ('gb-v5-release-'+[guid]::NewGuid().ToString('N').Substring(0,8))
 $Static=@(
   'index.html','manager.html','privacy.html','consent.html',
