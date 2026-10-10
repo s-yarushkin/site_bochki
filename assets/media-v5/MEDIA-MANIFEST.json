@@ -1,0 +1,115 @@
+{
+  "kind": "GARANT_BANI_V5_RELEASE_PHOTOS",
+  "status": "PREVIEW_ONLY_OWNER_REVIEW_PENDING",
+  "photos": [
+    {
+      "file": "hero-sun.webp",
+      "source": "real Tilda photo / GBV5-85FFBEBE5",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 457144,
+      "sha256": "3bebba7b912071505431f3d7019b7f7c2f73c08e4f584e430b4af44488087017",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "hero-rain.webp",
+      "source": "AI-edited rainy rendering derived from owner site photo, not unedited photography",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 289066,
+      "sha256": "9733393cc2820ad60b8d7781a1933485a714881d7215679335a6d37b555a34cd",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "catalog-kvadro.webp",
+      "source": "real Tilda photo GBV5-1D330FF8F",
+      "width": 750,
+      "height": 1000,
+      "bytes": 131104,
+      "sha256": "1a5a0463f72ba14b6672edb5b97147435954e99e5cdb71b1f2660c23cb69b6d2",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "catalog-parus.webp",
+      "source": "real Tilda photo GBV5-BE301CEF9 (642x648 original)",
+      "width": 642,
+      "height": 648,
+      "bytes": 102902,
+      "sha256": "3cc7b2574e772fff97302f25edbf457a8b22d4209300c529496109ed18dc6a46",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "catalog-viking.webp",
+      "source": "real Tilda photo GBV5-CE3C0C48E",
+      "width": 1100,
+      "height": 825,
+      "bytes": 187372,
+      "sha256": "6e9e8b41bb5687658bc95d625678edd120b364fee962718890fb75dd8bd719c0",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "catalog-kvadro-house.webp",
+      "source": "real Tilda photo GBV5-85FFBEBE5",
+      "width": 1100,
+      "height": 825,
+      "bytes": 203740,
+      "sha256": "314f15271a3df5132ca61bed1c1194b365389efd159718252e6de52a31f81a6a",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "mood-evening.webp",
+      "source": "real Tilda evening image GBV5-9E1A415DB",
+      "width": 750,
+      "height": 1000,
+      "bytes": 179460,
+      "sha256": "1c297ab4baf475e31a3b09d18e43cb3f19e18b01b3c6a3c5d25ee0eb9b5071e7",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "interior.webp",
+      "source": "real Tilda interior image GBV5-F0E98EF3B",
+      "width": 720,
+      "height": 960,
+      "bytes": 45826,
+      "sha256": "77c080cad17b9a42a0095bdf4219660b9d91038011d6ae6a3fb660a4c9a7d361",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "site-example.webp",
+      "source": "real Tilda site image GBV5-03BD8AB77",
+      "width": 1200,
+      "height": 852,
+      "bytes": 156588,
+      "sha256": "834ba3074d0bc330542fc55b58cadf2e3551982fdeae6ea762227f51a3d20a12",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "side-kvadro-house.webp",
+      "source": "real Tilda side image GBV5-6D91BD380",
+      "width": 1200,
+      "height": 900,
+      "bytes": 262780,
+      "sha256": "c323907797d107a2501a7a1b10adbcbf72a1e5bf428829a93b34e8830b81e181",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "catalog-parus-alt.webp",
+      "source": "real Tilda gallery image GBV5-227ED0F73",
+      "width": 1100,
+      "height": 825,
+      "bytes": 51914,
+      "sha256": "fd2f2c1741df46f3e5c9da8c1199a2824ef47bcb3089204c4f04d372b6dc2f5e",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    },
+    {
+      "file": "catalog-viking-alt.webp",
+      "source": "real Tilda gallery image GBV5-4C030776A",
+      "width": 712,
+      "height": 950,
+      "bytes": 54296,
+      "sha256": "b27f078d186dcdef422525b78ddd4f75940bdeb13780228983e3faef690da17c",
+      "rights": "PENDING_OWNER_CONFIRMATION"
+    }
+  ],
+  "rule": "Same unchanged catalog photo in SUN/RAIN if no verified pair. Hero rain is owner-requested edited weather visualization."
+}
