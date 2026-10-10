@@ -54,7 +54,7 @@ test('S11 success only after MAX receipt; independent privacy and consent docume
   assert.match(privacy,/Политика в отношении обработки персональных данных/);
   assert.match(consent,/Согласие на обработку персональных данных/);
 });
-test('S12 no unconditional price valid statement',()=>assert.match(html,/не оферта/));
+test('S12 indicative price is explicitly not an offer',()=>assert.match(html,/Расчёт ориентировочный, не является офертой/));
 
 test('S13 protected preview noindex and honeypot',()=>{assert.match(html,/name="robots" content="noindex,nofollow"/);assert.match(html,/name="website" tabindex="-1"/);assert.match(css,/\.honeypot/);});
 
