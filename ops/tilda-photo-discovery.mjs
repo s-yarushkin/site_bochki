@@ -26,6 +26,7 @@ function normalizeCandidate(raw){
     const url=new URL(cleaned);
     if(url.protocol!=='https:'||url.hostname.toLowerCase()!==SOURCE_HOST)return null;
     if(!IMAGE_FILE.test(url.pathname))return null;
+    if(url.pathname.toLowerCase()==='/img/tildacopy_black.png')return null; // Tilda branding
     url.hash='';
     // Retain query parameters as part of the factual observed source.
     return url.toString();
