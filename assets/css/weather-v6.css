@@ -170,8 +170,8 @@ body{background:var(--v5-page);color:var(--v5-text)}
 }
 .weather-window-content{
  position:relative;z-index:3;
- padding:42px 0 56px;
- width:100%;
+ padding:34px 0 42px;
+ /* Width is inherited from the shared .container rail. */
  text-shadow:0 2px 20px rgba(0,0,0,.05);
 }
 .weather-window-content .v6-kicker{
