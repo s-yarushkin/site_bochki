@@ -35,6 +35,9 @@ try {
     py -3 tests/browser_smoke.py
     if ($LASTEXITCODE -ne 0) { throw 'V5_BROWSER_QA_FAILED' }
     Write-Host 'V5_BROWSER_TESTS=PASS'
+    py -3 tests/manager-browser-smoke.py
+    if ($LASTEXITCODE -ne 0) { throw 'V5_MANAGER_BROWSER_QA_FAILED' }
+    Write-Host 'V5_MANAGER_BROWSER=PASS'
   }finally{ Pop-Location }
   git -C $Root add -- assets/media-v5
   if ($LASTEXITCODE -ne 0) { throw 'GIT_ADD_FAILED' }
