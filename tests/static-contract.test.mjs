@@ -15,7 +15,7 @@ const systemd=readFileSync(new URL('../ops/systemd/garant-bani-relay.service',im
 test('S01 main publicly visible phone or tel link absent',()=>{assert.doesNotMatch(html,/\+7\s?9\d{2}\s?\d{3}/);assert.doesNotMatch(html,/href\s*=\s*["']tel:/i);});
 test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.me\/|max\.ru\/|vk\.ru\/)/));
 test('S03 only designated same-origin lead endpoint in forms',()=>{assert.match(script,/fetch\(new URL\('api\/lead',document\.baseURI\)/);assert.doesNotMatch(script,/XMLHttpRequest|sendBeacon|localStorage|sessionStorage/);});
-test('S04 demo prices explicit, MAX forms declared',()=>{assert.match(html,/Цены и скидки условные/);assert.match(html,/Заявки принимаются через MAX/);});
+test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/Указаны ориентировочные цены/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
 test('S05 full and short callback flows',()=>{assert.match(html,/data-flow="quote"/);assert.match(html,/data-flow="callback"/);});
 test('S06 real asset slots for catalog and story',()=>{
   // The former unverified polok/stove image slots are replaced by documented
@@ -103,7 +103,7 @@ test('S16 protected manager interface has separate login, full quote and status 
   assert.match(managerJs,/\.textContent/);
   assert.doesNotMatch(managerJs,/innerHTML|localStorage|sessionStorage/);
   assert.match(managerCss,/@media\(max-width:690px\)/);
-  assert.match(html,/href="manager\.html"/);
+  assert.doesNotMatch(html,/href="manager\.html"/);
 });
 test('S17 lead snapshots include finish and request id; service persists SQLite separately from public files',()=>{
   assert.match(script,/requestId:formRequestId/);
