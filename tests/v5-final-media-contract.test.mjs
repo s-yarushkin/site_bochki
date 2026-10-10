@@ -47,7 +47,7 @@ test('V6.1.1 photo policy: three untouched models; Kvadro House has one approved
 test('V5 no invented plan photo or fabricated builder model interior',()=>{
   assert.equal(resolveMedia('product-front'),null);
   assert.match(js,/Пример интерьера одной из бань/);
-  assert.match(html,/Фотография модели. Представленная комплектация демонстрационная/);
+  assert.match(html,/На фото показана модель. Комплектация подбирается отдельно/);
   assert.match(html,/Газон и деревянные дорожки на изображении — визуализация благоустройства/);
 });
 
@@ -77,7 +77,8 @@ test('V5 lead, privacy, manager and demo pricing contracts remain intact',()=>{
   assert.match(js,/receipt\?\.delivered!==true/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/ДЕМО-КАТАЛОГ/);
+  assert.match(html,/Указаны ориентировочные цены/);
+  assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Демонстрационный прототип/);
   assert.match(html,/name="robots" content="noindex,nofollow"/);
   assert.doesNotMatch(js,/localStorage|sessionStorage/);
 });
