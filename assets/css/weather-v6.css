@@ -103,7 +103,7 @@ body{background:var(--v5-page);color:var(--v5-text)}
 .weather-sky::before,.weather-sky::after{
  content:"";position:absolute;inset:0;
  background-repeat:no-repeat;
- will-change:transform;
+ will-change:auto;
 }
 :root[data-theme="sun"] .weather-sky::before{
  background-image:
@@ -139,7 +139,7 @@ body{background:var(--v5-page);color:var(--v5-text)}
 :root[data-theme="rain"] .atmos-rain{opacity:.72}
 .atmos-rain::before,.atmos-rain::after{
  content:"";position:absolute;inset:-80% -35%;
- pointer-events:none;will-change:transform;
+ pointer-events:none;will-change:auto;
 }
 .atmos-rain::before{
  background-image:repeating-linear-gradient(101deg,transparent 0px,transparent 19px,rgba(205,223,245,.26) 19.6px,transparent 20.6px,transparent 34px);
@@ -151,8 +151,8 @@ body{background:var(--v5-page);color:var(--v5-text)}
  background-size:350px 490px;opacity:.48;
  filter:blur(.55px);transform:translate3d(0,-15%,0);
 }
-:root[data-motion="on"][data-theme="rain"] .is-scene-visible>.atmos-rain::before{animation:v6-rain-fall 1.2s linear infinite}
-:root[data-motion="on"][data-theme="rain"] .is-scene-visible>.atmos-rain::after{animation:v6-rain-fall 2.1s linear infinite reverse}
+:root[data-motion="on"][data-theme="rain"] .is-scene-visible>.atmos-rain::before{animation:v6-rain-fall 1.2s linear infinite;will-change:transform}
+:root[data-motion="on"][data-theme="rain"] .is-scene-visible>.atmos-rain::after{animation:v6-rain-fall 2.1s linear infinite reverse;will-change:transform}
 @keyframes v6-rain-fall{from{transform:translate3d(0,-13%,0)}to{transform:translate3d(-4%,18%,0)}}
 :root[data-theme="rain"] .hero-image::after{
  content:"";pointer-events:none;position:absolute;inset:0;z-index:1;
@@ -211,6 +211,8 @@ body{background:var(--v5-page);color:var(--v5-text)}
 :root[data-theme="rain"] .weather-window-content h2{color:#fff4e9}
 :root[data-theme="rain"] .weather-window-content p{color:#d1e1f2}
 :root[data-theme="rain"] .weather-window-content .v6-kicker{background:rgba(17,36,58,.66);border-color:#66809b;color:#ffd69c}
+.media-frame.media-ready.bundle-photo>strong,
+.media-frame.media-ready.small-media .slot-name{z-index:3}
 /* Harmonize surrounding sections: blue slate rain, airy sun. */
 :root[data-theme="sun"] .pain,
 :root[data-theme="sun"] .mood{background:#eaf5f9}
