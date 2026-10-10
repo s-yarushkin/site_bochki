@@ -76,7 +76,10 @@ with sync_playwright() as p:
         assert page.locator('.footer-legal a[href="manager.html"]').count()==0
         assert page.locator('input[name="leadConsent"]').count()==0
         assert page.locator('input[name="contactAccount"]').count()==0
-        if label!='desktop':
+        # The breakpoint is CSS max-width:850px, not the viewport label.
+        # A 1920px 'wide' viewport must retain desktop navigation.
+        assert page.locator('#menuToggle').is_visible()==(width<=850), ('MENU_BREAKPOINT',width)
+        if width<=850:
             assert page.locator('#menuToggle').is_visible()
             page.locator('#menuToggle').click()
             assert page.locator('#menuToggle').get_attribute('aria-expanded')=='true'
@@ -201,7 +204,7 @@ with sync_playwright() as p:
         assert page.locator('#contactChannelField').is_hidden()
         assert page.locator('#contactForm a[href="privacy.html"]').count()==1
         assert page.locator('#contactForm a[href="consent.html"]').count()==1
-        if label!='desktop':
+        if width<=850:
             box=page.locator('#contactDialog').bounding_box()
             assert box and box['x']>=-1 and box['x']+box['width']<=width+1,box
             assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
@@ -233,7 +236,7 @@ with sync_playwright() as p:
         chosen=page.evaluate('window.__GARANT_DEMO__.quote().options.map(x=>x.name)')
         summary=page.locator('#formQuote').inner_text()
         assert chosen and all(x in summary for x in chosen),(chosen,summary)
-        if label!='desktop':
+        if width<=850:
             assert page.locator('#contactDialog').evaluate('(el)=>el.scrollWidth<=el.clientWidth+2')
             page.locator('#contactDialog').evaluate('(el)=>{el.scrollTop=0}')
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-quote.png')),full_page=False)
