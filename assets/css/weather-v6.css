@@ -26,6 +26,8 @@
   --v5-hero-text:#f9f6f2;--v5-rule:#405570;
   --v5-header:rgba(10,25,43,.91);--v5-sticky:rgba(10,25,43,.95);
   --v5-ambient-bg:#10273e;--v5-soft-accent:#172e47;
+  --v5-media-bg:#19324c;--v5-media-text:#d9e4f0;
+  --v5-hero-photo:linear-gradient(145deg,#213d5d,#0e2039);
   --v6-sky-top:#142b45;--v6-sky-middle:#203b58;--v6-horizon:#385270;
   --v5-gold:#f0bd7a;--v5-gold-hover:#ffd297;
 }
@@ -33,6 +35,10 @@ body{background:var(--v5-page);color:var(--v5-text)}
 .header{background:var(--v5-header);border-color:var(--v5-border)}
 .header .brand small,.header .primary-nav a{color:var(--v5-text)}
 :root[data-theme="rain"] .header .brand-mark{background:#344d68}
+:root[data-theme="rain"] .demo-rail{background:#203854;color:#f1e4d3}
+:root[data-theme="rain"] .btn-dark{background:#294563;color:#f5f8fc}
+:root[data-theme="rain"] .btn-dark:hover{background:#365977;color:#fff}
+:root[data-theme="rain"] .preview-tab.active{background:#e7b778;color:#13263a}
 :root[data-theme="rain"] .header-callback,
 :root[data-theme="rain"] .catalog .btn-dark,
 :root[data-theme="rain"] .mood .btn-dark,
