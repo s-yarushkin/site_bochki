@@ -1,23 +1,26 @@
 /**
  * V5 preview photography. The assets are local to this static site, not CDN.
- * V6.1: weather affects only page atmosphere; bathhouse photography never changes with weather.
- * All presentations of Kvadro House share one approved visual with clearly disclosed conceptual landscaping.
- * The previously used raw photos remain in the manifest/archive for provenance but are not mixed on the sales page.
+ * V6.1.1: overcast uses a distinct approved dusk photograph with warm interior light
+ * for Kvadro House; no CSS precipitation is drawn on top of photography.
+ * SUN and RAIN each use one consistent image of Kvadro House, with disclosed conceptual landscaping.
  * Non-image product configuration data is unaffected.
  */
 export const MEDIA_SLOTS=Object.freeze({
   'hero-sun-desktop':{file:'hero-sun.webp',alt:'Реальная баня Квадро Хаус днём. Газон и мостки художественно визуализированы'},
-  'hero-rain-desktop':{file:'hero-sun.webp',alt:'Та же реальная баня; художественно визуализирован газон и дорожки участка'},
+  'hero-rain-desktop':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете с тёплой подсветкой. Благоустройство участка визуализировано'},
   'catalog-kvadro':{file:'catalog-kvadro.webp',alt:'Модель «Квадро» на участке, реальное фото'},
   'catalog-parus':{file:'catalog-parus.webp',alt:'Модель «Парус» на участке, реальное фото'},
   'catalog-viking':{file:'catalog-viking.webp',alt:'Модель «Викинг» на участке, реальное фото'},
-  'catalog-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус»; благоустройство участка визуализировано'},
-  'bundle-comfort':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» в визуализированном благоустройстве, пример объекта, не фото конкретной комплектации'},
+  'catalog-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём; благоустройство участка визуализировано'},
+  'catalog-kvadro-house-rain':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете с подсветкой; благоустройство участка визуализировано'},
+  'bundle-comfort':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» днём, пример модели; не фото конкретной комплектации'},
+  'bundle-comfort-rain':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете; пример модели, не фото конкретной комплектации'},
   'cta-evening-cozy':{file:'mood-evening.webp',alt:'Готовая баня с подсветкой во дворе зимним вечером'},
   'product-steam':{file:'interior.webp',alt:'Пример отделки внутри готовой бани'},
   'product-interior':{file:'interior.webp',alt:'Пример интерьера бани семейства «Викинг»'},
   'site-example':{file:'site-example.webp',alt:'Готовая баня на загородном участке'},
-  'side-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус», благоустройство участка на изображении визуализировано'},
+  'side-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём, благоустройство участка на изображении визуализировано'},
+  'side-kvadro-house-rain':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете; благоустройство участка визуализировано'},
   'polok-backlight':{file:'interior.webp',alt:'Пример отделки и печи внутри готовой бани'},
   'stove-water-tank':{file:'site-example.webp',alt:'Установленная баня на участке'},
   'product-front':null

@@ -54,12 +54,17 @@ test('V6.1 inherits common container width without full bleed window copy',()=>{
   assert.match(css,/@media\(max-width:550px\)/);
 });
 
-test('V6.1 has one consistent Kvadro House photo in hero, catalog, bundle and details',()=>{
-  for(const slot of ['hero-sun-desktop','hero-rain-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
-    const escaped=slot.replace(/[.*+?^$\{\}()|[\]\\]/g,'\\$&');
-    assert.match(media,new RegExp("'"+escaped+"':\\{file:'hero-sun\\.webp'"));
+test('V6.1.1 Kvadro House uses approved day versus illuminated overcast photo across all placements',()=>{
+  for(const slot of ['hero-sun-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
+    assert.ok(media.includes("'"+slot+"':{file:'hero-sun.webp'"),slot);
   }
-  assert.match(app,/\$\('#heroMedia'\)\.dataset\.slot='hero-sun-desktop'/);
+  for(const slot of ['hero-rain-desktop','catalog-kvadro-house-rain','bundle-comfort-rain','side-kvadro-house-rain']){
+    assert.ok(media.includes("'"+slot+"':{file:'hero-rain.webp'"),slot);
+  }
+  assert.match(app,/weather==='rain'\?'hero-rain-desktop':'hero-sun-desktop'/);
+  assert.match(app,/function syncWeatherPhotoFrames\(weather\)/);
+  assert.match(app,/weatherPhotoSlot\(slot\)/);
+  assert.match(app,/\$\('#previewImage'\)\.dataset\.slot=weatherPhotoSlot\(activeSlot,weather\)/);
   assert.match(html,/благоустройство территории визуализировано/);
 });
 

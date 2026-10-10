@@ -147,10 +147,20 @@ with sync_playwright() as p:
           const img=document.querySelector('#heroMedia img[data-v5-photo]');
           return img && img.complete && img.naturalWidth>0;
         }""",timeout=10000)
-        assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')==sun_hero_src, 'WEATHER_CHANGED_BATHHOUSE_PHOTO'
-        assert page.locator('[data-slot="bundle-comfort"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
-        assert page.locator('#catalogGrid [data-slot="catalog-kvadro-house"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
-        assert [c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]==catalog_src, 'CATALOG_IMAGE_CHANGED_WITH_WEATHER'
+        rain_hero_src=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
+        assert rain_hero_src!=sun_hero_src and rain_hero_src.endswith('/hero-rain.webp'), (
+            'RAIN_HERO_NOT_DUSK',width,rain_hero_src)
+        for target in [
+            '[data-slot="bundle-comfort-rain"] img[data-v5-photo]',
+            '#catalogGrid [data-slot="catalog-kvadro-house-rain"] img[data-v5-photo]',
+            '.detail-photo[data-slot="side-kvadro-house-rain"] img[data-v5-photo]',
+            '#previewImage[data-slot="catalog-kvadro-house-rain"] img[data-v5-photo]'
+        ]:
+            assert page.locator(target).count()==1,('RAIN_SLOT_MISSING',width,target)
+            assert page.locator(target).get_attribute('src')==rain_hero_src,('RAIN_IMAGE_MISMATCH',width,target)
+        rainy_catalog=[c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]
+        assert rainy_catalog[:3]==catalog_src[:3], ('OTHER_MODELS_WEATHER_CHANGED',width,rainy_catalog)
+        assert rainy_catalog[3]==rain_hero_src, ('KVADRO_HOUSE_STILL_SUN',width,rainy_catalog)
         # Wait for CSS transition completion before sampling computed colors.
         expect(page.locator('body')).to_have_css('background-color','rgb(12, 25, 42)')
         rain_colors=page.evaluate("""() => ({
@@ -177,6 +187,10 @@ with sync_playwright() as p:
         assert 'Растопили баню' in page.locator('#heroTitle').inner_text()
         assert page.locator('html').get_attribute('data-theme')=='sun'
         assert page.locator('[data-weather="sun"]').get_attribute('aria-pressed')=='true'
+        assert page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')==sun_hero_src
+        assert page.locator('#previewImage').get_attribute('data-slot')=='catalog-kvadro-house'
+        assert page.locator('[data-slot="bundle-comfort"] img[data-v5-photo]').get_attribute('src')==sun_hero_src
+        assert page.locator('.detail-photo[data-slot="side-kvadro-house"]').count()==1
         expect(page.locator('body')).to_have_css('background-color','rgb(247, 250, 249)')
         # Full boot also needs working catalog selection; a static card alone is insufficient.
         page.locator('[data-catalog-select="viking"]').click()
@@ -190,6 +204,8 @@ with sync_playwright() as p:
         page.locator('[data-weather="rain"]').click()
         assert page.locator('#quoteTotal').inner_text()==total_before_theme_change, 'THEME_CHANGED_PRICE'
         assert page.evaluate('window.__GARANT_DEMO__.getState()')['optionIds']==state['optionIds'], 'THEME_CHANGED_OPTIONS'
+        assert page.evaluate('window.__GARANT_DEMO__.getState()')['modelId']==state['modelId'], 'THEME_CHANGED_MODEL'
+        assert page.locator('#previewImage').get_attribute('data-slot')=='catalog-kvadro-house-rain'
         page.locator('[data-weather="sun"]').click()
         page.locator('#builderBack').click()  # go back from summary to delivery
         page.locator('#builderBack').click()  # comfort options
