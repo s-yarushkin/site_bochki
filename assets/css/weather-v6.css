@@ -235,7 +235,7 @@ body{background:var(--v5-page);color:var(--v5-text)}
 :root[data-theme="sun"] .final-cta{
  background:
   linear-gradient(100deg,rgba(24,54,56,.86),rgba(22,66,65,.48) 80%),
-  url('../media-v5/side-kvadro-house.webp') center/cover no-repeat,#215463;
+  url('../media-v5/hero-sun.webp') center/cover no-repeat,#215463;
 }
 :root[data-theme="sun"] .media-frame:has(>.v5-photo){background:#e9f3f7}
 :root[data-theme="rain"] .media-frame:has(>.v5-photo){background:#182c44}
