@@ -1,7 +1,7 @@
 /**
- * Garant Bani V6 atmosphere (presentation only).
- * Uses native CSS animations with IntersectionObserver/visibility pause.
- * No canvas, video, remote imagery, timers, storage, network, or quote changes.
+ * V6.1 atmospheric clouds: background-only, no precipitation overlays.
+ * Single passive scroll listener + rAF updates a CSS offset for the clouds
+ * behind the entire site. No network, storage, backend or pricing mutations.
  */
 const root=document.documentElement;
 const motionQuery=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -14,13 +14,28 @@ export function syncAtmosphereText(weather){
 }
 
 export function initAtmosphere(){
-  const scenes=[
-    ...document.querySelectorAll('.hero,.weather-window,#heroMedia,.bundle-photo,.mood-images .small-media:first-child')
-  ];
+  const scenes=[...document.querySelectorAll('.hero,.weather-window')];
+  let queued=false;
+  const updateCloudScroll=()=>{
+    queued=false;
+    if(root.dataset.motion!=='on'){
+      root.style.setProperty('--v61-cloud-scroll','0px');
+      return;
+    }
+    const offset=Math.max(0,Math.min(180,(window.scrollY||0)*.038));
+    root.style.setProperty('--v61-cloud-scroll',offset.toFixed(2)+'px');
+  };
+  const onScroll=()=>{
+    if(queued||root.dataset.motion!=='on')return;
+    queued=true;
+    window.requestAnimationFrame(updateCloudScroll);
+  };
   const setMotion=()=>{
     root.dataset.motion=!motionQuery.matches&&document.visibilityState==='visible'?'on':'off';
+    updateCloudScroll();
   };
   setMotion();
+  window.addEventListener('scroll',onScroll,{passive:true});
   document.addEventListener('visibilitychange',setMotion,{passive:true});
   if(typeof motionQuery.addEventListener==='function'){
     motionQuery.addEventListener('change',setMotion);
