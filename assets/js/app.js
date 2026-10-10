@@ -58,7 +58,7 @@ function renderSummary(){
   $('#quoteBreakdown').innerHTML=priceLine('Готовая баня',money(q.basePrice))+priceLine(`Дополнения (${q.options.length})`,money(q.optionsSubtotal))+(q.discount?priceLine(q.bundleApplied?'Выгода комплекта':'Скидка на допы',`−${money(q.discount)}`,'discount'):'');
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
   const slot=state.view==='outside'?model.slot:state.view==='inside'?'product-interior':'product-front';
-  $('#previewImage').dataset.slot=slot;
+  $('#previewImage').dataset.slot=weatherPhotoSlot(slot);
   $('#previewImage').setAttribute('aria-label',state.view==='outside'
     ?`Фотография семейства «${model.name}». Иллюстрация формы, размеры и отделка конкретного заказа могут отличаться.`
     :state.view==='inside'?'Пример интерьера одной из бань. Не визуализация выбранной комплектации.':'Схема выбранной модели будет уточнена.');
@@ -96,6 +96,27 @@ function renderBuilder(){if(!Object.hasOwn(getModel(state.modelId).sizes,state.s
   $('#builderStepLabel').textContent=`ШАГ ${state.step+1} ИЗ 7`;$('#builderStepName').textContent=stepNames[state.step];$('#builderProgress').style.width=`${((state.step+1)/7)*100}%`;
   renderStepContent();renderSummary();$('#builderBack').disabled=state.step===0;$('#builderBack').style.visibility=state.step===0?'hidden':'visible';$('#builderNext').textContent=state.step===6?'Начать заново ↺':'Далее →';
 }
+// Only existing, explicitly approved Kvadro House photos have a SUN/RAIN pair.
+function weatherPhotoSlot(slot,weather=document.documentElement.dataset.theme){
+  const paired=['catalog-kvadro-house','bundle-comfort','side-kvadro-house'];
+  return weather==='rain'&&paired.includes(slot)?slot+'-rain':slot;
+}
+function syncWeatherPhotoFrames(weather){
+  $('#heroMedia').dataset.slot=weather==='rain'?'hero-rain-desktop':'hero-sun-desktop';
+  for(const [selector,slot] of [
+    ['.product-card[data-model="kvadro-house"] .product-media','catalog-kvadro-house'],
+    ['.bundle-photo','bundle-comfort'],
+    ['.detail-photo[data-slot^="side-kvadro-house"]','side-kvadro-house']
+  ]){
+    const frame=$(selector);
+    if(frame)frame.dataset.slot=weatherPhotoSlot(slot,weather);
+  }
+  // Keep the currently selected model and view. Weather never resets the quote.
+  const activeSlot=state.view==='outside'?getModel(state.modelId).slot:
+    state.view==='inside'?'product-interior':'product-front';
+  $('#previewImage').dataset.slot=weatherPhotoSlot(activeSlot,weather);
+  syncMedia();
+}
 function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
   if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='natural';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
@@ -113,13 +134,14 @@ function setWeather(weather){
     button.classList.toggle('active',active);
     button.setAttribute('aria-pressed',String(active));
   });
-  $('#heroMedia').dataset.slot='hero-sun-desktop';
-  $('#heroPhotoId').textContent='РЕАЛЬНАЯ БАНЯ · ВИЗУАЛИЗАЦИЯ УЧАСТКА';
+  $('#heroPhotoId').textContent=rain
+    ?'РЕАЛЬНАЯ БАНЯ · ВЕЧЕРНИЙ СЮЖЕТ'
+    :'РЕАЛЬНАЯ БАНЯ · ВИЗУАЛИЗАЦИЯ УЧАСТКА';
   $('#heroPhotoCaption').textContent=rain
-    ?'Баня реальная · дорожки и газон визуализированы'
+    ?'Художественно обработанный вечерний кадр · благоустройство визуализировано'
     :'Баня реальная · дорожки и газон визуализированы';
   $('#heroMedia').setAttribute('aria-label',rain
-    ?'Реальная баня; газон и дорожки участка художественно визуализированы'
+    ?'Баня «Квадро Хаус», художественный вечерний сюжет с тёплой подсветкой; благоустройство участка визуализировано'
     :'Реальная баня днём; газон и дорожки участка художественно визуализированы');
   $('#heroTitle').innerHTML=rain
     ?'Небо затянуло тучами.<br>А у вас —<br><em>своя баня.</em>'
@@ -127,8 +149,8 @@ function setWeather(weather){
   $('#heroLead').textContent=rain
     ?'Пасмурный вечер на даче. Своя баня, тёплый свет и близкие рядом. Изготовим заранее и доставим готовым изделием — условия установки согласуем под ваш участок.'
     :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее и доставят готовым изделием — без затяжной стройки на участке.';
-  syncMedia();
   syncAtmosphereText(weather);
+  syncWeatherPhotoFrames(weather);
 }
 function initWeather(){
   $$('[data-weather]').forEach(button=>{
