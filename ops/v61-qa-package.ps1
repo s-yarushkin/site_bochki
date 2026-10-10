@@ -35,6 +35,20 @@ try {
 
   & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $Root 'ops\v61-build-preview-zip.ps1') -DestinationDirectory $DestinationDirectory
   if ($LASTEXITCODE -ne 0) { throw 'V61_STATIC_PACKAGE_FAILED' }
+  # Do not report ALL_QA=PASS while the expected source-pinned artifacts are absent.
+  $Id=$Sha.Substring(0,12)
+  $Package=Join-Path $DestinationDirectory ("GB-V61-static-preview-"+$Id+".zip")
+  $Sidecar=Join-Path $DestinationDirectory ("GB-V61-static-preview-"+$Id+".sha256.txt")
+  foreach ($Artifact in @($Package,$Sidecar,$Screenshots)) {
+    if (!(Test-Path -LiteralPath $Artifact -PathType Leaf)) { throw ('V61_STATIC_ARTIFACT_MISSING_'+$Artifact) }
+  }
+  $ActualHash=(Get-FileHash -LiteralPath $Package -Algorithm SHA256).Hash.ToLowerInvariant()
+  $SidecarText=(Get-Content -LiteralPath $Sidecar -Raw -Encoding UTF8).Trim()
+  if ($SidecarText -ne ($ActualHash+'  '+(Split-Path -Leaf $Package))) {
+    throw 'V61_STATIC_ZIP_SIDECAR_MISMATCH'
+  }
+  Write-Host 'V61_STATIC_ARTIFACTS_VERIFIED=PASS'
+  Write-Host ('V61_STATIC_PREVIEW_ZIP_SHA256='+$ActualHash)
 
   Write-Host ('V61_SOURCE_SHA='+$Sha)
   Write-Host 'V61_ALL_QA=PASS'
