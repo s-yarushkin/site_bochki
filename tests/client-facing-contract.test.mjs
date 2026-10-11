@@ -58,6 +58,7 @@ test('no unfinished internal copy leaks into customer-facing strings',()=>{
 
 test('V6.3 short laptop catalog and exact release packaging keep viewport/nav and favicon coherent',()=>{
   assert.match(styles,/html\{scroll-padding-top:0\}/);
+  assert.match(styles,/\.hero\{overflow:clip\}/); // No programmatic hero scroll after 320px RAIN click.
   assert.match(styles,/@media\(min-width:1100px\) and \(max-height:800px\)/);
   assert.match(styles,/@media\(min-width:1100px\) and \(max-height:740px\)/);
   assert.match(html,/assets\/images\/garant-bani-favicon\.svg/);
