@@ -422,6 +422,31 @@ main{position:relative;z-index:1}
   .catalog .product-body{padding:13px 16px 15px}
   .catalog .product-body p{min-height:2.7em;margin-bottom:9px}
 }
+/* V6.3 laptop-height fix (not a test tolerance workaround).
+   Reserve clear breathing room below EVERY catalog action after #models.
+   This compact mode changes vertical rhythm, never clips a panel. */
+@media(min-width:1100px) and (max-height:800px){
+  .catalog.section{padding-top:20px;padding-bottom:38px}
+  .catalog .section-top{margin-bottom:9px}
+  .catalog .section-top h2{margin-bottom:4px}
+  .catalog .section-description{font-size:15px;line-height:1.32}
+  .catalog .catalog-filters{margin:9px 0 9px}
+  .catalog .product-media{aspect-ratio:2.08}
+  .catalog .product-body{padding:11px 15px 12px}
+  .catalog .product-body h3{font-size:clamp(21px,1.9vw,25px);margin-bottom:4px}
+  .catalog .product-body p{
+    font-size:15px;line-height:1.32;min-height:2.64em;margin-bottom:7px
+  }
+  .catalog .product-meta{margin-bottom:8px}
+  .catalog .product-card .btn{min-height:40px;padding:10px 12px}
+}
+@media(min-width:1100px) and (max-height:740px){
+  .catalog.section{padding-top:16px}
+  .catalog .section-top{margin-bottom:6px}
+  .catalog .catalog-filters{margin:7px 0 7px}
+  .catalog .product-media{aspect-ratio:2.25}
+  .catalog .product-body{padding:9px 14px 10px}
+}
 @media(max-width:850px){
   #models,#bundle,#delivery,#builder,#faq{scroll-margin-top:78px}
   .pain-layout{grid-template-columns:minmax(0,1fr);gap:28px}
