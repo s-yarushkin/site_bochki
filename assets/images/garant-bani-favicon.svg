@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Гарант Бани">
+  <rect width="64" height="64" rx="15" fill="#11243a"/>
+  <path d="M19 17h24v6H26v19h-7V17z" fill="#f4d4aa"/>
+  <path d="M23 49c4-4 8-4 12 0s8 4 12 0" fill="none" stroke="#efbc77" stroke-width="3.8" stroke-linecap="round"/>
+  <path d="M23 56c4-4 8-4 12 0s8 4 12 0" fill="none" stroke="#efbc77" stroke-width="3.8" stroke-linecap="round"/>
+</svg>

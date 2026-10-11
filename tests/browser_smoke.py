@@ -8,7 +8,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 httpd = http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
 base='http://127.0.0.1:'+str(httpd.server_address[1])+'/'
-SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-v61-mobile-qa'
+SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-v63-viewport-qa'
 SHOT_DIR.mkdir(parents=True,exist_ok=True)
 results=[]
 with sync_playwright() as p:
@@ -26,7 +26,7 @@ with sync_playwright() as p:
     launch_args={'headless':True,'args':['--no-sandbox','--disable-dev-shm-usage']}
     if binary: launch_args['executable_path']=binary
     browser=p.chromium.launch(**launch_args)
-    for width,height,label in [(1440,900,'desktop'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
+    for width,height,label in [(1440,900,'desktop'),(1366,768,'laptop'),(1280,720,'short'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
         page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
         errors=[];posts=[];calls=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
@@ -86,6 +86,43 @@ with sync_playwright() as p:
             page.locator('.primary-nav a[href="#builder"]').click()
             assert page.locator('#menuToggle').get_attribute('aria-expanded')=='false'
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-main.png')),full_page=True)
+        # V6.3: a menu jump must reveal the four catalog prices/CTAs
+        # within the desktop/laptop viewport, under the sticky navigation.
+        if width>=1100 and height<=900:
+            page.locator('.primary-nav a[href="#models"]').click()
+            # Wait for a *settled* anchor, not a transient position mid-smooth-scroll.
+            # The old assertion could pass while #models crossed 88px on its way
+            # to the wrong final 178px position (double header compensation).
+            def wait_anchor_settled(selector):
+                page.wait_for_function("""selector => {
+                    const y=document.querySelector(selector).getBoundingClientRect().top;
+                    const last=window.__gbAnchorSample;
+                    const stable=last && last.selector===selector && Math.abs(last.y-y)<.3;
+                    const count=(y>=70 && y<=110 && stable) ? last.count+1 : 0;
+                    window.__gbAnchorSample={selector,y,count};
+                    return count>=7;
+                }""",arg=selector,timeout=12000)
+            wait_anchor_settled('#models')
+            for card in page.locator('#catalogGrid .product-card').all():
+                price=card.locator('.product-price').bounding_box()
+                action=card.locator('[data-catalog-select]').bounding_box()
+                assert price and 0<=price['y'] and price['y']+price['height']<=height-8, (
+                    'MODEL_PRICE_BELOW_VIEWPORT',width,height,price)
+                assert action and 0<=action['y'] and action['y']+action['height']<=height-8, (
+                    'MODEL_CTA_BELOW_VIEWPORT',width,height,action)
+            page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-catalog-viewport.png')),full_page=False)
+            # Recheck the remaining header anchors: each destination must stop
+            # below the sticky header (without a 2x offset).
+            for href,target in [('#bundle','#bundle'),('#delivery','#delivery'),
+                                ('#builder','#builder')]:
+                page.locator('.primary-nav a[href="'+href+'"]').click()
+                wait_anchor_settled(target)
+                dest=page.locator(target).bounding_box()
+                assert dest and 70<=dest['y']<=110, (
+                    'ANCHOR_DOUBLE_OFFSET_OR_HEADER_OVERLAP',width,height,target,dest)
+            # Return to #models before the following theme/form assertions.
+            page.locator('.primary-nav a[href="#models"]').click()
+            wait_anchor_settled('#models')
         # SUN/RAIN is a site-wide theme, not a hero-only picture/text swap.
         toggle=page.locator('.hero-weather').bounding_box()
         media=page.locator('#heroMedia').bounding_box()
@@ -126,7 +163,31 @@ with sync_playwright() as p:
           builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
+        # Check all Kvadro House presentations independently. The same SUN
+        # slot legitimately exists twice (catalog and builder), so an
+        # unscoped Playwright locator is ambiguous and fails strict mode.
+        weather_frame_selectors={
+            'hero':'#heroMedia img[data-v5-photo]',
+            'catalog':'#catalogGrid .product-card[data-model="kvadro-house"] img[data-v5-photo]',
+            'bundle':'.bundle-photo img[data-v5-photo]',
+            'details':'.detail-photo[data-slot="side-kvadro-house"] img[data-v5-photo]',
+            'builder':'#previewImage img[data-v5-photo]',
+        }
+        sun_crop={}
+        for name,selector in weather_frame_selectors.items():
+            assert page.locator(selector).count()==1, ('SUN_SCENE_SELECTOR_NOT_UNIQUE',width,name,selector)
+            sun_crop[name]=page.locator(selector).evaluate(
+                '(el)=>getComputedStyle(el).objectPosition')
         page.locator('[data-weather="rain"]').click()
+        rain_crop={}
+        for name,selector in weather_frame_selectors.items():
+            if name=='details':
+                selector='.detail-photo[data-slot="side-kvadro-house-rain"] img[data-v5-photo]'
+            assert page.locator(selector).count()==1, ('RAIN_SCENE_SELECTOR_NOT_UNIQUE',width,name,selector)
+            rain_crop[name]=page.locator(selector).evaluate(
+                '(el)=>getComputedStyle(el).objectPosition')
+            assert sun_crop[name]==rain_crop[name], (
+                'WEATHER_CROP_DRIFT',width,name,sun_crop[name],rain_crop[name])
         expect(page.locator('#heroTitle')).to_contain_text('Небо затянуло тучами')
         assert page.locator('html').get_attribute('data-theme')=='rain'
         rain_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
@@ -148,8 +209,20 @@ with sync_playwright() as p:
           return img && img.complete && img.naturalWidth>0;
         }""",timeout=10000)
         rain_hero_src=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
-        assert rain_hero_src!=sun_hero_src and rain_hero_src.endswith('/hero-rain.webp'), (
-            'RAIN_HERO_NOT_DUSK',width,rain_hero_src)
+        # Identical immutable geometry. Only a masked glass-light texture
+        # from the approved dusk asset changes with the weather.
+        assert rain_hero_src==sun_hero_src and rain_hero_src.endswith('/hero-sun.webp'), (
+            'WEATHER_MASTER_GEOMETRY_DRIFT',width,sun_hero_src,rain_hero_src)
+        night_layer=page.locator('#heroMedia').evaluate("""el => ({
+            background:getComputedStyle(el,'::before').backgroundImage,
+            mask:getComputedStyle(el,'::before').maskImage,
+            visible:getComputedStyle(el,'::before').display,
+            filter:getComputedStyle(el.querySelector('img[data-v5-photo]')).filter
+        })""")
+        assert 'hero-rain.webp' in night_layer['background'], ('NIGHT_LIGHT_LAYER_MISSING',width,night_layer)
+        assert 'radial-gradient' in night_layer['mask'], ('NIGHT_LIGHT_NOT_WINDOW_MASKED',width,night_layer)
+        assert night_layer['visible']!='none' and night_layer['filter']!='none', (
+            'SAME_MASTER_NOT_DUSK_GRADED',width,night_layer)
         for target in [
             '[data-slot="bundle-comfort-rain"] img[data-v5-photo]',
             '#catalogGrid [data-slot="catalog-kvadro-house-rain"] img[data-v5-photo]',
@@ -158,6 +231,9 @@ with sync_playwright() as p:
         ]:
             assert page.locator(target).count()==1,('RAIN_SLOT_MISSING',width,target)
             assert page.locator(target).get_attribute('src')==rain_hero_src,('RAIN_IMAGE_MISMATCH',width,target)
+            assert page.locator(target).evaluate(
+                "(img)=>img.complete && img.naturalWidth>0"), (
+                'WEATHER_SHARED_MASTER_NOT_LOADED',width,target)
         rainy_catalog=[c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]
         assert rainy_catalog[:3]==catalog_src[:3], ('OTHER_MODELS_WEATHER_CHANGED',width,rainy_catalog)
         assert rainy_catalog[3]==rain_hero_src, ('KVADRO_HOUSE_STILL_SUN',width,rainy_catalog)
@@ -171,6 +247,30 @@ with sync_playwright() as p:
         })""")
         for section in ('page','catalog','builder','footer'):
             assert sun_colors[section]!=rain_colors[section], (section,sun_colors,rain_colors)
+        # V6.3 visual-review regression: 320px RAIN screenshot once
+        # lost the LEFT 50+ px of the hero after clicking the switch.
+        # overflow:hidden is still a script-scrollable container even when
+        # document scrollWidth == viewport width; overflow:clip is not.
+        hero_alignment=page.evaluate("""() => {
+            const hero=document.querySelector('.hero');
+            const group=document.querySelector('.hero-weather').getBoundingClientRect();
+            const copy=document.querySelector('.hero-copy').getBoundingClientRect();
+            return {
+                scrollLeft:hero.scrollLeft,
+                overflow:getComputedStyle(hero).overflow,
+                groupLeft:group.left,groupRight:group.right,
+                copyLeft:copy.left,copyRight:copy.right,
+                width:window.innerWidth
+            };
+        }""")
+        assert hero_alignment['overflow']=='clip', (
+            'HERO_HIDDEN_SCROLL_CONTAINER',width,hero_alignment)
+        assert hero_alignment['scrollLeft']==0, (
+            'RAIN_HERO_HORIZONTALLY_SCROLLED',width,hero_alignment)
+        assert hero_alignment['groupLeft']>=-1 and hero_alignment['copyLeft']>=-1, (
+            'RAIN_HERO_TEXT_CLIPPED_LEFT',width,hero_alignment)
+        assert hero_alignment['groupRight']<=width+1 and hero_alignment['copyRight']<=width+1, (
+            'RAIN_HERO_CONTENT_CLIPPED_RIGHT',width,hero_alignment)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
         if label=='mobile':
             page.emulate_media(reduced_motion='reduce')

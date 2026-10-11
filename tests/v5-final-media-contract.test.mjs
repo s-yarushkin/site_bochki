@@ -26,7 +26,7 @@ test('V5 site loads third layer and photographic image controller',()=>{
   assert.match(css,/\.media-frame\.media-ready \.v5-photo/);
 });
 
-test('V6.1.1 photo policy: three untouched models; Kvadro House has one approved day/dusk pair',()=>{
+test('V6.3 geometry-safe weather: three untouched models and one shared Kvadro House master',()=>{
   for(const series of ['kvadro','parus','viking']){
     const key='catalog-'+series;
     assert.ok(resolveMedia(key),'Missing '+key);
@@ -38,17 +38,22 @@ test('V6.1.1 photo policy: three untouched models; Kvadro House has one approved
     assert.equal(resolveMedia(key).file,'hero-sun.webp',key);
   }
   for(const key of ['hero-rain-desktop','catalog-kvadro-house-rain','bundle-comfort-rain','side-kvadro-house-rain']){
-    assert.equal(resolveMedia(key).file,'hero-rain.webp',key);
+    assert.equal(resolveMedia(key).file,'hero-sun.webp',key);
     assert.match(resolveMedia(key).alt,/вечерн|подсветк/);
   }
-  assert.notEqual(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
+  assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
+  assert.match(readFileSync(new URL('../assets/css/weather-v6.css',import.meta.url),'utf8'),/mask-image:radial-gradient/);
 });
 
 test('V5 no invented plan photo or fabricated builder model interior',()=>{
   assert.equal(resolveMedia('product-front'),null);
-  assert.match(js,/Пример интерьера одной из бань/);
-  assert.match(html,/На фото показана модель. Комплектация подбирается отдельно/);
-  assert.match(html,/Газон и деревянные дорожки на изображении — визуализация благоустройства/);
+  // The copy is client-facing while explicitly disclosing that the pictured
+  // interior / additions / landscaping do not represent the quoted package.
+  assert.match(js,/На фото — пример интерьера\. Отделку вашей бани согласуем отдельно/);
+  assert.match(html,/На фото — модель «Квадро Хаус»\. Дополнения подбираются отдельно/);
+  assert.match(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
+  assert.match(html,/Газон и дорожки добавлены для наглядности/);
+  assert.doesNotMatch(html,/На фото показана модель\. Комплектация подбирается отдельно/);
 });
 
 test('V5 static assets are present, sized and match owner media manifest before release',()=>{
