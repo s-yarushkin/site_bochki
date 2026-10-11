@@ -247,6 +247,30 @@ with sync_playwright() as p:
         })""")
         for section in ('page','catalog','builder','footer'):
             assert sun_colors[section]!=rain_colors[section], (section,sun_colors,rain_colors)
+        # V6.3 visual-review regression: 320px RAIN screenshot once
+        # lost the LEFT 50+ px of the hero after clicking the switch.
+        # overflow:hidden is still a script-scrollable container even when
+        # document scrollWidth == viewport width; overflow:clip is not.
+        hero_alignment=page.evaluate("""() => {
+            const hero=document.querySelector('.hero');
+            const group=document.querySelector('.hero-weather').getBoundingClientRect();
+            const copy=document.querySelector('.hero-copy').getBoundingClientRect();
+            return {
+                scrollLeft:hero.scrollLeft,
+                overflow:getComputedStyle(hero).overflow,
+                groupLeft:group.left,groupRight:group.right,
+                copyLeft:copy.left,copyRight:copy.right,
+                width:window.innerWidth
+            };
+        }""")
+        assert hero_alignment['overflow']=='clip', (
+            'HERO_HIDDEN_SCROLL_CONTAINER',width,hero_alignment)
+        assert hero_alignment['scrollLeft']==0, (
+            'RAIN_HERO_HORIZONTALLY_SCROLLED',width,hero_alignment)
+        assert hero_alignment['groupLeft']>=-1 and hero_alignment['copyLeft']>=-1, (
+            'RAIN_HERO_TEXT_CLIPPED_LEFT',width,hero_alignment)
+        assert hero_alignment['groupRight']<=width+1 and hero_alignment['copyRight']<=width+1, (
+            'RAIN_HERO_CONTENT_CLIPPED_RIGHT',width,hero_alignment)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
         if label=='mobile':
             page.emulate_media(reduced_motion='reduce')
