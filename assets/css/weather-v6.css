@@ -429,6 +429,34 @@ html{scroll-padding-top:0}
 /* V6.3 laptop-height fix (not a test tolerance workaround).
    Reserve clear breathing room below EVERY catalog action after #models.
    This compact mode changes vertical rhythm, never clips a panel. */
+/* V6.3: immutable SUN master plus a strictly window-masked dusk
+   illumination. The roof, steps, trim, deck, and landscaping stay on
+   the identical photo in both modes. No rain effect/photo replacement. */
+:root[data-theme="rain"] [data-slot="hero-rain-desktop"].media-ready .v5-photo,
+:root[data-theme="rain"] [data-slot="catalog-kvadro-house-rain"].media-ready .v5-photo,
+:root[data-theme="rain"] [data-slot="bundle-comfort-rain"].media-ready .v5-photo,
+:root[data-theme="rain"] [data-slot="side-kvadro-house-rain"].media-ready .v5-photo{
+  filter:brightness(.47) saturate(.72) contrast(1.06);
+}
+:root[data-theme="rain"] [data-slot="hero-rain-desktop"].media-ready::before,
+:root[data-theme="rain"] [data-slot="catalog-kvadro-house-rain"].media-ready::before,
+:root[data-theme="rain"] [data-slot="bundle-comfort-rain"].media-ready::before,
+:root[data-theme="rain"] [data-slot="side-kvadro-house-rain"].media-ready::before{
+  content:"";
+  display:block;
+  position:absolute;inset:0;
+  z-index:1;pointer-events:none;
+  background:url('../media-v5/hero-rain.webp') center/cover no-repeat;
+  -webkit-mask-image:radial-gradient(ellipse 30% 36% at 61% 43%,#000 28%,transparent 92%);
+  mask-image:radial-gradient(ellipse 30% 36% at 61% 43%,#000 28%,transparent 92%);
+  mix-blend-mode:screen;
+  opacity:.83;
+}
+:root[data-theme="rain"] #previewImage[data-slot="catalog-kvadro-house-rain"].media-ready::before{
+  background-size:contain;
+}
+/* Layering stays inside the photo frame; the existing bundle caption
+   remains above the translucent light texture and fully interactive. */
 @media(min-width:1100px) and (max-height:800px){
   .catalog.section{padding-top:20px;padding-bottom:38px}
   .catalog .section-top{margin-bottom:9px}
