@@ -26,7 +26,7 @@ with sync_playwright() as p:
     launch_args={'headless':True,'args':['--no-sandbox','--disable-dev-shm-usage']}
     if binary: launch_args['executable_path']=binary
     browser=p.chromium.launch(**launch_args)
-    for width,height,label in [(1440,900,'desktop'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
+    for width,height,label in [(1440,900,'desktop'),(1366,768,'laptop'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
         page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
         errors=[];posts=[];calls=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
@@ -86,6 +86,22 @@ with sync_playwright() as p:
             page.locator('.primary-nav a[href="#builder"]').click()
             assert page.locator('#menuToggle').get_attribute('aria-expanded')=='false'
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-main.png')),full_page=True)
+        # V6.3: a menu jump must reveal the four catalog prices/CTAs
+        # within the desktop/laptop viewport, under the sticky navigation.
+        if width>=1100 and height<=900:
+            page.locator('.primary-nav a[href="#models"]').click()
+            page.wait_for_function("""() => {
+                const y=document.querySelector('#models').getBoundingClientRect().top;
+                return y>=65 && y<=110;
+            }""",timeout=10000)
+            for card in page.locator('#catalogGrid .product-card').all():
+                price=card.locator('.product-price').bounding_box()
+                action=card.locator('[data-catalog-select]').bounding_box()
+                assert price and 0<=price['y'] and price['y']+price['height']<=height+3, (
+                    'MODEL_PRICE_BELOW_VIEWPORT',width,height,price)
+                assert action and 0<=action['y'] and action['y']+action['height']<=height+3, (
+                    'MODEL_CTA_BELOW_VIEWPORT',width,height,action)
+            page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-catalog-viewport.png')),full_page=False)
         # SUN/RAIN is a site-wide theme, not a hero-only picture/text swap.
         toggle=page.locator('.hero-weather').bounding_box()
         media=page.locator('#heroMedia').bounding_box()
@@ -126,7 +142,12 @@ with sync_playwright() as p:
           builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
+        sun_crop=page.locator('[data-slot="catalog-kvadro-house"] .v5-photo').evaluate(
+            '(el)=>getComputedStyle(el).objectPosition')
         page.locator('[data-weather="rain"]').click()
+        rain_crop=page.locator('[data-slot="catalog-kvadro-house-rain"] .v5-photo').evaluate(
+            '(el)=>getComputedStyle(el).objectPosition')
+        assert sun_crop==rain_crop, ('WEATHER_CROP_DRIFT',width,sun_crop,rain_crop)
         expect(page.locator('#heroTitle')).to_contain_text('Небо затянуло тучами')
         assert page.locator('html').get_attribute('data-theme')=='rain'
         rain_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
