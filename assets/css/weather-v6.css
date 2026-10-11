@@ -499,3 +499,10 @@ html{scroll-padding-top:0}
   .catalog .product-body{padding:15px 17px 17px}
   .catalog .product-body p{margin-bottom:10px}
 }
+
+
+/* V6.3 visual-review fix: at 320px, tapping the RAIN segmented control
+   could programmatically scroll the hero 50+ px sideways. overflow:hidden
+   clips visually but still creates a scroll container; overflow:clip does
+   not. Keep both axes clipped (clouds/art), never allow a scroll offset. */
+.hero{overflow:clip}
