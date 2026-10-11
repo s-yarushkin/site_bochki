@@ -361,6 +361,10 @@ main{position:relative;z-index:1}
 :root[data-motion="off"] .weather-sky::before,
 :root[data-motion="off"] .weather-sky::after{animation:none!important;will-change:auto}
 
+/* The root already has scroll-padding-top:90px in site.css. Use only
+   section scroll-margin for target positioning; otherwise anchors stop
+   178px below viewport top (double sticky-header offset). */
+html{scroll-padding-top:0}
 /* V6.3: destination-first navigation and viewport-aware catalog.
    A navigation destination should expose model identity, indicative price
    and an actionable next step without wasted vertical space on laptops.
