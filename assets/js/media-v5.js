@@ -1,26 +1,27 @@
 /**
  * V5 preview photography. The assets are local to this static site, not CDN.
- * V6.1.1: overcast uses a distinct approved dusk photograph with warm interior light
- * for Kvadro House; no CSS precipitation is drawn on top of photography.
- * SUN and RAIN each use one consistent image of Kvadro House, with disclosed conceptual landscaping.
+ * V6.3: SUN and RAIN share the SAME Kvadro House master pixels for immutable
+ * architecture. RAIN is graded by CSS; warm glass is a masked, decorative
+ * blend of the existing approved dusk visual, not replacement building geometry.
+ * No rain streaks are added to photos; landscaping remains disclosed.
  * Non-image product configuration data is unaffected.
  */
 export const MEDIA_SLOTS=Object.freeze({
   'hero-sun-desktop':{file:'hero-sun.webp',alt:'Реальная баня Квадро Хаус днём. Газон и мостки художественно визуализированы'},
-  'hero-rain-desktop':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете с тёплой подсветкой. Благоустройство участка визуализировано'},
+  'hero-rain-desktop':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус»: вечерняя световая обработка дневного кадра, архитектура сохранена. Благоустройство участка визуализировано'},
   'catalog-kvadro':{file:'catalog-kvadro.webp',alt:'Модель «Квадро» на участке, реальное фото'},
   'catalog-parus':{file:'catalog-parus.webp',alt:'Модель «Парус» на участке, реальное фото'},
   'catalog-viking':{file:'catalog-viking.webp',alt:'Модель «Викинг» на участке, реальное фото'},
   'catalog-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём; благоустройство участка визуализировано'},
-  'catalog-kvadro-house-rain':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете с подсветкой; благоустройство участка визуализировано'},
+  'catalog-kvadro-house-rain':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» вечером, дневная фотография с обработкой освещения; благоустройство участка визуализировано'},
   'bundle-comfort':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» днём, пример модели; не фото конкретной комплектации'},
-  'bundle-comfort-rain':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете; пример модели, не фото конкретной комплектации'},
+  'bundle-comfort-rain':{file:'hero-sun.webp',alt:'Пример бани «Квадро Хаус» с вечерним освещением; не фотография конкретной комплектации'},
   'cta-evening-cozy':{file:'mood-evening.webp',alt:'Готовая баня с подсветкой во дворе зимним вечером'},
   'product-steam':{file:'interior.webp',alt:'Пример отделки внутри готовой бани'},
   'product-interior':{file:'interior.webp',alt:'Пример интерьера бани семейства «Викинг»'},
   'site-example':{file:'site-example.webp',alt:'Готовая баня на загородном участке'},
   'side-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём, благоустройство участка на изображении визуализировано'},
-  'side-kvadro-house-rain':{file:'hero-rain.webp',alt:'Баня «Квадро Хаус» в художественно обработанном вечернем сюжете; благоустройство участка визуализировано'},
+  'side-kvadro-house-rain':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» с вечерней обработкой дневного кадра; благоустройство участка визуализировано'},
   'polok-backlight':{file:'interior.webp',alt:'Пример отделки и печи внутри готовой бани'},
   'stove-water-tank':{file:'site-example.webp',alt:'Установленная баня на участке'},
   'product-front':null
@@ -39,7 +40,18 @@ export function syncMedia(root=document){
       frame.removeAttribute('data-image-status');
       continue;
     }
-    if(img?.dataset.mediaFile===entry.file)continue;
+    if(img?.dataset.mediaFile===entry.file){
+      // SUN and RAIN deliberately share one geometry source. Always update
+      // the semantic slot and accessible alt; do not leave an in-flight
+      // image load bound to the former slot when weather is switched rapidly.
+      frame.dataset.mediaSlotLoadedFor=frame.dataset.slot;
+      img.alt=entry.alt;
+      if(img.complete&&img.naturalWidth>0){
+        frame.classList.add('media-ready');
+        frame.dataset.imageStatus='loaded';
+      }
+      continue;
+    }
     if(img)img.remove();
     frame.classList.remove('media-ready');
     frame.dataset.imageStatus='loading';
