@@ -55,3 +55,14 @@ test('no unfinished internal copy leaks into customer-facing strings',()=>{
   assert.match(client,/Корректировка предварительной суммы/);
   assert.match(html,/Время прогрева зависит от модели, печи и погоды/);
 });
+
+test('V6.3 short laptop catalog and exact release packaging keep viewport/nav and favicon coherent',()=>{
+  assert.match(styles,/html\{scroll-padding-top:0\}/);
+  assert.match(styles,/@media\(min-width:1100px\) and \(max-height:800px\)/);
+  assert.match(styles,/@media\(min-width:1100px\) and \(max-height:740px\)/);
+  assert.match(html,/assets\/images\/garant-bani-favicon\.svg/);
+  const packageScript=read('ops/v63-build-preview-zip.ps1');
+  assert.match(packageScript,/assets\/images\/garant-bani-favicon\.svg/);
+  assert.doesNotMatch(packageScript,/'assets\/images\/placeholder\.svg'/);
+  assert.match(styles,/window-masked dusk|window-masked/i);
+});
