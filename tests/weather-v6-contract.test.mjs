@@ -54,12 +54,12 @@ test('V6.1 inherits common container width without full bleed window copy',()=>{
   assert.match(css,/@media\(max-width:550px\)/);
 });
 
-test('V6.3 Kvadro House uses day versus dusk photo slots with landscaping disclosure',()=>{
+test('V6.3 Kvadro House uses one exact architectural master and masked dusk illumination',()=>{
   for(const slot of ['hero-sun-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
     assert.ok(media.includes("'"+slot+"':{file:'hero-sun.webp'"),slot);
   }
   for(const slot of ['hero-rain-desktop','catalog-kvadro-house-rain','bundle-comfort-rain','side-kvadro-house-rain']){
-    assert.ok(media.includes("'"+slot+"':{file:'hero-rain.webp'"),slot);
+    assert.ok(media.includes("'"+slot+"':{file:'hero-sun.webp'"),slot);
   }
   assert.match(app,/weather==='rain'\?'hero-rain-desktop':'hero-sun-desktop'/);
   assert.match(app,/function syncWeatherPhotoFrames\(weather\)/);
@@ -70,8 +70,11 @@ test('V6.3 Kvadro House uses day versus dusk photo slots with landscaping disclo
   assert.match(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
   assert.match(css,/\[data-slot="catalog-kvadro-house-rain"\]/);
   assert.match(css,/\[data-slot="bundle-comfort-rain"\]/);
-  // This is a routing/crop contract only; it does NOT prove pixel geometry
-  // alignment of the two image files (separate V6.3 visual-release blocker).
+  // Exact SUN master in all eight slots prevents new window/roof/step geometry.
+  // The approved dusk source is only a masked warm-light layer, not the base.
+  assert.match(css,/background:url\('\.\.\/media-v5\/hero-rain\.webp'\)/);
+  assert.match(css,/mask-image:radial-gradient/);
+  assert.match(media,/frame\.dataset\.mediaSlotLoadedFor=frame\.dataset\.slot/);
 });
 
 test('V6.1 scroll-bound clouds pause when hidden or reduced-motion',()=>{
