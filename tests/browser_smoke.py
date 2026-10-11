@@ -26,7 +26,7 @@ with sync_playwright() as p:
     launch_args={'headless':True,'args':['--no-sandbox','--disable-dev-shm-usage']}
     if binary: launch_args['executable_path']=binary
     browser=p.chromium.launch(**launch_args)
-    for width,height,label in [(1440,900,'desktop'),(1366,768,'laptop'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
+    for width,height,label in [(1440,900,'desktop'),(1366,768,'laptop'),(1280,720,'short'),(1920,1080,'wide'),(768,1024,'tablet'),(390,844,'mobile'),(320,720,'compact')]:
         page=browser.new_page(viewport={'width':width,'height':height},device_scale_factor=1)
         errors=[];posts=[];calls=[]
         page.on('pageerror',lambda error:errors.append(str(error)))
