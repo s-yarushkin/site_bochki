@@ -54,7 +54,7 @@ test('V6.1 inherits common container width without full bleed window copy',()=>{
   assert.match(css,/@media\(max-width:550px\)/);
 });
 
-test('V6.1.1 Kvadro House uses approved day versus illuminated overcast photo across all placements',()=>{
+test('V6.3 Kvadro House uses day versus dusk photo slots with landscaping disclosure',()=>{
   for(const slot of ['hero-sun-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
     assert.ok(media.includes("'"+slot+"':{file:'hero-sun.webp'"),slot);
   }
@@ -65,7 +65,13 @@ test('V6.1.1 Kvadro House uses approved day versus illuminated overcast photo ac
   assert.match(app,/function syncWeatherPhotoFrames\(weather\)/);
   assert.match(app,/weatherPhotoSlot\(slot\)/);
   assert.match(app,/\$\('#previewImage'\)\.dataset\.slot=weatherPhotoSlot\(activeSlot,weather\)/);
-  assert.match(html,/благоустройство территории визуализировано/);
+  // Keep the essential truth-in-imagery disclaimer despite copy polishing.
+  assert.match(html,/На фото — настоящая баня/);
+  assert.match(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
+  assert.match(css,/\[data-slot="catalog-kvadro-house-rain"\]/);
+  assert.match(css,/\[data-slot="bundle-comfort-rain"\]/);
+  // This is a routing/crop contract only; it does NOT prove pixel geometry
+  // alignment of the two image files (separate V6.3 visual-release blocker).
 });
 
 test('V6.1 scroll-bound clouds pause when hidden or reduced-motion',()=>{
