@@ -142,12 +142,31 @@ with sync_playwright() as p:
           builder:getComputedStyle(document.querySelector('.builder-section')).backgroundColor,
           footer:getComputedStyle(document.querySelector('.footer')).backgroundColor
         })""")
-        sun_crop=page.locator('[data-slot="catalog-kvadro-house"] .v5-photo').evaluate(
-            '(el)=>getComputedStyle(el).objectPosition')
+        # Check all Kvadro House presentations independently. The same SUN
+        # slot legitimately exists twice (catalog and builder), so an
+        # unscoped Playwright locator is ambiguous and fails strict mode.
+        weather_frame_selectors={
+            'hero':'#heroMedia img[data-v5-photo]',
+            'catalog':'#catalogGrid .product-card[data-model="kvadro-house"] img[data-v5-photo]',
+            'bundle':'.bundle-photo img[data-v5-photo]',
+            'details':'.detail-photo[data-slot="side-kvadro-house"] img[data-v5-photo]',
+            'builder':'#previewImage img[data-v5-photo]',
+        }
+        sun_crop={}
+        for name,selector in weather_frame_selectors.items():
+            assert page.locator(selector).count()==1, ('SUN_SCENE_SELECTOR_NOT_UNIQUE',width,name,selector)
+            sun_crop[name]=page.locator(selector).evaluate(
+                '(el)=>getComputedStyle(el).objectPosition')
         page.locator('[data-weather="rain"]').click()
-        rain_crop=page.locator('[data-slot="catalog-kvadro-house-rain"] .v5-photo').evaluate(
-            '(el)=>getComputedStyle(el).objectPosition')
-        assert sun_crop==rain_crop, ('WEATHER_CROP_DRIFT',width,sun_crop,rain_crop)
+        rain_crop={}
+        for name,selector in weather_frame_selectors.items():
+            if name=='details':
+                selector='.detail-photo[data-slot="side-kvadro-house-rain"] img[data-v5-photo]'
+            assert page.locator(selector).count()==1, ('RAIN_SCENE_SELECTOR_NOT_UNIQUE',width,name,selector)
+            rain_crop[name]=page.locator(selector).evaluate(
+                '(el)=>getComputedStyle(el).objectPosition')
+            assert sun_crop[name]==rain_crop[name], (
+                'WEATHER_CROP_DRIFT',width,name,sun_crop[name],rain_crop[name])
         expect(page.locator('#heroTitle')).to_contain_text('Небо затянуло тучами')
         assert page.locator('html').get_attribute('data-theme')=='rain'
         rain_cta=page.locator('.final-cta').evaluate("(e)=>getComputedStyle(e).backgroundImage")
