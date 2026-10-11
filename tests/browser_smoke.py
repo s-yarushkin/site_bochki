@@ -90,18 +90,39 @@ with sync_playwright() as p:
         # within the desktop/laptop viewport, under the sticky navigation.
         if width>=1100 and height<=900:
             page.locator('.primary-nav a[href="#models"]').click()
-            page.wait_for_function("""() => {
-                const y=document.querySelector('#models').getBoundingClientRect().top;
-                return y>=65 && y<=110;
-            }""",timeout=10000)
+            # Wait for a *settled* anchor, not a transient position mid-smooth-scroll.
+            # The old assertion could pass while #models crossed 88px on its way
+            # to the wrong final 178px position (double header compensation).
+            def wait_anchor_settled(selector):
+                page.wait_for_function("""selector => {
+                    const y=document.querySelector(selector).getBoundingClientRect().top;
+                    const last=window.__gbAnchorSample;
+                    const stable=last && last.selector===selector && Math.abs(last.y-y)<.3;
+                    const count=(y>=70 && y<=110 && stable) ? last.count+1 : 0;
+                    window.__gbAnchorSample={selector,y,count};
+                    return count>=7;
+                }""",arg=selector,timeout=12000)
+            wait_anchor_settled('#models')
             for card in page.locator('#catalogGrid .product-card').all():
                 price=card.locator('.product-price').bounding_box()
                 action=card.locator('[data-catalog-select]').bounding_box()
-                assert price and 0<=price['y'] and price['y']+price['height']<=height+3, (
+                assert price and 0<=price['y'] and price['y']+price['height']<=height-8, (
                     'MODEL_PRICE_BELOW_VIEWPORT',width,height,price)
-                assert action and 0<=action['y'] and action['y']+action['height']<=height+3, (
+                assert action and 0<=action['y'] and action['y']+action['height']<=height-8, (
                     'MODEL_CTA_BELOW_VIEWPORT',width,height,action)
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-catalog-viewport.png')),full_page=False)
+            # Recheck the remaining header anchors: each destination must stop
+            # below the sticky header (without a 2x offset).
+            for href,target in [('#bundle','#bundle'),('#delivery','#delivery'),
+                                ('#builder','#builder')]:
+                page.locator('.primary-nav a[href="'+href+'"]').click()
+                wait_anchor_settled(target)
+                dest=page.locator(target).bounding_box()
+                assert dest and 70<=dest['y']<=110, (
+                    'ANCHOR_DOUBLE_OFFSET_OR_HEADER_OVERLAP',width,height,target,dest)
+            # Return to #models before the following theme/form assertions.
+            page.locator('.primary-nav a[href="#models"]').click()
+            wait_anchor_settled('#models')
         # SUN/RAIN is a site-wide theme, not a hero-only picture/text swap.
         toggle=page.locator('.hero-weather').bounding_box()
         media=page.locator('#heroMedia').bounding_box()
