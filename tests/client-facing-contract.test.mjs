@@ -40,3 +40,18 @@ test('same scene has identical sun and rain crop selectors',()=>{
   }
   assert.match(styles,/hero-rain-desktop/);
 });
+
+test('no unfinished internal copy leaks into customer-facing strings',()=>{
+  const client=html+'\n'+app;
+  for(const bad of [
+    'Подтверждённые показатели добавим после получения данных производителя',
+    'пока у нас нет утверждённого прайса',
+    'Это поможет затем уточнить доставку и установку. Это поможет',
+    'Заявка доставлена менеджеру «Гарант Бани» в MAX',
+    'Не удалось доставить заявку в MAX',
+    'Выгода комплекта','Скидка на допы',
+    'Расчётное уменьшение '
+  ])assert.doesNotMatch(client,new RegExp(bad));
+  assert.match(client,/Корректировка предварительной суммы/);
+  assert.match(html,/Время прогрева зависит от модели, печи и погоды/);
+});
