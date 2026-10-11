@@ -209,8 +209,20 @@ with sync_playwright() as p:
           return img && img.complete && img.naturalWidth>0;
         }""",timeout=10000)
         rain_hero_src=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
-        assert rain_hero_src!=sun_hero_src and rain_hero_src.endswith('/hero-rain.webp'), (
-            'RAIN_HERO_NOT_DUSK',width,rain_hero_src)
+        # Identical immutable geometry. Only a masked glass-light texture
+        # from the approved dusk asset changes with the weather.
+        assert rain_hero_src==sun_hero_src and rain_hero_src.endswith('/hero-sun.webp'), (
+            'WEATHER_MASTER_GEOMETRY_DRIFT',width,sun_hero_src,rain_hero_src)
+        night_layer=page.locator('#heroMedia').evaluate("""el => ({
+            background:getComputedStyle(el,'::before').backgroundImage,
+            mask:getComputedStyle(el,'::before').maskImage,
+            visible:getComputedStyle(el,'::before').display,
+            filter:getComputedStyle(el.querySelector('img[data-v5-photo]')).filter
+        })""")
+        assert 'hero-rain.webp' in night_layer['background'], ('NIGHT_LIGHT_LAYER_MISSING',width,night_layer)
+        assert 'radial-gradient' in night_layer['mask'], ('NIGHT_LIGHT_NOT_WINDOW_MASKED',width,night_layer)
+        assert night_layer['visible']!='none' and night_layer['filter']!='none', (
+            'SAME_MASTER_NOT_DUSK_GRADED',width,night_layer)
         for target in [
             '[data-slot="bundle-comfort-rain"] img[data-v5-photo]',
             '#catalogGrid [data-slot="catalog-kvadro-house-rain"] img[data-v5-photo]',
@@ -219,6 +231,9 @@ with sync_playwright() as p:
         ]:
             assert page.locator(target).count()==1,('RAIN_SLOT_MISSING',width,target)
             assert page.locator(target).get_attribute('src')==rain_hero_src,('RAIN_IMAGE_MISMATCH',width,target)
+            assert page.locator(target).evaluate(
+                "(img)=>img.complete && img.naturalWidth>0"), (
+                'WEATHER_SHARED_MASTER_NOT_LOADED',width,target)
         rainy_catalog=[c.locator('img[data-v5-photo]').get_attribute('src') for c in page.locator('#catalogGrid .product-card').all()]
         assert rainy_catalog[:3]==catalog_src[:3], ('OTHER_MODELS_WEATHER_CHANGED',width,rainy_catalog)
         assert rainy_catalog[3]==rain_hero_src, ('KVADRO_HOUSE_STILL_SUN',width,rainy_catalog)
