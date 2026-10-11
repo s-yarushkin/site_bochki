@@ -13,7 +13,7 @@ export const MEDIA_SLOTS=Object.freeze({
   'catalog-parus':{file:'catalog-parus.webp',alt:'Модель «Парус» на участке, реальное фото'},
   'catalog-viking':{file:'catalog-viking.webp',alt:'Модель «Викинг» на участке, реальное фото'},
   'catalog-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём; благоустройство участка визуализировано'},
-  'catalog-kvadro-house-rain':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» вечером, дневная фотография с обработкой освещения; благоустройство участка визуализировано'},
+  'catalog-kvadro-house-rain':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» с вечерним освещением: обработка дневного кадра; благоустройство участка визуализировано'},
   'bundle-comfort':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» днём, пример модели; не фото конкретной комплектации'},
   'bundle-comfort-rain':{file:'hero-sun.webp',alt:'Пример бани «Квадро Хаус» с вечерним освещением; не фотография конкретной комплектации'},
   'cta-evening-cozy':{file:'mood-evening.webp',alt:'Готовая баня с подсветкой во дворе зимним вечером'},
