@@ -264,7 +264,7 @@ function initForms(){
     }
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:f.elements.leadConsent.checked,requestId:formRequestId,website:f.elements.website.value
+      comment,consent:f.elements.leadConsent.checked,consentVersion:'2026-10-12',requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
