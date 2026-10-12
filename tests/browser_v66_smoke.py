@@ -75,7 +75,7 @@ try:
       cover.click()
       dialog=page.locator('#modelGallery')
       expect(dialog).to_be_visible()
-      assert model.split('-')[0].capitalize() in dialog.locator('#modelGalleryTitle').inner_text(),(model,label)
+      assert {'kvadro':'Квадро','parus':'Парус','viking':'Викинг','kvadro-house':'Квадро Хаус'}[model] in dialog.locator('#modelGalleryTitle').inner_text(),(model,label)
       assert dialog.locator('.model-gallery-thumb').count()==n,(model,label)
       img=dialog.locator('#modelGalleryImage')
       assert f'{model}-outside.webp' in img.get_attribute('src'),(model,label)
