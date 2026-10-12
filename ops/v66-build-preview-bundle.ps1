@@ -18,7 +18,7 @@ $Static=@(
  'assets/images/garant-bani-favicon.svg','assets/images/real-quadro.webp',
  'assets/images/real-quadro-side.webp'
 )
-$Server=@('server/garant-bani-relay.mjs','server/lead-store.mjs','server/manager-auth.mjs','server/manager-api.mjs')
+$Server=@('server/garant-bani-relay.mjs','server/lead-store.mjs','server/manager-auth.mjs','server/manager-api.mjs','data/legacy-v64-pricebook.js')
 $OldManifest=(Join-Path $Repo 'assets\media-v5\MEDIA-MANIFEST.json')
 $NewManifest=(Join-Path $Repo 'assets\catalog-v66\MEDIA-MANIFEST.json')
 if(!(Test-Path -LiteralPath $OldManifest) -or !(Test-Path -LiteralPath $NewManifest)){throw 'V66_MEDIA_MANIFESTS_MISSING'}
