@@ -63,6 +63,11 @@ try:
       assert gallery.locator('.model-images .media-frame').count()==2,model
       for img in gallery.locator('.model-images img[data-v5-photo]').all():
         assert 'catalog-v66' in img.get_attribute('src'),(model,label)
+    # Owner visual acceptance: capture both complete four-model catalog and interiors,
+    # not only the featured offer and legal footer. These were absent from r3 archive.
+    page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
+    page.locator('#model-interiors .details-grid-models').screenshot(
+        path=str(SHOT/f'{label}-four-interiors-sun.png'))
     page.locator('.footer-operator').scroll_into_view_if_needed()
     assert '1233500004650' in page.locator('.footer-operator').inner_text()
     page.screenshot(path=str(SHOT/f'{label}-legal-footer.png'))
@@ -81,6 +86,9 @@ try:
     hero_rain=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
     assert hero_rain==hero_sun,'Hero geometry changed'
     assert '490' in page.locator('#quoteTotal').inner_text()
+    page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-rain.png'))
+    page.locator('#model-interiors .details-grid-models').screenshot(
+        path=str(SHOT/f'{label}-four-interiors-rain.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
     page.locator('[data-weather="sun"]').click()
