@@ -11,6 +11,7 @@ const finishes={natural:'Натуральное дерево',walnut:'Тёплы
 const bases={unknown:'Нужно уточнить',ready:'Готово',advice:'Нужна консультация'};
 const access={unknown:'Нужно уточнить',yes:'Есть подъезд',advice:'Нужна консультация'};
 const money=value=>typeof value==='number'?new Intl.NumberFormat('ru-RU').format(value)+' ₽':'—';
+const displaySize=value=>/^\d{3}$/.test(String(value))?(Number(value)/100).toLocaleString('ru-RU')+' м':String(value).replace('x','×')+' м';
 const date=value=>value?new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short',timeZone:'Europe/Moscow'}).format(new Date(value)):'—';
 const el=(tag,cls='',value='')=>{
   const node=document.createElement(tag);
@@ -89,7 +90,7 @@ function renderList(data){
     b.append(top,el('div','lead-main',detail.name||'Без имени'),
       el('div','lead-sub',detail.phone+' · '+(channels[detail.contactChannel]||'Звонок')),
       el('div','lead-sub',detail.estimate?
-        detail.estimate.modelName+' · '+detail.estimate.sizeId[0]+' м · '+money(detail.estimate.total):
+        detail.estimate.modelName+' · '+displaySize(detail.estimate.sizeId)+' · '+money(detail.estimate.total):
         'Заказ обратного звонка'),
       el('div','lead-sub',date(lead.createdAt)+' · '+(lead.assignee||'Менеджер не назначен')));
     if(lead.notificationStatus==='failed')b.append(el('div','error','MAX не получил уведомление'));
@@ -137,8 +138,9 @@ function renderDetail(record){
     const q=lead.estimate,configuration=lead.configuration||{};
     const cd=$('#configurationInfo');cd.replaceChildren();
     pair(cd,'Модель',q.modelName);
-    pair(cd,'Размер',q.sizeId[0]+' м ('+q.sizeId+')');
+    pair(cd,'Размер',displaySize(q.sizeId));
     pair(cd,'Отделка',configuration.finishName||'Не указана');
+    pair(cd,'Цвет кровли',configuration.roofName||'Не указан');
     pair(cd,'Комплект',q.bundleApplied?'Применён комплект':configuration.bundleId?'Не применён':'Без комплекта');
     pair(cd,'Версия прайса',q.pricebookVersion+' · '+(q.pricebookStatus==='DEMO_ONLY'?'демоцены':'по прайсу'));
     const options=$('#selectedOptions');options.replaceChildren();
