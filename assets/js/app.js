@@ -87,7 +87,11 @@ function renderBundle(){
 }
 function quote(){return calculateQuote({modelId:state.modelId,sizeId:state.sizeId,optionIds:state.optionIds,bundleId:state.bundleId});}
 function priceLine(label,value,css=''){return `<div class="quote-row ${css}"><span>${escaped(label)}</span><strong>${escaped(value)}</strong></div>`;}
+// With no quality-controlled interior scene, do not silently show an old
+// low-resolution brochure fragment in the configurator.
+const hasApprovedInside=modelId=>modelId==='kvadro'||modelId==='parus';
 function renderSummary(){
+  if(!hasApprovedInside(state.modelId)&&state.view==='inside')state.view='outside';
   const q=quote(),model=getModel(state.modelId);
   $('#previewModelName').textContent=`${model.name} · ${sizeLabel(model,state.sizeId)}`;
   $('#quoteTotal').textContent=money(q.total);
@@ -103,7 +107,13 @@ function renderSummary(){
     :state.view==='inside'?'Баня «${model.name}»: интерьер.':'Схема выбранной модели будет уточнена.');
   $('#previewCaption').textContent=state.view==='outside'?`«${model.name}» снаружи`:state.view==='inside'?`«${model.name}» внутри`:'Размерная схема уточняется для заказа';
   syncMedia();
-  $$('[data-view]').forEach(btn=>{const selected=btn.dataset.view===state.view;btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));});
+  $('[data-view]').forEach(btn=>{
+    const supported=btn.dataset.view!=='inside'||hasApprovedInside(state.modelId);
+    if(!supported){btn.disabled=true;btn.title='Качественные изображения интерьера этой модели готовятся';}
+    else {btn.disabled=false;btn.removeAttribute('title');}
+    const selected=btn.dataset.view===state.view;
+    btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));
+  });
 }
 function optionCard(o){const selected=state.optionIds.includes(o.id);return `<button type="button" class="option-row ${selected?'selected':''}" data-option="${o.id}" aria-pressed="${selected}"><span class="option-check" aria-hidden="true">${selected?'✓':''}</span><span class="option-main"><strong>${escaped(o.name)}</strong><small>${escaped(o.benefit)}</small></span><span class="option-cost">+${money(o.price)}</span></button>`;}
 function renderOptions(category){const chosen=PRICEBOOK.options.filter(o=>o.category===category);return `<div class="options-grid">${chosen.map(optionCard).join('')}</div><p class="builder-insight">Стоимость ориентировочная. Возможность установки каждой опции уточним при заказе.</p>`;}
@@ -163,7 +173,7 @@ function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click
   if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
- $$('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{state.view=btn.dataset.view;renderSummary();}));}
+ $('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;renderSummary();}));}
 function setWeather(weather){
   if(weather!=='sun'&&weather!=='rain')return;
   const rain=weather==='rain';
