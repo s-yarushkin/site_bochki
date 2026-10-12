@@ -53,8 +53,11 @@
 .bundle-mini-gallery .media-frame{aspect-ratio:1.15;min-width:0;overflow:hidden;border-radius:10px;background:var(--v5-feature,#edf1e8)}
 .bundle-operational-note{font-size:12px;line-height:1.6;color:var(--v5-muted,#667)}
 .bundle-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}
-.bundle-item{display:flex;justify-content:space-between;align-items:start;gap:12px;padding:5px 0;font-size:12px;line-height:1.5}
+.bundle-item{display:flex;justify-content:space-between;align-items:start;gap:12px;padding:5px 0;font-size:13px;line-height:1.55;position:relative;padding-left:0}
 .bundle-item span{min-width:0;overflow-wrap:anywhere}.bundle-item strong{white-space:nowrap;font-weight:700}
+/* The legacy checkmark was absolute-positioned over the first letter. Remove it for price rows. */
+.bundle-list .bundle-item::before{content:none;display:none}
+
 .color-choices-catalog{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:18px}
 .color-choices-catalog .color-choice{display:flex;flex-direction:column;align-items:stretch;gap:5px;
   border-radius:11px;min-width:0;padding:7px;font-size:12px;line-height:1.3;white-space:normal}
