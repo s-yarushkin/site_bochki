@@ -65,3 +65,33 @@ test('V66 immutable lead snapshot keeps consent version, full size and server-ca
   assert.equal(store.stats().total,1);
  }finally{store.close()}
 });
+
+test('V66 rolling update preserves legacy V6.4 in-flight quote using frozen historical demo snapshot',()=>{
+ const old={...leadInput,consentVersion:undefined,configuration:{
+   modelId:'kvadro-house',sizeId:'500',finish:'walnut',
+   optionIds:['aspen','water-piping','steam-led','porch','window'],
+   bundleId:'family-comfort-demo'}};
+ const lead=validateBaniLead(old);
+ assert.equal(lead.estimate.pricebookVersion,'2026-10-08-demo-v4');
+ assert.equal(lead.estimate.basePrice,659000);
+ assert.equal(lead.estimate.total,857000);
+ assert.equal(lead.estimate.bundleApplied,true);
+ assert.equal(lead.configuration.finishName,'Тёплый орех');
+ assert.equal(lead.consentEvidence.method,'legacy-consent-true-unverified-action');
+ assert.match(formatBaniLead(lead),/Размер: 5 м/);
+ assert.match(formatBaniLead(lead),/Версия прайса: 2026-10-08-demo-v4/);
+});
+
+test('V66 new consent-versioned requests cannot silently fall back to legacy option prices or deprecated geometry',()=>{
+ const normal={...leadInput,consentVersion:'2026-10-12'};
+ assert.equal(validateBaniLead(normal).estimate.pricebookVersion,'2026-10-12-v66-owner-review-3');
+ assert.throws(()=>validateBaniLead({...normal,configuration:{
+   modelId:'kvadro-house',sizeId:'500',finish:'pine',roof:'brown',
+   optionIds:[],bundleId:null
+ }}),/UNAVAILABLE_SIZE/);
+ assert.throws(()=>validateBaniLead({...normal,configuration:{
+   modelId:'kvadro',sizeId:'500',finish:'pine',roof:'brown',
+   optionIds:['water-piping'],bundleId:null
+ }}),/UNKNOWN_OPTION/);
+ assert.throws(()=>validateBaniLead({...normal,consentVersion:'unknown'}),/CONSENT_VERSION_UNSUPPORTED/);
+});
