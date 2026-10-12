@@ -54,25 +54,16 @@ test('V6.1 inherits common container width without full bleed window copy',()=>{
   assert.match(css,/@media\(max-width:550px\)/);
 });
 
-test('V6.3 Kvadro House uses one exact architectural master and masked dusk illumination',()=>{
-  for(const slot of ['hero-sun-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
-    assert.ok(media.includes("'"+slot+"':{file:'hero-sun.webp'"),slot);
-  }
-  for(const slot of ['hero-rain-desktop','catalog-kvadro-house-rain','bundle-comfort-rain','side-kvadro-house-rain']){
+test('V6.6 retains one immutable SUN/RAIN hero while changing only lower-page catalog photos',()=>{
+  for(const slot of ['hero-sun-desktop','hero-rain-desktop']){
     assert.ok(media.includes("'"+slot+"':{file:'hero-sun.webp'"),slot);
   }
   assert.match(app,/weather==='rain'\?'hero-rain-desktop':'hero-sun-desktop'/);
   assert.match(app,/function syncWeatherPhotoFrames\(weather\)/);
   assert.match(app,/weatherPhotoSlot\(slot\)/);
   assert.match(app,/\$\('#previewImage'\)\.dataset\.slot=weatherPhotoSlot\(activeSlot,weather\)/);
-  // Keep the essential truth-in-imagery disclaimer despite copy polishing.
-  assert.match(html,/На фото — настоящая баня/);
-  assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
-  assert.match(html,/Газон и дорожки добавлены для наглядности/);
-  assert.match(css,/\[data-slot="catalog-kvadro-house-rain"\]/);
-  assert.match(css,/\[data-slot="bundle-comfort-rain"\]/);
-  // Exact SUN master in all eight slots prevents new window/roof/step geometry.
-  // The approved dusk source is only a masked warm-light layer, not the base.
+  assert.match(media,/assets\/catalog-v66\//);
+  assert.match(html,/рекламные изображения, а не фото готового заказа/i);
   assert.match(css,/background:url\('\.\.\/media-v5\/hero-rain\.webp'\)/);
   assert.match(css,/mask-image:radial-gradient/);
   assert.match(media,/frame\.dataset\.mediaSlotLoadedFor=frame\.dataset\.slot/);
