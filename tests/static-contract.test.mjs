@@ -86,7 +86,7 @@ test('S15 privacy and separate consent pages name proposed registered ООО whi
     assert.match(doc,/noindex,nofollow/);
   }
   assert.match(privacy,/Права посетителя/);
-  assert.match(privacy,/Сроки обработки и хранения/);
+  assert.match(privacy,/Сроки хранения и прекращение обработки/);
   assert.match(privacy,/Конкретные сроки хранения данных/);
   assert.match(privacy,/перечень получателей/i);
   assert.match(consent,/Отзыв согласия/);
