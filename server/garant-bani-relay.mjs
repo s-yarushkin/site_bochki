@@ -6,6 +6,7 @@ import {openLeadStore} from './lead-store.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
+import {CATALOG} from '../data/pricebook.js';
 
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
 const allowedBases = new Set(['unknown','ready','advice']);
@@ -17,7 +18,9 @@ const accessNames = {unknown:'Нужно уточнить',yes:'Есть под�
 const MAX_BODY_BYTES = 8192;
 const RATE_WINDOW_MS = 600000;
 const RATE_MAX = 5;
-const finishLabels = {natural:'Натуральное дерево',walnut:'Тёплый орех',graphite:'Графит'};
+const finishLabels=Object.fromEntries(CATALOG.finishes.body.map(f=>[f.id,f.name]));
+const roofLabels=Object.fromEntries(CATALOG.finishes.roof.map(f=>[f.id,f.name]));
+const sizeLabel=(modelId,sizeId)=>CATALOG.models[modelId]?.sizeKind==='full'?sizeId.replace('x','×')+' м':(Number(sizeId)/100).toLocaleString('ru-RU')+' м';
 
 function field(value,max) {
   if(typeof value!=='string' || value.length>max*3) throw new Error('INVALID_FIELD');
@@ -54,16 +57,18 @@ export function validateBaniLead(value) {
     if(district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
-    const {modelId,sizeId,optionIds,bundleId,finish}=value.configuration;
+    const {modelId,sizeId,optionIds,bundleId,finish,roof}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
     if(finish!==undefined && !Object.hasOwn(finishLabels,finish)) throw new Error('INVALID_FINISH');
+    if(roof!==undefined && !Object.hasOwn(roofLabels,roof)) throw new Error('INVALID_ROOF');
     const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId});
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
     lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,
-      finishId:finish??null,finishName:finish===undefined?'Не указана':finishLabels[finish]};
+      finishId:finish??null,finishName:finish===undefined?'Не указана':finishLabels[finish],
+      roofId:roof??null,roofName:roof===undefined?'Не указана':roofLabels[roof]};
     lead.estimate=estimate;
   }
   return lead;
@@ -85,9 +90,10 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
       '',
       'КОМПЛЕКТАЦИЯ',
       'Модель: '+q.modelName,
-      'Размер: '+q.sizeId+' (код; длина '+q.sizeId[0]+' м)',
+      'Размер: '+sizeLabel(q.modelId,q.sizeId),
       'Внешняя отделка: '+(lead.configuration?.finishName||'Не указана'),
-      'Стоимость модели: '+formatMoney(q.basePrice)+' (демо)',
+       'Цвет кровли: '+(lead.configuration?.roofName||'Не указана'),
+      'Стоимость модели: '+formatMoney(q.basePrice)+' (предварительно)',
       'Дополнительные опции ('+q.options.length+'):'
     );
     if(q.options.length)for(const option of q.options)text.push('  • '+option.name+' — '+formatMoney(option.price));
@@ -106,7 +112,7 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   }
   if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
-  text.push('Источник: защищённый сайт /bani-preview/');
+  text.push('Источник: сайт Гарант Бани');
   return text.join('\n');
 }
 
