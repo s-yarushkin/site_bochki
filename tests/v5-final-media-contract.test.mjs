@@ -26,15 +26,21 @@ test('V5 site loads third layer and photographic image controller',()=>{
   assert.match(css,/\.media-frame\.media-ready \.v5-photo/);
 });
 
-test('V6.6 SUN/RAIN hero preserves one architectural master, lower catalog is model-specific',()=>{
+test('V6.8 SUN/RAIN hero unchanged while 7 catalog concepts are model-specific',()=>{
   for(const id of ['kvadro','parus','viking','kvadro-house']){
-    assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v66/'+id+'-outside.webp');
+    assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v68-ai/'+id+'-outside-v68.webp');
+  }
+  for(const id of ['kvadro','parus']){
+    assert.equal(resolveMedia('interior-'+id).path,'assets/catalog-v68-ai/'+id+'-lounge-v68.webp');
+  }
+  // Archived interior frames stay available for rollback but must not enter the V6.8 albums.
+  for(const id of ['viking','kvadro-house']){
     assert.equal(resolveMedia('interior-'+id).path,'assets/catalog-v66/'+id+'-lounge.webp');
   }
   assert.equal(resolveMedia('hero-sun-desktop').file,'hero-sun.webp');
   assert.equal(resolveMedia('hero-rain-desktop').file,'hero-sun.webp');
   assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
-  assert.equal(resolveMedia('bundle-comfort').file,'kvadro-outside.webp');
+  assert.equal(resolveMedia('bundle-comfort').file,'kvadro-outside-v68.webp');
   assert.match(readFileSync(new URL('../assets/css/weather-v6.css',import.meta.url),'utf8'),/mask-image:radial-gradient/);
 });
 
@@ -73,8 +79,12 @@ test('V5 static assets are present, sized and match owner media manifest before 
     assert.ok(existsSync(file),'Missing v6.6 catalog media '+item.file);
     assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),item.sha256,item.file);
   }
+  const aiManifest=JSON.parse(readFileSync(join(root,'assets/catalog-v68-ai/MEDIA-MANIFEST.json'),'utf8'));
+  assert.equal(aiManifest.images.length,7);
+  const aiFiles=new Set(aiManifest.images.map(im=>im.file));
   for(const slot of Object.values(MEDIA_SLOTS).filter(Boolean)){
-    if(slot.path)assert.ok(catalogFiles.has(slot.file),'Unpackaged v6.6 media '+slot.file);
+    if(slot.path?.startsWith('assets/catalog-v68-ai/'))assert.ok(aiFiles.has(slot.file),'Unpackaged v6.8 concept '+slot.file);
+    else if(slot.path)assert.ok(catalogFiles.has(slot.file),'Unpackaged v6.6 media '+slot.file);
     else assert.ok(actual.has(slot.file),'Unpackaged v5 hero '+slot.file);
   }
 });
