@@ -61,15 +61,15 @@ function renderSummary(){
   const q=quote(),model=getModel(state.modelId);
   $('#previewModelName').textContent=`${model.name} · ${sizeLabel(model,state.sizeId)}`;
   $('#quoteTotal').textContent=money(q.total);
-  const chosen=q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт+':''}`:'Пока без дополнительных опций';
+  const chosen=q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт':''}`:'Пока без дополнительных опций';
   $('#previewOptionsText').textContent=chosen;
   $('#quoteBreakdown').innerHTML=priceLine('Готовая баня',money(q.basePrice))+priceLine(`Дополнения (${q.options.length})`,money(q.optionsSubtotal))+(q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):'');
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
   const slot=state.view==='outside'?model.slot:state.view==='inside'?`interior-${model.id}`:'product-front';
   $('#previewImage').dataset.slot=weatherPhotoSlot(slot);
   $('#previewImage').setAttribute('aria-label',state.view==='outside'
-    ?`Фотография семейства «${model.name}». Иллюстрация формы, размеры и отделка конкретного заказа могут отличаться.`
-    :state.view==='inside'?'На фото — пример интерьера. Отделку вашей бани согласуем отдельно.':'Схема выбранной модели будет уточнена.');
+    ?`Каталоговый вид модели «${model.name}». Изображение рекламное; реальные размеры и отделка заказа могут отличаться.`
+    :state.view==='inside'?'Изображение интерьера по каталогу. Реальную отделку бани согласуем отдельно.':'Схема выбранной модели будет уточнена.');
   $('#previewCaption').textContent=state.view==='outside'?`Каталог: «${model.name}»`:state.view==='inside'?`Каталог: интерьер модели «${model.name}»`:'Размерная схема уточняется для заказа';
   syncMedia();
   $$('[data-view]').forEach(btn=>{const selected=btn.dataset.view===state.view;btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));});
