@@ -1,4 +1,4 @@
-import {PRICEBOOK} from '../../data/pricebook.js';
+import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
 import {initAtmosphere,syncAtmosphereText} from './weather-v6.js';
@@ -7,13 +7,16 @@ const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>[...scope.querySelectorAll(selector)];
 const escaped=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stepNames=['Выберите модель','Выберите размер','Внешний вид','Парная и тепло','Удобства','Ваш участок','Ваша комплектация'];
-const state={step:0,modelId:'kvadro-house',sizeId:'500',optionIds:[],bundleId:null,finish:'natural',view:'outside',region:'',base:'unknown',access:'unknown'};
+const state={step:0,modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',view:'outside',region:'',base:'unknown',access:'unknown'};
 let formFlow='quote';
 let formQuote=null;
 let submitted=false;
 let formRequestId=null;
 const money=formatMoney;
 const bundle=PRICEBOOK.bundle;
+const sizeLabel=(model,sz)=>model.sizeKind==='full'?sz.replace('x','×')+' м':(Number(sz)/100).toLocaleString('ru-RU')+' м';
+const sizeHint=model=>model.sizeKind==='full'?'Выберите полный габарит':`Ширина ${model.widthM.toLocaleString('ru-RU')} м`;
+const catalogSizes=model=>model.sizeKind==='full'?`Габариты: ${Object.keys(model.sizes).map(sz=>sz.replace('x','×')).join(' / ')} м`:`Ширина ${model.widthM.toLocaleString('ru-RU')} м · длины ${Object.keys(model.sizes).map(sz=>(Number(sz)/100).toLocaleString('ru-RU')).join(' / ')} м`;
 
 function choice({title,detail='',selected=false,attributes='',price='',icon='⌂'}){
   return `<button type="button" class="choice ${selected?'selected':''}" ${attributes} aria-pressed="${selected}"><span class="choice-icon" aria-hidden="true">${icon}</span><strong>${escaped(title)}</strong>${detail?`<small>${escaped(detail)}</small>`:''}${price?`<small>${escaped(price)}</small>`:''}</button>`;
@@ -21,14 +24,21 @@ function choice({title,detail='',selected=false,attributes='',price='',icon='⌂
 function renderCatalog(){
   $('#catalogGrid').innerHTML=PRICEBOOK.models.map(model=>{
     const low=Math.min(...Object.values(model.sizes));
-    return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div><div class="product-sizes">${Object.keys(model.sizes).map(x=>`${x[0]} м`).join(' / ')}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
+    return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div><div class="product-sizes">${catalogSizes(model)}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
   }).join('');
   syncMedia();
   $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
     const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
-  $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('[data-model-jump]').forEach(link=>link.addEventListener('click',()=>{
+    const model=getModel(link.dataset.modelJump);
+    if(!model)return;
+    state.modelId=model.id;state.sizeId=Object.hasOwn(model.sizes,'500')?'500':Object.keys(model.sizes)[0];
+    state.optionIds=[];state.bundleId=null;state.step=1;state.view='outside';
+    renderBuilder();
+  }));
+  document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
     const value=btn.dataset.filter;
     $$('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
     $$('.product-card').forEach(card=>card.hidden=value!=='all'&&card.dataset.model!==value);
@@ -36,11 +46,11 @@ function renderCatalog(){
 }
 function renderBundle(){
   const options=bundle.optionIds.map(id=>getOption(id));
-  $('#bundleOptions').innerHTML=options.map(o=>`<div class="bundle-item">${escaped(o.name)}</div>`).join('');
+  $('#bundleOptions').innerHTML=options.map(o=>`<div class="bundle-item"><span>${escaped(o.name)}${o.quantity>1?' · '+o.quantity+' '+escaped(o.unit):''}</span><strong>${money(o.price)}</strong></div>`).join('');
   const quote=calculateQuote({modelId:bundle.modelId,sizeId:bundle.sizeId,optionIds:bundle.optionIds,bundleId:bundle.id});
   $('#bundleOld').textContent=money(quote.beforeDiscount);
   $('#bundleNew').textContent=money(quote.total);
-  $('#bundleSaving').textContent=`Расчётная разница ${money(quote.discount)}`;
+  $('#bundleSaving').textContent=quote.discount>0?`Расчётная разница ${money(quote.discount)}`:'Дополнительные опции включены в сумму';
   $$('[data-bundle]').forEach(btn=>btn.addEventListener('click',()=>{
     state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=btn.dataset.bundle==='summary'?6:3;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
@@ -50,29 +60,30 @@ function quote(){return calculateQuote({modelId:state.modelId,sizeId:state.sizeI
 function priceLine(label,value,css=''){return `<div class="quote-row ${css}"><span>${escaped(label)}</span><strong>${escaped(value)}</strong></div>`;}
 function renderSummary(){
   const q=quote(),model=getModel(state.modelId);
-  const length=Number(state.sizeId[0]);
-  $('#previewModelName').textContent=`${model.name} · ${length} м`;
+  $('#previewModelName').textContent=`${model.name} · ${sizeLabel(model,state.sizeId)}`;
   $('#quoteTotal').textContent=money(q.total);
-  const chosen=q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт+':''}`:'Пока без дополнительных опций';
+  const chosen=q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт':''}`:'Пока без дополнительных опций';
   $('#previewOptionsText').textContent=chosen;
   $('#quoteBreakdown').innerHTML=priceLine('Готовая баня',money(q.basePrice))+priceLine(`Дополнения (${q.options.length})`,money(q.optionsSubtotal))+(q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):'');
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
-  const slot=state.view==='outside'?model.slot:state.view==='inside'?'product-interior':'product-front';
+  const slot=state.view==='outside'?model.slot:state.view==='inside'?`interior-${model.id}`:'product-front';
   $('#previewImage').dataset.slot=weatherPhotoSlot(slot);
   $('#previewImage').setAttribute('aria-label',state.view==='outside'
-    ?`Фотография семейства «${model.name}». Иллюстрация формы, размеры и отделка конкретного заказа могут отличаться.`
-    :state.view==='inside'?'На фото — пример интерьера. Отделку вашей бани согласуем отдельно.':'Схема выбранной модели будет уточнена.');
-  $('#previewCaption').textContent=state.view==='outside'?`Фото модели «${model.name}»`:state.view==='inside'?'Пример интерьера, комплектация может отличаться':'Размерная схема уточняется для заказа';
+    ?`Баня «${model.name}» снаружи.`
+    :state.view==='inside'?'Баня «${model.name}»: интерьер.':'Схема выбранной модели будет уточнена.');
+  $('#previewCaption').textContent=state.view==='outside'?`«${model.name}» снаружи`:state.view==='inside'?`«${model.name}» внутри`:'Размерная схема уточняется для заказа';
   syncMedia();
   $$('[data-view]').forEach(btn=>{const selected=btn.dataset.view===state.view;btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));});
 }
 function optionCard(o){const selected=state.optionIds.includes(o.id);return `<button type="button" class="option-row ${selected?'selected':''}" data-option="${o.id}" aria-pressed="${selected}"><span class="option-check" aria-hidden="true">${selected?'✓':''}</span><span class="option-main"><strong>${escaped(o.name)}</strong><small>${escaped(o.benefit)}</small></span><span class="option-cost">+${money(o.price)}</span></button>`;}
 function renderOptions(category){const chosen=PRICEBOOK.options.filter(o=>o.category===category);return `<div class="options-grid">${chosen.map(optionCard).join('')}</div><p class="builder-insight">Стоимость ориентировочная. Возможность установки каждой опции уточним при заказе.</p>`;}
-function renderQuoteTable(){const q=quote();return `<div class="summary-table"><div class="quote-row"><b>${escaped(q.modelName)} · ${state.sizeId[0]} м</b><b>${money(q.basePrice)}</b></div>${q.options.map(o=>priceLine(o.name,money(o.price))).join('')}${q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):''}<div class="quote-row"><b>Предварительно</b><b>${money(q.total)}</b></div></div><p class="builder-insight">Это пример предварительного расчёта, а не коммерческое предложение. Доставку, основание и подключения рассчитаем отдельно.</p><button type="button" class="btn btn-accent btn-full" data-flow="quote">Получить расчёт для моего участка ↗</button>`;}
+function renderQuoteTable(){const q=quote();return `<div class="summary-table"><div class="quote-row"><b>${escaped(q.modelName)} · ${sizeLabel(getModel(state.modelId),state.sizeId)}</b><b>${money(q.basePrice)}</b></div>${q.options.map(o=>priceLine(o.name,money(o.price))).join('')}${q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):''}<div class="quote-row"><b>Предварительно</b><b>${money(q.total)}</b></div></div><p class="builder-insight">Это пример предварительного расчёта, а не коммерческое предложение. Доставку, основание и подключения рассчитаем отдельно.</p><button type="button" class="btn btn-accent btn-full" data-flow="quote">Получить расчёт для моего участка ↗</button>`;}
 function renderStepContent(){const model=getModel(state.modelId),step=state.step;let body='';
   if(step===0){body=`<h3 class="builder-title">Какая баня станет вашей?</h3><p class="builder-help">Выберите модель. Потом подберём размер и дополнения.</p><div class="choice-grid">${PRICEBOOK.models.map(m=>choice({title:m.name,detail:m.subtitle,selected:state.modelId===m.id,attributes:`data-choose-model="${m.id}"`,icon:'⌂'})).join('')}</div>`;}
-  if(step===1){body=`<h3 class="builder-title">Какой размер нужен?</h3><p class="builder-help">Варианты размеров для модели ${escaped(model.name)}. Доступность уточним при обращении.</p><div class="size-choices">${Object.keys(model.sizes).map(sz=>choice({title:sz[0]+' м',detail:sz,price:money(model.sizes[sz]),selected:state.sizeId===sz,attributes:`data-choose-size="${sz}"`,icon:'↔'})).join('')}</div>`;}
-  if(step===2){const finishes=[['natural','Натуральное дерево','#cda86c'],['walnut','Тёплый орех','#796246'],['graphite','Графит','#525754']];body=`<h3 class="builder-title">Каким будет внешний вид?</h3><p class="builder-help">Выберите настроение оформления. Доступные цвета и доплату подтвердим перед заказом.</p><div class="color-choices">${finishes.map(([id,title,color])=>`<button type="button" class="color-choice ${state.finish===id?'selected':''}" data-finish="${id}" aria-pressed="${state.finish===id}"><span class="color-swatch" style="background:${color}"></span>${title}</button>`).join('')}</div><div class="color-hint">Цвет — пожелание по отделке. На предварительную сумму он не влияет; варианты и стоимость уточним перед заказом.</div>`;}
+  if(step===1){body=`<h3 class="builder-title">Какой размер нужен?</h3><p class="builder-help">Варианты размеров для модели ${escaped(model.name)}. Доступность уточним при обращении.</p><div class="size-choices">${Object.keys(model.sizes).map(sz=>choice({title:sizeLabel(model,sz),detail:sizeHint(model),price:money(model.sizes[sz]),selected:state.sizeId===sz,attributes:`data-choose-size="${sz}"`,icon:'↔'})).join('')}</div>`;}
+  if(step===2){const bodyChoices=CATALOG.finishes.body;const roofChoices=CATALOG.finishes.roof;
+    const swatch=(kind,item,attr,selected)=>`<button type="button" class="color-choice ${selected===item.id?'selected':''}" data-${attr}="${item.id}" aria-pressed="${selected===item.id}"><img class="catalog-swatch" src="assets/catalog-v66/${kind}-${item.id}.webp" alt="" loading="lazy"><span>${escaped(item.name)}</span></button>`;
+    body=`<h3 class="builder-title">Цвет бани и кровли</h3><p class="builder-help">Выберите цвет корпуса и кровли по своему вкусу.</p><h4>Отделка корпуса — 12 вариантов</h4><div class="color-choices color-choices-catalog">${bodyChoices.map(item=>swatch('body',item,'finish',state.finish)).join('')}</div><h4>Цвет кровли — 4 варианта</h4><div class="color-choices color-choices-catalog">${roofChoices.map(item=>swatch('roof',item,'roof',state.roof)).join('')}</div><div class="color-hint">Стоимость выбранного цвета уточним при подтверждении заказа.</div>`;}
   if(step===3){body=`<h3 class="builder-title">Тепло начинается с деталей</h3><p class="builder-help">Подсветка полка, топка, отделка: выберите то, что сделает вашу парную особенной.</p>${renderOptions('steam')}`;}
   if(step===4){body=`<h3 class="builder-title">Добавим немного удобства</h3><p class="builder-help">Вода, крыльцо, окна и дополнительные мелочи для долгожданного отдыха.</p>${renderOptions('comfort')}`;}
   if(step===5){body=`<h3 class="builder-title">Расскажите об участке</h3><p class="builder-help">Уточним адрес, подъезд и основание, чтобы обсудить доставку и установку.</p><div class="site-fields"><label>Где ваша дача? <input id="regionInput" maxlength="140" placeholder="Город / район" value="${escaped(state.region)}"></label><label>Основание под баню<select id="baseSelect"><option value="unknown">Пока не знаю</option><option value="ready">Подготовлено</option><option value="advice">Нужна консультация</option></select></label><label>Подъезд транспорта<select id="accessSelect"><option value="unknown">Нужно уточнить</option><option value="yes">Есть подъезд</option><option value="advice">Нужна консультация</option></select></label></div><p class="builder-insight">Доставка и основание сейчас не включены в стоимость. Менеджер уточнит детали позже.</p>`;}
@@ -81,7 +92,8 @@ function renderStepContent(){const model=getModel(state.modelId),step=state.step
   if(step===5){$('#baseSelect').value=state.base;$('#accessSelect').value=state.access;$('#regionInput').addEventListener('input',e=>state.region=e.target.value);$('#baseSelect').addEventListener('change',e=>state.base=e.target.value);$('#accessSelect').addEventListener('change',e=>state.access=e.target.value);}
   $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;}renderBuilder();}));
   $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
-  $$('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
+  document.querySelectorAll('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
+  document.querySelectorAll('[data-roof]').forEach(btn=>btn.addEventListener('click',()=>{state.roof=btn.dataset.roof;renderBuilder();}));
   $$('[data-option]').forEach(btn=>btn.addEventListener('click',()=>toggleOption(btn.dataset.option)));
   // Form entry points are handled by one delegated listener in initForms().
 }
@@ -113,12 +125,12 @@ function syncWeatherPhotoFrames(weather){
   }
   // Keep the currently selected model and view. Weather never resets the quote.
   const activeSlot=state.view==='outside'?getModel(state.modelId).slot:
-    state.view==='inside'?'product-interior':'product-front';
+    state.view==='inside'?`interior-${state.modelId}`:'product-front';
   $('#previewImage').dataset.slot=weatherPhotoSlot(activeSlot,weather);
   syncMedia();
 }
 function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
-  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='natural';state.region='';state.base='unknown';state.access='unknown';}
+  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
  $$('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{state.view=btn.dataset.view;renderSummary();}));}
@@ -175,7 +187,7 @@ function formatRussianMobile(value){
     (d.length>=7?'-'+d.slice(6,8):'')+
     (d.length>=9?'-'+d.slice(8,10):'');
 }
-function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${q.sizeId[0]} м</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (ориентировочно)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
+function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${sizeLabel(getModel(q.modelId),q.sizeId)}</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (ориентировочно)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
 function openForm(flow='quote'){
   formRequestId=crypto.randomUUID();
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
@@ -253,7 +265,7 @@ function initForms(){
     }
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:f.elements.leadConsent.checked,requestId:formRequestId,website:f.elements.website.value
+      comment,consent:f.elements.leadConsent.checked,consentVersion:'2026-10-12',requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
@@ -261,7 +273,7 @@ function initForms(){
       payload.access=f.elements.access.value;
       payload.configuration={
         modelId:formQuote.modelId,sizeId:formQuote.sizeId,
-        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish
+        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish,roof:state.roof
       };
     }
     submit.disabled=true;

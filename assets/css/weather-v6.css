@@ -621,3 +621,29 @@ html{scroll-padding-top:0}
   .difference-bottom{align-items:stretch;flex-direction:column;gap:20px}
   .difference-bottom .btn{width:100%;max-width:100%}
 }
+
+
+/* V6.6 visual acceptance: never wrap ₽ onto its own line or clip available sizes.
+   Preserve the four-card desktop geometry by stacking compact metadata within each card. */
+.catalog .product-meta{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  justify-content:initial;
+  align-items:start;
+  gap:5px;
+  min-width:0;
+}
+.catalog .product-price{
+  white-space:nowrap;
+  max-width:100%;
+}
+.catalog .product-sizes{
+  white-space:normal;
+  min-width:0;
+  overflow-wrap:normal;
+  line-height:1.38;
+}
+@media (min-width:1100px) and (max-height:900px){
+  .catalog .product-meta{gap:3px;margin-bottom:8px}
+  .catalog .product-sizes{font-size:12px;line-height:1.3}
+}

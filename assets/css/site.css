@@ -46,3 +46,36 @@
 .contact-dialog .lead-consent-label input[aria-invalid="true"]{outline:2px solid var(--v5-error,#b33333);outline-offset:3px}
 @media(max-width:700px){.footer-operator{grid-template-columns:1fr;gap:19px}}
 @media(max-width:360px){.contact-dialog .lead-consent-label{padding:12px 10px;gap:9px;font-size:12px}}
+
+
+/* V6.6 canonical catalog, owner-selected featured Kvadro, and color swatches */
+.bundle-mini-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:18px}
+.bundle-mini-gallery .media-frame{aspect-ratio:1.15;min-width:0;overflow:hidden;border-radius:10px;background:var(--v5-feature,#edf1e8)}
+.bundle-operational-note{font-size:12px;line-height:1.6;color:var(--v5-muted,#667)}
+.bundle-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}
+.bundle-item{display:flex;justify-content:space-between;align-items:start;gap:12px;padding:5px 0;font-size:13px;line-height:1.55;position:relative;padding-left:0}
+.bundle-item span{min-width:0;overflow-wrap:anywhere}.bundle-item strong{white-space:nowrap;font-weight:700}
+/* The legacy checkmark was absolute-positioned over the first letter. Remove it for price rows. */
+.bundle-list .bundle-item::before{content:none;display:none}
+
+.color-choices-catalog{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:18px}
+.color-choices-catalog .color-choice{display:flex;flex-direction:column;align-items:stretch;gap:5px;
+  border-radius:11px;min-width:0;padding:7px;font-size:12px;line-height:1.3;white-space:normal}
+.color-choices-catalog .color-choice span{overflow-wrap:anywhere;text-align:center}
+.catalog-swatch{display:block;width:100%;height:70px;object-fit:cover;border-radius:6px;border:1px solid var(--v5-border,var(--line))}
+.details-grid-models{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.details-grid-models .detail-card{min-width:0}
+.details-grid-models .model-images{display:grid;grid-template-columns:3fr 2fr;gap:8px;margin-bottom:14px}
+.details-grid-models .model-images .media-frame{aspect-ratio:5/4;min-height:0;overflow:hidden;border-radius:10px}
+.details-grid-models .model-images .media-frame img{width:100%;height:100%;object-fit:cover}
+.details-grid-models .detail-card .text-link{display:inline-block;margin-top:14px}
+@media(max-width:790px){
+ .details-grid-models{grid-template-columns:1fr}
+ .bundle-list{grid-template-columns:1fr}
+ .color-choices-catalog{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:390px){
+ .bundle-mini-gallery{gap:5px}
+ .color-choices-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .catalog-swatch{height:55px}
+}

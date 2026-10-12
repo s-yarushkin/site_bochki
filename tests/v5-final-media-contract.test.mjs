@@ -26,34 +26,23 @@ test('V5 site loads third layer and photographic image controller',()=>{
   assert.match(css,/\.media-frame\.media-ready \.v5-photo/);
 });
 
-test('V6.3 geometry-safe weather: three untouched models and one shared Kvadro House master',()=>{
-  for(const series of ['kvadro','parus','viking']){
-    const key='catalog-'+series;
-    assert.ok(resolveMedia(key),'Missing '+key);
-    assert.equal(resolveMedia(key),MEDIA_SLOTS[key]);
-    assert.equal(Object.keys(MEDIA_SLOTS).filter(v=>v===key+'-rain').length,0);
-    assert.equal(Object.keys(MEDIA_SLOTS).filter(v=>v===key+'-sun').length,0);
+test('V6.6 SUN/RAIN hero preserves one architectural master, lower catalog is model-specific',()=>{
+  for(const id of ['kvadro','parus','viking','kvadro-house']){
+    assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v66/'+id+'-outside.webp');
+    assert.equal(resolveMedia('interior-'+id).path,'assets/catalog-v66/'+id+'-lounge.webp');
   }
-  for(const key of ['hero-sun-desktop','catalog-kvadro-house','bundle-comfort','side-kvadro-house']){
-    assert.equal(resolveMedia(key).file,'hero-sun.webp',key);
-  }
-  for(const key of ['hero-rain-desktop','catalog-kvadro-house-rain','bundle-comfort-rain','side-kvadro-house-rain']){
-    assert.equal(resolveMedia(key).file,'hero-sun.webp',key);
-    assert.match(resolveMedia(key).alt,/вечерн|подсветк/);
-  }
+  assert.equal(resolveMedia('hero-sun-desktop').file,'hero-sun.webp');
+  assert.equal(resolveMedia('hero-rain-desktop').file,'hero-sun.webp');
   assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
+  assert.equal(resolveMedia('bundle-comfort').file,'kvadro-outside.webp');
   assert.match(readFileSync(new URL('../assets/css/weather-v6.css',import.meta.url),'utf8'),/mask-image:radial-gradient/);
 });
 
-test('V5 no invented plan photo or fabricated builder model interior',()=>{
+test('V6.6 no invented plan photo; model-specific interiors are explicitly catalog renders',()=>{
   assert.equal(resolveMedia('product-front'),null);
-  // The copy is client-facing while explicitly disclosing that the pictured
-  // interior / additions / landscaping do not represent the quoted package.
-  assert.match(js,/На фото — пример интерьера\. Отделку вашей бани согласуем отдельно/);
-  assert.match(html,/На фото — модель «Квадро Хаус»\. Дополнения подбираются отдельно/);
-  assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
-  assert.match(html,/Газон и дорожки добавлены для наглядности/);
-  assert.doesNotMatch(html,/На фото показана модель\. Комплектация подбирается отдельно/);
+  assert.doesNotMatch(html,/рекламные изображения, а не фото готового заказа/);
+  assert.match(html,/Продуманная комплектация для отдыха на даче/);
+  assert.doesNotMatch(html,/Стоимость приведена для примера\. Состав комплекта/);
 });
 
 test('V5 static assets are present, sized and match owner media manifest before release',()=>{
@@ -73,8 +62,20 @@ test('V5 static assets are present, sized and match owner media manifest before 
     assert.ok(p.bytes>1000&&p.bytes<900000,p.file);
     assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),p.sha256,p.file);
   }
+  const catalogDir=join(root,'assets/catalog-v66');
+  const catalogManifest=JSON.parse(readFileSync(join(catalogDir,'MEDIA-MANIFEST.json'),'utf8'));
+  assert.equal(catalogManifest.images.length,34);
+  const catalogFiles=new Set();
+  for(const item of catalogManifest.images){
+    assert.ok(!catalogFiles.has(item.file),'duplicate catalog asset '+item.file);
+    catalogFiles.add(item.file);
+    const file=join(catalogDir,item.file);
+    assert.ok(existsSync(file),'Missing v6.6 catalog media '+item.file);
+    assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),item.sha256,item.file);
+  }
   for(const slot of Object.values(MEDIA_SLOTS).filter(Boolean)){
-    assert.ok(actual.has(slot.file),'Unpackaged media '+slot.file);
+    if(slot.path)assert.ok(catalogFiles.has(slot.file),'Unpackaged v6.6 media '+slot.file);
+    else assert.ok(actual.has(slot.file),'Unpackaged v5 hero '+slot.file);
   }
 });
 

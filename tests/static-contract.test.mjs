@@ -17,23 +17,21 @@ test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.m
 test('S03 only designated same-origin lead endpoint in forms',()=>{assert.match(script,/fetch\(new URL\('api\/lead',document\.baseURI\)/);assert.doesNotMatch(script,/XMLHttpRequest|sendBeacon|localStorage|sessionStorage/);});
 test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/Указаны ориентировочные цены/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
 test('S05 full and short callback flows',()=>{assert.match(html,/data-flow="quote"/);assert.match(html,/data-flow="callback"/);});
-test('S06 real asset slots for catalog and story',()=>{
-  // The former unverified polok/stove image slots are replaced by documented
-  // real-object/interior photography. Do not reintroduce misleading placeholders.
-  const staticSlots=['hero-sun-desktop','bundle-comfort','cta-evening-cozy',
-    'product-steam','product-interior','site-example','side-kvadro-house'];
-  for(const slot of staticSlots)assert.ok(
-    html.includes('data-slot="'+slot+'"'), 'Missing real-page slot '+slot);
-  for(const slot of ['catalog-kvadro','catalog-parus','catalog-viking','catalog-kvadro-house']){
-    assert.ok(data.includes("slot:'"+slot+"'"),'Missing catalog model slot '+slot);
-  }
+test('S06 all four models have distinct catalog exteriors/interiors, hero unchanged',()=>{
   const media=readFileSync(new URL('../assets/js/media-v5.js',import.meta.url),'utf8');
-  for(const slot of [...staticSlots.filter(v=>v!=='hero-sun-desktop'),'hero-sun-desktop','hero-rain-desktop',
-      'catalog-kvadro','catalog-parus','catalog-viking','catalog-kvadro-house']){
-    assert.ok(media.includes("'"+slot+"'"),'Missing local media mapping '+slot);
+  for(const slot of ['hero-sun-desktop','hero-rain-desktop','bundle-comfort','interior-kvadro','interior-parus','interior-viking','interior-kvadro-house']){
+    assert.ok(media.includes("'"+slot+"'"),'Missing media slot '+slot);
   }
-  assert.doesNotMatch(html,/data-slot="(?:stove-water-tank|polok-backlight)"/);
+  for(const id of ['kvadro','parus','viking','kvadro-house']){
+    assert.ok(Object.hasOwn(JSON.parse(readFileSync(new URL('../data/catalog-pricebook.json',import.meta.url),'utf8')).models,id),'Missing catalog model: '+id);
+    assert.ok(media.includes("'catalog-"+id+"'"),'Missing model exterior: '+id);
+  }
+  assert.match(html,/data-slot="hero-sun-desktop"/);
+  assert.match(html,/id="model-interiors"/);
+  assert.match(html,/data-slot="bundle-comfort"/);
+  assert.doesNotMatch(html,/data-slot="stove-water-tank"/);
 });
+
 test('S06b catalog buttons are registered as a collection and full startup remains reachable',()=>{
   // A single querySelector result has no forEach; this silently broke all
   // startup handlers including SUN/RAIN despite 77/77 passing previously.
@@ -88,7 +86,7 @@ test('S15 privacy and separate consent pages name proposed registered ООО whi
     assert.match(doc,/noindex,nofollow/);
   }
   assert.match(privacy,/Права посетителя/);
-  assert.match(privacy,/Сроки обработки и хранения/);
+  assert.match(privacy,/Сроки хранения и прекращение обработки/);
   assert.match(privacy,/Конкретные сроки хранения данных/);
   assert.match(privacy,/перечень получателей/i);
   assert.match(consent,/Отзыв согласия/);

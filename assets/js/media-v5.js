@@ -1,29 +1,39 @@
 /**
- * V5 preview photography. The assets are local to this static site, not CDN.
- * V6.3: SUN and RAIN share the SAME Kvadro House master pixels for immutable
- * architecture. RAIN is graded by CSS; warm glass is a masked, decorative
- * blend of the existing approved dusk visual, not replacement building geometry.
- * No rain streaks are added to photos; landscaping remains disclosed.
- * Non-image product configuration data is unaffected.
+ * V6.6 media registry.
+ * Keep the approved SUN/RAIN hero master untouched.
+ * All catalog images below hero are crops of owner-provided Garant-Grupp brochure.
+ * The PDF images are promotional renders/composites; they are NOT verified
+ * documentary photos of delivered installations.
  */
+const catalog=(file,alt)=>({file,path:'assets/catalog-v66/'+file,alt});
 export const MEDIA_SLOTS=Object.freeze({
-  'hero-sun-desktop':{file:'hero-sun.webp',alt:'Реальная баня Квадро Хаус днём. Газон и мостки художественно визуализированы'},
-  'hero-rain-desktop':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус»: вечерняя световая обработка дневного кадра, архитектура сохранена. Благоустройство участка визуализировано'},
-  'catalog-kvadro':{file:'catalog-kvadro.webp',alt:'Модель «Квадро» на участке, реальное фото'},
-  'catalog-parus':{file:'catalog-parus.webp',alt:'Модель «Парус» на участке, реальное фото'},
-  'catalog-viking':{file:'catalog-viking.webp',alt:'Модель «Викинг» на участке, реальное фото'},
-  'catalog-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём; благоустройство участка визуализировано'},
-  'catalog-kvadro-house-rain':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» с вечерним освещением: обработка дневного кадра; благоустройство участка визуализировано'},
-  'bundle-comfort':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» днём, пример модели; не фото конкретной комплектации'},
-  'bundle-comfort-rain':{file:'hero-sun.webp',alt:'Пример бани «Квадро Хаус» с вечерним освещением; не фотография конкретной комплектации'},
-  'cta-evening-cozy':{file:'mood-evening.webp',alt:'Готовая баня с подсветкой во дворе зимним вечером'},
-  'product-steam':{file:'interior.webp',alt:'Пример отделки внутри готовой бани'},
-  'product-interior':{file:'interior.webp',alt:'Пример интерьера бани семейства «Викинг»'},
-  'site-example':{file:'site-example.webp',alt:'Готовая баня на загородном участке'},
-  'side-kvadro-house':{file:'hero-sun.webp',alt:'Реальная баня «Квадро Хаус» днём, благоустройство участка на изображении визуализировано'},
-  'side-kvadro-house-rain':{file:'hero-sun.webp',alt:'Баня «Квадро Хаус» с вечерней обработкой дневного кадра; благоустройство участка визуализировано'},
-  'polok-backlight':{file:'interior.webp',alt:'Пример отделки и печи внутри готовой бани'},
-  'stove-water-tank':{file:'site-example.webp',alt:'Установленная баня на участке'},
+  'hero-sun-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: утверждённая художественная обработка участка'},
+  'hero-rain-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: та же архитектура в дождевой теме'},
+  'catalog-kvadro':catalog('kvadro-outside.webp','Квадро: наружный вид'),
+  'catalog-parus':catalog('parus-outside.webp','Парус: наружный вид'),
+  'catalog-viking':catalog('viking-outside.webp','Викинг: наружный вид'),
+  'catalog-kvadro-house':catalog('kvadro-house-outside.webp','Квадро Хаус: наружный вид'),
+  'catalog-kvadro-house-rain':catalog('kvadro-house-outside.webp','Квадро Хаус: вид снаружи'),
+  'bundle-comfort':catalog('kvadro-outside.webp','Квадро: готовая баня снаружи'),
+  'bundle-comfort-rain':catalog('kvadro-outside.webp','Квадро Комфорт: изображение'),
+  'cta-evening-cozy':catalog('viking-outside.webp','Викинг: внешний вид'),
+  'product-steam':catalog('kvadro-steam.webp','Квадро: парная'),
+  'product-interior':catalog('parus-lounge.webp','Парус: интерьер'),
+  'site-example':catalog('parus-outside.webp','Парус: внешний вид'),
+  'side-kvadro-house':catalog('kvadro-house-outside.webp','Квадро Хаус: вид снаружи'),
+  'side-kvadro-house-rain':catalog('kvadro-house-outside.webp','Квадро Хаус: вид снаружи'),
+  'interior-kvadro':catalog('kvadro-lounge.webp','Квадро: комната отдыха'),
+  'interior-parus':catalog('parus-lounge.webp','Парус: зона отдыха'),
+  'interior-viking':catalog('viking-lounge.webp','Викинг: зона отдыха'),
+  'interior-kvadro-house':catalog('kvadro-house-lounge.webp','Квадро Хаус: комната отдыха'),
+  'detail-kvadro-steam':catalog('kvadro-steam.webp','Квадро: парная'),
+  'detail-kvadro-lounge':catalog('kvadro-lounge.webp','Квадро: комната отдыха'),
+  'detail-kvadro-entry':catalog('kvadro-entry.webp','Квадро: входная зона'),
+  'detail-parus-steam':catalog('parus-steam.webp','Парус: парная'),
+  'detail-viking-steam':catalog('viking-steam.webp','Викинг: парная'),
+  'detail-kvadro-house-steam':catalog('kvadro-house-steam.webp','Квадро Хаус: парная'),
+  'polok-backlight':catalog('kvadro-steam.webp','Квадро: парная'),
+  'stove-water-tank':catalog('viking-stove.webp','Викинг: печь'),
   'product-front':null
 });
 export const MEDIA_ASSET_ROOT='assets/media-v5/';
@@ -76,6 +86,6 @@ export function syncMedia(root=document){
     // The same image is intentionally reused after switching themes if no pair.
     frame.dataset.mediaSlotLoadedFor=frame.dataset.slot;
     frame.append(img);
-    img.src=new URL(MEDIA_ASSET_ROOT+entry.file,document.baseURI).href;
+    img.src=new URL(entry.path??(MEDIA_ASSET_ROOT+entry.file),document.baseURI).href;
   }
 }

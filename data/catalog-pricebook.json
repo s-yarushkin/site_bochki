@@ -251,14 +251,14 @@
       "source": "catalog-p12"
     },
     "socket_kit_owner": {
-      "label": "Комплект розеток с установкой (состав уточнить)",
+      "label": "Комплект розеток",
       "unitPriceRub": 10000,
       "quantity": 1,
       "unit": "комплект",
       "source": "owner-estimate-2026-10-12"
     },
     "electrical_distribution_owner": {
-      "label": "Разводка электрики (объём уточнить)",
+      "label": "Разводка электрики",
       "unitPriceRub": 10000,
       "quantity": 1,
       "unit": "комплект",
@@ -286,7 +286,7 @@
       "source": "catalog-p14"
     },
     "electrical_safety_cabinet_temporary_supply": {
-      "label": "Электрощит с автоматической защитой и вводом для временного подключения (после проверки проекта)",
+      "label": "Электрощит с автоматической защитой",
       "unitPriceRub": 15000,
       "quantity": 1,
       "unit": "комплект",

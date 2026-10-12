@@ -6,6 +6,8 @@ import {openLeadStore} from './lead-store.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
+import {CATALOG} from '../data/pricebook.js';
+import {LEGACY_V64_PRICEBOOK} from '../data/legacy-v64-pricebook.js';
 
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
 const allowedBases = new Set(['unknown','ready','advice']);
@@ -17,7 +19,10 @@ const accessNames = {unknown:'Нужно уточнить',yes:'Есть под�
 const MAX_BODY_BYTES = 8192;
 const RATE_WINDOW_MS = 600000;
 const RATE_MAX = 5;
-const finishLabels = {natural:'Натуральное дерево',walnut:'Тёплый орех',graphite:'Графит'};
+const finishLabels=Object.fromEntries(CATALOG.finishes.body.map(f=>[f.id,f.name]));
+const roofLabels=Object.fromEntries(CATALOG.finishes.roof.map(f=>[f.id,f.name]));
+const oldFinishLabels={natural:'Натуральное дерево',walnut:'Тёплый орех',graphite:'Графит'};
+const sizeLabel=(modelId,sizeId,legacy=false)=>legacy?(Number(sizeId)/100).toLocaleString('ru-RU')+' м':CATALOG.models[modelId]?.sizeKind==='full'?sizeId.replace('x','×')+' м':(Number(sizeId)/100).toLocaleString('ru-RU')+' м';
 
 function field(value,max) {
   if(typeof value!=='string' || value.length>max*3) throw new Error('INVALID_FIELD');
@@ -31,6 +36,7 @@ export function validateBaniLead(value) {
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
   if(value.consent!==true) throw new Error('CONSENT_REQUIRED');
+  if(value.consentVersion!==undefined && value.consentVersion!=='2026-10-12')throw new Error('CONSENT_VERSION_UNSUPPORTED');
   const name=field(value.name,80);
   if((name && name.length<2) || (value.flow==='quote' && name.length<2)) throw new Error('INVALID_NAME');
   const digits=field(value.phone,32).replace(/\D/g,'');
@@ -48,22 +54,30 @@ export function validateBaniLead(value) {
   if(contactChannel==='telegram' && contactAccount.startsWith('https://max.ru/'))throw new Error('WRONG_CONTACT_NETWORK');
   if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
-  const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment};
+  const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
+    consentEvidence:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
   if(value.flow==='quote') {
     const district=field(value.district,140);
     if(district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
-    const {modelId,sizeId,optionIds,bundleId,finish}=value.configuration;
+    const {modelId,sizeId,optionIds,bundleId,finish,roof}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
-    if(finish!==undefined && !Object.hasOwn(finishLabels,finish)) throw new Error('INVALID_FINISH');
-    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId});
+    // A V6.4 tab opened before the rolling deployment has no consentVersion.
+    // Snapshot its *historic unapproved demo prices* rather than silently repricing
+    // old option IDs or dropping still-in-flight requests. New V6.6 always sends version.
+    const legacy=value.consentVersion===undefined;
+    const names=legacy?oldFinishLabels:finishLabels;
+    if(finish!==undefined && !Object.hasOwn(names,finish)) throw new Error('INVALID_FINISH');
+    if(roof!==undefined && !Object.hasOwn(roofLabels,roof)) throw new Error('INVALID_ROOF');
+    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},legacy?LEGACY_V64_PRICEBOOK:undefined);
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
     lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,
-      finishId:finish??null,finishName:finish===undefined?'Не указана':finishLabels[finish]};
+      finishId:finish??null,finishName:finish===undefined?'Не указана':names[finish],
+      roofId:roof??null,roofName:roof===undefined?'Не указана':roofLabels[roof]};
     lead.estimate=estimate;
   }
   return lead;
@@ -85,9 +99,10 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
       '',
       'КОМПЛЕКТАЦИЯ',
       'Модель: '+q.modelName,
-      'Размер: '+q.sizeId+' (код; длина '+q.sizeId[0]+' м)',
+      'Размер: '+sizeLabel(q.modelId,q.sizeId,q.pricebookVersion===LEGACY_V64_PRICEBOOK.version),
       'Внешняя отделка: '+(lead.configuration?.finishName||'Не указана'),
-      'Стоимость модели: '+formatMoney(q.basePrice)+' (демо)',
+       'Цвет кровли: '+(lead.configuration?.roofName||'Не указана'),
+      'Стоимость модели: '+formatMoney(q.basePrice)+' (предварительно)',
       'Дополнительные опции ('+q.options.length+'):'
     );
     if(q.options.length)for(const option of q.options)text.push('  • '+option.name+' — '+formatMoney(option.price));
@@ -106,7 +121,7 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   }
   if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
-  text.push('Источник: защищённый сайт /bani-preview/');
+  text.push('Источник: сайт Гарант Бани');
   return text.join('\n');
 }
 
@@ -114,15 +129,21 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   const host=env.HOST||'127.0.0.1';
   const port=Number(env.PORT||3301);
   const allowedOrigin=env.ALLOWED_ORIGIN;
+  const siteBasePath=env.SITE_BASE_PATH||'/bani-preview/';
   const chatId=env.MAX_CHAT_ID;
   if(host!=='127.0.0.1'||!Number.isSafeInteger(port)||port<1024||port>65535) throw new Error('UNSAFE_BIND');
-  if(allowedOrigin!=='https://xn----7sbbigeqcfm8bq.xn--p1ai') throw new Error('UNSAFE_ORIGIN');
+  let parsedOrigin;
+  try{parsedOrigin=new URL(allowedOrigin);}catch{throw new Error('UNSAFE_ORIGIN');}
+  if(parsedOrigin.protocol!=='https:'||parsedOrigin.origin!==allowedOrigin||
+     parsedOrigin.username||parsedOrigin.password||parsedOrigin.pathname!=='/'||
+     parsedOrigin.search||parsedOrigin.hash||!parsedOrigin.hostname.includes('.'))throw new Error('UNSAFE_ORIGIN');
+  if(!/^\/(?:[a-z0-9-]+\/)*$/.test(siteBasePath))throw new Error('UNSAFE_BASE_PATH');
   if(!/^-?\d+$/.test(chatId||'')) throw new Error('INVALID_CHAT_ID');
   const file=env.MAX_TOKEN_FILE||(env.CREDENTIALS_DIRECTORY?env.CREDENTIALS_DIRECTORY+'/max-token':null);
   if(!file) throw new Error('TOKEN_FILE_NOT_SET');
   const token=String(readSecret(file,'utf8')).trim();
   if(token.length<10)throw new Error('INVALID_TOKEN');
-  return {host,port,allowedOrigin,chatId,token};
+  return {host,port,allowedOrigin,siteBasePath,chatId,token};
 }
 
 export async function deliverBaniLead(lead,config,fetchImpl=fetch,meta={}) {
@@ -235,7 +256,7 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   if(!databasePath||!databasePath.startsWith('/var/lib/garant-bani-relay/'))throw new Error('UNSAFE_DATABASE_PATH');
   const store=openLeadStore(databasePath);
   const managerConfig=loadManagerConfig();
-  const auth=createManagerAuth(managerConfig);
+  const auth=createManagerAuth({...managerConfig,cookiePath:config.siteBasePath+'api/manager/'});
   const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error});
   const server=createServer(createRelayHandler({config,store,managerApi}));
   server.requestTimeout=15000;

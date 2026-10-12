@@ -9,9 +9,9 @@ test('V6.4 removes two requested distracting captions while preserving photo and
   assert.doesNotMatch(html,/На фото — настоящая баня\. Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят\./);
   assert.doesNotMatch(html,/Стоимость приведена для примера\. Состав комплекта, окончательную цену и возможность установки опций уточнит менеджер\./);
   assert.doesNotMatch(html,/class="hero-art-note"/);
-  assert.match(html,/Газон и дорожки добавлены для наглядности/); // Real-photo/visualized landscape disclosure stays.
+  assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/); // Owner requests no internal production notes in customer copy.
   assert.match(html,/Указаны ориентировочные цены для примера подбора/);
-  assert.match(html,/Ориентировочная стоимость комплекта/);
+  assert.match(html,/Предварительная стоимость комплекта/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
