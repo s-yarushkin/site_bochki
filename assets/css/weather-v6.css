@@ -647,3 +647,176 @@ html{scroll-padding-top:0}
   .catalog .product-meta{gap:3px;margin-bottom:8px}
   .catalog .product-sizes{font-size:12px;line-height:1.3}
 }
+
+
+/* V6.7 owner acceptance — product imagery must be completely visible and clickable. */
+.catalog .gallery-cover{
+  appearance:none;position:relative;display:block;width:100%;height:auto;min-width:0;
+  padding:0;border:0;border-radius:0;background:var(--v5-media-bg,#e8f2ee);
+  text-align:left;cursor:zoom-in;overflow:hidden;
+  aspect-ratio:1.46;
+}
+.catalog .gallery-cover .v5-photo,
+.catalog .gallery-cover.media-ready .v5-photo{
+  object-fit:contain;object-position:center;background:var(--v5-media-bg,#e8f2ee);
+}
+.catalog .gallery-cover:focus-visible,
+.gallery-photo-action:focus-visible,
+.gallery-model-title:focus-visible,
+.gallery-bundle-cover:focus-visible,
+.bundle-mini-gallery button:focus-visible,
+.builder-preview-image:focus-visible{
+  outline:3px solid #bb8338;outline-offset:3px;
+}
+.catalog .gallery-cover-hint{
+  display:inline-block;position:absolute;z-index:3;right:10px;bottom:10px;
+  background:rgba(17,43,35,.92);color:white;border-radius:8px;
+  padding:7px 10px;font:700 12px/1.25 var(--fontbody,Arial,sans-serif);
+  pointer-events:none;
+}
+.catalog .gallery-model-title{
+  appearance:none;border:0;background:none;color:inherit;font:inherit;
+  padding:0;text-align:left;cursor:zoom-in;
+}
+.catalog .gallery-model-title:hover,.gallery-photo-action:hover{text-decoration:underline}
+.catalog .product-card-actions{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+.catalog .gallery-photo-action{
+  appearance:none;border:0;background:none;color:var(--v5-text,var(--forest));
+  font:700 13px/1.4 var(--fontbody,Arial,sans-serif);
+  padding:0;text-align:left;cursor:zoom-in;min-height:26px;
+}
+.catalog .product-card-actions .btn{width:100%}
+.catalog .product-card[hidden]{display:none!important}
+
+/* Featured bath: show the entire landscape photo first, not a vertical crop. */
+.bundle-card{display:grid;grid-template-columns:minmax(0,1fr);width:100%;max-width:1200px}
+.bundle-photo.gallery-bundle-cover{
+  appearance:none;display:block;position:relative;cursor:zoom-in;
+  width:100%;min-height:0;aspect-ratio:16/8;
+  padding:0;border:0;border-radius:0;overflow:hidden;
+  background:var(--v5-media-bg,#e8f2ee);text-align:left;
+}
+.bundle-photo.gallery-bundle-cover .v5-photo,
+.bundle-photo.gallery-bundle-cover.media-ready .v5-photo{
+  object-fit:contain;object-position:center;background:var(--v5-media-bg,#e8f2ee);
+}
+.bundle-photo.gallery-bundle-cover::after{inset:66% 0 0;pointer-events:none}
+.bundle-photo.gallery-bundle-cover>strong{
+  position:absolute;bottom:20px;left:26px;z-index:3;
+  font-size:clamp(18px,2vw,25px);pointer-events:none;
+}
+.bundle-info{padding:clamp(24px,4vw,48px)}
+.bundle-info h3{max-width:unset}
+.bundle-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 34px;margin:24px 0 28px;
+}
+.bundle-feature-group{min-width:0}
+.bundle-feature-group h4{
+  font:800 16px/1.35 var(--fontbody,Arial,sans-serif);
+  color:var(--v5-text,var(--ink));margin:0 0 9px;
+}
+.bundle-feature-group ul{padding:0;margin:0;list-style:none}
+.bundle-feature-group li{
+  position:relative;padding:4px 0 4px 23px;
+  color:var(--v5-text,var(--ink));font-size:14px;line-height:1.55;
+}
+.bundle-feature-group li::before{
+  content:'✓';position:absolute;left:1px;top:4px;
+  font-weight:800;color:var(--forest,#276344);
+}
+:root[data-theme="rain"] .bundle-feature-group li::before{color:#d4b57d}
+.bundle-mini-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bundle-mini-gallery button{
+  display:block;appearance:none;position:relative;padding:0;border:0;
+  min-width:0;overflow:hidden;cursor:zoom-in;border-radius:10px;
+}
+.bundle-mini-gallery button .v5-photo{object-fit:contain;background:var(--v5-media-bg,#e8f2ee)}
+.builder-preview-image[data-gallery-open]{cursor:zoom-in;appearance:none;padding:0;border:0;width:100%}
+.builder-preview-image[data-gallery-open] .v5-photo{object-fit:contain}
+
+/* Delivery is a separate quoted service, not a hidden part of the kit price. */
+.delivery-cost{display:flex;align-items:flex-start;flex-wrap:wrap;gap:10px 22px}
+.delivery-cost>strong{font-size:clamp(18px,2.2vw,24px)}
+.delivery-cost>span{flex:1 1 350px;line-height:1.6}
+.delivery-cost>.btn{flex:0 0 auto}
+
+/* Full-screen accessible gallery; thumbnails belong only to the selected bath. */
+.model-gallery{
+  position:fixed;inset:0;margin:auto;padding:0;
+  width:min(1180px,calc(100vw - 28px));max-width:none;
+  max-height:min(92dvh,920px);border:1px solid #b7c4bc;
+  border-radius:16px;background:#fafbf9;color:#20352b;
+  box-shadow:0 28px 100px #0008;overflow:auto;
+}
+.model-gallery::backdrop{background:rgba(4,17,23,.85)}
+.model-gallery-shell{padding:clamp(12px,2vw,26px)}
+.model-gallery-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.model-gallery-header small{display:block;font-size:11px;letter-spacing:.15em;font-weight:800;color:#54705f}
+.model-gallery-header h2{font:700 clamp(24px,3vw,37px)/1.15 Georgia,serif;margin:3px 0 0;color:#1b392b}
+.model-gallery-close{width:42px;height:42px;flex:0 0 42px;border:1px solid #bfcfc7;border-radius:50%;background:white;color:#263e33;font-size:29px;cursor:pointer}
+.model-gallery-layout{display:grid;grid-template-columns:minmax(0,1fr) 165px;gap:17px;min-width:0}
+.model-gallery-stage{
+  position:relative;margin:0;border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column;min-width:0;
+  background:#e5eee9;
+}
+.model-gallery-stage>img{
+  display:block;width:100%;height:min(61dvh,590px);
+  object-fit:contain;object-position:center;
+}
+.model-gallery-stage figcaption{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 16px;background:#173829;color:#fff;font-size:14px;
+}
+.model-gallery-arrow{
+  position:absolute;z-index:3;top:42%;transform:translateY(-50%);
+  width:42px;height:52px;border:0;border-radius:9px;
+  background:rgba(13,39,29,.86);color:#fff;font-size:34px;
+  cursor:pointer;
+}
+.model-gallery-arrow.previous{left:9px}
+.model-gallery-arrow.next{right:9px}
+.model-gallery-thumbs{
+  display:flex;flex-direction:column;gap:10px;
+  max-height:min(68dvh,660px);overflow-y:auto;overscroll-behavior:contain;
+}
+.model-gallery-thumb{
+  appearance:none;display:flex;flex-direction:column;align-items:stretch;
+  padding:4px;border:2px solid transparent;border-radius:10px;
+  background:#edf3ee;color:#254034;text-align:left;cursor:pointer;
+  flex:0 0 auto;
+}
+.model-gallery-thumb.is-current{border-color:#307252;background:#fff}
+.model-gallery-thumb img{
+  display:block;width:100%;height:88px;object-fit:contain;background:#dde9e1;border-radius:6px;
+}
+.model-gallery-thumb span{font-size:12px;font-weight:700;padding:5px 4px 2px}
+.model-gallery-hint{font-size:12px;color:#5b7163;margin:13px 0 0}
+.model-gallery :is(button):focus-visible{outline:3px solid #c2842d;outline-offset:2px}
+
+@media(max-width:850px){
+  .bundle-photo.gallery-bundle-cover{aspect-ratio:4/3}
+  .bundle-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+  .model-gallery-layout{grid-template-columns:1fr}
+  .model-gallery-stage>img{height:min(52dvh,470px)}
+  .model-gallery-thumbs{flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none}
+  .model-gallery-thumb{width:125px;flex:0 0 125px}
+  .model-gallery-thumb img{height:74px}
+}
+@media(max-width:550px){
+  .catalog .gallery-cover{aspect-ratio:4/3}
+  .bundle-photo.gallery-bundle-cover{aspect-ratio:4/3}
+  .bundle-photo.gallery-bundle-cover>strong{left:13px;bottom:10px;font-size:17px}
+  .bundle-list{grid-template-columns:1fr}
+  .bundle-feature-group li{font-size:14px}
+  .model-gallery{width:calc(100vw - 12px);max-height:96dvh;border-radius:10px}
+  .model-gallery-layout{gap:10px}
+  .model-gallery-stage>img{height:min(48dvh,380px)}
+  .model-gallery-arrow{width:35px;height:45px}
+  .model-gallery-thumbs{gap:6px}
+  .model-gallery-thumb{width:105px;flex-basis:105px}
+  .model-gallery-thumb img{height:65px}
+  .model-gallery-hint{display:none}
+  .delivery-cost>.btn{width:100%}
+}

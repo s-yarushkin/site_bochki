@@ -9,18 +9,19 @@ const relay=read('server/garant-bani-relay.mjs');
 const privacy=read('privacy.html');
 const consent=read('consent.html');
 
-test('V6.5 operator identity is precise and consistent in footer, policy and separate consent',()=>{
-  for(const source of [html,privacy,consent]){
+test('V6.7 operator identity retained in privacy and consent documents, not on sales page',()=>{
+  for(const source of [privacy,consent]){
     for(const id of ['«ГАРАНТ-ГРУПП»','3525486964','352501001','1233500004650']){
       assert.ok(source.includes(id),'Missing registered operator data '+id);
     }
-    assert.ok(source.includes('Герцена, д. 114, кв. 8'),'Missing postal/legal address');
+    assert.ok(source.includes('Герцена, д. 114, кв. 8'),'Missing legal address');
   }
-  assert.match(html,/class="container footer-operator"/);
+  assert.doesNotMatch(html,/class="container footer-operator"/);
+  assert.doesNotMatch(html,/Герцена, д. 114/);
   assert.match(html,/aria-label="Правовая информация"/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/Доставка рассчитывается отдельно/);
+  assert.match(html,/Доставку рассчитываем отдельно/);
 });
 
 test('V6.5 policy is a separate noindex operator document with truthful MAX and external-fonts disclosures',()=>{
@@ -50,9 +51,8 @@ test('V6.5 explicit user consent is not prechecked or fabricated by app; server 
   assert.match(relay,/CONSENT_REQUIRED/);
 });
 
-test('V6.5 legal footer and consent control adapt to narrow screens and both themes',()=>{
-  assert.match(css,/\.footer-operator\{display:grid/);
-  assert.match(css,/@media\(max-width:700px\)\{\.footer-operator\{grid-template-columns:1fr/);
+test('V6.7 consent remains readable on narrow screens',()=>{
+  assert.match(html,/class="footer-legal"/);
   assert.match(css,/\.contact-dialog label\.lead-consent-label\{display:grid/);
   assert.match(css,/\.contact-dialog \.lead-consent-label input\[type="checkbox"\]/);
   assert.match(css,/@media\(max-width:360px\)\{\.contact-dialog \.lead-consent-label/);

@@ -19,10 +19,10 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
     /Изображение рекламное/i,
     /фактическ.*визуализ.*из каталог/i
   ])assert.doesNotMatch(publicCopy,phrase);
-  assert.match(html,/У каждой модели — свой характер/);
+  assert.match(html,/Четыре модели\. Выберите баню/);
   assert.match(html,/Квадро 5 м · Комфорт/);
   assert.doesNotMatch(html,/Комплектация без обливного устройства/);
-  assert.match(html,/Парная, комната отдыха и всё полезное/);
+  assert.match(html,/следующие 14 дополнений к готовой бане/);
   assert.match(css,/\.bundle-list \.bundle-item::before\{content:none;display:none\}/);
   for(const id of ['socket_kit_owner','electrical_distribution_owner','electrical_safety_cabinet_temporary_supply']){
     assert.doesNotMatch(book.options[id].label,/\(.*уточнить|после проверки проекта/);
@@ -41,7 +41,7 @@ test('V6.6 model cards show a full unbroken price and all size choices',()=>{
 
 test('V6.6 customer gallery identifies four models with distinct interiors, no shared generic room',()=>{
   for(const model of ['kvadro','parus','viking','kvadro-house']){
-    assert.match(html,new RegExp('data-model-jump="'+model+'"'));
+    assert.match(app,/data-gallery-open=/);
     assert.ok(media.includes("'interior-"+model+"'"),'missing interior for '+model);
     assert.ok(media.includes("'catalog-"+model+"'"),'missing exterior for '+model);
   }
