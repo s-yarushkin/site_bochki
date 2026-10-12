@@ -8,7 +8,7 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
 httpd = http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(QuietHandler,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
 base='http://127.0.0.1:'+str(httpd.server_address[1])+'/'
-SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-v64-editorial-qa'
+SHOT_DIR = Path(tempfile.gettempdir()) / 'garant-bani-v65-legal-qa'
 SHOT_DIR.mkdir(parents=True,exist_ok=True)
 results=[]
 with sync_playwright() as p:
@@ -356,6 +356,13 @@ with sync_playwright() as p:
             }"""),'REQUIRED_STAR_WRAPPED'
             page.locator('#contactDialog').evaluate('(el)=>{el.scrollTop=0}')
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-callback.png')),full_page=False)
+        # Consent is separate, initially unchecked and never auto-submitted.
+        consent=page.locator('#contactForm input[name="leadConsent"]')
+        assert not consent.is_checked(), 'CONSENT_PRECHECKED_CALLBACK'
+        page.locator('#contactForm button[type=submit]').click()
+        assert 'согласие' in page.locator('#formError').inner_text().lower(), 'MISSING_CONSENT_NOT_REJECTED'
+        assert len(calls)==0,'UNCONSENTED_CALLBACK_WAS_SENT'
+        consent.check()
         page.locator('#contactForm button[type=submit]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
@@ -381,12 +388,15 @@ with sync_playwright() as p:
             assert form.locator('a[href="privacy.html"]').is_visible()
             assert form.locator('a[href="consent.html"]').is_visible()
             page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-quote-bottom.png')),full_page=False)
+        assert not form.locator('[name="leadConsent"]').is_checked(), 'CONSENT_NOT_RESET_BETWEEN_FLOWS'
+        form.locator('[name="leadConsent"]').check()
         form.locator('button[type="submit"]').click()
         page.locator('#formResult').wait_for(state='visible')
         assert 'Заявка отправлена' in page.locator('#formResult').inner_text()
         assert len(calls)==2,calls
         assert calls[0]['data']['flow']=='callback',calls
         assert calls[1]['data']['flow']=='quote',calls
+        assert calls[0]['data']['consent'] is True and calls[1]['data']['consent'] is True,calls
         assert calls[1]['data']['configuration']['modelId']=='kvadro-house',calls
         assert calls[0]['data']['contactChannel']=='phone',calls
         assert calls[0]['data']['consent'] is True,calls
