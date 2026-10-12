@@ -32,7 +32,7 @@ test('V6.6 customer gallery identifies four models with distinct interiors, no s
 
 test('V6.6 SUN/RAIN hero remains present, while catalog media metadata stays internal',()=>{
   assert.match(html,/id="heroMedia" data-slot="hero-sun-desktop"/);
-  assert.match(app,/rain\?'hero-rain-desktop':'hero-sun-desktop'/);
+  assert.match(app,/weather==='rain'\?'hero-rain-desktop':'hero-sun-desktop'/);
   assert.ok(media.includes("'hero-sun-desktop':{file:'hero-sun.webp'"));
   assert.ok(media.includes("'hero-rain-desktop':{file:'hero-sun.webp'"));
   for(const term of ['по каталогу производителя','каталоговая визуализация','из каталога']){
