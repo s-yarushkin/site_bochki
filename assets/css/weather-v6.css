@@ -830,4 +830,5 @@ html{scroll-padding-top:0}
 .model-gallery-stage>img,.model-gallery-thumb img{object-fit:contain;object-position:center}
 @media(max-width:850px){
  .difference-experience:has(.difference-overline){grid-template-columns:1fr}
+ .difference-experience>p{grid-column:1}
 }
