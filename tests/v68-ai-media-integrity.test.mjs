@@ -63,7 +63,13 @@ test('V6.8: hidden low-res fragments cannot leak into approved user-visible gall
   }
   assert.doesNotMatch(html,/data-gallery-open="kvadro" data-gallery-first="3"/);
   assert.match(html,/ai-visual-note/);
-  assert.match(html,/Иллюстрации моделей созданы с использованием ИИ/);
+  assert.doesNotMatch(html,/Иллюстрации моделей созданы с использованием ИИ/);
+  const galleryJs=source('assets/js/catalog-gallery-v67.js');
+  assert.doesNotMatch(galleryJs,/созданы с использованием ИИ|Не являются подтверждёнными фотографиями/);
+  assert.match(galleryJs,/Листайте изображения стрелками/);
+  const app=source('assets/js/app.js');
+  assert.match(app,/\$\$\('\[data-view\]'\)\.forEach\(btn=>\{/);
+  assert.doesNotMatch(app,/Качественные изображения интерьера этой модели готовятся/);
   assert.doesNotMatch(html,/class="difference-experience-number"/);
   assert.match(source('assets/js/app.js'),/hasApprovedInside/);
 });
