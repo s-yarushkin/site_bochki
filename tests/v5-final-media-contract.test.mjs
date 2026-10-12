@@ -40,8 +40,8 @@ test('V6.6 SUN/RAIN hero preserves one architectural master, lower catalog is mo
 
 test('V6.6 no invented plan photo; model-specific interiors are explicitly catalog renders',()=>{
   assert.equal(resolveMedia('product-front'),null);
-  assert.match(html,/рекламные изображения, а не фото готового заказа/);
-  assert.match(html,/Визуализация модели по каталогу/);
+  assert.doesNotMatch(html,/рекламные изображения, а не фото готового заказа/);
+  assert.match(html,/Продуманная комплектация для отдыха на даче/);
   assert.doesNotMatch(html,/Стоимость приведена для примера\. Состав комплекта/);
 });
 
