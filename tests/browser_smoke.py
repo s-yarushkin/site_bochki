@@ -77,6 +77,16 @@ with sync_playwright() as p:
         page.locator('#why-us').evaluate(
             "(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-trust-sun.png')),full_page=False)
+        # V6.5 operator footer: visible legal ID, link targets and no overflow.
+        footer=page.locator('.footer-operator')
+        assert footer.count()==1, 'OPERATOR_FOOTER_MISSING'
+        assert footer.locator('strong').inner_text()=='ООО «ГАРАНТ-ГРУПП»'
+        assert '1233500004650' in footer.inner_text()
+        assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
+        assert page.locator('.footer-legal a[href="consent.html"]').count()==1
+        footer.scroll_into_view_if_needed()
+        assert footer.evaluate('(el)=>el.getBoundingClientRect().width<=window.innerWidth+1')
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-legal-footer-sun.png')),full_page=False)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-sun.png')),full_page=True)
         assert page.locator('.footer-legal a').count()==2
         assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
@@ -287,6 +297,8 @@ with sync_playwright() as p:
         page.locator('#why-us').evaluate(
             "(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-trust-rain.png')),full_page=False)
+        page.locator('.footer-operator').scroll_into_view_if_needed()
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-legal-footer-rain.png')),full_page=False)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
         if label=='mobile':
             page.emulate_media(reduced_motion='reduce')
