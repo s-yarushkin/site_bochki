@@ -7,6 +7,7 @@ import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 import {CATALOG} from '../data/pricebook.js';
+import {LEGACY_V64_PRICEBOOK} from '../data/legacy-v64-pricebook.js';
 
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
 const allowedBases = new Set(['unknown','ready','advice']);
@@ -20,7 +21,8 @@ const RATE_WINDOW_MS = 600000;
 const RATE_MAX = 5;
 const finishLabels=Object.fromEntries(CATALOG.finishes.body.map(f=>[f.id,f.name]));
 const roofLabels=Object.fromEntries(CATALOG.finishes.roof.map(f=>[f.id,f.name]));
-const sizeLabel=(modelId,sizeId)=>CATALOG.models[modelId]?.sizeKind==='full'?sizeId.replace('x','×')+' м':(Number(sizeId)/100).toLocaleString('ru-RU')+' м';
+const oldFinishLabels={natural:'Натуральное дерево',walnut:'Тёплый орех',graphite:'Графит'};
+const sizeLabel=(modelId,sizeId,legacy=false)=>legacy?(Number(sizeId)/100).toLocaleString('ru-RU')+' м':CATALOG.models[modelId]?.sizeKind==='full'?sizeId.replace('x','×')+' м':(Number(sizeId)/100).toLocaleString('ru-RU')+' м';
 
 function field(value,max) {
   if(typeof value!=='string' || value.length>max*3) throw new Error('INVALID_FIELD');
@@ -53,7 +55,7 @@ export function validateBaniLead(value) {
   if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
   const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
-    consentEvidence:{version:value.consentVersion??'legacy-not-versioned',method:'client-affirmative-checkbox-flag'}};
+    consentEvidence:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
   if(value.flow==='quote') {
     const district=field(value.district,140);
     if(district.length<2) throw new Error('INVALID_DISTRICT');
@@ -62,14 +64,19 @@ export function validateBaniLead(value) {
     const {modelId,sizeId,optionIds,bundleId,finish,roof}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
-    if(finish!==undefined && !Object.hasOwn(finishLabels,finish)) throw new Error('INVALID_FINISH');
+    // A V6.4 tab opened before the rolling deployment has no consentVersion.
+    // Snapshot its *historic unapproved demo prices* rather than silently repricing
+    // old option IDs or dropping still-in-flight requests. New V6.6 always sends version.
+    const legacy=value.consentVersion===undefined;
+    const names=legacy?oldFinishLabels:finishLabels;
+    if(finish!==undefined && !Object.hasOwn(names,finish)) throw new Error('INVALID_FINISH');
     if(roof!==undefined && !Object.hasOwn(roofLabels,roof)) throw new Error('INVALID_ROOF');
-    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId});
+    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},legacy?LEGACY_V64_PRICEBOOK:undefined);
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
     lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,
-      finishId:finish??null,finishName:finish===undefined?'Не указана':finishLabels[finish],
+      finishId:finish??null,finishName:finish===undefined?'Не указана':names[finish],
       roofId:roof??null,roofName:roof===undefined?'Не указана':roofLabels[roof]};
     lead.estimate=estimate;
   }
@@ -92,7 +99,7 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
       '',
       'КОМПЛЕКТАЦИЯ',
       'Модель: '+q.modelName,
-      'Размер: '+sizeLabel(q.modelId,q.sizeId),
+      'Размер: '+sizeLabel(q.modelId,q.sizeId,q.pricebookVersion===LEGACY_V64_PRICEBOOK.version),
       'Внешняя отделка: '+(lead.configuration?.finishName||'Не указана'),
        'Цвет кровли: '+(lead.configuration?.roofName||'Не указана'),
       'Стоимость модели: '+formatMoney(q.basePrice)+' (предварительно)',
