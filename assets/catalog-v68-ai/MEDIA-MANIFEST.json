@@ -59,14 +59,15 @@
       "file": "parus-lounge-v68.webp",
       "model": "parus",
       "scene": "lounge",
-      "width": 1448,
-      "height": 1086,
-      "sha256": "472a4fe68ff32232e640b06e1e8dc03386d1667a4dd60bb9417aeff79bf30b65",
-      "sizeBytes": 171830,
+      "width": 845,
+      "height": 880,
+      "sha256": "2171e60adb42444be8f3cef3bd7aea0ad4045640939d8a20c647139eaa1a2d6d",
+      "sizeBytes": 104856,
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 5,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "PENDING",
+      "visualCorrection": "CROPPED_TO_EXCLUDE_DUPLICATE_HANDLES_ON_SINGLE_DOOR"
     },
     {
       "file": "viking-outside-v68.webp",
