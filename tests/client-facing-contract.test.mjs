@@ -15,7 +15,7 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.match(html,/Ориентировочная стоимость комплекта/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
   assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
-  assert.match(html,/Это рекламные изображения, а не фото готового заказа/);
+  assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
   assert.match(pricebook,/status:CATALOG.status==='APPROVED'\?'APPROVED':'DEMO_ONLY'/); // Owner catalog remains a draft.
