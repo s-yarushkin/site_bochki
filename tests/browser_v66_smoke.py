@@ -92,7 +92,7 @@ try:
     page.locator('[data-choose-size="6x5"]').click()
     assert '739' in page.locator('#quoteTotal').inner_text()
     # Callback: without checkbox no network request; consent reinitializes for a new flow.
-    page.locator('.faq [data-flow="callback"]').click()
+    page.locator('.footer-ask [data-flow="callback"]').click()
     form=page.locator('#contactForm')
     form.locator('input[name="phone"]').fill('+7 999 123-45-67')
     checkbox=form.locator('[name="leadConsent"]')
