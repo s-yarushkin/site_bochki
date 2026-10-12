@@ -46,6 +46,11 @@ try:
     resp=page.goto(base,wait_until='domcontentloaded')
     assert resp.status==200,(label,resp.status)
     expect(page.locator('html')).to_have_attribute('data-theme','sun')
+    assert not errors,('STARTUP_JS_ERROR',label,errors)
+    assert page.locator('#builderStepLabel').inner_text()=='ШАГ 1 ИЗ 7',('BUILDER_STARTUP_FAILED',label)
+    assert page.evaluate('typeof window.__GARANT_DEMO__')=='object',('BOOT_DID_NOT_COMPLETE',label)
+    assert page.locator('.ai-visual-note').count()==0,('INTERNAL_MEDIA_DISCLOSURE_IN_UI',label)
+    assert 'с использованием ИИ' not in page.locator('body').inner_text(),('TECHNICAL_AI_NOTES_VISIBLE',label)
     expect(page.locator('#heroMedia img[data-v5-photo]')).to_have_count(1)
     hero_sun=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
     assert 'hero-sun.webp' in hero_sun,(label,hero_sun)
@@ -95,6 +100,8 @@ try:
     # load and are selectable independently without changing quote arithmetic.
     page.locator('#builderNext').click()
     page.locator('#builderNext').click()
+    assert page.locator('#builderStepName').inner_text()=='Внешний вид',('BUILDER_STEP_INCORRECT',label,page.locator('#builderStepName').inner_text())
+    assert not errors,('BUILDER_STEP_JS_ERROR',label,errors)
     assert page.locator('[data-finish]').count()==12,('FINISH_COUNT',label)
     assert page.locator('[data-roof]').count()==4,('ROOF_COUNT',label)
     for swatch in page.locator('.color-choices-catalog img.catalog-swatch').all():
