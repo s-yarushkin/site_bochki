@@ -51,7 +51,7 @@ test('V5 no invented plan photo or fabricated builder model interior',()=>{
   // interior / additions / landscaping do not represent the quoted package.
   assert.match(js,/На фото — пример интерьера\. Отделку вашей бани согласуем отдельно/);
   assert.match(html,/На фото — модель «Квадро Хаус»\. Дополнения подбираются отдельно/);
-  assert.match(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
+  assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
   assert.match(html,/Газон и дорожки добавлены для наглядности/);
   assert.doesNotMatch(html,/На фото показана модель\. Комплектация подбирается отдельно/);
 });

@@ -506,3 +506,118 @@ html{scroll-padding-top:0}
    clips visually but still creates a scroll container; overflow:clip does
    not. Keep both axes clipped (clouds/art), never allow a scroll offset. */
 .hero{overflow:clip}
+
+/* V6.4: owner-approved editorial differentiator, after real project details.
+   Theme-aware, responsive, no scripts or artificial comparison claims. */
+.difference{
+  position:relative;
+  background:var(--v5-ambient-bg);
+  color:var(--v5-text);
+  overflow:clip;
+}
+.difference .container{position:relative}
+.difference-intro{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(28px,6vw,100px);
+  align-items:end;
+  padding-bottom:clamp(28px,4vw,55px);
+}
+.difference-heading,.difference-story{min-width:0}
+.difference .eyebrow{display:block;margin-bottom:19px;color:var(--v5-muted)}
+.difference h2{
+  max-width:760px;
+  font-size:clamp(35px,4.45vw,65px);
+  line-height:1.07;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+.difference h2 em{color:#97703f}
+:root[data-theme="rain"] .difference h2 em{color:#f0c58f}
+.difference-story{font-size:clamp(16px,1.4vw,19px);line-height:1.66;color:var(--v5-muted)}
+.difference-story p{margin:0 0 16px;text-wrap:pretty}
+.difference-story .difference-lead{font-size:clamp(18px,1.7vw,23px);line-height:1.48;font-weight:600;color:var(--v5-text)}
+.difference-experience{
+  display:grid;
+  grid-template-columns:110px minmax(0,1fr) minmax(0,.8fr);
+  gap:clamp(18px,2.5vw,40px);
+  align-items:center;
+  padding:clamp(26px,4vw,48px);
+  border:1px solid var(--v5-border);
+  background:var(--v5-surface);
+  border-radius:20px;
+}
+.difference-experience-number{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(66px,8vw,106px);
+  font-weight:700;
+  letter-spacing:-.08em;
+  line-height:1;
+  color:var(--v5-gold);
+}
+.difference-overline,.difference-point-number{
+  font-size:12px;
+  line-height:1.4;
+  letter-spacing:.11em;
+  font-weight:700;
+  color:var(--v5-muted);
+}
+.difference-experience h3{
+  font-size:clamp(22px,2.45vw,34px);
+  line-height:1.2;
+  margin:10px 0 0;
+  text-wrap:balance;
+}
+.difference-experience h3 em{color:var(--v5-gold)}
+.difference-experience p{font-size:clamp(15px,1.3vw,18px);line-height:1.64;margin:0;color:var(--v5-muted)}
+.difference-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-top:16px;
+}
+.difference-point{
+  min-width:0;
+  background:var(--v5-surface);
+  border:1px solid var(--v5-border);
+  border-radius:16px;
+  padding:clamp(20px,2.4vw,31px);
+}
+.difference-point-number{color:var(--v5-gold)}
+.difference-point h3{
+  font-size:clamp(19px,1.9vw,25px);
+  line-height:1.16;
+  margin:24px 0 12px;
+  text-wrap:balance;
+}
+.difference-point p{color:var(--v5-muted);font-size:15px;line-height:1.57;margin:0;text-wrap:pretty}
+.difference-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:30px;
+  padding-top:clamp(24px,3.6vw,44px);
+}
+.difference-bottom p{font-size:clamp(16px,1.6vw,20px);line-height:1.52;max-width:740px;margin:0;color:var(--v5-text)}
+.difference-bottom .btn{flex-shrink:0;text-align:center}
+@media(max-width:1050px){
+  .difference-intro{grid-template-columns:1fr;gap:14px}
+  .difference h2{max-width:780px}
+  .difference-story{max-width:850px}
+  .difference-experience{grid-template-columns:80px minmax(0,1fr)}
+  .difference-experience>p{grid-column:2}
+  .difference-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .difference-intro{padding-bottom:24px}
+  .difference h2{font-size:clamp(31px,8.3vw,43px)}
+  .difference-experience{grid-template-columns:1fr;gap:10px;padding:23px 20px}
+  .difference-experience-number{font-size:65px}
+  .difference-experience h3{margin-top:8px}
+  .difference-experience>p{grid-column:1}
+  .difference-grid{grid-template-columns:1fr;gap:10px;margin-top:12px}
+  .difference-point{padding:22px 20px}
+  .difference-point h3{margin:13px 0 9px}
+  .difference-bottom{align-items:stretch;flex-direction:column;gap:20px}
+  .difference-bottom .btn{width:100%;max-width:100%}
+}
