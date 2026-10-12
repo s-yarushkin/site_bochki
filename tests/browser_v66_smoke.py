@@ -5,7 +5,7 @@ import functools, http.server, json, os, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-predeploy-qa'
+SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-r4-visual-qa'
 SHOT.mkdir(parents=True,exist_ok=True)
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
