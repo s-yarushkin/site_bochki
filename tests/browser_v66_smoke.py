@@ -1,11 +1,11 @@
-"""V6.6 QA: seven viewport SUN/RAIN, catalog, featured 490k, size, legal consent.
+"""V6.7 QA: seven viewport SUN/RAIN, isolated model galleries, featured kit and consent.
 Local static server and mock lead endpoint only; NEVER sends real customer requests.
 """
 import functools, http.server, json, os, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-r6-final-visual-qa'
+SHOT=Path(tempfile.gettempdir())/'garant-bani-v67-owner-photo-gallery-qa'
 SHOT.mkdir(parents=True,exist_ok=True)
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -67,19 +67,26 @@ try:
         const rects=[...rng.getClientRects()].filter(r=>r.width>0);
         return rects.length===1 && rects[0].right<=el.getBoundingClientRect().right+2;
       }"""),('PRICE_RUBLE_SPLIT_OR_CLIPPED',model)
-    assert page.locator('.details-grid-models .detail-card').count()==4,label
-    for model in ['kvadro','parus','viking','kvadro-house']:
-      gallery=page.locator(f'[data-model-jump="{model}"]').locator('xpath=..')
-      gallery.scroll_into_view_if_needed()
-      assert gallery.locator('.model-images .media-frame').count()==2,model
-      for img in gallery.locator('.model-images img[data-v5-photo]').all():
-        assert 'catalog-v66' in img.get_attribute('src'),(model,label)
+    assert page.locator('#model-interiors').count()==0,label
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
-    # Owner visual acceptance: capture both complete four-model catalog and interiors,
-    # not only the featured offer and legal footer. These were absent from r3 archive.
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
-    page.locator('#model-interiors .details-grid-models').screenshot(
-        path=str(SHOT/f'{label}-four-interiors-sun.png'))
+    for model,n in [('kvadro',4),('parus',5),('viking',4),('kvadro-house',5)]:
+      cover=page.locator(f'.product-card[data-model="{model}"] [data-gallery-open]').first
+      cover.click()
+      dialog=page.locator('#modelGallery')
+      expect(dialog).to_be_visible()
+      assert model.split('-')[0].capitalize() in dialog.locator('#modelGalleryTitle').inner_text(),(model,label)
+      assert dialog.locator('.model-gallery-thumb').count()==n,(model,label)
+      img=dialog.locator('#modelGalleryImage')
+      assert f'{model}-outside.webp' in img.get_attribute('src'),(model,label)
+      assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('MODEL_IMAGE_FAILED',model,label)
+      assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
+      dialog.locator('[data-gallery-next]').click()
+      assert f'{model}-steam.webp' in img.get_attribute('src'),(model,label)
+      assert dialog.locator('[aria-pressed="true"].model-gallery-thumb').count()==1,(model,label)
+      dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
+      page.keyboard.press('Escape')
+      expect(dialog).not_to_be_visible()
     # Review ALL catalogue color/roof choices at every viewport. Verify thumbnails
     # load and are selectable independently without changing quote arithmetic.
     page.locator('#builderNext').click()
@@ -98,13 +105,18 @@ try:
     page.locator('[data-roof="brown"]').click()
     page.locator('#builderBack').click()
     page.locator('#builderBack').click()
-    page.locator('.footer-operator').scroll_into_view_if_needed()
-    assert '1233500004650' in page.locator('.footer-operator').inner_text()
-    page.screenshot(path=str(SHOT/f'{label}-legal-footer.png'))
+    assert page.locator('.footer-operator').count()==0,'LEGAL_ADDRESS_VISIBLE_IN_FOOTER'
+    assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
+    legal=page.request.get(base+'privacy.html')
+    assert legal.status==200 and '1233500004650' in legal.text()
+    page.locator('.footer-bottom').scroll_into_view_if_needed()
+    page.screenshot(path=str(SHOT/f'{label}-legal-links-sun.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     assert 'Квадро 5 м' in page.locator('#bundleTitle').inner_text()
     assert '490' in page.locator('#bundleNew').inner_text()
-    assert page.locator('#bundleOptions .bundle-item').count()==14
+    assert page.locator('#bundleOptions li').count()==14
+    assert not page.locator('#bundleOptions').get_by_text('₽').count(),'PRICES_LEAKED_IN_KIT_ITEMS'
+    assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>getComputedStyle(im).objectFit')=='contain','BUNDLE_PHOTO_CROPPED'
     assert 'Обливаста' not in page.locator('#bundleOptions').inner_text()
     page.screenshot(path=str(SHOT/f'{label}-featured-sun.png'))
     page.locator('[data-bundle="summary"]').click()
@@ -117,16 +129,14 @@ try:
     assert hero_rain==hero_sun,'Hero geometry changed'
     assert '490' in page.locator('#quoteTotal').inner_text()
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-rain.png'))
-    page.locator('#model-interiors .details-grid-models').screenshot(
-        path=str(SHOT/f'{label}-four-interiors-rain.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
     page.locator('[data-weather="sun"]').click()
     # all 20 sizes in the shared catalogue: verify 4.5m and Kvadro House 6x5.
-    page.locator('[data-model-jump="kvadro"]').click()
+    page.locator('[data-catalog-select="kvadro"]').click()
     page.locator('[data-choose-size="450"]').click()
     assert '330' in page.locator('#quoteTotal').inner_text()
-    page.locator('[data-model-jump="kvadro-house"]').click()
+    page.locator('[data-catalog-select="kvadro-house"]').click()
     page.locator('[data-choose-size="6x5"]').click()
     assert '739' in page.locator('#quoteTotal').inner_text()
     # Callback: without checkbox no network request; consent reinitializes for a new flow.
