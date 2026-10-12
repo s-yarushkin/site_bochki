@@ -73,7 +73,7 @@ try:
         return rects.length===1 && rects[0].right<=el.getBoundingClientRect().right+2;
       }"""),('PRICE_RUBLE_SPLIT_OR_CLIPPED',model)
     assert page.locator('#model-interiors').count()==0,label
-    assert page.locator('.ai-visual-note').count()==1,('AI_DISCLOSURE_MISSING',label)
+    assert page.locator('.ai-visual-note').count()==0,('TECHNICAL_DISCLAIMER_PRESENT',label)
     assert page.locator('.difference-experience-number').count()==0,('BIG_04_NOT_REMOVED',label)
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
