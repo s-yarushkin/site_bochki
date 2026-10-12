@@ -47,10 +47,10 @@ test('S09 no pricing engine embedded directly in UI',()=>assert.match(script,/fr
 test('S10 no invented first firing time',()=>assert.doesNotMatch(html,/за (?:30|60|90|120) минут|за 2 часа/));
 test('S11 success only after MAX receipt; independent privacy and consent documents linked',()=>{
   assert.match(script,/receipt\?\.delivered!==true/);
-  assert.doesNotMatch(html,/name="leadConsent"/);
+  assert.match(html,/name="leadConsent" required/); // Unchecked separate consent.
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/Нажимая «Отправить заявку»/);
+  assert.match(html,/name="leadConsent" required/);
   assert.match(privacy,/Политика в отношении обработки персональных данных/);
   assert.match(consent,/Согласие на обработку персональных данных/);
 });
@@ -78,15 +78,21 @@ test('S15 mobile validation feedback clears on edit; required marker remains inl
   assert.match(css,/\.contact-dialog label b\{display:inline\}/);
   assert.match(css,/\.contact-dialog \.form-error:empty\{display:none\}/);
 });
-test('S15 privacy and separate consent pages have operator placeholders and processing terms',()=>{
+test('S15 privacy and separate consent pages name proposed registered ООО while keeping legal gate',()=>{
   for(const doc of [privacy,consent]){
-    for(const term of ['[ФИО ИП','[ИНН','[ОГРНИП','[EMAIL','АДРЕС'])assert.ok(doc.includes(term),term);
+    for(const term of ['ООО','«ГАРАНТ-ГРУПП»','3525486964','352501001','1233500004650','Герцена, д. 114, кв. 8']){
+      assert.ok(doc.includes(term),'Missing operator particular or unfinished contact: '+term);
+    }
+    assert.doesNotMatch(doc,/индивидуальному предпринимателю|\[ФИО ИП|ОГРНИП/);
     assert.match(doc,/152-ФЗ|персональных данных/);
     assert.match(doc,/noindex,nofollow/);
   }
   assert.match(privacy,/Права посетителя/);
   assert.match(privacy,/Сроки обработки и хранения/);
+  assert.match(privacy,/Конкретные сроки хранения данных/);
+  assert.match(privacy,/перечень получателей/i);
   assert.match(consent,/Отзыв согласия/);
+  assert.match(consent,/Конкретные сроки хранения/);
   assert.match(html,/footer-legal/);
 });
 

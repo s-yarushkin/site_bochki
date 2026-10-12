@@ -19,8 +19,13 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
   assert.match(pricebook,/status: 'DEMO_ONLY'/); // Never turn sample prices into a certified pricebook.
-  assert.match(privacy,/\[ФИО ИП/);
-  assert.match(consent,/\[ФИО ИП/);
+  for(const doc of [privacy,consent]){
+    assert.match(doc,/«ГАРАНТ-ГРУПП»/);
+    assert.match(doc,/3525486964/);
+    assert.match(doc,/1233500004650/);
+    assert.doesNotMatch(doc,/индивидуальному предпринимателю|ОГРНИП|\[ФИО ИП/);
+    assert.match(doc,/Герцена, д\. 114, кв\. 8/); // Postal request address is stated without invented email.
+  }
 });
 
 test('V6.3 links land below sticky header and catalog has a compact viewport layout',()=>{
