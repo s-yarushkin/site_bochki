@@ -24,7 +24,7 @@ test('client-facing preview has no development labels but preserves honest prici
     assert.match(doc,/3525486964/);
     assert.match(doc,/1233500004650/);
     assert.doesNotMatch(doc,/индивидуальному предпринимателю|ОГРНИП|\[ФИО ИП/);
-    assert.match(doc,/\[EMAIL ДЛЯ ПДН\]/); // Operator contact has not been approved yet.
+    assert.match(doc,/Герцена, д\. 114, кв\. 8/); // Postal request address is stated without invented email.
   }
 });
 
