@@ -19,7 +19,7 @@ export function resolveOptions(ids){
   return resolved;
 }
 
-export function calculateQuote({modelId='kvadro-house',sizeId='500',optionIds=[],bundleId=null}={},pricebook=PRICEBOOK){
+export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundleId=null}={},pricebook=PRICEBOOK){
   if(pricebook.status!=='DEMO_ONLY' && pricebook.status!=='APPROVED')throw new Error('UNAPPROVED_PRICEBOOK');
   const model=pricebook.models.find(m=>m.id===modelId);
   if(!model)throw new Error('UNKNOWN_MODEL');
@@ -44,7 +44,7 @@ export function calculateQuote({modelId='kvadro-house',sizeId='500',optionIds=[]
   const beforeDiscount=basePrice+optionsSubtotal;
   const total=beforeDiscount-discount;
   if(!Number.isSafeInteger(total)||total<0)throw new Error('INVALID_TOTAL');
-  return {modelId,sizeId,modelName:model.name,basePrice,optionIds:[...optionIds],options:chosen.map(o=>({id:o.id,name:o.name,price:o.price})),optionsSubtotal,eligibleSubtotal,discount,discountType,discountRate,total,beforeDiscount,needsConfirmation:true,deliveryKnown:false,pricebookVersion:pricebook.version,bundleApplied:bundleValid,pricebookStatus:pricebook.status};
+  return {modelId,sizeId,modelName:model.name,basePrice,optionIds:[...optionIds],options:chosen.map(o=>({id:o.id,name:o.name,price:o.price,quantity:o.quantity,unit:o.unit})),optionsSubtotal,eligibleSubtotal,discount,discountType,discountRate,total,beforeDiscount,needsConfirmation:true,deliveryKnown:false,pricebookVersion:pricebook.version,bundleApplied:bundleValid,pricebookStatus:pricebook.status};
 }
 
 export function isBundleApplicable(input){return calculateQuote(input).bundleApplied;}
