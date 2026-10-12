@@ -68,6 +68,15 @@ with sync_playwright() as p:
         for image in page.locator('.media-frame img[data-v5-photo]').all():
             image.scroll_into_view_if_needed()
             assert image.evaluate('(img)=>img.decode().then(()=>img.naturalWidth>0).catch(()=>false)'), 'V5_PHOTO_FAILED_TO_LOAD'
+        # V6.4: the four-model construction story is an actual responsive
+        # customer block, not just text buried in a test fixture.
+        assert page.locator('#why-us').count()==1, ('OWNER_TRUST_SECTION_MISSING',width)
+        assert page.locator('#why-us .difference-point').count()==4, ('OWNER_TRUST_PILLARS_MISSING',width)
+        trust_sun_bg=page.locator('#why-us').evaluate(
+            "(el)=>getComputedStyle(el).backgroundColor")
+        page.locator('#why-us').evaluate(
+            "(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-trust-sun.png')),full_page=False)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-sun.png')),full_page=True)
         assert page.locator('.footer-legal a').count()==2
         assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
@@ -271,6 +280,13 @@ with sync_playwright() as p:
             'RAIN_HERO_TEXT_CLIPPED_LEFT',width,hero_alignment)
         assert hero_alignment['groupRight']<=width+1 and hero_alignment['copyRight']<=width+1, (
             'RAIN_HERO_CONTENT_CLIPPED_RIGHT',width,hero_alignment)
+        trust_rain_bg=page.locator('#why-us').evaluate(
+            "(el)=>getComputedStyle(el).backgroundColor")
+        assert trust_rain_bg!=trust_sun_bg, (
+            'OWNER_TRUST_BLOCK_THEME_DID_NOT_SWITCH',width,trust_sun_bg,trust_rain_bg)
+        page.locator('#why-us').evaluate(
+            "(el)=>el.scrollIntoView({block:'start',behavior:'instant'})")
+        page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-trust-rain.png')),full_page=False)
         page.screenshot(path=str(SHOT_DIR/('garant-bani-'+label+'-rain.png')),full_page=True)
         if label=='mobile':
             page.emulate_media(reduced_motion='reduce')
