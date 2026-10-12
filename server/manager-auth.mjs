@@ -54,9 +54,10 @@ export function loadManagerConfig(env=process.env,readSecret=readFileSync){
   return {accounts,sessionSecret};
 }
 
-export function createManagerAuth({accounts,sessionSecret,now=()=>Date.now()}){
+export function createManagerAuth({accounts,sessionSecret,now=()=>Date.now(),cookiePath=COOKIE_PATH}){
   const verified=validateAccounts(accounts);
   if(typeof sessionSecret!=='string'||!sessionSecret)throw new Error('MANAGER_AUTH_CONFIG_MISSING');
+  if(typeof cookiePath!=='string'||!/^\/(?:[a-z0-9-]+\/)*api\/manager\/$/.test(cookiePath))throw new Error('INVALID_MANAGER_COOKIE_PATH');
   const byPhone=new Map(verified.map(a=>[a.phone,a]));
   const attempts=new Map();
   const sign=payload=>createHmac('sha256',sessionSecret).update(payload).digest('base64url');
@@ -68,7 +69,7 @@ export function createManagerAuth({accounts,sessionSecret,now=()=>Date.now()}){
       nonce:randomBytes(12).toString('hex')
     })).toString('base64url');
     const token=body+'.'+sign(body);
-    return COOKIE+'='+token+'; Path='+COOKIE_PATH+'; Max-Age='+EIGHT_HOURS+'; HttpOnly; Secure; SameSite=Strict';
+    return COOKIE+'='+token+'; Path='+cookiePath+'; Max-Age='+EIGHT_HOURS+'; HttpOnly; Secure; SameSite=Strict';
   }
 
   function session(req){
@@ -104,6 +105,6 @@ export function createManagerAuth({accounts,sessionSecret,now=()=>Date.now()}){
   }
   return {
     session,authenticated:req=>Boolean(session(req)),login,
-    logoutCookie:()=>COOKIE+'=; Path='+COOKIE_PATH+'; Max-Age=0; HttpOnly; Secure; SameSite=Strict'
+    logoutCookie:()=>COOKIE+'=; Path='+cookiePath+'; Max-Age=0; HttpOnly; Secure; SameSite=Strict'
   };
 }
