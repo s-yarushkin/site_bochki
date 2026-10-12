@@ -133,8 +133,9 @@ try:
     assert page.locator('#bundleOptions li').count()==14
     assert not page.locator('#bundleOptions').get_by_text('₽').count(),'PRICES_LEAKED_IN_KIT_ITEMS'
     assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>getComputedStyle(im).objectFit')=='contain','BUNDLE_PHOTO_CROPPED'
+    assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('BUNDLE_IMAGE_NOT_LOADED',label)
     assert 'Обливаста' not in page.locator('#bundleOptions').inner_text()
-    page.screenshot(path=str(SHOT/f'{label}-featured-sun.png'))
+    page.locator('#bundle').screenshot(path=str(SHOT/f'{label}-featured-sun.png'))
     page.locator('[data-bundle="summary"]').click()
     state=page.evaluate('window.__GARANT_DEMO__.getState()')
     assert state['modelId']=='kvadro' and state['sizeId']=='500' and len(state['optionIds'])==14,(label,state)
@@ -146,7 +147,7 @@ try:
     assert '490' in page.locator('#quoteTotal').inner_text()
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-rain.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
-    page.screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
+    page.locator('#bundle').screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
     page.locator('[data-weather="sun"]').click()
     # all 20 sizes in the shared catalogue: verify 4.5m and Kvadro House 6x5.
     page.locator('[data-catalog-select="kvadro"]').click()
