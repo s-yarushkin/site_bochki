@@ -1,11 +1,11 @@
-"""V6.7 QA: seven viewport SUN/RAIN, isolated model galleries, featured kit and consent.
+"""V6.8 QA: seven viewport SUN/RAIN, seven vetted images, featured kit and consent.
 Local static server and mock lead endpoint only; NEVER sends real customer requests.
 """
 import functools, http.server, json, os, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-SHOT=Path(tempfile.gettempdir())/'garant-bani-v67-owner-photo-gallery-qa'
+SHOT=Path(tempfile.gettempdir())/'garant-bani-v68-curated-concept-gallery-qa'
 SHOT.mkdir(parents=True,exist_ok=True)
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -54,7 +54,7 @@ try:
       card=page.locator(f'.product-card[data-model="{model}"]')
       card.scroll_into_view_if_needed()
       expect(card.locator('img[data-v5-photo]')).to_have_count(1)
-      assert f'{model}-outside.webp' in card.locator('img[data-v5-photo]').get_attribute('src')
+      assert f'{model}-outside-v68.webp' in card.locator('img[data-v5-photo]').get_attribute('src')
       sizes=card.locator('.product-sizes')
       size_text=sizes.inner_text()
       assert ('6×6 м' if model=='kvadro-house' else '6 м') in size_text,(model,size_text)
@@ -68,9 +68,11 @@ try:
         return rects.length===1 && rects[0].right<=el.getBoundingClientRect().right+2;
       }"""),('PRICE_RUBLE_SPLIT_OR_CLIPPED',model)
     assert page.locator('#model-interiors').count()==0,label
+    assert page.locator('.ai-visual-note').count()==1,('AI_DISCLOSURE_MISSING',label)
+    assert page.locator('.difference-experience-number').count()==0,('BIG_04_NOT_REMOVED',label)
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
-    for model,n in [('kvadro',4),('parus',5),('viking',4),('kvadro-house',5)]:
+    for model,n in [('kvadro',3),('parus',2),('viking',1),('kvadro-house',1)]:
       cover=page.locator(f'.product-card[data-model="{model}"] [data-gallery-open]').first
       cover.click()
       dialog=page.locator('#modelGallery')
@@ -78,11 +80,13 @@ try:
       assert {'kvadro':'Квадро','parus':'Парус','viking':'Викинг','kvadro-house':'Квадро Хаус'}[model] in dialog.locator('#modelGalleryTitle').inner_text(),(model,label)
       assert dialog.locator('.model-gallery-thumb').count()==n,(model,label)
       img=dialog.locator('#modelGalleryImage')
-      assert f'{model}-outside.webp' in img.get_attribute('src'),(model,label)
+      assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
       assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('MODEL_IMAGE_FAILED',model,label)
       assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
       dialog.locator('[data-gallery-next]').click()
-      assert f'{model}-steam.webp' in img.get_attribute('src'),(model,label)
+      expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp',
+                     'viking':'viking-outside-v68.webp','kvadro-house':'kvadro-house-outside-v68.webp'}[model]
+      assert expected_next in img.get_attribute('src'),(model,label)
       assert dialog.locator('[aria-pressed="true"].model-gallery-thumb').count()==1,(model,label)
       dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
       page.keyboard.press('Escape')
