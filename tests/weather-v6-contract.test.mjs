@@ -67,7 +67,8 @@ test('V6.3 Kvadro House uses one exact architectural master and masked dusk illu
   assert.match(app,/\$\('#previewImage'\)\.dataset\.slot=weatherPhotoSlot\(activeSlot,weather\)/);
   // Keep the essential truth-in-imagery disclaimer despite copy polishing.
   assert.match(html,/На фото — настоящая баня/);
-  assert.match(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
+  assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
+  assert.match(html,/Газон и дорожки добавлены для наглядности/);
   assert.match(css,/\[data-slot="catalog-kvadro-house-rain"\]/);
   assert.match(css,/\[data-slot="bundle-comfort-rain"\]/);
   // Exact SUN master in all eight slots prevents new window/roof/step geometry.
