@@ -30,6 +30,15 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.equal(book.options.electrical_safety_cabinet_temporary_supply.requiresTechnicalApproval,true);
 });
 
+test('V6.6 model cards show a full unbroken price and all size choices',()=>{
+  const responsive=source('assets/css/weather-v6.css');
+  assert.match(app,/const catalogSizes=model=>/);
+  assert.match(app,/Object\.keys\(model\.sizes\)\.map\(sz=>\(Number\(sz\)\/100\)/);
+  assert.match(responsive,/\.catalog \.product-meta\{[\s\S]*?display:grid;/);
+  assert.match(responsive,/\.catalog \.product-price\{\s*white-space:nowrap;/);
+  assert.match(responsive,/\.catalog \.product-sizes\{\s*white-space:normal;/);
+});
+
 test('V6.6 customer gallery identifies four models with distinct interiors, no shared generic room',()=>{
   for(const model of ['kvadro','parus','viking','kvadro-house']){
     assert.match(html,new RegExp('data-model-jump="'+model+'"'));
