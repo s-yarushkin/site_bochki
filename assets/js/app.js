@@ -246,9 +246,14 @@ function initForms(){
     if(formFlow==='quote'&&district.length<2){
       showError('Укажите город или район доставки.',f.elements.district);return;
     }
+    // Explicit user action, never auto-consent: the backend already enforces consent===true.
+    if(!f.elements.leadConsent.checked){
+      showError('Для отправки заявки подтвердите согласие на обработку персональных данных.',f.elements.leadConsent);
+      return;
+    }
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:true,requestId:formRequestId,website:f.elements.website.value
+      comment,consent:f.elements.leadConsent.checked,requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
