@@ -78,15 +78,21 @@ test('S15 mobile validation feedback clears on edit; required marker remains inl
   assert.match(css,/\.contact-dialog label b\{display:inline\}/);
   assert.match(css,/\.contact-dialog \.form-error:empty\{display:none\}/);
 });
-test('S15 privacy and separate consent pages have operator placeholders and processing terms',()=>{
+test('S15 privacy and separate consent pages name proposed registered ООО while keeping legal gate',()=>{
   for(const doc of [privacy,consent]){
-    for(const term of ['[ФИО ИП','[ИНН','[ОГРНИП','[EMAIL','АДРЕС'])assert.ok(doc.includes(term),term);
+    for(const term of ['ООО','«ГАРАНТ-ГРУПП»','3525486964','352501001','1233500004650','[EMAIL ДЛЯ ПДН]']){
+      assert.ok(doc.includes(term),'Missing operator particular or unfinished contact: '+term);
+    }
+    assert.doesNotMatch(doc,/индивидуальному предпринимателю|\[ФИО ИП|ОГРНИП/);
     assert.match(doc,/152-ФЗ|персональных данных/);
     assert.match(doc,/noindex,nofollow/);
   }
   assert.match(privacy,/Права посетителя/);
   assert.match(privacy,/Сроки обработки и хранения/);
+  assert.match(privacy,/\[СРОК ХРАНЕНИЯ ЗАЯВОК/);
+  assert.match(privacy,/\[НАИМЕНОВАНИЕ\/РЕКВИЗИТЫ ХОСТИНГ-ПРОВАЙДЕРА\]/);
   assert.match(consent,/Отзыв согласия/);
+  assert.match(consent,/\[СРОК ХРАНЕНИЯ ЗАЯВОК\]/);
   assert.match(html,/footer-legal/);
 });
 
