@@ -107,7 +107,7 @@ function renderSummary(){
     :state.view==='inside'?'Баня «${model.name}»: интерьер.':'Схема выбранной модели будет уточнена.');
   $('#previewCaption').textContent=state.view==='outside'?`«${model.name}» снаружи`:state.view==='inside'?`«${model.name}» внутри`:'Размерная схема уточняется для заказа';
   syncMedia();
-  $('[data-view]').forEach(btn=>{
+  document.querySelectorAll('[data-view]').forEach(btn=>{
     const supported=btn.dataset.view!=='inside'||hasApprovedInside(state.modelId);
     if(!supported){btn.disabled=true;btn.removeAttribute('title');}
     else {btn.disabled=false;btn.removeAttribute('title');}
@@ -173,7 +173,7 @@ function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click
   if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
- $('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;renderSummary();}));}
+ document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;renderSummary();}));}
 function setWeather(weather){
   if(weather!=='sun'&&weather!=='rain')return;
   const rain=weather==='rain';
