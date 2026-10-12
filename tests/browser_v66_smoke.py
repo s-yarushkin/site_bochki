@@ -57,7 +57,7 @@ try:
       assert f'{model}-outside.webp' in card.locator('img[data-v5-photo]').get_attribute('src')
       sizes=card.locator('.product-sizes')
       label=sizes.inner_text()
-      assert '6 м' in label,(model,label)
+      assert ('6×6 м' if model=='kvadro-house' else '6 м') in label,(model,label)
       assert sizes.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'),('SIZE_LABEL_CLIPPED',label,model)
       price=card.locator('.product-price')
       assert price.evaluate("""(el)=>{
