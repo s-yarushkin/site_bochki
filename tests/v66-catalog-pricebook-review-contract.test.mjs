@@ -23,7 +23,7 @@ test('V6.6 owner price adjustment already included once; Viking remains unchange
  const rule=book.pricingAdjustments;
  assert.ok(rule.important.includes('NEVER')||rule.important.includes('Never'));
  assert.deepEqual(rule.excludedModelIds,['viking']);
- assert.deepEqual(Object.values(rule.byLengthMeters),[20000,25000,30000,35000,40000]);
+ assert.deepEqual(['4','4.5','5','5.5','6'].map(key=>rule.byLengthMeters[key]),[20000,25000,30000,35000,40000]);
  assert.deepEqual(Object.values(book.prices.viking),[335000,385000,465000,490000,520000]);
  assert.deepEqual(Object.values(book.prices.kvadro),[310000,330000,370000,390000,405000]);
  assert.deepEqual(Object.values(book.prices.parus),[360000,385000,410000,430000,445000]);
