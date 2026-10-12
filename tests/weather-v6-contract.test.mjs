@@ -63,7 +63,7 @@ test('V6.6 retains one immutable SUN/RAIN hero while changing only lower-page ca
   assert.match(app,/weatherPhotoSlot\(slot\)/);
   assert.match(app,/\$\('#previewImage'\)\.dataset\.slot=weatherPhotoSlot\(activeSlot,weather\)/);
   assert.match(media,/assets\/catalog-v66\//);
-  assert.match(html,/рекламные изображения, а не фото готового заказа/i);
+  assert.doesNotMatch(html,/рекламные изображения, а не фото готового заказа/i);
   assert.match(css,/background:url\('\.\.\/media-v5\/hero-rain\.webp'\)/);
   assert.match(css,/mask-image:radial-gradient/);
   assert.match(media,/frame\.dataset\.mediaSlotLoadedFor=frame\.dataset\.slot/);
