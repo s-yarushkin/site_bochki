@@ -24,7 +24,11 @@ test('V6.8: exact seven-image manifest is truthful and content-addressed',()=>{
     assert.equal(im.source,'AI_GENERATED_FROM_OWNER_BROCHURE');
     assert.equal(im.visualProvenance,'CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO');
     assert.equal(im.ownerApproval,'PENDING');
-    assert.ok(im.width>=1000&&im.height>=1000,'Invalid source resolution '+im.file);
+    assert.ok(im.width>=800&&im.height>=800,'Insufficient source resolution '+im.file);
+    if(im.file==='parus-lounge-v68.webp'){
+      assert.equal(im.visualCorrection,'CROPPED_TO_EXCLUDE_DUPLICATE_HANDLES_ON_SINGLE_DOOR');
+      assert.deepEqual([im.width,im.height],[845,880]);
+    }
     const path=join(root,'assets/catalog-v68-ai',im.file);
     assert.ok(existsSync(path),'V6.8 media file missing '+im.file);
     assert.equal(statSync(path).size,im.sizeBytes,im.file);
