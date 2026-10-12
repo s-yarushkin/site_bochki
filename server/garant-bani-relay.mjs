@@ -34,6 +34,7 @@ export function validateBaniLead(value) {
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
   if(value.consent!==true) throw new Error('CONSENT_REQUIRED');
+  if(value.consentVersion!==undefined && value.consentVersion!=='2026-10-12')throw new Error('CONSENT_VERSION_UNSUPPORTED');
   const name=field(value.name,80);
   if((name && name.length<2) || (value.flow==='quote' && name.length<2)) throw new Error('INVALID_NAME');
   const digits=field(value.phone,32).replace(/\D/g,'');
@@ -51,7 +52,8 @@ export function validateBaniLead(value) {
   if(contactChannel==='telegram' && contactAccount.startsWith('https://max.ru/'))throw new Error('WRONG_CONTACT_NETWORK');
   if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
-  const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment};
+  const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
+    consentEvidence:{version:value.consentVersion??'legacy-not-versioned',method:'client-affirmative-checkbox-flag'}};
   if(value.flow==='quote') {
     const district=field(value.district,140);
     if(district.length<2) throw new Error('INVALID_DISTRICT');
