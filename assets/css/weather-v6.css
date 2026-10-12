@@ -823,7 +823,6 @@ html{scroll-padding-top:0}
 
 /* V6.8 curated concept art — visual truth before quantity. */
 .bundle-mini-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
-.ai-visual-note{max-width:68ch;margin:6px 0 0;font-size:12px;line-height:1.6;opacity:.88}
 .builder-preview .preview-tab:disabled{opacity:.52;cursor:not-allowed}
 .difference-experience:has(.difference-overline){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .model-gallery-hint{max-width:75ch;line-height:1.5}
