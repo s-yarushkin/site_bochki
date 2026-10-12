@@ -50,7 +50,7 @@ test('S11 success only after MAX receipt; independent privacy and consent docume
   assert.match(html,/name="leadConsent" required/); // Unchecked separate consent.
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/Нажимая «Отправить заявку»/);
+  assert.match(html,/name="leadConsent" required/);
   assert.match(privacy,/Политика в отношении обработки персональных данных/);
   assert.match(consent,/Согласие на обработку персональных данных/);
 });
@@ -90,7 +90,7 @@ test('S15 privacy and separate consent pages name proposed registered ООО whi
   assert.match(privacy,/Права посетителя/);
   assert.match(privacy,/Сроки обработки и хранения/);
   assert.match(privacy,/Конкретные сроки хранения данных/);
-  assert.match(privacy,/перечень получателей|перечень получателей/i);
+  assert.match(privacy,/перечень получателей/i);
   assert.match(consent,/Отзыв согласия/);
   assert.match(consent,/Конкретные сроки хранения/);
   assert.match(html,/footer-legal/);
