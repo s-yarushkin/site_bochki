@@ -12,7 +12,7 @@ $Static=@(
  'index.html','manager.html','privacy.html','consent.html',
  'assets/css/site.css','assets/css/themes-v5.css','assets/css/v5-finish.css',
  'assets/css/weather-v6.css','assets/css/manager.css',
- 'assets/js/app.js','assets/js/catalog-gallery-v67.js','assets/js/media-v5.js','assets/js/quote-engine.js',
+ 'assets/js/app.js','assets/js/media-v5.js','assets/js/quote-engine.js',
  'assets/js/weather-v6.js','assets/js/manager.js',
  'data/pricebook.js','data/catalog-pricebook.json',
  'assets/images/garant-bani-favicon.svg','assets/images/real-quadro.webp',
