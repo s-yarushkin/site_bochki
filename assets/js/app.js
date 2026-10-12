@@ -109,7 +109,7 @@ function renderSummary(){
   syncMedia();
   $('[data-view]').forEach(btn=>{
     const supported=btn.dataset.view!=='inside'||hasApprovedInside(state.modelId);
-    if(!supported){btn.disabled=true;btn.title='Качественные изображения интерьера этой модели готовятся';}
+    if(!supported){btn.disabled=true;btn.removeAttribute('title');}
     else {btn.disabled=false;btn.removeAttribute('title');}
     const selected=btn.dataset.view===state.view;
     btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));
