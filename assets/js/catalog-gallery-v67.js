@@ -46,7 +46,7 @@ export function initModelGallery(){
       </figure>
       <div id="modelGalleryThumbs" class="model-gallery-thumbs" aria-label="Все фотографии выбранной модели"></div>
     </div>
-    <p class="model-gallery-hint">Иллюстрации моделей созданы с использованием ИИ по каталогу производителя. Не являются подтверждёнными фотографиями готовых изделий. Комплектацию уточняйте при заказе. Используйте миниатюры, стрелки или Esc.</p>
+    <p class="model-gallery-hint">Листайте изображения стрелками или выбирайте миниатюры. Esc — закрыть.</p>
   </div>`;
   document.body.append(dialog);
   let activeModel=null,index=0,returnFocus=null;
