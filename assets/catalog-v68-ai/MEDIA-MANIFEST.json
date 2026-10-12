@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "publicationStatus": "OWNER_AI_MEDIA_REVIEW_REQUIRED",
+  "source": "Owner-provided 16-page brochure; derivative images generated with AI; not verified photographs of delivered products",
+  "images": [
+    {
+      "file": "kvadro-outside-v68.webp",
+      "model": "kvadro",
+      "scene": "outside",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "f49aef86336ff12a04eda1a8aa62a4c121b958eae4713915dd9aa148d58782c3",
+      "sizeBytes": 451616,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 8,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    },
+    {
+      "file": "kvadro-steam-v68.webp",
+      "model": "kvadro",
+      "scene": "steam",
+      "width": 1086,
+      "height": 1448,
+      "sha256": "f8ed58a7b120a1792ed3879a2d3679534cf38ea3797161edd148a7128e247541",
+      "sizeBytes": 172662,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 8,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    },
+    {
+      "file": "kvadro-lounge-v68.webp",
+      "model": "kvadro",
+      "scene": "lounge",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "23f5f4f07ae3c603c2be131a1f09e253e71b6547b4b39f9ace0e19582535514f",
+      "sizeBytes": 218834,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 8,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    },
+    {
+      "file": "parus-outside-v68.webp",
+      "model": "parus",
+      "scene": "outside",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "e61e5042acbb2f939726179b9baf6fc83d6952eb9ad5c32f6bbb1f05fc02a88a",
+      "sizeBytes": 432142,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 5,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    },
+    {
+      "file": "parus-lounge-v68.webp",
+      "model": "parus",
+      "scene": "lounge",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "472a4fe68ff32232e640b06e1e8dc03386d1667a4dd60bb9417aeff79bf30b65",
+      "sizeBytes": 171830,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 5,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    },
+    {
+      "file": "viking-outside-v68.webp",
+      "model": "viking",
+      "scene": "outside",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "8593d2c9f2f65acd41e18b381cf072660ebd0fe64a052a42a19eae90ae050147",
+      "sizeBytes": 367408,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 7,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    },
+    {
+      "file": "kvadro-house-outside-v68.webp",
+      "model": "kvadro-house",
+      "scene": "outside",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "713f7af61afd9e115675ac911d5d6431366fa0d7cde036af3396550e38efc60a",
+      "sizeBytes": 367974,
+      "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
+      "sourcePage": 4,
+      "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
+      "ownerApproval": "PENDING"
+    }
+  ]
+}
