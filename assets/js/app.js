@@ -1,6 +1,7 @@
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
+import {initModelGallery} from './catalog-gallery-v67.js';
 import {initAtmosphere,syncAtmosphereText} from './weather-v6.js';
 
 const $=(selector,scope=document)=>scope.querySelector(selector);
@@ -24,19 +25,29 @@ function choice({title,detail='',selected=false,attributes='',price='',icon='⌂
 function renderCatalog(){
   $('#catalogGrid').innerHTML=PRICEBOOK.models.map(model=>{
     const low=Math.min(...Object.values(model.sizes));
-    return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div><div class="product-sizes">${catalogSizes(model)}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
+    return `<article class="product-card" data-model="${model.id}">
+      <button type="button" class="product-media media-frame gallery-cover" data-slot="${model.slot}"
+        data-gallery-open="${model.id}" aria-label="Посмотреть фотографии модели ${escaped(model.name)}">
+        <span class="photo-placeholder-symbol" aria-hidden="true">⌂</span>
+        <span class="slot-name">Фото модели «${escaped(model.name)}»</span>
+        <span class="gallery-cover-hint">Смотреть фотографии ↗</span>
+      </button>
+      <div class="product-body">
+        <h3><button type="button" class="gallery-model-title" data-gallery-open="${model.id}">${escaped(model.name)}</button></h3>
+        <p>${escaped(model.subtitle)}</p>
+        <div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div>
+          <div class="product-sizes">${catalogSizes(model)}</div></div>
+        <div class="product-card-actions">
+          <button class="gallery-photo-action" type="button" data-gallery-open="${model.id}">Фото снаружи и внутри →</button>
+          <button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button>
+        </div>
+      </div></article>`;
   }).join('');
   syncMedia();
   $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
-    const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
+    const m=getModel(button.dataset.catalogSelect);
+    state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;state.view='outside';
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
-  }));
-  document.querySelectorAll('[data-model-jump]').forEach(link=>link.addEventListener('click',()=>{
-    const model=getModel(link.dataset.modelJump);
-    if(!model)return;
-    state.modelId=model.id;state.sizeId=Object.hasOwn(model.sizes,'500')?'500':Object.keys(model.sizes)[0];
-    state.optionIds=[];state.bundleId=null;state.step=1;state.view='outside';
-    renderBuilder();
   }));
   document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
     const value=btn.dataset.filter;
@@ -45,8 +56,26 @@ function renderCatalog(){
   }));
 }
 function renderBundle(){
-  const options=bundle.optionIds.map(id=>getOption(id));
-  $('#bundleOptions').innerHTML=options.map(o=>`<div class="bundle-item"><span>${escaped(o.name)}${o.quantity>1?' · '+o.quantity+' '+escaped(o.unit):''}</span><strong>${money(o.price)}</strong></div>`).join('');
+  // Customer-visible complete kit contents; detailed unit prices stay in the configurator.
+  const sections=[
+    ['Парная и печь',['stove_guard','aspen_backrests','remote_firebox_adjacent','glass_sauna_door_700x1700']],
+    ['Комната отдыха',['folding_table','bench_chest_spruce','cabinet_single_50x50']],
+    ['Окна и вентиляция',['vent_window_small','tilt_window_1400x800']],
+    ['Освещение и электрика',['socket_kit_owner','electrical_distribution_owner','outdoor_two_lanterns','led_light_10m','electrical_safety_cabinet_temporary_supply']]
+  ];
+  const included=new Set(bundle.optionIds);
+  const seen=new Set();
+  const row=id=>{
+    const o=getOption(id);seen.add(id);
+    return '<li>'+escaped(o.name)+(o.quantity>1?' · '+o.quantity+' '+escaped(o.unit):'')+'</li>';
+  };
+  let markup=sections.map(([heading,ids])=>{
+    const present=ids.filter(id=>included.has(id));
+    return present.length?'<div class="bundle-feature-group"><h4>'+escaped(heading)+'</h4><ul>'+present.map(row).join('')+'</ul></div>':'';
+  }).join('');
+  const extras=bundle.optionIds.filter(id=>!seen.has(id));
+  if(extras.length)markup+='<div class="bundle-feature-group"><h4>Дополнительно входит</h4><ul>'+extras.map(row).join('')+'</ul></div>';
+  $('#bundleOptions').innerHTML=markup;
   const quote=calculateQuote({modelId:bundle.modelId,sizeId:bundle.sizeId,optionIds:bundle.optionIds,bundleId:bundle.id});
   $('#bundleOld').textContent=money(quote.beforeDiscount);
   $('#bundleNew').textContent=money(quote.total);
@@ -314,5 +343,5 @@ function initForms(){
     }
   });
 }
-function boot(){renderCatalog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
+function boot(){initModelGallery();renderCatalog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
 boot();
