@@ -30,14 +30,14 @@ function renderCatalog(){
     const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
-  $('[data-model-jump]').forEach(link=>link.addEventListener('click',()=>{
+  document.querySelectorAll('[data-model-jump]').forEach(link=>link.addEventListener('click',()=>{
     const model=getModel(link.dataset.modelJump);
     if(!model)return;
     state.modelId=model.id;state.sizeId=Object.hasOwn(model.sizes,'500')?'500':Object.keys(model.sizes)[0];
     state.optionIds=[];state.bundleId=null;state.step=1;state.view='outside';
     renderBuilder();
   }));
-  $('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
     const value=btn.dataset.filter;
     $$('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
     $$('.product-card').forEach(card=>card.hidden=value!=='all'&&card.dataset.model!==value);
@@ -91,8 +91,8 @@ function renderStepContent(){const model=getModel(state.modelId),step=state.step
   if(step===5){$('#baseSelect').value=state.base;$('#accessSelect').value=state.access;$('#regionInput').addEventListener('input',e=>state.region=e.target.value);$('#baseSelect').addEventListener('change',e=>state.base=e.target.value);$('#accessSelect').addEventListener('change',e=>state.access=e.target.value);}
   $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;}renderBuilder();}));
   $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
-  $('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
-  $('[data-roof]').forEach(btn=>btn.addEventListener('click',()=>{state.roof=btn.dataset.roof;renderBuilder();}));
+  document.querySelectorAll('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
+  document.querySelectorAll('[data-roof]').forEach(btn=>btn.addEventListener('click',()=>{state.roof=btn.dataset.roof;renderBuilder();}));
   $$('[data-option]').forEach(btn=>btn.addEventListener('click',()=>toggleOption(btn.dataset.option)));
   // Form entry points are handled by one delegated listener in initForms().
 }
