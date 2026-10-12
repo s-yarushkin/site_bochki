@@ -8,7 +8,7 @@ const manifest=JSON.parse(read('assets/catalog-v66/MEDIA-MANIFEST.json'));
 const book=JSON.parse(read('data/catalog-pricebook.json'));
 const html=read('index.html'),app=read('assets/js/app.js');
 const css=read('assets/css/weather-v6.css');
-const pack=read('ops/v66-build-preview-bundle.ps1');
+const pack=read('ops/v67-build-preview-bundle.ps1');
 
 test('V6.7: all four galleries contain only their own brochure photos and all associated scenes',()=>{
   assert.deepEqual(Object.keys(MODEL_ALBUMS).sort(),Object.keys(book.models).sort());
