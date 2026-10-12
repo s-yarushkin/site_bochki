@@ -120,15 +120,21 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   const host=env.HOST||'127.0.0.1';
   const port=Number(env.PORT||3301);
   const allowedOrigin=env.ALLOWED_ORIGIN;
+  const siteBasePath=env.SITE_BASE_PATH||'/bani-preview/';
   const chatId=env.MAX_CHAT_ID;
   if(host!=='127.0.0.1'||!Number.isSafeInteger(port)||port<1024||port>65535) throw new Error('UNSAFE_BIND');
-  if(allowedOrigin!=='https://xn----7sbbigeqcfm8bq.xn--p1ai') throw new Error('UNSAFE_ORIGIN');
+  let parsedOrigin;
+  try{parsedOrigin=new URL(allowedOrigin);}catch{throw new Error('UNSAFE_ORIGIN');}
+  if(parsedOrigin.protocol!=='https:'||parsedOrigin.origin!==allowedOrigin||
+     parsedOrigin.username||parsedOrigin.password||parsedOrigin.pathname!=='/'||
+     parsedOrigin.search||parsedOrigin.hash||!parsedOrigin.hostname.includes('.'))throw new Error('UNSAFE_ORIGIN');
+  if(!/^\/(?:[a-z0-9-]+\/)*$/.test(siteBasePath))throw new Error('UNSAFE_BASE_PATH');
   if(!/^-?\d+$/.test(chatId||'')) throw new Error('INVALID_CHAT_ID');
   const file=env.MAX_TOKEN_FILE||(env.CREDENTIALS_DIRECTORY?env.CREDENTIALS_DIRECTORY+'/max-token':null);
   if(!file) throw new Error('TOKEN_FILE_NOT_SET');
   const token=String(readSecret(file,'utf8')).trim();
   if(token.length<10)throw new Error('INVALID_TOKEN');
-  return {host,port,allowedOrigin,chatId,token};
+  return {host,port,allowedOrigin,siteBasePath,chatId,token};
 }
 
 export async function deliverBaniLead(lead,config,fetchImpl=fetch,meta={}) {
@@ -241,7 +247,7 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   if(!databasePath||!databasePath.startsWith('/var/lib/garant-bani-relay/'))throw new Error('UNSAFE_DATABASE_PATH');
   const store=openLeadStore(databasePath);
   const managerConfig=loadManagerConfig();
-  const auth=createManagerAuth(managerConfig);
+  const auth=createManagerAuth({...managerConfig,cookiePath:config.siteBasePath+'api/manager/'});
   const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error});
   const server=createServer(createRelayHandler({config,store,managerApi}));
   server.requestTimeout=15000;
