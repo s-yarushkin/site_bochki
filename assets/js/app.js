@@ -27,7 +27,7 @@ function renderCatalog(){
     const low=Math.min(...Object.values(model.sizes));
     return `<article class="product-card" data-model="${model.id}">
       <button type="button" class="product-media media-frame gallery-cover" data-slot="${model.slot}"
-        data-gallery-open="${model.id}" aria-label="Посмотреть фотографии модели ${escaped(model.name)}">
+        data-gallery-open="${model.id}" aria-label="Посмотреть изображения модели ${escaped(model.name)}">
         <span class="photo-placeholder-symbol" aria-hidden="true">⌂</span>
         <span class="slot-name">Фото модели «${escaped(model.name)}»</span>
         <span class="gallery-cover-hint">Смотреть фотографии ↗</span>
@@ -38,7 +38,7 @@ function renderCatalog(){
         <div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div>
           <div class="product-sizes">${catalogSizes(model)}</div></div>
         <div class="product-card-actions">
-          <button class="gallery-photo-action" type="button" data-gallery-open="${model.id}">Фото снаружи и внутри →</button>
+          <button class="gallery-photo-action" type="button" data-gallery-open="${model.id}">Смотреть изображения →</button>
           <button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button>
         </div>
       </div></article>`;
