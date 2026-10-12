@@ -30,7 +30,14 @@ function renderCatalog(){
     const m=getModel(button.dataset.catalogSelect);state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
-  $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
+  $('[data-model-jump]').forEach(link=>link.addEventListener('click',()=>{
+    const model=getModel(link.dataset.modelJump);
+    if(!model)return;
+    state.modelId=model.id;state.sizeId=Object.hasOwn(model.sizes,'500')?'500':Object.keys(model.sizes)[0];
+    state.optionIds=[];state.bundleId=null;state.step=1;state.view='outside';
+    renderBuilder();
+  }));
+  $('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
     const value=btn.dataset.filter;
     $$('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
     $$('.product-card').forEach(card=>card.hidden=value!=='all'&&card.dataset.model!==value);
@@ -38,7 +45,7 @@ function renderCatalog(){
 }
 function renderBundle(){
   const options=bundle.optionIds.map(id=>getOption(id));
-  $('#bundleOptions').innerHTML=options.map(o=>`<div class="bundle-item">${escaped(o.name)}</div>`).join('');
+  $('#bundleOptions').innerHTML=options.map(o=>`<div class="bundle-item"><span>${escaped(o.name)}${o.quantity>1?' · '+o.quantity+' '+escaped(o.unit):''}</span><strong>${money(o.price)}</strong></div>`).join('');
   const quote=calculateQuote({modelId:bundle.modelId,sizeId:bundle.sizeId,optionIds:bundle.optionIds,bundleId:bundle.id});
   $('#bundleOld').textContent=money(quote.beforeDiscount);
   $('#bundleNew').textContent=money(quote.total);
