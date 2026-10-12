@@ -5,7 +5,7 @@ import functools, http.server, json, os, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-r5-final-visual-qa'
+SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-r6-final-visual-qa'
 SHOT.mkdir(parents=True,exist_ok=True)
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -56,9 +56,9 @@ try:
       expect(card.locator('img[data-v5-photo]')).to_have_count(1)
       assert f'{model}-outside.webp' in card.locator('img[data-v5-photo]').get_attribute('src')
       sizes=card.locator('.product-sizes')
-      label=sizes.inner_text()
-      assert ('6×6 м' if model=='kvadro-house' else '6 м') in label,(model,label)
-      assert sizes.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'),('SIZE_LABEL_CLIPPED',label,model)
+      size_text=sizes.inner_text()
+      assert ('6×6 м' if model=='kvadro-house' else '6 м') in size_text,(model,size_text)
+      assert sizes.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'),('SIZE_LABEL_CLIPPED',size_text,model)
       price=card.locator('.product-price')
       assert price.evaluate("""(el)=>{
         const node=[...el.childNodes].find(n=>n.nodeType===Node.TEXT_NODE && n.textContent.includes('₽'));
@@ -74,6 +74,7 @@ try:
       assert gallery.locator('.model-images .media-frame').count()==2,model
       for img in gallery.locator('.model-images img[data-v5-photo]').all():
         assert 'catalog-v66' in img.get_attribute('src'),(model,label)
+    assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     # Owner visual acceptance: capture both complete four-model catalog and interiors,
     # not only the featured offer and legal footer. These were absent from r3 archive.
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
