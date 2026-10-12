@@ -65,6 +65,9 @@ export function initModelGallery(){
     image.alt=album.name+' — '+scene.toLowerCase();
     caption.textContent=scene;
     counter.textContent=(index+1)+' / '+album.photos.length;
+    const canNavigate=album.photos.length>1;
+    dialog.querySelector('[data-gallery-prev]').hidden=!canNavigate;
+    dialog.querySelector('[data-gallery-next]').hidden=!canNavigate;
     thumbs.innerHTML=album.photos.map(([f,label],i)=>`<button type="button" class="model-gallery-thumb ${i===index?'is-current':''}" data-gallery-thumb="${i}" aria-pressed="${i===index}" aria-label="${label} — фото ${i+1}">
       <img src="${src(f)}" alt="" loading="lazy" decoding="async"/><span>${label}</span>
     </button>`).join('');
