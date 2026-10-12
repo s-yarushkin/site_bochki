@@ -19,8 +19,8 @@ test('V6.7 operator identity retained in privacy and consent documents, not on s
   assert.doesNotMatch(html,/class="container footer-operator"/);
   assert.doesNotMatch(html,/Герцена, д. 114/);
   assert.match(html,/aria-label="Правовая информация"/);
-  assert.match(html,/href="privacy\\.html"/);
-  assert.match(html,/href="consent\\.html"/);
+  assert.match(html,/href="privacy\.html"/);
+  assert.match(html,/href="consent\.html"/);
   assert.match(html,/Доставку рассчитываем отдельно/);
 });
 
@@ -53,7 +53,7 @@ test('V6.5 explicit user consent is not prechecked or fabricated by app; server 
 
 test('V6.7 consent remains readable on narrow screens',()=>{
   assert.match(html,/class="footer-legal"/);
-  assert.match(css,/\\.contact-dialog label\\.lead-consent-label\\{display:grid/);
-  assert.match(css,/\\.contact-dialog \\.lead-consent-label input\\[type="checkbox"\\]/);
-  assert.match(css,/@media\\(max-width:360px\\)\\{\\.contact-dialog \\.lead-consent-label/);
+  assert.match(css,/\.contact-dialog label\.lead-consent-label\{display:grid/);
+  assert.match(css,/\.contact-dialog \.lead-consent-label input\[type="checkbox"\]/);
+  assert.match(css,/@media\(max-width:360px\)\{\.contact-dialog \.lead-consent-label/);
 });
