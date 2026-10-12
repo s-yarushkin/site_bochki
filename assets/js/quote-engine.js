@@ -4,12 +4,12 @@ export const formatMoney = value => new Intl.NumberFormat('ru-RU').format(value)
 export const getModel = id => PRICEBOOK.models.find(m=>m.id === id) || null;
 export const getOption = id => PRICEBOOK.options.find(o=>o.id === id) || null;
 
-export function resolveOptions(ids){
+export function resolveOptions(ids,pricebook=PRICEBOOK){
   if(!Array.isArray(ids))throw new Error('OPTIONS_ARRAY_REQUIRED');
   const seen=new Set(), mutex=new Set(), resolved=[];
   for(const id of ids){
     if(typeof id!=='string')throw new Error('INVALID_OPTION_ID');
-    const opt=getOption(id);
+    const opt=pricebook.options.find(o=>o.id===id);
     if(!opt)throw new Error('UNKNOWN_OPTION_ID:'+id);
     if(seen.has(id))throw new Error('DUPLICATE_OPTION:'+id);
     if(opt.mutex && mutex.has(opt.mutex))throw new Error('INCOMPATIBLE_OPTIONS:'+id);
@@ -26,7 +26,7 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundl
   if(!Object.hasOwn(model.sizes,sizeId))throw new Error('UNAVAILABLE_SIZE');
   const basePrice=model.sizes[sizeId];
   if(!Number.isSafeInteger(basePrice)||basePrice<0)throw new Error('INVALID_BASE_PRICE');
-  const chosen=resolveOptions(optionIds);
+  const chosen=resolveOptions(optionIds,pricebook);
   const optionsSubtotal=chosen.reduce((sum,opt)=>{
     if(!Number.isSafeInteger(opt.price)||opt.price<0)throw new Error('INVALID_OPTION_PRICE');
     const v=sum+opt.price;if(!Number.isSafeInteger(v))throw new Error('PRICE_OVERFLOW');return v;
