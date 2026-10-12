@@ -12,7 +12,7 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.doesNotMatch(html,/Чаще всего у нас покупают/);
   assert.doesNotMatch(html,/href="manager\.html"/);
   assert.doesNotMatch(html,/data-view="plan"/);
-  assert.match(html,/Ориентировочная стоимость комплекта/);
+  assert.match(html,/Предварительная стоимость комплекта/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
   assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
   assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/);
