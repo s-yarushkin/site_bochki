@@ -97,6 +97,7 @@ function renderSummary(){
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
   const slot=state.view==='outside'?model.slot:state.view==='inside'?`interior-${model.id}`:'product-front';
   $('#previewImage').dataset.slot=weatherPhotoSlot(slot);
+  $('#previewImage').dataset.galleryOpen=state.modelId;
   $('#previewImage').setAttribute('aria-label',state.view==='outside'
     ?`Баня «${model.name}» снаружи.`
     :state.view==='inside'?'Баня «${model.name}»: интерьер.':'Схема выбранной модели будет уточнена.');
