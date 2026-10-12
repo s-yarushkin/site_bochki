@@ -23,7 +23,7 @@ test('S06 all four models have distinct catalog exteriors/interiors, hero unchan
     assert.ok(media.includes("'"+slot+"'"),'Missing media slot '+slot);
   }
   for(const id of ['kvadro','parus','viking','kvadro-house']){
-    assert.ok(data.includes("'"+id+"'"),'Missing model in price adapter: '+id);
+    assert.ok(Object.hasOwn(JSON.parse(readFileSync(new URL('../data/catalog-pricebook.json',import.meta.url),'utf8')).models,id),'Missing catalog model: '+id);
     assert.ok(media.includes("'catalog-"+id+"'"),'Missing model exterior: '+id);
   }
   assert.match(html,/data-slot="hero-sun-desktop"/);
