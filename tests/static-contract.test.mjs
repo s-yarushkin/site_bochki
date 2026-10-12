@@ -27,7 +27,9 @@ test('S06 all four models have distinct catalog exteriors/interiors, hero unchan
     assert.ok(media.includes("'catalog-"+id+"'"),'Missing model exterior: '+id);
   }
   assert.match(html,/data-slot="hero-sun-desktop"/);
-  assert.match(html,/id="model-interiors"/);
+  const gallery=readFileSync(new URL('../assets/js/catalog-gallery-v67.js',import.meta.url),'utf8');
+  assert.match(gallery,/export const MODEL_ALBUMS/);
+  assert.match(html,/data-gallery-open="kvadro"/);
   assert.match(html,/data-slot="bundle-comfort"/);
   assert.doesNotMatch(html,/data-slot="stove-water-tank"/);
 });
@@ -37,7 +39,7 @@ test('S06b catalog buttons are registered as a collection and full startup remai
   // startup handlers including SUN/RAIN despite 77/77 passing previously.
   assert.match(script,/\$\$\('\[data-catalog-select\]'\)\.forEach/);
   assert.doesNotMatch(script,/(?<!\$)\$\('\[data-catalog-select\]'\)\.forEach/);
-  assert.match(script,/function boot\(\)\{renderCatalog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
+  assert.match(script,/function boot\(\)\{initModelGallery\(\);renderCatalog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
 });
 test('S07 seven defined screens',()=>assert.match(script,/const stepNames=\[[^;]+\];/));
 test('S08 keyboard and motion accessibility',()=>{assert.match(css,/:focus-visible/);assert.match(css,/prefers-reduced-motion/);});
