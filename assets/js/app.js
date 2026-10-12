@@ -16,6 +16,7 @@ const money=formatMoney;
 const bundle=PRICEBOOK.bundle;
 const sizeLabel=(model,sz)=>model.sizeKind==='full'?sz.replace('x','×')+' м':(Number(sz)/100).toLocaleString('ru-RU')+' м';
 const sizeHint=model=>model.sizeKind==='full'?'Выберите полный габарит':`Ширина ${model.widthM.toLocaleString('ru-RU')} м`;
+const catalogSizes=model=>model.sizeKind==='full'?`Габариты: ${Object.keys(model.sizes).map(sz=>sz.replace('x','×')).join(' / ')} м`:`Ширина ${model.widthM.toLocaleString('ru-RU')} м · длины ${Object.keys(model.sizes).map(sz=>(Number(sz)/100).toLocaleString('ru-RU')).join(' / ')} м`;
 
 function choice({title,detail='',selected=false,attributes='',price='',icon='⌂'}){
   return `<button type="button" class="choice ${selected?'selected':''}" ${attributes} aria-pressed="${selected}"><span class="choice-icon" aria-hidden="true">${icon}</span><strong>${escaped(title)}</strong>${detail?`<small>${escaped(detail)}</small>`:''}${price?`<small>${escaped(price)}</small>`:''}</button>`;
@@ -23,7 +24,7 @@ function choice({title,detail='',selected=false,attributes='',price='',icon='⌂
 function renderCatalog(){
   $('#catalogGrid').innerHTML=PRICEBOOK.models.map(model=>{
     const low=Math.min(...Object.values(model.sizes));
-    return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div><div class="product-sizes">${sizeHint(model)} · ${Object.keys(model.sizes).map(x=>sizeLabel(model,x)).join(' / ')}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
+    return `<article class="product-card" data-model="${model.id}"><div class="product-media media-frame" data-slot="${model.slot}"><span class="photo-placeholder-symbol" aria-hidden="true">⌂</span><span class="slot-name">Фото модели «${escaped(model.name)}»</span></div><div class="product-body"><h3>${escaped(model.name)}</h3><p>${escaped(model.subtitle)}</p><div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div><div class="product-sizes">${catalogSizes(model)}</div></div><button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button></div></article>`;
   }).join('');
   syncMedia();
   $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
