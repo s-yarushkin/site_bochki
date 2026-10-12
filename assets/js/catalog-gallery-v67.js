@@ -1,23 +1,29 @@
 /* V6.7 — one verified catalog image album per model. Photos remain grouped;
    changing theme, card filters, or the configurator never mixes albums. */
+export const V68_MEDIA_PATHS=Object.freeze({
+  'kvadro-outside.webp':'assets/catalog-v68-ai/kvadro-outside-v68.webp',
+  'kvadro-steam.webp':'assets/catalog-v68-ai/kvadro-steam-v68.webp',
+  'kvadro-lounge.webp':'assets/catalog-v68-ai/kvadro-lounge-v68.webp',
+  'parus-outside.webp':'assets/catalog-v68-ai/parus-outside-v68.webp',
+  'parus-lounge.webp':'assets/catalog-v68-ai/parus-lounge-v68.webp',
+  'viking-outside.webp':'assets/catalog-v68-ai/viking-outside-v68.webp',
+  'kvadro-house-outside.webp':'assets/catalog-v68-ai/kvadro-house-outside-v68.webp'
+});
+// Only seven individually reviewed concept visualizations. The eleven small or
+// contaminated brochure fragments remain archived but are hidden from preview.
 export const MODEL_ALBUMS=Object.freeze({
   kvadro:{name:'Квадро',photos:[
     ['kvadro-outside.webp','Снаружи'],['kvadro-steam.webp','Парная'],
-    ['kvadro-lounge.webp','Комната отдыха'],['kvadro-entry.webp','Входная зона']
+    ['kvadro-lounge.webp','Комната отдыха']
   ]},
   parus:{name:'Парус',photos:[
-    ['parus-outside.webp','Снаружи'],['parus-steam.webp','Парная'],
-    ['parus-lounge.webp','Комната отдыха'],['parus-stove.webp','Печь'],
-    ['parus-shower.webp','Душевая зона']
+    ['parus-outside.webp','Снаружи'],['parus-lounge.webp','Комната отдыха']
   ]},
   viking:{name:'Викинг',photos:[
-    ['viking-outside.webp','Снаружи'],['viking-steam.webp','Парная'],
-    ['viking-lounge.webp','Комната отдыха'],['viking-stove.webp','Печь']
+    ['viking-outside.webp','Снаружи']
   ]},
   'kvadro-house':{name:'Квадро Хаус',photos:[
-    ['kvadro-house-outside.webp','Снаружи'],['kvadro-house-steam.webp','Парная'],
-    ['kvadro-house-lounge.webp','Комната отдыха'],['kvadro-house-stove.webp','Печь'],
-    ['kvadro-house-veranda.webp','Веранда']
+    ['kvadro-house-outside.webp','Снаружи']
   ]}
 });
 
@@ -25,10 +31,10 @@ export function initModelGallery(){
   const dialog=document.createElement('dialog');
   dialog.id='modelGallery';
   dialog.className='model-gallery';
-  dialog.setAttribute('aria-label','Фотографии выбранной модели бани');
+  dialog.setAttribute('aria-label','Изображения выбранной модели бани');
   dialog.innerHTML=`<div class="model-gallery-shell">
     <header class="model-gallery-header">
-      <div><small>ФОТОГРАФИИ МОДЕЛИ</small><h2 id="modelGalleryTitle"></h2></div>
+      <div><small>ИЗОБРАЖЕНИЯ МОДЕЛИ</small><h2 id="modelGalleryTitle"></h2></div>
       <button class="model-gallery-close" type="button" data-gallery-close aria-label="Закрыть фотографии">×</button>
     </header>
     <div class="model-gallery-layout">
@@ -40,7 +46,7 @@ export function initModelGallery(){
       </figure>
       <div id="modelGalleryThumbs" class="model-gallery-thumbs" aria-label="Все фотографии выбранной модели"></div>
     </div>
-    <p class="model-gallery-hint">Нажмите на миниатюру или используйте стрелки клавиатуры. Esc — закрыть.</p>
+    <p class="model-gallery-hint">Иллюстрации моделей созданы с использованием ИИ по каталогу производителя. Не являются подтверждёнными фотографиями готовых изделий. Комплектацию уточняйте при заказе. Используйте миниатюры, стрелки или Esc.</p>
   </div>`;
   document.body.append(dialog);
   let activeModel=null,index=0,returnFocus=null;
@@ -49,7 +55,7 @@ export function initModelGallery(){
   const caption=dialog.querySelector('#modelGalleryCaption');
   const counter=dialog.querySelector('#modelGalleryCounter');
   const thumbs=dialog.querySelector('#modelGalleryThumbs');
-  const src=file=>new URL('assets/catalog-v66/'+file,document.baseURI).href;
+  const src=file=>new URL(V68_MEDIA_PATHS[file]??('assets/catalog-v66/'+file),document.baseURI).href;
   function draw(){
     const album=MODEL_ALBUMS[activeModel];
     if(!album)return;
