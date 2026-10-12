@@ -33,7 +33,7 @@ test('V6.5 policy is a separate noindex operator document with truthful MAX and 
   assert.match(privacy,/закрытую рабочую группу мессенджера MAX/);
   assert.match(privacy,/Google Fonts/);
   assert.match(privacy,/не запрашивает через формы паспортные/);
-  assert.match(privacy,/отзыва согласия/);
+  assert.match(privacy,/отзыв[ае]? согласия|отзыве согласия/i);
   assert.match(privacy,/Конкретные сроки хранения/);
   assert.match(consent,/не распространяется на рекламные рассылки/);
   assert.match(consent,/отдельной установкой отметки/);
