@@ -5,7 +5,7 @@ import functools, http.server, json, os, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-r4-visual-qa'
+SHOT=Path(tempfile.gettempdir())/'garant-bani-v66-r5-final-visual-qa'
 SHOT.mkdir(parents=True,exist_ok=True)
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -55,7 +55,18 @@ try:
       card.scroll_into_view_if_needed()
       expect(card.locator('img[data-v5-photo]')).to_have_count(1)
       assert f'{model}-outside.webp' in card.locator('img[data-v5-photo]').get_attribute('src')
-      assert card.locator('.product-sizes').inner_text()
+      sizes=card.locator('.product-sizes')
+      label=sizes.inner_text()
+      assert '6 м' in label,(model,label)
+      assert sizes.evaluate('(el)=>el.scrollWidth<=el.clientWidth+2'),('SIZE_LABEL_CLIPPED',label,model)
+      price=card.locator('.product-price')
+      assert price.evaluate("""(el)=>{
+        const node=[...el.childNodes].find(n=>n.nodeType===Node.TEXT_NODE && n.textContent.includes('₽'));
+        if(!node)return false;
+        const rng=document.createRange();rng.selectNodeContents(node);
+        const rects=[...rng.getClientRects()].filter(r=>r.width>0);
+        return rects.length===1 && rects[0].right<=el.getBoundingClientRect().right+2;
+      }"""),('PRICE_RUBLE_SPLIT_OR_CLIPPED',model)
     assert page.locator('.details-grid-models .detail-card').count()==4,label
     for model in ['kvadro','parus','viking','kvadro-house']:
       gallery=page.locator(f'[data-model-jump="{model}"]').locator('xpath=..')
@@ -68,6 +79,24 @@ try:
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
     page.locator('#model-interiors .details-grid-models').screenshot(
         path=str(SHOT/f'{label}-four-interiors-sun.png'))
+    # Review ALL catalogue color/roof choices at every viewport. Verify thumbnails
+    # load and are selectable independently without changing quote arithmetic.
+    page.locator('#builderNext').click()
+    page.locator('#builderNext').click()
+    assert page.locator('[data-finish]').count()==12,('FINISH_COUNT',label)
+    assert page.locator('[data-roof]').count()==4,('ROOF_COUNT',label)
+    for swatch in page.locator('.color-choices-catalog img.catalog-swatch').all():
+      swatch.scroll_into_view_if_needed()
+      assert swatch.evaluate('(img)=>img.decode().then(()=>img.naturalWidth>0).catch(()=>false)'),('SWATCH_IMAGE_NOT_LOADED',label)
+    page.locator('#builderStepContent').screenshot(path=str(SHOT/f'{label}-body-and-roof-colors-sun.png'))
+    page.locator('[data-finish="teak"]').click()
+    assert page.locator('[data-finish="teak"]').get_attribute('aria-pressed')=='true'
+    page.locator('[data-roof="red"]').click()
+    assert page.locator('[data-roof="red"]').get_attribute('aria-pressed')=='true'
+    page.locator('[data-finish="pine"]').click()
+    page.locator('[data-roof="brown"]').click()
+    page.locator('#builderBack').click()
+    page.locator('#builderBack').click()
     page.locator('.footer-operator').scroll_into_view_if_needed()
     assert '1233500004650' in page.locator('.footer-operator').inner_text()
     page.screenshot(path=str(SHOT/f'{label}-legal-footer.png'))
