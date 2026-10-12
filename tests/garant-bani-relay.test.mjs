@@ -78,7 +78,9 @@ test('reads MAX token only from protected credentials path',()=>{
   });
   assert.equal(cfg.chatId,'-79890208563249');
   assert.throws(()=>loadRelayConfig({HOST:'0.0.0.0',ALLOWED_ORIGIN:origin,MAX_CHAT_ID:'-1',MAX_TOKEN_FILE:'/tmp/x'},()=> 'test-token-value'),/UNSAFE_BIND/);
-  assert.throws(()=>loadRelayConfig({HOST:'127.0.0.1',ALLOWED_ORIGIN:'https://evil.example',MAX_CHAT_ID:'-1',MAX_TOKEN_FILE:'/tmp/x'},()=> 'test-token-value'),/UNSAFE_ORIGIN/);
+  assert.equal(loadRelayConfig({HOST:'127.0.0.1',ALLOWED_ORIGIN:'https://new-domain.example',MAX_CHAT_ID:'-1',MAX_TOKEN_FILE:'/tmp/x'},()=> 'test-token-value').allowedOrigin,'https://new-domain.example');
+  assert.throws(()=>loadRelayConfig({HOST:'127.0.0.1',ALLOWED_ORIGIN:'http://new-domain.example',MAX_CHAT_ID:'-1',MAX_TOKEN_FILE:'/tmp/x'},()=> 'test-token-value'),/UNSAFE_ORIGIN/);
+  assert.throws(()=>loadRelayConfig({HOST:'127.0.0.1',ALLOWED_ORIGIN:'https://new-domain.example/path',MAX_CHAT_ID:'-1',MAX_TOKEN_FILE:'/tmp/x'},()=> 'test-token-value'),/UNSAFE_ORIGIN/);
 });
 test('MAX API uses correct bot Authorization header and group id',async()=>{
   let request;
