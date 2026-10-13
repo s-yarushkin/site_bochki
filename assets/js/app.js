@@ -94,8 +94,8 @@ function previewSlot(){
   if(state.modelId==='kvadro'&&state.view==='inside')
     return state.photoIndex===0?'detail-kvadro-steam':'interior-kvadro';
   if(state.modelId==='viking'){
-    if(state.view==='inside')return 'interior-viking';
-    return state.photoIndex===1?'catalog-viking-outside-02':'catalog-viking';
+    if(state.view==='inside')return 'real-viking-inside-01';
+    return ['catalog-viking','real-viking-outside-01','real-viking-outside-02'][state.photoIndex]||'catalog-viking';
   }
   return state.view==='outside'?getModel(state.modelId).slot:state.view==='inside'?`interior-${state.modelId}`:'product-front';
 }
