@@ -10,22 +10,29 @@ const html=read('index.html'),app=read('assets/js/app.js');
 const css=read('assets/css/weather-v6.css');
 const pack=read('ops/v67-build-preview-bundle.ps1');
 
-test('V6.8: only seven vetted concepts appear; all four albums isolated',()=>{
+test('V6.9: albums remain model-specific and real Viking photos stay grouped',()=>{
   assert.deepEqual(Object.keys(MODEL_ALBUMS).sort(),Object.keys(book.models).sort());
-  const expected={kvadro:3,parus:2,viking:1,'kvadro-house':1};
+  const expected={kvadro:3,parus:2,viking:3,'kvadro-house':1};
   for(const [model,album] of Object.entries(MODEL_ALBUMS)){
-    const photos=manifest.images.filter(m=>m.model===model);
     assert.equal(album.photos.length,expected[model],model);
+    if(model==='viking'){
+      assert.deepEqual(album.photos.map(([p])=>p),[
+        'assets/real-objects/viking/viking-001/outside-01.jpg',
+        'assets/real-objects/viking/viking-001/outside-02.jpg',
+        'assets/real-objects/viking/viking-001/inside-01.jpg'
+      ]);
+      continue;
+    }
+    const photos=manifest.images.filter(m=>m.model===model);
     assert.equal(album.photos.length,photos.length,model);
     assert.equal(album.photos[0][0],model+'-outside.webp');
     const mapped=album.photos.map(([file])=>V68_MEDIA_PATHS[file]?.split('/').at(-1));
     assert.deepEqual(new Set(mapped),new Set(photos.map(row=>row.file)),model);
     assert.equal(new Set(mapped).size,album.photos.length,model);
-    assert.ok(!mapped.some(f=>f===undefined),'Unsupported image in preview '+model);
   }
 });
 test('V6.7: gallery is accessible from model photo, name, miniatures and configurator',()=>{
-  assert.match(app,/import \{initModelGallery\} from '\.\/catalog-gallery-v67\.js'/);
+  assert.match(app,/import \{initModelGallery,getModelScenePhotos\} from '\.\/catalog-gallery-v67\.js'/);
   assert.match(app,/function boot\(\)\{initModelGallery\(\);renderCatalog\(\)/);
   assert.match(app,/data-gallery-open="\$\{model\.id\}"/);
   assert.match(app,/dataset\.galleryOpen=state\.modelId/);
