@@ -40,22 +40,28 @@ test('V6.8: exact seven-image manifest is truthful and content-addressed',()=>{
     assert.equal(createHash('sha256').update(data).digest('hex'),im.sha256,im.file);
   }
 });
-test('V6.8: every gallery preview image and card uses one reviewed asset for the correct model',()=>{
+test('V6.9: approved V6.8 art retained for rollback, Viking preview uses ONLY owner reality',()=>{
   const images=manifest.images;
   assert.deepEqual(images.map(im=>im.file).sort(),Object.values(V68_MEDIA_PATHS).map(path=>path.split('/').at(-1)).sort());
-  const counts={kvadro:3,parus:2,viking:1,'kvadro-house':1};
+  const counts={kvadro:3,parus:2,viking:3,'kvadro-house':1};
   for(const [model,album] of Object.entries(MODEL_ALBUMS)){
     assert.equal(album.photos.length,counts[model],model);
+    if(model==='viking'){
+      assert.ok(album.photos.every(([path])=>path.startsWith('assets/real-objects/viking/viking-001/')));
+      assert.equal(MEDIA_SLOTS['catalog-viking'].path,album.photos[0][0]);
+      assert.equal(MEDIA_SLOTS['catalog-viking-outside-02'].path,album.photos[1][0]);
+      assert.equal(MEDIA_SLOTS['interior-viking'].path,album.photos[2][0]);
+      continue;
+    }
     assert.equal(album.photos[0][0],model+'-outside.webp');
     for(const [file] of album.photos){
       const path=V68_MEDIA_PATHS[file];
       assert.ok(path?.startsWith('assets/catalog-v68-ai/'),file);
-      const asset=images.find(im=>im.file===path.split('/').at(-1));
-      assert.equal(asset?.model,model,file);
+      assert.equal(images.find(im=>im.file===path.split('/').at(-1))?.model,model,file);
     }
     assert.equal(MEDIA_SLOTS['catalog-'+model].path,V68_MEDIA_PATHS[model+'-outside.webp']);
   }
-  assert.equal(MEDIA_SLOTS['cta-evening-cozy'].path,'assets/catalog-v66/viking-outside.webp');
+  assert.equal(MEDIA_SLOTS['cta-evening-cozy'].path,MODEL_ALBUMS.viking.photos[0][0]);
   assert.equal(MEDIA_SLOTS['hero-sun-desktop'].file,'hero-sun.webp');
   assert.equal(MEDIA_SLOTS['hero-rain-desktop'].file,'hero-sun.webp');
 });
