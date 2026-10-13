@@ -1,38 +1,39 @@
 /**
  * V6.6 media registry.
  * Keep the approved SUN/RAIN hero master untouched.
- * All catalog images below hero are crops of owner-provided Garant-Grupp brochure.
+ * V6.8 updates selected lower-page images with AI-derived concept visuals; legacy assets retained.
  * The PDF images are promotional renders/composites; they are NOT verified
  * documentary photos of delivered installations.
  */
 const catalog=(file,alt)=>({file,path:'assets/catalog-v66/'+file,alt});
+const catalogV68=(file,alt)=>({file,path:'assets/catalog-v68-ai/'+file,alt});
 export const MEDIA_SLOTS=Object.freeze({
   'hero-sun-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: утверждённая художественная обработка участка'},
   'hero-rain-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: та же архитектура в дождевой теме'},
-  'catalog-kvadro':catalog('kvadro-outside.webp','Квадро: наружный вид'),
-  'catalog-parus':catalog('parus-outside.webp','Парус: наружный вид'),
-  'catalog-viking':catalog('viking-outside.webp','Викинг: наружный вид'),
-  'catalog-kvadro-house':catalog('kvadro-house-outside.webp','Квадро Хаус: наружный вид'),
-  'catalog-kvadro-house-rain':catalog('kvadro-house-outside.webp','Квадро Хаус: вид снаружи'),
-  'bundle-comfort':catalog('kvadro-outside.webp','Квадро: готовая баня снаружи'),
-  'bundle-comfort-rain':catalog('kvadro-outside.webp','Квадро Комфорт: изображение'),
+  'catalog-kvadro':catalogV68('kvadro-outside-v68.webp','Квадро: наружный вид'),
+  'catalog-parus':catalogV68('parus-outside-v68.webp','Парус: наружный вид'),
+  'catalog-viking':catalogV68('viking-outside-v68.webp','Викинг: наружный вид'),
+  'catalog-kvadro-house':catalogV68('kvadro-house-outside-v68.webp','Квадро Хаус: наружный вид'),
+  'catalog-kvadro-house-rain':catalogV68('kvadro-house-outside-v68.webp','Квадро Хаус: вид снаружи'),
+  'bundle-comfort':catalogV68('kvadro-outside-v68.webp','Квадро: готовая баня снаружи'),
+  'bundle-comfort-rain':catalogV68('kvadro-outside-v68.webp','Квадро Комфорт: изображение'),
   'cta-evening-cozy':catalog('viking-outside.webp','Викинг: внешний вид'),
-  'product-steam':catalog('kvadro-steam.webp','Квадро: парная'),
-  'product-interior':catalog('parus-lounge.webp','Парус: интерьер'),
-  'site-example':catalog('parus-outside.webp','Парус: внешний вид'),
-  'side-kvadro-house':catalog('kvadro-house-outside.webp','Квадро Хаус: вид снаружи'),
-  'side-kvadro-house-rain':catalog('kvadro-house-outside.webp','Квадро Хаус: вид снаружи'),
-  'interior-kvadro':catalog('kvadro-lounge.webp','Квадро: комната отдыха'),
-  'interior-parus':catalog('parus-lounge.webp','Парус: зона отдыха'),
+  'product-steam':catalogV68('kvadro-steam-v68.webp','Квадро: парная'),
+  'product-interior':catalogV68('parus-lounge-v68.webp','Парус: интерьер'),
+  'site-example':catalogV68('parus-outside-v68.webp','Парус: внешний вид'),
+  'side-kvadro-house':catalogV68('kvadro-house-outside-v68.webp','Квадро Хаус: вид снаружи'),
+  'side-kvadro-house-rain':catalogV68('kvadro-house-outside-v68.webp','Квадро Хаус: вид снаружи'),
+  'interior-kvadro':catalogV68('kvadro-lounge-v68.webp','Квадро: комната отдыха'),
+  'interior-parus':catalogV68('parus-lounge-v68.webp','Парус: зона отдыха'),
   'interior-viking':catalog('viking-lounge.webp','Викинг: зона отдыха'),
   'interior-kvadro-house':catalog('kvadro-house-lounge.webp','Квадро Хаус: комната отдыха'),
-  'detail-kvadro-steam':catalog('kvadro-steam.webp','Квадро: парная'),
-  'detail-kvadro-lounge':catalog('kvadro-lounge.webp','Квадро: комната отдыха'),
+  'detail-kvadro-steam':catalogV68('kvadro-steam-v68.webp','Квадро: парная'),
+  'detail-kvadro-lounge':catalogV68('kvadro-lounge-v68.webp','Квадро: комната отдыха'),
   'detail-kvadro-entry':catalog('kvadro-entry.webp','Квадро: входная зона'),
   'detail-parus-steam':catalog('parus-steam.webp','Парус: парная'),
   'detail-viking-steam':catalog('viking-steam.webp','Викинг: парная'),
   'detail-kvadro-house-steam':catalog('kvadro-house-steam.webp','Квадро Хаус: парная'),
-  'polok-backlight':catalog('kvadro-steam.webp','Квадро: парная'),
+  'polok-backlight':catalogV68('kvadro-steam-v68.webp','Квадро: парная'),
   'stove-water-tank':catalog('viking-stove.webp','Викинг: печь'),
   'product-front':null
 });

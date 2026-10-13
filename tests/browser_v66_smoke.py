@@ -1,11 +1,11 @@
-"""V6.7 QA: seven viewport SUN/RAIN, isolated model galleries, featured kit and consent.
+"""V6.8 QA: seven viewport SUN/RAIN, seven vetted images, featured kit and consent.
 Local static server and mock lead endpoint only; NEVER sends real customer requests.
 """
 import functools, http.server, json, os, tempfile, threading
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 ROOT=Path(__file__).resolve().parents[1]
-SHOT=Path(tempfile.gettempdir())/'garant-bani-v67-owner-photo-gallery-qa'
+SHOT=Path(tempfile.gettempdir())/'garant-bani-v68-curated-concept-gallery-qa'
 SHOT.mkdir(parents=True,exist_ok=True)
 
 class Quiet(http.server.SimpleHTTPRequestHandler):
@@ -46,6 +46,11 @@ try:
     resp=page.goto(base,wait_until='domcontentloaded')
     assert resp.status==200,(label,resp.status)
     expect(page.locator('html')).to_have_attribute('data-theme','sun')
+    assert not errors,('STARTUP_JS_ERROR',label,errors)
+    assert page.locator('#builderStepLabel').inner_text()=='ШАГ 1 ИЗ 7',('BUILDER_STARTUP_FAILED',label)
+    assert page.evaluate('typeof window.__GARANT_DEMO__')=='object',('BOOT_DID_NOT_COMPLETE',label)
+    assert page.locator('.ai-visual-note').count()==0,('INTERNAL_MEDIA_DISCLOSURE_IN_UI',label)
+    assert 'с использованием ИИ' not in page.locator('body').inner_text(),('TECHNICAL_AI_NOTES_VISIBLE',label)
     expect(page.locator('#heroMedia img[data-v5-photo]')).to_have_count(1)
     hero_sun=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
     assert 'hero-sun.webp' in hero_sun,(label,hero_sun)
@@ -54,7 +59,9 @@ try:
       card=page.locator(f'.product-card[data-model="{model}"]')
       card.scroll_into_view_if_needed()
       expect(card.locator('img[data-v5-photo]')).to_have_count(1)
-      assert f'{model}-outside.webp' in card.locator('img[data-v5-photo]').get_attribute('src')
+      card_image=card.locator('img[data-v5-photo]')
+      assert f'{model}-outside-v68.webp' in card_image.get_attribute('src')
+      assert card_image.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('CATALOG_IMAGE_MISSING_OR_NOT_DECODED',model,label)
       sizes=card.locator('.product-sizes')
       size_text=sizes.inner_text()
       assert ('6×6 м' if model=='kvadro-house' else '6 м') in size_text,(model,size_text)
@@ -68,21 +75,34 @@ try:
         return rects.length===1 && rects[0].right<=el.getBoundingClientRect().right+2;
       }"""),('PRICE_RUBLE_SPLIT_OR_CLIPPED',model)
     assert page.locator('#model-interiors').count()==0,label
+    assert page.locator('.ai-visual-note').count()==0,('TECHNICAL_DISCLAIMER_PRESENT',label)
+    assert page.locator('.difference-experience-number').count()==0,('BIG_04_NOT_REMOVED',label)
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
-    for model,n in [('kvadro',4),('parus',5),('viking',4),('kvadro-house',5)]:
+    for model,n in [('kvadro',3),('parus',2),('viking',1),('kvadro-house',1)]:
       cover=page.locator(f'.product-card[data-model="{model}"] [data-gallery-open]').first
       cover.click()
       dialog=page.locator('#modelGallery')
       expect(dialog).to_be_visible()
       assert {'kvadro':'Квадро','parus':'Парус','viking':'Викинг','kvadro-house':'Квадро Хаус'}[model] in dialog.locator('#modelGalleryTitle').inner_text(),(model,label)
       assert dialog.locator('.model-gallery-thumb').count()==n,(model,label)
+      for control in ('prev','next'):
+        nav=dialog.locator(f'[data-gallery-{control}]')
+        assert nav.is_visible()==(n>1),('SINGLE_IMAGE_NAVIGATION',model,control,label)
       img=dialog.locator('#modelGalleryImage')
-      assert f'{model}-outside.webp' in img.get_attribute('src'),(model,label)
+      assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
       assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('MODEL_IMAGE_FAILED',model,label)
       assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
-      dialog.locator('[data-gallery-next]').click()
-      assert f'{model}-steam.webp' in img.get_attribute('src'),(model,label)
+      if n>1:
+        dialog.locator('[data-gallery-next]').click()
+        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp'}[model]
+        assert expected_next in img.get_attribute('src'),(model,label)
+        assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('NEXT_IMAGE_FAILED',model,label)
+        dialog.locator('[data-gallery-prev]').click()
+        assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
+      else:
+        assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
+        assert not dialog.locator('[data-gallery-next]').is_visible(),('SINGLE_IMAGE_NAV_VISIBLE',model,label)
       assert dialog.locator('[aria-pressed="true"].model-gallery-thumb').count()==1,(model,label)
       dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
       page.keyboard.press('Escape')
@@ -91,6 +111,8 @@ try:
     # load and are selectable independently without changing quote arithmetic.
     page.locator('#builderNext').click()
     page.locator('#builderNext').click()
+    assert page.locator('#builderStepName').inner_text()=='Внешний вид',('BUILDER_STEP_INCORRECT',label,page.locator('#builderStepName').inner_text())
+    assert not errors,('BUILDER_STEP_JS_ERROR',label,errors)
     assert page.locator('[data-finish]').count()==12,('FINISH_COUNT',label)
     assert page.locator('[data-roof]').count()==4,('ROOF_COUNT',label)
     for swatch in page.locator('.color-choices-catalog img.catalog-swatch').all():
@@ -117,8 +139,9 @@ try:
     assert page.locator('#bundleOptions li').count()==14
     assert not page.locator('#bundleOptions').get_by_text('₽').count(),'PRICES_LEAKED_IN_KIT_ITEMS'
     assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>getComputedStyle(im).objectFit')=='contain','BUNDLE_PHOTO_CROPPED'
+    assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('BUNDLE_IMAGE_NOT_LOADED',label)
     assert 'Обливаста' not in page.locator('#bundleOptions').inner_text()
-    page.screenshot(path=str(SHOT/f'{label}-featured-sun.png'))
+    page.locator('#bundle').screenshot(path=str(SHOT/f'{label}-featured-sun.png'))
     page.locator('[data-bundle="summary"]').click()
     state=page.evaluate('window.__GARANT_DEMO__.getState()')
     assert state['modelId']=='kvadro' and state['sizeId']=='500' and len(state['optionIds'])==14,(label,state)
@@ -130,7 +153,7 @@ try:
     assert '490' in page.locator('#quoteTotal').inner_text()
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-rain.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
-    page.screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
+    page.locator('#bundle').screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
     page.locator('[data-weather="sun"]').click()
     # all 20 sizes in the shared catalogue: verify 4.5m and Kvadro House 6x5.
     page.locator('[data-catalog-select="kvadro"]').click()

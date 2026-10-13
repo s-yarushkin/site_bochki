@@ -820,3 +820,14 @@ html{scroll-padding-top:0}
   .model-gallery-hint{display:none}
   .delivery-cost>.btn{width:100%}
 }
+
+/* V6.8 curated concept art — visual truth before quantity. */
+.bundle-mini-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+.builder-preview .preview-tab:disabled{opacity:.52;cursor:not-allowed}
+.difference-experience:has(.difference-overline){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.model-gallery-hint{max-width:75ch;line-height:1.5}
+.model-gallery-stage>img,.model-gallery-thumb img{object-fit:contain;object-position:center}
+@media(max-width:850px){
+ .difference-experience:has(.difference-overline){grid-template-columns:1fr}
+ .difference-experience>p{grid-column:1}
+}
