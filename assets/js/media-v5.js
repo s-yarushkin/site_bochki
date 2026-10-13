@@ -33,7 +33,7 @@ export const MEDIA_SLOTS=Object.freeze({
   'detail-kvadro-lounge':catalogV68('kvadro-lounge-v68.webp','Квадро: комната отдыха'),
   'detail-kvadro-entry':catalog('kvadro-entry.webp','Квадро: входная зона'),
   'detail-parus-steam':catalog('parus-steam.webp','Парус: парная'),
-  'detail-viking-steam':realPhoto('inside-01.jpg','Викинг: реальная комната отдыха')
+  'detail-viking-steam':realPhoto('inside-01.jpg','Викинг: реальная комната отдыха'),
   'detail-kvadro-house-steam':catalog('kvadro-house-steam.webp','Квадро Хаус: парная'),
   'polok-backlight':catalogV68('kvadro-steam-v68.webp','Квадро: парная'),
   'stove-water-tank':catalog('viking-stove.webp','Викинг: печь'),
