@@ -131,6 +131,12 @@ try:
     assert not page.locator('#builderPhotoControls').is_visible(),('VIKING_BUILDER_INSIDE_SINGLE_NAV_VISIBLE',label)
     page.locator('[data-view="outside"]').click()
     page.locator('[data-choose-model="kvadro"]').click()
+    page.locator('[data-view="inside"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('kvadro-steam-v68\\.webp'))
+    assert page.locator('#builderPhotoControls').is_visible(),('KVADRO_INSIDE_NAV_MISSING',label)
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('kvadro-lounge-v68\\.webp'))
+    page.locator('[data-view="outside"]').click()
     # Review ALL catalogue color/roof choices at every viewport. Verify thumbnails
     # load and are selectable independently without changing quote arithmetic.
     page.locator('#builderNext').click()
