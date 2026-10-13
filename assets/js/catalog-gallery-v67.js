@@ -1,5 +1,5 @@
-/* V6.7 — one verified catalog image album per model. Photos remain grouped;
-   changing theme, card filters, or the configurator never mixes albums. */
+/* Model-specific photo albums. Real object photos remain source-scoped. */
+import {realModelPhotos} from './real-object-gallery-v69.js';
 export const V68_MEDIA_PATHS=Object.freeze({
   'kvadro-outside.webp':'assets/catalog-v68-ai/kvadro-outside-v68.webp',
   'kvadro-steam.webp':'assets/catalog-v68-ai/kvadro-steam-v68.webp',
@@ -19,13 +19,21 @@ export const MODEL_ALBUMS=Object.freeze({
   parus:{name:'Парус',photos:[
     ['parus-outside.webp','Снаружи'],['parus-lounge.webp','Комната отдыха']
   ]},
-  viking:{name:'Викинг',photos:[
-    ['viking-outside.webp','Снаружи']
-  ]},
+  viking:{name:'Викинг',photos:realModelPhotos('viking').map(photo=>[photo.path,photo.label])},
   'kvadro-house':{name:'Квадро Хаус',photos:[
     ['kvadro-house-outside.webp','Снаружи']
   ]}
 });
+
+
+// A scene is a photo group within one model; no cross-model mixing.
+export function sceneForLabel(label){return label==='Снаружи'?'outside':'inside';}
+export function getModelScenePhotos(modelId,scene='all'){
+  const album=MODEL_ALBUMS[modelId];
+  if(!album)return [];
+  return album.photos.map(([file,label],index)=>({file,label,index,scene:sceneForLabel(label)}))
+    .filter(photo=>scene==='all'||photo.scene===scene);
+}
 
 export function initModelGallery(){
   const dialog=document.createElement('dialog');
@@ -37,6 +45,7 @@ export function initModelGallery(){
       <div><small>ИЗОБРАЖЕНИЯ МОДЕЛИ</small><h2 id="modelGalleryTitle"></h2></div>
       <button class="model-gallery-close" type="button" data-gallery-close aria-label="Закрыть фотографии">×</button>
     </header>
+    <div class="model-gallery-scenes" id="modelGalleryScenes" role="group" aria-label="Категория фотографий"></div>
     <div class="model-gallery-layout">
       <figure class="model-gallery-stage">
         <img id="modelGalleryImage" alt="" decoding="async"/>
@@ -49,33 +58,53 @@ export function initModelGallery(){
     <p class="model-gallery-hint">Листайте изображения стрелками или выбирайте миниатюры. Esc — закрыть.</p>
   </div>`;
   document.body.append(dialog);
-  let activeModel=null,index=0,returnFocus=null;
+  let activeModel=null,index=0,activeScene='all',returnFocus=null;
   const image=dialog.querySelector('#modelGalleryImage');
   const title=dialog.querySelector('#modelGalleryTitle');
   const caption=dialog.querySelector('#modelGalleryCaption');
   const counter=dialog.querySelector('#modelGalleryCounter');
   const thumbs=dialog.querySelector('#modelGalleryThumbs');
-  const src=file=>new URL(V68_MEDIA_PATHS[file]??('assets/catalog-v66/'+file),document.baseURI).href;
+  const scenes=dialog.querySelector('#modelGalleryScenes');
+  const src=file=>new URL(V68_MEDIA_PATHS[file]??(file.startsWith('assets/real-objects/')?file:'assets/catalog-v66/'+file),document.baseURI).href;
+  const visiblePhotos=()=>getModelScenePhotos(activeModel,activeScene);
+  function chooseScene(scene){
+    if(!['all','outside','inside'].includes(scene))return;
+    activeScene=scene;index=0;draw();
+  }
   function draw(){
-    const album=MODEL_ALBUMS[activeModel];
-    if(!album)return;
-    const [file,scene]=album.photos[index];
+    const album=MODEL_ALBUMS[activeModel],photos=visiblePhotos();
+    if(!album||!photos.length)return;
+    index=Math.min(Math.max(0,index),photos.length-1);
+    const photo=photos[index];
     title.textContent=album.name;
-    image.src=src(file);
-    image.alt=album.name+' — '+scene.toLowerCase();
-    caption.textContent=scene;
-    counter.textContent=(index+1)+' / '+album.photos.length;
-    const canNavigate=album.photos.length>1;
+    image.src=src(photo.file);
+    image.alt=album.name+' — '+photo.label.toLowerCase();
+    caption.textContent=photo.label;
+    counter.textContent=(index+1)+' / '+photos.length;
+    const canNavigate=photos.length>1;
     dialog.querySelector('[data-gallery-prev]').hidden=!canNavigate;
     dialog.querySelector('[data-gallery-next]').hidden=!canNavigate;
-    thumbs.innerHTML=album.photos.map(([f,label],i)=>`<button type="button" class="model-gallery-thumb ${i===index?'is-current':''}" data-gallery-thumb="${i}" aria-pressed="${i===index}" aria-label="${label} — фото ${i+1}">
-      <img src="${src(f)}" alt="" loading="lazy" decoding="async"/><span>${label}</span>
-    </button>`).join('');
+    const categories=[
+      {id:'all',label:'Все'},
+      {id:'outside',label:'Снаружи'},
+      {id:'inside',label:'Внутри'}
+    ].filter(category=>category.id==='all'||getModelScenePhotos(activeModel,category.id).length>0);
+    scenes.innerHTML=categories.map(category=>
+      `<button type="button" class="model-gallery-scene ${category.id===activeScene?'active':''}" data-gallery-scene-select="${category.id}" aria-pressed="${category.id===activeScene}">${category.label}</button>`
+    ).join('');
+    thumbs.innerHTML=photos.map((item,i)=>
+      `<button type="button" class="model-gallery-thumb ${i===index?'is-current':''}" data-gallery-thumb="${i}" aria-pressed="${i===index}" aria-label="${item.label} — фото ${i+1}">
+        <img src="${src(item.file)}" alt="" loading="lazy" decoding="async"/><span>${item.label}</span>
+      </button>`
+    ).join('');
   }
-  function show(modelId,first=0,origin=null){
+  function show(modelId,first=0,origin=null,scene='all'){
     if(!Object.hasOwn(MODEL_ALBUMS,modelId))return;
     activeModel=modelId;
-    index=Math.max(0,Math.min(Number(first)||0,MODEL_ALBUMS[modelId].photos.length-1));
+    activeScene=['all','outside','inside'].includes(scene)?scene:'all';
+    const visible=visiblePhotos();
+    const requested=Math.max(0,Number(first)||0);
+    index=Math.max(0,visible.findIndex(photo=>photo.index===requested));
     returnFocus=origin instanceof HTMLElement?origin:document.activeElement;
     draw();
     if(!dialog.open)dialog.showModal();
@@ -83,17 +112,19 @@ export function initModelGallery(){
   }
   function move(delta){
     if(!activeModel)return;
-    const len=MODEL_ALBUMS[activeModel].photos.length;
+    const len=visiblePhotos().length;
+    if(!len)return;
     index=(index+delta+len)%len;
     draw();
   }
   document.addEventListener('click',event=>{
     const trigger=event.target.closest('[data-gallery-open]');
-    if(trigger){event.preventDefault();show(trigger.dataset.galleryOpen,trigger.dataset.galleryFirst,trigger);return;}
+    if(trigger){event.preventDefault();show(trigger.dataset.galleryOpen,trigger.dataset.galleryFirst,trigger,trigger.dataset.galleryScene||'all');return;}
     if(event.target===dialog&&dialog.open)dialog.close();
   });
   dialog.addEventListener('click',event=>{
     if(event.target.closest('[data-gallery-close]'))dialog.close();
+    else if(event.target.closest('[data-gallery-scene-select]'))chooseScene(event.target.closest('[data-gallery-scene-select]').dataset.gallerySceneSelect);
     else if(event.target.closest('[data-gallery-prev]'))move(-1);
     else if(event.target.closest('[data-gallery-next]'))move(1);
     else {
@@ -108,5 +139,6 @@ export function initModelGallery(){
   dialog.addEventListener('close',()=>{
     if(returnFocus?.isConnected)returnFocus.focus();
     activeModel=null;
+    activeScene='all';
   });
 }
