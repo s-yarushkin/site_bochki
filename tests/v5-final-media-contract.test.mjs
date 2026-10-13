@@ -26,13 +26,17 @@ test('V5 site loads third layer and photographic image controller',()=>{
   assert.match(css,/\.media-frame\.media-ready \.v5-photo/);
 });
 
-test('V6.9 SUN/RAIN hero unchanged; Viking comes only from owner real photos',()=>{
+test('V6.9 SUN/RAIN hero and V6.8 Viking cover unchanged; three real photos are additional',()=>{
   for(const id of ['kvadro','parus','kvadro-house']){
     assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v68-ai/'+id+'-outside-v68.webp');
   }
-  assert.equal(resolveMedia('catalog-viking').path,'assets/real-objects/viking/viking-001/outside-01.jpg');
-  assert.equal(resolveMedia('catalog-viking-outside-02').path,'assets/real-objects/viking/viking-001/outside-02.jpg');
-  assert.equal(resolveMedia('interior-viking').path,'assets/real-objects/viking/viking-001/inside-01.jpg');
+  assert.equal(resolveMedia('catalog-viking').path,'assets/catalog-v68-ai/viking-outside-v68.webp');
+  assert.equal(resolveMedia('real-viking-outside-01').path,'assets/real-objects/viking/viking-001/outside-01.jpg');
+  assert.equal(resolveMedia('real-viking-outside-02').path,'assets/real-objects/viking/viking-001/outside-02.jpg');
+  assert.equal(resolveMedia('real-viking-inside-01').path,'assets/real-objects/viking/viking-001/inside-01.jpg');
+  assert.equal(resolveMedia('interior-viking').path,'assets/catalog-v66/viking-lounge.webp');
+  assert.equal(resolveMedia('detail-viking-steam').path,'assets/catalog-v66/viking-steam.webp');
+  assert.equal(resolveMedia('cta-evening-cozy').path,'assets/catalog-v66/viking-outside.webp');
   for(const id of ['kvadro','parus']){
     assert.equal(resolveMedia('interior-'+id).path,'assets/catalog-v68-ai/'+id+'-lounge-v68.webp');
   }
