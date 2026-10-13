@@ -19,7 +19,7 @@ export const MODEL_ALBUMS=Object.freeze({
   parus:{name:'Парус',photos:[
     ['parus-outside.webp','Снаружи'],['parus-lounge.webp','Комната отдыха']
   ]},
-  viking:{name:'Викинг',photos:realModelPhotos('viking').map(photo=>[photo.path,photo.label])},
+  viking:{name:'Викинг',photos:[['viking-outside.webp','Снаружи'],...realModelPhotos('viking').map(photo=>[photo.path,photo.label])]},
   'kvadro-house':{name:'Квадро Хаус',photos:[
     ['kvadro-house-outside.webp','Снаружи']
   ]}
