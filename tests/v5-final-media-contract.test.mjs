@@ -26,17 +26,22 @@ test('V5 site loads third layer and photographic image controller',()=>{
   assert.match(css,/\.media-frame\.media-ready \.v5-photo/);
 });
 
-test('V6.8 SUN/RAIN hero unchanged while 7 catalog concepts are model-specific',()=>{
-  for(const id of ['kvadro','parus','viking','kvadro-house']){
+test('V6.9 SUN/RAIN hero and V6.8 Viking cover unchanged; three real photos are additional',()=>{
+  for(const id of ['kvadro','parus','kvadro-house']){
     assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v68-ai/'+id+'-outside-v68.webp');
   }
+  assert.equal(resolveMedia('catalog-viking').path,'assets/catalog-v68-ai/viking-outside-v68.webp');
+  assert.equal(resolveMedia('real-viking-outside-01').path,'assets/real-objects/viking/viking-001/outside-01.jpg');
+  assert.equal(resolveMedia('real-viking-outside-02').path,'assets/real-objects/viking/viking-001/outside-02.jpg');
+  assert.equal(resolveMedia('real-viking-inside-01').path,'assets/real-objects/viking/viking-001/inside-01.jpg');
+  assert.equal(resolveMedia('interior-viking').path,'assets/catalog-v66/viking-lounge.webp');
+  assert.equal(resolveMedia('detail-viking-steam').path,'assets/catalog-v66/viking-steam.webp');
+  assert.equal(resolveMedia('cta-evening-cozy').path,'assets/catalog-v66/viking-outside.webp');
   for(const id of ['kvadro','parus']){
     assert.equal(resolveMedia('interior-'+id).path,'assets/catalog-v68-ai/'+id+'-lounge-v68.webp');
   }
   // Archived interior frames stay available for rollback but must not enter the V6.8 albums.
-  for(const id of ['viking','kvadro-house']){
-    assert.equal(resolveMedia('interior-'+id).path,'assets/catalog-v66/'+id+'-lounge.webp');
-  }
+  assert.equal(resolveMedia('interior-kvadro-house').path,'assets/catalog-v66/kvadro-house-lounge.webp');
   assert.equal(resolveMedia('hero-sun-desktop').file,'hero-sun.webp');
   assert.equal(resolveMedia('hero-rain-desktop').file,'hero-sun.webp');
   assert.equal(resolveMedia('hero-sun-desktop').file,resolveMedia('hero-rain-desktop').file);
@@ -82,8 +87,12 @@ test('V5 static assets are present, sized and match owner media manifest before 
   const aiManifest=JSON.parse(readFileSync(join(root,'assets/catalog-v68-ai/MEDIA-MANIFEST.json'),'utf8'));
   assert.equal(aiManifest.images.length,7);
   const aiFiles=new Set(aiManifest.images.map(im=>im.file));
+  const real=JSON.parse(readFileSync(join(root,'assets/real-objects/viking/viking-001/MEDIA-MANIFEST.json'),'utf8'));
+  assert.equal(real.photos.length,3);
+  const realFiles=new Set(real.photos.map(im=>im.path));
   for(const slot of Object.values(MEDIA_SLOTS).filter(Boolean)){
-    if(slot.path?.startsWith('assets/catalog-v68-ai/'))assert.ok(aiFiles.has(slot.file),'Unpackaged v6.8 concept '+slot.file);
+    if(slot.path?.startsWith('assets/real-objects/'))assert.ok(realFiles.has(slot.path),'Unpackaged user real photo '+slot.path);
+    else if(slot.path?.startsWith('assets/catalog-v68-ai/'))assert.ok(aiFiles.has(slot.file),'Unpackaged v6.8 concept '+slot.file);
     else if(slot.path)assert.ok(catalogFiles.has(slot.file),'Unpackaged v6.6 media '+slot.file);
     else assert.ok(actual.has(slot.file),'Unpackaged v5 hero '+slot.file);
   }

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "objectId": "viking-001",
+  "modelId": "viking",
+  "source": "OWNER_UPLOADED_REAL_PHOTOS",
+  "description": "One real delivered Viking sauna; two exterior views, one interior lounge. No generated images.",
+  "photos": [
+    {
+      "path": "assets/real-objects/viking/viking-001/outside-01.jpg",
+      "scene": "outside",
+      "label": "Снаружи",
+      "sha256": "cbe9ac43cd2e94190aae4a3d1aa662d7e126eb3ebd8b4c04f4580ea01baef76b",
+      "width": 1280,
+      "height": 1708,
+      "bytes": 1030195
+    },
+    {
+      "path": "assets/real-objects/viking/viking-001/outside-02.jpg",
+      "scene": "outside",
+      "label": "Снаружи",
+      "sha256": "3f0c2accac441a16631cac45e99e05f544c0fcee807afb52a6131873fde0b1f9",
+      "width": 1280,
+      "height": 1708,
+      "bytes": 1043812
+    },
+    {
+      "path": "assets/real-objects/viking/viking-001/inside-01.jpg",
+      "scene": "inside",
+      "label": "Комната отдыха",
+      "sha256": "71441638f3d4352816b5607a377731460e0a6b891e61a9ae6735f18574a69cc1",
+      "width": 1280,
+      "height": 1708,
+      "bytes": 776233
+    }
+  ]
+}
