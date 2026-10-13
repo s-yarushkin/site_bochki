@@ -28,7 +28,8 @@ $New=Get-Content -LiteralPath $NewManifest -Raw -Encoding UTF8 | ConvertFrom-Jso
 $AI=Get-Content -LiteralPath $AIMediaManifest -Raw -Encoding UTF8 | ConvertFrom-Json
 if(@($Old.photos).Count -ne 12 -or @($New.images).Count -ne 34){throw 'V68_MEDIA_COUNT_MISMATCH'}
 if($New.publicationStatus -ne 'OWNER_MEDIA_RIGHTS_AND_RENDER_TRUTH_TO_VERIFY'){throw 'V68_MEDIA_STATUS_UNEXPECTED'}
-if(@($AI.images).Count -ne 7 -or $AI.publicationStatus -ne 'OWNER_AI_MEDIA_REVIEW_REQUIRED'){throw 'V68_AI_MEDIA_STATUS_OR_COUNT_MISMATCH'}
+if(@($AI.images).Count -ne 7 -or $AI.publicationStatus -ne 'OWNER_APPROVED_EXACT_SEVEN_MEDIA_ONLY' -or $AI.releaseAuthorization -ne 'NOT_GRANTED_SEPARATE_GO_REQUIRED'){throw 'V68_AI_MEDIA_STATUS_OR_COUNT_MISMATCH'}
+if(@($AI.images | Where-Object { $_.ownerApproval -ne 'APPROVED' }).Count -ne 0){throw 'V68_MEDIA_NOT_OWNER_APPROVED'}
 $Tmp=Join-Path $env:TEMP ('gb-v68-build-'+[guid]::NewGuid().ToString('N').Substring(0,8))
 New-Item -Path $Tmp -ItemType Directory -Force | Out-Null
 $HashRows=New-Object System.Collections.Generic.List[object]
