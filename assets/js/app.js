@@ -1,14 +1,14 @@
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
-import {initModelGallery} from './catalog-gallery-v67.js';
+import {initModelGallery,getModelScenePhotos} from './catalog-gallery-v67.js';
 import {initAtmosphere,syncAtmosphereText} from './weather-v6.js';
 
 const $=(selector,scope=document)=>scope.querySelector(selector);
 const $$=(selector,scope=document)=>[...scope.querySelectorAll(selector)];
 const escaped=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stepNames=['Выберите модель','Выберите размер','Внешний вид','Парная и тепло','Удобства','Ваш участок','Ваша комплектация'];
-const state={step:0,modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',view:'outside',region:'',base:'unknown',access:'unknown'};
+const state={step:0,modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',view:'outside',photoIndex:0,region:'',base:'unknown',access:'unknown'};
 let formFlow='quote';
 let formQuote=null;
 let submitted=false;
@@ -46,7 +46,7 @@ function renderCatalog(){
   syncMedia();
   $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
     const m=getModel(button.dataset.catalogSelect);
-    state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;state.view='outside';
+    state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;state.view='outside';state.photoIndex=0;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
   document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
@@ -89,7 +89,14 @@ function quote(){return calculateQuote({modelId:state.modelId,sizeId:state.sizeI
 function priceLine(label,value,css=''){return `<div class="quote-row ${css}"><span>${escaped(label)}</span><strong>${escaped(value)}</strong></div>`;}
 // With no quality-controlled interior scene, do not silently show an old
 // low-resolution brochure fragment in the configurator.
-const hasApprovedInside=modelId=>modelId==='kvadro'||modelId==='parus';
+const hasApprovedInside=modelId=>getModelScenePhotos(modelId,'inside').length>0;
+function previewSlot(){
+  if(state.modelId==='viking'){
+    if(state.view==='inside')return 'interior-viking';
+    return state.photoIndex===1?'catalog-viking-outside-02':'catalog-viking';
+  }
+  return state.view==='outside'?getModel(state.modelId).slot:state.view==='inside'?`interior-${state.modelId}`:'product-front';
+}
 function renderSummary(){
   if(!hasApprovedInside(state.modelId)&&state.view==='inside')state.view='outside';
   const q=quote(),model=getModel(state.modelId);
@@ -99,9 +106,16 @@ function renderSummary(){
   $('#previewOptionsText').textContent=chosen;
   $('#quoteBreakdown').innerHTML=priceLine('Готовая баня',money(q.basePrice))+priceLine(`Дополнения (${q.options.length})`,money(q.optionsSubtotal))+(q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):'');
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
-  const slot=state.view==='outside'?model.slot:state.view==='inside'?`interior-${model.id}`:'product-front';
+  const photos=getModelScenePhotos(state.modelId,state.view);
+  if(state.photoIndex>=photos.length)state.photoIndex=0;
+  const slot=previewSlot();
   $('#previewImage').dataset.slot=weatherPhotoSlot(slot);
   $('#previewImage').dataset.galleryOpen=state.modelId;
+  $('#previewImage').dataset.galleryFirst=String(photos[state.photoIndex]?.index??0);
+  $('#previewImage').dataset.galleryScene=state.view;
+  const nav=$('#builderPhotoControls');
+  nav.hidden=photos.length<2;
+  $('#builderPhotoCounter').textContent=`${Math.min(state.photoIndex+1,photos.length)} / ${photos.length}`;
   $('#previewImage').setAttribute('aria-label',state.view==='outside'
     ?`Баня «${model.name}» снаружи.`
     :state.view==='inside'?'Баня «${model.name}»: интерьер.':'Схема выбранной модели будет уточнена.');
@@ -130,7 +144,7 @@ function renderStepContent(){const model=getModel(state.modelId),step=state.step
   if(step===6){body=`<h3 class="builder-title">Вы уже собрали свою баню</h3><p class="builder-help">Вот ваш предварительный комплект. Если хотите, вернитесь назад и измените детали.</p>${renderQuoteTable()}`;}
   $('#builderStepContent').innerHTML=body;
   if(step===5){$('#baseSelect').value=state.base;$('#accessSelect').value=state.access;$('#regionInput').addEventListener('input',e=>state.region=e.target.value);$('#baseSelect').addEventListener('change',e=>state.base=e.target.value);$('#accessSelect').addEventListener('change',e=>state.access=e.target.value);}
-  $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;}renderBuilder();}));
+  $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;state.view='outside';state.photoIndex=0;}renderBuilder();}));
   $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
   document.querySelectorAll('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
   document.querySelectorAll('[data-roof]').forEach(btn=>btn.addEventListener('click',()=>{state.roof=btn.dataset.roof;renderBuilder();}));
@@ -164,8 +178,7 @@ function syncWeatherPhotoFrames(weather){
     if(frame)frame.dataset.slot=weatherPhotoSlot(slot,weather);
   }
   // Keep the currently selected model and view. Weather never resets the quote.
-  const activeSlot=state.view==='outside'?getModel(state.modelId).slot:
-    state.view==='inside'?`interior-${state.modelId}`:'product-front';
+  const activeSlot=previewSlot();
   $('#previewImage').dataset.slot=weatherPhotoSlot(activeSlot,weather);
   syncMedia();
 }
@@ -173,7 +186,13 @@ function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click
   if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
- document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;renderSummary();}));}
+ document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;state.photoIndex=0;renderSummary();}));
+ document.querySelectorAll('[data-builder-photo-step]').forEach(btn=>btn.addEventListener('click',()=>{
+   const photos=getModelScenePhotos(state.modelId,state.view);
+   if(photos.length<2)return;
+   state.photoIndex=(state.photoIndex+Number(btn.dataset.builderPhotoStep)+photos.length)%photos.length;
+   renderSummary();
+ }));}
 function setWeather(weather){
   if(weather!=='sun'&&weather!=='rain')return;
   const rain=weather==='rain';
