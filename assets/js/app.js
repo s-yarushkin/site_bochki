@@ -91,6 +91,8 @@ function priceLine(label,value,css=''){return `<div class="quote-row ${css}"><sp
 // low-resolution brochure fragment in the configurator.
 const hasApprovedInside=modelId=>getModelScenePhotos(modelId,'inside').length>0;
 function previewSlot(){
+  if(state.modelId==='kvadro'&&state.view==='inside')
+    return state.photoIndex===0?'detail-kvadro-steam':'interior-kvadro';
   if(state.modelId==='viking'){
     if(state.view==='inside')return 'interior-viking';
     return state.photoIndex===1?'catalog-viking-outside-02':'catalog-viking';
@@ -119,7 +121,9 @@ function renderSummary(){
   $('#previewImage').setAttribute('aria-label',state.view==='outside'
     ?`Баня «${model.name}» снаружи.`
     :state.view==='inside'?'Баня «${model.name}»: интерьер.':'Схема выбранной модели будет уточнена.');
-  $('#previewCaption').textContent=state.view==='outside'?`«${model.name}» снаружи`:state.view==='inside'?`«${model.name}» внутри`:'Размерная схема уточняется для заказа';
+  $('#previewCaption').textContent=photos[state.photoIndex]
+    ?`«${model.name}» · ${photos[state.photoIndex].label}`
+    :'Размерная схема уточняется для заказа';
   syncMedia();
   document.querySelectorAll('[data-view]').forEach(btn=>{
     const supported=btn.dataset.view!=='inside'||hasApprovedInside(state.modelId);
