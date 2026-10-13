@@ -14,7 +14,8 @@ const html=source('index.html');
 const audit=source('docs/V68-MEDIA-QA.md');
 
 test('V6.8: exact seven-image manifest is truthful and content-addressed',()=>{
-  assert.equal(manifest.publicationStatus,'OWNER_AI_MEDIA_REVIEW_REQUIRED');
+  assert.equal(manifest.publicationStatus,'OWNER_APPROVED_EXACT_SEVEN_MEDIA_ONLY');
+  assert.equal(manifest.releaseAuthorization,'NOT_GRANTED_SEPARATE_GO_REQUIRED');
   assert.equal(manifest.images.length,7);
   const files=new Set();
   for(const im of manifest.images){
@@ -23,11 +24,12 @@ test('V6.8: exact seven-image manifest is truthful and content-addressed',()=>{
     assert.match(im.file,/^[a-z0-9-]+-v68\.webp$/);
     assert.equal(im.source,'AI_GENERATED_FROM_OWNER_BROCHURE');
     assert.equal(im.visualProvenance,'CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO');
-    assert.equal(im.ownerApproval,'PENDING');
+    assert.equal(im.ownerApproval,'APPROVED');
     assert.ok(im.width>=800&&im.height>=800,'Insufficient source resolution '+im.file);
     if(im.file==='parus-lounge-v68.webp'){
-      assert.equal(im.visualCorrection,'CROPPED_TO_EXCLUDE_DUPLICATE_HANDLES_ON_SINGLE_DOOR');
-      assert.deepEqual([im.width,im.height],[845,880]);
+      assert.equal(im.sha256,'472a4fe68ff32232e640b06e1e8dc03386d1667a4dd60bb9417aeff79bf30b65');
+      assert.deepEqual([im.width,im.height],[1448,1086]);
+      assert.ok(!Object.hasOwn(im,'visualCorrection'));
     }
     const path=join(root,'assets/catalog-v68-ai',im.file);
     assert.ok(existsSync(path),'V6.8 media file missing '+im.file);
