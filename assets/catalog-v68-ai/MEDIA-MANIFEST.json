@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "publicationStatus": "OWNER_AI_MEDIA_REVIEW_REQUIRED",
+  "publicationStatus": "OWNER_APPROVED_EXACT_SEVEN_MEDIA_ONLY",
   "source": "Owner-provided 16-page brochure; derivative images generated with AI; not verified photographs of delivered products",
   "images": [
     {
@@ -14,7 +14,7 @@
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 8,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "APPROVED"
     },
     {
       "file": "kvadro-steam-v68.webp",
@@ -27,7 +27,7 @@
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 8,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "APPROVED"
     },
     {
       "file": "kvadro-lounge-v68.webp",
@@ -40,7 +40,7 @@
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 8,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "APPROVED"
     },
     {
       "file": "parus-outside-v68.webp",
@@ -53,21 +53,20 @@
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 5,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "APPROVED"
     },
     {
       "file": "parus-lounge-v68.webp",
       "model": "parus",
       "scene": "lounge",
-      "width": 845,
-      "height": 880,
-      "sha256": "2171e60adb42444be8f3cef3bd7aea0ad4045640939d8a20c647139eaa1a2d6d",
-      "sizeBytes": 104856,
+      "width": 1448,
+      "height": 1086,
+      "sha256": "472a4fe68ff32232e640b06e1e8dc03386d1667a4dd60bb9417aeff79bf30b65",
+      "sizeBytes": 171830,
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 5,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING",
-      "visualCorrection": "CROPPED_TO_EXCLUDE_DUPLICATE_HANDLES_ON_SINGLE_DOOR"
+      "ownerApproval": "APPROVED"
     },
     {
       "file": "viking-outside-v68.webp",
@@ -80,7 +79,7 @@
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 7,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "APPROVED"
     },
     {
       "file": "kvadro-house-outside-v68.webp",
@@ -93,7 +92,10 @@
       "source": "AI_GENERATED_FROM_OWNER_BROCHURE",
       "sourcePage": 4,
       "visualProvenance": "CONCEPT_ILLUSTRATION_NOT_VERIFIED_PRODUCT_PHOTO",
-      "ownerApproval": "PENDING"
+      "ownerApproval": "APPROVED"
     }
-  ]
+  ],
+  "ownerApprovalScope": "02_v68_site_candidates_7 (exact seven WebP bytes); other generated candidates rejected",
+  "ownerApprovedOn": "2026-10-13",
+  "releaseAuthorization": "NOT_GRANTED_SEPARATE_GO_REQUIRED"
 }
