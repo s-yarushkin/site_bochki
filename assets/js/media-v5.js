@@ -8,6 +8,7 @@
 const catalog=(file,alt)=>({file,path:'assets/catalog-v66/'+file,alt});
 const catalogV68=(file,alt)=>({file,path:'assets/catalog-v68-ai/'+file,alt});
 const realPhoto=(file,alt)=>({file,path:'assets/real-objects/viking/viking-001/'+file,alt});
+const realKvadroHouse=(file,alt)=>({file,path:'assets/real-objects/kvadro-house/kvadro-house-001/'+file,alt});
 export const MEDIA_SLOTS=Object.freeze({
   'hero-sun-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: утверждённая художественная обработка участка'},
   'hero-rain-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: та же архитектура в дождевой теме'},
@@ -18,6 +19,8 @@ export const MEDIA_SLOTS=Object.freeze({
   'real-viking-outside-02':realPhoto('outside-02.jpg','Викинг: реальная баня, второй вид снаружи'),
   'real-viking-inside-01':realPhoto('inside-01.jpg','Викинг: реальная комната отдыха'),
   'catalog-kvadro-house':catalogV68('kvadro-house-outside-v68.webp','Квадро Хаус: наружный вид'),
+  'real-kvadro-house-outside-01':realKvadroHouse('outside-01.jpg','Квадро Хаус: реальная баня, фасад и окно'),
+  'real-kvadro-house-outside-02':realKvadroHouse('outside-02.jpg','Квадро Хаус: реальная баня, внешний вид с торца и сбоку'),
   'catalog-kvadro-house-rain':catalogV68('kvadro-house-outside-v68.webp','Квадро Хаус: вид снаружи'),
   'bundle-comfort':catalogV68('kvadro-outside-v68.webp','Квадро: готовая баня снаружи'),
   'bundle-comfort-rain':catalogV68('kvadro-outside-v68.webp','Квадро Комфорт: изображение'),

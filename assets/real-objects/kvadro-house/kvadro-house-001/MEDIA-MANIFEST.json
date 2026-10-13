@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "objectId": "kvadro-house-001",
+  "modelId": "kvadro-house",
+  "source": "OWNER_UPLOADED_REAL_PHOTOS",
+  "description": "Owner real installation: two outside photographs, different viewpoints of the same Kvadro House. Append-only gallery.",
+  "photos": [
+    {
+      "path": "assets/real-objects/kvadro-house/kvadro-house-001/outside-01.jpg",
+      "scene": "outside",
+      "label": "Снаружи",
+      "sha256": "aac6c2bd5e0a1a3c0400882bf8ba7c099ea375a11dbddabfc8f616784330c8cb",
+      "width": 1280,
+      "height": 1708,
+      "bytes": 940534
+    },
+    {
+      "path": "assets/real-objects/kvadro-house/kvadro-house-001/outside-02.jpg",
+      "scene": "outside",
+      "label": "Снаружи",
+      "sha256": "279f0e89cf074c118ad631d1958e3dbe9f098472fb58f5f90effb30de5ec1822",
+      "width": 1280,
+      "height": 1708,
+      "bytes": 1017785
+    }
+  ]
+}

@@ -81,7 +81,7 @@ try:
     assert page.locator('.difference-experience-number').count()==0,('BIG_04_NOT_REMOVED',label)
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
-    for model,n in [('kvadro',3),('parus',2),('viking',4),('kvadro-house',1)]:
+    for model,n in [('kvadro',3),('parus',2),('viking',4),('kvadro-house',3)]:
       cover=page.locator(f'.product-card[data-model="{model}"] [data-gallery-open]').first
       cover.click()
       dialog=page.locator('#modelGallery')
@@ -98,7 +98,7 @@ try:
       assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
       if n>1:
         dialog.locator('[data-gallery-next]').click()
-        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp','viking':'outside-01.jpg'}[model]
+        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp','viking':'outside-01.jpg','kvadro-house':'outside-01.jpg'}[model]
         assert expected_next in img.get_attribute('src'),(model,label)
         assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('NEXT_IMAGE_FAILED',model,label)
         dialog.locator('[data-gallery-prev]').click()
@@ -120,6 +120,16 @@ try:
         assert not dialog.locator('[data-gallery-next]').is_visible(),('VIKING_SINGLE_INSIDE_ARROWS',label)
         dialog.locator('[data-gallery-scene-select="all"]').click()
         assert dialog.locator('.model-gallery-thumb').count()==4,('VIKING_ALL_COUNT',label)
+      if model=='kvadro-house':
+        dialog.locator('[data-gallery-scene-select="outside"]').click()
+        assert dialog.locator('.model-gallery-thumb').count()==3,('KVADRO_HOUSE_OUTSIDE_COUNT',label)
+        dialog.locator('[data-gallery-next]').click()
+        assert 'outside-01.jpg' in img.get_attribute('src'),('KVADRO_HOUSE_REAL_01',label)
+        assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('KVADRO_HOUSE_REAL_01_DECODE',label)
+        dialog.locator('[data-gallery-next]').click()
+        assert 'outside-02.jpg' in img.get_attribute('src'),('KVADRO_HOUSE_REAL_02',label)
+        assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('KVADRO_HOUSE_REAL_02_DECODE',label)
+        assert dialog.locator('[data-gallery-scene-select="inside"]').count()==0,('KVADRO_HOUSE_UNSUPPORTED_INSIDE_SHOWN',label)
       dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
       page.keyboard.press('Escape')
       expect(dialog).not_to_be_visible()
@@ -142,6 +152,17 @@ try:
     page.locator('[data-builder-photo-step="1"]').click()
     expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('kvadro-lounge-v68\\.webp'))
     page.locator('[data-view="outside"]').click()
+    page.locator('[data-choose-model="kvadro-house"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('kvadro-house-outside-v68\\.webp'))
+    assert page.locator('#builderPhotoControls').is_visible(),('KVADRO_HOUSE_BUILDER_NAV_MISSING',label)
+    assert page.locator('[data-view="inside"]').is_disabled(),('KVADRO_HOUSE_UNAPPROVED_INTERIOR_ACTIVE',label)
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-01\\.jpg'))
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-02\\.jpg'))
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('kvadro-house-outside-v68\\.webp'))
+    page.locator('[data-choose-model="kvadro"]').click()
     # Review ALL catalogue color/roof choices at every viewport. Verify thumbnails
     # load and are selectable independently without changing quote arithmetic.
     page.locator('#builderNext').click()
