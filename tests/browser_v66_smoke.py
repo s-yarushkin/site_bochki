@@ -61,7 +61,7 @@ try:
       card.scroll_into_view_if_needed()
       expect(card.locator('img[data-v5-photo]')).to_have_count(1)
       card_image=card.locator('img[data-v5-photo]')
-      expected_catalog='outside-01.jpg' if model=='viking' else f'{model}-outside-v68.webp'
+      expected_catalog=f'{model}-outside-v68.webp'
       assert expected_catalog in card_image.get_attribute('src'),('CATALOG_OWNER_PHOTO_OR_V68_MISMATCH',model,label,card_image.get_attribute('src'))
       assert card_image.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('CATALOG_IMAGE_MISSING_OR_NOT_DECODED',model,label)
       sizes=card.locator('.product-sizes')
@@ -81,7 +81,7 @@ try:
     assert page.locator('.difference-experience-number').count()==0,('BIG_04_NOT_REMOVED',label)
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
-    for model,n in [('kvadro',3),('parus',2),('viking',3),('kvadro-house',1)]:
+    for model,n in [('kvadro',3),('parus',2),('viking',4),('kvadro-house',1)]:
       cover=page.locator(f'.product-card[data-model="{model}"] [data-gallery-open]').first
       cover.click()
       dialog=page.locator('#modelGallery')
@@ -92,13 +92,13 @@ try:
         nav=dialog.locator(f'[data-gallery-{control}]')
         assert nav.is_visible()==(n>1),('SINGLE_IMAGE_NAVIGATION',model,control,label)
       img=dialog.locator('#modelGalleryImage')
-      expected_first='outside-01.jpg' if model=='viking' else f'{model}-outside-v68.webp'
+      expected_first=f'{model}-outside-v68.webp'
       assert expected_first in img.get_attribute('src'),(model,label)
       assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('MODEL_IMAGE_FAILED',model,label)
       assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
       if n>1:
         dialog.locator('[data-gallery-next]').click()
-        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp','viking':'outside-02.jpg'}[model]
+        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp','viking':'outside-01.jpg'}[model]
         assert expected_next in img.get_attribute('src'),(model,label)
         assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('NEXT_IMAGE_FAILED',model,label)
         dialog.locator('[data-gallery-prev]').click()
@@ -109,22 +109,26 @@ try:
       assert dialog.locator('[aria-pressed="true"].model-gallery-thumb').count()==1,(model,label)
       if model=='viking':
         dialog.locator('[data-gallery-scene-select="outside"]').click()
-        assert dialog.locator('.model-gallery-thumb').count()==2,('VIKING_OUTSIDE_COUNT',label)
+        assert dialog.locator('.model-gallery-thumb').count()==3,('VIKING_OUTSIDE_COUNT',label)
         dialog.locator('[data-gallery-next]').click()
-        assert 'outside-02.jpg' in img.get_attribute('src'),('VIKING_OUTSIDE_SECOND',label)
+        assert 'outside-01.jpg' in img.get_attribute('src'),('VIKING_OUTSIDE_SECOND',label)
+        dialog.locator('[data-gallery-next]').click()
+        assert 'outside-02.jpg' in img.get_attribute('src'),('VIKING_OUTSIDE_THIRD',label)
         dialog.locator('[data-gallery-scene-select="inside"]').click()
         assert dialog.locator('.model-gallery-thumb').count()==1,('VIKING_INSIDE_COUNT',label)
         assert 'inside-01.jpg' in img.get_attribute('src'),('VIKING_INSIDE_OWNER_IMAGE',label)
         assert not dialog.locator('[data-gallery-next]').is_visible(),('VIKING_SINGLE_INSIDE_ARROWS',label)
         dialog.locator('[data-gallery-scene-select="all"]').click()
-        assert dialog.locator('.model-gallery-thumb').count()==3,('VIKING_ALL_COUNT',label)
+        assert dialog.locator('.model-gallery-thumb').count()==4,('VIKING_ALL_COUNT',label)
       dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
       page.keyboard.press('Escape')
       expect(dialog).not_to_be_visible()
     # Viking builder uses same owner's three real shots; scene switches keep correct photos.
     page.locator('[data-choose-model="viking"]').click()
-    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-01\\.jpg'))
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('viking-outside-v68\\.webp'))
     assert page.locator('#builderPhotoControls').is_visible(),('VIKING_BUILDER_OUTSIDE_NAV_MISSING',label)
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-01\\.jpg'))
     page.locator('[data-builder-photo-step="1"]').click()
     expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-02\\.jpg'))
     page.locator('[data-view="inside"]').click()
