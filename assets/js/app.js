@@ -97,6 +97,8 @@ function previewSlot(){
     if(state.view==='inside')return 'real-viking-inside-01';
     return ['catalog-viking','real-viking-outside-01','real-viking-outside-02'][state.photoIndex]||'catalog-viking';
   }
+  if(state.modelId==='kvadro-house'&&state.view==='outside')
+    return ['catalog-kvadro-house','real-kvadro-house-outside-01','real-kvadro-house-outside-02'][state.photoIndex]||'catalog-kvadro-house';
   return state.view==='outside'?getModel(state.modelId).slot:state.view==='inside'?`interior-${state.modelId}`:'product-front';
 }
 function renderSummary(){
