@@ -30,20 +30,23 @@ test('V6.9 exact 3 immutable owner-uploaded Viking JPGs: 2 outside + 1 inside',(
     assert.ok(data.subarray(0,3).equals(Buffer.from([255,216,255])),'File is not original JPG');
   }
 });
-test('V6.9 Viking gallery is never mixed with other models or generative renders',()=>{
+test('V6.9 approved original plus three real Viking photos remain isolated by model',()=>{
   assert.deepEqual(realModelPhotos('viking','outside').map(x=>x.path),manifest.photos.slice(0,2).map(x=>x.path));
   assert.deepEqual(realModelPhotos('viking','inside').map(x=>x.path),[manifest.photos[2].path]);
   assert.equal(realModelPhotos('kvadro').length,0);
-  assert.equal(getModelScenePhotos('viking').length,3);
-  assert.equal(getModelScenePhotos('viking','outside').length,2);
+  assert.equal(getModelScenePhotos('viking').length,4);
+  assert.equal(getModelScenePhotos('viking','outside').length,3);
   assert.equal(getModelScenePhotos('viking','inside').length,1);
-  assert.deepEqual(getModelScenePhotos('viking').map(x=>x.file),manifest.photos.map(x=>x.path));
-  assert.equal(MEDIA_SLOTS['catalog-viking'].path,manifest.photos[0].path);
-  assert.equal(MEDIA_SLOTS['catalog-viking-outside-02'].path,manifest.photos[1].path);
-  assert.equal(MEDIA_SLOTS['interior-viking'].path,manifest.photos[2].path);
-  for(const slot of ['cta-evening-cozy','detail-viking-steam']){
-    assert.ok(MEDIA_SLOTS[slot].path.startsWith('assets/real-objects/viking/viking-001/'));
-  }
+  assert.deepEqual(getModelScenePhotos('viking').map(x=>x.file),[
+    'viking-outside.webp',...manifest.photos.map(x=>x.path)
+  ]);
+  assert.equal(MEDIA_SLOTS['catalog-viking'].path,'assets/catalog-v68-ai/viking-outside-v68.webp');
+  assert.equal(MEDIA_SLOTS['real-viking-outside-01'].path,manifest.photos[0].path);
+  assert.equal(MEDIA_SLOTS['real-viking-outside-02'].path,manifest.photos[1].path);
+  assert.equal(MEDIA_SLOTS['real-viking-inside-01'].path,manifest.photos[2].path);
+  assert.equal(MEDIA_SLOTS['cta-evening-cozy'].path,'assets/catalog-v66/viking-outside.webp');
+  assert.equal(MEDIA_SLOTS['interior-viking'].path,'assets/catalog-v66/viking-lounge.webp');
+  assert.equal(MEDIA_SLOTS['detail-viking-steam'].path,'assets/catalog-v66/viking-steam.webp');
   for(const name of ['kvadro','parus','kvadro-house']){
     assert.ok(MODEL_ALBUMS[name].photos.every(([file])=>!file.includes('real-objects/viking')));
   }
@@ -58,6 +61,6 @@ test('V6.9 existing modal and builder use one model-scoped gallery without new s
   assert.match(gallery,/getModelScenePhotos/);
   assert.match(app,/getModelScenePhotos\(state.modelId,state.view\)/);
   assert.match(app,/state.photoIndex/);
-  assert.match(app,/state.view==='inside'\)return 'interior-viking'/);
+  assert.match(app,/state.view==='inside'\)return 'real-viking-inside-01'/);
   assert.doesNotMatch(html,/ИИ|искусственного интеллекта/);
 });
