@@ -61,7 +61,8 @@ try:
       card.scroll_into_view_if_needed()
       expect(card.locator('img[data-v5-photo]')).to_have_count(1)
       card_image=card.locator('img[data-v5-photo]')
-      assert f'{model}-outside-v68.webp' in card_image.get_attribute('src')
+      expected_catalog='outside-01.jpg' if model=='viking' else f'{model}-outside-v68.webp'
+      assert expected_catalog in card_image.get_attribute('src'),('CATALOG_OWNER_PHOTO_OR_V68_MISMATCH',model,label,card_image.get_attribute('src'))
       assert card_image.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('CATALOG_IMAGE_MISSING_OR_NOT_DECODED',model,label)
       sizes=card.locator('.product-sizes')
       size_text=sizes.inner_text()
