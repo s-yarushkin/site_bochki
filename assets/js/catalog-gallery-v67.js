@@ -21,7 +21,8 @@ export const MODEL_ALBUMS=Object.freeze({
   ]},
   viking:{name:'Викинг',photos:[['viking-outside.webp','Снаружи'],...realModelPhotos('viking').map(photo=>[photo.path,photo.label])]},
   'kvadro-house':{name:'Квадро Хаус',photos:[
-    ['kvadro-house-outside.webp','Снаружи']
+    ['kvadro-house-outside.webp','Снаружи'],
+    ...realModelPhotos('kvadro-house').map(photo=>[photo.path,photo.label])
   ]}
 });
 
