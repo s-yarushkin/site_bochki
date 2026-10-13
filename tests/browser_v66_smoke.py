@@ -93,10 +93,16 @@ try:
       assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
       assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('MODEL_IMAGE_FAILED',model,label)
       assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
-      dialog.locator('[data-gallery-next]').click()
-      expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp',
-                     'viking':'viking-outside-v68.webp','kvadro-house':'kvadro-house-outside-v68.webp'}[model]
-      assert expected_next in img.get_attribute('src'),(model,label)
+      if n>1:
+        dialog.locator('[data-gallery-next]').click()
+        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp'}[model]
+        assert expected_next in img.get_attribute('src'),(model,label)
+        assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('NEXT_IMAGE_FAILED',model,label)
+        dialog.locator('[data-gallery-prev]').click()
+        assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
+      else:
+        assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
+        assert not dialog.locator('[data-gallery-next]').is_visible(),('SINGLE_IMAGE_NAV_VISIBLE',model,label)
       assert dialog.locator('[aria-pressed="true"].model-gallery-thumb').count()==1,(model,label)
       dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
       page.keyboard.press('Escape')
