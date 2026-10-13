@@ -87,9 +87,11 @@ test('V5 static assets are present, sized and match owner media manifest before 
   const aiManifest=JSON.parse(readFileSync(join(root,'assets/catalog-v68-ai/MEDIA-MANIFEST.json'),'utf8'));
   assert.equal(aiManifest.images.length,7);
   const aiFiles=new Set(aiManifest.images.map(im=>im.file));
-  const real=JSON.parse(readFileSync(join(root,'assets/real-objects/viking/viking-001/MEDIA-MANIFEST.json'),'utf8'));
-  assert.equal(real.photos.length,3);
-  const realFiles=new Set(real.photos.map(im=>im.path));
+  const vikingReal=JSON.parse(readFileSync(join(root,'assets/real-objects/viking/viking-001/MEDIA-MANIFEST.json'),'utf8'));
+  const houseReal=JSON.parse(readFileSync(join(root,'assets/real-objects/kvadro-house/kvadro-house-001/MEDIA-MANIFEST.json'),'utf8'));
+  assert.equal(vikingReal.photos.length,3);
+  assert.equal(houseReal.photos.length,2);
+  const realFiles=new Set([...vikingReal.photos,...houseReal.photos].map(im=>im.path));
   for(const slot of Object.values(MEDIA_SLOTS).filter(Boolean)){
     if(slot.path?.startsWith('assets/real-objects/'))assert.ok(realFiles.has(slot.path),'Unpackaged user real photo '+slot.path);
     else if(slot.path?.startsWith('assets/catalog-v68-ai/'))assert.ok(aiFiles.has(slot.file),'Unpackaged v6.8 concept '+slot.file);
