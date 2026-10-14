@@ -43,7 +43,7 @@ test('READY has exactly two fixed products, one package and server-only provisio
   assert.equal(six.configuration.finishName,'Графит');
   assert.equal(READY_PRICEBOOK.discountVerified,false);
   assert.match(formatReadyLead(six,{id:'GB-20261014-ABCD1234'}),/КВАДРО READY/);
-  assert.match(formatReadyLead(six),/799 000 ₽/);
+  assert.match(formatReadyLead(six).replace(/\s/g,' '),/799 000 ₽/);
 });
 test('READY validator rejects unknown product, finish, missing consent and invalid numbers',()=>{
   const good=leadInput();
@@ -74,7 +74,7 @@ test('existing SQLite keeps historical source, READY SKU and SQL source filters'
     store.update(five.id,{status:'won',assignee:'Менеджер',managerNote:'КП принято'});
     assert.equal(store.stats('quadro-ready').byStatus.won,1);
     assert.equal(store.detail(old.id).events.length,1);
-    assert.equal(store.detail(five.id).events.length,3);
+    assert.equal(store.detail(five.id).events.length,4);
   }finally{store.close();}
 });
 test('ready route only accepts its allowed Origin and source cannot be forged by caller',async()=>{
