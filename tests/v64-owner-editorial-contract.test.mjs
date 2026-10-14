@@ -10,7 +10,7 @@ test('V6.4 removes two requested distracting captions while preserving photo and
   assert.doesNotMatch(html,/Стоимость приведена для примера\. Состав комплекта, окончательную цену и возможность установки опций уточнит менеджер\./);
   assert.doesNotMatch(html,/class="hero-art-note"/);
   assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/); // Owner requests no internal production notes in customer copy.
-  assert.match(html,/Указаны ориентировочные цены для примера подбора/);
+  assert.match(html,/Цена «от» — ориентировочная стоимость/);
   assert.match(html,/Стоимость комплекта/);
   assert.match(html,/id="bundleNew">490 000 ₽/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
@@ -36,13 +36,13 @@ test('V6.4 FAQ has five concise and specific customer answers',()=>{
   const items=[...html.matchAll(/<details><summary>(.*?)<\/summary><p>(.*?)<\/p><\/details>/g)];
   assert.equal(items.length,5);
   const faq=new Map(items.map(([,question,answer])=>[question,answer]));
-  assert.match(faq.get('Нужно ли строить баню на участке?'),/Большинство наших бань приезжают уже в готовом виде/);
-  assert.match(faq.get('Нужно ли строить баню на участке?'),/Подготовьте основание/);
-  assert.match(faq.get('Можно ли париться в день доставки?'),/^Да\./);
-  assert.match(faq.get('Можно ли париться в день доставки?'),/Если основание заранее подготовлено/);
+  assert.match(faq.get('Нужно ли строить баню на участке?'),/Обычно баню привозят уже собранной/);
+  assert.match(faq.get('Нужно ли строить баню на участке?'),/Основание, подключения/);
+  assert.match(faq.get('Можно ли париться в день доставки?'),/Если баня привезена собранной/);
+  assert.match(faq.get('Можно ли париться в день доставки?'),/При сборке на участке потребуется дополнительное время/);
   assert.match(faq.get('Входит ли доставка в стоимость?'),/доставка оплачивается отдельно/);
   assert.match(faq.get('За сколько баня прогревается?'),/2–3 часа после растопки печи/);
-  assert.match(faq.get('Можно ли изменить выбранную комплектацию?'),/До начала изготовления согласуем/);
+  assert.match(faq.get('Можно ли изменить выбранную комплектацию?'),/Итоговую комплектацию согласуем до изготовления/);
   assert.doesNotMatch(items.map(x=>x[2]).join(' '),/зависит от модели, печи и погоды|без пустых обещаний/);
 });
 
