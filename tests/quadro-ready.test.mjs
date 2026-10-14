@@ -132,3 +132,13 @@ test('old flow and READY flow co-exist on one relay',async()=>{
     });
   }finally{store.close();}
 });
+
+test('READY refuses sending to MAX if persistent store is missing',async()=>{
+  let sent=0;
+  await withServer(createRelayHandler({config,deliver:async()=>{sent++;},log:()=>{}}),async base=>{
+    const response=await post(base,'/api/leads/quadro-ready',leadInput());
+    assert.equal(response.status,503);
+    assert.equal((await response.json()).code,'STORAGE_UNAVAILABLE');
+    assert.equal(sent,0);
+  });
+});
