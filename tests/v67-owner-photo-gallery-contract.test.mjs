@@ -76,7 +76,7 @@ test('V6.7: no repeated fake interior section and no legal street address in vis
   assert.doesNotMatch(html,/id="model-interiors"/);
   assert.doesNotMatch(html,/footer-operator/);
   assert.match(html,/href="privacy.html"/);
-  assert.match(read('privacy.html'),/Герцена, д\. 114/);
+  assert.match(read('privacy.html'),/Ленинградская, д\. 97/);
 });
 test('V6.7: standalone gallery module included in exact review ZIP and syntax gate',()=>{
   assert.match(pack,/assets\/js\/catalog-gallery-v67\.js/);
