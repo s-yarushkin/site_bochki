@@ -269,7 +269,8 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   const store=openLeadStore(databasePath);
   const managerConfig=loadManagerConfig();
   const auth=createManagerAuth({...managerConfig,cookiePath:config.siteBasePath+'api/manager/'});
-  const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error});
+  const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error,
+    notify:record=>deliverBaniLead(record.detail,config,fetch,{id:record.id,createdAt:record.createdAt})});
   const server=createServer(createRelayHandler({config,store,managerApi}));
   server.requestTimeout=15000;
   server.headersTimeout=12000;
