@@ -132,6 +132,8 @@ function renderDetail(record){
   pair(dl,'Тип заявки',record.flow==='quote'?'Получить расчёт':'Перезвоните мне');
   pair(dl,'Сообщение в MAX',record.notificationStatus==='delivered'?'Доставлено':record.notificationStatus==='failed'?'Не доставлено; заявка сохранена':'Ожидается отправка');
   pair(dl,'Комментарий',lead.comment);
+  $('#notificationRetryBlock').hidden=record.notificationStatus!=='failed';
+  $('#retryMaxStatus').textContent='';
   const conf=$('#configurationBlock');
   const property=$('#propertyBlock');
   conf.hidden=!lead.estimate;property.hidden=!lead.estimate;
@@ -244,6 +246,18 @@ document.querySelectorAll('#siteTabs .site-tab').forEach(button=>button.addEvent
   state.selected=null;
   loadList();
 }));
+$('#retryMaxButton').addEventListener('click',async()=>{
+  if(!state.selected||!confirm('Вы проверили, что заявка ещё не появилась в группе MAX? Повтор может доставить уведомление второй раз.'))return;
+  const id=state.selected,button=$('#retryMaxButton');
+  button.disabled=true;$('#retryMaxStatus').textContent='Отправляем…';
+  try{
+    await api('leads/'+encodeURIComponent(id)+'/retry-max',{method:'POST',body:'{}'});
+    $('#retryMaxStatus').textContent='Уведомление доставлено в MAX.';
+    await loadDetail(id);
+    await loadList();
+  }catch(error){fail(error,$('#retryMaxStatus'));}
+  finally{button.disabled=false;}
+});
 $('#loginForm').addEventListener('submit',login);
 $('#leadEditForm').addEventListener('submit',save);
 $('#filterForm').addEventListener('submit',event=>{event.preventDefault();state.offset=0;loadList();});
