@@ -131,7 +131,7 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   const host=env.HOST||'127.0.0.1';
   const port=Number(env.PORT||3301);
   const allowedOrigin=env.ALLOWED_ORIGIN;
-  const readyAllowedOrigin=env.READY_ALLOWED_ORIGIN||allowedOrigin;
+  const readyOriginSetting=env.READY_ALLOWED_ORIGIN||allowedOrigin;
   const siteBasePath=env.SITE_BASE_PATH||'/bani-preview/';
   const chatId=env.MAX_CHAT_ID;
   if(host!=='127.0.0.1'||!Number.isSafeInteger(port)||port<1024||port>65535) throw new Error('UNSAFE_BIND');
@@ -141,11 +141,13 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
      parsedOrigin.username||parsedOrigin.password||parsedOrigin.pathname!=='/'||
      parsedOrigin.search||parsedOrigin.hash||!parsedOrigin.hostname.includes('.'))throw new Error('UNSAFE_ORIGIN');
   let parsedReadyOrigin;
-  try{parsedReadyOrigin=new URL(readyAllowedOrigin);}catch{throw new Error('UNSAFE_READY_ORIGIN');}
-  if(parsedReadyOrigin.protocol!=='https:'||parsedReadyOrigin.origin!==readyAllowedOrigin||
+  try{parsedReadyOrigin=new URL(readyOriginSetting);}catch{throw new Error('UNSAFE_READY_ORIGIN');}
+  if(parsedReadyOrigin.protocol!=='https:'||
      parsedReadyOrigin.username||parsedReadyOrigin.password||parsedReadyOrigin.pathname!=='/'||
      parsedReadyOrigin.search||parsedReadyOrigin.hash||!parsedReadyOrigin.hostname.includes('.'))
     throw new Error('UNSAFE_READY_ORIGIN');
+  // Normalize IDN hostnames to the punycode Origin browsers actually send.
+  const readyAllowedOrigin=parsedReadyOrigin.origin;
   if(!/^\/(?:[a-z0-9-]+\/)*$/.test(siteBasePath))throw new Error('UNSAFE_BASE_PATH');
   if(!/^-?\d+$/.test(chatId||'')) throw new Error('INVALID_CHAT_ID');
   const file=env.MAX_TOKEN_FILE||(env.CREDENTIALS_DIRECTORY?env.CREDENTIALS_DIRECTORY+'/max-token':null);
