@@ -12,9 +12,20 @@ const pack=read('ops/v67-build-preview-bundle.ps1');
 
 test('V6.9: albums remain model-specific and real Viking photos stay grouped',()=>{
   assert.deepEqual(Object.keys(MODEL_ALBUMS).sort(),Object.keys(book.models).sort());
-  const expected={kvadro:3,parus:2,viking:4,'kvadro-house':3};
+  const expected={kvadro:3,parus:4,viking:4,'kvadro-house':3};
   for(const [model,album] of Object.entries(MODEL_ALBUMS)){
     assert.equal(album.photos.length,expected[model],model);
+    if(model==='parus'){
+      assert.deepEqual(album.photos.map(([p])=>p),[
+        'parus-outside.webp',
+        'assets/real-objects/parus/parus-001/outside-01.png',
+        'assets/real-objects/parus/parus-001/outside-02.png',
+        'parus-lounge.webp'
+      ]);
+      assert.equal(V68_MEDIA_PATHS[album.photos[0][0]],'assets/catalog-v68-ai/parus-outside-v68.webp');
+      assert.equal(V68_MEDIA_PATHS[album.photos[3][0]],'assets/catalog-v68-ai/parus-lounge-v68.webp');
+      continue;
+    }
     if(model==='kvadro-house'){
       assert.deepEqual(album.photos.map(([p])=>p),[
         'kvadro-house-outside.webp',
