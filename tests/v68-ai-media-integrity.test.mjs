@@ -43,9 +43,19 @@ test('V6.8: exact seven-image manifest is truthful and content-addressed',()=>{
 test('V6.9: all seven approved V6.8 images stay displayed while Viking gains three real photos',()=>{
   const images=manifest.images;
   assert.deepEqual(images.map(im=>im.file).sort(),Object.values(V68_MEDIA_PATHS).map(path=>path.split('/').at(-1)).sort());
-  const counts={kvadro:3,parus:2,viking:4,'kvadro-house':3};
+  const counts={kvadro:3,parus:4,viking:4,'kvadro-house':3};
   for(const [model,album] of Object.entries(MODEL_ALBUMS)){
     assert.equal(album.photos.length,counts[model],model);
+    if(model==='parus'){
+      assert.equal(album.photos[0][0],'parus-outside.webp');
+      assert.equal(album.photos[3][0],'parus-lounge.webp');
+      assert.equal(MEDIA_SLOTS['catalog-parus'].path,V68_MEDIA_PATHS[album.photos[0][0]]);
+      assert.equal(MEDIA_SLOTS['interior-parus'].path,V68_MEDIA_PATHS[album.photos[3][0]]);
+      assert.deepEqual(album.photos.slice(1,3).map(([path])=>path),[
+        MEDIA_SLOTS['real-parus-outside-01'].path,MEDIA_SLOTS['real-parus-outside-02'].path
+      ]);
+      continue;
+    }
     if(model==='kvadro-house'){
       assert.equal(album.photos[0][0],'kvadro-house-outside.webp');
       assert.equal(MEDIA_SLOTS['catalog-kvadro-house'].path,V68_MEDIA_PATHS[album.photos[0][0]]);
