@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "objectId": "parus-001",
+  "modelId": "parus",
+  "source": "OWNER_APPROVED_LANDSCAPE_EDIT_FROM_REAL_PHOTO",
+  "description": "Two owner-approved edits of the same real Parus sauna. Lawn, gravel paths and plants are visualized; the sauna design is preserved. Marketing visualization, not documentary proof of installed landscaping.",
+  "photos": [
+    {
+      "path": "assets/real-objects/parus/parus-001/outside-01.png",
+      "scene": "outside",
+      "label": "Снаружи",
+      "sha256": "34b2cf746fd1e47ae15cce5c9acbc2c37d7a24c7f0df4d2e5cde3ff4926c2b32",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 3292773
+    },
+    {
+      "path": "assets/real-objects/parus/parus-001/outside-02.png",
+      "scene": "outside",
+      "label": "Снаружи",
+      "sha256": "2367f378128e3d8257b2854cb35c9504c7473b2a572440ce91999d6c4e9ddf84",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 3146231
+    }
+  ]
+}
