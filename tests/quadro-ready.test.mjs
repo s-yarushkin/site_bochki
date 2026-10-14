@@ -5,7 +5,7 @@ import {createServer} from 'node:http';
 import {openLeadStore} from '../server/lead-store.mjs';
 import {validateBaniLead} from '../server/garant-bani-relay.mjs';
 import {validateReadyLead,formatReadyLead,READY_PRICEBOOK} from '../server/quadro-ready.mjs';
-import {createRelayHandler} from '../server/garant-bani-relay.mjs';
+import {createRelayHandler,loadRelayConfig} from '../server/garant-bani-relay.mjs';
 
 const oldOrigin='https://garant.example';
 const readyOrigin='https://quadro.example';
@@ -141,4 +141,12 @@ test('READY refuses sending to MAX if persistent store is missing',async()=>{
     assert.equal((await response.json()).code,'STORAGE_UNAVAILABLE');
     assert.equal(sent,0);
   });
+});
+
+test('new IDN site origin is normalized to browser punycode',()=>{
+  const env={HOST:'127.0.0.1',ALLOWED_ORIGIN:'https://preview.example',
+    READY_ALLOWED_ORIGIN:'https://дачапар.рф',MAX_CHAT_ID:'-1',MAX_TOKEN_FILE:'/fake'};
+  const configured=loadRelayConfig(env,()=> 'fake-test-token-value');
+  assert.equal(configured.readyAllowedOrigin,new URL('https://дачапар.рф').origin);
+  assert.throws(()=>loadRelayConfig({...env,READY_ALLOWED_ORIGIN:'https://дачапар.рф/unsafe'},()=> 'fake-test-token-value'),/UNSAFE_READY_ORIGIN/);
 });
