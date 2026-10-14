@@ -8,9 +8,10 @@ function loadApprovedMedia(){
     const image=new Image();
     image.alt='Фотография реальной бани — референс для комплектации КВАДРО READY';
     image.decoding='async';
-    image.loading=key==='hero-side'?'eager':'lazy';
+    image.loading='eager'; // Detached Image loads immediately; future lazy gallery uses IntersectionObserver.
     if(key==='hero-side')image.fetchPriority='high';
     image.onload=()=>{
+      node.setAttribute('aria-label',image.alt);
       node.classList.add('has-photo');
       node.append(image);
       const note=document.createElement('span');
