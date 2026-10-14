@@ -213,9 +213,20 @@ try:
     assert page.locator('.footer-operator').count()==0,'LEGAL_ADDRESS_VISIBLE_IN_FOOTER'
     assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
     legal=page.request.get(base+'privacy.html')
-    assert legal.status==200 and '1233500004650' in legal.text()
+    assert legal.status==200 and '1263500003590' in legal.text() and 'ГАРАНТ-ГРУПП' not in legal.text()
     page.locator('.footer-bottom').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT/f'{label}-legal-links-sun.png'))
+    assert page.locator('title').inner_text()=='Дача Пар — готовые бани для дачи',label
+    assert page.locator('#base .base-kit-list li').count()==17,('BASE_KIT_COUNT',label)
+    assert page.locator('#personal .personal-options article').count()==4,('CUSTOM_OPTIONS',label)
+    assert page.locator('#delivery .delivery-choice').count()==2,('DELIVERY_MODES',label)
+    assert page.locator('.footer-legal a[href="requisites.html"]').count()==1
+    assert 'ООО' not in page.locator('footer').inner_text(),('COMPANY_IN_FOOTER',label)
+    assert 'ООО' not in page.locator('#contactDialog').inner_text(),('COMPANY_IN_CONSENT_UI',label)
+    assert page.request.get(base+'requisites.html').status==200,('REQUISTES_404',label)
+    page.locator('#base').screenshot(path=str(SHOT/f'{label}-base-kit.png'))
+    page.locator('#personal').screenshot(path=str(SHOT/f'{label}-personalization.png'))
+    page.locator('#delivery').screenshot(path=str(SHOT/f'{label}-delivery-options.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     assert 'Квадро 5 м' in page.locator('#bundleTitle').inner_text()
     assert '490' in page.locator('#bundleNew').inner_text()
@@ -245,6 +256,10 @@ try:
     page.locator('[data-catalog-select="kvadro-house"]').click()
     page.locator('[data-choose-size="6x5"]').click()
     assert '739' in page.locator('#quoteTotal').inner_text()
+    # One of the new manager CTAs carries a topic into the existing callback payload.
+    page.locator('#personal [data-flow="callback"]').click()
+    assert 'индивидуальную комплектацию' in page.locator('#contactForm [name="comment"]').input_value(),('CUSTOM_TOPIC_NOT_PREFILLED',label)
+    page.locator('#dialogClose').click()
     # Callback: without checkbox no network request; consent reinitializes for a new flow.
     page.locator('.footer-ask [data-flow="callback"]').click()
     form=page.locator('#contactForm')
@@ -258,7 +273,7 @@ try:
     form.locator('#submitButton').click()
     page.locator('#formResult').wait_for(state='visible')
     assert len(calls)==1 and calls[0]['consent'] is True,calls
-    assert calls[0]['consentVersion']=='2026-10-12',calls
+    assert calls[0]['consentVersion']=='2026-10-14',calls
     page.locator('#dialogClose').click()
     page.locator('.builder-aside [data-flow="quote"]').click()
     assert not page.locator('#contactForm [name="leadConsent"]').is_checked(),label
