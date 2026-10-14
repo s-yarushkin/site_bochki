@@ -1,4 +1,6 @@
 /* V7.2: marketing sections for Dacha Par. Colors inherit the active SUN/RAIN variables. */
+#base,#personal{scroll-margin-top:90px;}
+
 .base-kit,.personal{position:relative}
 .base-kit-grid{display:grid;grid-template-columns:minmax(230px,.76fr) minmax(0,1.6fr);gap:clamp(24px,4vw,58px);align-items:start;margin-top:34px}
 .base-kit-intro{padding:clamp(24px,3vw,36px);background:var(--v5-surface-alt,var(--paper));border:1px solid var(--v5-border,var(--line));border-radius:18px}
