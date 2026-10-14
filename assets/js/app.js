@@ -14,6 +14,7 @@ let formQuote=null;
 let submitted=false;
 let formRequestId=null;
 const money=formatMoney;
+let formTopic='';
 const bundle=PRICEBOOK.bundle;
 const sizeLabel=(model,sz)=>model.sizeKind==='full'?sz.replace('x','×')+' м':(Number(sz)/100).toLocaleString('ru-RU')+' м';
 const sizeHint=model=>model.sizeKind==='full'?'Выберите полный габарит':`Ширина ${model.widthM.toLocaleString('ru-RU')} м`;
@@ -35,7 +36,7 @@ function renderCatalog(){
       <div class="product-body">
         <h3><button type="button" class="gallery-model-title" data-gallery-open="${model.id}">${escaped(model.name)}</button></h3>
         <p>${escaped(model.subtitle)}</p>
-        <div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div>
+        <div class="product-meta"><div class="product-price"><small>Базовая комплектация от</small>${money(low)}</div>
           <div class="product-sizes">${catalogSizes(model)}</div></div>
         <div class="product-card-actions">
           <button class="gallery-photo-action" type="button" data-gallery-open="${model.id}">Смотреть изображения →</button>
@@ -222,8 +223,8 @@ function setWeather(weather){
     ?'Небо затянуло тучами.<br>А у вас —<br><em>своя баня.</em>'
     :'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';
   $('#heroLead').textContent=rain
-    ?'Пасмурный вечер на даче. Своя баня, тёплый свет и близкие рядом. Изготовим заранее и доставим готовым изделием — условия установки согласуем под ваш участок.'
-    :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее и доставят готовым изделием — без затяжной стройки на участке.';
+    ?'Пасмурный вечер на даче. Своя баня, тёплый свет и близкие рядом. Изготовим заранее, а способ доставки и установки подберём с учётом вашего участка.'
+    :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее. Обычно доставим собранной, а если подъезд сложный — согласуем сборку из готовых элементов на участке.';
   syncAtmosphereText(weather);
   syncWeatherPhotoFrames(weather);
 }
@@ -255,11 +256,12 @@ function formatRussianMobile(value){
     (d.length>=9?'-'+d.slice(8,10):'');
 }
 function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${sizeLabel(getModel(q.modelId),q.sizeId)}</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (ориентировочно)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
-function openForm(flow='quote'){
+function openForm(flow='quote',topic=''){
   formRequestId=crypto.randomUUID();
+  formTopic=typeof topic==='string'?topic.slice(0,180):'';
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
-  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
+  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Дача Пар» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();$('#contactForm').elements.comment.value=formFlow==='callback'?formTopic:'';submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
@@ -292,7 +294,7 @@ function initForms(){
   }
   document.addEventListener('click',event=>{
     const trigger=event.target.closest('[data-flow]');
-    if(trigger)openForm(trigger.dataset.flow);
+    if(trigger)openForm(trigger.dataset.flow,trigger.dataset.topic||'');
   });
   $('#dialogClose').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
@@ -332,7 +334,7 @@ function initForms(){
     }
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:f.elements.leadConsent.checked,consentVersion:'2026-10-12',requestId:formRequestId,website:f.elements.website.value
+      comment,consent:f.elements.leadConsent.checked,consentVersion:'2026-10-14',requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
