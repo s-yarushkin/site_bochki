@@ -1,4 +1,28 @@
 (()=>{'use strict';
+// Progressive photos: release media as separate verified package. Missing assets keep honest placeholders.
+const MEDIA_NAMES=new Set(['hero-side','full-side','stove-wide','lounge','steam-shelves','exterior-proof','stove-tank']);
+function loadApprovedMedia(){
+  for(const node of document.querySelectorAll('[data-photo]')){
+    const key=node.dataset.photo;
+    if(!MEDIA_NAMES.has(key))continue;
+    const image=new Image();
+    image.alt='Фотография реальной бани — референс для комплектации КВАДРО READY';
+    image.decoding='async';
+    image.loading=key==='hero-side'?'eager':'lazy';
+    if(key==='hero-side')image.fetchPriority='high';
+    image.onload=()=>{
+      node.classList.add('has-photo');
+      node.append(image);
+      const note=document.createElement('span');
+      note.className='photo-note';
+      note.textContent='Фото реального объекта · детали READY уточняются';
+      node.append(note);
+    };
+    image.onerror=()=>{}; // Deliberate placeholder until a media release adds this exact asset.
+    image.src=new URL('media/'+key+'.webp',document.baseURI).toString();
+  }
+}
+loadApprovedMedia();
 const PRICES=Object.freeze({5:749000,6:799000});
 const NAMES=Object.freeze({natural:'Натуральный',walnut:'Орех',graphite:'Графит'});
 const state={size:5,color:'natural',requestId:null,pending:false};
