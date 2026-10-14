@@ -8,6 +8,13 @@ export const REAL_OBJECTS=Object.freeze({
       Object.freeze({path:'assets/real-objects/viking/viking-001/inside-01.jpg',scene:'inside',label:'Комната отдыха'})
     ])
   })]),
+  parus:Object.freeze([Object.freeze({
+    id:'parus-001',modelId:'parus',mediaProvenance:'OWNER_APPROVED_LANDSCAPE_EDIT_FROM_REAL_PHOTO',
+    photos:Object.freeze([
+      Object.freeze({path:'assets/real-objects/parus/parus-001/outside-01.png',scene:'outside',label:'Снаружи'}),
+      Object.freeze({path:'assets/real-objects/parus/parus-001/outside-02.png',scene:'outside',label:'Снаружи'})
+    ])
+  })]),
   'kvadro-house':Object.freeze([Object.freeze({
     id:'kvadro-house-001',modelId:'kvadro-house',
     photos:Object.freeze([
