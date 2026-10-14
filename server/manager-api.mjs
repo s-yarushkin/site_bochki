@@ -24,8 +24,9 @@ async function readJson(req){
 const safeId=id=>/^GB-\d{8}-[A-F0-9]{8}$/.test(id);
 const clientIp=req=>String(req.headers['x-forwarded-for']||'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown';
 
-export function createManagerApi({store,auth,origin,log=()=>{}}){
+export function createManagerApi({store,auth,origin,log=()=>{},notify=null}){
   if(!store||!auth||!origin)throw new Error('MANAGER_API_CONFIG_REQUIRED');
+  const notificationLocks=new Set();
   return async function managerApi(req,res){
     const url=new URL(req.url,'http://localhost');
     const path=url.pathname;
@@ -67,6 +68,25 @@ export function createManagerApi({store,auth,origin,log=()=>{}}){
           q:url.searchParams.get('q')||'',limit,offset
         });
         answer(res,200,{ok:true,...result,stats:store.stats(site)});return true;
+      }
+      const retry=/^\/api\/manager\/leads\/(GB-\d{8}-[A-F0-9]{8})\/retry-max$/.exec(path);
+      if(retry&&req.method==='POST'){
+        const id=retry[1];
+        const lead=store.get(id);
+        if(!lead){answer(res,404,{ok:false,code:'NOT_FOUND'});return true;}
+        if(lead.notificationStatus==='delivered'){answer(res,200,{ok:true,notificationStatus:'delivered',duplicate:true});return true;}
+        if(lead.notificationStatus!=='failed'||!notify){answer(res,409,{ok:false,code:'RETRY_UNAVAILABLE'});return true;}
+        if(notificationLocks.has(id)){answer(res,409,{ok:false,code:'RETRY_IN_PROGRESS'});return true;}
+        notificationLocks.add(id);
+        try{
+          await notify(lead);
+          store.delivery(id,'delivered');
+          log(JSON.stringify({event:'bani_manual_max_retry_success',leadId:id}));
+          answer(res,200,{ok:true,notificationStatus:'delivered'});return true;
+        }catch{
+          log(JSON.stringify({event:'bani_manual_max_retry_failed',leadId:id}));
+          answer(res,502,{ok:false,code:'MAX_RETRY_FAILED'});return true;
+        }finally{notificationLocks.delete(id);}
       }
       const match=/^\/api\/manager\/leads\/(GB-\d{8}-[A-F0-9]{8})$/.exec(path);
       if(match){
