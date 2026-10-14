@@ -1,7 +1,7 @@
 'use strict';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
-const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0};
+const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,site:'all'};
 const statuses={
   new:'Новая',in_progress:'В работе',awaiting_customer:'Ждём клиента',
   quote_sent:'КП отправлено',won:'Продано',lost:'Закрыто без продажи'
@@ -87,7 +87,7 @@ function renderList(data){
     b.setAttribute('aria-current',String(state.selected===lead.id));
     const top=el('div','lead-top');
     top.append(el('span','lead-id',lead.id),statusPill(lead.status));
-    b.append(top,el('div','lead-main',detail.name||'Без имени'),
+    b.append(top,el('div','lead-site',lead.sourceSite==='quadro-ready'?'КВАДРО READY':'Гарант Бани'),el('div','lead-main',detail.name||'Без имени'),
       el('div','lead-sub',detail.phone+' · '+(channels[detail.contactChannel]||'Звонок')),
       el('div','lead-sub',detail.estimate?
         detail.estimate.modelName+' · '+displaySize(detail.estimate.sizeId)+' · '+money(detail.estimate.total):
@@ -109,7 +109,7 @@ async function loadList(){
   try{
     const query=new URLSearchParams({
       limit:String(state.limit),offset:String(state.offset),
-      status:$('#statusFilter').value,q:$('#leadSearch').value.trim()
+      status:$('#statusFilter').value,q:$('#leadSearch').value.trim(),site:state.site
     });
     const data=await api('leads?'+query);
     if(epoch===state.sessionEpoch)renderList(data);
@@ -128,6 +128,7 @@ function renderDetail(record){
   pair(dl,'Имя',lead.name);
   pair(dl,'Телефон',lead.phone);
   pair(dl,'Связаться',channels[lead.contactChannel]||'Звонок');
+  pair(dl,'Источник заявки',record.sourceSite==='quadro-ready'?'КВАДРО READY':'Гарант Бани');
   pair(dl,'Тип заявки',record.flow==='quote'?'Получить расчёт':'Перезвоните мне');
   pair(dl,'Сообщение в MAX',record.notificationStatus==='delivered'?'Доставлено':record.notificationStatus==='failed'?'Не доставлено; заявка сохранена':'Ожидается отправка');
   pair(dl,'Комментарий',lead.comment);
@@ -138,11 +139,17 @@ function renderDetail(record){
     const q=lead.estimate,configuration=lead.configuration||{};
     const cd=$('#configurationInfo');cd.replaceChildren();
     pair(cd,'Модель',q.modelName);
+    if(record.sourceSite==='quadro-ready'){
+      pair(cd,'Артикул',q.sku);
+      pair(cd,'Комплектация','READY — фиксированная');
+      pair(cd,'Ширина',q.widthMeters+' м');
+    }
     pair(cd,'Размер',displaySize(q.sizeId));
     pair(cd,'Отделка',configuration.finishName||'Не указана');
     pair(cd,'Цвет кровли',configuration.roofName||'Не указан');
     pair(cd,'Комплект',q.bundleApplied?'Применён комплект':configuration.bundleId?'Не применён':'Без комплекта');
-    pair(cd,'Версия прайса',q.pricebookVersion+' · '+(q.pricebookStatus==='DEMO_ONLY'?'демоцены':'по прайсу'));
+    pair(cd,'Версия прайса',q.pricebookVersion+' · '+(q.pricebookStatus==='PROVISIONAL'?'ПРОЕКТНАЯ ЦЕНА':q.pricebookStatus==='DEMO_ONLY'?'демоцены':'по прайсу'));
+    if(record.sourceSite==='quadro-ready')pair(cd,'Фундамент','Не входит; бесплатная консультация');
     const options=$('#selectedOptions');options.replaceChildren();
     for(const item of q.options){
       const row=el('div','option-row');
@@ -151,21 +158,29 @@ function renderDetail(record){
     }
     if(!q.options.length)options.append(el('p','muted','Дополнительные опции не выбраны.'));
     const lines=$('#quoteLines');lines.replaceChildren();
-    for(const [label,value,cls]of[
-      ['Стоимость модели',q.basePrice,''],
-      ['Опции ('+q.options.length+')',q.optionsSubtotal,''],
-      ['Скидка',-q.discount,''],
-      ['Предварительно',q.total,'total']
-    ]){
+    const quoteRows=record.sourceSite==='quadro-ready'?
+      [['КВАДРО READY',q.total,'total']]:
+      [['Стоимость модели',q.basePrice,''],
+       ['Опции ('+q.options.length+')',q.optionsSubtotal,''],
+       ['Скидка',-q.discount,''],
+       ['Предварительно',q.total,'total']];
+    for(const [label,value,cls]of quoteRows){
       const row=el('div','quote-line '+cls);
       row.append(el('span','',label),el('strong','',(value<0?'−':'')+money(Math.abs(value))));
       lines.append(row);
     }
-    lines.append(el('small','muted','Доставка, отделка и условия установки требуют отдельного согласования. Цена демонстрационная.'));
+    lines.append(el('small','muted',record.sourceSite==='quadro-ready'?
+      'Проектная цена, до утверждения производителем. Доставка рассчитывается отдельно. Фундамент не входит.':
+      'Доставка, отделка и условия установки требуют отдельного согласования. Цена демонстрационная.'));
     const dd=$('#propertyInfo');dd.replaceChildren();
     pair(dd,'Район доставки',lead.district);
     pair(dd,'Основание',bases[lead.base]||lead.base);
     pair(dd,'Подъезд',access[lead.access]||lead.access);
+    if(record.sourceSite==='quadro-ready'){
+      pair(dd,'Доставка','Стоимость будет уточнена менеджером');
+      pair(dd,'Источник рекламы',lead.tracking?.utmSource||'—');
+      pair(dd,'Кампания',lead.tracking?.utmCampaign||'—');
+    }
   }
   $('#editStatus').value=record.status;
   $('#editAssignee').value=record.assignee||'';
@@ -220,6 +235,15 @@ async function save(event){
   }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#saveStatus'));}
   finally{button.disabled=false;}
 }
+document.querySelectorAll('#siteTabs .site-tab').forEach(button=>button.addEventListener('click',()=>{
+  state.site=button.dataset.site;
+  state.offset=0;
+  document.querySelectorAll('#siteTabs .site-tab').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+  $('#leadDetail').hidden=true;
+  $('#noSelection').hidden=false;
+  state.selected=null;
+  loadList();
+}));
 $('#loginForm').addEventListener('submit',login);
 $('#leadEditForm').addEventListener('submit',save);
 $('#filterForm').addEventListener('submit',event=>{event.preventDefault();state.offset=0;loadList();});
