@@ -51,7 +51,9 @@ test('READY validator rejects unknown product, finish, missing consent and inval
   assert.throws(()=>validateReadyLead({...good,product:{sku:'QR-5-READY',finishId:'red'}}),/INVALID_FINISH/);
   assert.throws(()=>validateReadyLead({...good,consent:{accepted:false,version:'quadro-ready-v1'}}),/CONSENT_REQUIRED/);
   assert.throws(()=>validateReadyLead({...good,customer:{...good.customer,phone:'+7 111 111 11 11'}}),/INVALID_PHONE/);
-  assert.throws(()=>validateReadyLead({...good,district:''}),/INVALID_DISTRICT/);
+  for(const district of ['', '   ', 'А']){
+    assert.throws(()=>validateReadyLead({...good,district}),/INVALID_DISTRICT/);
+  }
   assert.throws(()=>validateReadyLead({...good,website:'bot-value'}),/SPAM_REJECTED/);
   assert.throws(()=>validateReadyLead({...good,flow:'callback',customer:{...good.customer,contactChannel:'max'}}),/CALLBACK_MUST_BE_PHONE/);
   assert.throws(()=>validateReadyLead({...good,site:{base:'impossible'}}),/INVALID_SITE/);
