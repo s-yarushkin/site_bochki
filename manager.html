@@ -81,6 +81,12 @@
             <h3>Контакт клиента</h3>
             <dl id="contactInfo"></dl>
           </div>
+          <div class="detail-block" id="notificationRetryBlock" hidden>
+            <h3>Уведомление MAX не доставлено</h3>
+            <p class="muted fine">Заявка сохранена. Сначала проверьте, не появилось ли сообщение в группе: после таймаута результат отправки может быть неизвестен.</p>
+            <button id="retryMaxButton" type="button" class="btn outline">Повторить отправку MAX</button>
+            <p id="retryMaxStatus" role="status" class="muted fine"></p>
+          </div>
           <div class="detail-block" id="configurationBlock">
             <h3>Что выбрал клиент</h3>
             <dl id="configurationInfo"></dl>
