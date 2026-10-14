@@ -1,7 +1,7 @@
 'use strict';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
-const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,site:'all'};
+const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,site:'all',listRun:0};
 const statuses={
   new:'Новая',in_progress:'В работе',awaiting_customer:'Ждём клиента',
   quote_sent:'КП отправлено',won:'Продано',lost:'Закрыто без продажи'
@@ -103,7 +103,7 @@ function renderList(data){
   $('#nextButton').disabled=data.offset+data.leads.length>=data.total;
 }
 async function loadList(){
-  if(state.busy)return;
+  const run=++state.listRun;
   state.busy=true;
   const epoch=state.sessionEpoch;
   try{
@@ -112,9 +112,9 @@ async function loadList(){
       status:$('#statusFilter').value,q:$('#leadSearch').value.trim(),site:state.site
     });
     const data=await api('leads?'+query);
-    if(epoch===state.sessionEpoch)renderList(data);
-  }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#listSummary'));}
-  finally{if(epoch===state.sessionEpoch)state.busy=false;}
+    if(epoch===state.sessionEpoch&&run===state.listRun)renderList(data);
+  }catch(error){if(epoch===state.sessionEpoch&&run===state.listRun)fail(error,$('#listSummary'));}
+  finally{if(epoch===state.sessionEpoch&&run===state.listRun)state.busy=false;}
 }
 function renderDetail(record){
   $('#noSelection').hidden=true;$('#leadDetail').hidden=false;
