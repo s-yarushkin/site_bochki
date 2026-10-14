@@ -187,6 +187,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       return;
     }
     const readyRoute=req.url==='/api/leads/quadro-ready';
+    if(readyRoute&&!store)return json(res,503,{ok:false,code:'STORAGE_UNAVAILABLE'});
     if(!readyRoute&&req.url!=='/api/lead')return json(res,404,{ok:false,code:'NOT_FOUND'});
     if(req.method!=='POST')return json(res,405,{ok:false,code:'METHOD_NOT_ALLOWED'},{Allow:'POST'});
     const allowedOrigin=readyRoute?(config.readyAllowedOrigin||config.allowedOrigin):config.allowedOrigin;
