@@ -15,7 +15,7 @@ const systemd=readFileSync(new URL('../ops/systemd/garant-bani-relay.service',im
 test('S01 main publicly visible phone or tel link absent',()=>{assert.doesNotMatch(html,/\+7\s?9\d{2}\s?\d{3}/);assert.doesNotMatch(html,/href\s*=\s*["']tel:/i);});
 test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.me\/|max\.ru\/|vk\.ru\/)/));
 test('S03 only designated same-origin lead endpoint in forms',()=>{assert.match(script,/fetch\(new URL\('api\/lead',document\.baseURI\)/);assert.doesNotMatch(script,/XMLHttpRequest|sendBeacon|localStorage|sessionStorage/);});
-test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/Указаны ориентировочные цены/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
+test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/Цена «от» — ориентировочная стоимость/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
 test('S05 full and short callback flows',()=>{assert.match(html,/data-flow="quote"/);assert.match(html,/data-flow="callback"/);});
 test('S06 all four models have distinct catalog exteriors/interiors, hero unchanged',()=>{
   const media=readFileSync(new URL('../assets/js/media-v5.js',import.meta.url),'utf8');
@@ -80,7 +80,7 @@ test('S15 mobile validation feedback clears on edit; required marker remains inl
 });
 test('S15 privacy and separate consent pages name proposed registered ООО while keeping legal gate',()=>{
   for(const doc of [privacy,consent]){
-    for(const term of ['ООО','«ГАРАНТ-ГРУПП»','3525486964','352501001','1233500004650','Герцена, д. 114, кв. 8']){
+    for(const term of ['ООО','«ВУДАРТ-ГРУПП»','3500023844','350001001','1263500003590','Ленинградская, д. 97, помещение 25']){
       assert.ok(doc.includes(term),'Missing operator particular or unfinished contact: '+term);
     }
     assert.doesNotMatch(doc,/индивидуальному предпринимателю|\[ФИО ИП|ОГРНИП/);
