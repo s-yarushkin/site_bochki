@@ -11,17 +11,17 @@ const consent=read('consent.html');
 
 test('V6.7 operator identity retained in privacy and consent documents, not on sales page',()=>{
   for(const source of [privacy,consent]){
-    for(const id of ['«ГАРАНТ-ГРУПП»','3525486964','352501001','1233500004650']){
+    for(const id of ['«ВУДАРТ-ГРУПП»','3500023844','350001001','1263500003590']){
       assert.ok(source.includes(id),'Missing registered operator data '+id);
     }
-    assert.ok(source.includes('Герцена, д. 114, кв. 8'),'Missing legal address');
+    assert.ok(source.includes('Ленинградская, д. 97, помещение 25'),'Missing legal address');
   }
   assert.doesNotMatch(html,/class="container footer-operator"/);
-  assert.doesNotMatch(html,/Герцена, д. 114/);
+  assert.doesNotMatch(html,/ВУДАРТ-ГРУПП|ООО|ИНН|Ленинградская, д. 97/);
   assert.match(html,/aria-label="Правовая информация"/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/Доставку рассчитываем отдельно/);
+  assert.match(html,/Доставку, разгрузку, монтаж, основание/);
 });
 
 test('V6.5 policy is a separate noindex operator document with truthful MAX and external-fonts disclosures',()=>{
