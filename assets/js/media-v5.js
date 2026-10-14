@@ -9,11 +9,14 @@ const catalog=(file,alt)=>({file,path:'assets/catalog-v66/'+file,alt});
 const catalogV68=(file,alt)=>({file,path:'assets/catalog-v68-ai/'+file,alt});
 const realPhoto=(file,alt)=>({file,path:'assets/real-objects/viking/viking-001/'+file,alt});
 const realKvadroHouse=(file,alt)=>({file,path:'assets/real-objects/kvadro-house/kvadro-house-001/'+file,alt});
+const parusLandscape=(file,alt)=>({file,path:'assets/real-objects/parus/parus-001/'+file,alt});
 export const MEDIA_SLOTS=Object.freeze({
   'hero-sun-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: утверждённая художественная обработка участка'},
   'hero-rain-desktop':{file:'hero-sun.webp',alt:'Баня Квадро Хаус: та же архитектура в дождевой теме'},
   'catalog-kvadro':catalogV68('kvadro-outside-v68.webp','Квадро: наружный вид'),
   'catalog-parus':catalogV68('parus-outside-v68.webp','Парус: наружный вид'),
+  'real-parus-outside-01':parusLandscape('outside-01.png','Парус: внешний вид на участке с визуализированным озеленением'),
+  'real-parus-outside-02':parusLandscape('outside-02.png','Парус: боковой вид на участке с визуализированным озеленением'),
   'catalog-viking':catalogV68('viking-outside-v68.webp','Викинг: наружный вид'),
   'real-viking-outside-01':realPhoto('outside-01.jpg','Викинг: реальная баня, вид снаружи'),
   'real-viking-outside-02':realPhoto('outside-02.jpg','Викинг: реальная баня, второй вид снаружи'),
