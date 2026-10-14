@@ -12,6 +12,7 @@ $Archive=(Resolve-Path -LiteralPath $Archive).Path
 $Actual=(Get-FileHash -LiteralPath $Archive -Algorithm SHA256).Hash.ToLowerInvariant()
 if($Actual -ne $ExpectedZipSha256){throw 'QUADRO_MEDIA_ARCHIVE_SHA256_MISMATCH'}
 Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
 $zip=[System.IO.Compression.ZipFile]::OpenRead($Archive)
 $staging=Join-Path $env:TEMP ('quadro-media-stage-'+[Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $staging -Force|Out-Null
