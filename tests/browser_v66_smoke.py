@@ -81,7 +81,7 @@ try:
     assert page.locator('.difference-experience-number').count()==0,('BIG_04_NOT_REMOVED',label)
     assert label in {'wide','desktop','laptop','small-laptop','tablet','mobile','mobile-small'},'VIEWPORT_FILENAME_ID_CORRUPTED'
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-sun.png'))
-    for model,n in [('kvadro',3),('parus',2),('viking',4),('kvadro-house',3)]:
+    for model,n in [('kvadro',3),('parus',4),('viking',4),('kvadro-house',3)]:
       cover=page.locator(f'.product-card[data-model="{model}"] [data-gallery-open]').first
       cover.click()
       dialog=page.locator('#modelGallery')
@@ -98,7 +98,7 @@ try:
       assert img.evaluate('(im)=>getComputedStyle(im).objectFit')=='contain',('CROPPED_GALLERY_IMAGE',model,label)
       if n>1:
         dialog.locator('[data-gallery-next]').click()
-        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'parus-lounge-v68.webp','viking':'outside-01.jpg','kvadro-house':'outside-01.jpg'}[model]
+        expected_next={'kvadro':'kvadro-steam-v68.webp','parus':'outside-01.png','viking':'outside-01.jpg','kvadro-house':'outside-01.jpg'}[model]
         assert expected_next in img.get_attribute('src'),(model,label)
         assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('NEXT_IMAGE_FAILED',model,label)
         dialog.locator('[data-gallery-prev]').click()
@@ -107,6 +107,20 @@ try:
         assert f'{model}-outside-v68.webp' in img.get_attribute('src'),(model,label)
         assert not dialog.locator('[data-gallery-next]').is_visible(),('SINGLE_IMAGE_NAV_VISIBLE',model,label)
       assert dialog.locator('[aria-pressed="true"].model-gallery-thumb').count()==1,(model,label)
+      if model=='parus':
+        dialog.locator('[data-gallery-scene-select="outside"]').click()
+        assert dialog.locator('.model-gallery-thumb').count()==3,('PARUS_OUTSIDE_COUNT',label)
+        dialog.locator('[data-gallery-next]').click()
+        assert 'outside-01.png' in img.get_attribute('src'),('PARUS_OUTSIDE_01',label)
+        assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('PARUS_EDIT_01_DECODE',label)
+        dialog.locator('[data-gallery-next]').click()
+        assert 'outside-02.png' in img.get_attribute('src'),('PARUS_OUTSIDE_02',label)
+        assert img.evaluate('(im)=>im.decode().then(()=>im.naturalWidth>0).catch(()=>false)'),('PARUS_EDIT_02_DECODE',label)
+        dialog.locator('[data-gallery-scene-select="inside"]').click()
+        assert dialog.locator('.model-gallery-thumb').count()==1,('PARUS_INSIDE_PRESERVED',label)
+        assert 'parus-lounge-v68.webp' in img.get_attribute('src'),('PARUS_INTERIOR_UNCHANGED',label)
+        dialog.locator('[data-gallery-scene-select="all"]').click()
+        assert dialog.locator('.model-gallery-thumb').count()==4,('PARUS_ALL_COUNT',label)
       if model=='viking':
         dialog.locator('[data-gallery-scene-select="outside"]').click()
         assert dialog.locator('.model-gallery-thumb').count()==3,('VIKING_OUTSIDE_COUNT',label)
@@ -133,6 +147,19 @@ try:
       dialog.screenshot(path=str(SHOT/f'{label}-gallery-{model}-sun.png'))
       page.keyboard.press('Escape')
       expect(dialog).not_to_be_visible()
+    # Parus builder: existing cover + two approved landscape edits, interior untouched.
+    page.locator('[data-choose-model="parus"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('parus-outside-v68\\.webp'))
+    assert page.locator('#builderPhotoControls').is_visible(),('PARUS_OUTSIDE_NAV_MISSING',label)
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-01\\.png'))
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('outside-02\\.png'))
+    page.locator('[data-builder-photo-step="1"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('parus-outside-v68\\.webp'))
+    page.locator('[data-view="inside"]').click()
+    expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('parus-lounge-v68\\.webp'))
+    page.locator('[data-view="outside"]').click()
     # Viking builder uses same owner's three real shots; scene switches keep correct photos.
     page.locator('[data-choose-model="viking"]').click()
     expect(page.locator('#previewImage img[data-v5-photo]')).to_have_attribute('src',re.compile('viking-outside-v68\\.webp'))

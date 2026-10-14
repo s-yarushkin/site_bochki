@@ -57,7 +57,9 @@ test('V7.0 Viking gallery and the other models stay unchanged, only existing UI 
   ]);
   assert.equal(realModelPhotos('viking').length,3);
   assert.equal(MODEL_ALBUMS.kvadro.photos.length,3);
-  assert.equal(MODEL_ALBUMS.parus.photos.length,2);
+  // V7.0 regression concerns existing Parus media, not the number of future owner-approved additions.
+  assert.equal(MODEL_ALBUMS.parus.photos[0][0],'parus-outside.webp');
+  assert.equal(MODEL_ALBUMS.parus.photos.at(-1)[0],'parus-lounge.webp');
   const html=read('index.html'),app=read('assets/js/app.js'),gallery=read('assets/js/catalog-gallery-v67.js');
   assert.doesNotMatch(html,/id="real-bani"|id="real-objects"/);
   assert.match(app,/real-kvadro-house-outside-01/);

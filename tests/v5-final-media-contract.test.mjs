@@ -30,6 +30,8 @@ test('V6.9 SUN/RAIN hero and V6.8 Viking cover unchanged; three real photos are 
   for(const id of ['kvadro','parus','kvadro-house']){
     assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v68-ai/'+id+'-outside-v68.webp');
   }
+  assert.equal(resolveMedia('real-parus-outside-01').path,'assets/real-objects/parus/parus-001/outside-01.png');
+  assert.equal(resolveMedia('real-parus-outside-02').path,'assets/real-objects/parus/parus-001/outside-02.png');
   assert.equal(resolveMedia('catalog-viking').path,'assets/catalog-v68-ai/viking-outside-v68.webp');
   assert.equal(resolveMedia('real-viking-outside-01').path,'assets/real-objects/viking/viking-001/outside-01.jpg');
   assert.equal(resolveMedia('real-viking-outside-02').path,'assets/real-objects/viking/viking-001/outside-02.jpg');
@@ -89,9 +91,12 @@ test('V5 static assets are present, sized and match owner media manifest before 
   const aiFiles=new Set(aiManifest.images.map(im=>im.file));
   const vikingReal=JSON.parse(readFileSync(join(root,'assets/real-objects/viking/viking-001/MEDIA-MANIFEST.json'),'utf8'));
   const houseReal=JSON.parse(readFileSync(join(root,'assets/real-objects/kvadro-house/kvadro-house-001/MEDIA-MANIFEST.json'),'utf8'));
+  const parusEdited=JSON.parse(readFileSync(join(root,'assets/real-objects/parus/parus-001/MEDIA-MANIFEST.json'),'utf8'));
   assert.equal(vikingReal.photos.length,3);
   assert.equal(houseReal.photos.length,2);
-  const realFiles=new Set([...vikingReal.photos,...houseReal.photos].map(im=>im.path));
+  assert.equal(parusEdited.photos.length,2);
+  assert.equal(parusEdited.source,'OWNER_APPROVED_LANDSCAPE_EDIT_FROM_REAL_PHOTO');
+  const realFiles=new Set([...vikingReal.photos,...houseReal.photos,...parusEdited.photos].map(im=>im.path));
   for(const slot of Object.values(MEDIA_SLOTS).filter(Boolean)){
     if(slot.path?.startsWith('assets/real-objects/'))assert.ok(realFiles.has(slot.path),'Unpackaged user real photo '+slot.path);
     else if(slot.path?.startsWith('assets/catalog-v68-ai/'))assert.ok(aiFiles.has(slot.file),'Unpackaged v6.8 concept '+slot.file);
