@@ -61,11 +61,12 @@ export function createManagerApi({store,auth,origin,log=()=>{}}){
       if(path==='/api/manager/leads'&&req.method==='GET'){
         const limit=Number(url.searchParams.get('limit')||50);
         const offset=Number(url.searchParams.get('offset')||0);
+        const site=url.searchParams.get('site')||'all';
         const result=store.list({
-          status:url.searchParams.get('status')||'all',
+          site,status:url.searchParams.get('status')||'all',
           q:url.searchParams.get('q')||'',limit,offset
         });
-        answer(res,200,{ok:true,...result,stats:store.stats()});return true;
+        answer(res,200,{ok:true,...result,stats:store.stats(site)});return true;
       }
       const match=/^\/api\/manager\/leads\/(GB-\d{8}-[A-F0-9]{8})$/.exec(path);
       if(match){
@@ -94,7 +95,7 @@ export function createManagerApi({store,auth,origin,log=()=>{}}){
       }
       answer(res,404,{ok:false,code:'NOT_FOUND'});return true;
     }catch(error){
-      const code=['INVALID_STATUS','INVALID_PAGINATION','INVALID_TEXT','TEXT_TOO_LONG','INVALID_JSON','BODY_TOO_LARGE'].includes(error.message)?
+      const code=['INVALID_STATUS','INVALID_SITE_FILTER','INVALID_PAGINATION','INVALID_TEXT','TEXT_TOO_LONG','INVALID_JSON','BODY_TOO_LARGE'].includes(error.message)?
         error.message:'REQUEST_FAILED';
       answer(res,code==='REQUEST_FAILED'?500:400,{ok:false,code});
       log(JSON.stringify({event:'bani_manager_error',code}));
