@@ -18,6 +18,8 @@ function asLead(row) {
   return row?{
     id:row.id,createdAt:row.created_at,updatedAt:row.updated_at,
     flow:row.flow,status:row.status,assignee:row.assignee,
+    sourceSite:row.source_site||'garant-bani',productKind:row.product_kind||'catalog-configurator',
+    productSku:row.product_sku||null,
     managerNote:row.manager_note,notificationStatus:row.notification_status,
     notifiedAt:row.notified_at,detail:JSON.parse(row.snapshot_json)
   }:null;
@@ -53,9 +55,24 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
     );
     CREATE INDEX IF NOT EXISTS lead_events_idx ON lead_events(lead_id,seq);
   `);
+  // Forward-only additive migration: preserve every historical lead and event.
+  const columns=new Set(db.prepare('PRAGMA table_info(leads)').all().map(x=>x.name));
+  const additions=[
+    ['source_site', "TEXT NOT NULL DEFAULT 'garant-bani'"],
+    ['product_kind', "TEXT NOT NULL DEFAULT 'catalog-configurator'"],
+    ['product_sku', 'TEXT'],
+    ['price_version', 'TEXT'],
+    ['tracking_json', 'TEXT']
+  ];
+  db.exec('BEGIN IMMEDIATE');
+  try {
+    for(const [name,type] of additions)if(!columns.has(name))db.exec('ALTER TABLE leads ADD COLUMN '+name+' '+type);
+    db.exec('CREATE INDEX IF NOT EXISTS leads_source_status_idx ON leads(source_site,status,created_at DESC)');
+    db.exec('COMMIT');
+  }catch(error){db.exec('ROLLBACK');throw error;}
   const getByRequest=db.prepare('SELECT * FROM leads WHERE request_id=?');
   const getById=db.prepare('SELECT * FROM leads WHERE id=?');
-  const insert=db.prepare('INSERT INTO leads (id,request_id,created_at,updated_at,flow,snapshot_json) VALUES (?,?,?,?,?,?)');
+  const insert=db.prepare('INSERT INTO leads (id,request_id,created_at,updated_at,flow,snapshot_json,source_site,product_kind,product_sku,price_version,tracking_json) VALUES (?,?,?,?,?,?,?,?,?,?,?)');
   const insertEvent=db.prepare('INSERT INTO lead_events (lead_id,happened_at,actor,action,detail) VALUES (?,?,?,?,?)');
   const setDelivered=db.prepare("UPDATE leads SET notification_status='delivered',notified_at=?,updated_at=? WHERE id=?");
   const setFailed=db.prepare("UPDATE leads SET notification_status='failed',updated_at=? WHERE id=?");
@@ -74,7 +91,12 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
         const id='GB-'+time.slice(0,10).replaceAll('-','')+'-'+randomBytes(4).toString('hex').toUpperCase();
         try{
           db.exec('BEGIN IMMEDIATE');
-          insert.run(id,requestId,time,time,lead.flow,JSON.stringify(lead));
+          insert.run(id,requestId,time,time,lead.flow,JSON.stringify(lead),
+            lead.sourceSite==='quadro-ready'?'quadro-ready':'garant-bani',
+            lead.sourceSite==='quadro-ready'?'ready-fixed':'catalog-configurator',
+            lead.sourceSite==='quadro-ready'?lead.estimate?.sku||null:null,
+            lead.estimate?.pricebookVersion||null,
+            lead.sourceSite==='quadro-ready'?JSON.stringify(lead.tracking||{}):null);
           insertEvent.run(id,time,'system','created','Заявка получена с сайта');
           db.exec('COMMIT');
           return {lead:asLead(getById.get(id)),created:true};
@@ -105,12 +127,14 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
       }catch(err){try{db.exec('ROLLBACK');}catch{}throw err;}
       return asLead(getById.get(id));
     },
-    list({status='all',q='',limit=50,offset=0}={}){
+    list({status='all',site='all',q='',limit=50,offset=0}={}){
       if(status!=='all'&&!allowed.has(status))throw new Error('INVALID_STATUS');
+      if(!['all','garant-bani','quadro-ready'].includes(site))throw new Error('INVALID_SITE_FILTER');
       if(!Number.isInteger(limit)||limit<1||limit>100||!Number.isInteger(offset)||offset<0||offset>100000)throw new Error('INVALID_PAGINATION');
       q=safeText(q,80);
       const where=[],args=[];
       if(status!=='all'){where.push('status=?');args.push(status);}
+      if(site!=='all'){where.push('source_site=?');args.push(site);}
       if(q){
         where.push("(id LIKE ? OR assignee LIKE ? OR snapshot_json LIKE ?)");
         const match='%'+q.replace(/[\\%_]/g,'\\$&')+'%';
@@ -122,10 +146,16 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
       const n=db.prepare('SELECT count(*) AS n FROM leads '+condition).get(...args).n;
       return {leads:rows,total:n,offset,limit};
     },
-    stats(){
+    stats(site='all'){
+      if(!['all','garant-bani','quadro-ready'].includes(site))throw new Error('INVALID_SITE_FILTER');
       const values=Object.fromEntries(LEAD_STATUSES.map(s=>[s,0]));
-      for(const row of counts.all())values[row.status]=row.n;
-      return {total:total.get().n,byStatus:values};
+      if(site==='all'){
+        for(const row of counts.all())values[row.status]=row.n;
+        return {total:total.get().n,byStatus:values};
+      }
+      for(const row of db.prepare('SELECT status,count(*) AS n FROM leads WHERE source_site=? GROUP BY status').all(site))
+        values[row.status]=row.n;
+      return {total:db.prepare('SELECT count(*) AS n FROM leads WHERE source_site=?').get(site).n,byStatus:values};
     },
     detail(id){
       const lead=asLead(getById.get(id));
