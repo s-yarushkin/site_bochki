@@ -3,6 +3,7 @@ import {readFileSync,realpathSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {createHash,randomUUID} from 'node:crypto';
 import {openLeadStore} from './lead-store.mjs';
+import {validateReadyLead,formatReadyLead} from './quadro-ready.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
@@ -84,6 +85,7 @@ export function validateBaniLead(value) {
 }
 
 export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
+  if(lead.sourceSite==='quadro-ready')return formatReadyLead(lead,{id,createdAt});
   const text=[
     'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
@@ -129,6 +131,7 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   const host=env.HOST||'127.0.0.1';
   const port=Number(env.PORT||3301);
   const allowedOrigin=env.ALLOWED_ORIGIN;
+  const readyAllowedOrigin=env.READY_ALLOWED_ORIGIN||allowedOrigin;
   const siteBasePath=env.SITE_BASE_PATH||'/bani-preview/';
   const chatId=env.MAX_CHAT_ID;
   if(host!=='127.0.0.1'||!Number.isSafeInteger(port)||port<1024||port>65535) throw new Error('UNSAFE_BIND');
@@ -137,13 +140,19 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   if(parsedOrigin.protocol!=='https:'||parsedOrigin.origin!==allowedOrigin||
      parsedOrigin.username||parsedOrigin.password||parsedOrigin.pathname!=='/'||
      parsedOrigin.search||parsedOrigin.hash||!parsedOrigin.hostname.includes('.'))throw new Error('UNSAFE_ORIGIN');
+  let parsedReadyOrigin;
+  try{parsedReadyOrigin=new URL(readyAllowedOrigin);}catch{throw new Error('UNSAFE_READY_ORIGIN');}
+  if(parsedReadyOrigin.protocol!=='https:'||parsedReadyOrigin.origin!==readyAllowedOrigin||
+     parsedReadyOrigin.username||parsedReadyOrigin.password||parsedReadyOrigin.pathname!=='/'||
+     parsedReadyOrigin.search||parsedReadyOrigin.hash||!parsedReadyOrigin.hostname.includes('.'))
+    throw new Error('UNSAFE_READY_ORIGIN');
   if(!/^\/(?:[a-z0-9-]+\/)*$/.test(siteBasePath))throw new Error('UNSAFE_BASE_PATH');
   if(!/^-?\d+$/.test(chatId||'')) throw new Error('INVALID_CHAT_ID');
   const file=env.MAX_TOKEN_FILE||(env.CREDENTIALS_DIRECTORY?env.CREDENTIALS_DIRECTORY+'/max-token':null);
   if(!file) throw new Error('TOKEN_FILE_NOT_SET');
   const token=String(readSecret(file,'utf8')).trim();
   if(token.length<10)throw new Error('INVALID_TOKEN');
-  return {host,port,allowedOrigin,siteBasePath,chatId,token};
+  return {host,port,allowedOrigin,readyAllowedOrigin,siteBasePath,chatId,token};
 }
 
 export async function deliverBaniLead(lead,config,fetchImpl=fetch,meta={}) {
@@ -177,9 +186,11 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       await managerApi(req,res);
       return;
     }
-    if(req.url!=='/api/lead')return json(res,404,{ok:false,code:'NOT_FOUND'});
+    const readyRoute=req.url==='/api/leads/quadro-ready';
+    if(!readyRoute&&req.url!=='/api/lead')return json(res,404,{ok:false,code:'NOT_FOUND'});
     if(req.method!=='POST')return json(res,405,{ok:false,code:'METHOD_NOT_ALLOWED'},{Allow:'POST'});
-    if(req.headers.origin!==config.allowedOrigin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
+    const allowedOrigin=readyRoute?(config.readyAllowedOrigin||config.allowedOrigin):config.allowedOrigin;
+    if(req.headers.origin!==allowedOrigin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
     if(!/^application\/json(?:\s*;|\s*$)/i.test(req.headers['content-type']||''))return json(res,415,{ok:false,code:'CONTENT_TYPE_REQUIRED'});
     const clientIp=String(req.headers['x-forwarded-for']||'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown';
     const now=clock();
@@ -201,7 +212,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       const raw=Buffer.concat(chunks).toString('utf8');
       let payload;
       try{payload=JSON.parse(raw);}catch{throw new Error('INVALID_JSON');}
-      const lead=validateBaniLead(payload);
+      const lead=readyRoute?validateReadyLead(payload):validateBaniLead(payload);
       const fingerprint=createHash('sha256').update(JSON.stringify(lead)).digest('hex');
       if(!store && recent.has(fingerprint))return json(res,200,{ok:true,delivered:true,duplicate:true});
       let record=null;
@@ -219,7 +230,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         }
         if(record.notificationStatus==='delivered'){
           recent.set(fingerprint,now+120000);
-          return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id});
+          return json(res,200,{ok:true,delivered:true,persisted:true,duplicate:true,leadId:record.id,notificationStatus:'delivered'});
         }
         if(sending.has(record.id))return json(res,409,{ok:false,code:'DELIVERY_IN_PROGRESS'});
       }
@@ -230,11 +241,12 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         if(record)store.delivery(record.id,'delivered');
         recent.set(fingerprint,now+120000);
         log(JSON.stringify({event:'bani_lead_delivered',flow:lead.flow,leadId:record?.id||null}));
-        return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id}:{})});
+        return json(res,readyRoute?201:200,{ok:true,delivered:true,...(readyRoute?{persisted:!!record,notificationStatus:'delivered'}:{}),...(record?{leadId:record.id}:{})});
       } catch {
         if(record)try{store.delivery(record.id,'failed');}catch{}
         log(JSON.stringify({event:'bani_delivery_failed',leadId:record?.id||null}));
-        return json(res,502,{ok:false,code:'DELIVERY_UNAVAILABLE',...(record?{leadId:record.id}:{})});
+        return readyRoute&&record?json(res,202,{ok:true,persisted:true,delivered:false,notificationStatus:'failed',leadId:record.id}):
+           json(res,502,{ok:false,code:'DELIVERY_UNAVAILABLE',...(record?{leadId:record.id}:{})});
       } finally {
         if(record)sending.delete(record.id);
         active--;
