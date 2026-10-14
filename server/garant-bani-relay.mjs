@@ -36,7 +36,7 @@ export function validateBaniLead(value) {
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
   if(value.consent!==true) throw new Error('CONSENT_REQUIRED');
-  if(value.consentVersion!==undefined && value.consentVersion!=='2026-10-12')throw new Error('CONSENT_VERSION_UNSUPPORTED');
+  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14'].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');
   const name=field(value.name,80);
   if((name && name.length<2) || (value.flow==='quote' && name.length<2)) throw new Error('INVALID_NAME');
   const digits=field(value.phone,32).replace(/\D/g,'');
@@ -85,7 +85,7 @@ export function validateBaniLead(value) {
 
 export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   const text=[
-    'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
+    lead.consentEvidence?.version==='2026-10-14'?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
     ...(createdAt?['Создана: '+createdAt]:[]),
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
@@ -121,7 +121,7 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   }
   if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
-  text.push('Источник: сайт Гарант Бани');
+  text.push(lead.consentEvidence?.version==='2026-10-14'?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
   return text.join('\n');
 }
 
