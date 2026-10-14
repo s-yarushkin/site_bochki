@@ -216,13 +216,13 @@ try:
     assert legal.status==200 and '1263500003590' in legal.text() and 'ГАРАНТ-ГРУПП' not in legal.text()
     page.locator('.footer-bottom').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT/f'{label}-legal-links-sun.png'))
-    assert page.locator('title').inner_text()=='Дача Пар — готовые бани для дачи',label
+    assert page.title()=='Дача Пар — готовые бани для дачи',label
     assert page.locator('#base .base-kit-list li').count()==17,('BASE_KIT_COUNT',label)
     assert page.locator('#personal .personal-options article').count()==4,('CUSTOM_OPTIONS',label)
     assert page.locator('#delivery .delivery-choice').count()==2,('DELIVERY_MODES',label)
     assert page.locator('.footer-legal a[href="requisites.html"]').count()==1
     assert 'ООО' not in page.locator('footer').inner_text(),('COMPANY_IN_FOOTER',label)
-    assert 'ООО' not in page.locator('#contactDialog').inner_text(),('COMPANY_IN_CONSENT_UI',label)
+    assert 'ООО' not in page.locator('#contactDialog').text_content(),('COMPANY_IN_CONSENT_UI',label)
     assert page.request.get(base+'requisites.html').status==200,('REQUISTES_404',label)
     page.locator('#base').screenshot(path=str(SHOT/f'{label}-base-kit.png'))
     page.locator('#personal').screenshot(path=str(SHOT/f'{label}-personalization.png'))
