@@ -41,7 +41,7 @@ export function validateReadyLead(value,{pricebook=READY_PRICEBOOK}={}){
   if(!['phone','telegram','max'].includes(contactChannel))throw new Error('INVALID_CONTACT_CHANNEL');
   if(value.flow==='callback'&&contactChannel!=='phone')throw new Error('CALLBACK_MUST_BE_PHONE');
   const comment=clean(customer.comment||'',500);
-  const district=clean(value.district||'',140,{required:value.flow==='quote'});
+  const district=clean(value.district||'',140);
   if(value.flow==='quote'&&district.length<2)throw new Error('INVALID_DISTRICT');
   if(!value.product||typeof value.product!=='object'||Array.isArray(value.product))throw new Error('INVALID_PRODUCT');
   const sku=value.product.sku;
