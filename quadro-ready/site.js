@@ -2,13 +2,13 @@
 // Progressive photos: release media as separate verified package. Missing assets keep honest placeholders.
 const MEDIA_NAMES=new Set(['hero-side','full-side','stove-wide','lounge','steam-shelves','exterior-proof','stove-tank']);
 function loadApprovedMedia(){
-  for(const node of document.querySelectorAll('[data-photo]')){
+  const load=node=>{
     const key=node.dataset.photo;
-    if(!MEDIA_NAMES.has(key))continue;
+    if(!MEDIA_NAMES.has(key))return;
     const image=new Image();
-    image.alt='Фотография реальной бани — референс для комплектации КВАДРО READY';
+    image.alt='Реальная баня — фотография объекта-референса КВАДРО READY';
     image.decoding='async';
-    image.loading='eager'; // Detached Image loads immediately; future lazy gallery uses IntersectionObserver.
+    image.loading='eager';
     if(key==='hero-side')image.fetchPriority='high';
     image.onload=()=>{
       node.setAttribute('aria-label',image.alt);
@@ -19,8 +19,18 @@ function loadApprovedMedia(){
       note.textContent='Фото реального объекта · детали READY уточняются';
       node.append(note);
     };
-    image.onerror=()=>{}; // Deliberate placeholder until a media release adds this exact asset.
+    image.onerror=()=>{}; // No missing image shown: placeholder stays readable.
     image.src=new URL('media/'+key+'.webp',document.baseURI).toString();
+  };
+  const observer='IntersectionObserver' in window?new IntersectionObserver(entries=>{
+    for(const entry of entries)if(entry.isIntersecting){
+      observer.unobserve(entry.target);
+      load(entry.target);
+    }
+  },{rootMargin:'400px'}):null;
+  for(const node of document.querySelectorAll('[data-photo]')){
+    if(node.dataset.photo==='hero-side'||!observer)load(node);
+    else observer.observe(node);
   }
 }
 loadApprovedMedia();
