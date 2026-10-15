@@ -15,7 +15,9 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
 httpd=http.server.ThreadingHTTPServer(('127.0.0.1',0),
     functools.partial(Quiet,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
-base=f'http://127.0.0.1:{httpd.server_address[1]}/'
+base=os.environ.get('DACHA_QA_BASE') or f'http://127.0.0.1:{httpd.server_address[1]}/'
+if os.environ.get('DACHA_QA_BASE'):
+ assert base=='https://xn--80aaan1dh9b.xn--p1ai/','UNEXPECTED_LIVE_QA_TARGET'
 
 widths=[('wide',1920,1080),('desktop',1440,900),('laptop',1366,768),
         ('small-laptop',1280,800),('tablet',768,900),

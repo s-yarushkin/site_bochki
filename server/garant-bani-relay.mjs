@@ -136,14 +136,29 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   try{parsedOrigin=new URL(allowedOrigin);}catch{throw new Error('UNSAFE_ORIGIN');}
   if(parsedOrigin.protocol!=='https:'||parsedOrigin.origin!==allowedOrigin||
      parsedOrigin.username||parsedOrigin.password||parsedOrigin.pathname!=='/'||
-     parsedOrigin.search||parsedOrigin.hash||!parsedOrigin.hostname.includes('.'))throw new Error('UNSAFE_ORIGIN');
+     parsedOrigin.search||parsedOrigin.hash||(!parsedOrigin.hostname.includes('.')||!/^[a-z0-9.-]+$/.test(parsedOrigin.hostname)))throw new Error('UNSAFE_ORIGIN');
   if(!/^\/(?:[a-z0-9-]+\/)*$/.test(siteBasePath))throw new Error('UNSAFE_BASE_PATH');
   if(!/^-?\d+$/.test(chatId||'')) throw new Error('INVALID_CHAT_ID');
   const file=env.MAX_TOKEN_FILE||(env.CREDENTIALS_DIRECTORY?env.CREDENTIALS_DIRECTORY+'/max-token':null);
   if(!file) throw new Error('TOKEN_FILE_NOT_SET');
   const token=String(readSecret(file,'utf8')).trim();
   if(token.length<10)throw new Error('INVALID_TOKEN');
-  return {host,port,allowedOrigin,siteBasePath,chatId,token};
+  const sites=[{origin:allowedOrigin,basePath:siteBasePath}];
+  if(env.ADDITIONAL_SITES_JSON){
+    let additional;
+    try{additional=JSON.parse(env.ADDITIONAL_SITES_JSON);}catch{throw new Error('UNSAFE_ADDITIONAL_SITES');}
+    if(!Array.isArray(additional)||additional.length>4)throw new Error('UNSAFE_ADDITIONAL_SITES');
+    for(const site of additional){
+      let url;
+      try{url=new URL(site.origin);}catch{throw new Error('UNSAFE_ADDITIONAL_SITES');}
+      if(url.protocol!=='https:'||url.origin!==site.origin||(!url.hostname.includes('.')||!/^[a-z0-9.-]+$/.test(url.hostname))||
+         url.username||url.password||url.pathname!=='/'||url.search||url.hash||
+         typeof site.basePath!=='string'||!/^\/(?:[a-z0-9-]+\/)*$/.test(site.basePath)||
+         sites.some(s=>s.origin===site.origin))throw new Error('UNSAFE_ADDITIONAL_SITES');
+      sites.push({origin:site.origin,basePath:site.basePath});
+    }
+  }
+  return {host,port,allowedOrigin,siteBasePath,chatId,token,sites};
 }
 
 export async function deliverBaniLead(lead,config,fetchImpl=fetch,meta={}) {
@@ -165,6 +180,24 @@ function json(res,status,data,extra={}) {
   res.end(JSON.stringify(data));
 }
 
+// Caddy preserves Host while stripping only the legacy /bani-preview prefix.
+// Never use X-Forwarded-Host or Origin to select a site's cookie scope.
+export function resolveRelaySite(config,req){
+  if(!config.sites)return {origin:config.allowedOrigin,basePath:config.siteBasePath};
+  return config.sites.find(site=>new URL(site.origin).host===req.headers.host)??null;
+}
+
+export function createSiteManagerApi({config,store,managerConfig,log=()=>{}}){
+  const routes=new Map(config.sites.map(site=>[site.origin,createManagerApi({store,
+    auth:createManagerAuth({...managerConfig,cookiePath:site.basePath+'api/manager/'}),
+    origin:site.origin,log})]));
+  return async(req,res)=>{
+    const site=resolveRelaySite(config,req);
+    if(!site)return json(res,403,{ok:false,code:'HOST_FORBIDDEN'});
+    return routes.get(site.origin)(req,res);
+  };
+}
+
 export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Date.now(),log=console.error,store=null,managerApi=null}={}) {
   const quotas=new Map();
   const recent=new Map();
@@ -179,7 +212,8 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
     }
     if(req.url!=='/api/lead')return json(res,404,{ok:false,code:'NOT_FOUND'});
     if(req.method!=='POST')return json(res,405,{ok:false,code:'METHOD_NOT_ALLOWED'},{Allow:'POST'});
-    if(req.headers.origin!==config.allowedOrigin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
+    const site=resolveRelaySite(config,req);
+    if(!site||req.headers.origin!==site.origin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
     if(!/^application\/json(?:\s*;|\s*$)/i.test(req.headers['content-type']||''))return json(res,415,{ok:false,code:'CONTENT_TYPE_REQUIRED'});
     const clientIp=String(req.headers['x-forwarded-for']||'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown';
     const now=clock();
@@ -256,8 +290,7 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   if(!databasePath||!databasePath.startsWith('/var/lib/garant-bani-relay/'))throw new Error('UNSAFE_DATABASE_PATH');
   const store=openLeadStore(databasePath);
   const managerConfig=loadManagerConfig();
-  const auth=createManagerAuth({...managerConfig,cookiePath:config.siteBasePath+'api/manager/'});
-  const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error});
+  const managerApi=createSiteManagerApi({config,store,managerConfig,log:console.error});
   const server=createServer(createRelayHandler({config,store,managerApi}));
   server.requestTimeout=15000;
   server.headersTimeout=12000;
