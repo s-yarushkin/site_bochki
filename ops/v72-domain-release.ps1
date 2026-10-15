@@ -1,7 +1,8 @@
 # Pinned preview cutover. No Actions, no permanent redirect, no production test leads.
 param(
  [Parameter(Mandatory=$true)][ValidatePattern('^[a-f0-9]{40}$')][string]$SourceSha,
- [string]$Server='deploy@135.106.137.195'
+ [string]$Server='deploy@135.106.137.195',
+ [switch]$RecoverPreviousAttempt
 )
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
@@ -44,8 +45,10 @@ if($LASTEXITCODE -ne 0){throw 'SCP_FAILED'}
 $Prepare="cd '$Remote' && printf '%s  source.tar.gz\n' '$Hash' | sha256sum -c - && mkdir source && tar -xzf source.tar.gz -C source"
 & ssh -o ConnectTimeout=15 $Server $Prepare
 if($LASTEXITCODE -ne 0){throw 'REMOTE_PACKAGE_VERIFY_FAILED'}
+$RecoveryFlag=''
+if($RecoverPreviousAttempt){$RecoveryFlag=' --recover-v72-attempt'}
 # Interactive TTY is intentional: only the owner enters sudo if required.
-& ssh -t -o ConnectTimeout=15 $Server "sudo python3 '$Remote/source/ops/v72-domain-install.py' --source '$Remote/source' --source-sha '$SourceSha' --apply"
+& ssh -t -o ConnectTimeout=15 $Server "sudo python3 '$Remote/source/ops/v72-domain-install.py' --source '$Remote/source' --source-sha '$SourceSha' --apply$RecoveryFlag"
 if($LASTEXITCODE -ne 0){throw 'SERVER_INSTALL_STOPPED; inspect exact fail-closed reason; do not bypass baseline'}
 Write-Host ('V72_SOURCE_SHA='+$SourceSha)
 Write-Host 'V72_HTTPS_PREVIEW_INSTALLED=YES'

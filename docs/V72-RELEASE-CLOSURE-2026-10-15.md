@@ -9,11 +9,11 @@ Use the exact commit containing this document; never deploy a floating branch.
 
 - GitHub PR head matched the accepted SHA before editing.
 - `npm run check`: 141/141 Node tests, syntax checks PASS.
-- `python tests/v72-installer.test.py`: 5/5 isolated installer safety tests PASS.
+- `python tests/v72-installer.test.py`: 9/9 installer safety/readiness tests PASS, including a real delayed local TCP/HTTP listener.
 - Domain browser navigation returned 502 with upstream TLS internal error. A valid HTTPS page was **not** observed.
 - Direct SSH from this execution environment: network unreachable.
 - Authorized remote Windows device was listed online, but infrastructure reads did not return usable output; the file-read request ultimately failed `Timeout - no response from device`.
-- No remote deployment, Caddy validation, production SQLite inspection, or real MAX delivery is claimed.
+- Initial autonomous run performed no deployment. A subsequent owner-run attempt passed server preflight but stopped with connection refused after activation began. The old installer did not wait for the relay socket and could mask its original activation error with a rollback health-check failure. Actual server rollback completion remains unconfirmed. Real MAX delivery remains untested.
 - Prior accepted frontend QA (7 viewports) remains evidence for the unchanged UI. New live QA is pending. Local Chromium download failed; no new browser PASS is claimed.
 
 ## Minimal transition architecture
@@ -59,3 +59,11 @@ Automatic rollback covers activation/HTTP verification failures. A later browser
 ## Launch boundaries
 
 No permanent redirect, old site deletion, commercial GO, SEO indexing or paid traffic. Real working MAX delivery remains NOT TESTED. An isolated mock demonstrates the request/storage path, not delivery to the working MAX group. The installer does not claim to finish browser acceptance until the final live browser script succeeds.
+
+## Owner-run failure and recovery, 15.10.2026
+
+The owner reported all 141 Node tests, package transfer/hash verification and live server preflight PASS, followed by `INSTALL_STOPPED: <urlopen error [Errno 111] Connection refused>`. This establishes a post-preflight failure, not its full server-side cause.
+
+Fixed: bounded relay readiness polling after both activation and rollback, explicit activation phase markers, root-only `failure.json` preserving the original and rollback errors. Nine installer tests pass, including transient refusal, permanent refusal, actual delayed HTTP startup and double failure reporting.
+
+`ops/v72-domain-release.ps1 -SourceSha <FIX_COMMIT> -RecoverPreviousAttempt` first uses the updated rollback implementation on `/var/backups/dachapar/20261015-cc583a2c4665-v72/state.json`, verifies the prior SHA and exact Caddy/link/drop-in leases, waits for the original relay to become ready, then runs the fresh guarded installation. It never restores the SQLite backup onto live data. Prior backups and release directories are retained. Any foreign change or persistently unavailable relay stops the process with an explicit error. No new live PASS is claimed before the owner-run output is obtained.

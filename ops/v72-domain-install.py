@@ -38,15 +38,30 @@ def replace_caddy(data,mode,uid,gid):
 def link(path,target):
     temp=path.with_name(path.name+'.v72-tmp')
     os.symlink(target,temp); os.replace(temp,path)
-def response(url,host=None,expected=200):
+def response(url,host=None,expected=200,timeout=15):
     req=urllib.request.Request(url,headers={'Host':host} if host else {})
     try:
-        with urllib.request.urlopen(req,timeout=15) as res:
+        with urllib.request.urlopen(req,timeout=timeout) as res:
             status=res.status; data=res.read(); headers=res.headers
     except urllib.error.HTTPError as e:
         status=e.code; data=e.read(); headers=e.headers
     require(status==expected,f'HTTP_EXPECTED_{expected}_GOT_{status}: {url}')
     return data,headers
+
+def wait_relay_ready(timeout=30,interval=0.5):
+    # Type=simple reports restart completion before Node opens its socket.
+    deadline=time.monotonic()+timeout
+    last=None
+    while time.monotonic()<deadline:
+        try:
+            response('http://127.0.0.1:3301/health',timeout=min(2,max(0.01,deadline-time.monotonic())))
+            print('RELAY_READY=PASS',flush=True)
+            return
+        except (urllib.error.URLError,TimeoutError,RuntimeError,OSError) as error:
+            last=error
+            time.sleep(min(interval,max(0,deadline-time.monotonic())))
+    status=run('systemctl','show',SERVICE,'-p','ActiveState','-p','SubState','-p','Result','-p','ExecMainStatus')
+    raise RuntimeError('RELAY_NOT_READY: '+str(last)+'; '+status.replace('\n','; '))
 
 def caddy_block(root):
     return f'''\n# DACHA_PAR_V72_PREVIEW_BEGIN\n{HOST} {{
@@ -94,7 +109,7 @@ def rollback(state):
     run('systemctl','daemon-reload');run('systemctl','restart',SERVICE)
     run('caddy','validate','--config',str(CADDY),'--adapter','caddyfile')
     run('systemctl','reload','caddy')
-    response('http://127.0.0.1:3301/health')
+    wait_relay_ready()
     print('ROLLBACK=PASS; SQLite preserved; no DB restore performed')
 
 def install(source,sha,apply):
@@ -167,14 +182,20 @@ def install(source,sha,apply):
     shutil.copyfile(source/'ops/v72-domain-install.py',backup/'installer.py')
     # Last lease check immediately before activation; refuse competing deploys.
     require(digest(CADDY.read_bytes())==EXPECTED_CADDY and str(API.resolve())==OLD_API,'PREACTIVATION_BASELINE_CHANGED')
+    phase='activate_backend'
+    print('ACTIVATION_PHASE='+phase,flush=True)
     try:
         DROP.parent.mkdir(parents=True,exist_ok=True);atomic_bytes(DROP,drop)
         link(API,new_api);link(WEB,new_web)
         run('systemctl','daemon-reload');run('systemctl','restart',SERVICE)
-        response('http://127.0.0.1:3301/health')
+        wait_relay_ready()
         for host in [OLD,HOST]:response('http://127.0.0.1:3301/api/manager/session',host,401)
+        phase='activate_caddy'
+        print('ACTIVATION_PHASE='+phase,flush=True)
         replace_caddy(candidate,state['caddyMode'],state['caddyUid'],state['caddyGid'])
         run('systemctl','reload','caddy')
+        phase='verify_https'
+        print('ACTIVATION_PHASE='+phase,flush=True)
         # ACME may take time. HTTPS is verified with the system trust store, never -k.
         last=None
         for attempt in range(6):
@@ -198,12 +219,22 @@ def install(source,sha,apply):
         (backup/'result.json').write_text(json.dumps({'installed':True,'sourceSha':sha,'https':True,'realMaxDelivery':'NOT_TESTED','browserQA':'PENDING'},indent=2))
         print('DEPLOYED_PREVIEW=YES; HTTPS=PASS; OLD_SITE_PRESERVED=YES; REAL_MAX_DELIVERY=NOT_TESTED; BROWSER_QA=PENDING')
         print('ROLLBACK: sudo python3 '+str(backup/'installer.py')+' --rollback '+str(backup/'state.json'))
-    except Exception:
-        rollback(state)
-        raise
+    except Exception as error:
+        failure={'phase':phase,'error':str(error),'rollback':'PENDING'}
+        (backup/'failure.json').write_text(json.dumps(failure,indent=2))
+        print('ACTIVATION_FAILED_PHASE='+phase+'; '+str(error),flush=True)
+        try:
+            rollback(state)
+        except Exception as rollback_error:
+            failure.update(rollback='FAILED',rollbackError=str(rollback_error))
+            (backup/'failure.json').write_text(json.dumps(failure,indent=2))
+            raise RuntimeError('ACTIVATION_FAILED: '+str(error)+'; ROLLBACK_FAILED: '+str(rollback_error)+'; STATE='+str(backup/'state.json')) from error
+        failure['rollback']='PASS'
+        (backup/'failure.json').write_text(json.dumps(failure,indent=2))
+        raise RuntimeError('ACTIVATION_FAILED['+phase+']: '+str(error)+'; ROLLBACK=PASS') from error
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--source',type=Path);p.add_argument('--source-sha');p.add_argument('--apply',action='store_true');p.add_argument('--rollback',type=Path)
+    p=argparse.ArgumentParser();p.add_argument('--source',type=Path);p.add_argument('--source-sha');p.add_argument('--apply',action='store_true');p.add_argument('--rollback',type=Path);p.add_argument('--recover-v72-attempt',action='store_true')
     a=p.parse_args()
     with open('/run/lock/dachapar-v72.lock','w') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -211,6 +242,17 @@ def main():
             require(os.geteuid()==0,'ROOT_REQUIRED');rollback(json.loads(a.rollback.read_text()))
         else:
             require(a.source and a.source_sha,'SOURCE_AND_SHA_REQUIRED')
+            if a.recover_v72_attempt:
+                require(a.apply,'RECOVERY_REQUIRES_APPLY')
+                require(os.geteuid()==0,'ROOT_REQUIRED')
+                require(re.fullmatch('[0-9a-f]{40}',a.source_sha),'INVALID_SOURCE_SHA')
+                verify_source(a.source.resolve(),a.source_sha)
+                prior=BACKUPS/'20261015-cc583a2c4665-v72'/'state.json'
+                require(prior.is_file(),'PRIOR_ATTEMPT_STATE_MISSING')
+                state=json.loads(prior.read_text())
+                require(state['sourceSha']=='cc583a2c46651f617609c79d099f8e3e324a6431','PRIOR_ATTEMPT_SHA_MISMATCH')
+                print('RECOVER_PREVIOUS_ATTEMPT=START',flush=True)
+                rollback(state)
             install(a.source.resolve(),a.source_sha,a.apply)
 if __name__=='__main__':
     try:main()

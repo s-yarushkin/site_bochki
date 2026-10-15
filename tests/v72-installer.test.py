@@ -1,7 +1,8 @@
 """Installer transaction tests on temporary files; systemctl/Caddy/HTTP stubbed.
 These prove backup/rollback safety, not live server readiness or Caddy syntax.
 """
-import importlib.util, json, sqlite3, tempfile, unittest
+import importlib.util, json, sqlite3, tempfile, unittest, urllib.error
+import http.server, socket, threading, time
 from pathlib import Path
 from unittest.mock import patch
 spec=importlib.util.spec_from_file_location('installer',Path(__file__).resolve().parents[1]/'ops/v72-domain-install.py')
@@ -64,4 +65,42 @@ class InstallerSafety(unittest.TestCase):
   state=json.loads(next(m.BACKUPS.glob('*/state.json')).read_text())
   with self.assertRaisesRegex(RuntimeError,'ROLLBACK_CADDY_CONCURRENT_CHANGE'):m.rollback(state)
   self.assertEqual(self.caddy.read_bytes(),b'new neighboring route')
+ def test_readiness_retries_connection_refused(self):
+  with patch.object(m,'response',side_effect=[urllib.error.URLError(ConnectionRefusedError(111,'Connection refused')),('ok',{})]) as request,patch.object(m.time,'sleep'):
+   m.wait_relay_ready()
+   self.assertEqual(request.call_count,2)
+ def test_real_delayed_http_listener_becomes_ready(self):
+  with socket.socket() as sock:
+   sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
+  created=[];attempts=[]
+  class Health(http.server.BaseHTTPRequestHandler):
+   def do_GET(self):self.send_response(200);self.end_headers();self.wfile.write(b'{"ok":true}')
+   def log_message(self,*args):pass
+  def start_later():
+   time.sleep(0.07)
+   httpd=http.server.ThreadingHTTPServer(('127.0.0.1',port),Health);created.append(httpd);httpd.serve_forever(poll_interval=0.01)
+  worker=threading.Thread(target=start_later);worker.start()
+  # The global setUp mock is bypassed here: this test uses actual TCP and HTTP.
+  self.http.stop()
+  real_response=m.response
+  def local_health(url,**kwargs):
+   attempts.append(1);return real_response('http://127.0.0.1:'+str(port)+'/health',**kwargs)
+  try:
+   with patch.object(m,'response',side_effect=local_health):m.wait_relay_ready(timeout=2,interval=0.01)
+   self.assertGreater(len(attempts),1)
+  finally:
+   worker.join(timeout=0.01)
+   if created:created[0].shutdown();created[0].server_close()
+   worker.join(timeout=2)
+   self.http.start()
+ def test_permanent_refusal_reports_service_status(self):
+  with patch.object(m,'response',side_effect=urllib.error.URLError('connection refused')):
+   with self.assertRaisesRegex(RuntimeError,'RELAY_NOT_READY'):m.wait_relay_ready(timeout=0.002,interval=0.001)
+ def test_rollback_error_does_not_hide_activation_error(self):
+  with patch.object(m,'wait_relay_ready',side_effect=[RuntimeError('new backend unavailable'),RuntimeError('old backend unavailable')]):
+   with self.assertRaisesRegex(RuntimeError,'ACTIVATION_FAILED: new backend unavailable; ROLLBACK_FAILED: old backend unavailable'):
+    m.install(self.source,self.sha,True)
+  failure=json.loads(next(m.BACKUPS.glob('*/failure.json')).read_text())
+  self.assertEqual(failure['phase'],'activate_backend')
+  self.assertEqual(failure['error'],'new backend unavailable');self.assertEqual(failure['rollback'],'FAILED')
 if __name__=='__main__':unittest.main()
