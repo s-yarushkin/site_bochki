@@ -56,7 +56,7 @@ test('S11 success only after MAX receipt; independent privacy and consent docume
 });
 test('S12 indicative price is explicitly not an offer',()=>assert.match(html,/Расчёт ориентировочный, не является офертой/));
 
-test('S13 protected preview noindex and honeypot',()=>{assert.match(html,/name="robots" content="noindex,nofollow"/);assert.match(html,/name="website" tabindex="-1"/);assert.match(css,/\.honeypot/);});
+test('S13 public homepage indexability and honeypot',()=>{assert.match(html,/name="robots" content="index,follow,max-image-preview:large"/);assert.match(html,/name="website" tabindex="-1"/);assert.match(css,/\.honeypot/);});
 
 test('S14 callback phone-only; quote four channels all tied to mobile number',()=>{
   for(const choice of ['phone','telegram','max','whatsapp'])assert.match(html,new RegExp('value="'+choice+'"'));

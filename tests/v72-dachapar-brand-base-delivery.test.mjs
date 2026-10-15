@@ -9,7 +9,7 @@ const html=read('index.html'),js=read('assets/js/app.js'),css=read('assets/css/d
 const privacy=read('privacy.html'),consent=read('consent.html'),requisites=read('requisites.html');
 
 test('V7.2 visible identity is Dacha Par; company appears only in linked legal documents',()=>{
-  assert.match(html,/<title>Дача Пар — готовые бани для дачи<\/title>/);
+  assert.match(html,/<title>Готовые бани с доставкой в Москву и области — Дача Пар<\/title>/);
   assert.match(html,/>ДАЧА ПАР<\/strong>/);
   assert.match(html,/href="requisites\.html">Юридическая информация<\/a>/);
   assert.match(html,/href="privacy\.html">Политика обработки персональных данных<\/a>/);

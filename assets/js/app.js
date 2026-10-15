@@ -1,3 +1,4 @@
+import {readLandingModel} from './landing-model.js';
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
@@ -191,7 +192,7 @@ function syncWeatherPhotoFrames(weather){
   $('#previewImage').dataset.slot=weatherPhotoSlot(activeSlot,weather);
   syncMedia();
 }
-function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
+function initBuilder(){const landing=readLandingModel(location.search,PRICEBOOK.models);if(landing){state.modelId=landing.id;state.sizeId=Object.keys(landing.sizes)[0];state.step=1;}renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
   if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});

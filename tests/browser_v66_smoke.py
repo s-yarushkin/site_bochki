@@ -218,7 +218,7 @@ try:
     assert legal.status==200 and '1263500003590' in legal.text() and 'ГАРАНТ-ГРУПП' not in legal.text()
     page.locator('.footer-bottom').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT/f'{label}-legal-links-sun.png'))
-    assert page.title()=='Дача Пар — готовые бани для дачи',label
+    assert page.title()=='Готовые бани с доставкой в Москву и области — Дача Пар',label
     assert page.locator('#base .base-kit-list li').count()==17,('BASE_KIT_COUNT',label)
     assert page.locator('#personal .personal-options article').count()==4,('CUSTOM_OPTIONS',label)
     assert page.locator('#delivery .delivery-choice').count()==2,('DELIVERY_MODES',label)
