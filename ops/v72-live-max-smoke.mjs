@@ -8,7 +8,18 @@ import {pathToFileURL,fileURLToPath} from 'node:url';
 import {join} from 'node:path';
 const ORIGIN='https://xn--80aaan1dh9b.xn--p1ai';
 const RUNTIME='/srv/services/garant-bani-relay/releases/20261015-56bf8a1a82d2-v72';
-const RELAY_HASH='f353c358691e341a6a921cb0bccd681d8a97c63b24a2fb10acce06ff9246a8f0';
+// Both values are derived from the same accepted Git blob. Git archive applies
+// core.autocrlf=true on Windows; no arbitrary source normalization is allowed.
+const RELAY_HASHES=new Map([
+ ['f353c358691e341a6a921cb0bccd681d8a97c63b24a2fb10acce06ff9246a8f0','LF'],
+ ['74270a0c4fa6ed599421561d11b927741da9acc3d3fe325fb87635d075ac33bf','CRLF']
+]);
+export function verifyRelayBytes(bytes){
+ const hash=createHash('sha256').update(bytes).digest('hex');
+ const lineEndings=RELAY_HASHES.get(hash);
+ if(!lineEndings)throw Error('ACTIVE_RELAY_HASH_CHANGED actual='+hash);
+ return {hash,lineEndings};
+}
 const ensure=(value,code)=>{if(!value)throw Error(code);};
 function post(port,payload){return new Promise((resolve,reject)=>{
  const req=request({hostname:'127.0.0.1',port,path:'/api/lead',method:'POST',headers:{host:new URL(ORIGIN).host,origin:ORIGIN,'content-type':'application/json'}},res=>{
@@ -57,7 +68,8 @@ async function main(){
  ensure(realpathSync('/proc/'+pid+'/cwd')===active,'RUNNING_RUNTIME_MISMATCH');
  const env=Object.fromEntries(readFileSync('/proc/'+pid+'/environ','utf8').split('\0').filter(Boolean).map(line=>{const i=line.indexOf('=');return [line.slice(0,i),line.slice(i+1)];}));
  ensure(!env.NODE_EXTRA_CA_CERTS||env.NODE_EXTRA_CA_CERTS===process.env.NODE_EXTRA_CA_CERTS,'CA_CONFIGURATION_MISMATCH');
- ensure(createHash('sha256').update(readFileSync(join(active,'server/garant-bani-relay.mjs'))).digest('hex')===RELAY_HASH,'ACTIVE_RELAY_HASH_CHANGED');
+ const source=verifyRelayBytes(readFileSync(join(active,'server/garant-bani-relay.mjs')));
+ console.log('ACTIVE_RELAY_SOURCE=PASS; lineEndings='+source.lineEndings+'; sha256='+source.hash);
  const result=await runSmoke({runtimeDirectory:active,env});
  console.log('LIVE_MAX_SMOKE='+JSON.stringify(result));
  console.log('MAX_API_ACCEPTED=PASS; PRODUCTION_SQLITE_WRITES=0; MANAGER_RECEIPT=NOT_VERIFIED');

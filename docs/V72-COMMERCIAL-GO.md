@@ -14,10 +14,16 @@ One callback with consent edition 2026-10-14 is submitted to the isolated listen
 
 Success means: actual active credentials and MAX destination accepted one diagnostic through the delivery adapter, isolated HTTP/store status succeeded and duplicate suppression succeeded. It does not mean a human manager read the message, nor that a real customer lead was written into production SQLite. A failure can occur after the server accepted the message; do not rerun blindly.
 
-Local checks: complete Node suite 143/143 PASS; no actual MAX message sent by local tests.
+Local checks: complete Node suite 144/144 PASS; no actual MAX message sent by local tests.
 
 ## Content facts still required
 
 The current pricebook explicitly retains `CATALOG_DRAFT`; amounts remain preliminary and must not be silently promoted or changed. Public legal pages still describe themselves as a draft for operator approval and leave actual retention/processing arrangements to confirmation. Owner GO must not be converted into invented facts about retention, processors or completed notifications. These content facts require the operator's actual information before removing draft statements. No claim of legal compliance is made here.
 
 Indexing remains blocked in HTML, Caddy response headers and robots.txt; changing only one layer would not enable crawling. A subsequent scoped release must handle these together, add canonical and sitemap, keep manager/API paths out of indexing and preserve the old site. Paid advertising has no supplied campaign or budget and is not launched.
+
+## Source hash diagnostic correction
+
+An owner-run smoke stopped at `ACTIVE_RELAY_HASH_CHANGED`, before calling the MAX delivery function, so that run sent no message. The accepted Git blob has LF SHA256 `f353c358691e341a6a921cb0bccd681d8a97c63b24a2fb10acce06ff9246a8f0`. Reproducing `git -c core.autocrlf=true archive` from the same installed commit yields CRLF SHA256 `74270a0c4fa6ed599421561d11b927741da9acc3d3fe325fb87635d075ac33bf`; converting those CRLF bytes back to LF reproduces the exact accepted hash. The live file's hash has not yet been obtained.
+
+The corrected gate accepts only those two exact byte sequences, prints which matched, and rejects any other hash while reporting it. This does not modify the live relay or bypass a content mismatch. A local regression verifies both accepted variants and rejection of changed source.
