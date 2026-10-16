@@ -12,7 +12,22 @@ const managerCss=readFileSync(new URL('../assets/css/manager.css',import.meta.ur
 const systemd=readFileSync(new URL('../ops/systemd/garant-bani-relay.service',import.meta.url),'utf8');
 
 
-test('S01 main publicly visible phone or tel link absent',()=>{assert.doesNotMatch(html,/\+7\s?9\d{2}\s?\d{3}/);assert.doesNotMatch(html,/href\s*=\s*["']tel:/i);});
+test('S01 manager telephone CTA is visible in header, footer and mobile without removing callback',()=>{
+  assert.equal((html.match(/href="tel:\+79517349999"/g)||[]).length,3);
+  assert.match(html,/\+7 \(951\) 734-99-99/);
+  assert.match(html,/class="mobile-cta mobile-cta-dual"/);
+  assert.match(html,/data-flow="callback"/);
+  const ctaCss=readFileSync(new URL('../assets/css/dachapar-v72.css',import.meta.url),'utf8');
+  assert.match(ctaCss,/mobile-cta\.mobile-cta-dual/);
+});
+test('S01b SEO entry pages let visitors call the manager directly',()=>{
+  for(const path of ['bani/index.html','bani/kvadro/index.html','bani/parus/index.html','bani/viking/index.html','bani/kvadro-haus/index.html','dostavka-i-ustanovka/index.html','voprosy/index.html','kontakty/index.html']){
+    const seo=readFileSync(new URL('../'+path,import.meta.url),'utf8');
+    assert.equal((seo.match(/href="tel:\+79517349999"/g)||[]).length,path==='kontakty/index.html'?3:2,path);
+  }
+  const generator=readFileSync(new URL('../scripts/build-search-pages.mjs',import.meta.url),'utf8');
+  assert.match(generator,/tel:\+79517349999/);
+});
 test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.me\/|max\.ru\/|vk\.ru\/)/));
 test('S03 only designated same-origin lead endpoint in forms',()=>{assert.match(script,/fetch\(new URL\('api\/lead',document\.baseURI\)/);assert.doesNotMatch(script,/XMLHttpRequest|sendBeacon|localStorage|sessionStorage/);});
 test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/Цена «от» — ориентировочная стоимость/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
