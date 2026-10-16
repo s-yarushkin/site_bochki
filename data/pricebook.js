@@ -24,8 +24,9 @@ const models=Object.entries(CATALOG.models).map(([id,model])=>({
   widthM:model.widthM??null,sizeKind:model.sizeKind
 }));
 const options=Object.entries(CATALOG.options).map(([id,option])=>({
-  id,name:option.label,price:option.unitPriceRub*option.quantity,
+  id,name:option.label,price:Number.isSafeInteger(option.unitPriceRub)?option.unitPriceRub*option.quantity:null,
   unitPriceRub:option.unitPriceRub,quantity:option.quantity,unit:option.unit,
+  priceStatus:option.priceStatus??'PRELIMINARY',
   category:steamOptions.has(id)?'steam':'comfort',
   benefit:option.requiresTechnicalApproval?'Требуется согласование условий установки':'Дополнение по каталогу',
   discountEligible:false,requiresTechnicalApproval:option.requiresTechnicalApproval===true,
