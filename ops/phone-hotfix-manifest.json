@@ -1,0 +1,18 @@
+{
+  "expectedTarget": "/srv/sites/dachapar-preview/releases/20261015-search-286ab17b3a02",
+  "baseline": {
+    "index.html": "2e1bb40ba7616ae63010cf7786293d2e9946f019075392027b66363c9290de16",
+    "assets/js/app.js": "33fac7b8d264d5666ef1162de5f9bed684af5ab824da7581152e0ad2013a5977",
+    "assets/js/landing-model.js": "185ef09669ab79e0a0965884481b594823cec4d429a202bef04318e8ce0834ca",
+    "llms.txt": "54b270ea0918125d8f5554628fc0a29905bc543553dd5128915e8a3a6689d555",
+    "sitemap.xml": "b3d7d128ea2b68f87d102eb301eaa254fec587c8bb4c7b2ec900cac66358a3d6",
+    "bani/index.html": "2ca53deefbe77c8006383a4d8eb2d8d32f458a739639cb1908dbeb4975b4f74e",
+    "bani/kvadro/index.html": "e3a87571d14e629651e5e9da241cf586640a71b935823d392201cc8f986b8416",
+    "bani/parus/index.html": "d4f26cca57fee8a15d28babd2a49f6152f483ca9b1afc1440ad224423f9393d8",
+    "bani/viking/index.html": "420368fbe2c2f153026140430412b0e2576350897620ba24cdec6b4454594db4",
+    "bani/kvadro-haus/index.html": "a546749b2d0e20269a9a29569fb1fccb1c9c2d6d943cc82ce847c232449e64a3",
+    "dostavka-i-ustanovka/index.html": "fe73e1cea1923412a91e08bfd163d2edd684e21cfbfb69dd23ee142bdab06235",
+    "voprosy/index.html": "54aa8b40903f50c7b72309ff3b7d153f6e1950916391e33ed2969d3bd81b7bc3",
+    "kontakty/index.html": "40ca548785499a67ff7cb984ef718254efde40dbb7c8091546fce80f7c86e34d"
+  }
+}

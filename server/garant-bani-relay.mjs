@@ -1,3 +1,4 @@
+import {CONSENT_VERSION,CONSENT_METHOD,CONSENT_NOTICE_ID,CONSENT_DOCUMENT_SHA256} from '../assets/js/lead-consent.js';
 import {createServer} from 'node:http';
 import {readFileSync,realpathSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
@@ -6,7 +7,8 @@ import {openLeadStore} from './lead-store.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
-import {CATALOG} from '../data/pricebook.js';
+import {CATALOG,PRICEBOOK} from '../data/pricebook.js';
+import {LEGACY_V72_PRICEBOOK} from '../data/legacy-v72-pricebook.js';
 import {LEGACY_V64_PRICEBOOK} from '../data/legacy-v64-pricebook.js';
 
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
@@ -36,9 +38,11 @@ export function validateBaniLead(value) {
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
   if(value.consent!==true) throw new Error('CONSENT_REQUIRED');
-  if(value.consentVersion!==undefined && value.consentVersion!=='2026-10-12')throw new Error('CONSENT_VERSION_UNSUPPORTED');
-  const name=field(value.name,80);
-  if((name && name.length<2) || (value.flow==='quote' && name.length<2)) throw new Error('INVALID_NAME');
+  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');
+  const submitConsent=value.consentVersion===CONSENT_VERSION;
+  if(submitConsent&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');
+  const name=field(value.name??'',80);
+  if(!submitConsent&&((name && name.length<2) || (value.flow==='quote' && name.length<2))) throw new Error('INVALID_NAME');
   const digits=field(value.phone,32).replace(/\D/g,'');
   const mobile=digits.length===10 && digits.startsWith('9')?'7'+digits:
     digits.length===11 && digits.startsWith('8')?'7'+digits.slice(1):digits;
@@ -55,13 +59,13 @@ export function validateBaniLead(value) {
   if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
   const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
-    consentEvidence:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
+    consentEvidence:submitConsent?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
   if(value.flow==='quote') {
-    const district=field(value.district,140);
-    if(district.length<2) throw new Error('INVALID_DISTRICT');
+    const district=field(value.district??'',140);
+    if(!submitConsent&&district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
-    const {modelId,sizeId,optionIds,bundleId,finish,roof}=value.configuration;
+    const {modelId,sizeId,optionIds,bundleId,finish,roof,pricebookVersion}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
     // A V6.4 tab opened before the rolling deployment has no consentVersion.
@@ -71,11 +75,17 @@ export function validateBaniLead(value) {
     const names=legacy?oldFinishLabels:finishLabels;
     if(finish!==undefined && !Object.hasOwn(names,finish)) throw new Error('INVALID_FINISH');
     if(roof!==undefined && !Object.hasOwn(roofLabels,roof)) throw new Error('INVALID_ROOF');
-    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},legacy?LEGACY_V64_PRICEBOOK:undefined);
+    // Old V6.6/V7.2 clients send no price version. Preserve their historic quote.
+    // New clients name a known server-owned book; client-supplied amounts are ignored.
+    const selectedBook=legacy?LEGACY_V64_PRICEBOOK:
+      pricebookVersion===undefined||pricebookVersion===LEGACY_V72_PRICEBOOK.version?LEGACY_V72_PRICEBOOK:
+      pricebookVersion===PRICEBOOK.version?PRICEBOOK:null;
+    if(!selectedBook)throw new Error('PRICEBOOK_VERSION_UNSUPPORTED');
+    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},selectedBook);
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
-    lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,
+    lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,pricebookVersion:estimate.pricebookVersion,
       finishId:finish??null,finishName:finish===undefined?'Не указана':names[finish],
       roofId:roof??null,roofName:roof===undefined?'Не указана':roofLabels[roof]};
     lead.estimate=estimate;
@@ -85,7 +95,7 @@ export function validateBaniLead(value) {
 
 export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   const text=[
-    'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
+    ['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
     ...(createdAt?['Создана: '+createdAt]:[]),
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
@@ -114,14 +124,14 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
       'Версия прайса: '+q.pricebookVersion+' ('+q.pricebookStatus+')',
       '',
       'УЧАСТОК',
-      'Район: '+lead.district,
+      'Район: '+(lead.district||'Не указан'),
       'Основание: '+bases[lead.base],
       'Подъезд: '+accessNames[lead.access]
     );
   }
   if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
-  text.push('Источник: сайт Гарант Бани');
+  text.push(['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
   return text.join('\n');
 }
 
@@ -136,14 +146,29 @@ export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   try{parsedOrigin=new URL(allowedOrigin);}catch{throw new Error('UNSAFE_ORIGIN');}
   if(parsedOrigin.protocol!=='https:'||parsedOrigin.origin!==allowedOrigin||
      parsedOrigin.username||parsedOrigin.password||parsedOrigin.pathname!=='/'||
-     parsedOrigin.search||parsedOrigin.hash||!parsedOrigin.hostname.includes('.'))throw new Error('UNSAFE_ORIGIN');
+     parsedOrigin.search||parsedOrigin.hash||(!parsedOrigin.hostname.includes('.')||!/^[a-z0-9.-]+$/.test(parsedOrigin.hostname)))throw new Error('UNSAFE_ORIGIN');
   if(!/^\/(?:[a-z0-9-]+\/)*$/.test(siteBasePath))throw new Error('UNSAFE_BASE_PATH');
   if(!/^-?\d+$/.test(chatId||'')) throw new Error('INVALID_CHAT_ID');
   const file=env.MAX_TOKEN_FILE||(env.CREDENTIALS_DIRECTORY?env.CREDENTIALS_DIRECTORY+'/max-token':null);
   if(!file) throw new Error('TOKEN_FILE_NOT_SET');
   const token=String(readSecret(file,'utf8')).trim();
   if(token.length<10)throw new Error('INVALID_TOKEN');
-  return {host,port,allowedOrigin,siteBasePath,chatId,token};
+  const sites=[{origin:allowedOrigin,basePath:siteBasePath}];
+  if(env.ADDITIONAL_SITES_JSON){
+    let additional;
+    try{additional=JSON.parse(env.ADDITIONAL_SITES_JSON);}catch{throw new Error('UNSAFE_ADDITIONAL_SITES');}
+    if(!Array.isArray(additional)||additional.length>4)throw new Error('UNSAFE_ADDITIONAL_SITES');
+    for(const site of additional){
+      let url;
+      try{url=new URL(site.origin);}catch{throw new Error('UNSAFE_ADDITIONAL_SITES');}
+      if(url.protocol!=='https:'||url.origin!==site.origin||(!url.hostname.includes('.')||!/^[a-z0-9.-]+$/.test(url.hostname))||
+         url.username||url.password||url.pathname!=='/'||url.search||url.hash||
+         typeof site.basePath!=='string'||!/^\/(?:[a-z0-9-]+\/)*$/.test(site.basePath)||
+         sites.some(s=>s.origin===site.origin))throw new Error('UNSAFE_ADDITIONAL_SITES');
+      sites.push({origin:site.origin,basePath:site.basePath});
+    }
+  }
+  return {host,port,allowedOrigin,siteBasePath,chatId,token,sites};
 }
 
 export async function deliverBaniLead(lead,config,fetchImpl=fetch,meta={}) {
@@ -165,6 +190,24 @@ function json(res,status,data,extra={}) {
   res.end(JSON.stringify(data));
 }
 
+// Caddy preserves Host while stripping only the legacy /bani-preview prefix.
+// Never use X-Forwarded-Host or Origin to select a site's cookie scope.
+export function resolveRelaySite(config,req){
+  if(!config.sites)return {origin:config.allowedOrigin,basePath:config.siteBasePath};
+  return config.sites.find(site=>new URL(site.origin).host===req.headers.host)??null;
+}
+
+export function createSiteManagerApi({config,store,managerConfig,log=()=>{}}){
+  const routes=new Map(config.sites.map(site=>[site.origin,createManagerApi({store,
+    auth:createManagerAuth({...managerConfig,cookiePath:site.basePath+'api/manager/'}),
+    origin:site.origin,log})]));
+  return async(req,res)=>{
+    const site=resolveRelaySite(config,req);
+    if(!site)return json(res,403,{ok:false,code:'HOST_FORBIDDEN'});
+    return routes.get(site.origin)(req,res);
+  };
+}
+
 export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Date.now(),log=console.error,store=null,managerApi=null}={}) {
   const quotas=new Map();
   const recent=new Map();
@@ -179,7 +222,8 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
     }
     if(req.url!=='/api/lead')return json(res,404,{ok:false,code:'NOT_FOUND'});
     if(req.method!=='POST')return json(res,405,{ok:false,code:'METHOD_NOT_ALLOWED'},{Allow:'POST'});
-    if(req.headers.origin!==config.allowedOrigin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
+    const site=resolveRelaySite(config,req);
+    if(!site||req.headers.origin!==site.origin)return json(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});
     if(!/^application\/json(?:\s*;|\s*$)/i.test(req.headers['content-type']||''))return json(res,415,{ok:false,code:'CONTENT_TYPE_REQUIRED'});
     const clientIp=String(req.headers['x-forwarded-for']||'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown';
     const now=clock();
@@ -256,8 +300,7 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   if(!databasePath||!databasePath.startsWith('/var/lib/garant-bani-relay/'))throw new Error('UNSAFE_DATABASE_PATH');
   const store=openLeadStore(databasePath);
   const managerConfig=loadManagerConfig();
-  const auth=createManagerAuth({...managerConfig,cookiePath:config.siteBasePath+'api/manager/'});
-  const managerApi=createManagerApi({store,auth,origin:config.allowedOrigin,log:console.error});
+  const managerApi=createSiteManagerApi({config,store,managerConfig,log:console.error});
   const server=createServer(createRelayHandler({config,store,managerApi}));
   server.requestTimeout=15000;
   server.headersTimeout=12000;

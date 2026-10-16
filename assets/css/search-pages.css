@@ -1,0 +1,28 @@
+:root{font-family:Arial,Helvetica,sans-serif;color:#20312a;background:#faf8f2;line-height:1.65}*{box-sizing:border-box}body{margin:0}a{color:#22553f;text-underline-offset:4px}a:hover{color:#9b5a27}header,footer,main{max-width:1180px;margin:auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid #d9dfd6}.brand{font-weight:800;font-size:24px;letter-spacing:.06em;text-decoration:none}.brand small{display:block;font-size:10px;letter-spacing:.1em}nav{display:flex;flex-wrap:wrap;gap:12px 22px}main{padding-bottom:64px}h1{font-family:Georgia,serif;font-size:clamp(30px,5vw,52px);line-height:1.15;max-width:960px;margin:28px 0}h2{font-size:clamp(23px,3vw,30px);line-height:1.25;margin-top:42px}h3{font-size:21px}.lead{font-size:19px;max-width:900px}.breadcrumbs{font-size:13px;color:#52685c}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:28px 0}.cards article{padding:24px;border:1px solid #d9dfd6;border-radius:16px;background:#fff}.cards h2,.cards h3{margin-top:10px}.cards img{width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}.model-image{width:100%;max-width:960px;height:auto;max-height:550px;object-fit:contain;background:#e8eee8;border-radius:16px}figure{margin:28px 0}figcaption,.note{font-size:14px;color:#52685c}.button{display:inline-block;background:#203e31;color:#fff;text-decoration:none;border-radius:7px;padding:12px 20px;font-weight:700}.button:hover{background:#315b47;color:#fff}.table-scroll{max-width:100%;overflow:auto;border:1px solid #d9dfd6;border-radius:10px}table{border-collapse:collapse;width:100%;text-align:left}caption{text-align:left;padding:16px;font-weight:700}th,td{padding:13px 16px;border-top:1px solid #d9dfd6;vertical-align:top}thead{background:#e8eee8}.kit{columns:2;column-gap:44px}.kit li{break-inside:avoid;margin-bottom:9px}.region-nav{padding:20px;background:#e8eee8;border-radius:12px}.next-step{background:#e8eee8;border-radius:16px;padding:24px;margin-top:48px}.next-step h2{margin-top:0}.next-step a{margin:8px 14px 8px 0}footer{border-top:1px solid #d9dfd6;font-size:14px}footer nav{margin:16px 0}p,li,td,th,a{overflow-wrap:anywhere}section[id]{scroll-margin-top:22px}@media(max-width:700px){header{display:block}header nav{margin-top:16px}header,footer,main{padding-left:18px;padding-right:18px}.cards{grid-template-columns:1fr}.kit{columns:1}th,td{padding:11px 9px}h1{font-size:32px}.lead{font-size:17px}.cards article{padding:18px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+/* Click-to-call available on every SEO landing page. */
+header .header-call{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 13px;background:#203e31;color:#fff;border-radius:8px;font-size:14px;font-weight:700;text-align:center;text-decoration:none;white-space:nowrap}
+header .header-call:hover,header .header-call:focus-visible{background:#315b47;color:#fff}
+.next-step .call-button,.call-button{background:#e5ab65;color:#192a20}
+.next-step .call-button:hover,.call-button:hover,.call-button:focus-visible{background:#f2c58a;color:#192a20}
+@media(max-width:700px){header .header-call{margin-top:15px;max-width:100%}}
+
+/* DACHA_PAR_SEO_CTA_PRIORITY_20261016: strong direct-call action on landing pages */
+header a.header-call,
+.next-step a.button.call-button,
+main a.button.call-button {
+  background:#ffc563;
+  color:#182b23;
+  border:2px solid #ffc563;
+  box-shadow:0 4px 16px rgba(70,43,11,.15);
+  font-weight:800;
+}
+header a.header-call:hover,
+.next-step a.button.call-button:hover {
+  background:#ffda91;
+  color:#182b23;
+}
+@media(max-width:700px){
+  header a.header-call{display:flex;width:100%;margin-top:12px}
+  .next-step a.button.call-button{display:block;text-align:center;margin:8px 0}
+}
