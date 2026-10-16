@@ -37,3 +37,25 @@
 .delivery-note.delivery-cost .btn{flex:0 1 auto;max-width:100%;white-space:normal}
 @media(max-width:850px){.base-kit-grid,.personal-layout{grid-template-columns:1fr}.base-kit-intro{max-width:none}.personal-story{padding:0}}
 @media(max-width:600px){.base-kit-list,.personal-options,.delivery-options{grid-template-columns:1fr}.base-kit-list>div:last-child{grid-column:auto}.base-kit-list>div,.personal-options article,.delivery-choice{padding:22px 19px}.base-kit-grid,.personal-layout{gap:19px}.delivery-note.delivery-cost .btn,.base-kit-intro .btn,.personal-story .btn{width:100%}}
+
+/* Direct manager call CTA: responsive, with existing SUN/RAIN color tokens. */
+.header-phone{display:inline-flex;align-items:center;gap:9px;flex:0 0 auto;color:var(--v5-text,var(--ink));text-decoration:none;min-height:44px}
+.header-phone-icon{font-size:23px;line-height:1}
+.header-phone-copy{display:flex;flex-direction:column;gap:2px;white-space:nowrap}
+.header-phone-copy small{font-size:11px;font-weight:600;color:var(--v5-muted,var(--muted))}
+.header-phone-copy strong{font-size:14px;font-weight:800;letter-spacing:-.015em}
+.header-phone:hover .header-phone-copy strong{text-decoration:underline;text-underline-offset:3px}
+.header-phone:focus-visible,.mobile-cta-dual a:focus-visible{outline:3px solid var(--v5-gold,var(--accent));outline-offset:3px;border-radius:8px}
+@media(max-width:1180px){.header-callback{display:none}}
+@media(max-width:850px){
+ .header-phone{margin-left:auto}
+ .menu-toggle{margin-left:0}
+ .mobile-cta.mobile-cta-dual{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+ .mobile-cta-dual .btn{display:flex;align-items:center;justify-content:center;min-width:0;min-height:46px;padding:10px 6px;font-size:14px;text-align:center;white-space:nowrap}
+}
+@media(max-width:550px){
+ .header-inner{gap:8px}
+ .header-phone{width:44px;height:44px;justify-content:center}
+ .header-phone-copy{display:none}
+}
+@media(max-width:360px){.mobile-cta-dual .btn{font-size:13px}}
