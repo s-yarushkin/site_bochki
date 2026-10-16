@@ -42,7 +42,7 @@ test('relay recalculates current version, retains old tabs and rejects an unknow
  assert.throws(()=>validateBaniLead(lead('untrusted-version')),/PRICEBOOK_VERSION_UNSUPPORTED/);
  const fake=lead(PRICEBOOK.version);fake.configuration.total=1;fake.configuration.basePrice=1;
  assert.equal(validateBaniLead(fake).estimate.total,471555);
- assert.match(formatBaniLead(fresh),/471\\s?555/);
+ assert.match(formatBaniLead(fresh),/471\s?555/);
  for(const [modelId,prices] of Object.entries(CATALOG.prices))for(const [sizeId,value] of Object.entries(prices)){
   const input=lead(PRICEBOOK.version);input.configuration={...input.configuration,modelId,sizeId};assert.equal(validateBaniLead(input).estimate.total,value);
  }
