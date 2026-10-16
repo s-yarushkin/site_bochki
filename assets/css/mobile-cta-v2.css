@@ -1,0 +1,159 @@
+/* Dacha Par: customer CTA hierarchy, mobile-first, both SUN and RAIN themes.
+   Deliberately excludes photo/gallery triggers, filters and navigation controls. */
+:root {
+  --dp-action: #ffc563;
+  --dp-action-hover: #ffda91;
+  --dp-action-ink: #182b23;
+  --dp-bar-bg: #18352d;
+  --dp-bar-border: #f1bc65;
+}
+:root[data-theme="rain"] {
+  --dp-action: #ffca6d;
+  --dp-action-hover: #ffe0a1;
+  --dp-action-ink: #132438;
+  --dp-bar-bg: #10253b;
+  --dp-bar-border: #eeb770;
+}
+
+/* A single, recognizable conversion color for customer-facing primary actions. */
+:root .btn.btn-accent,
+:root .catalog .product-card .btn.btn-dark,
+:root .btn.btn-dark[data-flow="callback"],
+:root .btn.header-callback {
+  background: var(--dp-action);
+  border-color: var(--dp-action);
+  color: var(--dp-action-ink);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(71, 42, 6, .14);
+}
+:root[data-theme="rain"] .btn.btn-accent,
+:root[data-theme="rain"] .catalog .product-card .btn.btn-dark,
+:root[data-theme="rain"] .btn.btn-dark[data-flow="callback"],
+:root[data-theme="rain"] .btn.header-callback {
+  background: var(--dp-action);
+  border-color: var(--dp-action);
+  color: var(--dp-action-ink);
+}
+:root .btn.btn-accent:hover,
+:root .catalog .product-card .btn.btn-dark:hover,
+:root .btn.btn-dark[data-flow="callback"]:hover,
+:root .btn.header-callback:hover {
+  background: var(--dp-action-hover);
+  border-color: var(--dp-action-hover);
+  color: var(--dp-action-ink);
+  filter: none;
+}
+
+/* Make both ways of reaching the manager easily recognizable. */
+:root .header-phone-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 23px;
+  background: var(--dp-action);
+  color: var(--dp-action-ink);
+}
+:root .footer-ask a[href="tel:+79517349999"] {
+  background: var(--dp-action);
+  border-color: var(--dp-action);
+  color: var(--dp-action-ink);
+  font-weight: 800;
+}
+:root .footer-ask a[href="tel:+79517349999"]:hover {
+  background: var(--dp-action-hover);
+}
+:root .footer-ask .btn[data-flow="callback"] {
+  border: 1px solid currentColor;
+}
+
+@media (max-width: 850px) {
+  /* The bar is always present from the first viewport, not only at page end. */
+  :root .mobile-cta.mobile-cta-dual {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 55;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    gap: 9px;
+    align-items: center;
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: var(--dp-bar-bg);
+    border-top: 3px solid var(--dp-bar-border);
+    box-shadow: 0 -12px 36px rgba(3, 18, 21, .32);
+  }
+  :root .mobile-cta-dual .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+    padding: 11px 6px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: clamp(12px, 3.6vw, 15px);
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+  }
+  :root .mobile-cta-dual a[href="tel:+79517349999"] {
+    background: var(--dp-action);
+    border: 2px solid var(--dp-action);
+    color: var(--dp-action-ink);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .2);
+  }
+  :root .mobile-cta-dual a[href="tel:+79517349999"]:hover {
+    background: var(--dp-action-hover);
+  }
+  :root .mobile-cta-dual .btn[data-flow="callback"] {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .78);
+    color: #fff;
+    box-shadow: none;
+  }
+  :root .mobile-cta-dual .btn[data-flow="callback"]:hover {
+    background: rgba(255, 255, 255, .13);
+  }
+  :root .mobile-cta-dual .btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: -5px;
+  }
+  body {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  }
+  /* The modal is a top-layer interaction; its fields and actions stay unobstructed. */
+  body:has(.contact-dialog[open]) .mobile-cta.mobile-cta-dual {
+    display: none;
+  }
+}
+@media (max-width: 360px) {
+  :root .mobile-cta.mobile-cta-dual {gap: 7px;padding-inline: 9px;}
+  :root .mobile-cta-dual .btn {font-size: 12px;}
+}
+@media (prefers-reduced-motion: reduce) {
+  :root .mobile-cta-dual .btn {animation: none;transition: none;}
+}
+
+/* SEO landing pages: direct manager call outranks neutral navigation. */
+header a.header-call,
+.next-step a.button.call-button,
+main a.button.call-button {
+  background: var(--dp-action);
+  color: var(--dp-action-ink);
+  border: 2px solid var(--dp-action);
+  box-shadow: 0 4px 16px rgba(70, 43, 11, .15);
+  font-weight: 800;
+}
+header a.header-call:hover,
+.next-step a.button.call-button:hover {
+  background: var(--dp-action-hover);
+  color: var(--dp-action-ink);
+}
+@media (max-width: 700px) {
+  header a.header-call {display:flex;width:100%;margin-top:12px;}
+  .next-step a.button.call-button {display:block;text-align:center;margin:8px 0;}
+}
