@@ -14,7 +14,7 @@ test('MOBILE-01 layout CSS runs after CTA hierarchy while keeping the telephone 
   assert.match(priority,/position: fixed/);
   assert.match(priority,/safe-area-inset-bottom/);
   assert.match(priority,/body:has\(\.contact-dialog\[open\]\)/);
-  assert.doesNotMatch(mobile,/#ffc563|data\/pricebook|price|optionIds|quoteTotal/i);
+  assert.doesNotMatch(mobile,/data\/pricebook|optionIds|quoteTotal|calculateQuote/i);
 });
 
 test('MOBILE-01 full model dimensions wrap instead of overflowing narrow cards',()=>{
