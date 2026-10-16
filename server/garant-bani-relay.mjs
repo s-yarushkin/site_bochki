@@ -6,7 +6,8 @@ import {openLeadStore} from './lead-store.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
-import {CATALOG} from '../data/pricebook.js';
+import {CATALOG,PRICEBOOK} from '../data/pricebook.js';
+import {LEGACY_V72_PRICEBOOK} from '../data/legacy-v72-pricebook.js';
 import {LEGACY_V64_PRICEBOOK} from '../data/legacy-v64-pricebook.js';
 
 const MAX_ORIGIN = 'https://platform-api2.max.ru';
@@ -61,7 +62,7 @@ export function validateBaniLead(value) {
     if(district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
-    const {modelId,sizeId,optionIds,bundleId,finish,roof}=value.configuration;
+    const {modelId,sizeId,optionIds,bundleId,finish,roof,pricebookVersion}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
     // A V6.4 tab opened before the rolling deployment has no consentVersion.
@@ -71,11 +72,17 @@ export function validateBaniLead(value) {
     const names=legacy?oldFinishLabels:finishLabels;
     if(finish!==undefined && !Object.hasOwn(names,finish)) throw new Error('INVALID_FINISH');
     if(roof!==undefined && !Object.hasOwn(roofLabels,roof)) throw new Error('INVALID_ROOF');
-    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},legacy?LEGACY_V64_PRICEBOOK:undefined);
+    // Old V6.6/V7.2 clients send no price version. Preserve their historic quote.
+    // New clients name a known server-owned book; client-supplied amounts are ignored.
+    const selectedBook=legacy?LEGACY_V64_PRICEBOOK:
+      pricebookVersion===undefined||pricebookVersion===LEGACY_V72_PRICEBOOK.version?LEGACY_V72_PRICEBOOK:
+      pricebookVersion===PRICEBOOK.version?PRICEBOOK:null;
+    if(!selectedBook)throw new Error('PRICEBOOK_VERSION_UNSUPPORTED');
+    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},selectedBook);
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
-    lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,
+    lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,pricebookVersion:estimate.pricebookVersion,
       finishId:finish??null,finishName:finish===undefined?'Не указана':names[finish],
       roofId:roof??null,roofName:roof===undefined?'Не указана':roofLabels[roof]};
     lead.estimate=estimate;

@@ -231,7 +231,9 @@ try:
     page.locator('#delivery').screenshot(path=str(SHOT/f'{label}-delivery-options.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     assert 'Квадро 5 м' in page.locator('#bundleTitle').inner_text()
-    assert '490' in page.locator('#bundleNew').inner_text()
+    assert '630' in page.locator('#bundleNew').inner_text()
+    assert '630 000' in page.locator('#bundleTitle').inner_text().replace('\u00a0',' ')
+    assert page.evaluate('window.__GARANT_DEMO__.quote().pricebookVersion')=='2026-10-16-sheet-site-v1'
     assert page.locator('#bundleOptions li').count()==14
     assert not page.locator('#bundleOptions').get_by_text('₽').count(),'PRICES_LEAKED_IN_KIT_ITEMS'
     assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>getComputedStyle(im).objectFit')=='contain','BUNDLE_PHOTO_CROPPED'
@@ -241,12 +243,12 @@ try:
     page.locator('[data-bundle="summary"]').click()
     state=page.evaluate('window.__GARANT_DEMO__.getState()')
     assert state['modelId']=='kvadro' and state['sizeId']=='500' and len(state['optionIds'])==14,(label,state)
-    assert '490' in page.locator('#quoteTotal').inner_text()
+    assert '630' in page.locator('#quoteTotal').inner_text()
     page.locator('[data-weather="rain"]').click()
     expect(page.locator('html')).to_have_attribute('data-theme','rain')
     hero_rain=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
     assert hero_rain==hero_sun,'Hero geometry changed'
-    assert '490' in page.locator('#quoteTotal').inner_text()
+    assert '630' in page.locator('#quoteTotal').inner_text()
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-rain.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     page.locator('#bundle').screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
@@ -254,10 +256,10 @@ try:
     # all 20 sizes in the shared catalogue: verify 4.5m and Kvadro House 6x5.
     page.locator('[data-catalog-select="kvadro"]').click()
     page.locator('[data-choose-size="450"]').click()
-    assert '330' in page.locator('#quoteTotal').inner_text()
+    assert '465' in page.locator('#quoteTotal').inner_text()
     page.locator('[data-catalog-select="kvadro-house"]').click()
     page.locator('[data-choose-size="6x5"]').click()
-    assert '739' in page.locator('#quoteTotal').inner_text()
+    assert '839' in page.locator('#quoteTotal').inner_text()
     # One of the new manager CTAs carries a topic into the existing callback payload.
     page.locator('#personal [data-flow="callback"]').click()
     assert 'индивидуальную комплектацию' in page.locator('#contactForm [name="comment"]').input_value(),('CUSTOM_TOPIC_NOT_PREFILLED',label)

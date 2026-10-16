@@ -68,7 +68,7 @@ test('V6.7: featured kit presents 14 included options without line item pricing'
   assert.match(app,/\$\('#bundleOptions'\)\.innerHTML=markup/);
   assert.doesNotMatch(app,/\$\('#bundleOptions'\)\.innerHTML=options\.map/);
   assert.match(html,/id="bundleNew"/);
-  assert.match(html,/Готовый комплект за 490 000 ₽/);
+  assert.match(html,/Готовый комплект за 630 000 ₽/);
   // V7.2 explicitly prices transport/handling/assembly and site connections separately.
   assert.match(html,/Доставку, разгрузку, монтаж, основание и внешние подключения рассчитаем отдельно/);
   assert.match(html,/id="delivery"[\s\S]*?разгрузка манипулятором/);

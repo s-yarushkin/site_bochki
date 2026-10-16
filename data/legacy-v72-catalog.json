@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "version": "2026-10-12-v66-owner-review-3",
+  "status": "CATALOG_DRAFT",
+  "currency": "RUB",
+  "source": "Owner-supplied 16-page Garant Grupp PDF, pages 3-14; two electrical 10k lines are owner's provisional estimates; owner-added size-based surcharges and featured bundle corrections on 2026-10-12",
+  "prices": {
+    "kvadro": {
+      "400": 310000,
+      "450": 330000,
+      "500": 370000,
+      "550": 390000,
+      "600": 405000
+    },
+    "parus": {
+      "400": 360000,
+      "450": 385000,
+      "500": 410000,
+      "550": 430000,
+      "600": 445000
+    },
+    "viking": {
+      "400": 335000,
+      "450": 385000,
+      "500": 465000,
+      "550": 490000,
+      "600": 520000
+    },
+    "kvadro-house": {
+      "4x4": 560000,
+      "5x4": 629000,
+      "6x4": 689000,
+      "6x5": 739000,
+      "6x6": 789000
+    }
+  },
+  "models": {
+    "kvadro": {
+      "name": "Квадро",
+      "widthM": 2.1,
+      "sizeKind": "length",
+      "lengthsM": [
+        4,
+        4.5,
+        5,
+        5.5,
+        6
+      ]
+    },
+    "parus": {
+      "name": "Парус",
+      "widthM": 2.4,
+      "sizeKind": "length",
+      "lengthsM": [
+        4,
+        4.5,
+        5,
+        5.5,
+        6
+      ]
+    },
+    "viking": {
+      "name": "Викинг",
+      "widthM": 2.4,
+      "sizeKind": "length",
+      "lengthsM": [
+        4,
+        4.5,
+        5,
+        5.5,
+        6
+      ],
+      "catalogTitle": "Викинг 2.4×2.7 с клиновым входом"
+    },
+    "kvadro-house": {
+      "name": "Квадро Хаус",
+      "sizeKind": "full",
+      "sizes": [
+        "4x4",
+        "5x4",
+        "6x4",
+        "6x5",
+        "6x6"
+      ]
+    }
+  },
+  "finishes": {
+    "body": [
+      {
+        "id": "pine",
+        "name": "Сосна",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "teak",
+        "name": "Тиковое дерево",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "rosewood",
+        "name": "Палисандр",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "larch",
+        "name": "Лиственница",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "redwood",
+        "name": "Красное дерево",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "walnut_wood",
+        "name": "Ореховое дерево",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "iceberg",
+        "name": "Айсберг",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "north_sea",
+        "name": "Северное море",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "scandinavian_gray",
+        "name": "Скандинавский серый",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "oak_dufa",
+        "name": "Орех (DUFA)",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "licorice",
+        "name": "Лакрица",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "ral_7024",
+        "name": "RAL 7024",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      }
+    ],
+    "roof": [
+      {
+        "id": "green",
+        "name": "Зелёный",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "brown",
+        "name": "Коричневый",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "red",
+        "name": "Красный",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "gray",
+        "name": "Серый",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      }
+    ]
+  },
+  "options": {
+    "stove_guard": {
+      "label": "Ограждение печи",
+      "unitPriceRub": 5000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p12"
+    },
+    "aspen_backrests": {
+      "label": "Подспинники из осины, комплект",
+      "unitPriceRub": 2500,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "catalog-p13"
+    },
+    "folding_table": {
+      "label": "Откидной стол",
+      "unitPriceRub": 3000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p14"
+    },
+    "bench_chest_spruce": {
+      "label": "Лавка-рундук из ели",
+      "unitPriceRub": 2000,
+      "quantity": 2,
+      "unit": "пог. м",
+      "source": "catalog-p14"
+    },
+    "glass_sauna_door_700x1700": {
+      "label": "Стеклянная дверь 700×1700 мм, 3 петли",
+      "unitPriceRub": 9000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p10"
+    },
+    "vent_window_small": {
+      "label": "Форточка 30×30 / 30×40 см",
+      "unitPriceRub": 3000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p11"
+    },
+    "tilt_window_1400x800": {
+      "label": "Окно 1400×800 мм, откидное",
+      "unitPriceRub": 14500,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p11"
+    },
+    "oblivasta_connected": {
+      "label": "Обливное устройство «Обливаста» с подключением",
+      "unitPriceRub": 24000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p12"
+    },
+    "remote_firebox_adjacent": {
+      "label": "Вынос топки в смежное помещение",
+      "unitPriceRub": 10000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p12"
+    },
+    "socket_kit_owner": {
+      "label": "Комплект розеток",
+      "unitPriceRub": 10000,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "owner-estimate-2026-10-12"
+    },
+    "electrical_distribution_owner": {
+      "label": "Разводка электрики",
+      "unitPriceRub": 10000,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "owner-estimate-2026-10-12"
+    },
+    "outdoor_two_lanterns": {
+      "label": "Уличное освещение, 2 фонаря за комплект",
+      "unitPriceRub": 8000,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "catalog-p13"
+    },
+    "led_light_10m": {
+      "label": "LED-подсветка до 10 м",
+      "unitPriceRub": 16000,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "catalog-p13"
+    },
+    "cabinet_single_50x50": {
+      "label": "Шкаф одностворчатый 50×50",
+      "unitPriceRub": 10000,
+      "quantity": 1,
+      "unit": "шт",
+      "source": "catalog-p14"
+    },
+    "electrical_safety_cabinet_temporary_supply": {
+      "label": "Электрощит с автоматической защитой",
+      "unitPriceRub": 15000,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "owner-estimate-2026-10-12",
+      "safetyGate": "Проект/монтаж электриком, проверка допустимости временного разъёмного ввода, защитных устройств, допустимой нагрузки и условий влажности. Обычный удлинитель не обещается; до заключения специалиста опция не считается технически подтверждённой.",
+      "requiresTechnicalApproval": true
+    }
+  },
+  "featuredBundle": {
+    "id": "kvadro-5m-comfort-2026",
+    "modelId": "kvadro",
+    "sizeId": "500",
+    "selectedOptionIds": [
+      "stove_guard",
+      "aspen_backrests",
+      "folding_table",
+      "bench_chest_spruce",
+      "glass_sauna_door_700x1700",
+      "vent_window_small",
+      "tilt_window_1400x800",
+      "remote_firebox_adjacent",
+      "socket_kit_owner",
+      "electrical_distribution_owner",
+      "outdoor_two_lanterns",
+      "led_light_10m",
+      "cabinet_single_50x50",
+      "electrical_safety_cabinet_temporary_supply"
+    ],
+    "discountRub": 0,
+    "removed": "shower-zone-1x1,oblivasta_connected",
+    "temporaryElectricalConnectionStatus": "ENGINEERING_CONFIRMATION_REQUIRED"
+  },
+  "deliveryIncluded": false,
+  "checks": {
+    "baseRub": 370000,
+    "optionRub": 120000,
+    "knownSubtotalRub": 490000,
+    "previousKnownSubtotalRub": 469000,
+    "confirmationRequired": [
+      "technical compliance of temporary electrical input",
+      "power and leakage protection design",
+      "manufacturer material/option scope",
+      "finish and roof markups",
+      "approval of current price list"
+    ]
+  },
+  "notes": [
+    "DRAFT only; must not be loaded into active V6.4 without synchronized verified frontend/backend release",
+    "Two outdoor lamps together are 8000 RUB in PDF p13, not 8000 each",
+    "Color and roof surcharges are UNSET, not zero",
+    "No old demo progressive 3/5/7/10 percent discounts",
+    "Other offered catalog options should be migrated into the same single data file after validation",
+    "Current owner-revised list excludes Oblivasta from featured bundle because connecting it needs prepared water supply; it remains a separate optional product only.",
+    "Electrical panel 15000 RUB is an owner's proposed price, but feasibility of temporary supply requires an approved design and licensed/qualified installation; never market ordinary extension-lead use as safe or universal.",
+    "Owner increases all base prices except Viking: +20000/+25000/+30000/+35000/+40000 for 4/4.5/5/5.5/6 m lengths, respectively.",
+    "Kvadro 5m: 340000 catalog base +30000 owner uplift = 370000; prior selected additions 129000 -24000 Oblivasta +15000 panel=120000. Sum 490000."
+  ],
+  "pricingAdjustments": {
+    "policy": "owner-instructed model base-price uplift, already included in authoritative prices",
+    "excludedModelIds": [
+      "viking"
+    ],
+    "eligibleModelIds": [
+      "kvadro",
+      "parus",
+      "kvadro-house"
+    ],
+    "byLengthMeters": {
+      "4": 20000,
+      "5": 30000,
+      "6": 40000,
+      "4.5": 25000,
+      "5.5": 35000
+    },
+    "houseInterpretation": "For Kvadro House first dimension in NxM size is taken as product length; 6x4, 6x5, 6x6 all +40000. Confirm axis naming with manufacturer prior to publishing.",
+    "calculatedSurchargesByModelSize": {
+      "kvadro": {
+        "400": 20000,
+        "450": 25000,
+        "500": 30000,
+        "550": 35000,
+        "600": 40000
+      },
+      "parus": {
+        "400": 20000,
+        "450": 25000,
+        "500": 30000,
+        "550": 35000,
+        "600": 40000
+      },
+      "kvadro-house": {
+        "4x4": 20000,
+        "5x4": 30000,
+        "6x4": 40000,
+        "6x5": 40000,
+        "6x6": 40000
+      }
+    },
+    "important": "These deltas are ALREADY reflected in prices. Never add them a second time."
+  }
+}

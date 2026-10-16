@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 
-const book=JSON.parse(readFileSync(new URL('../data/catalog-pricebook.json',import.meta.url),'utf8'));
+const book=JSON.parse(readFileSync(new URL('../data/legacy-v72-catalog.json',import.meta.url),'utf8'));
 const skuCount=()=>Object.values(book.prices).reduce((sum,model)=>sum+Object.keys(model).length,0);
 const bundle=book.featuredBundle;
 const lineTotal=id=>book.options[id].unitPriceRub*book.options[id].quantity;

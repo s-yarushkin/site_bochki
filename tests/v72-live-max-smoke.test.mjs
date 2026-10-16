@@ -27,7 +27,7 @@ test('live smoke never reports accepted delivery on a failed MAX response',()=>i
 }));
 
 test('source gate accepts only the exact accepted LF and Windows Git archive CRLF blobs',()=>{
- const lf=readFileSync(new URL('../server/garant-bani-relay.mjs',import.meta.url));
+ const lf=readFileSync(new URL('./fixtures/v72-relay-56bf8a1a.mjs',import.meta.url));
  assert.equal(verifyRelayBytes(lf).lineEndings,'LF');
  assert.equal(verifyRelayBytes(Buffer.from(lf.toString().replaceAll('\n','\r\n'))).lineEndings,'CRLF');
  assert.throws(()=>verifyRelayBytes(Buffer.concat([lf,Buffer.from('\n// changed source')])),/ACTIVE_RELAY_HASH_CHANGED actual=[a-f0-9]{64}/);

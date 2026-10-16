@@ -343,7 +343,7 @@ function initForms(){
       payload.access=f.elements.access.value;
       payload.configuration={
         modelId:formQuote.modelId,sizeId:formQuote.sizeId,
-        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish,roof:state.roof
+        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish,roof:state.roof,pricebookVersion:formQuote.pricebookVersion
       };
     }
     submit.disabled=true;
