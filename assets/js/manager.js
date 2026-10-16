@@ -158,10 +158,10 @@ function renderDetail(record){
       ['Предварительно',q.total,'total']
     ]){
       const row=el('div','quote-line '+cls);
-      row.append(el('span','',label),el('strong','',(value<0?'−':'')+money(Math.abs(value))));
+      row.append(el('span','',label),el('strong','',value===null?'По запросу':(value<0?'−':'')+money(Math.abs(value))));
       lines.append(row);
     }
-    lines.append(el('small','muted','Доставка, отделка и условия установки требуют отдельного согласования. Цена демонстрационная.'));
+    lines.append(el('small','muted','Доставка, отделка и условия установки требуют отдельного согласования. Для выбранных позиций без цены расчёт завершает менеджер.'));
     const dd=$('#propertyInfo');dd.replaceChildren();
     pair(dd,'Район доставки',lead.district);
     pair(dd,'Основание',bases[lead.base]||lead.base);
