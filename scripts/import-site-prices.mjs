@@ -41,6 +41,7 @@ export function updateStaticPrices(book,html){
   .replace(/(id="quoteTotal">)[^<]+/,(_,prefix)=>prefix+money(book.prices.kvadro['500']));
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+  throw new Error('OBSOLETE_PRICE_IMPORT_BLOCKED: use approved V73 public snapshot; never re-import the old C column');
  const source=JSON.parse(readFileSync(resolve(ROOT,process.argv[2]??'data/source/site-prices-2026-10-16.json'),'utf8'));
  const baseline=JSON.parse(readFileSync(resolve(ROOT,'data/legacy-v72-catalog.json'),'utf8'));
  const book=importSitePrices(source,baseline);
