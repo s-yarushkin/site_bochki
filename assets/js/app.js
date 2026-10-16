@@ -82,7 +82,7 @@ function renderBundle(){
   const quote=calculateQuote({modelId:bundle.modelId,sizeId:bundle.sizeId,optionIds:bundle.optionIds,bundleId:bundle.id});
   $('#bundleOld').textContent=money(quote.beforeDiscount);
   $('#bundleNew').textContent=money(quote.total);
-  $('#bundleSaving').textContent=quote.discount>0?`Расчётная разница ${money(quote.discount)}`:'Дополнительные опции включены в сумму';
+  $('#bundleSaving').textContent=quote.quoteRequired?'Стоимость отдельных опций уточнит менеджер':quote.discount>0?`Расчётная разница ${money(quote.discount)}`:'Дополнительные опции включены в сумму';
   $$('[data-bundle]').forEach(btn=>btn.addEventListener('click',()=>{
     state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=btn.dataset.bundle==='summary'?6:3;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
@@ -111,7 +111,7 @@ function renderSummary(){
   const q=quote(),model=getModel(state.modelId);
   $('#previewModelName').textContent=`${model.name} · ${sizeLabel(model,state.sizeId)}`;
   $('#quoteTotal').textContent=money(q.total);
-  const chosen=q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт':''}`:'Пока без дополнительных опций';
+  const chosen=q.quoteRequired?`${q.options.length} опций · стоимость уточнит менеджер`:q.options.length?`${q.options.length} дополнительных опций${q.bundleApplied?' · комплект Комфорт':''}`:'Пока без дополнительных опций';
   $('#previewOptionsText').textContent=chosen;
   $('#quoteBreakdown').innerHTML=priceLine('Готовая баня',money(q.basePrice))+priceLine(`Дополнения (${q.options.length})`,money(q.optionsSubtotal))+(q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):'');
   $('#quoteDetails').innerHTML=q.options.length?q.options.map(o=>`<div class="breakdown-line"><span>${escaped(o.name)}</span><b>${money(o.price)}</b></div>`).join(''):'<p class="tiny muted">Дополнительные опции пока не выбраны.</p>';
@@ -140,9 +140,9 @@ function renderSummary(){
     btn.classList.toggle('active',selected);btn.setAttribute('aria-pressed',String(selected));
   });
 }
-function optionCard(o){const selected=state.optionIds.includes(o.id);return `<button type="button" class="option-row ${selected?'selected':''}" data-option="${o.id}" aria-pressed="${selected}"><span class="option-check" aria-hidden="true">${selected?'✓':''}</span><span class="option-main"><strong>${escaped(o.name)}</strong><small>${escaped(o.benefit)}</small></span><span class="option-cost">+${money(o.price)}</span></button>`;}
+function optionCard(o){const selected=state.optionIds.includes(o.id);return `<button type="button" class="option-row ${selected?'selected':''}" data-option="${o.id}" aria-pressed="${selected}"><span class="option-check" aria-hidden="true">${selected?'✓':''}</span><span class="option-main"><strong>${escaped(o.name)}</strong><small>${escaped(o.benefit)}</small></span><span class="option-cost">${o.price===null?'По запросу':'+'+money(o.price)}</span></button>`;}
 function renderOptions(category){const chosen=PRICEBOOK.options.filter(o=>o.category===category);return `<div class="options-grid">${chosen.map(optionCard).join('')}</div><p class="builder-insight">Стоимость ориентировочная. Возможность установки каждой опции уточним при заказе.</p>`;}
-function renderQuoteTable(){const q=quote();return `<div class="summary-table"><div class="quote-row"><b>${escaped(q.modelName)} · ${sizeLabel(getModel(state.modelId),state.sizeId)}</b><b>${money(q.basePrice)}</b></div>${q.options.map(o=>priceLine(o.name,money(o.price))).join('')}${q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):''}<div class="quote-row"><b>Предварительно</b><b>${money(q.total)}</b></div></div><p class="builder-insight">Это пример предварительного расчёта, а не коммерческое предложение. Доставку, основание и подключения рассчитаем отдельно.</p><button type="button" class="btn btn-accent btn-full" data-flow="quote">Получить расчёт для моего участка ↗</button>`;}
+function renderQuoteTable(){const q=quote();return `<div class="summary-table"><div class="quote-row"><b>${escaped(q.modelName)} · ${sizeLabel(getModel(state.modelId),state.sizeId)}</b><b>${money(q.basePrice)}</b></div>${q.options.map(o=>priceLine(o.name,money(o.price))).join('')}${q.discount?priceLine('Корректировка предварительной суммы',`−${money(q.discount)}`,'discount'):''}<div class="quote-row"><b>Предварительно</b><b>${money(q.total)}</b></div></div><p class="builder-insight">${q.quoteRequired?'Выбранные позиции с ценой по запросу рассчитаем вместе с менеджером. ':''}Это предварительная стоимость, не коммерческое предложение. Доставку, основание и подключения рассчитаем отдельно.</p><button type="button" class="btn btn-accent btn-full" data-flow="quote">Получить расчёт для моего участка ↗</button>`;}
 function renderStepContent(){const model=getModel(state.modelId),step=state.step;let body='';
   if(step===0){body=`<h3 class="builder-title">Какая баня станет вашей?</h3><p class="builder-help">Выберите модель. Потом подберём размер и дополнения.</p><div class="choice-grid">${PRICEBOOK.models.map(m=>choice({title:m.name,detail:m.subtitle,selected:state.modelId===m.id,attributes:`data-choose-model="${m.id}"`,icon:'⌂'})).join('')}</div>`;}
   if(step===1){body=`<h3 class="builder-title">Какой размер нужен?</h3><p class="builder-help">Варианты размеров для модели ${escaped(model.name)}. Доступность уточним при обращении.</p><div class="size-choices">${Object.keys(model.sizes).map(sz=>choice({title:sizeLabel(model,sz),detail:sizeHint(model),price:money(model.sizes[sz]),selected:state.sizeId===sz,attributes:`data-choose-size="${sz}"`,icon:'↔'})).join('')}</div>`;}

@@ -68,7 +68,8 @@ test('search page generation is reproducible from the shared catalog and accepte
 
 test('public commercial pages and AI index contain no company phone or internal priority language',()=>{
  for(const p of manifest.pages){
-  const html=read(p.file);assert.doesNotMatch(html,/tel:|"telephone"|293[- ]?46|[Пп]риоритет/);
+  const html=read(p.file);assert.doesNotMatch(html,/"telephone"|293[- ]?46|[Пп]риоритет/);
+  if(p.path!=='/')assert.match(html,/href="tel:\+79517349999"/);
   if(p.path!=='/')assert.match(html,/Связаться с менеджером/);
  }
  assert.doesNotMatch(read('llms.txt'),/293[- ]?46|[Пп]риоритет/);

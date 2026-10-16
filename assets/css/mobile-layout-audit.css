@@ -1,0 +1,22 @@
+/* MOBILE-01: mobile layout and touch-target acceptance; intentionally price-neutral.
+   Loaded after customer CTA CSS. Does not change product pricing or visual assets. */
+@media (max-width: 850px) {
+  /* Ensure scroll-to targets and focus are not obscured by the fixed CTA bar. */
+  html { scroll-padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)); }
+  .catalog .catalog-filters .filter { min-height: 44px; }
+  .catalog .gallery-photo-action { min-height: 44px; }
+  .model-gallery .model-gallery-close,
+  .model-gallery .model-gallery-arrow,
+  .model-gallery .model-gallery-scene { min-width: 44px; min-height: 44px; }
+  .builder-photo-controls button { width: 44px; height: 44px; min-width: 44px; }
+  .contact-dialog .dialog-close { width: 44px; height: 44px; }
+  .contact-dialog #submitButton { min-height: 50px; }
+}
+@media (max-width: 550px) {
+  /* Kvadro House lists five dimensions. The previous flex row + nowrap overflowed
+     narrow catalog cards. Show the actual complete text below the price. */
+  .catalog .product-card, .catalog .product-body { min-width: 0; }
+  .catalog .product-meta { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .catalog .product-sizes { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .catalog .product-price { max-width: 100%; }
+}
