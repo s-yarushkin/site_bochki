@@ -1,4 +1,4 @@
-import {readLandingModel} from './landing-model.js';
+import {readLandingModel,readLandingContact} from './landing-model.js';
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
@@ -383,6 +383,8 @@ function initForms(){
       submit.textContent=originalLabel;
     }
   });
+  const landingTopic=readLandingContact(location.search);
+  if(landingTopic!==null)openForm('callback',landingTopic);
 }
 function boot(){initModelGallery();renderCatalog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
 boot();
