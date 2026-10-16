@@ -1,3 +1,4 @@
+import {CONSENT_VERSION,CONSENT_METHOD,CONSENT_NOTICE_ID,CONSENT_DOCUMENT_SHA256} from '../assets/js/lead-consent.js';
 import {createServer} from 'node:http';
 import {readFileSync,realpathSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
@@ -37,9 +38,11 @@ export function validateBaniLead(value) {
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
   if(value.consent!==true) throw new Error('CONSENT_REQUIRED');
-  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14'].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');
-  const name=field(value.name,80);
-  if((name && name.length<2) || (value.flow==='quote' && name.length<2)) throw new Error('INVALID_NAME');
+  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');
+  const submitConsent=value.consentVersion===CONSENT_VERSION;
+  if(submitConsent&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');
+  const name=field(value.name??'',80);
+  if(!submitConsent&&((name && name.length<2) || (value.flow==='quote' && name.length<2))) throw new Error('INVALID_NAME');
   const digits=field(value.phone,32).replace(/\D/g,'');
   const mobile=digits.length===10 && digits.startsWith('9')?'7'+digits:
     digits.length===11 && digits.startsWith('8')?'7'+digits.slice(1):digits;
@@ -56,10 +59,10 @@ export function validateBaniLead(value) {
   if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
   const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
-    consentEvidence:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
+    consentEvidence:submitConsent?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
   if(value.flow==='quote') {
-    const district=field(value.district,140);
-    if(district.length<2) throw new Error('INVALID_DISTRICT');
+    const district=field(value.district??'',140);
+    if(!submitConsent&&district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
     const {modelId,sizeId,optionIds,bundleId,finish,roof,pricebookVersion}=value.configuration;
@@ -92,7 +95,7 @@ export function validateBaniLead(value) {
 
 export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   const text=[
-    lead.consentEvidence?.version==='2026-10-14'?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
+    ['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
     ...(createdAt?['Создана: '+createdAt]:[]),
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
@@ -121,14 +124,14 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
       'Версия прайса: '+q.pricebookVersion+' ('+q.pricebookStatus+')',
       '',
       'УЧАСТОК',
-      'Район: '+lead.district,
+      'Район: '+(lead.district||'Не указан'),
       'Основание: '+bases[lead.base],
       'Подъезд: '+accessNames[lead.access]
     );
   }
   if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
-  text.push(lead.consentEvidence?.version==='2026-10-14'?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
+  text.push(['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
   return text.join('\n');
 }
 

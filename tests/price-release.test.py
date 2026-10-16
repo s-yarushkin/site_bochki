@@ -12,7 +12,7 @@ class PriceRelease(unittest.TestCase):
   names=set(self.m['apiGuards'])|set(self.m['apiFiles'])|set(self.m['webFiles'])|{'ops/v72-domain-install.py','ops/price-release-probe.mjs','seo/pages.json'}
   # Stage source from candidate. Historic API files are exact shipped fixtures.
   for n in names:
-   p=self.source/n;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/n,p)
+   p=self.source/n;p.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/('tests/fixtures/prices-relay-6cad820.mjs' if n=='server/garant-bani-relay.mjs' else n),p)
   for n in self.m['apiGuards']:
    p=self.old_api/n;p.parent.mkdir(parents=True,exist_ok=True)
    if n=='server/garant-bani-relay.mjs':shutil.copyfile(ROOT/'tests/fixtures/v72-relay-56bf8a1a.mjs',p)

@@ -1,3 +1,4 @@
+import {CONSENT_VERSION,CONSENT_METHOD} from './lead-consent.js';
 import {readLandingModel,readLandingContact} from './landing-model.js';
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
@@ -256,13 +257,17 @@ function formatRussianMobile(value){
     (d.length>=7?'-'+d.slice(6,8):'')+
     (d.length>=9?'-'+d.slice(8,10):'');
 }
-function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${sizeLabel(getModel(q.modelId),q.sizeId)}</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (ориентировочно)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
+function setResultText(){
+ const q=formQuote;
+ $('#formQuote').hidden=!q;
+ $('#formQuote').innerHTML=q?`<details><summary><b>${escaped(q.modelName)} · ${sizeLabel(getModel(q.modelId),q.sizeId)} — ${money(q.total)}</b><span>Посмотреть комплектацию</span></summary><p>Дополнения: ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}. Доставка и подключения рассчитываются отдельно.</p></details>`:'';
+}
 function openForm(flow='quote',topic=''){
   formRequestId=crypto.randomUUID();
   formTopic=typeof topic==='string'?topic.slice(0,180):'';
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
-  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Дача Пар» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();$('#contactForm').elements.comment.value=formFlow==='callback'?formTopic:'';submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
+  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ПОМОЩЬ С ВЫБОРОМ':'ВАША БАНЯ';$('#contactTitle').textContent=callback?'Связаться с менеджером':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте телефон — обсудим баню и ответим на ваши вопросы.':'Комплектация сохранена. Оставьте телефон — менеджер уточнит доставку и итоговую стоимость.';
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent='необязательно';$('#formExtra').open=false;$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();$('#contactForm').elements.comment.value=formFlow==='callback'?formTopic:'';submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Номер для ответа на вашу заявку.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
@@ -279,7 +284,7 @@ function initForms(){
   function showError(message,focusField){
     error.textContent=message;
     error.scrollIntoView({block:'nearest'});
-    if(focusField)focusField.focus({preventScroll:true});
+    if(focusField){const details=focusField.closest('details');if(details)details.open=true;focusField.focus({preventScroll:true});}
   }
   function updatePhoneHint(validateEmpty=false){
     const current=phone.value.trim();
@@ -287,7 +292,7 @@ function initForms(){
     phoneHint.dataset.valid=valid?'true':(current||validateEmpty?'false':'');
     phoneHint.textContent=valid?'Формат номера корректен.':
       current||validateEmpty?'Проверьте номер: требуется +7 (9XX) XXX-XX-XX.':
-      'Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';
+      'Номер для ответа на вашу заявку.';
     if(valid)phone.removeAttribute('aria-invalid');
     else if(current||validateEmpty)phone.setAttribute('aria-invalid','true');
     else phone.removeAttribute('aria-invalid');
@@ -322,20 +327,11 @@ function initForms(){
     const contactChannel=formFlow==='callback'?'phone':channel.value;
     const district=f.elements.district.value.trim();
     const comment=f.elements.comment.value.trim();
-    if(formFlow==='quote'&&name.length<2){showError('Укажите имя — минимум два символа.',f.elements.customerName);return;}
-    if(name&&name.length<2){showError('Если указываете имя, напишите минимум два символа.',f.elements.customerName);return;}
     if(!updatePhoneHint(true)){showError('Проверьте мобильный номер: +7 (9XX) XXX-XX-XX.',phone);return;}
-    if(formFlow==='quote'&&district.length<2){
-      showError('Укажите город или район доставки.',f.elements.district);return;
-    }
-    // Explicit user action, never auto-consent: the backend already enforces consent===true.
-    if(!f.elements.leadConsent.checked){
-      showError('Для отправки заявки подтвердите согласие на обработку персональных данных.',f.elements.leadConsent);
-      return;
-    }
+    // Consent evidence is created only after the user submits a valid form.
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:f.elements.leadConsent.checked,consentVersion:'2026-10-14',requestId:formRequestId,website:f.elements.website.value
+      comment,consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;

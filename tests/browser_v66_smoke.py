@@ -264,30 +264,23 @@ try:
     page.locator('#personal [data-flow="callback"]').click()
     assert 'индивидуальную комплектацию' in page.locator('#contactForm [name="comment"]').input_value(),('CUSTOM_TOPIC_NOT_PREFILLED',label)
     page.locator('#dialogClose').click()
-    # Callback: without checkbox no network request; consent reinitializes for a new flow.
+    # One submit, no checkbox; phone-only callback and quote preserve configuration.
     page.locator('.footer-ask [data-flow="callback"]').click()
     form=page.locator('#contactForm')
-    form.locator('input[name="phone"]').fill('+7 999 123-45-67')
-    checkbox=form.locator('[name="leadConsent"]')
-    assert not checkbox.is_checked(),label
-    form.locator('#submitButton').click()
-    assert 'согласие' in page.locator('#formError').inner_text().lower(),label
+    assert form.locator('input[type="checkbox"]').count()==0
     assert calls==[],label
-    checkbox.check()
+    form.locator('input[name="phone"]').fill('+7 999 123-45-67')
     form.locator('#submitButton').click()
     page.locator('#formResult').wait_for(state='visible')
     assert len(calls)==1 and calls[0]['consent'] is True,calls
-    assert calls[0]['consentVersion']=='2026-10-14',calls
+    assert calls[0]['consentVersion']=='2026-10-16' and calls[0]['consentMethod']=='submit-button-v1',calls
     page.locator('#dialogClose').click()
     page.locator('.builder-aside [data-flow="quote"]').click()
-    assert not page.locator('#contactForm [name="leadConsent"]').is_checked(),label
-    page.locator('#contactForm input[name="customerName"]').fill('Тест')
     page.locator('#contactForm input[name="phone"]').fill('+7 999 123-45-67')
-    page.locator('#contactForm input[name="district"]').fill('Вологодский район')
-    page.locator('#contactForm [name="leadConsent"]').check()
     page.locator('#contactForm #submitButton').click()
     page.locator('#formResult').wait_for(state='visible')
     assert len(calls)==2,calls
+    assert calls[1]['name']=='' and calls[1]['district']==''
     assert calls[1]['configuration']['sizeId']=='6x5',calls
     assert calls[1]['configuration']['roof']=='brown',calls
     if w<=390:

@@ -57,7 +57,7 @@ test('V7.2 custom and delivery blocks guide directly to a manager, with no false
   assert.match(css,/@media\(max-width:600px\)/);
 });
 test('V7.2 new consent edition works while existing 2026-10-12 clients remain supported',()=>{
-  assert.match(js,/consentVersion:'2026-10-14'/);
+  assert.match(js,/consentVersion:CONSENT_VERSION/);
   const example=version=>({
     flow:'callback',consent:true,consentVersion:version,name:'',phone:'+7 (900) 123-45-67',
     contactChannel:'phone',comment:'Подбор комплектации'

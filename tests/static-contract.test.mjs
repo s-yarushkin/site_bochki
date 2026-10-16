@@ -47,10 +47,10 @@ test('S09 no pricing engine embedded directly in UI',()=>assert.match(script,/fr
 test('S10 no invented first firing time',()=>assert.doesNotMatch(html,/за (?:30|60|90|120) минут|за 2 часа/));
 test('S11 success only after MAX receipt; independent privacy and consent documents linked',()=>{
   assert.match(script,/receipt\?\.delivered!==true/);
-  assert.match(html,/name="leadConsent" required/); // Unchecked separate consent.
+  assert.doesNotMatch(html,/type="checkbox"/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/name="leadConsent" required/);
+  assert.match(html,/id="submitConsentNotice"/);
   assert.match(privacy,/Политика в отношении обработки персональных данных/);
   assert.match(consent,/Согласие на обработку персональных данных/);
 });
