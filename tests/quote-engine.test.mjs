@@ -3,9 +3,9 @@ import {calculateQuote,resolveOptions,formatMoney} from '../assets/js/quote-engi
 import {PRICEBOOK,CATALOG} from '../data/pricebook.js';
 const bundle=PRICEBOOK.bundle;const required=bundle.optionIds;
 const q=(patch={})=>calculateQuote({modelId:'kvadro',sizeId:'500',optionIds:[],...patch});
-test('T01 canonical Kvadro 5m base is 505k',()=>{assert.equal(q().total,505000);});
-test('T02 owner featured bundle is 630k',()=>{assert.equal(q({optionIds:required,bundleId:bundle.id}).total,630000);});
-test('T03 featured before discount 630k',()=>{assert.equal(q({optionIds:required,bundleId:bundle.id}).beforeDiscount,630000);});
+test('T01 Kvadro 5m base follows new published matrix',()=>{assert.equal(q().total,471555);});
+test('T02 featured bundle requiring unpriced components has no invented total',()=>{const r=q({optionIds:required,bundleId:bundle.id});assert.equal(r.total,null);assert.equal(r.quoteRequired,true);assert.ok(r.unpricedOptionIds.length>=4);});
+test('T03 featured gross price is unknown, not a stale snapshot',()=>{assert.equal(q({optionIds:required,bundleId:bundle.id}).beforeDiscount,null);});
 test('T04 no invented bundle discount',()=>{assert.equal(q({optionIds:required,bundleId:bundle.id}).discount,0);});
 test('T05 featured exactly fourteen options',()=>{assert.equal(required.length,14);});
 test('T06 bundle invalid when one item removed',()=>{assert.equal(q({optionIds:required.slice(0,-1),bundleId:bundle.id}).bundleApplied,false);});
@@ -18,12 +18,12 @@ test('T12 roof surcharges remain unknown, not zero',()=>{assert.ok(CATALOG.finis
 test('T13 duplicate option forbidden',()=>{assert.throws(()=>q({optionIds:['stove_guard','stove_guard']}),/DUPLICATE/);});
 test('T14 unknown product option forbidden',()=>{assert.throws(()=>q({optionIds:['not-real']}),/UNKNOWN/);});
 test('T15 wrong ID type forbidden',()=>{assert.throws(()=>q({optionIds:[3]}),/INVALID_OPTION/);});
-test('T16 size 4.5m calculates',()=>{assert.equal(q({sizeId:'450'}).total,465000);});
-test('T17 size 5.5m calculates',()=>{assert.equal(q({sizeId:'550'}).total,525000);});
+test('T16 size 4.5m calculates',()=>{assert.equal(q({sizeId:'450'}).total,407420);});
+test('T17 size 5.5m calculates',()=>{assert.equal(q({sizeId:'550'}).total,494141);});
 test('T18 Kvadro House all dimensions present',()=>{assert.deepEqual(Object.keys(PRICEBOOK.models.find(m=>m.id==='kvadro-house').sizes),['4x4','5x4','6x4','6x5','6x6']);});
-test('T19 Kvadro House 6x5 correct value',()=>{assert.equal(q({modelId:'kvadro-house',sizeId:'6x5'}).total,839000);});
-test('T20 Viking base follows site column',()=>{assert.deepEqual(Object.values(PRICEBOOK.models.find(m=>m.id==='viking').sizes),[490000,540000,620000,645000,675000]);});
-test('T21 Viking model selection works',()=>{assert.equal(q({modelId:'viking',sizeId:'500'}).total,620000);});
+test('T19 Kvadro House 6x5 correct value',()=>{assert.equal(q({modelId:'kvadro-house',sizeId:'6x5'}).total,778500);});
+test('T20 Viking base follows site column',()=>{assert.deepEqual(Object.values(PRICEBOOK.models.find(m=>m.id==='viking').sizes),[396630,464940,552825,595980,613620]);});
+test('T21 Viking model selection works',()=>{assert.equal(q({modelId:'viking',sizeId:'500'}).total,552825);});
 test('T22 unknown model rejected',()=>{assert.throws(()=>q({modelId:'alien'}),/UNKNOWN_MODEL/);});
 test('T23 unknown size rejected',()=>{assert.throws(()=>q({sizeId:'200'}),/UNAVAILABLE_SIZE/);});
 test('T24 no invented delivery inclusion',()=>{assert.equal(q().deliveryKnown,false);});
@@ -34,8 +34,12 @@ test('T28 option API requires array',()=>{assert.throws(()=>resolveOptions('stov
 test('T29 currency formatting RUB',()=>{assert.match(formatMoney(630000),/630\s?000\s?₽/);});
 test('T30 unapproved catalog input fails closed',()=>{assert.throws(()=>calculateQuote({}, {...PRICEBOOK,status:'UNVERIFIED'}),/UNAPPROVED/);});
 test('T31 negative base rejected',()=>{assert.throws(()=>calculateQuote({modelId:'kvadro',sizeId:'500'},{...PRICEBOOK,models:[{...PRICEBOOK.models[0],sizes:{'500':-5}}]}),/INVALID_BASE/);});
-test('T32 sum of model options discount invariant',()=>{for(const ids of [[],['stove_guard'],['stove_guard','folding_table'],required]){const r=q({optionIds:ids});assert.equal(r.total,r.basePrice+r.optionsSubtotal-r.discount)};});
+test('T32 sum of model options discount invariant',()=>{for(const ids of [[],['stove_guard'],['stove_guard','folding_table']]){const r=q({optionIds:ids});assert.equal(r.total,r.basePrice+r.optionsSubtotal-r.discount)};});
 test('T33 unknown bundle gets no discount',()=>{assert.equal(q({optionIds:required,bundleId:'unknown'}).discount,0);});
 test('T34 order of independent options preserves total',()=>{assert.equal(q({optionIds:['stove_guard','folding_table']}).total,q({optionIds:['folding_table','stove_guard']}).total);});
 test('T35 Oblivasta remains excluded from featured set',()=>{assert.ok(!required.includes('oblivasta_connected'));});
-test('T36 electrical panel 15k requires approval',()=>{assert.equal(PRICEBOOK.options.find(o=>o.id==='electrical_safety_cabinet_temporary_supply').requiresTechnicalApproval,true);});
+test('T36 electrical panel has no invented amount and remains approval-only',()=>{assert.equal(PRICEBOOK.options.find(o=>o.id==='electrical_safety_cabinet_temporary_supply').requiresTechnicalApproval,true);});
+
+test('T37 selected unpriced option does not become zero or a partial confirmed total',()=>{const x=q({optionIds:['socket_kit_owner']});assert.equal(x.total,null);assert.equal(x.optionsSubtotal,null);assert.equal(x.unpricedOptionIds[0],'socket_kit_owner');assert.equal(formatMoney(x.total),'По запросу');});
+test('T38 priced add-on and base are summed exactly in public rubles',()=>{const x=q({optionIds:['stove_guard']});assert.equal(x.optionsSubtotal,5850);assert.equal(x.total,471555+5850);});
+test('T39 saved historic site-v1 catalog is not rewritten by the new book',async()=>{const legacy=(await import('../data/legacy-site-v1-pricebook.js')).PRICEBOOK;assert.equal(legacy.version,'2026-10-16-sheet-site-v1');assert.equal(legacy.models.find(m=>m.id==='kvadro').sizes['500'],505000);});
