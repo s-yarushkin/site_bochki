@@ -6,3 +6,23 @@ header .header-call:hover,header .header-call:focus-visible{background:#315b47;c
 .next-step .call-button,.call-button{background:#e5ab65;color:#192a20}
 .next-step .call-button:hover,.call-button:hover,.call-button:focus-visible{background:#f2c58a;color:#192a20}
 @media(max-width:700px){header .header-call{margin-top:15px;max-width:100%}}
+
+/* DACHA_PAR_SEO_CTA_PRIORITY_20261016: strong direct-call action on landing pages */
+header a.header-call,
+.next-step a.button.call-button,
+main a.button.call-button {
+  background:#ffc563;
+  color:#182b23;
+  border:2px solid #ffc563;
+  box-shadow:0 4px 16px rgba(70,43,11,.15);
+  font-weight:800;
+}
+header a.header-call:hover,
+.next-step a.button.call-button:hover {
+  background:#ffda91;
+  color:#182b23;
+}
+@media(max-width:700px){
+  header a.header-call{display:flex;width:100%;margin-top:12px}
+  .next-step a.button.call-button{display:block;text-align:center;margin:8px 0}
+}
