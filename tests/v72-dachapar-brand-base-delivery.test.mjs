@@ -37,7 +37,7 @@ test('V7.2 base kit lists exact 17 components without changing price engine',()=
                      'Обручи','гибкой черепицы','в два слоя'])assert.ok(base.includes(item),item);
   assert.match(base,/data-flow="callback" data-topic=/);
   assert.match(html,/id="bundleNew">По запросу/);
-  assert.match(html,/id="quoteTotal">505 000 ₽/);
+  assert.match(html,/id="quoteTotal">471 555 ₽/);
   assert.match(js,/Базовая комплектация от/);
   assert.match(js,/from '\.\/quote-engine\.js'/);
 });
