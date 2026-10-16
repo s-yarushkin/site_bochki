@@ -842,3 +842,15 @@ html{scroll-padding-top:0}
 .builder-photo-controls span{font-size:12px;font-weight:700;min-width:40px;text-align:center}
 .builder-photo-controls button:focus-visible,.model-gallery-scene:focus-visible{outline:3px solid #c2842d;outline-offset:2px}
 @media(max-width:550px){.model-gallery-scene{padding:9px 13px;font-size:12px}.model-gallery-scenes{gap:6px}}
+
+
+/* DACHA_PAR_RAIN_PRODUCT_PHOTO_DOUBLE_EXPOSURE_FIX_20261016 */
+/* Never superimpose hero-rain.webp onto model/product photos. The original
+   weather-specific brightness adjustment stays active. */
+:root[data-theme="rain"] [data-slot="catalog-kvadro-house-rain"].media-ready::before,
+:root[data-theme="rain"] [data-slot="bundle-comfort-rain"].media-ready::before,
+:root[data-theme="rain"] [data-slot="side-kvadro-house-rain"].media-ready::before {
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
+}
