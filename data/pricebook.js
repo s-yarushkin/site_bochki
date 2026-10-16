@@ -28,7 +28,7 @@ const options=Object.entries(CATALOG.options).map(([id,option])=>({
   unitPriceRub:option.unitPriceRub,quantity:option.quantity,unit:option.unit,
   priceStatus:option.priceStatus??'PRELIMINARY',
   category:steamOptions.has(id)?'steam':'comfort',
-  benefit:option.requiresTechnicalApproval?'Требуется согласование условий установки':'Дополнение по каталогу',
+  benefit:option.unitPriceRub===null?'Стоимость уточнит менеджер':option.requiresTechnicalApproval?'Требуется согласование условий установки':'Дополнение по каталогу',
   discountEligible:false,requiresTechnicalApproval:option.requiresTechnicalApproval===true,
   ...(id==='glass_sauna_door_700x1700'?{mutex:'entry-door'}:{})
 }));
