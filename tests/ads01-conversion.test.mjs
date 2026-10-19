@@ -23,9 +23,9 @@ test('ADS01 detailed independent from premium, no fake paid extras',()=>{
   assert.equal(classifyConfirmedLead(q(550000,'Сергиев Посад',[{price:5000},{price:7000}],false)).detailedQualified,false);
   assert.equal(classifyConfirmedLead(q(800000,'Ивантеевка',[{price:null},{price:null}],true)).premiumQualified,true);
 });
-test('ADS01 no real counter configured before owner approval',async()=>{
+test('ADS01 verified counter ID is configured, but privacy activation remains OFF',async()=>{
   const cfg=await import('../assets/js/analytics-config.js');
-  assert.equal(cfg.ADS01_COUNTER_ID,null);
+  assert.equal(cfg.ADS01_COUNTER_ID,113675581);
   assert.equal(cfg.ADS01_PRIVACY_APPROVED,false);
   const m=await import('../assets/js/analytics.js');
   assert.equal(m.trackGoal('dp_lead_confirmed'),false);

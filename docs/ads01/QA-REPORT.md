@@ -13,7 +13,7 @@ As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development
 | 400/429/502/timeout and duplicate browser acceptance | PASS mocked Chromium: 200, duplicate, 400/429/502, aborted network | Chromium synthetic HTTP 200 / duplicate / 502, no production MAX, real 400 / 429 / timeout require extended QA |
 | `npm run check`, legacy V73, V74 20 SKU | PASS | GitHub Actions run 39260655369, Node suite + price snapshot; note release base still has COLUMN=H metadata, while owner-approved #69 requires J225:J244 |
 | Desktop/mobile 320/390/768/1366/1920 SUN/RAIN | PASS (matrix smoke) | Isolated Chromium width 320/390/768/1366/1920, SUN/RAIN; deeper viewport conversion acceptance remains for V74 RC |
-| Real counter configured and goals arriving | NOT_VERIFIED | Owner ID/access missing |
+| Real counter configured and goals arriving | COUNTER KNOWN / live goals NOT_VERIFIED | Owner counter 113675581 stored with activation=false. First 3 goals confirmed on owner screenshots, 15 further goals reported created by owner; delivery into actual Metрика not verified. |
 | Legal/cookie notice signed | NO-GO | Responsible operator/privacy approval missing |
 | Production lead creation | NOT_PERFORMED | No production API post or DB write attempted |
 | Production deploy | NOT_PERFORMED | No deployment authorized |
@@ -46,4 +46,10 @@ As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development
 - Scope of isolated server tests: price/city premium qualification, forged client price rejection, SQLite duplicate, MAX failure then successful retry, quote vs callback, malformed requests, sanitized attribution.
 - Scope of expanded Chromium: mobile and desktop phone/CTA, 8 SEO phone clicks, seven-step quote with source city and size, 400/429/502 and aborted request, first/last-touch campaign identifiers, opt-in and revocation.
 - **This does not merge #69/#71**. Release merge order: land/approve #69, refresh PR #71 onto final V7.4 and rerun gates before any deploy.
-- Final activation status: **NO-GO** pending real Yandex counter ID/access, legal/privacy signoff, owner merge/deploy GO and verified real Metrica goals. Ad launch and payment explicitly excluded.
+- Final activation status: **NO-GO** pending legal/privacy signoff, owner merge/deploy GO and verified real Metrica goals. Real counter ID `113675581` is configured **disabled**; first 3 goal IDs screen-verified, others user-reported created. Ad launch and payment explicitly excluded.
+
+## Owner Yandex Metrica setup, 19.10.2026
+- Confirmed `дачапар.рф` counter: `113675581`, configured in source with `ADS01_PRIVACY_APPROVED=false` (external tag OFF).
+- Three screenshot-confirmed goal IDs: premium `672514007`, detailed `672514096`, all leads `672514144`; exact event identifiers match the R9 contract.
+- Owner confirmed all 18 goals entered manually; remaining 15 not independently screenshot-verified. Static revenue should be blank; only one primary billable goal per Direct campaign.
+- Before activation: confirm automatic goals OFF, ecommerce OFF, content analytics OFF, Tag Manager OFF, Webvisor/form recording OFF pending privacy review; screenshot/owner proof needed.

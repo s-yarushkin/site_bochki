@@ -61,7 +61,7 @@ function initCounter(){
   }
   window.ym(ADS01_COUNTER_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
   if(!document.querySelector('script[data-dp-metrika]')){
-    const s=document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js';s.dataset.dpMetrika='1';document.head.append(s);
+    const s=document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js?id='+encodeURIComponent(String(ADS01_COUNTER_ID));s.dataset.dpMetrika='1';document.head.append(s);
   }
 }
 function displayConsent(force=false){
