@@ -38,12 +38,13 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundl
     knownOptionsSubtotal+=opt.price;
     if(!Number.isSafeInteger(knownOptionsSubtotal))throw new Error('PRICE_OVERFLOW');
   }
-  const quoteRequired=missing.length>0;
+  const bundle=pricebook.bundle;
+  const bundleValid=bundleId===bundle.id && modelId===bundle.modelId && sizeId===bundle.sizeId && bundle.optionIds.every(id=>optionIds.includes(id));
+  const quoteRequired=missing.length>0||(bundleValid&&bundle.quotePendingApproval===true);
   const optionsSubtotal=quoteRequired?null:knownOptionsSubtotal;
   const eligible=chosen.filter(o=>o.discountEligible && Number.isSafeInteger(o.price));
   const eligibleSubtotal=eligible.reduce((s,o)=>s+o.price,0);
-  const bundle=pricebook.bundle;
-  const bundleValid=bundleId===bundle.id && modelId===bundle.modelId && sizeId===bundle.sizeId && bundle.optionIds.every(id=>optionIds.includes(id));
+
   let discount=0,discountType='none',discountRate=0;
   if(bundleValid){
     discount=quoteRequired?0:Math.min(bundle.discount,eligibleSubtotal);discountType='bundle';
@@ -57,6 +58,7 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundl
   return {modelId,sizeId,modelName:model.name,basePrice,optionIds:[...optionIds],
     options:chosen.map(o=>({id:o.id,name:o.name,price:o.price,quantity:o.quantity,unit:o.unit,priceStatus:o.priceStatus??'PRELIMINARY'})),
     optionsSubtotal,knownOptionsSubtotal,eligibleSubtotal,unpricedOptionIds:missing.map(o=>o.id),quoteRequired,
+    quoteApprovalReason:bundleValid&&bundle.quotePendingApproval?'Не подтверждена стоимость комплектации электрощита':null,
     discount,discountType,discountRate,total,beforeDiscount,needsConfirmation:true,deliveryKnown:false,
     pricebookVersion:pricebook.version,bundleApplied:bundleValid,pricebookStatus:pricebook.status};
 }
