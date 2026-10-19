@@ -43,7 +43,7 @@ test('product pages use the existing sizes and indicative amounts without fake O
   const html=read('bani/'+slug+'/index.html');
   for(const amount of Object.values(cat.prices[id]))assert.ok(html.includes(amount.toLocaleString('ru-RU')+' ₽'));
   assert.doesNotMatch(html,/"(?:offers|aggregateRating|review|availability)"/);
-  assert.match(html,/не является офертой/);assert.equal([...html.matchAll(/<li>/g)].length,17);
+  assert.match(html,/не является офертой/);assert.equal([...html.matchAll(/<li>/g)].length,19);
   assert.ok(html.includes('/?model='+id+'#builder'));
  }
 });
