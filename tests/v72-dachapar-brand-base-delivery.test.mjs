@@ -31,12 +31,12 @@ test('V73 retains original base elements and adds floor and electrical safety pa
   const base=html.match(/<section class="base-kit section"[\s\S]*?<\/section>/)?.[0]||'';
   assert.match(base,/всё главное для вашей бани/);
   assert.equal((base.match(/<li>/g)||[]).length,19);
-  for(const item of ['Печь','Дымоход','55 л','Двухъярусные лежаки','Трапик','минерита',
+  for(const item of ['Надёжная, проверенная печь','Дымоход','55 л','Двухъярусные лежаки','Трапик','минерита',
                      'Две скамейки','Вешалка','60 × 80','вынесенный по центру',
-                     'Ступенька','электропроводка и освещение','Слив','Вентиляция',
+                     'Ступенька','Внутренняя электрика и освещение','Слив','Вентиляция',
                      'Электрощит','Напольная конструкция','Обручи','гибкой черепицы','в два слоя'])assert.ok(base.includes(item),item);
   assert.match(base,/data-flow="callback" data-topic=/);
-  assert.match(html,/id="bundleNew">По запросу/);
+  assert.match(html,/id="bundleNew">613 977 ₽/);
   assert.match(html,/id="quoteTotal">500 955 ₽/);
   assert.match(js,/Базовая комплектация от/);
   assert.match(js,/from '\.\/quote-engine\.js'/);
