@@ -32,7 +32,7 @@ test('ADS01 uses owner counter without extra UI and Webvisor disabled',async()=>
   assert.equal(m.trackGoal('dp_lead_confirmed'),false);
   assert.equal(m.attributionForLead(),null);
   const adapter=readFileSync(new URL('../assets/js/analytics.js',import.meta.url),'utf8');
-  assert.match(adapter,/tag\\.js\\?id=/);
+  assert.ok(adapter.includes('metrika/tag.js?id='));
   assert.doesNotMatch(adapter,/displayConsent|consentSettings|dp_analytics_consent_v1|Разрешить аналитику|Без аналитики|Настройки аналитики/);
 });
 
