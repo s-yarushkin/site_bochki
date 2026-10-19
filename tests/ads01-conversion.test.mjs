@@ -73,7 +73,7 @@ test('ADS01 all 18 owner-created event identifiers match the deployed measuremen
   ];
   assert.equal(new Set(ids).size,18);
   assert.deepEqual([...ids].sort(),expected.sort());
-  assert.match(code,/initCounter\\(\\);/);
+  assert.ok(code.includes('initCounter();'));
   assert.doesNotMatch(code,/displayConsent|consentSettings|dp_analytics_consent_v1/);
   assert.match(read('privacy.html'),/Яндекс Метрик/);
 });
