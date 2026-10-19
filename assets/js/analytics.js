@@ -1,14 +1,15 @@
-// ADS-01 single public-site measurement adapter; safe no-op until owner GO.
+// ADS-01 single public-site measurement adapter. No consent pop-ups or UI blockers.
+// Production switch requires independent operator verification of the legal basis.
 import {ADS01_COUNTER_ID, ADS01_OWNER_RELEASE_GO, ADS01_WEBVISOR_ENABLED} from './analytics-config.js';
 const goals=new Set(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_builder_start','dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click']);
 const models=new Set(['kvadro','parus','viking','kvadro-house']);
 const placements=new Set(['header','hero','catalog','base','bundle','personal','delivery','builder','faq','final','footer','mobile','seo','unknown']);
-const decisionsKey='dp_analytics_consent_v1', touchKey='dp_attribution_v1', seenKey='dp_counted_leads_v1';
+const touchKey='dp_attribution_v1', seenKey='dp_counted_leads_v1';
 const ready=Number.isSafeInteger(ADS01_COUNTER_ID)&&ADS01_COUNTER_ID>0&&ADS01_OWNER_RELEASE_GO===true;
 let active=false;
 const getStore=()=>{try{return localStorage;}catch{return null;}};
 const getSession=()=>{try{return sessionStorage;}catch{return null;}};
-function isAllowed(){return ready && getStore()?.getItem(decisionsKey)==='accepted';}
+function isAllowed(){return ready;}
 function cleanValue(v,max=90){return typeof v==='string' && v.length<=max && /^[a-zA-Z0-9а-яА-ЯёЁ_.:+-]+$/.test(v) ? v : null;}
 function safePath(p){return typeof p==='string' && /^\/[a-z0-9/-]{0,100}$/.test(p) ? p : '/';}
 function readTouch(){
@@ -64,27 +65,6 @@ function initCounter(){
     const s=document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js?id='+encodeURIComponent(String(ADS01_COUNTER_ID));s.dataset.dpMetrika='1';document.head.append(s);
   }
 }
-function displayConsent(force=false){
-  if(!ready||(!force&&getStore()?.getItem(decisionsKey))||document.querySelector('[data-dp-consent]'))return;
-  const root=document.createElement('aside');root.dataset.dpConsent='1';root.setAttribute('role','region');root.setAttribute('aria-label','Настройки аналитики');
-  root.style.cssText='position:fixed;bottom:90px;left:12px;right:12px;max-width:620px;margin:auto;background:#fff;color:#202c26;border:1px solid #aaa;border-radius:12px;padding:14px;z-index:9997;box-shadow:0 4px 22px #0003;font:14px/1.4 Arial,sans-serif';
-  const desc=document.createElement('p');
-  desc.textContent='Разрешить Яндекс Метрику для анализа посещений, кликов и заявок? Сервис использует технические данные и идентификаторы. Вебвизор выключен. ';
-  const policy=document.createElement('a');policy.href='/privacy.html#analytics';policy.textContent='Подробнее в Политике.';
-  desc.append(policy);desc.style.margin='0 0 10px';
-  const yes=document.createElement('button'),no=document.createElement('button');
-  yes.type=no.type='button';yes.textContent='Разрешить аналитику';no.textContent='Без аналитики';
-  yes.style.cssText='padding:8px 12px;margin-right:10px';no.style.cssText='padding:8px 12px';
-  yes.addEventListener('click',()=>{try{getStore()?.setItem(decisionsKey,'accepted');}catch{}root.remove();initCounter();});
-  no.addEventListener('click',()=>{try{getStore()?.setItem(decisionsKey,'denied');getStore()?.removeItem(touchKey);}catch{}root.remove();if(active)location.reload();});
-  root.append(desc,yes,no);document.body.append(root);
-}
-export function revokeAnalyticsConsent(){
-  try{getStore()?.setItem(decisionsKey,'denied');getStore()?.removeItem(touchKey);}catch{}
-  active=false;
-  // Already loaded third-party tracker cannot be unloaded reliably; a reload ensures no reinitialization.
-  if(typeof location!=='undefined')location.reload();
-}
 export function trackGoal(name,params={}){
   if(!active||!goals.has(name)||typeof window.ym!=='function')return false;
   const safe={};
@@ -127,11 +107,6 @@ function placement(el){
   if(location.pathname!=='/')return 'seo';
   return 'unknown';
 }
-function consentSettings(){
-  const footer=document.querySelector('footer');if(!footer||!ready)return;
-  const b=document.createElement('button');b.type='button';b.textContent='Настройки аналитики';b.style.cssText='margin:8px;padding:6px;font:inherit';
-  b.addEventListener('click',()=>displayConsent(true));footer.append(b);
-}
 function monitorClicks(){
   document.addEventListener('click',event=>{
     const el=event.target instanceof Element?event.target.closest('a,button'):null;
@@ -166,7 +141,7 @@ function monitorClicks(){
   }
 }
 if(typeof document!=='undefined'){
-  const start=()=>{if(!ready)return;consentSettings();monitorClicks();if(isAllowed())initCounter();else displayConsent();};
+  const start=()=>{if(!ready)return;monitorClicks();initCounter();};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
   else start();
 }
