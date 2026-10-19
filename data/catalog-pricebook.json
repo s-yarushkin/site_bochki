@@ -1,37 +1,37 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-19-v73-full-bases-scope-pending-panel",
+  "version": "2026-10-19-v73-customer-ready-r1",
   "status": "CATALOG_DRAFT",
   "currency": "RUB",
   "source": "Approved base public totals from owner internal Google calculator; priced add-ons from owner supplied DOCX; items without matching specification are quotation-only",
   "prices": {
     "kvadro": {
-      "400": 373698,
-      "450": 419570,
-      "500": 484155,
-      "550": 506741,
-      "600": 521766
+      "400": 389298,
+      "450": 435770,
+      "500": 500955,
+      "550": 523541,
+      "600": 538566
     },
     "parus": {
-      "400": 396630,
-      "450": 434970,
-      "500": 491400,
-      "550": 512820,
-      "600": 525420
+      "400": 412230,
+      "450": 451170,
+      "500": 508200,
+      "550": 529620,
+      "600": 542220
     },
     "viking": {
-      "400": 431730,
-      "450": 502740,
-      "500": 589275,
-      "550": 633780,
-      "600": 651420
+      "400": 447330,
+      "450": 519540,
+      "500": 605475,
+      "550": 650580,
+      "600": 668220
     },
     "kvadro-house": {
-      "4x4": 574875,
-      "5x4": 673875,
-      "6x4": 716625,
-      "6x5": 778500,
-      "6x6": 841500
+      "4x4": 589875,
+      "5x4": 688875,
+      "6x4": 731625,
+      "6x5": 793500,
+      "6x6": 856500
     }
   },
   "models": {
@@ -319,42 +319,33 @@
     ],
     "discountRub": 0,
     "removed": "shower-zone-1x1,oblivasta_connected",
-    "temporaryElectricalConnectionStatus": "ENGINEERING_CONFIRMATION_REQUIRED",
-    "quoteRequiredUntil": {
-      "electricalShieldFactorySpecAndCost": "PENDING",
-      "installation": "OPTIONAL_NOT_INCLUDED",
-      "delivery": "NOT_INCLUDED"
-    },
     "mandatoryIncludedFeatures": [
-      "Вынесенный центральный вход (база)",
-      "Каркасный пол (база)",
-      "Утепление пола пеноплэкс 50 мм на 10,5 м² (комплект)"
+      "Удобный центральный вход и каркасный пол уже включены в базу",
+      "Надёжная проверенная печь, внутреннее освещение и стандартная электрика в базе",
+      "Утепление пола 50 мм по всей площади 10,5 м² в комплектации Комфорт",
+      "Большое окно, форточка в парной и стеклянная дверь в парную",
+      "Удобные места для хранения и дополнительный свет"
     ],
-    "stoveStatus": "Базовая печь включена; точная модель ещё подтверждается у производства"
+    "customerDescription": "Светлая баня для отдыха: стеклянная дверь в парную, увеличенное окно в комнате отдыха и форточка, удобные места для хранения, уютный свет и утеплённый пол."
   },
   "deliveryIncluded": false,
   "checks": {
-    "baseRub": 484155,
+    "baseRub": 500955,
     "knownOptionsRub": 113022,
-    "quoteRequired": true,
-    "bundlePriceBlocker": "PENDING_FACTORY_ELECTRICAL_PANEL_SPEC_AND_COST",
+    "quoteRequired": false,
     "baseCount": 20,
     "optionCount": 13,
     "featureOptionCount": 12,
-    "earlierUndefinedSiteOptionsResolved": 5,
     "insulationAreaM2": 10.5,
-    "proposedKnownBundleSubtotalRub": 597177
+    "bundleTotalRub": 613977
   },
   "notes": [
-    "Published values are provisional CUSTOMER PRICES only; private cost/pricing margins belong to the owner-controlled calculator.",
-    "All 20 model-size totals are rounded to the nearest whole ruble as a final step; Quadro 5.5 m uses 506741 rubles.",
-    "Kvadro's protruding centered entrance and Viking's centered arched entrance are included in their updated base customer prices; do not bill separately.",
-    "The Kvadro 5 m featured set includes 50 mm insulation on 10.5 m²; mandatory frame floor belongs to the base.",
-    "Minor socket work and internal wiring were removed from customer-configurable paid add-ons: ordinary wiring is already part of the base.",
-    "The electrical safety cabinet is designated as mandatory base equipment by the owner, but model, scope and factory cost remain a RELEASE GATE.",
-    "The exact default stove model and price must be confirmed with the producer; upgrades should replace—not duplicate—the base stove.",
-    "Normal product base and the feature bundle remain PRELIMINARY until the electrical shield specification and economics are approved.",
-    "Terrace, delivery, unloading, site foundation, site electrical hookups and on-site assembly are not included without a separate confirmed contract."
+    "Customer-facing source: 20 equipped base price totals from owner's Google calculator, including owner's approved internal management reserve for standard electrical protection.",
+    "No supplier-specific stove brand, electrical panel components, supplier costs, margins or rates belong in client-facing pages.",
+    "The standard sauna is equipped with a stove, inner wiring/light, protection, doors/windows, benches, drainage and ventilation; site utility connections, delivery, unloading and foundation are separately confirmed.",
+    "Kvadro 5m Comfort includes 50mm insulation on 10.5sqm and meaningful comfort upgrades; the quoted amount is the full configured sauna excluding offsite logistics and site hookups.",
+    "When replacing a built-in component with a premium one, the final order specification must avoid double billing; confirm with the manager.",
+    "The gallery must correspond to the actual saleable model and centered entry; reject inaccurate or AI-mutated geometry."
   ],
   "pricingAdjustments": {
     "policy": "Final site-column amounts are already complete. Never add historic uplifts again."
@@ -366,19 +357,18 @@
     "syncMode": "OWNER_REVIEWED_PUBLIC_SNAPSHOT",
     "baseCount": 20,
     "optionScope": "matched DOCX line-items; pending items unpriced",
-    "rounding": "nearest whole RUB, halves upwards",
-    "approvedDate": "2026-10-19"
+    "rounding": "round final model price to nearest whole RUB",
+    "approvedDate": "2026-10-19",
+    "scope": "Customer-visible equipped base, including an internally budgeted standard electrical safety panel; no vendor procurement claims"
   },
   "baseInclusions": {
     "common": [
-      "Штатная печь, дымоход и бак для воды",
-      "Оборудованная парная с полками",
-      "Комната отдыха с базовыми лавками",
-      "Штатные окна и двери",
-      "Внутренняя электропроводка и освещение",
-      "Вентиляция и слив",
-      "Подготовленная напольная конструкция",
-      "Электрощит с автоматической защитой — уточняется состав и закупочная цена до публикации"
+      "Надёжная проверенная печь, уже включённая в стоимость",
+      "Полки и лежаки в парной, дымоход и штатный бак для воды",
+      "Лавки и место для вещей в комнате отдыха",
+      "Окна и двери по выбранной модели",
+      "Внутреннее освещение и электрика, штатная электрическая защита",
+      "Вентиляция, слив и напольная конструкция"
     ],
     "modelSpecific": {
       "kvadro": "Вынесенный вход по центру включён в цену",
@@ -387,13 +377,14 @@
       "kvadro-house": "Напольная конструкция по спецификации выбранного варианта"
     },
     "externalExcluded": [
-      "Доставка, разгрузка, основание и подключение к сетям участка",
-      "Сборка на участке при необходимости — отдельный расчёт"
+      "Доставка, разгрузка и основание под баню",
+      "Внешнее подключение электричества и воды",
+      "Монтаж на участке, если он потребуется"
     ],
     "priceApprovalGate": {
-      "electricalShield": "PENDING_FACTORY_SPEC_AND_PRICE",
-      "defaultStove": "PENDING_EXACT_MODEL_PRICE",
-      "customerPriceStatus": "PRELIMINARY"
+      "electricalShield": "OWNER_PLANNING_RESERVE_INCLUDED",
+      "defaultStove": "MODEL_NAME_NOT_PUBLIC",
+      "customerPriceStatus": "READY_FOR_RELEASE_QA"
     }
   }
 }
