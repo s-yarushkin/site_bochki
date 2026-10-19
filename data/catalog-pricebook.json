@@ -340,13 +340,13 @@
     "bundleTotalRub": 618022
   },
   "notes": [
-    "Customer-facing source: 20 equipped base price totals from owner's Google calculator, including owner's approved internal management reserve for standard electrical protection.",
+    "Customer-facing source: 20 equipped base price totals from owner's Google calculator, including owner's approved unconfirmed management estimate for standard electrical protection.",
     "No supplier-specific stove brand, electrical panel components, supplier costs, margins or rates belong in client-facing pages.",
     "The standard sauna is equipped with a stove, inner wiring/light, protection, doors/windows, benches, drainage and ventilation; site utility connections, delivery, unloading and foundation are separately confirmed.",
     "Kvadro 5m Comfort includes 50mm insulation on 10.5sqm and meaningful comfort upgrades; the quoted amount is the full configured sauna excluding offsite logistics and site hookups.",
     "When replacing a built-in component with a premium one, the final order specification must avoid double billing; confirm with the manager.",
     "The gallery must correspond to the actual saleable model and centered entry; reject inaccurate or AI-mutated geometry.",
-    "V74 base public prices are sourced from the Google Sheet rounded site-price column H225:H244; G values remain private workbook calculation outputs and are not shipped. All consumer base quotes use this revision consistently.",
+    "V74 base public prices are sourced from the Google Sheet rounded site-price column J225:J244; I values remain private workbook calculation outputs and are not shipped. All consumer base quotes use this revision consistently.",
     "Featured bundle total follows base + unchanged option totals = 618022 RUB; a commercial rounded featured-package price requires separate owner approval."
   ],
   "pricingAdjustments": {
@@ -354,14 +354,14 @@
   },
   "priceSource": {
     "sheet": "Рабочий калькулятор",
-    "column": "H",
-    "header": "Стоимость для сайта, округлённая",
-    "syncMode": "OWNER_GOOGLE_SHEET_PUBLIC_COLUMN_H_SNAPSHOT_2026_10_19",
+    "column": "J",
+    "header": "Стоимость для сайта, округлённая, ₽",
+    "syncMode": "OWNER_GOOGLE_SHEET_PUBLIC_COLUMN_J_SNAPSHOT_2026_10_19",
     "baseCount": 20,
     "optionScope": "matched DOCX line-items; pending items unpriced",
     "rounding": "CEILING_TO_NEXT_5000",
     "approvedDate": "2026-10-19",
-    "scope": "Only 20 public base prices, source formulas G→H; individual extras remain unchanged"
+    "scope": "Only 20 public base prices from Google Sheet J225:J244 (I→J ceiling to 5,000 RUB); individual extras remain unchanged"
   },
   "baseInclusions": {
     "common": [

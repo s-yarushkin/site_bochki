@@ -7,8 +7,8 @@ import {calculateQuote} from '../assets/js/quote-engine.js';
 import {validateBaniLead} from '../server/garant-bani-relay.mjs';
 const snap=JSON.parse(readFileSync(new URL('../data/source/v74-public-rounded-sheet-snapshot.json',import.meta.url),'utf8'));
 const lead=version=>({flow:'quote',name:'Тест',phone:'+79991234567',district:'Тестовый участок',base:'ready',access:'yes',consent:true,consentVersion:'2026-10-14',configuration:{modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',pricebookVersion:version}});
-test('H of Google price table is single approved public base snapshot, 20 SKU',()=>{
-  assert.equal(snap.column,'H');
+test('J of Google price table is single approved public base snapshot, 20 SKU',()=>{
+  assert.equal(snap.column,'J');
   assert.equal(snap.rows.length,20);
   assert.equal(CATALOG.version,snap.pricebookVersion);
   for(const row of snap.rows){

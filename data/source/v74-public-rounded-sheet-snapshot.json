@@ -1,9 +1,9 @@
 {
-  "schemaVersion": "v74-source-h1",
+  "schemaVersion": "v74-source-j1",
   "sourceSheet": "Рабочий калькулятор",
-  "sourceRange": "A225:B244;H225:H244",
-  "column": "H",
-  "header": "Стоимость для сайта, округлённая",
+  "sourceRange": "A225:B244;J225:J244",
+  "column": "J",
+  "header": "Стоимость для сайта, округлённая, ₽",
   "rounding": "CEILING_5000_UP",
   "capturedDate": "2026-10-19",
   "pricebookVersion": "2026-10-19-v74-sheet-round-up-5000-r1",

@@ -1,7 +1,7 @@
 /** V74-02: fail-closed public price consistency.
- * Source: sanitized ONLY public A/B/H cells of the owner's Google workbook.
+ * Source: sanitized ONLY public A/B/J cells of the owner's Google workbook.
  * Never fetch/expose hidden calculations or private economics to browser/repo.
- * Optional --live checks current H against the committed snapshot using a
+ * Optional --live checks current J against the committed snapshot using a
  * read-only OAuth access token injected by trusted CI (never logged).
  */
 import {readFileSync} from 'node:fs';
@@ -21,9 +21,10 @@ const keys={
 const modelNames={kvadro:'Квадро',viking:'Викинг',parus:'Парус','kvadro-house':'Квадро Хаус'};
 const sizeNames={'400':'4 м','450':'4,5 м','500':'5 м','550':'5,5 м','600':'6 м','4x4':'4×4 м','5x4':'5×4 м','6x4':'6×4 м','6x5':'6×5 м','6x6':'6×6 м'};
 const assert=(condition,code)=>{if(!condition)throw new Error(code)};
-assert(snapshot.column==='H'&&snapshot.header==='Стоимость для сайта, округлённая','SOURCE_COLUMN_CHANGED');
+assert(snapshot.column==='J'&&snapshot.header==='Стоимость для сайта, округлённая, ₽','SOURCE_COLUMN_CHANGED');
 assert(snapshot.rows.length===20,'BASE_SKU_COUNT');
 assert(catalog.version===snapshot.pricebookVersion,'SOURCE_VERSION_MISMATCH');
+assert(catalog.priceSource?.column===snapshot.column&&catalog.priceSource?.header===snapshot.header,'PRICEBOOK_PUBLIC_COLUMN_CONTRACT_MISMATCH');
 const expected=[];
 for(const [model,ids] of Object.entries(keys))for(const id of ids){
   const row=snapshot.rows.find(r=>r.modelId===model&&r.sizeId===id);
@@ -42,12 +43,12 @@ const input=readFileSync(join(root,'index.html'),'utf8');
 assert(input.includes('id="quoteTotal">505 000 ₽'),'HTML_INITIAL_BASE_MISMATCH');
 assert(input.includes('id="bundleNew">618 022 ₽'),'HTML_FEATURED_BUNDLE_MISMATCH');
 assert(catalog.checks.baseRub===505000&&catalog.checks.bundleTotalRub===618022,'CHECKSUM_MISMATCH');
-console.log('V74_SNAPSHOT_BASE_PRICES=PASS; VERIFIED=20; COLUMN=H; EXTRAS_UNCHANGED=1');
+console.log('V74_SNAPSHOT_BASE_PRICES=PASS; VERIFIED=20; COLUMN=J; EXTRAS_UNCHANGED=1');
 
 if(process.argv.includes('--live')){
  const id=process.env.DACHAPAR_SHEETS_ID,token=process.env.DACHAPAR_SHEETS_READ_TOKEN;
  assert(id&&token,'LIVE_SHEETS_CREDENTIALS_REQUIRED');
- const ranges=["'Рабочий калькулятор'!A225:B244","'Рабочий калькулятор'!H225:H244"];
+ const ranges=["'Рабочий калькулятор'!A225:B244","'Рабочий калькулятор'!J225:J244"];
  const fetchRange=async range=>{
    const endpoint='https://sheets.googleapis.com/v4/spreadsheets/'+encodeURIComponent(id)+'/values/'+encodeURIComponent(range)+'?valueRenderOption=UNFORMATTED_VALUE';
    const response=await fetch(endpoint,{headers:{Authorization:'Bearer '+token},signal:AbortSignal.timeout(10000)});
