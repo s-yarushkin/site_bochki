@@ -5,7 +5,7 @@ import CATALOG from './catalog-pricebook.json' with {type:'json'};
 const subtitles={
   kvadro:'Компактная готовая баня для дачного участка',
   parus:'Панорамное пространство для отдыха',
-  viking:'Выразительная форма с клиновым входом',
+  viking:'Арочный вход по центру уже в базовой цене',
   'kvadro-house':'Пространство для отдыха с близкими'
 };
 const slots={
