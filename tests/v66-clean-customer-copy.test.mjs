@@ -24,7 +24,7 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.doesNotMatch(html,/Комплектация без обливного устройства/);
   // V73 has 19 concrete base items and 12 meaningful additions; minuscule wiring costs are not listed as add-ons.
   assert.match(html,/12 дополнениями, включая утепление пола/);
-  assert.match(html,/id="base"[\s\S]*?оснащённая баня/);
+  assert.match(html,/id="base"[\s\S]*?всё главное для вашей бани/);
   assert.match(css,/\.bundle-list \.bundle-item::before\{content:none;display:none\}/);
   for(const id of ['socket_kit_owner','electrical_distribution_owner','electrical_safety_cabinet_temporary_supply']){
     assert.equal(book.options[id],undefined);
