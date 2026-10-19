@@ -19,7 +19,7 @@ export function classifyConfirmedLead(lead) {
   if(!lead || lead.flow!=='quote' || !lead.estimate)return {premiumQualified:false,detailedQualified:false};
   const sum=lead.estimate.total;
   const priced=Number.isSafeInteger(sum) && sum>=0;
-  const premiumQualified=priced && sum>=PREMIUM_MIN_RUB && premiumCity(lead.district)!==null;
+  const premiumQualified=priced && lead.estimate.quoteRequired!==true && (!lead.estimate.unpricedOptionIds||lead.estimate.unpricedOptionIds.length===0) && sum>=PREMIUM_MIN_RUB && premiumCity(lead.district)!==null;
   const options=Array.isArray(lead.estimate.options)?lead.estimate.options:[];
   const detailedQualified=lead.journeyComplete===true && typeof lead.district==='string' && lead.district.trim().length>=2 && options.filter(o=>Number.isSafeInteger(o.price)&&o.price>0).length>=2;
   return {premiumQualified,detailedQualified};

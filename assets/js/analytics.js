@@ -99,7 +99,7 @@ function markReceipt(requestId){
   try{const s=getSession(),list=JSON.parse(s?.getItem(seenKey)||'[]');s?.setItem(seenKey,JSON.stringify([...new Set([...(Array.isArray(list)?list:[]),requestId])].slice(-60)));}catch{}
 }
 export function confirmedLead(receipt,{flow,requestId}={}){
-  if(!active||receipt?.ok!==true||receipt?.delivered!==true||receipt?.duplicate===true||seenReceipt(requestId))return false;
+  if(!active||receipt?.ok!==true||receipt?.delivered!==true||receipt?.analytics?.persisted!==true||receipt?.duplicate===true||seenReceipt(requestId))return false;
   markReceipt(requestId);trackGoal('dp_lead_confirmed',{flow});
   if(flow==='quote')trackGoal('dp_quote_lead_confirmed',{flow});
   if(flow==='callback')trackGoal('dp_callback_lead_confirmed',{flow});

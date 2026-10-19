@@ -285,7 +285,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         }
         if(record.notificationStatus==='delivered'){
           recent.set(fingerprint,now+120000);
-          return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id,analytics:classifyConfirmedLead(record.detail)});
+          return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id,analytics:{persisted:true,...classifyConfirmedLead(record.detail)}});
         }
         if(sending.has(record.id))return json(res,409,{ok:false,code:'DELIVERY_IN_PROGRESS'});
       }
@@ -296,7 +296,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         if(record)store.delivery(record.id,'delivered');
         recent.set(fingerprint,now+120000);
         log(JSON.stringify({event:'bani_lead_delivered',flow:lead.flow,leadId:record?.id||null}));
-        return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id,analytics:classifyConfirmedLead(record.detail)}:{})});
+        return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id,analytics:{persisted:true,...classifyConfirmedLead(record.detail)}}:{})});
       } catch {
         if(record)try{store.delivery(record.id,'failed');}catch{}
         log(JSON.stringify({event:'bani_delivery_failed',leadId:record?.id||null}));

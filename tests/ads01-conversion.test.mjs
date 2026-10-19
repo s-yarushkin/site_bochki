@@ -14,6 +14,7 @@ test('ADS01 exact threshold, null, underprice, non-city and non-quote',()=>{
   assert.equal(classifyConfirmedLead(q(749999,'Ногинск')).premiumQualified,false);
   assert.equal(classifyConfirmedLead(q(null,'Ногинск')).premiumQualified,false);
   assert.equal(classifyConfirmedLead(q(860000,'Москва')).premiumQualified,false);
+  assert.equal(classifyConfirmedLead({...q(860000,'Ногинск'),estimate:{total:860000,quoteRequired:true}}).premiumQualified,false);
   assert.equal(classifyConfirmedLead({...q(860000,'Ногинск'),flow:'callback'}).premiumQualified,false);
 });
 test('ADS01 detailed independent from premium, no fake paid extras',()=>{
