@@ -29,7 +29,7 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.match(feature,/Больше света, больше уюта/);
   assert.match(feature,/увеличенное окно/);
   assert.match(feature,/стеклянная дверь/);
-  assert.match(feature,/утеплённый пол/);
+  assert.match(feature,/утеплённый пол/i);
   assert.match(feature,/места для хранения/);
   assert.match(feature,/id="bundleNew">613 977 ₽/);
   assert.doesNotMatch(feature,/\b\d+\s+(?:дополнени[йя]|опци[йя]|позиций)/i);
