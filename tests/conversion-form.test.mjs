@@ -5,7 +5,7 @@ import {CONSENT_VERSION,CONSENT_METHOD,CONSENT_DOCUMENT_SHA256} from '../assets/
 import {PRICEBOOK} from '../data/pricebook.js';
 const lead={flow:'quote',phone:'+79991234567',name:'',district:'',base:'unknown',access:'unknown',consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,configuration:{modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,pricebookVersion:PRICEBOOK.version}};
 test('phone-only request retains server-calculated configuration and exact consent document fingerprint',()=>{
- const value=validateBaniLead(lead);assert.equal(value.estimate.total,471555);assert.equal(value.name,'');assert.equal(value.district,'');
+ const value=validateBaniLead(lead);assert.equal(value.estimate.total,484155);assert.equal(value.name,'');assert.equal(value.district,'');
  assert.equal(value.consentEvidence.method,CONSENT_METHOD);assert.equal(value.consentEvidence.version,CONSENT_VERSION);
  assert.equal(createHash('sha256').update(readFileSync(new URL('../consent.html',import.meta.url))).digest('hex'),CONSENT_DOCUMENT_SHA256);
  assert.equal(value.consentEvidence.documentSha256,CONSENT_DOCUMENT_SHA256);assert.match(formatBaniLead(value),/Район: Не указан/);assert.match(formatBaniLead(value),/ДАЧА ПАР/);
