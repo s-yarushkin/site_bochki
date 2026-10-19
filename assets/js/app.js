@@ -64,7 +64,7 @@ function renderCatalog(){
       </div></article>`;
   }).join('');
   syncMedia();
-  $('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>selectCatalogModel(button.dataset.catalogSelect)));
+  $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>selectCatalogModel(button.dataset.catalogSelect)));
   document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
     const value=btn.dataset.filter;
     $$('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
