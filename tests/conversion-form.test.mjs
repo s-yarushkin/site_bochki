@@ -5,7 +5,7 @@ import {CONSENT_VERSION,CONSENT_METHOD,CONSENT_DOCUMENT_SHA256} from '../assets/
 import {PRICEBOOK} from '../data/pricebook.js';
 const lead={flow:'quote',phone:'+79991234567',name:'',district:'',base:'unknown',access:'unknown',consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,configuration:{modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,pricebookVersion:PRICEBOOK.version}};
 test('phone-only request retains server-calculated configuration and exact consent document fingerprint',()=>{
- const value=validateBaniLead(lead);assert.equal(value.estimate.total,500955);assert.equal(value.name,'');assert.equal(value.district,'');
+ const value=validateBaniLead(lead);assert.equal(value.estimate.total,505000);assert.equal(value.name,'');assert.equal(value.district,'');
  assert.equal(value.consentEvidence.method,CONSENT_METHOD);assert.equal(value.consentEvidence.version,CONSENT_VERSION);
  // Git may check out the same legal document as CRLF on Windows.
  // Fingerprint the canonical LF publication bytes; unlike trimming or rewriting

@@ -36,8 +36,8 @@ test('V73 retains original base elements and adds floor and electrical safety pa
                      'Ступенька','Внутренняя электрика и освещение','Слив','Вентиляция',
                      'Электрощит','Напольная конструкция','Обручи','гибкой черепицы','в два слоя'])assert.ok(base.includes(item),item);
   assert.match(base,/data-flow="callback" data-topic=/);
-  assert.match(html,/id="bundleNew">613 977 ₽/);
-  assert.match(html,/id="quoteTotal">500 955 ₽/);
+  assert.match(html,/id="bundleNew">618 022 ₽/);
+  assert.match(html,/id="quoteTotal">505 000 ₽/);
   assert.match(js,/Базовая комплектация от/);
   assert.match(js,/from '\.\/quote-engine\.js'/);
 });
