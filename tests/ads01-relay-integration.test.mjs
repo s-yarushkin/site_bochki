@@ -128,7 +128,7 @@ test('ADS-01 attribution server rejects untrusted free text and raw URLs without
     assert.equal(value.first.yclid,'123-A');
     assert.equal(value.first.utm_term,undefined);
     assert.equal(value.first.evil,undefined);
-    assert.equal(value.last,undefined);
+    assert.deepEqual(value.last,{utm_medium:'cpc'}); // safe valid field is retained; injected URL is discarded.
     assert.equal(value.first.landing,'/bani/kvadro/');
   });
 });
