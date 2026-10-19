@@ -1,4 +1,5 @@
 import {CONSENT_VERSION,CONSENT_METHOD} from './lead-consent.js';
+import {trackGoal,attributionForLead,confirmedLead} from './analytics.js';
 import {readLandingModel,readLandingContact} from './landing-model.js';
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
@@ -15,6 +16,9 @@ let formFlow='quote';
 let formQuote=null;
 let submitted=false;
 let formRequestId=null;
+let builderCompleted=false;
+let builderStarted=false;
+function markBuilderStart(){if(!builderStarted){builderStarted=true;trackGoal('dp_builder_start',{placement:'builder'});}}
 const money=formatMoney;
 let formTopic='';
 const bundle=PRICEBOOK.bundle;
@@ -27,6 +31,9 @@ function choice({title,detail='',selected=false,attributes='',price='',icon='⌂
 }
 function selectCatalogModel(modelId){
   const model=getModel(modelId);
+  builderCompleted=false;
+  markBuilderStart();
+  trackGoal('dp_model_select',{model:model.id,placement:'catalog'});
   const changed=state.modelId!==model.id;
   state.modelId=model.id;
   if(changed){
@@ -146,6 +153,8 @@ function renderBundle(){
   $('#bundleNew').textContent=money(total.total);
   $('#bundleSaving').textContent='Выбранное оснащение входит в общую стоимость';
   $$('[data-bundle]').forEach(btn=>btn.addEventListener('click',()=>{
+    builderCompleted=false;
+    markBuilderStart();
     state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=btn.dataset.bundle==='summary'?6:3;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
@@ -221,18 +230,18 @@ function renderStepContent(){const model=getModel(state.modelId),step=state.step
     body=`<h3 class="builder-title">Цвет бани и кровли</h3><p class="builder-help">Выберите цвет корпуса и кровли по своему вкусу.</p><h4>Отделка корпуса — 12 вариантов</h4><div class="color-choices color-choices-catalog">${bodyChoices.map(item=>swatch('body',item,'finish',state.finish)).join('')}</div><h4>Цвет кровли — 4 варианта</h4><div class="color-choices color-choices-catalog">${roofChoices.map(item=>swatch('roof',item,'roof',state.roof)).join('')}</div><div class="color-hint">Стоимость выбранного цвета уточним при подтверждении заказа.</div>`;}
   if(step===3){body=`<h3 class="builder-title">Тепло начинается с деталей</h3><p class="builder-help">Подсветка полка, топка, отделка: выберите то, что сделает вашу парную особенной.</p>${renderOptions('steam')}`;}
   if(step===4){body=`<h3 class="builder-title">Добавим немного удобства</h3><p class="builder-help">Вода, крыльцо, окна и дополнительные мелочи для долгожданного отдыха.</p>${renderOptions('comfort')}`;}
-  if(step===5){body=`<h3 class="builder-title">Расскажите об участке</h3><p class="builder-help">Уточним адрес, подъезд и основание, чтобы обсудить доставку и установку.</p><div class="site-fields"><label>Где ваша дача? <input id="regionInput" maxlength="140" placeholder="Город / район" value="${escaped(state.region)}"></label><label>Основание под баню<select id="baseSelect"><option value="unknown">Пока не знаю</option><option value="ready">Подготовлено</option><option value="advice">Нужна консультация</option></select></label><label>Подъезд транспорта<select id="accessSelect"><option value="unknown">Нужно уточнить</option><option value="yes">Есть подъезд</option><option value="advice">Нужна консультация</option></select></label></div><p class="builder-insight">Доставка и основание сейчас не включены в стоимость. Менеджер уточнит детали позже.</p>`;}
+  if(step===5){body=`<h3 class="builder-title">Расскажите об участке</h3><p class="builder-help">Уточним адрес, подъезд и основание, чтобы обсудить доставку и установку.</p><div class="site-fields"><label>Где ваша дача? <input class="ym-disable-keys" id="regionInput" maxlength="140" placeholder="Город / район" value="${escaped(state.region)}"></label><label>Основание под баню<select id="baseSelect"><option value="unknown">Пока не знаю</option><option value="ready">Подготовлено</option><option value="advice">Нужна консультация</option></select></label><label>Подъезд транспорта<select id="accessSelect"><option value="unknown">Нужно уточнить</option><option value="yes">Есть подъезд</option><option value="advice">Нужна консультация</option></select></label></div><p class="builder-insight">Доставка и основание сейчас не включены в стоимость. Менеджер уточнит детали позже.</p>`;}
   if(step===6){body=`<h3 class="builder-title">Вы уже собрали свою баню</h3><p class="builder-help">Вот ваш предварительный комплект. Если хотите, вернитесь назад и измените детали.</p>${renderQuoteTable()}`;}
   $('#builderStepContent').innerHTML=body;
   if(step===5){$('#baseSelect').value=state.base;$('#accessSelect').value=state.access;$('#regionInput').addEventListener('input',e=>state.region=e.target.value);$('#baseSelect').addEventListener('change',e=>state.base=e.target.value);$('#accessSelect').addEventListener('change',e=>state.access=e.target.value);}
-  $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;state.view='outside';state.photoIndex=0;}renderBuilder();}));
-  $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
+  $$('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{markBuilderStart();trackGoal('dp_model_select',{model:btn.dataset.chooseModel,placement:'builder'});const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;state.view='outside';state.photoIndex=0;}renderBuilder();}));
+  $$('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{markBuilderStart();trackGoal('dp_size_select',{size:btn.dataset.chooseSize,model:state.modelId,placement:'builder'});if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
   document.querySelectorAll('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
   document.querySelectorAll('[data-roof]').forEach(btn=>btn.addEventListener('click',()=>{state.roof=btn.dataset.roof;renderBuilder();}));
   $$('[data-option]').forEach(btn=>btn.addEventListener('click',()=>toggleOption(btn.dataset.option)));
   // Form entry points are handled by one delegated listener in initForms().
 }
-function toggleOption(id){const option=getOption(id);if(!option)return;
+function toggleOption(id){const option=getOption(id);if(!option)return;trackGoal('dp_builder_interaction',{step:state.step+1,placement:'builder'});
   if(state.optionIds.includes(id)){state.optionIds=state.optionIds.filter(x=>x!==id);}
   else {if(option.mutex)state.optionIds=state.optionIds.filter(x=>getOption(x).mutex!==option.mutex);state.optionIds.push(id);}
   // Bundle is intentionally retained as an eligibility intent; removing a required option
@@ -265,8 +274,8 @@ function syncWeatherPhotoFrames(weather){
   syncMedia();
 }
 function initBuilder(){const landing=readLandingModel(location.search,PRICEBOOK.models);if(landing){state.modelId=landing.id;state.sizeId=Object.keys(landing.sizes)[0];state.step=1;}renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
-  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
-  else state.step++;renderBuilder();
+  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';builderCompleted=false;builderStarted=false;}
+  else {markBuilderStart();if(state.step===5){builderCompleted=true;trackGoal('dp_builder_complete',{placement:'builder',model:state.modelId});}state.step++;}renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
  document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;state.photoIndex=0;renderSummary();}));
  document.querySelectorAll('[data-builder-photo-step]').forEach(btn=>btn.addEventListener('click',()=>{
@@ -340,7 +349,7 @@ function openForm(flow='quote',topic=''){
   const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ПОМОЩЬ С ВЫБОРОМ':'ВАША БАНЯ';$('#contactTitle').textContent=callback?'Связаться с менеджером':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте телефон — обсудим баню и ответим на ваши вопросы.':'Комплектация сохранена. Оставьте телефон — менеджер уточнит доставку и итоговую стоимость.';
   $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent='необязательно';$('#formExtra').open=false;$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();$('#contactForm').elements.comment.value=formFlow==='callback'?formTopic:'';submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Номер для ответа на вашу заявку.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
-  setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
+  setResultText();$('#contactDialog').showModal();trackGoal('dp_form_open',{flow:formFlow});$('#contactForm').elements.phone.focus();
 }
 function initForms(){
   const dialog=$('#contactDialog');
@@ -353,6 +362,7 @@ function initForms(){
   const phoneHint=$('#phoneHint');
   const channel=form.elements.contactChannel;
   function showError(message,focusField){
+    trackGoal('dp_form_error',{flow:formFlow});
     error.textContent=message;
     error.scrollIntoView({block:'nearest'});
     if(focusField){const details=focusField.closest('details');if(details)details.open=true;focusField.focus({preventScroll:true});}
@@ -375,6 +385,7 @@ function initForms(){
   });
   $('#dialogClose').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+  dialog.addEventListener('close',()=>{if(!submitted)trackGoal('dp_form_close',{flow:formFlow});});
   back.addEventListener('click',()=>{
     if(submitted){dialog.close();return;}
     result.hidden=true;
@@ -402,7 +413,8 @@ function initForms(){
     // Consent evidence is created only after the user submits a valid form.
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
+      comment,consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value,
+      journeyComplete:formFlow==='quote'&&builderCompleted
     };
     if(formFlow==='quote'){
       payload.district=district;
@@ -413,6 +425,8 @@ function initForms(){
         optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish,roof:state.roof,pricebookVersion:formQuote.pricebookVersion
       };
     }
+    const adsAttribution=attributionForLead();
+    if(adsAttribution)payload.attribution=adsAttribution;
     submit.disabled=true;
     const originalLabel=submit.textContent;
     submit.textContent='Отправляем заявку…';
@@ -431,6 +445,7 @@ function initForms(){
         throw new Error('DELIVERY_FAILED');
       }
       submitted=true;
+      confirmedLead(receipt,{flow:formFlow,requestId:formRequestId});
       result.querySelector('strong').textContent='Заявка отправлена';
       result.querySelector('p').textContent='Спасибо! Заявка отправлена. Мы свяжемся с вами выбранным способом.';
       back.textContent='Закрыть';
