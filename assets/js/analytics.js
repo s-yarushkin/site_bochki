@@ -1,6 +1,6 @@
 // ADS-01 single public-site measurement adapter; safe no-op until owner GO.
 import {ADS01_COUNTER_ID, ADS01_PRIVACY_APPROVED} from './analytics-config.js';
-const goals=new Set(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_error','dp_builder_start','dp_builder_complete','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click']);
+const goals=new Set(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_builder_start','dp_builder_complete','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click']);
 const models=new Set(['kvadro','parus','viking','kvadro-house']);
 const placements=new Set(['header','hero','catalog','base','bundle','personal','delivery','builder','faq','final','footer','mobile','seo','unknown']);
 const decisionsKey='dp_analytics_consent_v1', touchKey='dp_attribution_v1', seenKey='dp_counted_leads_v1';
