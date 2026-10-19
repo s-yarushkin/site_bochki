@@ -3,7 +3,7 @@
 import CATALOG from './catalog-pricebook.json' with {type:'json'};
 
 const subtitles={
-  kvadro:'Компактная готовая баня для дачного участка',
+  kvadro:'Центральный вход включён в базовую стоимость',
   parus:'Панорамное пространство для отдыха',
   viking:'Арочный вход по центру уже в базовой цене',
   'kvadro-house':'Пространство для отдыха с близкими'
@@ -42,8 +42,10 @@ export const PRICEBOOK=Object.freeze({
   models,options,
   finishes:CATALOG.finishes,
   bundle:{id:bundle.id,name:'Квадро 5 м · Комфорт',modelId:bundle.modelId,
-    sizeId:bundle.sizeId,optionIds:[...bundle.selectedOptionIds],discount:bundle.discountRub},
+    sizeId:bundle.sizeId,optionIds:[...bundle.selectedOptionIds],discount:bundle.discountRub,quotePendingApproval:!!bundle.quoteRequiredUntil?.electricalShieldFactorySpecAndCost,
+    pendingApprovalReason:'Параметры и стоимость штатного электрощита подтверждает производство'},
   progressive:[],
+  baseInclusions:CATALOG.baseInclusions,
   deliveryIncluded:CATALOG.deliveryIncluded
 });
 export {CATALOG};
