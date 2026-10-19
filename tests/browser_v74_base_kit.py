@@ -2,6 +2,7 @@
 No production HTTP requests or lead creation; captures screenshots at several sizes.
 """
 import json
+import os
 import functools
 import http.server
 import threading
@@ -22,7 +23,10 @@ server=http.server.ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Local,d
 threading.Thread(target=server.serve_forever,daemon=True).start()
 try:
  with sync_playwright() as p:
-  browser=p.chromium.launch(headless=True)
+  opts={'headless':True}
+  for candidate in [Path(os.environ.get('PLAYWRIGHT_CHROMIUM_EXECUTABLE','/__not_configured__')),Path(os.environ.get('PROGRAMFILES',r'C:\Program Files'))/'Google/Chrome/Application/chrome.exe',Path(os.environ.get('PROGRAMFILES(X86)',r'C:\Program Files (x86)'))/'Microsoft/Edge/Application/msedge.exe',Path('/usr/bin/chromium')]:
+   if candidate.is_file():opts['executable_path']=str(candidate);break
+  browser=p.chromium.launch(**opts)
   for w,h in sizes:
    page=browser.new_page(viewport={'width':w,'height':h},device_scale_factor=1,reduced_motion='reduce')
    errors=[]

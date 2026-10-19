@@ -7,7 +7,8 @@ export const V68_MEDIA_PATHS=Object.freeze({
   'parus-outside.webp':'assets/catalog-v68-ai/parus-outside-v68.webp',
   'parus-lounge.webp':'assets/catalog-v68-ai/parus-lounge-v68.webp',
   'viking-outside.webp':'assets/catalog-v68-ai/viking-outside-v68.webp',
-  'kvadro-house-outside.webp':'assets/catalog-v68-ai/kvadro-house-outside-v68.webp'
+  // Owner's 19.10 scope: replace this cover only with the existing SUN master.
+  'kvadro-house-outside.webp':'assets/media-v5/hero-sun.webp'
 });
 // Only seven individually reviewed concept visualizations. The eleven small or
 // contaminated brochure fragments remain archived but are hidden from preview.

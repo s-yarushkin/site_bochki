@@ -39,8 +39,9 @@ test('V6.1 supports blue sky and navy overcast clouds below content',()=>{
 test('V6.1 has exactly two scenic interludes with no falling-rain copy',()=>{
   assert.equal((html.match(/class="weather-window/g)||[]).length,2);
   assert.equal((html.match(/data-weather-scene=/g)||[]).length,2);
-  assert.equal((html.match(/data-v6-sun=/g)||[]).length,4);
-  assert.equal((html.match(/data-v6-rain=/g)||[]).length,4);
+  assert.equal((html.match(/data-v6-sun=/g)||[]).length,3);
+  assert.equal((html.match(/data-v6-rain=/g)||[]).length,3);
+  assert.match(html,/href="#bundle">Посмотреть комплект «Комфорт»/);
   assert.doesNotMatch(html,/Пусть дождь идёт|капли стучат/);
   assert.match(motion,/node\.textContent=weather==='rain'/);
 });

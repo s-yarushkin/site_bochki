@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "v74-source-h1",
+  "sourceSheet": "Рабочий калькулятор",
+  "sourceRange": "A225:B244;H225:H244",
+  "column": "H",
+  "header": "Стоимость для сайта, округлённая",
+  "rounding": "CEILING_5000_UP",
+  "capturedDate": "2026-10-19",
+  "pricebookVersion": "2026-10-19-v74-sheet-round-up-5000-r1",
+  "rows": [
+    {
+      "sourceRow": 225,
+      "modelId": "kvadro",
+      "sizeId": "400",
+      "sitePriceRub": 390000
+    },
+    {
+      "sourceRow": 226,
+      "modelId": "kvadro",
+      "sizeId": "450",
+      "sitePriceRub": 440000
+    },
+    {
+      "sourceRow": 227,
+      "modelId": "kvadro",
+      "sizeId": "500",
+      "sitePriceRub": 505000
+    },
+    {
+      "sourceRow": 228,
+      "modelId": "kvadro",
+      "sizeId": "550",
+      "sitePriceRub": 525000
+    },
+    {
+      "sourceRow": 229,
+      "modelId": "kvadro",
+      "sizeId": "600",
+      "sitePriceRub": 540000
+    },
+    {
+      "sourceRow": 230,
+      "modelId": "viking",
+      "sizeId": "400",
+      "sitePriceRub": 450000
+    },
+    {
+      "sourceRow": 231,
+      "modelId": "viking",
+      "sizeId": "450",
+      "sitePriceRub": 520000
+    },
+    {
+      "sourceRow": 232,
+      "modelId": "viking",
+      "sizeId": "500",
+      "sitePriceRub": 610000
+    },
+    {
+      "sourceRow": 233,
+      "modelId": "viking",
+      "sizeId": "550",
+      "sitePriceRub": 655000
+    },
+    {
+      "sourceRow": 234,
+      "modelId": "viking",
+      "sizeId": "600",
+      "sitePriceRub": 670000
+    },
+    {
+      "sourceRow": 235,
+      "modelId": "parus",
+      "sizeId": "400",
+      "sitePriceRub": 415000
+    },
+    {
+      "sourceRow": 236,
+      "modelId": "parus",
+      "sizeId": "450",
+      "sitePriceRub": 455000
+    },
+    {
+      "sourceRow": 237,
+      "modelId": "parus",
+      "sizeId": "500",
+      "sitePriceRub": 510000
+    },
+    {
+      "sourceRow": 238,
+      "modelId": "parus",
+      "sizeId": "550",
+      "sitePriceRub": 530000
+    },
+    {
+      "sourceRow": 239,
+      "modelId": "parus",
+      "sizeId": "600",
+      "sitePriceRub": 545000
+    },
+    {
+      "sourceRow": 240,
+      "modelId": "kvadro-house",
+      "sizeId": "4x4",
+      "sitePriceRub": 590000
+    },
+    {
+      "sourceRow": 241,
+      "modelId": "kvadro-house",
+      "sizeId": "5x4",
+      "sitePriceRub": 690000
+    },
+    {
+      "sourceRow": 242,
+      "modelId": "kvadro-house",
+      "sizeId": "6x4",
+      "sitePriceRub": 735000
+    },
+    {
+      "sourceRow": 243,
+      "modelId": "kvadro-house",
+      "sizeId": "6x5",
+      "sitePriceRub": 795000
+    },
+    {
+      "sourceRow": 244,
+      "modelId": "kvadro-house",
+      "sizeId": "6x6",
+      "sitePriceRub": 860000
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+/* V74 content release: readable sections with natural page scrolling.
+ * The configurator's layout, controls and preview are deliberately excluded.
+ */
+.section-top h2,
+.difference h2,
+.faq h2,
+.base-kit h3,
+.weather-window h2 { text-wrap: balance; }
+
+.section-description,
+.base-kit-intro p,
+.difference-story p { text-wrap: pretty; }
+
+#differenceTitle { max-width: none; }
+@media (min-width: 851px) {
+  .difference-intro { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); }
+  #differenceTitle { font-size: clamp(34px, 3.15vw, 50px); }
+  #differenceTitle em { display: block; }
+}
+
+[data-weather-scene="skyline"] .weather-window-content {
+  padding-block: clamp(28px, 4vw, 48px);
+}
+[data-weather-scene="skyline"] p { max-width: 54ch; }
+[data-weather-scene="skyline"] .btn {
+  margin-top: 18px;
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+/* A scene ends when its content ends, including enlarged text. */
+.base-kit-intro,
+.base-kit-list > div,
+.product-body { min-width: 0; }
+.base-kit-intro h3,
+.base-kit-list h3 { overflow-wrap: break-word; }

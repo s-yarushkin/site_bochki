@@ -59,7 +59,7 @@ test('V7.1 previous Viking and Kvadro House galleries, hero, pricebook remain un
   assert.equal(MODEL_ALBUMS['kvadro-house'].photos.length,3);
   assert.equal(MODEL_ALBUMS.kvadro.photos.length,3);
   assert.equal(MEDIA_SLOTS['catalog-viking'].path,'assets/catalog-v68-ai/viking-outside-v68.webp');
-  assert.equal(MEDIA_SLOTS['catalog-kvadro-house'].path,'assets/catalog-v68-ai/kvadro-house-outside-v68.webp');
+  assert.equal(MEDIA_SLOTS['catalog-kvadro-house'].path,'assets/media-v5/hero-sun.webp');
   assert.equal(MEDIA_SLOTS['hero-sun-desktop'].file,'hero-sun.webp');
   assert.equal(MEDIA_SLOTS['hero-rain-desktop'].file,'hero-sun.webp');
   const manifest=json=>JSON.parse(read(json));

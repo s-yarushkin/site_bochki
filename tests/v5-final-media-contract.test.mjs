@@ -27,9 +27,10 @@ test('V5 site loads third layer and photographic image controller',()=>{
 });
 
 test('V6.9 SUN/RAIN hero and V6.8 Viking cover unchanged; three real photos are additional',()=>{
-  for(const id of ['kvadro','parus','kvadro-house']){
+  for(const id of ['kvadro','parus']){
     assert.equal(resolveMedia('catalog-'+id).path,'assets/catalog-v68-ai/'+id+'-outside-v68.webp');
   }
+  assert.equal(resolveMedia('catalog-kvadro-house').path,'assets/media-v5/hero-sun.webp');
   assert.equal(resolveMedia('real-parus-outside-01').path,'assets/real-objects/parus/parus-001/outside-01.png');
   assert.equal(resolveMedia('real-parus-outside-02').path,'assets/real-objects/parus/parus-001/outside-02.png');
   assert.equal(resolveMedia('catalog-viking').path,'assets/catalog-v68-ai/viking-outside-v68.webp');
@@ -100,6 +101,7 @@ test('V5 static assets are present, sized and match owner media manifest before 
   for(const slot of Object.values(MEDIA_SLOTS).filter(Boolean)){
     if(slot.path?.startsWith('assets/real-objects/'))assert.ok(realFiles.has(slot.path),'Unpackaged user real photo '+slot.path);
     else if(slot.path?.startsWith('assets/catalog-v68-ai/'))assert.ok(aiFiles.has(slot.file),'Unpackaged v6.8 concept '+slot.file);
+    else if(slot.path?.startsWith('assets/media-v5/'))assert.ok(actual.has(slot.file),'Unpackaged v5 hero '+slot.file);
     else if(slot.path)assert.ok(catalogFiles.has(slot.file),'Unpackaged v6.6 media '+slot.file);
     else assert.ok(actual.has(slot.file),'Unpackaged v5 hero '+slot.file);
   }

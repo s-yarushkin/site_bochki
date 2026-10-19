@@ -33,7 +33,7 @@ test('V7.0 two exact owner JPG photographs of one Kvadro House: outside only',()
     assert.ok(data.subarray(0,3).equals(Buffer.from([255,216,255])),'JPG signature');
   }
 });
-test('V7.0 original Kvadro House cover remains first; two originals added, no interior invented',()=>{
+test('V74 Kvadro House SUN cover is first; two originals remain, no interior invented',()=>{
   const photos=getModelScenePhotos('kvadro-house');
   assert.deepEqual(photos.map(p=>p.file),[
     'kvadro-house-outside.webp',...manifest.photos.map(p=>p.path)
@@ -41,8 +41,8 @@ test('V7.0 original Kvadro House cover remains first; two originals added, no in
   assert.equal(getModelScenePhotos('kvadro-house','outside').length,3);
   assert.equal(getModelScenePhotos('kvadro-house','inside').length,0);
   assert.deepEqual(realModelPhotos('kvadro-house').map(p=>p.path),manifest.photos.map(p=>p.path));
-  assert.equal(MEDIA_SLOTS['catalog-kvadro-house'].path,'assets/catalog-v68-ai/kvadro-house-outside-v68.webp');
-  assert.equal(MEDIA_SLOTS['catalog-kvadro-house-rain'].path,'assets/catalog-v68-ai/kvadro-house-outside-v68.webp');
+  assert.equal(MEDIA_SLOTS['catalog-kvadro-house'].path,'assets/media-v5/hero-sun.webp');
+  assert.equal(MEDIA_SLOTS['catalog-kvadro-house-rain'].path,'assets/media-v5/hero-sun.webp');
   assert.equal(MEDIA_SLOTS['real-kvadro-house-outside-01'].path,manifest.photos[0].path);
   assert.equal(MEDIA_SLOTS['real-kvadro-house-outside-02'].path,manifest.photos[1].path);
   assert.equal(MEDIA_SLOTS['hero-sun-desktop'].file,'hero-sun.webp');

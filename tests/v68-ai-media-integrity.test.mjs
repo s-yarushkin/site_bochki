@@ -40,9 +40,10 @@ test('V6.8: exact seven-image manifest is truthful and content-addressed',()=>{
     assert.equal(createHash('sha256').update(data).digest('hex'),im.sha256,im.file);
   }
 });
-test('V6.9: all seven approved V6.8 images stay displayed while Viking gains three real photos',()=>{
+test('V74: six V6.8 images remain; only Kvadro House cover uses the existing SUN master',()=>{
   const images=manifest.images;
-  assert.deepEqual(images.map(im=>im.file).sort(),Object.values(V68_MEDIA_PATHS).map(path=>path.split('/').at(-1)).sort());
+  assert.deepEqual(images.filter(im=>im.model!=='kvadro-house').map(im=>im.file).sort(),Object.values(V68_MEDIA_PATHS).filter(path=>path.startsWith('assets/catalog-v68-ai/')).map(path=>path.split('/').at(-1)).sort());
+  assert.equal(V68_MEDIA_PATHS['kvadro-house-outside.webp'],'assets/media-v5/hero-sun.webp');
   const counts={kvadro:3,parus:4,viking:4,'kvadro-house':3};
   for(const [model,album] of Object.entries(MODEL_ALBUMS)){
     assert.equal(album.photos.length,counts[model],model);

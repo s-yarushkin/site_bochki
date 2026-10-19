@@ -32,7 +32,7 @@ test('V6.9: albums remain model-specific and real Viking photos stay grouped',()
         'assets/real-objects/kvadro-house/kvadro-house-001/outside-01.jpg',
         'assets/real-objects/kvadro-house/kvadro-house-001/outside-02.jpg'
       ]);
-      assert.equal(V68_MEDIA_PATHS[album.photos[0][0]],'assets/catalog-v68-ai/kvadro-house-outside-v68.webp');
+      assert.equal(V68_MEDIA_PATHS[album.photos[0][0]],'assets/media-v5/hero-sun.webp');
       continue;
     }
     if(model==='viking'){
@@ -65,12 +65,12 @@ test('V6.7: gallery is accessible from model photo, name, miniatures and configu
 });
 test('V73: curated comfort kit has 12 options and one customer price without line-item disclosure',()=>{
   assert.equal(book.featuredBundle.selectedOptionIds.length,12);
-  assert.equal(book.checks.bundleTotalRub,613977);
+  assert.equal(book.checks.bundleTotalRub,618022);
   assert.match(app,/function renderBundle\(\)/);
   assert.match(app,/\['Больше света'/);
   assert.match(app,/\$\('#bundleOptions'\)\.innerHTML=benefits\.map/);
   assert.doesNotMatch(app,/\$\('#bundleOptions'\)\.innerHTML=options\.map/);
-  assert.match(html,/id="bundleNew">613 977 ₽/);
+  assert.match(html,/id="bundleNew">618 022 ₽/);
   assert.doesNotMatch(html,/Готовый комплект за 630 000 ₽/);
   assert.match(html,/Доставку, разгрузку, основание, монтаж на участке/);
   assert.match(html,/id="delivery"[\s\S]*?разгрузка манипулятором/);
