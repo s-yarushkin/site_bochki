@@ -43,3 +43,25 @@ test('T36 electrical panel has no invented amount and remains approval-only',()=
 test('T37 selected unpriced option does not become zero or a partial confirmed total',()=>{const x=q({optionIds:['socket_kit_owner']});assert.equal(x.total,null);assert.equal(x.optionsSubtotal,null);assert.equal(x.unpricedOptionIds[0],'socket_kit_owner');assert.equal(formatMoney(x.total),'По запросу');});
 test('T38 priced add-on and base are summed exactly in public rubles',()=>{const x=q({optionIds:['stove_guard']});assert.equal(x.optionsSubtotal,5850);assert.equal(x.total,471555+5850);});
 test('T39 saved historic site-v1 catalog is not rewritten by the new book',async()=>{const legacy=(await import('../data/legacy-site-v1-pricebook.js')).PRICEBOOK;assert.equal(legacy.version,'2026-10-16-sheet-site-v1');assert.equal(legacy.models.find(m=>m.id==='kvadro').sizes['500'],505000);});
+
+test('T40 Viking new base contains the centered arched entrance for all five sizes',()=>{
+  const v=PRICEBOOK.models.find(m=>m.id==='viking');
+  assert.deepEqual(Object.values(v.sizes),[431730,502740,589275,633780,651420]);
+  assert.equal(q({modelId:'viking',sizeId:'500'}).total,589275);
+});
+test('T41 50mm insulated floor is included only in the Kvadro 5m featured kit',()=>{
+  const id='floor_insulation_50mm_kvadro_500';
+  assert.ok(required.includes(id));
+  const option=PRICEBOOK.options.find(o=>o.id===id);
+  assert.equal(option.price,14742);
+  assert.equal(option.compatibleModelId,'kvadro');
+  assert.equal(option.compatibleSizeId,'500');
+  assert.equal(q({optionIds:[id]}).total,471555+14742);
+  assert.throws(()=>q({modelId:'viking',sizeId:'500',optionIds:[id]}),/OPTION_NOT_AVAILABLE_FOR_SIZE/);
+  assert.throws(()=>q({modelId:'kvadro',sizeId:'400',optionIds:[id]}),/OPTION_NOT_AVAILABLE_FOR_SIZE/);
+});
+test('T42 no Quadro center entrance price is invented before owner approval',()=>{
+  const cat=CATALOG;
+  assert.equal(cat.checks.pendingCentralEntranceRrpRub,null);
+  assert.equal(cat.prices.kvadro['500'],471555);
+});
