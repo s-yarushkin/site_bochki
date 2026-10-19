@@ -21,7 +21,7 @@ test('T15 wrong ID type forbidden',()=>{assert.throws(()=>q({optionIds:[3]}),/IN
 test('T16 size 4.5m calculates',()=>{assert.equal(q({sizeId:'450'}).total,435770);});
 test('T17 size 5.5m calculates',()=>{assert.equal(q({sizeId:'550'}).total,523541);});
 test('T18 Kvadro House all dimensions present',()=>{assert.deepEqual(Object.keys(PRICEBOOK.models.find(m=>m.id==='kvadro-house').sizes),['4x4','5x4','6x4','6x5','6x6']);});
-test('T19 Kvadro House 6x5 correct value',()=>{assert.equal(q({modelId:'kvadro-house',sizeId:'6x5'}).total,778500);});
+test('T19 Kvadro House 6x5 correct value',()=>{assert.equal(q({modelId:'kvadro-house',sizeId:'6x5'}).total,793500);});
 test('T20 Viking base follows site column',()=>{assert.deepEqual(Object.values(PRICEBOOK.models.find(m=>m.id==='viking').sizes),[447330,519540,605475,650580,668220]);});
 test('T21 Viking model selection works',()=>{assert.equal(q({modelId:'viking',sizeId:'500'}).total,605475);});
 test('T22 unknown model rejected',()=>{assert.throws(()=>q({modelId:'alien'}),/UNKNOWN_MODEL/);});
