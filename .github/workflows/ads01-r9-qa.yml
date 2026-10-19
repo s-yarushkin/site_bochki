@@ -8,6 +8,8 @@ on:
       - 'assets/js/**'
       - 'server/**'
       - 'tests/ads01-*'
+      - 'tests/test_ads01_fast_release.py'
+      - 'ops/ads01-fast-*'
       - 'tests/browser_ads01.py'
       - 'tests/browser_ads01_extended.py'
       - 'index.html'
@@ -31,6 +33,8 @@ jobs:
         with: {python-version: '3.12'}
       - name: Existing test suite and ADS-01 unit tests
         run: npm run check
+      - name: ADS-01 fast installer staging and rollback unit tests
+        run: python tests/test_ads01_fast_release.py
       - name: Price binding and historic book gate
         run: node scripts/verify-v74-public-prices.mjs
       - name: Generated SEO same as committed snapshot
