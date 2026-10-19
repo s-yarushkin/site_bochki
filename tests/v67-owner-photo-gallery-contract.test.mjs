@@ -67,7 +67,7 @@ test('V73: curated comfort kit has 12 options and one customer price without lin
   assert.equal(book.featuredBundle.selectedOptionIds.length,12);
   assert.equal(book.checks.bundleTotalRub,613977);
   assert.match(app,/function renderBundle\(\)/);
-  assert.match(app,/\['Светло и уютно'/);
+  assert.match(app,/\['Больше света'/);
   assert.match(app,/\$\('#bundleOptions'\)\.innerHTML=benefits\.map/);
   assert.doesNotMatch(app,/\$\('#bundleOptions'\)\.innerHTML=options\.map/);
   assert.match(html,/id="bundleNew">613 977 ₽/);
