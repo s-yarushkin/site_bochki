@@ -1,0 +1,49 @@
+name: ADS-01 R9 conversion and privacy acceptance
+on:
+  pull_request:
+    branches: [release/v74-content-20261019]
+    paths:
+      - 'assets/js/**'
+      - 'server/**'
+      - 'tests/ads01-*'
+      - 'tests/browser_ads01.py'
+      - 'index.html'
+      - 'bani/**'
+      - 'dostavka-i-ustanovka/**'
+      - 'voprosy/**'
+      - 'kontakty/**'
+      - 'docs/ads01/**'
+      - '.github/workflows/ads01-r9-qa.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Existing test suite and ADS-01 unit tests
+        run: npm run check
+      - name: Price binding and historic book gate
+        run: node scripts/verify-v74-public-prices.mjs
+      - name: Generated SEO same as committed snapshot
+        run: |
+          node scripts/build-search-pages.mjs
+          git diff --exit-code -- bani/ dostavka-i-ustanovka/ voprosy/ kontakty/
+      - name: Prepare isolated Chromium
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: ADS-01 offline browser goals, consent and CTA
+        run: python tests/browser_ads01.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ads01-r9-browser-${{ github.run_id }}
+          path: docs/ads01/artifacts/browser/
+          if-no-files-found: warn
+          retention-days: 30
