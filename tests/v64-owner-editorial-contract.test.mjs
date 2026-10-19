@@ -10,7 +10,7 @@ test('V6.4 removes two requested distracting captions while preserving photo and
   assert.doesNotMatch(html,/Стоимость приведена для примера\. Состав комплекта, окончательную цену и возможность установки опций уточнит менеджер\./);
   assert.doesNotMatch(html,/class="hero-art-note"/);
   assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/); // Owner requests no internal production notes in customer copy.
-  assert.match(html,/Цена «от» — ориентировочная стоимость/);
+  assert.match(html,/В базовую стоимость включена готовая баня/);
   assert.match(html,/Стоимость комплекта/);
   assert.match(html,/id="bundleNew">613 977 ₽/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
