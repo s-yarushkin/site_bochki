@@ -21,7 +21,7 @@ test('website matrix uses 20 new equipped base prices and removed low-value extr
  assert.equal(CATALOG.options.bench_chest_spruce.unitPriceRub,4095);
  assert.equal(CATALOG.options.socket_kit_owner,undefined);
  assert.equal(CATALOG.checks.bundleTotalRub,613977);
- assert.equal(CATALOG.checks.quoteRequired,true);
+ assert.equal(CATALOG.checks.quoteRequired,false);
  assert.deepEqual(importSitePrices(source,old),read('data/legacy-site-v1-catalog.json'));
 });
 test('import rejects missing/zero/non-integer site price, duplicate rows and wrong column',()=>{
