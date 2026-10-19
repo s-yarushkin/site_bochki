@@ -1,0 +1,59 @@
+name: V74 Hero browser acceptance
+on:
+  pull_request:
+    branches:
+      - plan/v74-customer-experience-20261019
+    paths:
+      - 'assets/css/v74-hero.css'
+      - 'index.html'
+      - 'tests/browser_v74_first_viewport.py'
+      - 'docs/v74/artifacts/01-hero/**'
+      - '.github/workflows/v74-hero-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  hero-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout baseline
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || 'plan/v74-customer-experience-20261019' }}
+          path: base
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: head
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Baseline before evidence (expected failure is reported, not hidden)
+        run: |
+          python head/tests/browser_v74_first_viewport.py --phase before --root base --out-dir evidence
+      - name: Candidate after strict acceptance
+        run: |
+          python head/tests/browser_v74_first_viewport.py --phase after --root head --out-dir evidence
+      - name: Node regression
+        working-directory: head
+        run: npm run check
+      - name: Mobile browser acceptance
+        working-directory: head
+        run: python tests/browser_mobile_acceptance.py
+      - name: Upload real browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v74-01-hero-before-after-${{ github.run_id }}
+          path: evidence/
+          if-no-files-found: warn
+          retention-days: 30
