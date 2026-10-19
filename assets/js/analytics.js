@@ -43,8 +43,9 @@ function suppressTrackingQuery(){
   // Avoid sending arbitrary query strings/PII through default pageview metadata.
   try {
     const u=new URL(location.href), q=new URLSearchParams();
-    for(const key of ['model','contact','from']){
-      const v=cleanValue(u.searchParams.get(key),50);if(v)q.set(key,v);
+    for(const key of ['model','contact','from','utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid']){
+      const v=cleanValue(u.searchParams.get(key),key==='yclid'?180:key.startsWith('utm_')?90:50);
+      if(v)q.set(key,v);
     }
     const safe=u.pathname+(q.size?'?'+q.toString():'')+u.hash;
     if(safe!==u.pathname+u.search+u.hash)history.replaceState(history.state,'',safe);
@@ -154,6 +155,11 @@ function monitorClicks(){
     },{threshold:0.5});
     const observe=()=>document.querySelectorAll('.product-card[data-model]').forEach(el=>observer.observe(el));
     observe();
+    const grid=document.getElementById('catalogGrid');
+    if(grid && typeof MutationObserver!=='undefined'){
+      const watcher=new MutationObserver(observe);
+      watcher.observe(grid,{childList:true});
+    }
   }
 }
 if(typeof document!=='undefined'){
