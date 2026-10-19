@@ -37,3 +37,10 @@ As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development
 
 ## Release dependency
 - [PR #69](https://github.com/s-yarushkin/site_bochki/pull/69) is still Draft/open against the V7.4 release branch as of this report. It corrects the source-of-truth metadata from H to owner-approved J225:J244. R9 changes none of the 20 prices. Before a production merge, R8 must integrate #69, audit price snapshot with J and rerun full regression at immutable release SHA.
+
+## Unified V7.4 + ADS-01 Metrica opt-in RC
+- Created from prior combined source `b2c6ffdf5d3f7204daf38e4c2f20b1922c898954` (column J price source and full R9 analytics, CI PASS at run `39263168207`).
+- Owner confirmed one counter `113675581` and manual creation of 18 exact JS goals; independent account verification is incomplete for goals 4–18.
+- RC uses technical `ADS01_OWNER_RELEASE_GO=true` with visitor opt-in, Yandex script loaded only after acceptance, Webvisor disabled, link to expanded privacy §8; zero script before consent is CI gate.
+- No automatic production deploy path exists in the repo. Remote Desktop Commander device `DESKTOP-VJMGOO6` was OFFLINE on 2026-10-19; operator access via authorized PowerShell/SSH is necessary for release.
+- **Live release NO-GO** until operator approves privacy notice/consent basis; production read-only preflight; backup + restore rehearsal; deployment under pinned SHA; HTTPS/synthetic-no-lead smoke and live Metrica verification. Never state campaign spend or real goal receipts as PASS without evidence.

@@ -21,8 +21,9 @@ class MockSite(SimpleHTTPRequestHandler):
     def log_message(self, fmt, *args):
         pass
     def do_GET(self):
-        if urlsplit(self.path).path == "/assets/js/analytics-config.js" and type(self).enable_analytics:
-            body = b"export const ADS01_COUNTER_ID=1; export const ADS01_PRIVACY_APPROVED=true; // MOCK ONLY\n"
+        if urlsplit(self.path).path == "/assets/js/analytics-config.js":
+            toggle = "true" if type(self).enable_analytics else "false"
+            body = ("export const ADS01_COUNTER_ID=113675581; export const ADS01_OWNER_RELEASE_GO="+toggle+"; export const ADS01_WEBVISOR_ENABLED=false; // LOCAL MOCK ONLY\n").encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/javascript")
             self.send_header("Content-Length", str(len(body)))

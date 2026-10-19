@@ -1,10 +1,10 @@
 # ADS-01 · Privacy preflight — awaiting owner/legal GO
-Status: **BLOCKED FOR PRODUCTION ENABLEMENT**. This is an engineering checklist, not legal advice or legal approval.
+Status: **CODE PREPARED / OPERATOR LEGAL SIGNOFF PENDING**. Visitor opt-in is now active in the isolated RC only; this is engineering preparation, not legal advice or legal approval.
 
-Current `privacy.html` section 8.2 says legal/privacy updates and consent mechanisms are required **before** enabling analytics or advertising tracking. `consent.html` is an application/contact response consent; it does NOT cover Webvisor/advertising tracking by implication.
+The isolated RC updates `privacy.html` §8.2–8.5 to disclose Yandex Metrica and separate opt-in. The operator must still approve the actual legal basis/retention/consent and confirm updated policy before publishing. `consent.html` is an application/contact response consent; it does NOT cover Webvisor/advertising tracking by implication.
 
 ## What we built
-- Default `ADS01_COUNTER_ID = null`, `ADS01_PRIVACY_APPROVED = false`: no Yandex script, cookies, external analytics calls or consent banner initiated by ADS01.
+- RC config: real `ADS01_COUNTER_ID = 113675581`, technical `ADS01_OWNER_RELEASE_GO = true`, `ADS01_WEBVISOR_ENABLED = false`; zero Yandex scripts/cookies/goals until browser visitor accepts the banner. The technical toggle does not mean legal compliance has been approved.
 - When both owner-controlled switches are set, public pages show separate opt-in Allow / No analytics controls, save decision locally and start one counter only on Allow. A footer settings button allows changing the choice; declining after prior acceptance forces reload. On denial, local attribution is deleted.
 - `ym-disable-keys` on contact input, free comments, honeypot and dynamic builder location; `ym-hide-content` on contact dialog, quote summary and response block. Recording all fields must also be disabled in the owner counter settings.
 - Browser analytics `reachGoal` send only approved categorical values. No phone/name/city/address/notes/customer ID/leadId/requestId/raw URLs/yclid as goal parameters.

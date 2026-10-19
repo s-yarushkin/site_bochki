@@ -1,10 +1,10 @@
 // ADS-01 single public-site measurement adapter; safe no-op until owner GO.
-import {ADS01_COUNTER_ID, ADS01_PRIVACY_APPROVED} from './analytics-config.js';
+import {ADS01_COUNTER_ID, ADS01_OWNER_RELEASE_GO, ADS01_WEBVISOR_ENABLED} from './analytics-config.js';
 const goals=new Set(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_builder_start','dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click']);
 const models=new Set(['kvadro','parus','viking','kvadro-house']);
 const placements=new Set(['header','hero','catalog','base','bundle','personal','delivery','builder','faq','final','footer','mobile','seo','unknown']);
 const decisionsKey='dp_analytics_consent_v1', touchKey='dp_attribution_v1', seenKey='dp_counted_leads_v1';
-const ready=Number.isSafeInteger(ADS01_COUNTER_ID)&&ADS01_COUNTER_ID>0&&ADS01_PRIVACY_APPROVED===true;
+const ready=Number.isSafeInteger(ADS01_COUNTER_ID)&&ADS01_COUNTER_ID>0&&ADS01_OWNER_RELEASE_GO===true;
 let active=false;
 const getStore=()=>{try{return localStorage;}catch{return null;}};
 const getSession=()=>{try{return sessionStorage;}catch{return null;}};
@@ -59,16 +59,19 @@ function initCounter(){
     const stub=function(){(stub.a=stub.a||[]).push(arguments);};
     stub.l=Date.now();window.ym=stub;
   }
-  window.ym(ADS01_COUNTER_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});
+  window.ym(ADS01_COUNTER_ID,'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:ADS01_WEBVISOR_ENABLED===true});
   if(!document.querySelector('script[data-dp-metrika]')){
-    const s=document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js';s.dataset.dpMetrika='1';document.head.append(s);
+    const s=document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js?id='+encodeURIComponent(String(ADS01_COUNTER_ID));s.dataset.dpMetrika='1';document.head.append(s);
   }
 }
 function displayConsent(force=false){
-  if(!ready||(!force&&getStore()?.getItem(decisionsKey)))return;
-  const root=document.createElement('aside');root.setAttribute('role','region');root.setAttribute('aria-label','Настройки аналитики');
+  if(!ready||(!force&&getStore()?.getItem(decisionsKey))||document.querySelector('[data-dp-consent]'))return;
+  const root=document.createElement('aside');root.dataset.dpConsent='1';root.setAttribute('role','region');root.setAttribute('aria-label','Настройки аналитики');
   root.style.cssText='position:fixed;bottom:90px;left:12px;right:12px;max-width:620px;margin:auto;background:#fff;color:#202c26;border:1px solid #aaa;border-radius:12px;padding:14px;z-index:9997;box-shadow:0 4px 22px #0003;font:14px/1.4 Arial,sans-serif';
-  const desc=document.createElement('p');desc.textContent='Разрешить анонимизированную аналитику посещений и действий на сайте? Поля заявки скрыты от записи.';desc.style.margin='0 0 10px';
+  const desc=document.createElement('p');
+  desc.textContent='Разрешить Яндекс Метрику для анализа посещений, кликов и заявок? Сервис использует технические данные и идентификаторы. Вебвизор выключен. ';
+  const policy=document.createElement('a');policy.href='/privacy.html#analytics';policy.textContent='Подробнее в Политике.';
+  desc.append(policy);desc.style.margin='0 0 10px';
   const yes=document.createElement('button'),no=document.createElement('button');
   yes.type=no.type='button';yes.textContent='Разрешить аналитику';no.textContent='Без аналитики';
   yes.style.cssText='padding:8px 12px;margin-right:10px';no.style.cssText='padding:8px 12px';

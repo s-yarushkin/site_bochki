@@ -1,11 +1,11 @@
 # ADS-01 · Owner setup: fast safe path to a Yandex Direct campaign
-**Nothing has been switched on**. No Metrica ID is stored. No Direct budget, payment details, campaign activation, production deploy or live MAX calls were performed.
+**Release candidate only — NOT DEPLOYED.** Owner-created Metrica counter `113675581` is configured with explicit VISITOR opt-in (technical owner switch ON); Webvisor OFF. No campaigns, spending, production deploy or real MAX calls were performed. Operator must complete privacy/legal checklist before public activation.
 
 ## 1. Before making changes
 - Accept V7.4 integrated release inventory, verify source SHA and #69 pricing binding, full quote/SQLite/MAX and rollback.
 - Owner / legal adviser approves `privacy-preflight.md` and actual updated notice/consent model. This file does not grant legal permission.
 - Choose a Yandex account and create or identify the **one owner-owned counter for дачапар.рф** (do NOT merge with separate QUADRO READY counter without express approval).
-- Supply counter numeric ID and access rights through approved access process; do not share login/password/token in GitHub.
+- Owner confirmed real counter `113675581`, three individually screenshot-verified primary goals; owner reports all 18 JS event goals created. Do not share login/password/token in GitHub.
 
 ## 2. Configure the counter
 Settings > Counter: real site domain and canonical aliases; enable clickmap, link tracking; enable Webvisor, scroll map and form analytics only after privacy GO. On Webvisor tab **disable recording all fields**; check `ym-disable-keys` and `ym-hide-content` masking. Ensure the manager area is not tracked.
@@ -18,7 +18,7 @@ Secondary diagnostics: `dp_quote_lead_confirmed`, `dp_callback_lead_confirmed`, 
 You may postpone optional UX goals in Metrica if count/management burden requires; that does not change source events.
 
 ## 3. Explicitly enable later (not in R9 Draft PR)
-In `assets/js/analytics-config.js`, set approved numeric `ADS01_COUNTER_ID` and boolean `ADS01_PRIVACY_APPROVED=true` in a reviewed separate deploy commit **only after** legal approval and counter access. Verify there is exactly one Metrica script after explicit visitor opt-in and none without it. Merge + production deploy/backup/rollback only after standalone owner GO.
+`assets/js/analytics-config.js` contains the owner counter `113675581`, `ADS01_OWNER_RELEASE_GO=true` and `ADS01_WEBVISOR_ENABLED=false` in the ISOLATED release candidate. These are technical settings, **not a legal approval**. Only publish once the operator approves the privacy notice and click-consent UI. Verify zero Yandex calls without visitor opt-in and exactly one loaded script after Allow. Backup, smoke, rollback and immutable RC SHA are mandatory.
 
 ## 4. Diagnostics without real customers
 Use isolated Playwright / Chromium with a **mock** `window.ym` or intercepted tag script; simulated API 200 with persisted/analytics flags; simulate 400/429/502/timeout, duplicate and double-click. No real MAX or production SQLite. Inspect Yandex `reachGoal` request parameters: no PII and no IDs. Real-account goal receipts/Webvisor activity remain NOT_VERIFIED until a strictly authorized non-personal-data test.
