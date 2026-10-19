@@ -243,6 +243,10 @@ def deploy(source,commit):
         for (role,name),digest in ACTIVE_HASHES.items():
             root=old_web if role=='WEB' else old_api
             require(sha(root/name)==digest,'BASELINE_CHANGED_DURING_STAGE')
+        # The rollback program must remain available after temp extraction is deleted.
+        retained=new_web/'ads01-fast-rollback-installer.py'
+        shutil.copyfile(source/'ops/ads01-fast-install.py',retained)
+        os.chmod(retained,0o600)
         state_file=new_web/'ads01-rollback-state.json'
         state_file.write_text(json.dumps(state,indent=2),encoding='utf8')
         os.chmod(state_file,0o600)
@@ -253,7 +257,7 @@ def deploy(source,commit):
         switch(WEB,new_web)
         verify_live(new_web,caddy_hash,env_hash,unit)
         print('ADS01_DEPLOY=PASS; SOURCE_SHA='+commit+'; DB_BACKUP=SKIPPED_OWNER_DECISION; DB_WRITES_BY_INSTALLER=0',flush=True)
-        print('ROLLBACK_COMMAND=sudo python3 '+str(source/'ops/ads01-fast-install.py')+' --rollback '+str(state_file),flush=True)
+        print('ROLLBACK_COMMAND=sudo python3 '+str(retained)+' --rollback '+str(state_file),flush=True)
     except BaseException:
         if changed:
             try:
