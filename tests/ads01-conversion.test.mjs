@@ -37,10 +37,11 @@ const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('ADS01 CTA and journey hooks are present in current V74 code',()=>{
   const app=read('assets/js/app.js'),relay=read('server/garant-bani-relay.mjs'),html=read('index.html');
   for(const token of ["dp_form_open","dp_form_error","dp_builder_complete","dp_model_select","dp_size_select","confirmedLead(receipt"])assert.ok(app.includes(token),token);
-  assert.match(relay,/analytics:classifyConfirmedLead\(record\.detail\)/);
+  assert.match(relay,/analytics:\{persisted:true,\.\.\.classifyConfirmedLead\(record\.detail\)\}/);
   assert.match(relay,/attribution/);
   assert.match(html,/class="contact-dialog ym-hide-content"/);
-  for(const field of ['phone','customerName','district','website'])assert.ok(html.includes('class="ym-disable-keys" type='),'missing mask '+field);
+  for(const field of ['phone','customerName','district','website'])assert.ok(html.includes('name="'+field+'"'),'missing field '+field);
+  assert.equal((html.match(/class="ym-disable-keys"/g)||[]).length,5);
   assert.match(html,/class="ym-disable-keys" name="comment"/);
   assert.match(app,/class="ym-disable-keys" id="regionInput"/);
 });
