@@ -15,3 +15,6 @@ Before initializing external Yandex code, the adapter retains consented campaign
 
 ## Reports
 Segment by source/medium/campaign/landing/model/flow, later device/geo via approved Metrica reports. CPL requires actual Direct spend. Do not equate quote totals with realized revenue, or count manager status `won` without CRM verification.
+
+## RC mode change — no visitor analytics UI
+Owner rejected any extra pop-up/buttons, and RC no longer waits for localStorage consent flag. When operator authorizes production activation, the counter automatically collects available allowed campaign metadata on page load. Previous opt-in-only section above describes the superseded prototype and is **not** the operating mode of this RC. Processing still requires a documented lawful basis; browsing the website alone does not prove consent.

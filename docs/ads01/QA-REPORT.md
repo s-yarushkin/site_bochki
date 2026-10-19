@@ -44,3 +44,9 @@ As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development
 - RC uses technical `ADS01_OWNER_RELEASE_GO=true` with visitor opt-in, Yandex script loaded only after acceptance, Webvisor disabled, link to expanded privacy §8; zero script before consent is CI gate.
 - No automatic production deploy path exists in the repo. Remote Desktop Commander device `DESKTOP-VJMGOO6` was OFFLINE on 2026-10-19; operator access via authorized PowerShell/SSH is necessary for release.
 - **Live release NO-GO** until operator approves privacy notice/consent basis; production read-only preflight; backup + restore rehearsal; deployment under pinned SHA; HTTPS/synthetic-no-lead smoke and live Metrica verification. Never state campaign spend or real goal receipts as PASS without evidence.
+
+## No-banner implementation update (post-owner correction)
+- Owner rejected extra consent windows/buttons. RC `assets/js/analytics.js` contains no banner, analytics settings footer control, nor implied-consent claim. The remaining contact form consent under the submit button is unchanged.
+- Counter 113675581 initializes once per page load if RC is published with `ADS01_OWNER_RELEASE_GO=true`. Webvisor remains OFF.
+- Attribution may persist in localStorage (30-day expiry); operator must confirm lawful basis for this cookie/identifier and tracking behavior before production. The privacy policy alone is not proof of informed consent.
+- Old screenshot/CI results from the opt-in iteration do NOT validate this new code. Require fresh immutable SHA: Node + nine-page Chromium, error & duplicate matrices, privacy UI absence, 20-price J gate, backup + restore rehearsal, and real server publication evidence.

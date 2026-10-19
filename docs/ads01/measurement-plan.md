@@ -33,3 +33,6 @@ The exact goals, triggers and parameters are in [event-contract.md](event-contra
 
 ## Release gates
 `npm run check`, ADS-01 Node contracts, 20-SKU current + V73 historical price regressions, regenerated 8 SEO pages, desktop/mobile scenarios, no exfiltration of PII, requests to real MAX = 0, production SQLite writes = 0, ad spend = 0. Evidence and gaps in [QA-REPORT.md](QA-REPORT.md).
+
+## RC mode clarification
+No additional consent banners/buttons are allowed by owner. Existing form consent text remains. The privacy-policy notice does not itself constitute proof of consent to behavioral tracking; privacy/legal review before launch is mandatory. Webvisor is OFF.

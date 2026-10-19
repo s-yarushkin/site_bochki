@@ -1,5 +1,5 @@
 # ADS-01 · Owner setup: fast safe path to a Yandex Direct campaign
-**Release candidate only — NOT DEPLOYED.** Owner-created Metrica counter `113675581` is configured with explicit VISITOR opt-in (technical owner switch ON); Webvisor OFF. No campaigns, spending, production deploy or real MAX calls were performed. Operator must complete privacy/legal checklist before public activation.
+**Release candidate only — NOT DEPLOYED.** Owner-owned Metrica `113675581` is prepared for direct page-load activation, without any banner or analytics controls, per owner's revised UX instruction. Webvisor OFF. The operator must confirm a valid lawful basis and policy before this candidate goes live. No advertising, production deployment or live MAX operations were performed. Operator must complete privacy/legal checklist before public activation.
 
 ## 1. Before making changes
 - Accept V7.4 integrated release inventory, verify source SHA and #69 pricing binding, full quote/SQLite/MAX and rollback.
@@ -8,7 +8,7 @@
 - Owner confirmed real counter `113675581`, three individually screenshot-verified primary goals; owner reports all 18 JS event goals created. Do not share login/password/token in GitHub.
 
 ## 2. Configure the counter
-Settings > Counter: real site domain and canonical aliases; enable clickmap, link tracking; enable Webvisor, scroll map and form analytics only after privacy GO. On Webvisor tab **disable recording all fields**; check `ym-disable-keys` and `ym-hide-content` masking. Ensure the manager area is not tracked.
+Settings > Counter: real site domain and canonical aliases; enable clickmap and link tracking after lawful-basis review; keep Webvisor, scroll map and form recording OFF for this launch. On Webvisor tab **disable recording all fields**; check `ym-disable-keys` and `ym-hide-content` masking. Ensure the manager area is not tracked.
 
 Create JavaScript-event goals **with exact IDs**:
 Primary experimental: `dp_premium_quote_confirmed` — a real server-saved, MAX-delivered quote >=750000 RUB and delivery city Noginsk / Korolyov / Ivanteyevka.
@@ -18,7 +18,7 @@ Secondary diagnostics: `dp_quote_lead_confirmed`, `dp_callback_lead_confirmed`, 
 You may postpone optional UX goals in Metrica if count/management burden requires; that does not change source events.
 
 ## 3. Explicitly enable later (not in R9 Draft PR)
-`assets/js/analytics-config.js` contains the owner counter `113675581`, `ADS01_OWNER_RELEASE_GO=true` and `ADS01_WEBVISOR_ENABLED=false` in the ISOLATED release candidate. These are technical settings, **not a legal approval**. Only publish once the operator approves the privacy notice and click-consent UI. Verify zero Yandex calls without visitor opt-in and exactly one loaded script after Allow. Backup, smoke, rollback and immutable RC SHA are mandatory.
+`assets/js/analytics-config.js` contains `ADS01_COUNTER_ID=113675581`, `ADS01_OWNER_RELEASE_GO=true` and `ADS01_WEBVISOR_ENABLED=false` in an **unpublished** release candidate. There is no analytics pop-up, extra button, or footer control. **Technical GO is not legal approval**: publish only after the operator confirms its specific lawful basis and the policy under applicable requirements. Verify one tag per page and zero extra consent UI; preserve backup, smoke, rollback and immutable SHA evidence.
 
 ## 4. Diagnostics without real customers
 Use isolated Playwright / Chromium with a **mock** `window.ym` or intercepted tag script; simulated API 200 with persisted/analytics flags; simulate 400/429/502/timeout, duplicate and double-click. No real MAX or production SQLite. Inspect Yandex `reachGoal` request parameters: no PII and no IDs. Real-account goal receipts/Webvisor activity remain NOT_VERIFIED until a strictly authorized non-personal-data test.
