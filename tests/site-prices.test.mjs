@@ -68,7 +68,7 @@ test('isolated HTTP lead flow keeps new and old totals in memory and delivers th
 
 test('HTML renders updated base and quotation-only bundle before JavaScript',()=>{
  const home=readFileSync(new URL('../index.html',import.meta.url),'utf8');
- assert.match(home,/Готовый комплект — стоимость по расчёту/);
+ assert.match(home,/Квадро 5 м · Комфорт/);
  assert.match(home,/id="bundleNew">613 977 ₽/);
  assert.match(home,/id="quoteTotal">500 955 ₽/);
  assert.doesNotMatch(home,/Готовый комплект за 630 000 ₽/);
