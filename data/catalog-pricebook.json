@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-16-v73-public-snapshot",
+  "version": "2026-10-19-v73-entry-insulation-review",
   "status": "CATALOG_DRAFT",
   "currency": "RUB",
   "source": "Approved base public totals from owner internal Google calculator; priced add-ons from owner supplied DOCX; items without matching specification are quotation-only",
@@ -20,11 +20,11 @@
       "600": 525420
     },
     "viking": {
-      "400": 396630,
-      "450": 464940,
-      "500": 552825,
-      "550": 595980,
-      "600": 613620
+      "400": 431730,
+      "450": 502740,
+      "500": 589275,
+      "550": 633780,
+      "600": 651420
     },
     "kvadro-house": {
       "4x4": 574875,
@@ -313,6 +313,17 @@
       "requiresTechnicalApproval": true,
       "priceStatus": "ON_REQUEST",
       "priceClarification": "Электрощит с автоматической защитой: отдельная стоимость отсутствует, требуется электротехническое согласование"
+    },
+    "floor_insulation_50mm_kvadro_500": {
+      "label": "Утепление пола пеноплэкс 50 мм · 10,5 м² (Квадро 5 м)",
+      "unitPriceRub": 14742,
+      "quantity": 1,
+      "unit": "компл.",
+      "source": "Прайс Гарант бань.docx: 1200 ₽/м² × 10,5 м² × 0,9 × 1,30; retail customer amount only",
+      "priceStatus": "PRELIMINARY",
+      "compatibleModelId": "kvadro",
+      "compatibleSizeId": "500",
+      "pricingClarification": "Каркасный пол уже в базовой цене Квадро. Утепление 50 мм включено только в пакет Квадро 5 м Комфорт, не в обычную базовую цену."
     }
   },
   "featuredBundle": {
@@ -333,7 +344,8 @@
       "outdoor_two_lanterns",
       "led_light_10m",
       "cabinet_single_50x50",
-      "electrical_safety_cabinet_temporary_supply"
+      "electrical_safety_cabinet_temporary_supply",
+      "floor_insulation_50mm_kvadro_500"
     ],
     "discountRub": 0,
     "removed": "shower-zone-1x1,oblivasta_connected",
@@ -342,7 +354,7 @@
   "deliveryIncluded": false,
   "checks": {
     "baseRub": 471555,
-    "knownOptionsRub": 84825,
+    "knownOptionsRub": 99567,
     "knownSubtotalRub": null,
     "quoteRequired": true,
     "unpricedBundleOptionIds": [
@@ -353,18 +365,24 @@
       "electrical_safety_cabinet_temporary_supply"
     ],
     "baseCount": 20,
-    "optionCount": 15,
+    "optionCount": 16,
     "publishedStatuses": [
       "PRELIMINARY",
       "ON_REQUEST"
-    ]
+    ],
+    "kvadroComfortInsulationRub": 14742,
+    "kvadroComfortInsulationAreaM2": 10.5,
+    "pendingCentralEntranceRrpRub": null
   },
   "notes": [
     "All website prices are an exported PUBLIC customer-price snapshot; private factory cost, manager commissions and markup factors are never in this repository.",
     "Base display prices rounded to nearest whole RUB; factory financials remain inside the owner's protected Google workbook.",
     "Add-ons with no unequivocal matching DOCX line item are quote-by-request; must never be assigned old prices or shown as zero.",
     "Terraces, insulation, stove replacements, installation and site-specific works require a separate confirmation and are not silently added.",
-    "Changes to the bundle: contains unpriced options, therefore the bundle total is quote-by-request until its scope is fully approved."
+    "Changes to the bundle: contains unpriced options, therefore the bundle total is quote-by-request until its scope is fully approved.",
+    "Viking base models include a 2.4m arched central entrance per owner's direction, priced as 30000 ₽ RRP in the private calculation; public catalog contains only the final base amounts.",
+    "Kvadro center-protruding entrance needs the owner's confirmation; the source DOCX only lists a side entrance. The Kvadro base matrix is NOT changed until its exact price is approved.",
+    "Kvadro 5m comfort adds 10.5 m² of 50mm floor insulation by the latest source DOCX rate; the normal Kvadro base remains without insulation."
   ],
   "pricingAdjustments": {
     "policy": "Final site-column amounts are already complete. Never add historic uplifts again."
@@ -377,6 +395,6 @@
     "baseCount": 20,
     "optionScope": "matched DOCX line-items; pending items unpriced",
     "rounding": "nearest whole RUB, halves upwards",
-    "approvedDate": "2026-10-16"
+    "approvedDate": "2026-10-19"
   }
 }
