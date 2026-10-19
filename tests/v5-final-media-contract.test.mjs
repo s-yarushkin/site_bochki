@@ -109,7 +109,7 @@ test('V5 lead, privacy, manager and demo pricing contracts remain intact',()=>{
   assert.match(js,/receipt\?\.delivered!==true/);
   assert.match(html,/href="privacy\.html"/);
   assert.match(html,/href="consent\.html"/);
-  assert.match(html,/Цена «от» — ориентировочная стоимость/);
+  assert.match(html,/В базовую стоимость включена готовая баня/);
   assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Демонстрационный прототип/);
   assert.match(html,/name="robots" content="index,follow,max-image-preview:large"/);
   assert.doesNotMatch(js,/localStorage|sessionStorage/);
