@@ -23,4 +23,4 @@ G2: сравнение computed CSS и bounding boxes base/head, включая 
 G3: mobile script на 320–851 и fixed CTA, без overflow.
 G12: mouse hit test, keyboard, 200% zoom (реальный, не CSS transform) и platform smoke; отдельное подтверждение.
 
-**Статус:** реализация подготовлена, визуальная приёмка НЕ подтверждена до получения browser artifacts.
+**Статус (19.10.2026):** desktop G1 при 100% — PASS в Chromium (8/8 sun/rain); screenshot evidence: https://github.com/s-yarushkin/site_bochki/actions/runs/39226183783/artifacts/12173468682. Полная приёмка G12 (реальный 90/110/200% zoom, устройства) — PENDING.
