@@ -22,8 +22,18 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.match(html,/Четыре модели\. Выберите баню/);
   assert.match(html,/Квадро 5 м · Комфорт/);
   assert.doesNotMatch(html,/Комплектация без обливного устройства/);
-  // V73 has 19 concrete base items and 12 meaningful additions; minuscule wiring costs are not listed as add-ons.
-  assert.match(html,/12 дополнениями, включая утепление пола/);
+  // The catalogue may contain twelve priced options, but the buyer sees benefits,
+  // not technical quantities or a bill of materials.
+  assert.equal(book.featuredBundle.selectedOptionIds.length,12);
+  const feature=html.match(/<section class="bundle-section section"[\s\S]*?<\/section>/)?.[0]||'';
+  assert.match(feature,/Больше света, больше уюта/);
+  assert.match(feature,/увеличенному окну/);
+  assert.match(feature,/стеклянной двери в парную/);
+  assert.match(feature,/утеплённый пол/);
+  assert.match(feature,/места для хранения/);
+  assert.match(feature,/id="bundleNew">613 977 ₽/);
+  assert.doesNotMatch(feature,/\b\d+\s+(?:дополнени[йя]|опци[йя]|позиций)/i);
+  assert.doesNotMatch(app,/q\.options\.length\} дополнительных опций\$\{q\.bundleApplied/);
   assert.match(html,/id="base"[\s\S]*?всё главное для вашей бани/);
   assert.match(css,/\.bundle-list \.bundle-item::before\{content:none;display:none\}/);
   for(const id of ['socket_kit_owner','electrical_distribution_owner','electrical_safety_cabinet_temporary_supply']){
