@@ -29,7 +29,7 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   for(const id of ['socket_kit_owner','electrical_distribution_owner','electrical_safety_cabinet_temporary_supply']){
     assert.equal(book.options[id],undefined);
   }
-  assert.equal(book.baseInclusions.priceApprovalGate.electricalShield,'PENDING_FACTORY_SPEC_AND_PRICE');
+  assert.equal(book.baseInclusions.priceApprovalGate.electricalShield,'OWNER_PLANNING_RESERVE_INCLUDED');
 });
 
 test('V6.6 model cards show a full unbroken price and all size choices',()=>{
