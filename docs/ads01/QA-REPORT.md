@@ -4,13 +4,13 @@ As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development
 | Gate | Status | Evidence / gap |
 |---|---|---|
 | City + price qualification rules | PASS — Node CI | `server/ads01-conversion.mjs`, `tests/ads01-conversion.test.mjs`: 750000 boundary, 3 exact cities, rejection of wrong location/unpriced |
-| Server-saved + delivered receipt / duplicate | PASS — Node CI | `garant-bani-relay.mjs` returns server-owned persisted/qualification flags only for real stored record; browser suppresses duplicate and repeat in session |
-| CTA + builder + forms | PASS — mocked Chromium | `assets/js/app.js` and `analytics.js`; model/size, builder stages, callback, tel, gallery, base |
+| Server-saved + delivered receipt / duplicate | PASS — isolated unit/mock; live NOT_VERIFIED | `garant-bani-relay.mjs` returns server-owned persisted/qualification flags only for real stored record; browser suppresses duplicate and repeat in session |
+| CTA + builder + forms | PARTIAL — CTA/source contract and selected Chromium path; exhaustive interaction matrix pending | `assets/js/app.js` and `analytics.js`; model/size, builder stages, callback, tel, gallery, base |
 | All public SEO routes | PASS — mocked Chromium | 8 generated SEO pages (plus home = 9) each include one adapter; generator source updated |
-| Personal-data masking | PASS — source and mocked Chromium; real Webvisor NOT_VERIFIED | Mask contact forms, dynamic region, and responses; no real external counter configured |
+| Personal-data masking | SOURCE VERIFIED; real Webvisor NOT_VERIFIED | Mask contact forms, dynamic region, and responses; no real external counter configured |
 | No-fabricated-counter/safe no-op | SOURCE VERIFIED | `analytics-config.js`: null ID and false privacy approval |
-| Opt-in UTM/yclid / first-last | PASS — mocked Chromium | `analytics.js`, server allowlist, no raw URLs passed; live Yandex session attribution unverified |
-| 400/429/502/timeout and duplicate browser acceptance | PASS (mocked) | Chromium synthetic HTTP 200 / duplicate / 502, no production MAX, real 400 / 429 / timeout require extended QA |
+| Opt-in UTM/yclid / first-last | IMPLEMENTED; full first/last + live Yandex session NOT_VERIFIED | `analytics.js`, server allowlist, no raw URLs passed; live Yandex session attribution unverified |
+| 400/429/502/timeout and duplicate browser acceptance | PARTIAL (200/duplicate/502 mocked PASS) | Chromium synthetic HTTP 200 / duplicate / 502, no production MAX, real 400 / 429 / timeout require extended QA |
 | `npm run check`, legacy V73, V74 20 SKU | PASS | GitHub Actions run 39260655369, Node suite + price snapshot; note release base still has COLUMN=H metadata, while owner-approved #69 requires J225:J244 |
 | Desktop/mobile 320/390/768/1366/1920 SUN/RAIN | PASS (matrix smoke) | Isolated Chromium width 320/390/768/1366/1920, SUN/RAIN; deeper viewport conversion acceptance remains for V74 RC |
 | Real counter configured and goals arriving | NOT_VERIFIED | Owner ID/access missing |
@@ -23,7 +23,7 @@ As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development
 1. SQLite can persist a lead but MAX fail, returning HTTP 502: **never** send primary browser goal on 502. SQLite/Metika divergence must be reviewed; reliable outbox/retry and offline attribution are separate reviewed work.
 2. Browser may block or lose `reachGoal`; `duplicate:true` is suppressed to avoid double CPA. SQLite is business truth.
 3. Browser-supplied `journeyComplete` and UTM are user-controlled inputs and must not be treated as tamper-proof proof of offline purchase.
-4. No live traffic or production acceptance was used; once CI/browser tests run, append exact pass/fail logs, commit SHA and evidence links, never infer PASS.
+4. No live traffic or production acceptance was used. Current tests cover limited mock cases; 400/429/timeout and all CTA placements need additional Chromium acceptance before release GO.
 
 **GO/NO-GO**: Implementation draft = reviewable. Live Metrica = NO-GO. Paid traffic = NO-GO. Production deployment = NO-GO until owner, legal and test gates.
 
