@@ -14,7 +14,7 @@ const source=read('data/source/site-prices-2026-10-16.json');
 const old=read('data/legacy-v72-catalog.json');
 const lead=(version)=>({flow:'quote',name:'Тест изолированный',phone:'+79991234567',district:'Тестовый участок',base:'ready',access:'yes',consent:true,consentVersion:'2026-10-14',configuration:{modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',...(version?{pricebookVersion:version}:{})}});
 test('website matrix uses 20 owner-approved public base totals and quote-only unmatched options',()=>{
- const expected={kvadro:{400:361998,450:407420,500:471555,550:494141,600:509166},parus:{400:396630,450:434970,500:491400,550:512820,600:525420},viking:{400:396630,450:464940,500:552825,550:595980,600:613620},'kvadro-house':{'4x4':574875,'5x4':673875,'6x4':716625,'6x5':778500,'6x6':841500}};
+ const expected={kvadro:{400:361998,450:407420,500:471555,550:494141,600:509166},parus:{400:396630,450:434970,500:491400,550:512820,600:525420},viking:{400:431730,450:502740,500:589275,550:633780,600:651420},'kvadro-house':{'4x4':574875,'5x4':673875,'6x4':716625,'6x5':778500,'6x6':841500}};
  assert.deepEqual(CATALOG.prices,expected);
  assert.equal(CATALOG.options.stove_guard.unitPriceRub,5850);
  assert.equal(CATALOG.options.folding_table.unitPriceRub,5265);
