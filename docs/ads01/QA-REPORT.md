@@ -1,18 +1,18 @@
 # ADS-01 · QA and release truth table
-As-of 2026-10-19. Owner GO for isolated development given, **not** for production. Branch `feat/ads01-r9-conversion-measurement-20261019`, base `release/v74-content-20261019` at 2c3e5a435caed1ca092e9ce957b65a0286302b25.
+As-of 2026-10-19, after offline CI acceptance. Owner GO for isolated development given, **not** for production. Branch `feat/ads01-r9-conversion-measurement-20261019`, base `release/v74-content-20261019` at 2c3e5a435caed1ca092e9ce957b65a0286302b25.
 
 | Gate | Status | Evidence / gap |
 |---|---|---|
-| City + price qualification rules | IMPLEMENTED / CI PENDING | `server/ads01-conversion.mjs`, `tests/ads01-conversion.test.mjs`: 750000 boundary, 3 exact cities, rejection of wrong location/unpriced |
-| Server-saved + delivered receipt / duplicate | IMPLEMENTED / CI PENDING | `garant-bani-relay.mjs` returns server-owned persisted/qualification flags only for real stored record; browser suppresses duplicate and repeat in session |
-| CTA + builder + forms | IMPLEMENTED / BROWSER NOT_VERIFIED | `assets/js/app.js` and `analytics.js`; model/size, builder stages, callback, tel, gallery, base |
-| All public SEO routes | IMPLEMENTED / BROWSER NOT_VERIFIED | 8 generated SEO pages (plus home = 9) each include one adapter; generator source updated |
-| Personal-data masking | SOURCE VERIFIED / BROWSER NOT_VERIFIED | Mask contact forms, dynamic region, and responses; no real external counter configured |
+| City + price qualification rules | PASS — Node CI | `server/ads01-conversion.mjs`, `tests/ads01-conversion.test.mjs`: 750000 boundary, 3 exact cities, rejection of wrong location/unpriced |
+| Server-saved + delivered receipt / duplicate | PASS — Node CI | `garant-bani-relay.mjs` returns server-owned persisted/qualification flags only for real stored record; browser suppresses duplicate and repeat in session |
+| CTA + builder + forms | PASS — mocked Chromium | `assets/js/app.js` and `analytics.js`; model/size, builder stages, callback, tel, gallery, base |
+| All public SEO routes | PASS — mocked Chromium | 8 generated SEO pages (plus home = 9) each include one adapter; generator source updated |
+| Personal-data masking | PASS — source and mocked Chromium; real Webvisor NOT_VERIFIED | Mask contact forms, dynamic region, and responses; no real external counter configured |
 | No-fabricated-counter/safe no-op | SOURCE VERIFIED | `analytics-config.js`: null ID and false privacy approval |
-| Opt-in UTM/yclid / first-last | IMPLEMENTED / BROWSER NOT_VERIFIED | `analytics.js`, server allowlist, no raw URLs passed; live Yandex session attribution unverified |
-| 400/429/502/timeout and duplicate browser acceptance | NOT_RUN | Requires isolated Chromium receiver and fake MAX |
-| `npm run check`, legacy V73, V74 20 SKU | NOT_RUN | Must be executed on branch SHA in clean Node environment |
-| Desktop/mobile 320/390/768/1366/1920 SUN/RAIN | NOT_RUN | Requires browser screenshots and mock network |
+| Opt-in UTM/yclid / first-last | PASS — mocked Chromium | `analytics.js`, server allowlist, no raw URLs passed; live Yandex session attribution unverified |
+| 400/429/502/timeout and duplicate browser acceptance | PASS (mocked) | Chromium synthetic HTTP 200 / duplicate / 502, no production MAX, real 400 / 429 / timeout require extended QA |
+| `npm run check`, legacy V73, V74 20 SKU | PASS | GitHub Actions run 39260655369, Node suite + price snapshot; note release base still has COLUMN=H metadata, while owner-approved #69 requires J225:J244 |
+| Desktop/mobile 320/390/768/1366/1920 SUN/RAIN | PASS (matrix smoke) | Isolated Chromium width 320/390/768/1366/1920, SUN/RAIN; deeper viewport conversion acceptance remains for V74 RC |
 | Real counter configured and goals arriving | NOT_VERIFIED | Owner ID/access missing |
 | Legal/cookie notice signed | NO-GO | Responsible operator/privacy approval missing |
 | Production lead creation | NOT_PERFORMED | No production API post or DB write attempted |
@@ -26,3 +26,14 @@ As-of 2026-10-19. Owner GO for isolated development given, **not** for productio
 4. No live traffic or production acceptance was used; once CI/browser tests run, append exact pass/fail logs, commit SHA and evidence links, never infer PASS.
 
 **GO/NO-GO**: Implementation draft = reviewable. Live Metrica = NO-GO. Paid traffic = NO-GO. Production deployment = NO-GO until owner, legal and test gates.
+
+## Green CI evidence
+- PASS: [ADS-01 R9 GitHub Actions run 39260655369](https://github.com/s-yarushkin/site_bochki/actions/runs/39260655369) on commit `406b6db2169d476cb2a45c32b2081a79dd148a32`.
+- `npm run check`: PASS, including new ADS-01 unit tests.
+- `node scripts/verify-v74-public-prices.mjs`: PASS against current release-base snapshot; **not** proof that owner source J in #69 is merged.
+- SEO generator parity: PASS (9 indexable URLs including home).
+- `ADS01_CHROMIUM=PASS; SEO_ROUTES=9; WIDTHS=5; THEMES=2; MOCK_LEADS=3; PRODUCTION_POSTS=0; REAL_YANDEX_CALLS=0`.
+- Real phone, contacts, website traffic, production lead persistence, Webvisor goal receipt and Direct reporting were not exercised.
+
+## Release dependency
+- [PR #69](https://github.com/s-yarushkin/site_bochki/pull/69) is still Draft/open against the V7.4 release branch as of this report. It corrects the source-of-truth metadata from H to owner-approved J225:J244. R9 changes none of the 20 prices. Before a production merge, R8 must integrate #69, audit price snapshot with J and rerun full regression at immutable release SHA.
