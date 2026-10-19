@@ -1,0 +1,137 @@
+/* V74-03: model price ↔ base kit. Customer-facing price values still
+   originate exclusively from versioned PRICEBOOK; this layer is presentation.
+   Modal uses native <dialog> focus/escape behavior and retains the source photo gallery. */
+.catalog .product-base-trigger{
+  appearance:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  margin:0 0 14px;
+  padding:10px 12px;
+  min-height:46px;
+  border:1px solid var(--v5-border,var(--line));
+  border-radius:9px;
+  background:var(--v5-surface-alt,var(--paper));
+  color:var(--v5-text,var(--ink));
+  text-align:left;
+  font:750 13px/1.35 var(--fonthead,Arial,sans-serif);
+  cursor:pointer;
+}
+.catalog .product-base-trigger:hover{
+  border-color:var(--v5-gold,var(--accent));
+  background:var(--v5-surface,var(--paper));
+}
+.catalog .product-base-trigger:focus-visible,
+.base-dialog :is(button):focus-visible{
+  outline:3px solid var(--v5-gold,var(--accent));
+  outline-offset:3px;
+}
+.base-dialog{
+  border:1px solid var(--v5-border,var(--line));
+  padding:0;
+  border-radius:18px;
+  color:var(--v5-text,var(--ink));
+  background:var(--v5-surface,var(--paper));
+  box-shadow:0 22px 75px rgba(0,0,0,.27);
+  width:min(760px,calc(100% - 24px));
+  max-height:92dvh;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.base-dialog::backdrop{
+  background:rgba(12,23,26,.68);
+}
+.base-dialog-shell{
+  position:relative;
+  padding:clamp(20px,3.3vw,36px);
+}
+.base-dialog-close{
+  position:absolute;
+  right:14px;
+  top:12px;
+  border:1px solid var(--v5-border,var(--line));
+  border-radius:10px;
+  background:var(--v5-surface-alt,var(--paper));
+  color:var(--v5-text,var(--ink));
+  width:44px;
+  height:44px;
+  font-size:29px;
+  line-height:1;
+  cursor:pointer;
+}
+.base-dialog .eyebrow{
+  display:block;
+  padding-right:53px;
+  margin-bottom:10px;
+  font-size:10px;
+}
+.base-dialog h2{
+  font-size:clamp(27px,3.3vw,40px);
+  line-height:1.12;
+  margin:0 42px 12px 0;
+}
+.base-dialog p{margin:0}
+#baseDialogDesc{font-size:15px;line-height:1.5;color:var(--v5-muted,var(--muted))}
+.base-dialog-price{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:16px 0 18px!important;
+  padding:13px 15px;
+  background:var(--v5-surface-alt,var(--paper));
+  border:1px solid var(--v5-border,var(--line));
+  border-radius:12px;
+}
+.base-dialog-price span{font-size:13px;color:var(--v5-muted,var(--muted))}
+.base-dialog-price strong{
+  white-space:nowrap;
+  font-size:clamp(20px,2.2vw,25px);
+}
+.base-dialog-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.base-dialog-groups section,.base-dialog-specific,.base-dialog-excluded{
+  border:1px solid var(--v5-border,var(--line));
+  background:var(--v5-surface,var(--paper));
+  padding:15px 18px;
+  border-radius:12px;
+}
+.base-dialog-groups section:last-child{grid-column:1/-1}
+.base-dialog h3{font-size:16px;line-height:1.35;margin:0 0 9px}
+.base-dialog ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.base-dialog li{
+  position:relative;
+  padding-left:19px;
+  font-size:13px;
+  line-height:1.4;
+}
+.base-dialog li::before{
+  content:'✓';position:absolute;left:0;
+  color:var(--forest);
+  font-weight:800;
+}
+:root[data-theme="rain"] .base-dialog li::before{color:#f1c186}
+.base-dialog-specific,.base-dialog-excluded{margin-top:12px}
+.base-dialog-specific{
+  background:var(--v5-feature,var(--v5-surface-alt));
+}
+.base-dialog-specific p{font-size:14px;line-height:1.5}
+.base-dialog-excluded li::before{content:'—';color:var(--v5-muted,var(--muted))}
+.base-dialog-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:19px}
+.base-dialog-actions .btn{min-height:49px;padding:12px 18px;font-size:14px}
+@media(max-width:550px){
+  .base-dialog{width:calc(100% - 12px);max-height:94dvh;border-radius:12px}
+  .base-dialog-shell{padding:20px 14px}
+  .base-dialog h2{font-size:27px;margin-right:33px}
+  .base-dialog-groups{grid-template-columns:minmax(0,1fr);gap:9px}
+  .base-dialog-groups section:last-child{grid-column:auto}
+  .base-dialog-groups section,.base-dialog-specific,.base-dialog-excluded{padding:12px 14px}
+  .base-dialog-actions{flex-direction:column}
+  .base-dialog-actions .btn{width:100%;min-height:49px}
+}
+
+.base-dialog-full{display:inline-flex;align-items:center;min-height:49px;line-height:1.35;
+  font-size:13px;text-decoration:underline;text-underline-offset:4px;color:var(--v5-text,var(--ink))}
+.base-dialog-full:focus-visible{outline:3px solid var(--v5-gold,var(--accent));outline-offset:2px;border-radius:4px}

@@ -30,7 +30,7 @@ test('S01b SEO entry pages let visitors call the manager directly',()=>{
 });
 test('S02 no messenger links in UI',()=>assert.doesNotMatch(html,/(t\.me\/|wa\.me\/|max\.ru\/|vk\.ru\/)/));
 test('S03 only designated same-origin lead endpoint in forms',()=>{assert.match(script,/fetch\(new URL\('api\/lead',document\.baseURI\)/);assert.doesNotMatch(script,/XMLHttpRequest|sendBeacon|localStorage|sessionStorage/);});
-test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/Цена «от» — ориентировочная стоимость/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
+test('S04 customer copy keeps indicative pricing without developer labels',()=>{assert.match(html,/В базовую стоимость включена готовая баня/);assert.match(html,/Расчёт ориентировочный/);assert.doesNotMatch(html,/ДЕМО-КАТАЛОГ|ФОТОСЛОТ|Интерактивный деморасчёт/);});
 test('S05 full and short callback flows',()=>{assert.match(html,/data-flow="quote"/);assert.match(html,/data-flow="callback"/);});
 test('S06 all four models have distinct catalog exteriors/interiors, hero unchanged',()=>{
   const media=readFileSync(new URL('../assets/js/media-v5.js',import.meta.url),'utf8');
@@ -54,7 +54,7 @@ test('S06b catalog buttons are registered as a collection and full startup remai
   // startup handlers including SUN/RAIN despite 77/77 passing previously.
   assert.match(script,/\$\$\('\[data-catalog-select\]'\)\.forEach/);
   assert.doesNotMatch(script,/(?<!\$)\$\('\[data-catalog-select\]'\)\.forEach/);
-  assert.match(script,/function boot\(\)\{initModelGallery\(\);renderCatalog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
+  assert.match(script,/function boot\(\)\{initModelGallery\(\);renderCatalog\(\);initBaseDialog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\);initBuilder\(\);initMobileMenu\(\);initForms\(\);syncMedia\(\)/);
 });
 test('S07 seven defined screens',()=>assert.match(script,/const stepNames=\[[^;]+\];/));
 test('S08 keyboard and motion accessibility',()=>{assert.match(css,/:focus-visible/);assert.match(css,/prefers-reduced-motion/);});

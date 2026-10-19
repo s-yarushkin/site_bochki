@@ -12,7 +12,7 @@ const pricebook=read('data/pricebook.js');
 test('V6.1 preserves feature modules, source-owned pricebook and backend isolation',()=>{
   assert.match(html,/href="assets\/css\/weather-v6\.css"/);
   assert.match(app,/import \{initAtmosphere,syncAtmosphereText\} from '\.\/weather-v6\.js'/);
-  assert.match(app,/renderCatalog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\)/);
+  assert.match(app,/renderCatalog\(\);initBaseDialog\(\);renderBundle\(\);initWeather\(\);initAtmosphere\(\)/);
   assert.match(pricebook,/DEMO_ONLY/);
   assert.doesNotMatch(app,/localStorage|sessionStorage/);
 });
