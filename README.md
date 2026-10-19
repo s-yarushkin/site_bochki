@@ -10,6 +10,14 @@
 - реальные фотографии продукции не подменяются вымышленными характеристиками;
 - временные AI-концепты явно маркируются как concept / placeholder.
 
+## Следующий цикл «Дача Пар» — V74 (планирование, не production)
+
+- [Полное ТЗ по 9 направлениям, роли, критерии приемки](docs/v74/README.md)
+- [EPIC #57: весь план](https://github.com/s-yarushkin/site_bochki/issues/57)
+- [Первое задание #58: UX первого экрана](https://github.com/s-yarushkin/site_bochki/issues/58)
+
+Документация V74 ведётся в отдельной ветке `plan/v74-customer-experience-20261019`, исходная опубликованная версия V73 не изменялась.
+
 ## Рабочие материалы
 
 - [Figma-макет](https://www.figma.com/design/m831QH99zcv2SpkaFMPo01/Untitled)
