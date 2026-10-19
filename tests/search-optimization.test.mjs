@@ -43,7 +43,7 @@ test('product pages use the existing sizes and indicative amounts without fake O
   const html=read('bani/'+slug+'/index.html');
   for(const amount of Object.values(cat.prices[id]))assert.ok(html.includes(amount.toLocaleString('ru-RU')+' ₽'));
   assert.doesNotMatch(html,/"(?:offers|aggregateRating|review|availability)"/);
-  assert.match(html,/не является офертой/);assert.equal([...html.matchAll(/<li>/g)].length,17);
+  assert.match(html,/не является офертой/);assert.equal([...html.matchAll(/<li>/g)].length,19);
   assert.ok(html.includes('/?model='+id+'#builder'));
  }
 });
@@ -51,9 +51,10 @@ test('sitemap covers only public canonical pages; legal and manager stay noindex
  const urls=[...read('sitemap.xml').matchAll(/<loc>(.*?)<\/loc>/g)].map(x=>x[1]);
  assert.deepEqual(urls,manifest.pages.map(p=>manifest.origin+p.path));
  for(const path of ['manager.html','privacy.html','consent.html','requisites.html'])assert.match(read(path),/noindex/);
- assert.match(read('robots.txt'),/User-agent: \*\nAllow: \/\nDisallow: \/api\//);
- assert.match(read('robots.txt'),/User-agent: GPTBot\nDisallow: \//);
- assert.ok(!read('robots.txt').includes('User-agent: OAI-SearchBot\nDisallow: /'));
+ const robots=read('robots.txt').replace(/\r\n/g,'\n');
+ assert.match(robots,/User-agent: \*\nAllow: \/\nDisallow: \/api\//);
+ assert.match(robots,/User-agent: GPTBot\nDisallow: \//);
+ assert.ok(!robots.includes('User-agent: OAI-SearchBot\nDisallow: /'));
 });
 test('landing model parameters select only known catalog models and ignore hostile inputs',()=>{
  const models=Object.keys(cat.models).map(id=>({id}));
@@ -62,13 +63,18 @@ test('landing model parameters select only known catalog models and ignore hosti
 });
 test('search page generation is reproducible from the shared catalog and accepted base-kit source',()=>{
  const names=[...manifest.pages.filter(p=>p.path!=='/').map(p=>p.file),'robots.txt','sitemap.xml','llms.txt','seo/pages.json'];
- const before=names.map(read);execFileSync(process.execPath,['scripts/build-search-pages.mjs'],{cwd:root});
- assert.deepEqual(names.map(read),before);
+ // Windows core.autocrlf converts generated LF sources into CRLF at checkout.
+ // Content comparison remains byte-for-byte after normalizing only line endings.
+ const canonical=source=>source.replace(/\r\n/g,'\n');
+ const before=names.map(name=>canonical(read(name)));
+ execFileSync(process.execPath,['scripts/build-search-pages.mjs'],{cwd:root});
+ for(let i=0;i<names.length;i++)assert.equal(canonical(read(names[i])),before[i],names[i]+' generated page differs');
 });
 
 test('public commercial pages and AI index contain no company phone or internal priority language',()=>{
  for(const p of manifest.pages){
-  const html=read(p.file);assert.doesNotMatch(html,/tel:|"telephone"|293[- ]?46|[Пп]риоритет/);
+  const html=read(p.file);assert.doesNotMatch(html,/"telephone"|293[- ]?46|[Пп]риоритет/);
+  if(p.path!=='/')assert.match(html,/href="tel:\+79517349999"/);
   if(p.path!=='/')assert.match(html,/Связаться с менеджером/);
  }
  assert.doesNotMatch(read('llms.txt'),/293[- ]?46|[Пп]риоритет/);

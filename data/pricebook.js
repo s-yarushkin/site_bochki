@@ -3,9 +3,9 @@
 import CATALOG from './catalog-pricebook.json' with {type:'json'};
 
 const subtitles={
-  kvadro:'Компактная готовая баня для дачного участка',
+  kvadro:'Центральный вход включён в базовую стоимость',
   parus:'Панорамное пространство для отдыха',
-  viking:'Выразительная форма с клиновым входом',
+  viking:'Арочный вход по центру уже в базовой цене',
   'kvadro-house':'Пространство для отдыха с близкими'
 };
 const slots={
@@ -24,10 +24,12 @@ const models=Object.entries(CATALOG.models).map(([id,model])=>({
   widthM:model.widthM??null,sizeKind:model.sizeKind
 }));
 const options=Object.entries(CATALOG.options).map(([id,option])=>({
-  id,name:option.label,price:option.unitPriceRub*option.quantity,
+  id,name:option.label,price:Number.isSafeInteger(option.unitPriceRub)?option.unitPriceRub*option.quantity:null,
   unitPriceRub:option.unitPriceRub,quantity:option.quantity,unit:option.unit,
+  priceStatus:option.priceStatus??'PRELIMINARY',
+  compatibleModelId:option.compatibleModelId??null,compatibleSizeId:option.compatibleSizeId??null,
   category:steamOptions.has(id)?'steam':'comfort',
-  benefit:option.requiresTechnicalApproval?'Требуется согласование условий установки':'Дополнение по каталогу',
+  benefit:option.unitPriceRub===null?'Стоимость уточнит менеджер':option.requiresTechnicalApproval?'Требуется согласование условий установки':'Дополнение по каталогу',
   discountEligible:false,requiresTechnicalApproval:option.requiresTechnicalApproval===true,
   ...(id==='glass_sauna_door_700x1700'?{mutex:'entry-door'}:{})
 }));
@@ -40,8 +42,10 @@ export const PRICEBOOK=Object.freeze({
   models,options,
   finishes:CATALOG.finishes,
   bundle:{id:bundle.id,name:'Квадро 5 м · Комфорт',modelId:bundle.modelId,
-    sizeId:bundle.sizeId,optionIds:[...bundle.selectedOptionIds],discount:bundle.discountRub},
+    sizeId:bundle.sizeId,optionIds:[...bundle.selectedOptionIds],discount:bundle.discountRub,quotePendingApproval:false,
+    pendingApprovalReason:null,customerDescription:bundle.customerDescription},
   progressive:[],
+  baseInclusions:CATALOG.baseInclusions,
   deliveryIncluded:CATALOG.deliveryIncluded
 });
 export {CATALOG};

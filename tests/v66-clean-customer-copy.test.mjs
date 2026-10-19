@@ -22,14 +22,24 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.match(html,/Четыре модели\. Выберите баню/);
   assert.match(html,/Квадро 5 м · Комфорт/);
   assert.doesNotMatch(html,/Комплектация без обливного устройства/);
-  // V7.2 distinguishes the complete 17-item base kit from the featured 14 paid additions.
-  assert.match(html,/к базовой бане добавлены следующие 14 опций, учтённых в указанной сумме/);
-  assert.match(html,/id="base"[\s\S]*?в базовой комплектации/);
+  // The catalogue may contain twelve priced options, but the buyer sees benefits,
+  // not technical quantities or a bill of materials.
+  assert.equal(book.featuredBundle.selectedOptionIds.length,12);
+  const feature=html.match(/<section class="bundle-section section"[\s\S]*?<\/section>/)?.[0]||'';
+  assert.match(feature,/Больше света, больше уюта/);
+  assert.match(feature,/увеличенное окно/);
+  assert.match(feature,/стеклянная дверь/);
+  assert.match(feature,/утеплённый пол/i);
+  assert.match(feature,/места для хранения/);
+  assert.match(feature,/id="bundleNew">613 977 ₽/);
+  assert.doesNotMatch(feature,/\b\d+\s+(?:дополнени[йя]|опци[йя]|позиций)/i);
+  assert.doesNotMatch(app,/q\.options\.length\} дополнительных опций\$\{q\.bundleApplied/);
+  assert.match(html,/id="base"[\s\S]*?всё главное для вашей бани/);
   assert.match(css,/\.bundle-list \.bundle-item::before\{content:none;display:none\}/);
   for(const id of ['socket_kit_owner','electrical_distribution_owner','electrical_safety_cabinet_temporary_supply']){
-    assert.doesNotMatch(book.options[id].label,/\(.*уточнить|после проверки проекта/);
+    assert.equal(book.options[id],undefined);
   }
-  assert.equal(book.options.electrical_safety_cabinet_temporary_supply.requiresTechnicalApproval,true);
+  assert.equal(book.baseInclusions.priceApprovalGate.electricalShield,'OWNER_PLANNING_RESERVE_INCLUDED');
 });
 
 test('V6.6 model cards show a full unbroken price and all size choices',()=>{

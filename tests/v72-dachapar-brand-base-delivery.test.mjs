@@ -27,17 +27,17 @@ test('V7.2 visible identity is Dacha Par; company appears only in linked legal d
   assert.match(consent,/ВУДАРТ-ГРУПП/);
   assert.doesNotMatch(privacy+consent+requisites,/ГАРАНТ-ГРУПП|Герцена|3525486964/);
 });
-test('V7.2 base kit lists exact 17 components without changing price engine',()=>{
+test('V73 retains original base elements and adds floor and electrical safety panel',()=>{
   const base=html.match(/<section class="base-kit section"[\s\S]*?<\/section>/)?.[0]||'';
-  assert.match(base,/Цена «от» — это баня/);
-  assert.equal((base.match(/<li>/g)||[]).length,17);
-  for(const item of ['Печь','Дымоход','55 л','Двухъярусные лежаки','Трапик','минерита',
-                     'Две скамейки','Вешалка','60 × 80','Глухая входная дверь',
-                     'Ступенька','электрики и освещения','Слив','Вентиляция',
-                     'Обручи','гибкой черепицы','в два слоя'])assert.ok(base.includes(item),item);
+  assert.match(base,/всё главное для вашей бани/);
+  assert.equal((base.match(/<li>/g)||[]).length,19);
+  for(const item of ['Надёжная, проверенная печь','Дымоход','55 л','Двухъярусные лежаки','Трапик','минерита',
+                     'Две скамейки','Вешалка','60 × 80','вынесенный по центру',
+                     'Ступенька','Внутренняя электрика и освещение','Слив','Вентиляция',
+                     'Электрощит','Напольная конструкция','Обручи','гибкой черепицы','в два слоя'])assert.ok(base.includes(item),item);
   assert.match(base,/data-flow="callback" data-topic=/);
-  assert.match(html,/id="bundleNew">630 000 ₽/);
-  assert.match(html,/id="quoteTotal">505 000 ₽/);
+  assert.match(html,/id="bundleNew">613 977 ₽/);
+  assert.match(html,/id="quoteTotal">500 955 ₽/);
   assert.match(js,/Базовая комплектация от/);
   assert.match(js,/from '\.\/quote-engine\.js'/);
 });

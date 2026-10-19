@@ -27,8 +27,14 @@ test('live smoke never reports accepted delivery on a failed MAX response',()=>i
 }));
 
 test('source gate accepts only the exact accepted LF and Windows Git archive CRLF blobs',()=>{
- const lf=readFileSync(new URL('./fixtures/v72-relay-56bf8a1a.mjs',import.meta.url));
+ // On Windows, Git can check out this old source fixture with CRLF.
+ // Reconstruct the two exact accepted historical blobs for this test only.
+ // Production verifyRelayBytes remains a strict SHA256 allowlist.
+ const fixture=readFileSync(new URL('./fixtures/v72-relay-56bf8a1a.mjs',import.meta.url));
+ const lf=Buffer.from(fixture.toString('utf8').replace(/\r\n/g,'\n'),'utf8');
+ const crlf=Buffer.from(lf.toString('utf8').replace(/\n/g,'\r\n'),'utf8');
  assert.equal(verifyRelayBytes(lf).lineEndings,'LF');
- assert.equal(verifyRelayBytes(Buffer.from(lf.toString().replaceAll('\n','\r\n'))).lineEndings,'CRLF');
+ assert.equal(verifyRelayBytes(crlf).lineEndings,'CRLF');
+ assert.ok(['LF','CRLF'].includes(verifyRelayBytes(fixture).lineEndings));
  assert.throws(()=>verifyRelayBytes(Buffer.concat([lf,Buffer.from('\n// changed source')])),/ACTIVE_RELAY_HASH_CHANGED actual=[a-f0-9]{64}/);
 });

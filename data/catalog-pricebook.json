@@ -1,37 +1,37 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-16-sheet-site-v1",
+  "version": "2026-10-19-v73-customer-ready-r1",
   "status": "CATALOG_DRAFT",
   "currency": "RUB",
-  "source": "Owner Google Sheets · ЦЕНА НА САЙТЕ (C); reviewed snapshot; no dealer/RRP fallback",
+  "source": "Approved base public totals from owner internal Google calculator; priced add-ons from owner supplied DOCX; items without matching specification are quotation-only",
   "prices": {
     "kvadro": {
-      "400": 445000,
-      "450": 465000,
-      "500": 505000,
-      "550": 525000,
-      "600": 540000
+      "400": 389298,
+      "450": 435770,
+      "500": 500955,
+      "550": 523541,
+      "600": 538566
     },
     "parus": {
-      "400": 540000,
-      "450": 565000,
-      "500": 590000,
-      "550": 610000,
-      "600": 625000
+      "400": 412230,
+      "450": 451170,
+      "500": 508200,
+      "550": 529620,
+      "600": 542220
     },
     "viking": {
-      "400": 490000,
-      "450": 540000,
-      "500": 620000,
-      "550": 645000,
-      "600": 675000
+      "400": 447330,
+      "450": 519540,
+      "500": 605475,
+      "550": 650580,
+      "600": 668220
     },
     "kvadro-house": {
-      "4x4": 620000,
-      "5x4": 699000,
-      "6x4": 769000,
-      "6x5": 839000,
-      "6x6": 899000
+      "4x4": 589875,
+      "5x4": 688875,
+      "6x4": 731625,
+      "6x5": 793500,
+      "6x6": 856500
     }
   },
   "models": {
@@ -45,7 +45,8 @@
         5,
         5.5,
         6
-      ]
+      ],
+      "baseEntrance": "Центральный вынесенный вход включён"
     },
     "parus": {
       "name": "Парус",
@@ -70,7 +71,8 @@
         5.5,
         6
       ],
-      "catalogTitle": "Викинг 2.4×2.7 с клиновым входом"
+      "catalogTitle": "Викинг с арочным входом по центру",
+      "baseEntrance": "Арочный вход по центру включён"
     },
     "kvadro-house": {
       "name": "Квадро Хаус",
@@ -189,110 +191,112 @@
   "options": {
     "stove_guard": {
       "label": "Ограждение печи",
-      "unitPriceRub": 7000,
+      "unitPriceRub": 5850,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C49"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "aspen_backrests": {
       "label": "Подспинники из осины, комплект",
-      "unitPriceRub": 2500,
+      "unitPriceRub": 2925,
       "quantity": 1,
       "unit": "комплект",
-      "source": "Google Sheets · Рабочий калькулятор!C64"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "folding_table": {
       "label": "Откидной стол",
-      "unitPriceRub": 6000,
+      "unitPriceRub": 5265,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C95"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "bench_chest_spruce": {
-      "label": "Лавка-рундук из ели",
-      "unitPriceRub": 2000,
-      "quantity": 2,
-      "unit": "пог. м",
-      "source": "Google Sheets · Рабочий калькулятор!C94"
+      "label": "Лавка-рундук 2 м вместо базовой лавки",
+      "unitPriceRub": 4095,
+      "quantity": 1,
+      "unit": "комплект",
+      "source": "Прайс Гарант бань.docx: замена штатной лавки на рундук 2 пог. м; утверждённая розничная сумма",
+      "priceStatus": "PRELIMINARY",
+      "priceClarification": "Стандарт 2 м, замена, не дополнительная лавка"
     },
     "glass_sauna_door_700x1700": {
       "label": "Стеклянная дверь 700×1700 мм, 3 петли",
-      "unitPriceRub": 9000,
+      "unitPriceRub": 10530,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C14"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "vent_window_small": {
       "label": "Форточка 30×30 / 30×40 см",
-      "unitPriceRub": 3000,
+      "unitPriceRub": 3510,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C25"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "tilt_window_1400x800": {
       "label": "Окно 1400×800 мм, откидное",
-      "unitPriceRub": 14500,
+      "unitPriceRub": 16965,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C37"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "oblivasta_connected": {
       "label": "Обливное устройство «Обливаста» с подключением",
-      "unitPriceRub": 24000,
+      "unitPriceRub": 28080,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C51"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "remote_firebox_adjacent": {
       "label": "Вынос топки в смежное помещение",
-      "unitPriceRub": 10000,
+      "unitPriceRub": 11700,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C57"
-    },
-    "socket_kit_owner": {
-      "label": "Комплект розеток",
-      "unitPriceRub": 10000,
-      "quantity": 1,
-      "unit": "комплект",
-      "source": "Google Sheets · Рабочий калькулятор!C105"
-    },
-    "electrical_distribution_owner": {
-      "label": "Разводка электрики",
-      "unitPriceRub": 10000,
-      "quantity": 1,
-      "unit": "комплект",
-      "source": "Google Sheets · Рабочий калькулятор!C106"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "outdoor_two_lanterns": {
       "label": "Уличное освещение, 2 фонаря за комплект",
-      "unitPriceRub": 8000,
+      "unitPriceRub": 9360,
       "quantity": 1,
       "unit": "комплект",
-      "source": "Google Sheets · Рабочий калькулятор!C79"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "led_light_10m": {
       "label": "LED-подсветка до 10 м",
-      "unitPriceRub": 16000,
+      "unitPriceRub": 18720,
       "quantity": 1,
       "unit": "комплект",
-      "source": "Google Sheets · Рабочий калькулятор!C81"
+      "source": "Owner DOCX; published calculated retail total (approved snapshot)",
+      "priceStatus": "PRELIMINARY"
     },
     "cabinet_single_50x50": {
-      "label": "Шкаф одностворчатый 50×50",
-      "unitPriceRub": 10000,
+      "label": "Шкаф одностворчатый между душевой и парной",
+      "unitPriceRub": 9360,
       "quantity": 1,
       "unit": "шт",
-      "source": "Google Sheets · Рабочий калькулятор!C99"
+      "source": "Прайс Гарант бань.docx: одностворчатый шкаф между душевой и парной; розничная сумма",
+      "priceStatus": "PRELIMINARY",
+      "priceClarification": "Цена варианта между душевой и парной; ранее указанный размер 50×50 должен быть подтверждён при оформлении заказа"
     },
-    "electrical_safety_cabinet_temporary_supply": {
-      "label": "Электрощит с автоматической защитой",
-      "unitPriceRub": 15000,
+    "floor_insulation_50mm_kvadro_500": {
+      "label": "Утепление пола пеноплэкс 50 мм · 10,5 м² (Квадро 5 м)",
+      "unitPriceRub": 14742,
       "quantity": 1,
-      "unit": "комплект",
-      "source": "Google Sheets · Рабочий калькулятор!C107",
-      "safetyGate": "Проект/монтаж электриком, проверка допустимости временного разъёмного ввода, защитных устройств, допустимой нагрузки и условий влажности. Обычный удлинитель не обещается; до заключения специалиста опция не считается технически подтверждённой.",
-      "requiresTechnicalApproval": true
+      "unit": "компл.",
+      "source": "Прайс Гарант бань.docx, внутренний калькулятор собственника: подтверждённая публичная стоимость утепления пола 50 мм на площади Квадро 5 м.",
+      "priceStatus": "PRELIMINARY",
+      "compatibleModelId": "kvadro",
+      "compatibleSizeId": "500",
+      "pricingClarification": "Каркасный пол уже в базовой цене Квадро. Утепление 50 мм включено только в пакет Квадро 5 м Комфорт, не в обычную базовую цену."
     }
   },
   "featuredBundle": {
@@ -308,84 +312,79 @@
       "vent_window_small",
       "tilt_window_1400x800",
       "remote_firebox_adjacent",
-      "socket_kit_owner",
-      "electrical_distribution_owner",
       "outdoor_two_lanterns",
       "led_light_10m",
       "cabinet_single_50x50",
-      "electrical_safety_cabinet_temporary_supply"
+      "floor_insulation_50mm_kvadro_500"
     ],
     "discountRub": 0,
     "removed": "shower-zone-1x1,oblivasta_connected",
-    "temporaryElectricalConnectionStatus": "ENGINEERING_CONFIRMATION_REQUIRED"
+    "mandatoryIncludedFeatures": [
+      "Удобный центральный вход и каркасный пол уже включены в базу",
+      "Надёжная проверенная печь, внутреннее освещение и стандартная электрика в базе",
+      "Утепление пола 50 мм по всей площади 10,5 м² в комплектации Комфорт",
+      "Большое окно, форточка в парной и стеклянная дверь в парную",
+      "Удобные места для хранения и дополнительный свет"
+    ],
+    "customerDescription": "Светлая баня для отдыха: стеклянная дверь в парную, увеличенное окно в комнате отдыха и форточка, удобные места для хранения, уютный свет и утеплённый пол."
   },
   "deliveryIncluded": false,
   "checks": {
-    "baseRub": 505000,
-    "optionRub": 125000,
-    "knownSubtotalRub": 630000,
-    "previousKnownSubtotalRub": 490000,
-    "confirmationRequired": [
-      "technical compliance of temporary electrical input",
-      "power and leakage protection design",
-      "manufacturer material/option scope",
-      "finish and roof markups",
-      "approval of current price list"
-    ]
+    "baseRub": 500955,
+    "knownOptionsRub": 113022,
+    "quoteRequired": false,
+    "baseCount": 20,
+    "optionCount": 13,
+    "featureOptionCount": 12,
+    "insulationAreaM2": 10.5,
+    "bundleTotalRub": 613977
   },
   "notes": [
-    "Prices are a reviewed snapshot of website column C, not a live Google Sheets connection.",
-    "No dealer prices, RRP, workbook calculations or manual discount cells are published.",
-    "Option quantities in the featured kit stay unchanged; spreadsheet checkboxes and selection quantities are not product price definitions.",
-    "Color/roof surcharges remain unset. Delivery, unloading, foundation and connections are quoted separately.",
-    "Special offer mentioned in free-text sheet notes is not imported as a column-C price or an invented discount."
+    "Customer-facing source: 20 equipped base price totals from owner's Google calculator, including owner's approved internal management reserve for standard electrical protection.",
+    "No supplier-specific stove brand, electrical panel components, supplier costs, margins or rates belong in client-facing pages.",
+    "The standard sauna is equipped with a stove, inner wiring/light, protection, doors/windows, benches, drainage and ventilation; site utility connections, delivery, unloading and foundation are separately confirmed.",
+    "Kvadro 5m Comfort includes 50mm insulation on 10.5sqm and meaningful comfort upgrades; the quoted amount is the full configured sauna excluding offsite logistics and site hookups.",
+    "When replacing a built-in component with a premium one, the final order specification must avoid double billing; confirm with the manager.",
+    "The gallery must correspond to the actual saleable model and centered entry; reject inaccurate or AI-mutated geometry."
   ],
   "pricingAdjustments": {
     "policy": "Final site-column amounts are already complete. Never add historic uplifts again."
   },
   "priceSource": {
-    "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1tDbbyKBW5opBRLWk_twPTryKYm9wgaezEcI5hTla06o/edit",
     "sheet": "Рабочий калькулятор",
-    "column": "C",
-    "header": "ЦЕНА НА САЙТЕ, ₽",
-    "readAt": "2026-10-16T05:21:34.733Z",
-    "syncMode": "REVIEWED_SNAPSHOT",
-    "cells": {
-      "kvadro/400": "C225",
-      "kvadro/450": "C226",
-      "kvadro/500": "C227",
-      "kvadro/550": "C228",
-      "kvadro/600": "C229",
-      "parus/400": "C235",
-      "parus/450": "C236",
-      "parus/500": "C237",
-      "parus/550": "C238",
-      "parus/600": "C239",
-      "viking/400": "C230",
-      "viking/450": "C231",
-      "viking/500": "C232",
-      "viking/550": "C233",
-      "viking/600": "C234",
-      "kvadro-house/4x4": "C240",
-      "kvadro-house/5x4": "C241",
-      "kvadro-house/6x4": "C242",
-      "kvadro-house/6x5": "C243",
-      "kvadro-house/6x6": "C244",
-      "stove_guard": "C49",
-      "aspen_backrests": "C64",
-      "folding_table": "C95",
-      "bench_chest_spruce": "C94",
-      "glass_sauna_door_700x1700": "C14",
-      "vent_window_small": "C25",
-      "tilt_window_1400x800": "C37",
-      "oblivasta_connected": "C51",
-      "remote_firebox_adjacent": "C57",
-      "socket_kit_owner": "C105",
-      "electrical_distribution_owner": "C106",
-      "outdoor_two_lanterns": "C79",
-      "led_light_10m": "C81",
-      "cabinet_single_50x50": "C99",
-      "electrical_safety_cabinet_temporary_supply": "C107"
+    "column": "G",
+    "header": "Базовая комплектация для сайта, ₽",
+    "syncMode": "OWNER_REVIEWED_PUBLIC_SNAPSHOT",
+    "baseCount": 20,
+    "optionScope": "matched DOCX line-items; pending items unpriced",
+    "rounding": "round final model price to nearest whole RUB",
+    "approvedDate": "2026-10-19",
+    "scope": "Customer-visible equipped base, including an internally budgeted standard electrical safety panel; no vendor procurement claims"
+  },
+  "baseInclusions": {
+    "common": [
+      "Надёжная проверенная печь, уже включённая в стоимость",
+      "Полки и лежаки в парной, дымоход и штатный бак для воды",
+      "Лавки и место для вещей в комнате отдыха",
+      "Окна и двери по выбранной модели",
+      "Внутреннее освещение и электрика, штатная электрическая защита",
+      "Вентиляция, слив и напольная конструкция"
+    ],
+    "modelSpecific": {
+      "kvadro": "Вынесенный вход по центру включён в цену",
+      "viking": "Арочный вход по центру включён в цену",
+      "parus": "Расположение входа по спецификации выбранного варианта",
+      "kvadro-house": "Напольная конструкция по спецификации выбранного варианта"
+    },
+    "externalExcluded": [
+      "Доставка, разгрузка и основание под баню",
+      "Внешнее подключение электричества и воды",
+      "Монтаж на участке, если он потребуется"
+    ],
+    "priceApprovalGate": {
+      "electricalShield": "OWNER_PLANNING_RESERVE_INCLUDED",
+      "defaultStove": "MODEL_NAME_NOT_PUBLIC",
+      "customerPriceStatus": "READY_FOR_RELEASE_QA"
     }
   }
 }
