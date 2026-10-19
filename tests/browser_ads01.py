@@ -47,7 +47,10 @@ def goals(page):
     return page.evaluate("() => (window.ym?.a || []).filter(x=>x[1]==='reachGoal').map(x=>x[2])")
 
 def open_and_send(page, city="Ногинск"):
+    # HTML may be interactive before deferred ES modules attach their listeners.
+    page.wait_for_function("() => !!window.__GARANT_DEMO__")
     page.locator(".builder-aside [data-flow='quote']").click()
+    page.locator("#contactDialog[open]").wait_for(state="visible")
     page.locator("#formExtra summary").click()
     page.locator("#contactForm [name='district']").fill(city)
     page.locator("#contactForm [name='phone']").fill("+7 (921) 234-56-78")
