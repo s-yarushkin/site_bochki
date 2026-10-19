@@ -1,21 +1,23 @@
-# ADS-01 · Privacy preflight — awaiting owner/legal GO
-Status: **CODE PREPARED / OPERATOR LEGAL SIGNOFF PENDING**. This RC has no analytics banner or opt-in buttons by owner decision; it initializes the counter at page load if published. Operator must confirm an applicable lawful basis; a policy notice or browsing alone cannot be treated as evidence of consent.
+# ADS-01 · Privacy / lawful-basis preflight (current RC)
 
-The isolated RC updates `privacy.html` §8.2–8.5 to disclose Yandex Metrica and separate opt-in. The operator must still approve the actual legal basis/retention/consent and confirm updated policy before publishing. `consent.html` is an application/contact response consent; it does NOT cover Webvisor/advertising tracking by implication.
+**Status: LEGAL/OPERATOR SIGNOFF PENDING — NOT DEPLOYED.** This document is a technical inventory, not legal advice.
 
-## What we built
-- RC config: real `ADS01_COUNTER_ID = 113675581`, technical `ADS01_OWNER_RELEASE_GO = true`, `ADS01_WEBVISOR_ENABLED = false`; when published it would initialize once per page on load. There are NO new visitor consent controls. Legal approval remains independent of this technical switch.
-- Per owner UX decision, the release adds no visitor-facing analytics buttons or dialogs. The public privacy policy §8 describes processing; the controller must independently document legal grounds, information duties and rights handling before publishing.
-- `ym-disable-keys` on contact input, free comments, honeypot and dynamic builder location; `ym-hide-content` on contact dialog, quote summary and response block. Recording all fields must also be disabled in the owner counter settings.
-- Browser analytics `reachGoal` send only approved categorical values. No phone/name/city/address/notes/customer ID/leadId/requestId/raw URLs/yclid as goal parameters.
-- No analytics code in manager/admin area or relay API.
-- First/last touch attribution is stored locally for up to 30 days if the counter is enabled. This is not consent evidence; legal review must account for cookies and identifiers. No server schema changes.
+The owner rejected extra analytics popups, banners, and click-to-accept UI. Current RC has none; the callback/quote form still displays its own existing text about processing entered contact data. The live behavior of `privacy.html` §8.2–8.5 describes planned Yandex Metrica 113675581. Publishing policy text **does not itself prove the visitor consented** to optional tracking.
 
-## Owner + personal-data owner must approve before production
-1. Which personal data / tracking identifiers are processed, legitimate legal basis and retention, whether consent required, what constitutes consent/revocation and evidence.
-2. Correct public privacy/cookie notice, purposes, recipients, Yandex contractual terms, infrastructure localization and server logging.
-3. Whether loading Yandex Metrica without an affirmative click is permissible on a specifically documented legal basis; operator details, RKN notices, retention, cookie identifiers, storage and transfers must be evaluated by responsible counsel.
-4. Explicit production configuration GO; do **not** change consent.html SHA/submission evidence for this task.
-5. Verify Yandex Metrica Webvisor UI: `Записывать все поля` OFF, `Вебвизор` enabled only after approval; verify with safe fictitious local inputs and private-contents masking before accepting production.
+## Data and technical controls
+- Counter `113675581`, 18 exact JS goals, `ADS01_OWNER_RELEASE_GO=true` in unpublished RC. If deployed, initialization is automatic on a public page, no user controls added.
+- `ADS01_WEBVISOR_ENABLED=false`; verify Webvisor/form-field recording is also OFF in the real Yandex account before enabling.
+- `ym-disable-keys` applied to phone, name, delivery district, comment and dynamic region; `ym-hide-content` on contact dialog/quote/result. No personal free text, phone, leadId, requestId, address or userParams in `reachGoal`.
+- Allowed event parameters only `placement`, `model`, `size`, `step`, `flow`. The adapter is not injected into manager/admin endpoints.
+- UTM/yclid and safe first/last touch are retained locally for up to 30 days, and sanitized again on the server before addition to the lead JSON snapshot. This collection must be included in the operator's legal assessment.
+- Existing form handling and its `consent.html` SHA remain independent. Do not add modal dialogs, cookie banners or checkboxes to the sales funnel merely to satisfy implementation convenience.
 
-Reference: https://yandex.ru/support/metrica/ru/webvisor/settings
+## Mandatory operator review before public analytics activation
+1. Identify and document a specific lawful basis for each category of technical identifiers, visits, goals, UTM/yclid and service data processing. Do not assume browsing = consent. If the actual lawful basis requires an affirmative opt-in, the owner and counsel must agree a compliant alternative before tracking begins.
+2. Approve actual privacy notice, operator/processor responsibilities and Yandex contracts, retention, access controls, location/transfer and relevant Roskomnadzor obligations.
+3. Approve current processing of personal details in lead form and privacy/consent text against real SQLite + MAX retention and roles.
+4. Verify Webvisor recording OFF in owner account; network/browser smoke with anonymized local data; production test goals only after an explicitly approved safe method, without real customer leads.
+5. Confirm pinned release SHA, server preflight, backup, restore rehearsal, fail-closed rollback, no other services touched.
+
+## Operational blocker
+Remote Desktop Commander `DESKTOP-VJMGOO6` was OFFLINE when checked. The repository includes `ops/ads01-readonly-preflight.ps1` which inventories active WEB/API links and price version through SSH without mutation. Do not run the old limited `ops/v74-content-release.ps1` against the combined ADS-01 RC: its approved overlay omits the new analytics JS, backend conversion classifier and legal page.
