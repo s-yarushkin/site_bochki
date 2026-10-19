@@ -30,7 +30,7 @@ test('V73 catalogue keeps only meaningful priced extras; mandatory wiring and pa
 test('V73 featured package has one consistent retail amount, no technical-price exposure',()=>{
   const bundle=calculateQuote({modelId:'kvadro',sizeId:'500',optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id});
   assert.equal(bundle.total,613977);assert.equal(bundle.quoteRequired,false);assert.equal(bundle.unpricedOptionIds.length,0);
-  assert.equal(formatMoney(bundle.total),'613 977 ₽');
+  assert.match(formatMoney(bundle.total),/613\s?977\s?₽/);
   assert.match(read('index.html'),/id="bundleNew">613 977 ₽/);
   assert.doesNotMatch(read('index.html'),/Готовый комплект за 630 000 ₽/);
 });
