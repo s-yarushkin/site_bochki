@@ -29,7 +29,7 @@ test('V7.2 visible identity is Dacha Par; company appears only in linked legal d
 });
 test('V73 retains original base elements and adds floor and electrical safety panel',()=>{
   const base=html.match(/<section class="base-kit section"[\s\S]*?<\/section>/)?.[0]||'';
-  assert.match(base,/оснащённая баня/);
+  assert.match(base,/всё главное для вашей бани/);
   assert.equal((base.match(/<li>/g)||[]).length,19);
   for(const item of ['Печь','Дымоход','55 л','Двухъярусные лежаки','Трапик','минерита',
                      'Две скамейки','Вешалка','60 × 80','вынесенный по центру',
@@ -37,7 +37,7 @@ test('V73 retains original base elements and adds floor and electrical safety pa
                      'Электрощит','Напольная конструкция','Обручи','гибкой черепицы','в два слоя'])assert.ok(base.includes(item),item);
   assert.match(base,/data-flow="callback" data-topic=/);
   assert.match(html,/id="bundleNew">По запросу/);
-  assert.match(html,/id="quoteTotal">484 155 ₽/);
+  assert.match(html,/id="quoteTotal">500 955 ₽/);
   assert.match(js,/Базовая комплектация от/);
   assert.match(js,/from '\.\/quote-engine\.js'/);
 });
