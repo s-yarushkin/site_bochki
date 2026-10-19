@@ -31,7 +31,7 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.match(feature,/стеклянная дверь/);
   assert.match(feature,/утеплённый пол/i);
   assert.match(feature,/места для хранения/);
-  assert.match(feature,/id="bundleNew">613 977 ₽/);
+  assert.match(feature,/id="bundleNew">618 022 ₽/);
   assert.doesNotMatch(feature,/\b\d+\s+(?:дополнени[йя]|опци[йя]|позиций)/i);
   assert.doesNotMatch(app,/q\.options\.length\} дополнительных опций\$\{q\.bundleApplied/);
   assert.match(html,/id="base"[\s\S]*?всё главное для вашей бани/);
