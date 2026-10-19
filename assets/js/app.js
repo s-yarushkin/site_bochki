@@ -111,6 +111,11 @@ function initBaseDialog(){
       dialog.close();
       return;
     }
+    if(event.target.closest('[data-base-full]')){
+      selectedModel=true;
+      dialog.close();
+      return;
+    }
     const select=event.target.closest('[data-base-select]');
     if(select){
       selectedModel=true;
