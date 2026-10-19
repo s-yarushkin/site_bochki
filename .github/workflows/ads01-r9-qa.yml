@@ -1,5 +1,7 @@
 name: ADS-01 R9 conversion and privacy acceptance
 on:
+  push:
+    branches: [test/ads01-r9-v74-price-j-integration-20261019]
   pull_request:
     branches: [release/v74-content-20261019]
     paths:
