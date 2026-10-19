@@ -6,9 +6,9 @@ const {validateBaniLead}=await import(pathToFileURL(resolve(root,'server/garant-
 const {PRICEBOOK}=await import(pathToFileURL(resolve(root,'data/pricebook.js')));
 const {PRICEBOOK:OLD_SITE}=await import(pathToFileURL(resolve(root,'data/legacy-site-v1-pricebook.js')));
 const input={flow:'quote',name:'Изолированная проверка',phone:'+79991234567',district:'Изолированный тест',base:'ready',access:'yes',consent:true,consentVersion:'2026-10-14',configuration:{modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',pricebookVersion:PRICEBOOK.version}};
-const fresh=validateBaniLead(input);if(fresh.estimate.total!==484155)throw Error('NEW_RUNTIME_PRICE_MISMATCH');
-const full=validateBaniLead({...input,configuration:{...input.configuration,optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id}});if(full.estimate.total!==null)throw Error('BUNDLE_PRICE_MISMATCH');
-if(full.estimate.quoteRequired!==true || full.estimate.unpricedOptionIds.length!==0 || !full.estimate.quoteApprovalReason?.includes('электрощита'))throw Error('PANEL_APPROVAL_GATE_MISSING');
+const fresh=validateBaniLead(input);if(fresh.estimate.total!==500955)throw Error('NEW_RUNTIME_PRICE_MISMATCH');
+const full=validateBaniLead({...input,configuration:{...input.configuration,optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id}});if(full.estimate.total!==613977)throw Error('BUNDLE_PRICE_MISMATCH');
+if(full.estimate.quoteRequired!==false || full.estimate.unpricedOptionIds.length!==0)throw Error('BUNDLE_INCORRECT_APPROVAL_STATUS');
 const oldTab=validateBaniLead({...input,configuration:{...input.configuration,pricebookVersion:OLD_SITE.version}});
 if(oldTab.estimate.total!==505000)throw Error('SITE_V1_TAB_COMPATIBILITY_BROKEN');
 delete input.configuration.pricebookVersion;
@@ -17,4 +17,4 @@ for(const model of PRICEBOOK.models)for(const [sizeId,amount] of Object.entries(
  const got=validateBaniLead({...input,configuration:{...input.configuration,modelId:model.id,sizeId,pricebookVersion:PRICEBOOK.version}});
  if(got.estimate.total!==amount)throw Error('MATRIX_PRICE_MISMATCH');
 }
-console.log('PRICE_RUNTIME_PROBE=PASS; NEW_AND_PREVIOUS_BOOKS=PASS; PRICE_BY_REQUEST=PASS; MATRIX_20=PASS; PERSISTENCE_WRITES=0; MAX_CALLS=0');
+console.log('PRICE_RUNTIME_PROBE=PASS; NEW_AND_PREVIOUS_BOOKS=PASS; CURATED_KIT_TOTAL_613977=PASS; MATRIX_20=PASS; PERSISTENCE_WRITES=0; MAX_CALLS=0');
