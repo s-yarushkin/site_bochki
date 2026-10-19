@@ -7,7 +7,15 @@ const lead={flow:'quote',phone:'+79991234567',name:'',district:'',base:'unknown'
 test('phone-only request retains server-calculated configuration and exact consent document fingerprint',()=>{
  const value=validateBaniLead(lead);assert.equal(value.estimate.total,500955);assert.equal(value.name,'');assert.equal(value.district,'');
  assert.equal(value.consentEvidence.method,CONSENT_METHOD);assert.equal(value.consentEvidence.version,CONSENT_VERSION);
- assert.equal(createHash('sha256').update(readFileSync(new URL('../consent.html',import.meta.url))).digest('hex'),CONSENT_DOCUMENT_SHA256);
+ // Git may check out the same legal document as CRLF on Windows.
+ // Fingerprint the canonical LF publication bytes; unlike trimming or rewriting
+ // text, newline normalization cannot hide a change to the consent wording.
+ const checkedOutDocument=readFileSync(new URL('../consent.html',import.meta.url));
+ const originalText=checkedOutDocument.toString('utf8');
+ const canonicalText=originalText.replace(/\r\n/g,'\n');
+ assert.ok(!canonicalText.includes('\r'),'CONSENT_UNEXPECTED_LINE_ENDINGS');
+ assert.equal(createHash('sha256').update(Buffer.from(canonicalText,'utf8')).digest('hex'),CONSENT_DOCUMENT_SHA256);
+ assert.ok(originalText===canonicalText||originalText===canonicalText.replace(/\n/g,'\r\n'),'CONSENT_MIXED_LINE_ENDINGS');
  assert.equal(value.consentEvidence.documentSha256,CONSENT_DOCUMENT_SHA256);assert.match(formatBaniLead(value),/Район: Не указан/);assert.match(formatBaniLead(value),/ДАЧА ПАР/);
  for(const bad of [undefined,false,0])assert.throws(()=>validateBaniLead({...lead,consent:bad}),/CONSENT_REQUIRED/);
  for(const bad of [undefined,'checkbox','accepted'])assert.throws(()=>validateBaniLead({...lead,consentMethod:bad}),/CONSENT_METHOD_REQUIRED/);
