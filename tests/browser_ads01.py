@@ -48,7 +48,10 @@ def goals(page):
 
 def open_and_send(page, city="Ногинск"):
     # HTML may be interactive before deferred ES modules attach their listeners.
-    page.wait_for_function("() => !!window.__GARANT_DEMO__")
+    try:
+        page.wait_for_function("() => !!window.__GARANT_DEMO__", timeout=8000)
+    except Exception as exc:
+        raise AssertionError("site boot failed, JS errors: " + repr(getattr(page, "_ads01_errors", [])) + "; app_js_status=" + str(page.evaluate("() => performance.getEntriesByType('resource').filter(x => x.name.includes('/assets/js/app.js')).length"))) from exc
     page.locator(".builder-aside [data-flow='quote']").click()
     page.locator("#contactDialog[open]").wait_for(state="visible")
     page.locator("#formExtra summary").click()
@@ -88,6 +91,10 @@ def main():
             MockSite.enable_analytics = True
             c = browser.new_context(viewport={"width":1366,"height":768})
             page = c.new_page()
+            page._ads01_errors = []
+            page.on("pageerror",lambda e:page._ads01_errors.append("pageerror:"+str(e)))
+            page.on("console",lambda msg:page._ads01_errors.append("console:"+msg.text) if msg.type=="error" else None)
+            page.on("requestfailed",lambda req:page._ads01_errors.append("failed:"+req.url))
             requested = []
             page.route("https://mc.yandex.ru/**", lambda route: (requested.append(route.request.url), route.fulfill(status=200, content_type="application/javascript", body="// offline test receiver")))
             page.goto(origin + "/", wait_until="domcontentloaded")
