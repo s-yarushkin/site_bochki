@@ -13,7 +13,7 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.doesNotMatch(html,/href="manager\.html"/);
   assert.doesNotMatch(html,/data-view="plan"/);
   assert.match(html,/Стоимость комплекта/);
-  assert.match(html,/id="bundleNew">По запросу/);
+  assert.match(html,/id="bundleNew">613 977 ₽/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
   assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
   assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/);
