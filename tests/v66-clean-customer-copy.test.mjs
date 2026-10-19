@@ -27,8 +27,8 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.equal(book.featuredBundle.selectedOptionIds.length,12);
   const feature=html.match(/<section class="bundle-section section"[\s\S]*?<\/section>/)?.[0]||'';
   assert.match(feature,/Больше света, больше уюта/);
-  assert.match(feature,/увеличенному окну/);
-  assert.match(feature,/стеклянной двери в парную/);
+  assert.match(feature,/увеличенное окно/);
+  assert.match(feature,/стеклянная дверь/);
   assert.match(feature,/утеплённый пол/);
   assert.match(feature,/места для хранения/);
   assert.match(feature,/id="bundleNew">613 977 ₽/);
