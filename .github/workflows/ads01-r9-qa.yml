@@ -9,6 +9,7 @@ on:
       - 'server/**'
       - 'tests/ads01-*'
       - 'tests/browser_ads01.py'
+      - 'tests/browser_ads01_extended.py'
       - 'index.html'
       - 'bani/**'
       - 'dostavka-i-ustanovka/**'
@@ -42,6 +43,8 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: ADS-01 offline browser goals, consent and CTA
         run: python tests/browser_ads01.py
+      - name: ADS-01 extended CTA, full funnel and error matrix
+        run: python tests/browser_ads01_extended.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
