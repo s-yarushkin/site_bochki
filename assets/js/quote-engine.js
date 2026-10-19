@@ -27,6 +27,9 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundl
   const basePrice=model.sizes[sizeId];
   if(!Number.isSafeInteger(basePrice)||basePrice<0)throw new Error('INVALID_BASE_PRICE');
   const chosen=resolveOptions(optionIds,pricebook);
+  for(const option of chosen){
+    if((option.compatibleModelId&&option.compatibleModelId!==modelId)||(option.compatibleSizeId&&option.compatibleSizeId!==sizeId))throw new Error('OPTION_NOT_AVAILABLE_FOR_SIZE:'+option.id);
+  }
   const missing=chosen.filter(opt=>opt.price===null);
   let knownOptionsSubtotal=0;
   for(const opt of chosen){
