@@ -1,37 +1,37 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-19-v73-customer-ready-r1",
+  "version": "2026-10-19-v74-sheet-round-up-5000-r1",
   "status": "CATALOG_DRAFT",
   "currency": "RUB",
   "source": "Approved base public totals from owner internal Google calculator; priced add-ons from owner supplied DOCX; items without matching specification are quotation-only",
   "prices": {
     "kvadro": {
-      "400": 389298,
-      "450": 435770,
-      "500": 500955,
-      "550": 523541,
-      "600": 538566
+      "400": 390000,
+      "450": 440000,
+      "500": 505000,
+      "550": 525000,
+      "600": 540000
     },
     "parus": {
-      "400": 412230,
-      "450": 451170,
-      "500": 508200,
-      "550": 529620,
-      "600": 542220
+      "400": 415000,
+      "450": 455000,
+      "500": 510000,
+      "550": 530000,
+      "600": 545000
     },
     "viking": {
-      "400": 447330,
-      "450": 519540,
-      "500": 605475,
-      "550": 650580,
-      "600": 668220
+      "400": 450000,
+      "450": 520000,
+      "500": 610000,
+      "550": 655000,
+      "600": 670000
     },
     "kvadro-house": {
-      "4x4": 589875,
-      "5x4": 688875,
-      "6x4": 731625,
-      "6x5": 793500,
-      "6x6": 856500
+      "4x4": 590000,
+      "5x4": 690000,
+      "6x4": 735000,
+      "6x5": 795000,
+      "6x6": 860000
     }
   },
   "models": {
@@ -330,14 +330,14 @@
   },
   "deliveryIncluded": false,
   "checks": {
-    "baseRub": 500955,
+    "baseRub": 505000,
     "knownOptionsRub": 113022,
     "quoteRequired": false,
     "baseCount": 20,
     "optionCount": 13,
     "featureOptionCount": 12,
     "insulationAreaM2": 10.5,
-    "bundleTotalRub": 613977
+    "bundleTotalRub": 618022
   },
   "notes": [
     "Customer-facing source: 20 equipped base price totals from owner's Google calculator, including owner's approved internal management reserve for standard electrical protection.",
@@ -345,21 +345,23 @@
     "The standard sauna is equipped with a stove, inner wiring/light, protection, doors/windows, benches, drainage and ventilation; site utility connections, delivery, unloading and foundation are separately confirmed.",
     "Kvadro 5m Comfort includes 50mm insulation on 10.5sqm and meaningful comfort upgrades; the quoted amount is the full configured sauna excluding offsite logistics and site hookups.",
     "When replacing a built-in component with a premium one, the final order specification must avoid double billing; confirm with the manager.",
-    "The gallery must correspond to the actual saleable model and centered entry; reject inaccurate or AI-mutated geometry."
+    "The gallery must correspond to the actual saleable model and centered entry; reject inaccurate or AI-mutated geometry.",
+    "V74 base public prices are sourced from the Google Sheet rounded site-price column H225:H244; G values remain private workbook calculation outputs and are not shipped. All consumer base quotes use this revision consistently.",
+    "Featured bundle total follows base + unchanged option totals = 618022 RUB; a commercial rounded featured-package price requires separate owner approval."
   ],
   "pricingAdjustments": {
     "policy": "Final site-column amounts are already complete. Never add historic uplifts again."
   },
   "priceSource": {
     "sheet": "Рабочий калькулятор",
-    "column": "G",
-    "header": "Базовая комплектация для сайта, ₽",
-    "syncMode": "OWNER_REVIEWED_PUBLIC_SNAPSHOT",
+    "column": "H",
+    "header": "Стоимость для сайта, округлённая",
+    "syncMode": "OWNER_GOOGLE_SHEET_PUBLIC_COLUMN_H_SNAPSHOT_2026_10_19",
     "baseCount": 20,
     "optionScope": "matched DOCX line-items; pending items unpriced",
-    "rounding": "round final model price to nearest whole RUB",
+    "rounding": "CEILING_TO_NEXT_5000",
     "approvedDate": "2026-10-19",
-    "scope": "Customer-visible equipped base, including an internally budgeted standard electrical safety panel; no vendor procurement claims"
+    "scope": "Only 20 public base prices, source formulas G→H; individual extras remain unchanged"
   },
   "baseInclusions": {
     "common": [

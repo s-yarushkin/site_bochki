@@ -8,6 +8,7 @@ import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 import {CATALOG,PRICEBOOK} from '../data/pricebook.js';
+import {PRICEBOOK as LEGACY_V73_PRICEBOOK} from '../data/legacy-v73-pricebook.js';
 import {PRICEBOOK as LEGACY_SITE_V1_PRICEBOOK} from '../data/legacy-site-v1-pricebook.js';
 import {LEGACY_V72_PRICEBOOK} from '../data/legacy-v72-pricebook.js';
 import {LEGACY_V64_PRICEBOOK} from '../data/legacy-v64-pricebook.js';
@@ -81,6 +82,7 @@ export function validateBaniLead(value) {
     const selectedBook=legacy?LEGACY_V64_PRICEBOOK:
       pricebookVersion===undefined||pricebookVersion===LEGACY_V72_PRICEBOOK.version?LEGACY_V72_PRICEBOOK:
       pricebookVersion===PRICEBOOK.version?PRICEBOOK:
+      pricebookVersion===LEGACY_V73_PRICEBOOK.version?LEGACY_V73_PRICEBOOK:
       pricebookVersion===LEGACY_SITE_V1_PRICEBOOK.version?LEGACY_SITE_V1_PRICEBOOK:null;
     if(!selectedBook)throw new Error('PRICEBOOK_VERSION_UNSUPPORTED');
     const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},selectedBook);

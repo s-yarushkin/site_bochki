@@ -1,7 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {CATALOG,PRICEBOOK} from '../data/pricebook.js';
+import {PRICEBOOK} from '../data/pricebook.js';
+import {CATALOG,PRICEBOOK as V73_PRICEBOOK} from '../data/legacy-v73-pricebook.js';
 import {PRICEBOOK as PREVIOUS_SITE} from '../data/legacy-site-v1-pricebook.js';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 import {validateBaniLead,formatBaniLead} from '../server/garant-bani-relay.mjs';
@@ -14,7 +15,7 @@ const base={
   'kvadro-house':[589875,688875,731625,793500,856500]
 };
 test('V73 exactly matches the 20 owner-approved public base outputs',()=>{
-  assert.equal(PRICEBOOK.version,'2026-10-19-v73-customer-ready-r1');
+  assert.equal(V73_PRICEBOOK.version,'2026-10-19-v73-customer-ready-r1');
   for(const [id,amounts] of Object.entries(base))assert.deepEqual(Object.values(CATALOG.prices[id]),amounts);
   assert.equal(Object.values(base).flat().length,20);
 });
@@ -28,18 +29,18 @@ test('V73 catalogue keeps only meaningful priced extras; mandatory wiring and pa
   assert.equal(CATALOG.checks.optionCount,13);assert.equal(CATALOG.checks.featureOptionCount,12);
 });
 test('V73 featured package has one consistent retail amount, no technical-price exposure',()=>{
-  const bundle=calculateQuote({modelId:'kvadro',sizeId:'500',optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id});
+  const bundle=calculateQuote({modelId:'kvadro',sizeId:'500',optionIds:V73_PRICEBOOK.bundle.optionIds,bundleId:V73_PRICEBOOK.bundle.id},V73_PRICEBOOK);
   assert.equal(bundle.total,613977);assert.equal(bundle.quoteRequired,false);assert.equal(bundle.unpricedOptionIds.length,0);
   assert.match(formatMoney(bundle.total),/613\s?977\s?₽/);
-  assert.match(read('index.html'),/id="bundleNew">613 977 ₽/);
+  assert.match(read('index.html'),/id="bundleNew">618 022 ₽/);
   assert.doesNotMatch(read('index.html'),/Готовый комплект за 630 000 ₽/);
 });
 test('V73 server recomputes current amounts, old site-v1 tabs and legacy tabs independently',()=>{
   const lead=(version,opts=[])=>({flow:'quote',name:'Изолированный тест',phone:'+79991234567',district:'Тестовый район',base:'ready',access:'yes',consent:true,consentVersion:'2026-10-14',configuration:{modelId:'kvadro',sizeId:'500',optionIds:opts,bundleId:null,finish:'pine',roof:'brown',pricebookVersion:version}});
-  assert.equal(validateBaniLead(lead(PRICEBOOK.version)).estimate.total,500955);
+  assert.equal(validateBaniLead(lead(V73_PRICEBOOK.version)).estimate.total,500955);
   assert.equal(validateBaniLead(lead(PREVIOUS_SITE.version)).estimate.total,505000);
-  assert.throws(()=>validateBaniLead(lead(PRICEBOOK.version,['socket_kit_owner'])),/UNKNOWN_OPTION/);
-  const pending=lead(PRICEBOOK.version,PRICEBOOK.bundle.optionIds);pending.configuration.bundleId=PRICEBOOK.bundle.id;
+  assert.throws(()=>validateBaniLead(lead(V73_PRICEBOOK.version,['socket_kit_owner'])),/UNKNOWN_OPTION/);
+  const pending=lead(V73_PRICEBOOK.version,V73_PRICEBOOK.bundle.optionIds);pending.configuration.bundleId=V73_PRICEBOOK.bundle.id;
   const unpriced=validateBaniLead(pending);
   assert.equal(unpriced.estimate.total,613977);
   assert.match(formatBaniLead(unpriced),/613\s?977/);
@@ -57,7 +58,7 @@ test('V73 every SEO model table uses the current prices',()=>{
   const pages={kvadro:'kvadro',parus:'parus',viking:'viking','kvadro-house':'kvadro-haus'};
   for(const [id,slug] of Object.entries(pages)){
     const html=read('bani/'+slug+'/index.html');
-    for(const sum of base[id])assert.ok(html.includes(new Intl.NumberFormat('ru-RU').format(sum)+' ₽'),id+':'+sum);
+    for(const sum of Object.values(PRICEBOOK.models.find(m=>m.id===id).sizes))assert.ok(html.includes(new Intl.NumberFormat('ru-RU').format(sum)+' ₽'),id+':'+sum);
   }
 });
 
