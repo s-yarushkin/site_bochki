@@ -63,14 +63,16 @@ test('V6.7: gallery is accessible from model photo, name, miniatures and configu
   assert.match(css,/\.catalog \.gallery-cover\.media-ready \.v5-photo\{[\s\S]*?object-fit:contain/);
   assert.match(css,/\.bundle-photo\.gallery-bundle-cover\.media-ready \.v5-photo\{[\s\S]*?object-fit:contain/);
 });
-test('V6.7: featured kit presents 14 included options without line item pricing',()=>{
-  assert.equal(book.featuredBundle.selectedOptionIds.length,14);
-  assert.match(app,/\$\('#bundleOptions'\)\.innerHTML=markup/);
+test('V73: curated comfort kit has 12 options and one customer price without line-item disclosure',()=>{
+  assert.equal(book.featuredBundle.selectedOptionIds.length,12);
+  assert.equal(book.checks.bundleTotalRub,613977);
+  assert.match(app,/function renderBundle\(\)/);
+  assert.match(app,/\['Светло и уютно'/);
+  assert.match(app,/\$\('#bundleOptions'\)\.innerHTML=benefits\.map/);
   assert.doesNotMatch(app,/\$\('#bundleOptions'\)\.innerHTML=options\.map/);
-  assert.match(html,/id="bundleNew"/);
-  assert.match(html,/Готовый комплект за 630 000 ₽/);
-  // V7.2 explicitly prices transport/handling/assembly and site connections separately.
-  assert.match(html,/Доставку, разгрузку, монтаж, основание и внешние подключения рассчитаем отдельно/);
+  assert.match(html,/id="bundleNew">613 977 ₽/);
+  assert.doesNotMatch(html,/Готовый комплект за 630 000 ₽/);
+  assert.match(html,/Доставку, разгрузку, основание, монтаж на участке/);
   assert.match(html,/id="delivery"[\s\S]*?разгрузка манипулятором/);
 });
 test('V6.7: no repeated fake interior section and no legal street address in visible footer',()=>{
