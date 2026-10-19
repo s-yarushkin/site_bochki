@@ -61,9 +61,9 @@ test('ADS01 all indexable pages share one script, without manager tracking',()=>
 
 test('ADS01 all 18 owner-created event identifiers match the deployed measurement adapter',()=>{
   const code=read('assets/js/analytics.js');
-  const match=code.match(/const goals=new Set\\(\\[([^\\]]+)\\]\\)/);
-  assert.ok(match,'event allowlist exists');
-  const ids=[...match[1].matchAll(/'([^']+)'/g)].map(x=>x[1]);
+  const section=code.split("const goals=new Set([")[1]?.split("]);")[0];
+  assert.ok(section,'event allowlist exists');
+  const ids=[...section.matchAll(/'([^']+)'/g)].map(x=>x[1]);
   const expected=[
     'dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_lead_confirmed',
     'dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_phone_click',
