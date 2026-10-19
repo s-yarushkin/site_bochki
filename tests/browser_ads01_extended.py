@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ADS-01 extended offline acceptance: actual CTA hooks, funnel, opt-in and failure routes.
+"""ADS-01 extended offline acceptance: actual CTA hooks, funnel, Webvisor OFF and failure routes.
 Only loopback local HTTP; mocked Yandex tag and MAX/SQLite API; no production leads.
 """
 import json
@@ -25,12 +25,16 @@ def main():
             p0.route("https://mc.yandex.ru/**", lambda route:(external.append(route.request.url),route.fulfill(status=200,content_type="application/javascript",body="// MOCKED TAG; NO EXTERNAL NETWORK")))
             url=origin+"/?utm_source=yandex&utm_medium=cpc&utm_campaign=test_a&yclid=MOCK-A1"
             p0.goto(url,wait_until="domcontentloaded")
-            p0.get_by_role("button",name="Без аналитики").click()
-            assert not p0.locator("script[data-dp-metrika]").count(),"denied visitor should have no tracker"
-            assert p0.evaluate("() => localStorage.getItem('dp_attribution_v1')") is None
+            p0.wait_for_function("() => typeof window.ym === 'function'")
+            assert p0.locator("script[data-dp-metrika]").count()==1
+            assert p0.get_by_role("button",name="Разрешить аналитику").count()==0
+            assert p0.get_by_role("button",name="Без аналитики").count()==0
+            assert p0.locator('[data-dp-consent]').count()==0
+            assert p0.evaluate("() => window.ym.a.some(x=>x[1]==='init' && x[2].webvisor===false)")
             p0.reload(wait_until="domcontentloaded")
-            assert not p0.locator("script[data-dp-metrika]").count()
-            # Consent can be changed in browser site settings only after an owner-approved counter is enabled.
+            p0.wait_for_function("() => typeof window.ym === 'function'")
+            assert p0.locator("script[data-dp-metrika]").count()==1
+            # Visitors can browse immediately; the site does not insert analytics controls.
             c2=browser.new_context(viewport={"width":1366,"height":900})
             page=c2.new_page()
             errors=[]
@@ -38,8 +42,9 @@ def main():
             outbound=[]
             page.route("https://mc.yandex.ru/**",lambda route:(outbound.append(route.request.url),route.fulfill(status=200,content_type="application/javascript",body="// MOCKED TAG")))
             page.goto(url,wait_until="domcontentloaded")
-            page.get_by_role("button",name="Разрешить аналитику").click()
             page.wait_for_function("() => typeof window.ym==='function' && !!window.__GARANT_DEMO__")
+            assert page.locator('[data-dp-consent]').count()==0
+            assert page.get_by_role("button",name="Настройки аналитики").count()==0
             original=json.loads(page.evaluate("() => localStorage.getItem('dp_attribution_v1')"))
             assert original["first"]["utm_campaign"]=="test_a",original
             assert original["first"]["yclid"]=="MOCK-A1",original
@@ -135,17 +140,15 @@ def main():
             page.locator(".mobile-cta [data-flow='callback']").click()
             page.locator("#contactDialog[open]").wait_for()
             assert goals(page).count("dp_form_open")==1
-            # Opt-out via footer settings, reload, then no subsequent events.
+            # No analytics pop-up or injected footer CTA after any user flow.
             page.locator("#dialogClose").click()
-            page.locator("footer button").filter(has_text="Настройки аналитики").click()
-            page.get_by_role("button",name="Без аналитики").click()
-            page.wait_for_load_state("domcontentloaded")
-            assert page.evaluate("() => localStorage.getItem('dp_analytics_consent_v1')")=="denied"
-            assert page.evaluate("() => localStorage.getItem('dp_attribution_v1')") is None
-            assert not page.locator("script[data-dp-metrika]").count()
+            assert page.get_by_role("button",name="Без аналитики").count()==0
+            assert page.get_by_role("button",name="Разрешить аналитику").count()==0
+            assert page.get_by_role("button",name="Настройки аналитики").count()==0
+            assert not page.locator('[data-dp-consent]').count()
             assert not errors,errors
             c2.close();c.close();browser.close()
-            print("ADS01_EXTENDED_BROWSER=PASS; REAL_CTA_DESKTOP_MOBILE=PASS; 8_SEO_PHONE_GOALS=PASS; 3_HTTP_ERROR_PATHS_PLUS_ABORT=PASS; 7_STEP_JOURNEY=PASS; UTM_FIRST_LAST=PASS; DENIAL_REVOCATION=PASS; REAL_MAX=0; PRODUCTION_POSTS=0; REAL_YANDEX_REQUESTS=0")
+            print("ADS01_EXTENDED_BROWSER=PASS; REAL_CTA_DESKTOP_MOBILE=PASS; 8_SEO_PHONE_GOALS=PASS; 3_HTTP_ERROR_PATHS_PLUS_ABORT=PASS; 7_STEP_JOURNEY=PASS; UTM_FIRST_LAST=PASS; NO_BANNER=PASS; WEBVISOR_OFF=PASS; REAL_MAX=0; PRODUCTION_POSTS=0; REAL_YANDEX_REQUESTS=0")
     finally:
         server.shutdown();server.server_close()
 

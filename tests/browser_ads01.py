@@ -88,7 +88,7 @@ def main():
                     if width in [320,1366]:
                         page.screenshot(path=str(OUT / ("offline-"+str(width)+"-"+weather+".png")), full_page=False)
             c.close()
-            # Owner-approved counter simulated only through localhost in-memory script override.
+            # Owner-approved counter simulated only through localhost mock tag, never real Yandex.
             MockSite.enable_analytics = True
             c = browser.new_context(viewport={"width":1366,"height":768})
             page = c.new_page()
@@ -99,11 +99,13 @@ def main():
             requested = []
             page.route("https://mc.yandex.ru/**", lambda route: (requested.append(route.request.url), route.fulfill(status=200, content_type="application/javascript", body="// offline test receiver")))
             page.goto(origin + "/", wait_until="domcontentloaded")
-            page.get_by_role("button", name="Без аналитики").wait_for()
-            assert not page.locator("script[data-dp-metrika]").count(), "track before consent"
-            page.get_by_role("button", name="Разрешить аналитику").click()
-            page.wait_for_timeout(130)
+            page.wait_for_function("() => typeof window.ym === 'function'")
             assert page.locator("script[data-dp-metrika]").count()==1
+            assert page.locator('[data-dp-consent]').count()==0
+            assert page.get_by_role("button",name="Разрешить аналитику").count()==0
+            assert page.get_by_role("button",name="Без аналитики").count()==0
+            assert page.evaluate("() => window.ym.a.some(x=>x[1]==='init' && x[2].webvisor===false)")
+            assert len(requested)==1
             page.locator("[data-track='hero_builder']").click()
             assert "dp_cta_click" in goals(page), goals(page)
             MockSite.reply_code=200
@@ -127,7 +129,7 @@ def main():
             open_and_send(page)
             page.wait_for_selector("#formError:not(:empty)")
             assert goals(page).count("dp_premium_quote_confirmed")==1,goals(page)
-            assert len(requested)<=1, "duplicate Yandex tag load"
+            assert len(requested)==1, "duplicate Yandex tag load"
             c.close()
             browser.close()
             print("ADS01_CHROMIUM=PASS; SEO_ROUTES=9; WIDTHS=5; THEMES=2; MOCK_LEADS=%d; PRODUCTION_POSTS=0; REAL_YANDEX_CALLS=0" % len(MockSite.posts))
