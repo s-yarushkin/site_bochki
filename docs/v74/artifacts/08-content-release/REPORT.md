@@ -25,7 +25,7 @@
 - Полная изолированная сборка поверх git-снимка production V73: PASS. Проверены commit из Git tar PAX, staging web/API, реальный Node probe нового API, сохранение всех посторонних файлов и байтов изображений, отсутствие отложенных файлов конфигуратора. Проверен implementation SHA `a089c29344f4617d99765f2cdc02c9f3fc34d5d9`. В тестовой среде заменён только путь исполняемого Node с серверного `/usr/bin/node` на имеющийся локальный runtime; код установщика не менялся.
 - Логика от `function quote()` до `function boot()` в app.js побайтово совпадает с production V73: действующий конфигуратор и обработка формы не переписывались.
 - Python syntax / `git diff --check`: PASS.
-- Browser QA нового ограниченного релиза: **NOT_RUN** в этой среде. Реальные browser zoom 90/110/200% и физический телефон также не проверялись. Скрипт PowerShell запускает first viewport, base-kit, mobile, SEO и новый локальный content/gallery/form smoke **до** соединения с сервером. Старые V66 browser-тесты с ценой 630000, 14 опциями и прежней версией прайса не используются как приёмка текущего продукта.
+- Browser QA ограниченного релиза: **PASS в PowerShell владельца 19.10.2026**, по предоставленному полному логу: hero 8 desktop sun/rain cases; база 4 модели × 5 разрешений × 2 темы; mobile 8 ширин × 2 темы; SEO 9 страниц × 7 ширин; content/gallery/form 5 разрешений × 2 темы. Реальных тестовых лидов и отправок MAX нет. В Windows safety-suite: 7 PASS, 1 SKIP (серверные symlink semantics ранее проверены на Linux). Реальные browser zoom 90/110/200% и физический телефон этим прогоном не подтверждены.
 
 ## Установка и откат
 
@@ -39,4 +39,21 @@
 
 Caddy, env, auth, другие сервисы сервера, MAX и live заявки не меняются. Установка выполняется только из PowerShell владельца; DC/Actions для неё не используются.
 
-**Фактический production deploy: NOT_RUN.** SSH из среды недоступен (`Network is unreachable`), подключённый компьютер офлайн. Публикация не объявляется выполненной; окончательная browser-приёмка и запуск установки включены в один подготовленный PowerShell-файл.
+**Фактический production deploy: PASS.** 19.10.2026 владелец выполнил установку из PowerShell и предоставил лог успешной браузерной приёмки, передачи файлов, staging, backup/restore rehearsal и HTTPS-проверки установщика.
+
+- Установленный SHA: `6f22babba4048e92a30f9084108d247730658e6f`.
+- `V74_CONTENT_DEPLOY=PASS; PUBLIC_BASES=20; COMFORT=618022; LEADS_CREATED=0`.
+- `V74_CONTENT_RELEASE=PASS; CONFIGURATOR_REDESIGN=NO; NEW_IMAGE_FILES=0; PRODUCTION_TEST_LEADS=0`.
+- SHA256 архива и установщика: `OK`.
+- Серверные `STAGED`, `BACKUP`, `RESTORE_REHEARSAL`: `PASS`; проверка восстановления выполнялась в отдельный файл.
+- Локальная папка приёмки: `%TEMP%\DachaPar-V74-Content-13da106d7df546a88240526b5d48a2eb`.
+- Дополнительные browser-материалы: `%TEMP%\dachapar-v74-content-evidence`.
+- Основание статуса — предоставленный владельцем лог; повторный SSH/деплой из среды ассистента не выполнялся.
+
+Постоянная команда отката, выданная установленной версией:
+
+```bash
+sudo python3 /var/backups/dachapar/20261019-v74-content-6f22babba404-1792405832546616258/installer.py --rollback /var/backups/dachapar/20261019-v74-content-6f22babba404-1792405832546616258/state.json
+```
+
+Этот отчёт обновлён после установки; production остаётся на указанном SHA.
