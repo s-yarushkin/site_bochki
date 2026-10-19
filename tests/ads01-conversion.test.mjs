@@ -58,3 +58,22 @@ test('ADS01 all indexable pages share one script, without manager tracking',()=>
   }
   assert.ok(!read('assets/js/manager.js').includes('analytics.js'));
 });
+
+test('ADS01 all 18 owner-created event identifiers match the deployed measurement adapter',()=>{
+  const code=read('assets/js/analytics.js');
+  const match=code.match(/const goals=new Set\\(\\[([^\\]]+)\\]\\)/);
+  assert.ok(match,'event allowlist exists');
+  const ids=[...match[1].matchAll(/'([^']+)'/g)].map(x=>x[1]);
+  const expected=[
+    'dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_lead_confirmed',
+    'dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_phone_click',
+    'dp_form_open','dp_form_close','dp_form_error','dp_builder_start',
+    'dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select',
+    'dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click'
+  ];
+  assert.equal(new Set(ids).size,18);
+  assert.deepEqual([...ids].sort(),expected.sort());
+  assert.match(code,/initCounter\\(\\);/);
+  assert.doesNotMatch(code,/displayConsent|consentSettings|dp_analytics_consent_v1/);
+  assert.match(read('privacy.html'),/Яндекс Метрик/);
+});
