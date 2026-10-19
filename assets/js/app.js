@@ -64,7 +64,8 @@ function renderBundle(){
     ['Парная и печь',['stove_guard','aspen_backrests','remote_firebox_adjacent','glass_sauna_door_700x1700']],
     ['Комната отдыха',['folding_table','bench_chest_spruce','cabinet_single_50x50']],
     ['Окна и вентиляция',['vent_window_small','tilt_window_1400x800']],
-    ['Освещение и электрика',['socket_kit_owner','electrical_distribution_owner','outdoor_two_lanterns','led_light_10m','electrical_safety_cabinet_temporary_supply']]
+    ['Освещение',['outdoor_two_lanterns','led_light_10m']],
+    ['Утепление пола',['floor_insulation_50mm_kvadro_500']]
   ];
   const included=new Set(bundle.optionIds);
   const seen=new Set();
@@ -82,7 +83,7 @@ function renderBundle(){
   const quote=calculateQuote({modelId:bundle.modelId,sizeId:bundle.sizeId,optionIds:bundle.optionIds,bundleId:bundle.id});
   $('#bundleOld').textContent=money(quote.beforeDiscount);
   $('#bundleNew').textContent=money(quote.total);
-  $('#bundleSaving').textContent=quote.quoteRequired?'Стоимость отдельных опций уточнит менеджер':quote.discount>0?`Расчётная разница ${money(quote.discount)}`:'Дополнительные опции включены в сумму';
+  $('#bundleSaving').textContent=quote.quoteRequired?(quote.quoteApprovalReason||'Стоимость отдельных опций уточнит менеджер'):quote.discount>0?`Расчётная разница ${money(quote.discount)}`:'Дополнительные опции включены в сумму';
   $$('[data-bundle]').forEach(btn=>btn.addEventListener('click',()=>{
     state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=btn.dataset.bundle==='summary'?6:3;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
