@@ -25,6 +25,22 @@ const catalogSizes=model=>model.sizeKind==='full'?`Габариты: ${Object.ke
 function choice({title,detail='',selected=false,attributes='',price='',icon='⌂'}){
   return `<button type="button" class="choice ${selected?'selected':''}" ${attributes} aria-pressed="${selected}"><span class="choice-icon" aria-hidden="true">${icon}</span><strong>${escaped(title)}</strong>${detail?`<small>${escaped(detail)}</small>`:''}${price?`<small>${escaped(price)}</small>`:''}</button>`;
 }
+function selectCatalogModel(modelId){
+  const model=getModel(modelId);
+  const changed=state.modelId!==model.id;
+  state.modelId=model.id;
+  if(changed){
+    state.sizeId=Object.keys(model.sizes)[0];
+    state.bundleId=null;
+    state.optionIds=[];
+    state.view='outside';
+    state.photoIndex=0;
+  }
+  state.step=1;
+  renderBuilder();
+  $('#builder').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function renderCatalog(){
   $('#catalogGrid').innerHTML=PRICEBOOK.models.map(model=>{
     const low=Math.min(...Object.values(model.sizes));
@@ -40,6 +56,7 @@ function renderCatalog(){
         <p>${escaped(model.subtitle)}</p>
         <div class="product-meta"><div class="product-price"><small>Базовая комплектация от</small>${money(low)}</div>
           <div class="product-sizes">${catalogSizes(model)}</div></div>
+        <button class="product-base-trigger" type="button" data-base-open="${model.id}" aria-haspopup="dialog" aria-label="Что входит в стоимость модели ${escaped(model.name)}">Что входит в стоимость <span aria-hidden="true">→</span></button>
         <div class="product-card-actions">
           <button class="gallery-photo-action" type="button" data-gallery-open="${model.id}">Смотреть изображения →</button>
           <button class="btn btn-dark" type="button" data-catalog-select="${model.id}">Выбрать модель →</button>
@@ -47,16 +64,67 @@ function renderCatalog(){
       </div></article>`;
   }).join('');
   syncMedia();
-  $$('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>{
-    const m=getModel(button.dataset.catalogSelect);
-    state.modelId=m.id;state.sizeId=Object.keys(m.sizes)[0];state.bundleId=null;state.optionIds=[];state.step=1;state.view='outside';state.photoIndex=0;
-    renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
-  }));
+  $('[data-catalog-select]').forEach(button=>button.addEventListener('click',()=>selectCatalogModel(button.dataset.catalogSelect)));
   document.querySelectorAll('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>{
     const value=btn.dataset.filter;
     $$('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});
     $$('.product-card').forEach(card=>card.hidden=value!=='all'&&card.dataset.model!==value);
   }));
+}
+function initBaseDialog(){
+  const dialog=$('#baseDialog');
+  if(!dialog)return;
+  let opener=null;
+  let selectedModel=false;
+  const source=PRICEBOOK.baseInclusions;
+  const lists=[
+    ['Парная и печь',source.common.slice(0,2)],
+    ['Комната отдыха и вход',source.common.slice(2,4)],
+    ['Конструкция и инженерия',source.common.slice(4,6)]
+  ];
+  function open(modelId,trigger){
+    const model=getModel(modelId);
+    opener=trigger;
+    selectedModel=false;
+    $('#baseDialogTitle').textContent=`Что входит в стоимость «${model.name}»`;
+    $('#baseDialogPrice').textContent=money(Math.min(...Object.values(model.sizes)));
+    $('#baseDialogGroups').innerHTML=lists.map(([title,items])=>
+      `<section><h3>${escaped(title)}</h3><ul>${items.map(item=>`<li>${escaped(item)}</li>`).join('')}</ul></section>`
+    ).join('');
+    $('#baseDialogSpecific').innerHTML=`<h3>Особенность «${escaped(model.name)}»</h3><p>${escaped(source.modelSpecific[model.id])}</p>`;
+    $('#baseDialogExcluded').innerHTML=source.externalExcluded.map(item=>`<li>${escaped(item)}</li>`).join('');
+    const select=$('[data-base-select]',dialog);
+    select.dataset.baseSelect=model.id;
+    select.textContent=`Выбрать «${model.name}» →`;
+    dialog.showModal();
+    $('[data-base-close]',dialog).focus();
+  }
+  document.addEventListener('click',event=>{
+    const trigger=event.target.closest('[data-base-open]');
+    if(trigger){
+      event.preventDefault();
+      open(trigger.dataset.baseOpen,trigger);
+    }
+  });
+  dialog.addEventListener('click',event=>{
+    if(event.target===dialog || event.target.closest('[data-base-close]')){
+      dialog.close();
+      return;
+    }
+    const select=event.target.closest('[data-base-select]');
+    if(select){
+      selectedModel=true;
+      const modelId=select.dataset.baseSelect;
+      dialog.close();
+      selectCatalogModel(modelId);
+      $('#builderTitle').setAttribute('tabindex','-1');
+      $('#builderTitle').focus({preventScroll:true});
+    }
+  });
+  dialog.addEventListener('close',()=>{
+    if(!selectedModel&&opener?.isConnected)opener.focus();
+    opener=null;
+  });
 }
 function renderBundle(){
   // Present practical benefits, not twelve line-item prices.
@@ -380,5 +448,5 @@ function initForms(){
   const landingTopic=readLandingContact(location.search);
   if(landingTopic!==null)openForm('callback',landingTopic);
 }
-function boot(){initModelGallery();renderCatalog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
+function boot(){initModelGallery();renderCatalog();initBaseDialog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
 boot();
