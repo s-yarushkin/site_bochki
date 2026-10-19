@@ -1,0 +1,116 @@
+/* V74-01: first-screen conversion layout.
+ * Desktop-specific vertical budget; mobile retains the tested natural flow.
+ * No changes to media slots, prices, weather assets, or fixed mobile CTA.
+ */
+@media (min-width: 851px) {
+  .hero {
+    padding-top: clamp(8px, 1.1vh, 14px);
+    padding-bottom: clamp(18px, 2.5vh, 28px);
+  }
+  .hero-toolbar { margin-bottom: clamp(4px, .7vh, 8px); }
+  .hero .hero-weather {
+    gap: 10px;
+    padding: 5px 9px 5px 12px;
+  }
+  .hero .weather-caption { font-size: 11px; }
+  .hero .weather-btn {
+    min-height: 36px;
+    padding: 6px 11px;
+  }
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.07fr) minmax(0, .93fr);
+    gap: clamp(24px, 3vw, 40px);
+    align-items: center;
+  }
+  .hero-copy {
+    padding: 0;
+    align-self: center;
+    min-width: 0;
+  }
+  .hero-copy .eyebrow {
+    margin-bottom: clamp(8px, 1.35vh, 13px);
+    font-size: 11px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(42px, 4.15vw, 59px);
+    line-height: 1.045;
+    margin: 0 0 clamp(10px, 1.4vh, 16px);
+    max-width: none;
+  }
+  .hero-lead {
+    max-width: 58ch;
+    font-size: clamp(15px, 1.1vw, 17px);
+    line-height: 1.4;
+    margin: 0 0 clamp(12px, 1.6vh, 18px);
+    text-wrap: pretty;
+  }
+  .hero-actions {
+    flex-wrap: nowrap;
+    gap: clamp(12px, 1.3vw, 21px);
+  }
+  .hero-actions .btn-large {
+    min-height: 48px;
+    padding: 12px 19px;
+  }
+  .hero-actions .text-link {
+    white-space: nowrap;
+    font-size: 15px;
+  }
+  .hero-proof {
+    flex-wrap: nowrap;
+    gap: clamp(7px, .9vw, 14px);
+    margin-top: clamp(13px, 1.8vh, 20px);
+    padding-top: clamp(11px, 1.4vh, 16px);
+    font-size: 12px;
+    line-height: 1.34;
+  }
+  .hero-proof > div {
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .hero-proof b {
+    flex: 0 0 auto;
+    line-height: 1.34;
+  }
+  .hero-art {
+    min-width: 0;
+    align-self: center;
+    display: block;
+  }
+  .hero-image {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 5 / 4;
+    max-height: min(570px, calc(100svh - 180px));
+  }
+}
+@media (min-width: 851px) and (max-height: 800px) {
+  .hero-toolbar { margin-bottom: 4px; }
+  .hero-copy .eyebrow { margin-bottom: 7px; }
+  .hero-copy h1 {
+    font-size: clamp(40px, 3.75vw, 54px);
+    line-height: 1.025;
+  }
+  .hero-lead {
+    font-size: 15px;
+    line-height: 1.34;
+    margin-bottom: 12px;
+  }
+  .hero-proof {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+  .hero-image {
+    max-height: min(485px, calc(100svh - 150px));
+  }
+}
+/* Intermediate laptop widths have less horizontal room for both actions.
+ * Keep both links as real controls, allow wrapping rather than clipping. */
+@media (min-width: 851px) and (max-width: 1080px) {
+  .hero-actions { flex-wrap: wrap; }
+  .hero-proof { flex-wrap: wrap; }
+  .hero-proof > div { flex: 1 1 28%; }
+}
