@@ -56,7 +56,7 @@ def main():
             page.locator("#contactDialog[open]").wait_for()
             assert "dp_form_open" in goals(page)
             page.locator("#dialogClose").click()
-            assert "dp_form_close" in goals(page)
+            page.wait_for_function("() => (window.ym?.a||[]).some(x=>x[1]==='reachGoal' && x[2]==='dp_form_close')")
             # Dynamic cards after JS render: approved model view and selection.
             card=page.locator(".product-card[data-model='kvadro-house']")
             card.scroll_into_view_if_needed()
