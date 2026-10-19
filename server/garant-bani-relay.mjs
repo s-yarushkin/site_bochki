@@ -1,4 +1,5 @@
 import {CONSENT_VERSION,CONSENT_METHOD,CONSENT_NOTICE_ID,CONSENT_DOCUMENT_SHA256} from '../assets/js/lead-consent.js';
+import {classifyConfirmedLead} from './ads01-conversion.mjs';
 import {createServer} from 'node:http';
 import {readFileSync,realpathSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
@@ -61,7 +62,24 @@ export function validateBaniLead(value) {
   if(contactChannel==='max' && contactAccount.startsWith('https://t.me/'))throw new Error('WRONG_CONTACT_NETWORK');
   const comment=field(value.comment??'',500);
   const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
+    journeyComplete:value.journeyComplete===true,
     consentEvidence:submitConsent?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
+  // Attribution is opt-in and strictly limited to known tokens; never store raw URLs.
+  if(value.attribution && typeof value.attribution==='object' && !Array.isArray(value.attribution)){
+    const safe={};
+    for(const touch of ['first','last']){
+      const src=value.attribution[touch];if(!src||typeof src!=='object'||Array.isArray(src))continue;
+      const clean={};
+      for(const key of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid','landing','referrer']){
+        const v=src[key];const max=key==='yclid'?180:key==='landing'?105:90;
+        if(typeof v!=='string'||v.length>max)continue;
+        if(key==='landing'?!/^\/[a-z0-9/-]{0,100}$/.test(v):key==='referrer'?!/^(?:yandex|google|external)$/.test(v):!/^[a-zA-Z0-9а-яА-ЯёЁ_.:+-]+$/.test(v))continue;
+        clean[key]=v;
+      }
+      if(Object.keys(clean).length)safe[touch]=clean;
+    }
+    if(Object.keys(safe).length)lead.attribution=safe;
+  }
   if(value.flow==='quote') {
     const district=field(value.district??'',140);
     if(!submitConsent&&district.length<2) throw new Error('INVALID_DISTRICT');
@@ -267,7 +285,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         }
         if(record.notificationStatus==='delivered'){
           recent.set(fingerprint,now+120000);
-          return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id});
+          return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id,analytics:classifyConfirmedLead(record.detail)});
         }
         if(sending.has(record.id))return json(res,409,{ok:false,code:'DELIVERY_IN_PROGRESS'});
       }
@@ -278,7 +296,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         if(record)store.delivery(record.id,'delivered');
         recent.set(fingerprint,now+120000);
         log(JSON.stringify({event:'bani_lead_delivered',flow:lead.flow,leadId:record?.id||null}));
-        return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id}:{})});
+        return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id,analytics:classifyConfirmedLead(record.detail)}:{})});
       } catch {
         if(record)try{store.delivery(record.id,'failed');}catch{}
         log(JSON.stringify({event:'bani_delivery_failed',leadId:record?.id||null}));
