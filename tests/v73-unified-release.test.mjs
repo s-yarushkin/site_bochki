@@ -10,11 +10,11 @@ const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 const base={
   kvadro:[361998,407420,471555,494141,509166],
   parus:[396630,434970,491400,512820,525420],
-  viking:[396630,464940,552825,595980,613620],
+  viking:[431730,502740,589275,633780,651420],
   'kvadro-house':[574875,673875,716625,778500,841500]
 };
 test('V73 exactly matches the 20 owner-approved public base outputs',()=>{
-  assert.equal(PRICEBOOK.version,'2026-10-16-v73-public-snapshot');
+  assert.equal(PRICEBOOK.version,'2026-10-19-v73-entry-insulation-review');
   for(const [id,amounts] of Object.entries(base))assert.deepEqual(Object.values(CATALOG.prices[id]),amounts);
   assert.equal(Object.values(base).flat().length,20);
 });
