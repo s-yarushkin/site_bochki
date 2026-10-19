@@ -1,6 +1,6 @@
 // ADS-01 single public-site measurement adapter; safe no-op until owner GO.
 import {ADS01_COUNTER_ID, ADS01_PRIVACY_APPROVED} from './analytics-config.js';
-const goals=new Set(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_builder_start','dp_builder_complete','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click']);
+const goals=new Set(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_builder_start','dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click']);
 const models=new Set(['kvadro','parus','viking','kvadro-house']);
 const placements=new Set(['header','hero','catalog','base','bundle','personal','delivery','builder','faq','final','footer','mobile','seo','unknown']);
 const decisionsKey='dp_analytics_consent_v1', touchKey='dp_attribution_v1', seenKey='dp_counted_leads_v1';
@@ -63,8 +63,8 @@ function initCounter(){
     const s=document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js';s.dataset.dpMetrika='1';document.head.append(s);
   }
 }
-function displayConsent(){
-  if(!ready||getStore()?.getItem(decisionsKey))return;
+function displayConsent(force=false){
+  if(!ready||(!force&&getStore()?.getItem(decisionsKey)))return;
   const root=document.createElement('aside');root.setAttribute('role','region');root.setAttribute('aria-label','Настройки аналитики');
   root.style.cssText='position:fixed;bottom:90px;left:12px;right:12px;max-width:620px;margin:auto;background:#fff;color:#202c26;border:1px solid #aaa;border-radius:12px;padding:14px;z-index:9997;box-shadow:0 4px 22px #0003;font:14px/1.4 Arial,sans-serif';
   const desc=document.createElement('p');desc.textContent='Разрешить анонимизированную аналитику посещений и действий на сайте? Поля заявки скрыты от записи.';desc.style.margin='0 0 10px';
@@ -72,7 +72,7 @@ function displayConsent(){
   yes.type=no.type='button';yes.textContent='Разрешить аналитику';no.textContent='Без аналитики';
   yes.style.cssText='padding:8px 12px;margin-right:10px';no.style.cssText='padding:8px 12px';
   yes.addEventListener('click',()=>{try{getStore()?.setItem(decisionsKey,'accepted');}catch{}root.remove();initCounter();});
-  no.addEventListener('click',()=>{try{getStore()?.setItem(decisionsKey,'denied');getStore()?.removeItem(touchKey);}catch{}root.remove();});
+  no.addEventListener('click',()=>{try{getStore()?.setItem(decisionsKey,'denied');getStore()?.removeItem(touchKey);}catch{}root.remove();if(active)location.reload();});
   root.append(desc,yes,no);document.body.append(root);
 }
 export function revokeAnalyticsConsent(){
@@ -110,7 +110,7 @@ export function confirmedLead(receipt,{flow,requestId}={}){
 function placement(el){
   if(el.closest('.mobile-cta'))return 'mobile';
   if(el.closest('.hero')||el.closest('#top'))return 'hero';
-  if(el.closest('.header'))return 'header';
+  if(el.closest('header'))return 'header';
   if(el.closest('.catalog'))return 'catalog';
   if(el.closest('#base'))return 'base';
   if(el.closest('#bundle'))return 'bundle';
@@ -122,6 +122,11 @@ function placement(el){
   if(el.closest('.footer'))return 'footer';
   if(location.pathname!=='/')return 'seo';
   return 'unknown';
+}
+function consentSettings(){
+  const footer=document.querySelector('footer');if(!footer||!ready)return;
+  const b=document.createElement('button');b.type='button';b.textContent='Настройки аналитики';b.style.cssText='margin:8px;padding:6px;font:inherit';
+  b.addEventListener('click',()=>displayConsent(true));footer.append(b);
 }
 function monitorClicks(){
   document.addEventListener('click',event=>{
@@ -152,7 +157,7 @@ function monitorClicks(){
   }
 }
 if(typeof document!=='undefined'){
-  const start=()=>{if(!ready)return;monitorClicks();if(isAllowed())initCounter();else displayConsent();};
+  const start=()=>{if(!ready)return;consentSettings();monitorClicks();if(isAllowed())initCounter();else displayConsent();};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});
   else start();
 }

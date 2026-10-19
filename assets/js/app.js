@@ -17,6 +17,8 @@ let formQuote=null;
 let submitted=false;
 let formRequestId=null;
 let builderCompleted=false;
+let builderStarted=false;
+function markBuilderStart(){if(!builderStarted){builderStarted=true;trackGoal('dp_builder_start',{placement:'builder'});}}
 const money=formatMoney;
 let formTopic='';
 const bundle=PRICEBOOK.bundle;
@@ -30,6 +32,7 @@ function choice({title,detail='',selected=false,attributes='',price='',icon='⌂
 function selectCatalogModel(modelId){
   const model=getModel(modelId);
   builderCompleted=false;
+  markBuilderStart();
   trackGoal('dp_model_select',{model:model.id,placement:'catalog'});
   const changed=state.modelId!==model.id;
   state.modelId=model.id;
@@ -151,6 +154,7 @@ function renderBundle(){
   $('#bundleSaving').textContent='Выбранное оснащение входит в общую стоимость';
   $$('[data-bundle]').forEach(btn=>btn.addEventListener('click',()=>{
     builderCompleted=false;
+    markBuilderStart();
     state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=btn.dataset.bundle==='summary'?6:3;
     renderBuilder();$('#builder').scrollIntoView({behavior:'smooth'});
   }));
@@ -230,14 +234,14 @@ function renderStepContent(){const model=getModel(state.modelId),step=state.step
   if(step===6){body=`<h3 class="builder-title">Вы уже собрали свою баню</h3><p class="builder-help">Вот ваш предварительный комплект. Если хотите, вернитесь назад и измените детали.</p>${renderQuoteTable()}`;}
   $('#builderStepContent').innerHTML=body;
   if(step===5){$('#baseSelect').value=state.base;$('#accessSelect').value=state.access;$('#regionInput').addEventListener('input',e=>state.region=e.target.value);$('#baseSelect').addEventListener('change',e=>state.base=e.target.value);$('#accessSelect').addEventListener('change',e=>state.access=e.target.value);}
-  $('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{trackGoal('dp_model_select',{model:btn.dataset.chooseModel,placement:'builder'});const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;state.view='outside';state.photoIndex=0;}renderBuilder();}));
-  $('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{trackGoal('dp_size_select',{size:btn.dataset.chooseSize,model:state.modelId,placement:'builder'});if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
+  $('[data-choose-model]').forEach(btn=>btn.addEventListener('click',()=>{markBuilderStart();trackGoal('dp_model_select',{model:btn.dataset.chooseModel,placement:'builder'});const old=state.modelId;state.modelId=btn.dataset.chooseModel;state.sizeId=Object.keys(getModel(state.modelId).sizes)[0];if(old!==state.modelId){state.optionIds=[];state.bundleId=null;state.view='outside';state.photoIndex=0;}renderBuilder();}));
+  $('[data-choose-size]').forEach(btn=>btn.addEventListener('click',()=>{markBuilderStart();trackGoal('dp_size_select',{size:btn.dataset.chooseSize,model:state.modelId,placement:'builder'});if(state.sizeId!==btn.dataset.chooseSize){state.bundleId=null;state.sizeId=btn.dataset.chooseSize;}renderBuilder();}));
   document.querySelectorAll('[data-finish]').forEach(btn=>btn.addEventListener('click',()=>{state.finish=btn.dataset.finish;renderBuilder();}));
   document.querySelectorAll('[data-roof]').forEach(btn=>btn.addEventListener('click',()=>{state.roof=btn.dataset.roof;renderBuilder();}));
   $$('[data-option]').forEach(btn=>btn.addEventListener('click',()=>toggleOption(btn.dataset.option)));
   // Form entry points are handled by one delegated listener in initForms().
 }
-function toggleOption(id){const option=getOption(id);if(!option)return;
+function toggleOption(id){const option=getOption(id);if(!option)return;trackGoal('dp_builder_interaction',{step:state.step+1,placement:'builder'});
   if(state.optionIds.includes(id)){state.optionIds=state.optionIds.filter(x=>x!==id);}
   else {if(option.mutex)state.optionIds=state.optionIds.filter(x=>getOption(x).mutex!==option.mutex);state.optionIds.push(id);}
   // Bundle is intentionally retained as an eligibility intent; removing a required option
@@ -270,8 +274,8 @@ function syncWeatherPhotoFrames(weather){
   syncMedia();
 }
 function initBuilder(){const landing=readLandingModel(location.search,PRICEBOOK.models);if(landing){state.modelId=landing.id;state.sizeId=Object.keys(landing.sizes)[0];state.step=1;}renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
-  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';builderCompleted=false;}
-  else {if(state.step===0)trackGoal('dp_builder_start',{placement:'builder'});if(state.step===5){builderCompleted=true;trackGoal('dp_builder_complete',{placement:'builder',model:state.modelId});}state.step++;}renderBuilder();
+  if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';builderCompleted=false;builderStarted=false;}
+  else {markBuilderStart();if(state.step===5){builderCompleted=true;trackGoal('dp_builder_complete',{placement:'builder',model:state.modelId});}state.step++;}renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
  document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.disabled)return;state.view=btn.dataset.view;state.photoIndex=0;renderSummary();}));
  document.querySelectorAll('[data-builder-photo-step]').forEach(btn=>btn.addEventListener('click',()=>{
