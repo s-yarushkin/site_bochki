@@ -60,8 +60,8 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optio
   const bundleValid=bundleId===bundle.id && modelId===bundle.modelId && sizeId===bundle.sizeId && bundle.optionIds.every(id=>optionIds.includes(id));
   const quoteRequired=missing.length>0||(bundleValid&&bundle.quotePendingApproval===true);
   const optionsSubtotal=quoteRequired?null:knownOptionsSubtotal;
-  const eligible=chosen.filter(o=>o.discountEligible && Number.isSafeInteger(o.price));
-  const eligibleSubtotal=eligible.reduce((s,o)=>s+o.price,0);
+  const eligible=chosen.filter(o=>o.discountEligible && Number.isSafeInteger(priceFor(o)));
+  const eligibleSubtotal=eligible.reduce((s,o)=>s+priceFor(o),0);
 
   let discount=0,discountType='none',discountRate=0;
   if(bundleValid){
@@ -70,11 +70,13 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optio
     discountRate=(pricebook.progressive.find(t=>eligible.length>=t.min)||{rate:0}).rate;
     discount=quoteRequired?0:Math.round(eligibleSubtotal*discountRate/100);
   }
-  const beforeDiscount=quoteRequired?null:basePrice+optionsSubtotal;
+  const installationRub=modelId==='kvadro-house'?Math.round(basePrice*0.10):0;
+  const beforeDiscount=quoteRequired?null:basePrice+optionsSubtotal+installationRub;
   const total=quoteRequired?null:beforeDiscount-discount;
   if(total!==null&&(!Number.isSafeInteger(total)||total<0))throw new Error('INVALID_TOTAL');
   return {modelId,sizeId,modelName:model.name,basePrice,optionIds:[...optionIds],
-    options:chosen.map(o=>({id:o.id,name:o.name,price:o.price,quantity:o.quantity,unit:o.unit,priceStatus:o.priceStatus??'PRELIMINARY'})),
+    options:chosen.map(o=>({id:o.id,name:o.name,price:priceFor(o),quantity:quantityFor(o),unit:o.unit,priceStatus:o.priceStatus??'PRELIMINARY'})),
+    installationRub,
     optionsSubtotal,knownOptionsSubtotal,eligibleSubtotal,unpricedOptionIds:missing.map(o=>o.id),quoteRequired,
     quoteApprovalReason:bundleValid&&bundle.quotePendingApproval?'Не подтверждена стоимость комплектации электрощита':null,
     discount,discountType,discountRate,total,beforeDiscount,needsConfirmation:true,deliveryKnown:false,
