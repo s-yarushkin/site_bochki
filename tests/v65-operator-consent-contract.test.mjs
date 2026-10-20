@@ -60,5 +60,5 @@ test('Consent version and signed document hash match the public consent revision
   assert.match(contract,/CONSENT_VERSION='2026-10-20'/);
   assert.match(contract,/CONSENT_METHOD='submit-button-v2'/);
   assert.ok(contract.includes(digest),'Consent digest must match public document');
-  assert.match(privacy,/самостоятельно отмечает отдельное/);
+  assert.match(privacy,/Нажатие кнопки «Отправить заявку»/);
 });
