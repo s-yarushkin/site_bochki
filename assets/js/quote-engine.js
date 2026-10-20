@@ -70,7 +70,7 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optio
     discountRate=(pricebook.progressive.find(t=>eligible.length>=t.min)||{rate:0}).rate;
     discount=quoteRequired?0:Math.round(eligibleSubtotal*discountRate/100);
   }
-  const installationRub=modelId==='kvadro-house'?Math.round(basePrice*0.10):0;
+  const installationRub=modelId==='kvadro-house' && pricebook.pricingAdjustments?.installation?.['kvadro-house']?.mandatory===true ? Math.round(basePrice*0.10) : 0;
   const beforeDiscount=quoteRequired?null:basePrice+optionsSubtotal+installationRub;
   const total=quoteRequired?null:beforeDiscount-discount;
   if(total!==null&&(!Number.isSafeInteger(total)||total<0))throw new Error('INVALID_TOTAL');
