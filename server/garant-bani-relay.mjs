@@ -85,7 +85,7 @@ export function validateBaniLead(value) {
     if(!submitConsent&&district.length<2) throw new Error('INVALID_DISTRICT');
     if(!allowedBases.has(value.base) || !allowedAccess.has(value.access)) throw new Error('INVALID_SITE_FIELDS');
     if(!value.configuration || typeof value.configuration!=='object' || Array.isArray(value.configuration)) throw new Error('MISSING_CONFIGURATION');
-    const {modelId,sizeId,optionIds,bundleId,finish,roof,pricebookVersion}=value.configuration;
+    const {modelId,sizeId,optionIds,optionQuantities={},bundleId,finish,roof,pricebookVersion}=value.configuration;
     if(typeof modelId!=='string' || typeof sizeId!=='string' || !Array.isArray(optionIds) || optionIds.length>20) throw new Error('INVALID_CONFIGURATION');
     if(bundleId!==null && typeof bundleId!=='string') throw new Error('INVALID_CONFIGURATION');
     // A V6.4 tab opened before the rolling deployment has no consentVersion.
@@ -103,11 +103,11 @@ export function validateBaniLead(value) {
       pricebookVersion===LEGACY_V73_PRICEBOOK.version?LEGACY_V73_PRICEBOOK:
       pricebookVersion===LEGACY_SITE_V1_PRICEBOOK.version?LEGACY_SITE_V1_PRICEBOOK:null;
     if(!selectedBook)throw new Error('PRICEBOOK_VERSION_UNSUPPORTED');
-    const estimate=calculateQuote({modelId,sizeId,optionIds,bundleId},selectedBook);
+    const estimate=calculateQuote({modelId,sizeId,optionIds,optionQuantities,bundleId},selectedBook);
     lead.district=district;
     lead.base=value.base;
     lead.access=value.access;
-    lead.configuration={modelId,sizeId,optionIds:[...optionIds],bundleId,pricebookVersion:estimate.pricebookVersion,
+    lead.configuration={modelId,sizeId,optionIds:[...optionIds],optionQuantities:{...optionQuantities},bundleId,pricebookVersion:estimate.pricebookVersion,
       finishId:finish??null,finishName:finish===undefined?'Не указана':names[finish],
       roofId:roof??null,roofName:roof===undefined?'Не указана':roofLabels[roof]};
     lead.estimate=estimate;

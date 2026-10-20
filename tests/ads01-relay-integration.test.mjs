@@ -50,7 +50,7 @@ test('ADS-01 end to end: three allowed cities produce the expensive confirmed le
       assert.equal(response.body.leadId.startsWith('GB-'),true);
       assert.equal(sends(),1);
       const row=store.byRequest(payload.requestId);
-      assert.equal(row.detail.estimate.total,860000);
+      assert.equal(row.detail.estimate.total,946000);
       assert.equal(row.notificationStatus,'delivered');
       assert.equal(row.detail.district,city);
     });

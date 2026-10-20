@@ -46,7 +46,7 @@ test('relay recalculates current version, retains old tabs and rejects an unknow
  assert.equal(validateBaniLead(fake).estimate.total,505000);
  assert.match(formatBaniLead(fresh),/505\s?000/);
  for(const [modelId,prices] of Object.entries(CATALOG.prices))for(const [sizeId,value] of Object.entries(prices)){
-  const input=lead(PRICEBOOK.version);input.configuration={...input.configuration,modelId,sizeId};assert.equal(validateBaniLead(input).estimate.total,value);
+  const input=lead(PRICEBOOK.version);input.configuration={...input.configuration,modelId,sizeId};assert.equal(validateBaniLead(input).estimate.total,value+(modelId==='kvadro-house'?Math.round(value*.1):0));
  }
  const input=lead(PRICEBOOK.version);input.configuration.optionIds=PRICEBOOK.bundle.optionIds;input.configuration.bundleId=PRICEBOOK.bundle.id;
  assert.equal(validateBaniLead(input).estimate.total,calculateQuote({optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id}).total);

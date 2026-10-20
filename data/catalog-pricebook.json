@@ -296,7 +296,59 @@
       "priceStatus": "PRELIMINARY",
       "compatibleModelId": "kvadro",
       "compatibleSizeId": "500",
-      "pricingClarification": "Каркасный пол уже в базовой цене Квадро. Утепление 50 мм включено только в пакет Квадро 5 м Комфорт, не в обычную базовую цену."
+      "pricingClarification": "Каркасный пол уже в базовой цене Квадро. Утепление 50 мм включено только в пакет Квадро 5 м Комфорт, не в обычную базовую цену.",
+      "mutex": "floor-insulation",
+      "pricingMode": "fixed-bundle"
+    },
+    "floor_insulation_50mm_area": {
+      "label": "Утепление пола пеноплэкс 50 мм",
+      "unitPriceRub": 1404,
+      "quantity": 1,
+      "unit": "м²",
+      "priceStatus": "PRELIMINARY",
+      "pricingMode": "floor-area",
+      "mutex": "floor-insulation",
+      "source": "Утверждено 20.10.2026; расчёт из рабочего калькулятора"
+    },
+    "floor_insulation_100mm_area": {
+      "label": "Утепление пола пеноплэкс 100 мм",
+      "unitPriceRub": 2691,
+      "quantity": 1,
+      "unit": "м²",
+      "priceStatus": "PRELIMINARY",
+      "pricingMode": "floor-area",
+      "mutex": "floor-insulation",
+      "source": "Утверждено 20.10.2026; расчёт из рабочего калькулятора"
+    },
+    "terrace_roof_area": {
+      "label": "Терраса с крышей — площадь по проекту",
+      "unitPriceRub": 23400,
+      "quantity": 1,
+      "unit": "м²",
+      "priceStatus": "PRELIMINARY",
+      "pricingMode": "area-input",
+      "mutex": "terrace",
+      "source": "Утверждено 20.10.2026; расчёт из рабочего калькулятора"
+    },
+    "terrace_open_area": {
+      "label": "Терраса без крыши — площадь по проекту",
+      "unitPriceRub": 15210,
+      "quantity": 1,
+      "unit": "м²",
+      "priceStatus": "PRELIMINARY",
+      "pricingMode": "area-input",
+      "mutex": "terrace",
+      "source": "Утверждено 20.10.2026; расчёт из рабочего калькулятора"
+    },
+    "terrace_dpk_area": {
+      "label": "Терраса из ДПК — полная стоимость",
+      "unitPriceRub": 18720,
+      "quantity": 1,
+      "unit": "м²",
+      "priceStatus": "PRELIMINARY",
+      "pricingMode": "area-input",
+      "mutex": "terrace",
+      "source": "Утверждено 20.10.2026; расчёт из рабочего калькулятора"
     }
   },
   "featuredBundle": {
@@ -350,7 +402,18 @@
     "Featured bundle total follows base + unchanged option totals = 618022 RUB; a commercial rounded featured-package price requires separate owner approval."
   ],
   "pricingAdjustments": {
-    "policy": "Final site-column amounts are already complete. Never add historic uplifts again."
+    "policy": "Final site-column amounts are already complete. Never add historic uplifts again.",
+    "installation": {
+      "kvadro-house": {
+        "basePriceRate": 0.1,
+        "mandatory": true
+      }
+    },
+    "extrasCoefficient": {
+      "commission": 0.9,
+      "markup": 1.3
+    },
+    "cashlessSurchargeVisible": false
   },
   "priceSource": {
     "sheet": "Рабочий калькулятор",
@@ -361,7 +424,8 @@
     "optionScope": "matched DOCX line-items; pending items unpriced",
     "rounding": "CEILING_TO_NEXT_5000",
     "approvedDate": "2026-10-19",
-    "scope": "Only 20 public base prices from Google Sheet J225:J244 (I→J ceiling to 5,000 RUB); individual extras remain unchanged"
+    "scope": "20 approved J base prices unchanged; extras and mandatory kvadro-house installation updated 2026-10-20",
+    "optionsApprovedDate": "2026-10-20"
   },
   "baseInclusions": {
     "common": [
@@ -381,7 +445,7 @@
     "externalExcluded": [
       "Доставка, разгрузка и основание под баню",
       "Внешнее подключение электричества и воды",
-      "Монтаж на участке, если он потребуется"
+      "Монтаж для прочих моделей согласуется отдельно; для Квадро Хаус обязательный монтаж +10% базы"
     ],
     "priceApprovalGate": {
       "electricalShield": "OWNER_PLANNING_RESERVE_INCLUDED",

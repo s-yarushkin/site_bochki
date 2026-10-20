@@ -27,6 +27,7 @@ const options=Object.entries(CATALOG.options).map(([id,option])=>({
   id,name:option.label,price:Number.isSafeInteger(option.unitPriceRub)?option.unitPriceRub*option.quantity:null,
   unitPriceRub:option.unitPriceRub,quantity:option.quantity,unit:option.unit,
   priceStatus:option.priceStatus??'PRELIMINARY',
+  pricingMode:option.pricingMode??'fixed',mutex:option.mutex??null,
   compatibleModelId:option.compatibleModelId??null,compatibleSizeId:option.compatibleSizeId??null,
   category:steamOptions.has(id)?'steam':'comfort',
   benefit:option.unitPriceRub===null?'Стоимость уточнит менеджер':option.requiresTechnicalApproval?'Требуется согласование условий установки':'Дополнение по каталогу',
@@ -46,6 +47,7 @@ export const PRICEBOOK=Object.freeze({
     pendingApprovalReason:null,customerDescription:bundle.customerDescription},
   progressive:[],
   baseInclusions:CATALOG.baseInclusions,
-  deliveryIncluded:CATALOG.deliveryIncluded
+  deliveryIncluded:CATALOG.deliveryIncluded,
+  pricingAdjustments:CATALOG.pricingAdjustments
 });
 export {CATALOG};

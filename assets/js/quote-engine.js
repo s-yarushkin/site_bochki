@@ -19,7 +19,7 @@ export function resolveOptions(ids,pricebook=PRICEBOOK){
   return resolved;
 }
 
-export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundleId=null}={},pricebook=PRICEBOOK){
+export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optionQuantities={},bundleId=null}={},pricebook=PRICEBOOK){
   if(pricebook.status!=='DEMO_ONLY' && pricebook.status!=='APPROVED')throw new Error('UNAPPROVED_PRICEBOOK');
   const model=pricebook.models.find(m=>m.id===modelId);
   if(!model)throw new Error('UNKNOWN_MODEL');
@@ -27,23 +27,41 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundl
   const basePrice=model.sizes[sizeId];
   if(!Number.isSafeInteger(basePrice)||basePrice<0)throw new Error('INVALID_BASE_PRICE');
   const chosen=resolveOptions(optionIds,pricebook);
+  if(!optionQuantities||typeof optionQuantities!=='object'||Array.isArray(optionQuantities))throw new Error('INVALID_OPTION_QUANTITIES');
+  if(Object.keys(optionQuantities).length>5)throw new Error('TOO_MANY_OPTION_QUANTITIES');
+  for(const [id,qty] of Object.entries(optionQuantities)){
+    if(!chosen.some(o=>o.id===id&&o.pricingMode==='area-input'))throw new Error('UNEXPECTED_OPTION_QUANTITY');
+    if(!Number.isSafeInteger(qty)||qty<1||qty>40)throw new Error('INVALID_OPTION_QUANTITY');
+  }
   for(const option of chosen){
     if((option.compatibleModelId&&option.compatibleModelId!==modelId)||(option.compatibleSizeId&&option.compatibleSizeId!==sizeId))throw new Error('OPTION_NOT_AVAILABLE_FOR_SIZE:'+option.id);
   }
-  const missing=chosen.filter(opt=>opt.price===null);
+  const floorArea=()=>{
+    if(modelId==='kvadro-house'){
+      const x=sizeId.match(/^(\d+)x(\d+)$/);
+      if(!x)throw new Error('INVALID_FLOOR_SIZE');
+      return Number(x[1])*Number(x[2]);
+    }
+    if(!Number.isFinite(model.widthM))throw new Error('INVALID_FLOOR_WIDTH');
+    return Number(sizeId)/100*model.widthM;
+  };
+  const quantityFor=o=>o.pricingMode==='area-input'?(optionQuantities[o.id]??1):o.pricingMode==='floor-area'?floorArea():(o.quantity??1);
+  const priceFor=o=>o.unitPriceRub===null?null:typeof o.unitPriceRub==='number'?Math.round(o.unitPriceRub*quantityFor(o)):o.price;
+  const missing=chosen.filter(o=>priceFor(o)===null);
   let knownOptionsSubtotal=0;
-  for(const opt of chosen){
-    if(opt.price===null)continue;
-    if(!Number.isSafeInteger(opt.price)||opt.price<0)throw new Error('INVALID_OPTION_PRICE');
-    knownOptionsSubtotal+=opt.price;
+  for(const o of chosen){
+    const amount=priceFor(o);
+    if(amount===null)continue;
+    if(!Number.isSafeInteger(amount)||amount<0)throw new Error('INVALID_OPTION_PRICE');
+    knownOptionsSubtotal+=amount;
     if(!Number.isSafeInteger(knownOptionsSubtotal))throw new Error('PRICE_OVERFLOW');
   }
   const bundle=pricebook.bundle;
   const bundleValid=bundleId===bundle.id && modelId===bundle.modelId && sizeId===bundle.sizeId && bundle.optionIds.every(id=>optionIds.includes(id));
   const quoteRequired=missing.length>0||(bundleValid&&bundle.quotePendingApproval===true);
   const optionsSubtotal=quoteRequired?null:knownOptionsSubtotal;
-  const eligible=chosen.filter(o=>o.discountEligible && Number.isSafeInteger(o.price));
-  const eligibleSubtotal=eligible.reduce((s,o)=>s+o.price,0);
+  const eligible=chosen.filter(o=>o.discountEligible && Number.isSafeInteger(priceFor(o)));
+  const eligibleSubtotal=eligible.reduce((s,o)=>s+priceFor(o),0);
 
   let discount=0,discountType='none',discountRate=0;
   if(bundleValid){
@@ -52,11 +70,13 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundl
     discountRate=(pricebook.progressive.find(t=>eligible.length>=t.min)||{rate:0}).rate;
     discount=quoteRequired?0:Math.round(eligibleSubtotal*discountRate/100);
   }
-  const beforeDiscount=quoteRequired?null:basePrice+optionsSubtotal;
+  const installationRub=modelId==='kvadro-house' && pricebook.pricingAdjustments?.installation?.['kvadro-house']?.mandatory===true ? Math.round(basePrice*0.10) : 0;
+  const beforeDiscount=quoteRequired?null:basePrice+optionsSubtotal+installationRub;
   const total=quoteRequired?null:beforeDiscount-discount;
   if(total!==null&&(!Number.isSafeInteger(total)||total<0))throw new Error('INVALID_TOTAL');
   return {modelId,sizeId,modelName:model.name,basePrice,optionIds:[...optionIds],
-    options:chosen.map(o=>({id:o.id,name:o.name,price:o.price,quantity:o.quantity,unit:o.unit,priceStatus:o.priceStatus??'PRELIMINARY'})),
+    options:chosen.map(o=>({id:o.id,name:o.name,price:priceFor(o),quantity:quantityFor(o),unit:o.unit,priceStatus:o.priceStatus??'PRELIMINARY'})),
+    installationRub,
     optionsSubtotal,knownOptionsSubtotal,eligibleSubtotal,unpricedOptionIds:missing.map(o=>o.id),quoteRequired,
     quoteApprovalReason:bundleValid&&bundle.quotePendingApproval?'Не подтверждена стоимость комплектации электрощита':null,
     discount,discountType,discountRate,total,beforeDiscount,needsConfirmation:true,deliveryKnown:false,

@@ -21,7 +21,7 @@ test('T15 wrong ID type forbidden',()=>{assert.throws(()=>q({optionIds:[3]}),/IN
 test('T16 size 4.5m calculates',()=>{assert.equal(q({sizeId:'450'}).total,440000);});
 test('T17 size 5.5m calculates',()=>{assert.equal(q({sizeId:'550'}).total,525000);});
 test('T18 Kvadro House all dimensions present',()=>{assert.deepEqual(Object.keys(PRICEBOOK.models.find(m=>m.id==='kvadro-house').sizes),['4x4','5x4','6x4','6x5','6x6']);});
-test('T19 Kvadro House 6x5 correct value',()=>{assert.equal(q({modelId:'kvadro-house',sizeId:'6x5'}).total,795000);});
+test('T19 Kvadro House 6x5 correct value',()=>{assert.equal(q({modelId:'kvadro-house',sizeId:'6x5'}).total,874500);});
 test('T20 Viking base follows site column',()=>{assert.deepEqual(Object.values(PRICEBOOK.models.find(m=>m.id==='viking').sizes),[450000,520000,610000,655000,670000]);});
 test('T21 Viking model selection works',()=>{assert.equal(q({modelId:'viking',sizeId:'500'}).total,610000);});
 test('T22 unknown model rejected',()=>{assert.throws(()=>q({modelId:'alien'}),/UNKNOWN_MODEL/);});
@@ -29,12 +29,12 @@ test('T23 unknown size rejected',()=>{assert.throws(()=>q({sizeId:'200'}),/UNAVA
 test('T24 no invented delivery inclusion',()=>{assert.equal(q().deliveryKnown,false);});
 test('T25 protected preview remains demo until price approval',()=>{assert.equal(q().pricebookStatus,'DEMO_ONLY');});
 test('T26 pricebook version in result',()=>{assert.equal(q().pricebookVersion,PRICEBOOK.version);});
-test('T27 all models and size values quoted exactly',()=>{for(const m of PRICEBOOK.models)for(const [size,p] of Object.entries(m.sizes))assert.equal(q({modelId:m.id,sizeId:size}).total,p);});
+test('T27 all models and size values quoted exactly',()=>{for(const m of PRICEBOOK.models)for(const [size,p] of Object.entries(m.sizes))assert.equal(q({modelId:m.id,sizeId:size}).total,p+(m.id==='kvadro-house'?Math.round(p*0.1):0));});
 test('T28 option API requires array',()=>{assert.throws(()=>resolveOptions('stove_guard'),/ARRAY/);});
 test('T29 currency formatting RUB',()=>{assert.match(formatMoney(630000),/630\s?000\s?₽/);});
 test('T30 unapproved catalog input fails closed',()=>{assert.throws(()=>calculateQuote({}, {...PRICEBOOK,status:'UNVERIFIED'}),/UNAPPROVED/);});
 test('T31 negative base rejected',()=>{assert.throws(()=>calculateQuote({modelId:'kvadro',sizeId:'500'},{...PRICEBOOK,models:[{...PRICEBOOK.models[0],sizes:{'500':-5}}]}),/INVALID_BASE/);});
-test('T32 sum of model options discount invariant',()=>{for(const ids of [[],['stove_guard'],['stove_guard','folding_table']]){const r=q({optionIds:ids});assert.equal(r.total,r.basePrice+r.optionsSubtotal-r.discount)};});
+test('T32 sum of model options discount invariant',()=>{for(const ids of [[],['stove_guard'],['stove_guard','folding_table']]){const r=q({optionIds:ids});assert.equal(r.total,r.basePrice+r.optionsSubtotal+r.installationRub-r.discount)};});
 test('T33 unknown bundle gets no discount',()=>{assert.equal(q({optionIds:required,bundleId:'unknown'}).discount,0);});
 test('T34 order of independent options preserves total',()=>{assert.equal(q({optionIds:['stove_guard','folding_table']}).total,q({optionIds:['folding_table','stove_guard']}).total);});
 test('T35 Oblivasta remains excluded from featured set',()=>{assert.ok(!required.includes('oblivasta_connected'));});
