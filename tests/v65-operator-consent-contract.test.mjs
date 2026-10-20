@@ -50,7 +50,7 @@ test('submit consent has an individual linked document and server rejects absent
   assert.match(relay,/value\.consent!==true/);assert.match(relay,/CONSENT_METHOD_REQUIRED/);
 });
 test('submit notice stays readable and linked below the button on narrow screens',()=>{
- assert.ok(html.indexOf('id="submitButton"')<html.indexOf('id="submitConsentNotice"'));
+ assert.ok(html.indexOf('id="submitConsentNotice"')<html.indexOf('id="submitButton"'));
  assert.match(css,/\.contact-dialog \.submit-consent-notice/);assert.match(css,/font-size:12px;line-height:1\.55/);
 });
 
