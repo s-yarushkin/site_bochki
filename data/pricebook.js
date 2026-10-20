@@ -47,6 +47,7 @@ export const PRICEBOOK=Object.freeze({
     pendingApprovalReason:null,customerDescription:bundle.customerDescription},
   progressive:[],
   baseInclusions:CATALOG.baseInclusions,
-  deliveryIncluded:CATALOG.deliveryIncluded
+  deliveryIncluded:CATALOG.deliveryIncluded,
+  pricingAdjustments:CATALOG.pricingAdjustments
 });
 export {CATALOG};
