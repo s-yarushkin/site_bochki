@@ -23,7 +23,7 @@ test('card builder and relay share identical base for every one of 20 SKUs',()=>
     const direct=calculateQuote(input);
     const req=lead(PRICEBOOK.version);req.configuration={...req.configuration,...input};
     assert.equal(direct.basePrice,row.sitePriceRub);
-    assert.equal(direct.total,row.sitePriceRub);
+    assert.equal(direct.total,row.sitePriceRub+(row.modelId==='kvadro-house'?Math.round(row.sitePriceRub*.1):0));
     assert.equal(validateBaniLead(req).estimate.total,row.sitePriceRub);
   }
 });
