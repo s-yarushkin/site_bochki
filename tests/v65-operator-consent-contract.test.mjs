@@ -46,7 +46,7 @@ test('submit consent has an individual linked document and server rejects absent
   assert.match(html,/id="submitConsentNotice"/);assert.match(html,/href="consent\.html"/);
   assert.match(app,/consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD/);
   assert.match(app,/f\.elements\.leadConsent\.checked/);
-  assert.match(css,/\.contact-dialog \.lead-consent-choice/);
+  assert.match(css,/\.contact-dialog label\.lead-consent-choice/);
   assert.match(relay,/value\.consent!==true/);assert.match(relay,/CONSENT_METHOD_REQUIRED/);
 });
 test('submit notice stays readable and linked below the button on narrow screens',()=>{
