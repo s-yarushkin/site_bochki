@@ -19,7 +19,7 @@ export function resolveOptions(ids,pricebook=PRICEBOOK){
   return resolved;
 }
 
-export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],bundleId=null}={},pricebook=PRICEBOOK){
+export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optionQuantities={},bundleId=null}={},pricebook=PRICEBOOK){
   if(pricebook.status!=='DEMO_ONLY' && pricebook.status!=='APPROVED')throw new Error('UNAPPROVED_PRICEBOOK');
   const model=pricebook.models.find(m=>m.id===modelId);
   if(!model)throw new Error('UNKNOWN_MODEL');
