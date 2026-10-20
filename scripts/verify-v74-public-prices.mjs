@@ -38,12 +38,25 @@ for(const [model,ids] of Object.entries(keys))for(const id of ids){
 assert(new Set(expected.map(r=>r.sourceRow)).size===20,'DUPLICATE_SHEET_ROW');
 assert(new Set(expected.map(r=>r.modelId+':'+r.sizeId)).size===20,'DUPLICATE_SKU');
 assert(snapshot.rows.every(r=>expected.includes(r)),'UNEXPECTED_SKU');
-assert(JSON.stringify(catalog.options)===JSON.stringify(v73.options),'EXTRAS_CHANGED_UNEXPECTEDLY');
+for(const [id,legacy] of Object.entries(v73.options)){
+  const current={...catalog.options[id]};delete current.mutex;delete current.pricingMode;
+  assert(JSON.stringify(current)===JSON.stringify(legacy),'HISTORIC_EXTRA_CHANGED_'+id);
+}
+const approved={
+  floor_insulation_50mm_area:1404,floor_insulation_100mm_area:2691,
+  terrace_roof_area:23400,terrace_open_area:15210,terrace_dpk_area:18720
+};
+assert(Object.keys(catalog.options).length===Object.keys(v73.options).length+5,'UNAPPROVED_OPTION_COUNT');
+for(const [id,rub] of Object.entries(approved)){
+  assert(catalog.options[id]?.unitPriceRub===rub,'EXTRA_TARIFF_MISMATCH_'+id);
+}
+assert(catalog.pricingAdjustments?.installation?.['kvadro-house']?.basePriceRate===.1,'HOUSE_INSTALLATION_MISSING');
+assert(catalog.pricingAdjustments?.cashlessSurchargeVisible===false,'CASHLESS_DISCLOSURE_PROHIBITED');
 const input=readFileSync(join(root,'index.html'),'utf8');
 assert(input.includes('id="quoteTotal">505 000 ₽'),'HTML_INITIAL_BASE_MISMATCH');
 assert(input.includes('id="bundleNew">618 022 ₽'),'HTML_FEATURED_BUNDLE_MISMATCH');
 assert(catalog.checks.baseRub===505000&&catalog.checks.bundleTotalRub===618022,'CHECKSUM_MISMATCH');
-console.log('V74_SNAPSHOT_BASE_PRICES=PASS; VERIFIED=20; COLUMN=J; EXTRAS_UNCHANGED=1');
+console.log('V74_SNAPSHOT_BASE_PRICES=PASS; VERIFIED=20; COLUMN=J; HISTORIC_EXTRAS_UNCHANGED=1; NEW_EXTRAS=5');
 
 if(process.argv.includes('--live')){
  const id=process.env.DACHAPAR_SHEETS_ID,token=process.env.DACHAPAR_SHEETS_READ_TOKEN;
