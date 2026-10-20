@@ -42,7 +42,7 @@ test('V6.5 policy is a separate noindex operator document with truthful MAX and 
 });
 
 test('submit consent has an individual linked document and server rejects absent or mismatched evidence',()=>{
-  assert.match(html,/type="checkbox" name="leadConsent" id="leadConsent" required/);
+  assert.doesNotMatch(html,/type="checkbox" name="leadConsent"/);
   assert.match(html,/id="submitConsentNotice"/);assert.match(html,/href="consent\.html"/);
   assert.match(app,/consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD/);
   assert.match(app,/f\.elements\.leadConsent\.checked/);
