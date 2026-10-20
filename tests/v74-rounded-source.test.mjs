@@ -24,7 +24,7 @@ test('card builder and relay share identical base for every one of 20 SKUs',()=>
     const req=lead(PRICEBOOK.version);req.configuration={...req.configuration,...input};
     assert.equal(direct.basePrice,row.sitePriceRub);
     assert.equal(direct.total,row.sitePriceRub+(row.modelId==='kvadro-house'?Math.round(row.sitePriceRub*.1):0));
-    assert.equal(validateBaniLead(req).estimate.total,row.sitePriceRub);
+    assert.equal(validateBaniLead(req).estimate.total,row.sitePriceRub+(row.modelId==='kvadro-house'?Math.round(row.sitePriceRub*.1):0));
   }
 });
 test('historic V73 tabs preserve pre-rounding amounts and unchanged option prices',()=>{
