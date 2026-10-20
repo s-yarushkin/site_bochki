@@ -326,10 +326,11 @@ function initForms(){
     const district=f.elements.district.value.trim();
     const comment=f.elements.comment.value.trim();
     if(!updatePhoneHint(true)){showError('Проверьте мобильный номер: +7 (9XX) XXX-XX-XX.',phone);return;}
+    if(!f.elements.leadConsent.checked){showError('Подтвердите согласие на обработку данных.',f.elements.leadConsent);return;}
     // Consent evidence is created only after the user submits a valid form.
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
+      comment,consent:f.elements.leadConsent.checked,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
