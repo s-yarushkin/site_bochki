@@ -30,7 +30,11 @@ test('card builder and relay share identical base for every one of 20 SKUs',()=>
 test('historic V73 tabs preserve pre-rounding amounts and unchanged option prices',()=>{
   assert.equal(validateBaniLead(lead(V73_PRICEBOOK.version)).estimate.total,500955);
   assert.equal(validateBaniLead(lead(PRICEBOOK.version)).estimate.total,505000);
-  assert.deepEqual(CATALOG.options,V73.options);
+  for(const [id,option] of Object.entries(V73.options)){
+    const {mutex,pricingMode,...current}=CATALOG.options[id]??{};
+    assert.deepEqual(current,option,'Historic option '+id+' must retain price and description');
+  }
+  assert.equal(CATALOG.options.terrace_dpk_area.unitPriceRub,18720);
 });
 test('bundle follows common base without silent discount or cosmetic 5k rounding',()=>{
   const q=calculateQuote({modelId:'kvadro',sizeId:'500',optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id});
