@@ -36,12 +36,24 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optio
   for(const option of chosen){
     if((option.compatibleModelId&&option.compatibleModelId!==modelId)||(option.compatibleSizeId&&option.compatibleSizeId!==sizeId))throw new Error('OPTION_NOT_AVAILABLE_FOR_SIZE:'+option.id);
   }
-  const missing=chosen.filter(opt=>opt.price===null);
+  const floorArea=()=>{
+    if(modelId==='kvadro-house'){
+      const x=sizeId.match(/^(\d+)x(\d+)$/);
+      if(!x)throw new Error('INVALID_FLOOR_SIZE');
+      return Number(x[1])*Number(x[2]);
+    }
+    if(!Number.isFinite(model.widthM))throw new Error('INVALID_FLOOR_WIDTH');
+    return Number(sizeId)/100*model.widthM;
+  };
+  const quantityFor=o=>o.pricingMode==='area-input'?(optionQuantities[o.id]??1):o.pricingMode==='floor-area'?floorArea():o.quantity;
+  const priceFor=o=>o.unitPriceRub===null?null:Math.round(o.unitPriceRub*quantityFor(o));
+  const missing=chosen.filter(o=>priceFor(o)===null);
   let knownOptionsSubtotal=0;
-  for(const opt of chosen){
-    if(opt.price===null)continue;
-    if(!Number.isSafeInteger(opt.price)||opt.price<0)throw new Error('INVALID_OPTION_PRICE');
-    knownOptionsSubtotal+=opt.price;
+  for(const o of chosen){
+    const amount=priceFor(o);
+    if(amount===null)continue;
+    if(!Number.isSafeInteger(amount)||amount<0)throw new Error('INVALID_OPTION_PRICE');
+    knownOptionsSubtotal+=amount;
     if(!Number.isSafeInteger(knownOptionsSubtotal))throw new Error('PRICE_OVERFLOW');
   }
   const bundle=pricebook.bundle;
