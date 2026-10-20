@@ -38,7 +38,7 @@ test('V6.5 policy is a separate noindex operator document with truthful MAX and 
   assert.match(privacy,/отзыв[ае]? согласия|отзыве согласия/i);
   assert.match(privacy,/30 дней/);
   assert.match(consent,/не распространяется на рекламные рассылки/);
-  assert.match(consent,/отмечая/);
+  assert.match(consent,/кнопки «Отправить заявку»/);
 });
 
 test('submit consent has an individual linked document and server rejects absent or mismatched evidence',()=>{
