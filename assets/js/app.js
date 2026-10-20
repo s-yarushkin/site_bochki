@@ -329,7 +329,7 @@ function initForms(){
     // Consent evidence is created only after the user submits a valid form.
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:f.elements.leadConsent.checked,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
+      comment,consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
