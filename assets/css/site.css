@@ -87,3 +87,9 @@
 .builder-main,.builder-aside{min-width:0;max-width:100%}
 .quote-row>span:first-child,.summary-table .quote-row>b:first-child{min-width:0;overflow-wrap:anywhere}
 @media(max-width:850px){.builder-layout{grid-template-columns:minmax(0,1fr)}}
+
+/* Standalone consent is an explicit, unchecked action. */
+.contact-dialog .lead-consent-choice{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:var(--ink,#20312a);cursor:pointer}
+.contact-dialog .lead-consent-choice input{margin:3px 0 0;flex:none;width:18px;height:18px;accent-color:#2d7655}
+.contact-dialog .lead-consent-choice span{min-width:0}
+.contact-dialog .lead-consent-choice a{text-decoration:underline;text-underline-offset:2px}
