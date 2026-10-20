@@ -45,8 +45,8 @@ export function calculateQuote({modelId='kvadro',sizeId='500',optionIds=[],optio
     if(!Number.isFinite(model.widthM))throw new Error('INVALID_FLOOR_WIDTH');
     return Number(sizeId)/100*model.widthM;
   };
-  const quantityFor=o=>o.pricingMode==='area-input'?(optionQuantities[o.id]??1):o.pricingMode==='floor-area'?floorArea():o.quantity;
-  const priceFor=o=>o.unitPriceRub===null?null:Math.round(o.unitPriceRub*quantityFor(o));
+  const quantityFor=o=>o.pricingMode==='area-input'?(optionQuantities[o.id]??1):o.pricingMode==='floor-area'?floorArea():(o.quantity??1);
+  const priceFor=o=>o.unitPriceRub===null?null:typeof o.unitPriceRub==='number'?Math.round(o.unitPriceRub*quantityFor(o)):o.price;
   const missing=chosen.filter(o=>priceFor(o)===null);
   let knownOptionsSubtotal=0;
   for(const o of chosen){
