@@ -38,6 +38,7 @@ jobs:
           trap 'kill "$SERVER_PID"' EXIT
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8765/ > /dev/null && break || sleep 1; done
           R732_PLAYWRIGHT_MODULE="$RUNNER_TEMP/r732-browser/node_modules/playwright" node tests/browser_r732_content.mjs
+          python tests/windows_r732_browser.py --out artifacts/r732-browser/cdp-acceptance.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
