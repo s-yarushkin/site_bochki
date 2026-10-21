@@ -1,7 +1,7 @@
 name: ADS-01 R9 conversion and privacy acceptance
 on:
   push:
-    branches: [test/ads01-r9-v74-price-j-integration-20261019, release/r7-price20-api-20261020]
+    branches: [test/ads01-r9-v74-price-j-integration-20261019, release/r7-price20-api-20261020, fix/r7-legal-analytics-20261021]
   pull_request:
     branches: [release/v74-content-20261019]
     paths:
@@ -35,6 +35,10 @@ jobs:
         run: npm run check
       - name: ADS-01 fast installer staging and rollback unit tests
         run: python tests/test_ads01_fast_release.py
+      - name: Legal overlay staging, consent and retained content tests
+        run: python tests/test_legal_overlay.py
+      - name: Premium R73 actual form and payload cutover tests
+        run: python tests/test_legal_r73_live.py
       - name: Price binding and historic book gate
         run: node scripts/verify-v74-public-prices.mjs
       - name: Generated SEO same as committed snapshot

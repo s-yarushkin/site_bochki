@@ -47,3 +47,15 @@ test('stored request retains button consent evidence and missing evidence never 
   const saved=store.detail(accepted.body.leadId);assert.equal(saved.detail.consentEvidence.documentSha256,CONSENT_DOCUMENT_SHA256);assert.equal(saved.detail.name,'');assert.ok(saved.createdAt);
  }finally{await new Promise(resolve=>server.close(resolve));store.close();}
 });
+
+test('in-flight 2026-10-16 form keeps its original consent evidence and optional fields',()=>{
+  const earlier={...lead,consentVersion:'2026-10-16',consentMethod:'submit-button-v1'};
+  const result=validateBaniLead(earlier);
+  assert.equal(result.name,'');
+  assert.equal(result.district,'');
+  assert.equal(result.consentEvidence.version,'2026-10-16');
+  assert.equal(result.consentEvidence.method,'submit-button-v1');
+  assert.equal(result.consentEvidence.documentSha256,'fd858836a3eb8824f6db99c6f00c0e30cb77d58523582b45ea8d515965d96e2a');
+  assert.match(formatBaniLead(result),/ДАЧА ПАР/);
+  assert.throws(()=>validateBaniLead({...earlier,consentMethod:CONSENT_METHOD}),/CONSENT_METHOD_REQUIRED/);
+});

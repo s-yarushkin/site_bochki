@@ -21,11 +21,11 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.match(html,/href="consent\.html"/);
   assert.match(pricebook,/status:CATALOG.status==='APPROVED'\?'APPROVED':'DEMO_ONLY'/); // Owner catalog remains a draft.
   for(const doc of [privacy,consent]){
-    assert.match(doc,/«ВУДАРТ-ГРУПП»/);
-    assert.match(doc,/3500023844/);
-    assert.match(doc,/1263500003590/);
-    assert.doesNotMatch(doc,/индивидуальному предпринимателю|ОГРНИП|\[ФИО ИП/);
-    assert.match(doc,/Ленинградская, д\. 97, помещение 25/); // Postal request address is stated without invented email.
+    assert.match(doc,/Ярушкина Наталья Олеговна/);
+    assert.match(doc,/352534593865/);
+    assert.match(doc,/322352500011968/);
+    assert.match(doc,/bdd-35@mail.ru/);
+    assert.match(doc,/ООО «ВУДАРТ-ГРУПП»/); // Distinct seller disclosure.
   }
 });
 

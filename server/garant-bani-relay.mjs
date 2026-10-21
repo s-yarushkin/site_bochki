@@ -41,9 +41,12 @@ export function validateBaniLead(value) {
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
   if(value.consent!==true) throw new Error('CONSENT_REQUIRED');
-  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');
-  const submitConsent=value.consentVersion===CONSENT_VERSION;
-  if(submitConsent&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');
+  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14','2026-10-16',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');
+  const currentSubmit=value.consentVersion===CONSENT_VERSION;
+  const historicSubmit=value.consentVersion==='2026-10-16';
+  const submitConsent=currentSubmit||historicSubmit;
+  if(currentSubmit&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');
+  if(historicSubmit&&value.consentMethod!=='submit-button-v1')throw new Error('CONSENT_METHOD_REQUIRED');
   const name=field(value.name??'',80);
   if(!submitConsent&&((name && name.length<2) || (value.flow==='quote' && name.length<2))) throw new Error('INVALID_NAME');
   const digits=field(value.phone,32).replace(/\D/g,'');
@@ -63,7 +66,7 @@ export function validateBaniLead(value) {
   const comment=field(value.comment??'',500);
   const lead={flow:value.flow,name,phone:'+'+mobile,contactChannel,contactAccount,comment,
     journeyComplete:value.journeyComplete===true,
-    consentEvidence:submitConsent?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
+    consentEvidence:currentSubmit?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:historicSubmit?{version:'2026-10-16',method:'submit-button-v1',noticeId:'lead-submit-notice-2026-10-16-v1',documentSha256:'fd858836a3eb8824f6db99c6f00c0e30cb77d58523582b45ea8d515965d96e2a'}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
   // Attribution is opt-in and strictly limited to known tokens; never store raw URLs.
   if(value.attribution && typeof value.attribution==='object' && !Array.isArray(value.attribution)){
     const safe={};
@@ -117,7 +120,7 @@ export function validateBaniLead(value) {
 
 export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   const text=[
-    ['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
+    ['2026-10-14','2026-10-16',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
     ...(createdAt?['Создана: '+createdAt]:[]),
     'Тип: '+(lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
@@ -153,7 +156,7 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   }
   if(lead.contactAccount)text.push('Контакт в мессенджере: '+lead.contactAccount);
   if(lead.comment) text.push('Комментарий: '+lead.comment);
-  text.push(['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
+  text.push(['2026-10-14','2026-10-16',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
   return text.join('\n');
 }
 
