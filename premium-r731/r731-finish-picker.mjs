@@ -19,7 +19,8 @@ for (const [selectId, kind, groupName] of groups) {
   const caption = document.createElement('p');
   caption.className = 'r731-finish-hint';
   caption.textContent = 'Образцы оттенков из каталога. Цвет на экране приблизителен: точный образец и доплату уточним перед заказом.';
-  select.insertAdjacentElement('afterend', palette);
+  // Interactive swatches must not be nested inside the original <label>.
+  field.insertAdjacentElement('afterend', palette);
   palette.insertAdjacentElement('afterend', caption);
   const updateSelection = () => {
     for (const button of palette.querySelectorAll('.r731-finish-option')) {
