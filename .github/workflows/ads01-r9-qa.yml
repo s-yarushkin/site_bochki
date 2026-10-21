@@ -35,6 +35,8 @@ jobs:
         run: npm run check
       - name: ADS-01 fast installer staging and rollback unit tests
         run: python tests/test_ads01_fast_release.py
+      - name: Legal overlay staging, consent and retained content tests
+        run: python tests/test_legal_overlay.py
       - name: Price binding and historic book gate
         run: node scripts/verify-v74-public-prices.mjs
       - name: Generated SEO same as committed snapshot
