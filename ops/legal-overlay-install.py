@@ -70,6 +70,30 @@ def update_index(current_html, source_html):
     ensure('ym-hide-content' in result,'ANALYTICS_MASKING_LOST')
     return result
 
+def patch_active_relay(current):
+    """Change only the exact consent-related fragments in the approved active R7 API."""
+    changes=(
+        ("if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');\n"
+         "  const submitConsent=value.consentVersion===CONSENT_VERSION;\n"
+         "  if(submitConsent&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');",
+         "if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14','2026-10-16',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');\n"
+         "  const currentSubmit=value.consentVersion===CONSENT_VERSION;\n"
+         "  const historicSubmit=value.consentVersion==='2026-10-16';\n"
+         "  const submitConsent=currentSubmit||historicSubmit;\n"
+         "  if(currentSubmit&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');\n"
+         "  if(historicSubmit&&value.consentMethod!=='submit-button-v1')throw new Error('CONSENT_METHOD_REQUIRED');"),
+        ("consentEvidence:submitConsent?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}",
+         "consentEvidence:currentSubmit?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:historicSubmit?{version:'2026-10-16',method:'submit-button-v1',noticeId:'lead-submit-notice-2026-10-16-v1',documentSha256:'fd858836a3eb8824f6db99c6f00c0e30cb77d58523582b45ea8d515965d96e2a'}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}"),
+        ("['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version)",
+         "['2026-10-14','2026-10-16',CONSENT_VERSION].includes(lead.consentEvidence?.version)")
+    )
+    for idx,(before,after) in enumerate(changes):
+        required=2 if idx==2 else 1
+        ensure(current.count(before)==required,'ACTIVE_RELAY_CONSENT_SHAPE_CHANGED_'+str(idx))
+        current=current.replace(before,after)
+    return current
+
+
 def validate(src, web, api):
     ensure(src.resolve()!=web.resolve() and src.resolve()!=api.resolve(),'SOURCE_IS_LIVE_RELEASE')
     for name in REQUIRED:
