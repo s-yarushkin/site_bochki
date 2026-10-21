@@ -54,12 +54,29 @@ class LegalOverlayTests(unittest.TestCase):
             module.update_index(old+module.BUTTON_RE.search(old).group(),self.live)
 
     def test_source_consent_fingerprint_is_exact(self):
-        digest=module.sha256(self.consent)
+        # Git for Windows may convert LF to CRLF at checkout while Git archives
+        # and the deployed consent document retain canonical LF bytes.
+        # Normalize *only* permitted newline conversion; never trim or rewrite content.
+        canonical=self.consent.replace(b'\r\n',b'\n')
+        self.assertNotIn(b'\r',canonical,'Unexpected standalone CR in consent document')
+        self.assertIn(self.consent,(canonical,canonical.replace(b'\n',b'\r\n')),
+                      'Mixed source newlines are not allowed')
+        digest=module.sha256(canonical)
         self.assertIn("CONSENT_DOCUMENT_SHA256='"+digest+"'",self.contract)
         self.assertIn("CONSENT_VERSION='2026-10-21'",self.contract)
         self.assertIn("CONSENT_METHOD='submit-button-v2'",self.contract)
         self.assertIn('113675581',self.privacy)
         self.assertIn('bdd-35@mail.ru',self.privacy)
+
+    def test_windows_crlf_checkout_preserves_git_published_digest(self):
+        canonical=self.consent.replace(b'\r\n',b'\n')
+        simulated_windows=canonical.replace(b'\n',b'\r\n')
+        self.assertEqual(module.sha256(simulated_windows.replace(b'\r\n',b'\n')),
+                         module.sha256(canonical))
+        self.assertNotEqual(module.sha256(canonical+b'mutated'),
+                            module.sha256(canonical))
+        self.assertIn("CONSENT_DOCUMENT_SHA256='"+module.sha256(canonical)+"'",
+                      self.contract)
 
     def test_historic_form_acceptance_contract(self):
         api=(ROOT/'server/garant-bani-relay.mjs').read_text(encoding='utf-8')
