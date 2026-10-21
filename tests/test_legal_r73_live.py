@@ -62,7 +62,7 @@ class R73ExactFormTests(unittest.TestCase):
         self.assertIn("analytics.confirmed(result.receipt,{flow,requestId:payload.requestId})",new)
         self.assertIn("const result = await submitLead(payload,settings,location.origin)",new)
         self.assertEqual(new.count("payload.consentVersion = '2026-10-21'"),1)
-        with self.assertRaisesRegex(RuntimeError,'R73_LEAD_BUILDER_CHANGED'):
+        with self.assertRaisesRegex(RuntimeError,'CONSENT_ALREADY_APPLIED'):
             module.adjust_app(new)
 
     def test_missing_import_or_verified_receipt_fails_closed(self):
