@@ -66,7 +66,7 @@ def main():
                     assert not errors,errors
                     assert metrics["has_h1"],path
                     if phase=="after" and width in (390,1366):
-                        page.screenshot(path=str(OUT/(path.split('/')[1] if path.startswith('bani/') and path.count('/')>1 else "catalog")+"-"+str(width)+".png"),full_page=True)
+                        page.screenshot(path=str(OUT/((path.split('/')[1] if path.startswith('bani/') and path.count('/')>1 else "catalog")+"-"+str(width)+".png")),full_page=True)
                     vals.append(metrics)
                     context.close()
                 assert vals[1]["overflow"]<=max(0,vals[0]["overflow"])+1,(path,width,vals)
