@@ -95,6 +95,23 @@ def patch_active_relay(current):
     return current
 
 
+def patch_active_relay_bytes(original):
+    """Keep LF/CRLF from exact-hash-pinned live API, reject mixed newline styles."""
+    ensure(isinstance(original,bytes),'API_INPUT_NOT_BYTES')
+    is_crlf=b'\r\n' in original
+    canonical=original.replace(b'\r\n',b'\n')
+    ensure(b'\r' not in canonical,'ACTIVE_API_MIXED_NEWLINES')
+    if is_crlf:
+        ensure(original.count(b'\n')==original.count(b'\r\n'),
+               'ACTIVE_API_MIXED_NEWLINES')
+    decoded=canonical.decode('utf-8')
+    patched=patch_active_relay(decoded)
+    ensure(patched!=decoded,'CONSENT_PATCH_NOT_APPLIED')
+    # Every preexisting non-consent segment remains byte-for-byte unchanged
+    # after restoring the original newline convention.
+    return patched.replace('\n','\r\n') if is_crlf else patched
+
+
 def validate(src, web, api):
     ensure(src.resolve()!=web.resolve() and src.resolve()!=api.resolve(),'SOURCE_IS_LIVE_RELEASE')
     for name in REQUIRED:
@@ -116,8 +133,11 @@ def validate(src, web, api):
            'HISTORICAL_CLIENT_COMPATIBILITY_MISSING')
     old_api=(api/'server/garant-bani-relay.mjs').read_bytes()
     ensure(git_blob(old_api)==OLD_API_BLOB,'API_BASELINE_CHANGED_REQUIRE_MANUAL_REVIEW')
-    ensure(b'\r' not in old_api,'ACTIVE_API_NEWLINES_CHANGED')
-    patched_api=patch_active_relay(old_api.decode('utf-8'))
+    # Active R7 was installed with Windows CRLF line endings. Verify the exact
+    # binary blob first, then temporarily normalize *line endings only* for
+    # the same fail-closed, exact-match consent patch. Return the original
+    # newline convention so all non-consent source bytes remain equivalent.
+    patched_api=patch_active_relay_bytes(old_api)
     old_contract=(api/'assets/js/lead-consent.js').read_bytes()
     ensure("CONSENT_VERSION='2026-10-16'" in old_contract.decode('utf-8'),
            'ACTIVE_API_CONSENT_CHANGED')
