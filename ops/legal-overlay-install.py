@@ -67,7 +67,8 @@ def update_index(current_html, source_html):
     result=current_html[:left]+notice+'\n'+button+current_html[right:]
     ensure(result.count('id="submitButton"')==1 and result.count('id="submitConsentNotice"')==1,
            'AFTER_FORM_INVARIANT')
-    ensure('ym-hide-content' in result,'ANALYTICS_MASKING_LOST')
+    ensure('ym-hide-content' not in current_html or 'ym-hide-content' in result,
+           'ANALYTICS_MASKING_LOST')
     return result
 
 def patch_active_relay(current):
@@ -120,9 +121,11 @@ def validate(src, web, api):
     old_contract=(api/'assets/js/lead-consent.js').read_bytes()
     ensure("CONSENT_VERSION='2026-10-16'" in old_contract.decode('utf-8'),
            'ACTIVE_API_CONSENT_CHANGED')
-    ensure((web/'assets/js/analytics.js').is_file() and
-           'analytics.js' in (web/'assets/js/app.js').read_text(encoding='utf-8'),
-           'ADS01_ANALYTICS_NOT_PRESENT_IN_ACTIVE_RELEASE')
+    # Owner verified that active R73 lacks analytics.js: preserve that state.
+    analytics_present=(web/'assets/js/analytics.js').is_file()
+    if analytics_present:
+        ensure('analytics.js' in (web/'assets/js/app.js').read_text(encoding='utf-8'),
+               'ACTIVE_ANALYTICS_INCONSISTENT')
     existing=(web/'index.html').read_text(encoding='utf-8')
     updated=update_index(existing,source_bytes(src,'index.html').decode('utf-8'))
     ensure(updated!=existing,'LEGAL_ALREADY_APPLIED')
@@ -130,7 +133,7 @@ def validate(src, web, api):
         ensure(not any(p.is_symlink() for p in base.rglob('*')),'NESTED_RELEASE_SYMLINK')
     for parent in (web.parent,api.parent):
         ensure(shutil.disk_usage(parent).free>200*1024*1024,'LOW_DISK_SPACE')
-    return updated
+    return updated, patched_api, analytics_present
 
 def atomic_link(link, target, label):
     temp=link.parent/(link.name+'.'+label+'.swap')
