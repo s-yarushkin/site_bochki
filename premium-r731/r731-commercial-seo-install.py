@@ -164,6 +164,7 @@ def model_patch(s,model,pricebook):
     return s
 
 def journal_cta(s,slug):
+    must("dp-article-to-products" not in s,"ARTICLE_ALREADY_PATCHED_"+slug)
     linksets={
      "kak-vybrat-gotovuyu-banyu":[
         ("../../bani/kvadro/","Квадро: вход по центру, ширина 2,1 м"),
