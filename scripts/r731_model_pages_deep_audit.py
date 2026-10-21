@@ -58,6 +58,42 @@ def schema_nodes(soup):
                 })
     return vals
 
+def full_schema_facts(path):
+    html, status, _, _=get(path)
+    soup=BeautifulSoup(html,"html.parser")
+    facts=[]
+    for script in soup.select('script[type="application/ld+json"]'):
+        try:obj=json.loads(script.string or script.text)
+        except:continue
+        stack=[obj]
+        while stack:
+            node=stack.pop()
+            if isinstance(node,list):stack.extend(node);continue
+            if not isinstance(node,dict):continue
+            stack.extend(node.get("@graph",[]))
+            tp=node.get("@type")
+            if tp not in ("ProductGroup","Product","Offer","AggregateOffer","BreadcrumbList"):continue
+            variants=node.get("hasVariant",[])
+            if isinstance(variants,dict):variants=[variants]
+            product_variants=[]
+            for variant in variants:
+                if not isinstance(variant,dict):continue
+                v_offers=variant.get("offers",{})
+                product_variants.append({
+                  "name":variant.get("name"),"sku":variant.get("sku"),
+                  "url":variant.get("url"),
+                  "offer":({k:v_offers.get(k) for k in ("price","priceCurrency","availability","url")} if isinstance(v_offers,dict) else v_offers),
+                })
+            offers=node.get("offers",{})
+            breadcrumbs=node.get("itemListElement",[])
+            facts.append({"type":tp,"keys":list(node.keys()),
+                          "variesBy":node.get("variesBy"),"productGroupID":node.get("productGroupID"),
+                          "variants_count":len(variants),
+                          "variants":product_variants,
+                          "offer":({k:offers.get(k) for k in ("price","priceCurrency","availability","url")} if isinstance(offers,dict) else offers),
+                          "breadcrumb_names":[x.get("name") for x in breadcrumbs if isinstance(x,dict)]})
+    return facts
+
 def price_numbers(text):
     return sorted(set(re.findall(r"\b(?:\d{2,3}[ \u00a0\u202f]?){1,2}\d{3}\s*(?:₽|руб(?:лей|ля)?)",text,re.IGNORECASE)))
 
@@ -151,5 +187,7 @@ def main():
                 sb={re.sub(r"[^а-яёa-z0-9]","",p.lower()) for p in b["paragraphs"] if len(p)>35}
                 j=(len(sa&sb)/len(sa|sb)) if (sa or sb) else 0
                 print("MODEL_TEXT_OVERLAP="+json.dumps({"a":a["path"],"b":b["path"],"same_long_paragraphs":len(sa&sb),"jaccard":round(j,3)},ensure_ascii=False))
+    for path in ("/bani/",)+MODELS:
+        print("FULL_SCHEMA="+json.dumps({"path":path,"facts":full_schema_facts(path)},ensure_ascii=False))
     print("AUDIT_COMPLETE; PAGES="+str(len(outputs)))
 if __name__=="__main__":main()
