@@ -2,6 +2,9 @@ name: R73.2 text-only content and release acceptance
 on:
   push:
     branches: [feat/r732-seo-content-no-media-20261021]
+  pull_request:
+    branches: [audit/r731-seo-commercial-20261021]
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 permissions:
   contents: read
