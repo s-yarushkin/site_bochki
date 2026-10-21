@@ -91,6 +91,19 @@ class LegalOverlayTests(unittest.TestCase):
             "const footer='KEEP_NEWER_SERVER_LOGIC_UNCHANGED';\n"
         )
         patched=module.patch_active_relay(old)
+        # The actual active R7 API is CRLF, unlike the GitHub source.
+        lf_bytes=old.encode('utf-8')
+        crlf_bytes=lf_bytes.replace(b'\n',b'\r\n')
+        self.assertEqual(module.patch_active_relay_bytes(lf_bytes),patched.encode('utf-8'))
+        patched_crlf=module.patch_active_relay_bytes(crlf_bytes)
+        self.assertEqual(patched_crlf,patched.encode('utf-8').replace(b'\n',b'\r\n'))
+        self.assertEqual(patched_crlf.count(b'\r\n'),patched_crlf.count(b'\n'))
+        self.assertIn(b'KEEP_NEWER_SERVER_LOGIC_UNCHANGED',patched_crlf)
+        # CRLF/LF mixtures and stray carriage returns are not accepted.
+        with self.assertRaisesRegex(RuntimeError,'ACTIVE_API_MIXED_NEWLINES'):
+            module.patch_active_relay_bytes(crlf_bytes.replace(b'\r\n',b'\n',1))
+        with self.assertRaisesRegex(RuntimeError,'ACTIVE_API_MIXED_NEWLINES'):
+            module.patch_active_relay_bytes(lf_bytes+b'\r')
         self.assertIn("const marker='KEEP_NEWER_SERVER_LOGIC_UNCHANGED'",patched)
         self.assertIn("const footer='KEEP_NEWER_SERVER_LOGIC_UNCHANGED'",patched)
         self.assertIn("historicSubmit=value.consentVersion==='2026-10-16'",patched)
