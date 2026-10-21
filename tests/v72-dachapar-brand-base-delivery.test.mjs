@@ -25,6 +25,8 @@ test('V7.2 visible identity is Dacha Par; company appears only in linked legal d
   assert.match(requisites,/Ленинградская, д\. 97/);
   assert.match(privacy,/ВУДАРТ-ГРУПП/);
   assert.match(consent,/ВУДАРТ-ГРУПП/);
+  assert.match(privacy,/352534593865/);
+  assert.match(consent,/322352500011968/);
   assert.doesNotMatch(privacy+consent+requisites,/ГАРАНТ-ГРУПП|Герцена|3525486964/);
 });
 test('V73 retains original base elements and adds floor and electrical safety panel',()=>{
