@@ -4,6 +4,7 @@ on:
     branches: [audit/r731-seo-commercial-20261021]
     paths:
       - 'scripts/r731_model_pages_deep_audit.py'
+      - 'scripts/r731_seo_source_anchors.py'
       - '.github/workflows/r731-commercial-seo-audit.yml'
   workflow_dispatch:
 permissions:
@@ -20,4 +21,6 @@ jobs:
       - name: Install HTML parser
         run: pip install beautifulsoup4==4.12.3
       - name: Audit actual commercial pages on public website
-        run: python scripts/r731_model_pages_deep_audit.py
+        run: |
+          python scripts/r731_model_pages_deep_audit.py
+          python scripts/r731_seo_source_anchors.py
