@@ -11,10 +11,10 @@ const consent=read('consent.html');
 
 test('V6.7 operator identity retained in privacy and consent documents, not on sales page',()=>{
   for(const source of [privacy,consent]){
-    for(const id of ['«ВУДАРТ-ГРУПП»','3500023844','350001001','1263500003590']){
+    for(const id of ['Ярушкина Наталья Олеговна','352534593865','322352500011968','bdd-35@mail.ru']){
       assert.ok(source.includes(id),'Missing registered operator data '+id);
     }
-    assert.ok(source.includes('Ленинградская, д. 97, помещение 25'),'Missing legal address');
+    assert.ok(source.includes('ООО «ВУДАРТ-ГРУПП»'),'Missing seller disclosure');
   }
   assert.doesNotMatch(html,/class="container footer-operator"/);
   assert.doesNotMatch(html,/ВУДАРТ-ГРУПП|ООО|ИНН|Ленинградская, д. 97/);
@@ -27,17 +27,17 @@ test('V6.7 operator identity retained in privacy and consent documents, not on s
 test('V6.5 policy is a separate noindex operator document with truthful MAX and external-fonts disclosures',()=>{
   for(const doc of [privacy,consent]){
     assert.match(doc,/noindex,nofollow/);
-    assert.doesNotMatch(doc,/индивидуальному предпринимателю|ОГРНИП|\[EMAIL ДЛЯ ПДН\]|\[ФИО ИП/);
+    assert.doesNotMatch(doc,/\[EMAIL ДЛЯ ПДН\]|\[ФИО ИП/);
     assert.match(doc,/Российской Федерации|персональных данных/);
-    assert.match(doc,/доработ|проверк|утверждени/i);
+    assert.doesNotMatch(doc,/Проект для согласования|Проект для утверждения|требует согласования/);
   }
   assert.match(privacy,/закрытую рабочую группу мессенджера MAX/);
   assert.match(privacy,/Google Fonts/);
   assert.match(privacy,/не запрашивает через формы паспортные/);
   assert.match(privacy,/отзыв[ае]? согласия|отзыве согласия/i);
-  assert.match(privacy,/Конкретные сроки хранения/);
+  assert.match(privacy,/3 года/);
   assert.match(consent,/не распространяется на рекламные рассылки/);
-  assert.match(consent,/нажатием кнопки/);
+  assert.match(consent,/нажатия кнопки «Отправить заявку»/);
 });
 
 test('submit consent has an individual linked document and server rejects absent or mismatched evidence',()=>{
@@ -47,6 +47,6 @@ test('submit consent has an individual linked document and server rejects absent
   assert.match(relay,/value\.consent!==true/);assert.match(relay,/CONSENT_METHOD_REQUIRED/);
 });
 test('submit notice stays readable and linked below the button on narrow screens',()=>{
- assert.ok(html.indexOf('id="submitButton"')<html.indexOf('id="submitConsentNotice"'));
+ assert.ok(html.indexOf('id="submitConsentNotice"')<html.indexOf('id="submitButton"'));
  assert.match(css,/\.contact-dialog \.submit-consent-notice/);assert.match(css,/font-size:12px;line-height:1\.55/);
 });
