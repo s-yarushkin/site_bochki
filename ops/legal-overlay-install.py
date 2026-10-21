@@ -17,7 +17,7 @@ from pathlib import Path
 WEB = Path('/srv/sites/dachapar-preview/current')
 API = Path('/srv/services/garant-bani-relay/current')
 SERVICE = 'garant-bani-relay.service'
-OLD_API_BLOB = '096517554e4a0bac1445a47770a972b2d175d427'
+OLD_API_BLOB = 'ed4be4b02be5cae25107e08e465dcd3f8dcf7d6d'  # verified owner read-only API fingerprint
 REQUIRED = ('privacy.html','consent.html','requisites.html','assets/js/lead-consent.js')
 NOTICE_RE = re.compile(r'<p class="form-footnote submit-consent-notice" id="submitConsentNotice">.*?</p>', re.S)
 BUTTON_RE = re.compile(r'<button type="submit" class="btn btn-accent btn-full" id="submitButton"[^>]*>Отправить заявку</button>', re.S)
