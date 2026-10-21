@@ -79,6 +79,8 @@ def adjust_index(html):
     return updated
 
 def adjust_app(app):
+    require("payload.consentVersion = '2026-10-21';" not in app,
+            'CONSENT_ALREADY_APPLIED')
     require(APP_IMPORT in app,'R73_LEAD_CLIENT_IMPORT_CHANGED')
     require("analytics.confirmed(result.receipt,{flow,requestId:payload.requestId})" in app,
             'R73_CONFIRMED_CONVERSION_CHANGED')
