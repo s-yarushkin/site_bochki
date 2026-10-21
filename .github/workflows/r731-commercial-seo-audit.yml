@@ -1,0 +1,46 @@
+name: DachaPar commercial SEO independent read-only audit
+on:
+  push:
+    branches: [audit/r731-seo-commercial-20261021]
+    paths:
+      - 'scripts/r731_model_pages_deep_audit.py'
+      - 'scripts/r731_seo_source_anchors.py'
+      - 'premium-r731/r731-commercial-seo-install.py'
+      - 'tests/test_r731_commercial_live.py'
+      - 'tests/browser_r731_commercial.py'
+      - '.github/workflows/r731-commercial-seo-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  commercial-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install HTML parser
+        run: pip install beautifulsoup4==4.12.3
+      - name: Audit actual commercial pages on public website
+        run: |
+          python scripts/r731_model_pages_deep_audit.py
+          python scripts/r731_seo_source_anchors.py
+      - name: Validate 8-page SEO patch against actual live HTML and all prices
+        run: |
+          python tests/test_r731_commercial_live.py
+          python -m py_compile premium-r731/r731-commercial-seo-install.py
+      - name: Chromium visuals — compare old and new at 4 breakpoints
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+          python tests/browser_r731_commercial.py
+      - name: Save visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r731-commercial-seo-visual
+          path: artifacts/r731-commercial-visual/
+          retention-days: 7
+          if-no-files-found: warn
