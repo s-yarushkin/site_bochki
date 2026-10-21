@@ -20,6 +20,9 @@ if($Actual -ne $SourceSha){throw "SOURCE_PIN_MISMATCH_EXPECTED_$($SourceSha)_GOT
 Write-Host ('RELEASE_SOURCE_SHA='+$SourceSha)
 & py -3 -X utf8 (Join-Path $Repo 'tests/test_r732_content.py')
 if($LASTEXITCODE -ne 0){throw 'R732_LOCAL_ACCEPTANCE_FAILED'}
+Write-Host 'R732_WINDOWS_BROWSER_BEGIN; DISPOSABLE_PROFILE=YES; POST=0; NO_API_PROXY'
+& py -3 -X utf8 (Join-Path $Repo 'tests/windows_r732_browser.py') --out (Join-Path $Run 'browser-acceptance.json')
+if($LASTEXITCODE -ne 0){throw 'R732_BROWSER_ACCEPTANCE_FAILED_NO_SERVER_CHANGE'}
 $Archive=Join-Path $Run 'source.tar.gz'
 & git -C $Repo archive --format=tar.gz "--output=$Archive" $SourceSha premium-r732
 if($LASTEXITCODE -ne 0){throw 'SOURCE_ARCHIVE_FAILED'}
