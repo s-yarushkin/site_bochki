@@ -78,6 +78,34 @@ class LegalOverlayTests(unittest.TestCase):
         self.assertIn("CONSENT_DOCUMENT_SHA256='"+module.sha256(canonical)+"'",
                       self.contract)
 
+    def test_active_api_patch_only_rewrites_known_consent_fragments(self):
+        # Construct the exact old-consent code shape reported by the live API probe.
+        old=(
+            "const marker='KEEP_NEWER_SERVER_LOGIC_UNCHANGED';\n"
+            "  if(value.consentVersion!==undefined && !['2026-10-12','2026-10-14',CONSENT_VERSION].includes(value.consentVersion))throw new Error('CONSENT_VERSION_UNSUPPORTED');\n"
+            "  const submitConsent=value.consentVersion===CONSENT_VERSION;\n"
+            "  if(submitConsent&&value.consentMethod!==CONSENT_METHOD)throw new Error('CONSENT_METHOD_REQUIRED');\n"
+            "  const lead={consentEvidence:submitConsent?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};\n"
+            "  ['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version);\n"
+            "  ['2026-10-14',CONSENT_VERSION].includes(lead.consentEvidence?.version);\n"
+            "const footer='KEEP_NEWER_SERVER_LOGIC_UNCHANGED';\n"
+        )
+        patched=module.patch_active_relay(old)
+        self.assertIn("const marker='KEEP_NEWER_SERVER_LOGIC_UNCHANGED'",patched)
+        self.assertIn("const footer='KEEP_NEWER_SERVER_LOGIC_UNCHANGED'",patched)
+        self.assertIn("historicSubmit=value.consentVersion==='2026-10-16'",patched)
+        self.assertIn("currentSubmit=value.consentVersion===CONSENT_VERSION",patched)
+        self.assertIn("documentSha256:'fd858836a3eb8824f6db99c6f00c0e30cb77d58523582b45ea8d515965d96e2a'",patched)
+        self.assertEqual(patched.count("['2026-10-14','2026-10-16',CONSENT_VERSION]"),2)
+        self.assertNotIn('const marker=\'REMOVED\'',patched)
+        self.assertNotEqual(module.sha256(patched.encode()),module.sha256(old.encode()))
+        with self.assertRaisesRegex(RuntimeError,'ACTIVE_RELAY_CONSENT_SHAPE_CHANGED'):
+            module.patch_active_relay(patched)
+
+    def test_production_fingerprint_is_pinned_not_unrestricted(self):
+        self.assertEqual(module.OLD_API_BLOB,'ed4be4b02be5cae25107e08e465dcd3f8dcf7d6d')
+        self.assertEqual(len(module.OLD_API_BLOB),40)
+
     def test_historic_form_acceptance_contract(self):
         api=(ROOT/'server/garant-bani-relay.mjs').read_text(encoding='utf-8')
         self.assertIn("historicSubmit=value.consentVersion==='2026-10-16'",api)
