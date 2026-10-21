@@ -5,6 +5,8 @@ on:
     paths:
       - 'scripts/r731_model_pages_deep_audit.py'
       - 'scripts/r731_seo_source_anchors.py'
+      - 'premium-r731/r731-commercial-seo-install.py'
+      - 'tests/test_r731_commercial_live.py'
       - '.github/workflows/r731-commercial-seo-audit.yml'
   workflow_dispatch:
 permissions:
@@ -24,3 +26,7 @@ jobs:
         run: |
           python scripts/r731_model_pages_deep_audit.py
           python scripts/r731_seo_source_anchors.py
+      - name: Validate 8-page SEO patch against actual live HTML and all prices
+        run: |
+          python tests/test_r731_commercial_live.py
+          python -m py_compile premium-r731/r731-commercial-seo-install.py
