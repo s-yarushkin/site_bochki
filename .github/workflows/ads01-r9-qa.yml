@@ -1,7 +1,7 @@
 name: ADS-01 R9 conversion and privacy acceptance
 on:
   push:
-    branches: [test/ads01-r9-v74-price-j-integration-20261019, release/r7-price20-api-20261020, fix/r7-legal-analytics-20261021]
+    branches: [test/ads01-r9-v74-price-j-integration-20261019, release/r7-price20-api-20261020, fix/r7-legal-analytics-20261021, feat/r731-premium-web-20261021]
   pull_request:
     branches: [release/v74-content-20261019]
     paths:
@@ -39,6 +39,11 @@ jobs:
         run: python tests/test_legal_overlay.py
       - name: Premium R73 actual form and payload cutover tests
         run: python tests/test_legal_r73_live.py
+      - name: Premium R73.1 visual colours and region contracts
+        run: |
+          python tests/test_r731_premium.py
+          node --check premium-r731/r731-finish-picker.mjs
+          python -m py_compile premium-r731/r731-web-installer.py
       - name: Price binding and historic book gate
         run: node scripts/verify-v74-public-prices.mjs
       - name: Generated SEO same as committed snapshot
