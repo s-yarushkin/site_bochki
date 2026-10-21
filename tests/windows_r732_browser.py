@@ -156,7 +156,8 @@ def main():
                                 require(client.evaluate('document.querySelector("details summary").click();document.querySelector("details").open') is True,'FAQ_INTERACTION')
                             if route in ROUTES[-3:]:
                                 require(client.evaluate('document.querySelectorAll("main img").length')==0,'NEW_ARTICLE_HAS_IMAGE')
-                                require(client.evaluate('[...document.querySelectorAll(".article-sidebar a")].at(-1).click();location.hash')=='#part-5','ARTICLE_CONTENTS_LINK')
+                                toc=client.evaluate('(()=>{const a=[...document.querySelectorAll(".article-sidebar a")].at(-1);const visible=a.getClientRects().length>0;if(visible)a.click();return {href:a.getAttribute("href"),target:!!document.querySelector("#part-5"),visible,hash:location.hash};})()')
+                                require(toc['href']=='#part-5' and toc['target'] and (not toc['visible'] or toc['hash']=='#part-5'),'ARTICLE_CONTENTS_LINK')
                             results.append({'route':route,**value})
                             print('R732_BROWSER_CASE=PASS; WIDTH='+str(width)+'; PAGE='+route,flush=True)
                         client.goto(origin+'/bani/kvadro/?size=500')

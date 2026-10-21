@@ -47,8 +47,14 @@ try{
             assert.equal(await page.locator('details').first().evaluate(el=>el.open),true);
           }
           if(newRoutes.has(route)){
-            await page.locator('.article-sidebar a').last().click();
-            assert.equal(new URL(page.url()).hash,'#part-5');
+            const contents=page.locator('.article-sidebar a').last();
+            assert.equal(await contents.getAttribute('href'),'#part-5');
+            assert.equal(await page.locator('#part-5').count(),1);
+            // The existing mobile article template intentionally hides its sidebar.
+            if(await contents.isVisible()){
+              await contents.click();
+              assert.equal(new URL(page.url()).hash,'#part-5');
+            }
             assert.equal(await page.locator('main img').count(),0);
           }
         }
