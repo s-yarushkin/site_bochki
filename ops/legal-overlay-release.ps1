@@ -17,7 +17,7 @@ $Run=Join-Path $env:TEMP ('DachaPar-Legal-'+[guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force $Run | Out-Null
 $Repo=Join-Path $Run 'repo'
 Write-Host 'LEGAL_OWNER_RUN=START; ADS_SPEND=UNTOUCHED; SQLITE=UNTOUCHED; MAX=NO_LIVE_CALLS'
-& git clone --quiet --depth 1 --single-branch --branch $Branch $RepoURL $Repo
+& git -c core.autocrlf=false -c core.safecrlf=true clone --quiet --depth 1 --single-branch --branch $Branch $RepoURL $Repo
 if($LASTEXITCODE -ne 0){throw 'GIT_CLONE_FAILED'}
 & git -C $Repo config core.autocrlf false
 $Actual=(& git -C $Repo rev-parse HEAD).Trim()
