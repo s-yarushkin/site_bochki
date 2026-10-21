@@ -109,7 +109,7 @@ def patch_active_relay_bytes(original):
     ensure(patched!=decoded,'CONSENT_PATCH_NOT_APPLIED')
     # Every preexisting non-consent segment remains byte-for-byte unchanged
     # after restoring the original newline convention.
-    return patched.replace('\n','\r\n') if is_crlf else patched
+    return (patched.replace('\n','\r\n') if is_crlf else patched).encode('utf-8')
 
 
 def validate(src, web, api):
@@ -183,7 +183,7 @@ def install(src, old_web, old_api, html, patched_api, analytics_present, sha):
     for name in ('assets/js/lead-consent.js','server/garant-bani-relay.mjs'):
         out=api_target/name
         ensure(out.is_file() and not out.is_symlink(),'API_OVERLAY_UNSAFE_'+name)
-        out.write_bytes(patched_api.encode('utf-8') if name=='server/garant-bani-relay.mjs' else source_bytes(src,name))
+        out.write_bytes(patched_api if name=='server/garant-bani-relay.mjs' else source_bytes(src,name))
     # Pre-switch check: never publish a broken API module.
     subprocess.run(['node','--check',str(api_target/'server/garant-bani-relay.mjs')],check=True,timeout=15)
     ensure(sha256((api_target/'assets/js/lead-consent.js').read_bytes())==
