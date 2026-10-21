@@ -1,0 +1,29 @@
+name: DachaPar P0 public SEO read-only audit
+on:
+  push:
+    branches: [feat/r731-premium-web-20261021]
+    paths:
+      - scripts/r731_public_seo_live_audit.py
+      - .github/workflows/r731-seo-readonly.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read-only GET SEO audit against actual production website
+        run: python scripts/r731_public_seo_live_audit.py
+      - name: Save public SEO metadata audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: r731-public-seo-audit
+          path: artifacts/r731-seo-live.json
+          if-no-files-found: warn
+          retention-days: 10
