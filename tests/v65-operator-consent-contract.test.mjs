@@ -12,10 +12,10 @@ const consent=read('consent.html');
 
 test('V6.7 operator identity retained in privacy and consent documents, not on sales page',()=>{
   for(const source of [privacy,consent]){
-    for(const id of ['«ВУДАРТ-ГРУПП»','3500023844','350001001','1263500003590']){
+    for(const id of ['Ярушкина Наталья Олеговна','352534593865','322352500011968','bdd-35@mail.ru']){
       assert.ok(source.includes(id),'Missing registered operator data '+id);
     }
-    assert.ok(source.includes('Ленинградская, д. 97, помещение 25'),'Missing legal address');
+    assert.ok(source.includes('ООО «ВУДАРТ-ГРУПП»'),'Missing seller disclosure');
   }
   assert.doesNotMatch(html,/class="container footer-operator"/);
   assert.doesNotMatch(html,/ВУДАРТ-ГРУПП|ООО|ИНН|Ленинградская, д. 97/);
@@ -36,7 +36,7 @@ test('V6.5 policy is a separate noindex operator document with truthful MAX and 
   assert.match(privacy,/Google Fonts/);
   assert.match(privacy,/не запрашивает через формы паспортные/);
   assert.match(privacy,/отзыв[ае]? согласия|отзыве согласия/i);
-  assert.match(privacy,/30 дней/);
+  assert.match(privacy,/3 года/);
   assert.match(consent,/не распространяется на рекламные рассылки/);
   assert.match(consent,/кнопки «Отправить заявку»/);
 });
@@ -57,7 +57,7 @@ test('submit notice stays readable and linked below the button on narrow screens
 test('Consent version and signed document hash match the public consent revision',()=>{
   const contract=read('assets/js/lead-consent.js');
   const digest=createHash('sha256').update(consent,'utf8').digest('hex');
-  assert.match(contract,/CONSENT_VERSION='2026-10-20'/);
+  assert.match(contract,/CONSENT_VERSION='2026-10-21'/);
   assert.match(contract,/CONSENT_METHOD='submit-button-v2'/);
   assert.ok(contract.includes(digest),'Consent digest must match public document');
   assert.match(privacy,/Нажатие кнопки «Отправить заявку»/);
