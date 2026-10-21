@@ -51,11 +51,14 @@ def main():
                 vals=[]
                 for phase,markup in (("before",old),("after",new)):
                     context=browser.new_context(viewport={"width":width,"height":850})
+                    # Load the real site CSS; block only heavy images/fonts and pixels.
+                    context.route("**/*", lambda route: route.abort() if route.request.resource_type in ("image","font","media") else route.continue_())
                     page=context.new_page()
                     errors=[]
                     page.on("pageerror",lambda err:errors.append(str(err)))
                     page.set_content(sanitized(markup,path),wait_until="domcontentloaded",timeout=30000)
-                    page.wait_for_timeout(550)
+                    page.wait_for_load_state("networkidle",timeout=20000)
+                    page.evaluate("document.fonts.ready")
                     metrics=page.evaluate("""() => ({
                         width:innerWidth,
                         overflow:document.documentElement.scrollWidth-innerWidth,
