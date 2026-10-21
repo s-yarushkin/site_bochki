@@ -110,11 +110,13 @@ def validate(src, web, api):
            'IP_CONTACT_MISSING')
     ensure('322352500011968' in source_bytes(src,'requisites.html').decode('utf-8'),
            'IP_REQUISITES_MISSING')
-    new_api=source_bytes(src,'server/garant-bani-relay.mjs')
-    ensure("historicSubmit=value.consentVersion==='2026-10-16'" in new_api.decode('utf-8'),
+    source_api=source_bytes(src,'server/garant-bani-relay.mjs').decode('utf-8')
+    ensure("historicSubmit=value.consentVersion==='2026-10-16'" in source_api,
            'HISTORICAL_CLIENT_COMPATIBILITY_MISSING')
     old_api=(api/'server/garant-bani-relay.mjs').read_bytes()
     ensure(git_blob(old_api)==OLD_API_BLOB,'API_BASELINE_CHANGED_REQUIRE_MANUAL_REVIEW')
+    ensure(b'\r' not in old_api,'ACTIVE_API_NEWLINES_CHANGED')
+    patched_api=patch_active_relay(old_api.decode('utf-8'))
     old_contract=(api/'assets/js/lead-consent.js').read_bytes()
     ensure("CONSENT_VERSION='2026-10-16'" in old_contract.decode('utf-8'),
            'ACTIVE_API_CONSENT_CHANGED')
