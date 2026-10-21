@@ -20,7 +20,7 @@ class R731Contracts(unittest.TestCase):
                 '<button id="relay-submit" aria-describedby="relay-consent">Отправить заявку</button>'
                 '<p id="relay-consent">Отправляя заявку, вы подтверждаете</p></form>'
                 '<span id="installation-label">Монтаж «Квадро Хаус» · обязательно, 10% базы</span>'
-                '<section class="journal-teaser section wrap"><h2>Old articles retained</h2></section>'
+                '    <section class="journal-teaser section wrap"><h2>Old articles retained</h2></section>'
                 '<p>Москва и область · Вологда · Ярославль</p>'
                 '</body></html>')
     def old_app(self):
