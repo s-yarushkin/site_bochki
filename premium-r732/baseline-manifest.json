@@ -1,0 +1,104 @@
+{
+  "origin": "https://xn--80aaan1dh9b.xn--p1ai",
+  "source_release": "R731-SEO-P0-7e83cabf0aa8-1792587304682300390",
+  "api_release": "R73-LEGAL-db5d49445661-1792566478879449075",
+  "snapshot_date": "2026-10-21",
+  "files": {
+    "index.html": {
+      "sha256": "c3d56597aa01380cc32a02e8b715073f55a51daee049e9074d5dcb9aba8543ac",
+      "bytes": 53362
+    },
+    "bani/index.html": {
+      "sha256": "df60d32cdf26751cde6ee4ebb3183054c3f4b4320fb087671aae9dd71d42e934",
+      "bytes": 8808
+    },
+    "bani/kvadro/index.html": {
+      "sha256": "3210f441223ccf6e400aeb5fbe1b4dfdcb5d13df1e7790ef2ac0270e1023ebb0",
+      "bytes": 13106
+    },
+    "bani/viking/index.html": {
+      "sha256": "80807b286730dada98f6f4c21543e813c7dcba98649525810d34290307285b15",
+      "bytes": 12837
+    },
+    "bani/parus/index.html": {
+      "sha256": "084217e4691a3a96208afe711985f8d402a2ee680b4177726fc558a382a20b04",
+      "bytes": 12914
+    },
+    "bani/kvadro-haus/index.html": {
+      "sha256": "cb674541616f23dbe2205973a0f19a79c35b898764a5e63c6f8e60d2cc7124cf",
+      "bytes": 14746
+    },
+    "dostavka-i-ustanovka/index.html": {
+      "sha256": "97193f792a3e66adafdc2d436c155afbcc2a7627dbb162210c595a35c4040195",
+      "bytes": 11164
+    },
+    "voprosy/index.html": {
+      "sha256": "d8d6bffb9f128fd5b74b14876f89d27c65b3fd81b46eeff4bad0ac3e6cd02525",
+      "bytes": 10035
+    },
+    "kontakty/index.html": {
+      "sha256": "2edd17f62961fbff86bf4c2cd131815accdd4124cacf0213f79b6744654761be",
+      "bytes": 8264
+    },
+    "compare/index.html": {
+      "sha256": "f09ad793c68a1ca9466a6b009d6356249dbf1d1e5205ba7b0e85f14740ca9684",
+      "bytes": 11628
+    },
+    "journal/index.html": {
+      "sha256": "ee5f91ead0778ab256f342b645a961ca03e61b9a95b9d8cd74ab38d67a5d094b",
+      "bytes": 14807
+    },
+    "journal/kak-vybrat-gotovuyu-banyu/index.html": {
+      "sha256": "500d6b7b9566b92e0309c846e9636e27502480c10f8dfc9cbc93de6b3e827199",
+      "bytes": 12780
+    },
+    "journal/iz-chego-skladyvaetsya-tsena/index.html": {
+      "sha256": "9e333b234e188aa165a0f6cc1b15470e1a57a037a7af848a2bf7ddba75f21ab0",
+      "bytes": 12656
+    },
+    "journal/kvadro-5-komfort/index.html": {
+      "sha256": "9ec912943108635607f2b346cffa281b232f441c3fd37bcfa2d96133eada1e05",
+      "bytes": 12776
+    },
+    "journal/dostavka-i-osnovanie/index.html": {
+      "sha256": "84b603de97238156b0210185dfb8d52741ca488cd41e7017c9f4c98694170ba0",
+      "bytes": 11586
+    },
+    "journal/ventilyatsiya-i-fortochka/index.html": {
+      "sha256": "9b3081cce25e0ed47ac6c93d2049544ead38e0e78db31a50ab1aac2c137b1d05",
+      "bytes": 11610
+    },
+    "journal/el-ili-sosna-dlya-bani/index.html": {
+      "sha256": "84bf2496124599211181685268ca3dd489010fb68f32e5f9b3260304e789eb1a",
+      "bytes": 18148
+    },
+    "journal/chto-takoe-lunnyy-paz/index.html": {
+      "sha256": "06a463fd0bfb4144f603fac59dfa1074f29a086384d9f641983aac074463e74e",
+      "bytes": 16887
+    },
+    "journal/kak-par-vliyaet-na-derevo/index.html": {
+      "sha256": "8ba30af2891808869a64a49ab20b47f5e055548658b28b0a2e7980ab2a547956",
+      "bytes": 16308
+    },
+    "journal/drova-ili-brikety-dlya-bani/index.html": {
+      "sha256": "6c39e299b5da1b596ce72a222c192bf19c082d2548ec4d222c16c335d0544e5f",
+      "bytes": 17107
+    },
+    "journal/uteplenie-pola-v-bane/index.html": {
+      "sha256": "ba0754cbdede5175c104e1b14cc40ee9ab847e244b64b31ef188f608eb55ae46",
+      "bytes": 16345
+    },
+    "sitemap.xml": {
+      "sha256": "9b68a5f68f626fea1ecbb2d13aae14a9ef172b649d49eea437f6a09e86b465ac",
+      "bytes": 1839
+    },
+    "robots.txt": {
+      "sha256": "d895d56db203239f6f3ef6207177ee79e4655255dd3012fa7a259ccf15722a7c",
+      "bytes": 196
+    },
+    "data/catalog-pricebook.json": {
+      "sha256": "3a0b43fc379a4c3e9ee6bcf2ed170923205a18d1f9629317467a6a6fb85dfef6",
+      "bytes": 17364
+    }
+  }
+}

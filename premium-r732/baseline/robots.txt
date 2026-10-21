@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /server/
+Disallow: /ops/
+Disallow: /tests/
+Disallow: /.git/
+
+User-agent: GPTBot
+Disallow: /
+
+Sitemap: https://xn--80aaan1dh9b.xn--p1ai/sitemap.xml

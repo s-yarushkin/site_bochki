@@ -1,0 +1,46 @@
+name: R73.2 text-only content and release acceptance
+on:
+  push:
+    branches: [feat/r732-seo-content-no-media-20261021]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Existing application contracts
+        run: npm run check
+      - name: Text, prices, media preservation and rollback rehearsal
+        run: |
+          python tests/test_r732_content.py
+          python premium-r732/build.py --out artifacts/r732-preview
+          python -m py_compile premium-r732/build.py premium-r732/content.py premium-r732/install.py
+      - name: Install isolated browser tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/r732-browser" --no-package-lock --no-save playwright@1.55.1
+          "$RUNNER_TEMP/r732-browser/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Actual CSS, FAQ, journal and size links at four widths
+        run: |
+          python -u tests/r732_preview_server.py > artifacts/r732-preview-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID"' EXIT
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8765/ > /dev/null && break || sleep 1; done
+          R732_PLAYWRIGHT_MODULE="$RUNNER_TEMP/r732-browser/node_modules/playwright" node tests/browser_r732_content.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: r732-text-only-evidence
+          path: |
+            artifacts/r732-browser/
+            artifacts/r732-preview-server.log
+          retention-days: 14
+          if-no-files-found: warn
