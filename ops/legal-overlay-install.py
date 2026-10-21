@@ -145,7 +145,7 @@ def restart_service():
     subprocess.run(['systemctl','restart',SERVICE],check=True,timeout=25)
     subprocess.run(['systemctl','is-active','--quiet',SERVICE],check=True,timeout=10)
 
-def install(src, old_web, old_api, html, sha):
+def install(src, old_web, old_api, html, patched_api, analytics_present, sha):
     stamp='LEGAL-20261021-'+sha[:12]+'-'+str(time.time_ns())
     web_target=old_web.parent/stamp
     api_target=old_api.parent/stamp
@@ -163,7 +163,7 @@ def install(src, old_web, old_api, html, sha):
     for name in ('assets/js/lead-consent.js','server/garant-bani-relay.mjs'):
         out=api_target/name
         ensure(out.is_file() and not out.is_symlink(),'API_OVERLAY_UNSAFE_'+name)
-        out.write_bytes(source_bytes(src,name))
+        out.write_bytes(patched_api.encode('utf-8') if name=='server/garant-bani-relay.mjs' else source_bytes(src,name))
     # Pre-switch check: never publish a broken API module.
     subprocess.run(['node','--check',str(api_target/'server/garant-bani-relay.mjs')],check=True,timeout=15)
     ensure(sha256((api_target/'assets/js/lead-consent.js').read_bytes())==
@@ -183,6 +183,7 @@ def install(src, old_web, old_api, html, sha):
                'LIVE_NOTICE_MISSING')
         print('LEGAL_OVERLAY_DEPLOY=PASS; WEB='+str(web_target)+'; API='+str(api_target))
         print('SQLITE_WRITES=0; MAX_CALLS=0; EXISTING_WEB_CONTENT=PRESERVED')
+        print('METRIKA_FILE=' + ('PRESENT' if analytics_present else 'MISSING') + '; REAL_METRIKA_GOALS=NOT_VERIFIED')
     except BaseException:
         if switched_web: atomic_link(WEB,old_web,'web-rollback')
         if switched_api:
@@ -199,11 +200,12 @@ def main():
     args=p.parse_args()
     ensure(bool(re.fullmatch('[a-f0-9]{40}',args.source_sha)),'BAD_PIN')
     old_web,old_api=active(WEB),active(API)
-    html=validate(args.source,old_web,old_api)
+    html, patched_api, analytics_present=validate(args.source,old_web,old_api)
     print('LEGAL_PREFLIGHT=PASS; ACTIVE_WEB='+str(old_web)+'; ACTIVE_API='+str(old_api))
-    print('OLD_API_GIT_BLOB='+OLD_API_BLOB+'; CONSENT_DOC_HASH=PASS; R73_WEB_COPY=PRESERVED')
+    print('OLD_API_GIT_BLOB='+OLD_API_BLOB+'; API_PATCH=CONSENT_ONLY; CONSENT_DOC_HASH=PASS; R73_WEB_COPY=PRESERVED')
+    print('ANALYTICS=' + ('PRESENT' if analytics_present else 'MISSING') + '; REAL_GOAL_DELIVERY=NOT_VERIFIED')
     if args.activate:
-        install(args.source,old_web,old_api,html,args.source_sha)
+        install(args.source,old_web,old_api,html,patched_api,analytics_present,args.source_sha)
     else:
         print('READ_ONLY=YES; NOTHING_DEPLOYED')
 if __name__=='__main__':
