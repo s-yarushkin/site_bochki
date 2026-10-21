@@ -192,6 +192,11 @@ def run():
         page_rows.append(row)
         print("PAGE status=%s canonical_ok=%s h1=%s title=%s path=%s"%(row["status"],row["canonical_matches"],len(row["h1"]),bool(row["title"]),path))
     a["pages"]=page_rows
+    # Public search snippet metadata; don't display any private URLs.
+    for x in page_rows:
+        if x["path"]=="/" or x["path"].startswith("/bani/"):
+            print("SEARCH_SNIPPET path=%s title=%r description=%r h1=%r"%(x["path"],x["title"],x["description"],x["h1"]))
+    print("ROBOTS_RULES="+json.dumps(a["robots"],ensure_ascii=False))
     docs=fetch("/data/catalog-pricebook.json")
     a["pricebook"]={"status":docs.get("status"),"error":docs.get("error")}
     if docs.get("status")==200:
@@ -201,6 +206,8 @@ def run():
             a["pricebook"]["models"]=list(d.get("prices",{}))
             a["pricebook"]["base_min"]=min(int(v) for mp in d.get("prices",{}).values() for v in mp.values() if isinstance(v,(float,int)))
         except Exception as e:a["pricebook"]["parse_error"]=str(e)[:90]
+    if a["pricebook"].get("status")==200:
+        print("LIVE_PRICEBOOK version=%s base_min=%s models=%s"%(a["pricebook"].get("version"),a["pricebook"].get("base_min"),a["pricebook"].get("models")))
     resp=fetch("/")
     a["public_headers"]={k:resp.get("headers",{}).get(k) for k in ["strict-transport-security","content-security-policy","x-frame-options","x-content-type-options","referrer-policy","permissions-policy","content-encoding","content-type","server"]}
     # GET / with advertised compression; only record response headers, no side effects.
