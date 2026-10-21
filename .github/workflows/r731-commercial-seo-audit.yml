@@ -1,0 +1,23 @@
+name: DachaPar commercial SEO independent read-only audit
+on:
+  push:
+    branches: [audit/r731-seo-commercial-20261021]
+    paths:
+      - 'scripts/r731_model_pages_deep_audit.py'
+      - '.github/workflows/r731-commercial-seo-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  commercial-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install HTML parser
+        run: pip install beautifulsoup4==4.12.3
+      - name: Audit actual commercial pages on public website
+        run: python scripts/r731_model_pages_deep_audit.py
