@@ -93,9 +93,9 @@ test('S15 mobile validation feedback clears on edit; required marker remains inl
   assert.match(css,/\.contact-dialog label b\{display:inline\}/);
   assert.match(css,/\.contact-dialog \.form-error:empty\{display:none\}/);
 });
-test('S15 privacy and separate consent pages name proposed registered ООО while keeping legal gate',()=>{
+test('S15 privacy and separate consent pages name operator and have no draft banners',()=>{
   for(const doc of [privacy,consent]){
-    for(const term of ['ООО','«ВУДАРТ-ГРУПП»','3500023844','350001001','1263500003590','Ленинградская, д. 97, помещение 25']){
+    for(const term of ['Ярушкина Наталья Олеговна','352534593865','322352500011968','bdd-35@mail.ru','ООО «ВУДАРТ-ГРУПП»']){
       assert.ok(doc.includes(term),'Missing operator particular or unfinished contact: '+term);
     }
     assert.doesNotMatch(doc,/индивидуальному предпринимателю|\[ФИО ИП|ОГРНИП/);
@@ -104,10 +104,10 @@ test('S15 privacy and separate consent pages name proposed registered ООО whi
   }
   assert.match(privacy,/Права посетителя/);
   assert.match(privacy,/Сроки хранения и прекращение обработки/);
-  assert.match(privacy,/Конкретные сроки хранения данных/);
-  assert.match(privacy,/перечень получателей/i);
+  assert.match(privacy,/30 дней/);
+  assert.match(privacy,/мессенджера/);
   assert.match(consent,/Отзыв согласия/);
-  assert.match(consent,/Конкретные сроки хранения/);
+  assert.match(consent,/3 лет/);
   assert.match(html,/footer-legal/);
 });
 

@@ -87,3 +87,7 @@
 .builder-main,.builder-aside{min-width:0;max-width:100%}
 .quote-row>span:first-child,.summary-table .quote-row>b:first-child{min-width:0;overflow-wrap:anywhere}
 @media(max-width:850px){.builder-layout{grid-template-columns:minmax(0,1fr)}}
+
+/* Notice precedes the submit CTA; full consent remains a separate linked document. */
+.contact-dialog .submit-consent-notice{font-size:12px;line-height:1.55}
+.contact-dialog .submit-privacy-note{font-size:12px;line-height:1.55}
