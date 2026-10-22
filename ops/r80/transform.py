@@ -171,7 +171,13 @@ def model_page(src,model,parts=None):
   require(bool(m),'LEGACY_MODEL_INTRO_MISSING_'+model)
   src=src[:m.end()]+nav+src[m.end():]
   require('Размеры и базовые цены' in src,'LEGACY_MODEL_PRICE_MISSING_'+model)
- src=src.replace('class="content-page"','class="content-page cjm-model-page"',1)
+ if 'class="content-page"' in src:
+  src=src.replace('class="content-page"','class="content-page cjm-model-page"',1)
+ elif re.search(r'<body\s+class="',src):
+  src=src.replace('<body class="','<body class="cjm-model-page ',1)
+ else:
+  src=src.replace('<body>','<body class="cjm-model-page">',1)
+ require('cjm-model-page' in src,'MODEL_PAGE_STYLE_SCOPE_MISSING_'+model)
  src=src.replace('href="../../compare/"','href="/bani/"')
  src=src.replace('>Сравнение</a>','>Все модели</a>')
  src=once_replace(src,'</head>','<link rel="stylesheet" href="'+ASSET_URL+'"><script type="module" src="/cjm-r80-model.mjs?v=20261022-r80a"></script></head>','MODEL_HEAD_'+model)
