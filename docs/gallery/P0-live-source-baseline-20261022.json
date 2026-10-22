@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-22",
+  "source": "Owner-run PowerShell read-only live probe output, not independently downloaded by assistant",
+  "site": "https://xn--80aaan1dh9b.xn--p1ai",
+  "status": "SOURCE_HASHES_CONFIRMED_FILES_NOT_YET_IN_ASSISTANT",
+  "productionWrites": 0,
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 62635,
+      "sha256": "339391845AA453F6627331755CD52D7C83311B60155B92D7C8B7F4B42060FB77"
+    },
+    {
+      "path": "parus-media/widget.mjs",
+      "bytes": 8540,
+      "sha256": "F0F02302B01C4072194381D0755CF35DAA8BE529BA91A2EEC27DF9162E79872A"
+    },
+    {
+      "path": "parus-media/widget.css",
+      "bytes": 8178,
+      "sha256": "BA6CC1CE1D41F4A545A77A68853F39505F8A9B3E44BD5944712B0D10385E2E72"
+    },
+    {
+      "path": "parus-media/content.mjs",
+      "bytes": 6302,
+      "sha256": "C71B32B2AE4A07DB722F5D2CB97D4613AEB68A844EFD7D37E395CADCD02276F4"
+    }
+  ]
+}

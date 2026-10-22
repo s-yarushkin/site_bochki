@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "note": "Only already published model cover images. Individual real-object albums are imported separately after approval; no implied size/price/plan.",
+  "models": {
+    "kvadro": {"name":"Квадро","url":"/bani/kvadro/","groups":[{"id":"kvadro-model","label":"Фотографии модели","kind":"model-view","photos":[{"src":"/assets/kvadro-garden-r7-1536.webp","scene":"outside","caption":"Квадро · общий вид"}]}]},
+    "viking": {"name":"Викинг","url":"/bani/viking/","groups":[{"id":"viking-model","label":"Фотографии модели","kind":"model-view","photos":[{"src":"/assets/viking-p3-1536.webp","scene":"outside","caption":"Викинг · общий вид"}]}]},
+    "parus": {"name":"Парус","url":"/bani/parus/","groups":[{"id":"parus-model","label":"Фотографии модели","kind":"model-view","photos":[{"src":"/assets/parus-garden-r7-1536.webp","scene":"outside","caption":"Парус · общий вид"}]}]},
+    "kvadro-house": {"name":"Квадро Хаус","url":"/bani/kvadro-haus/","groups":[{"id":"kvadro-house-model","label":"Фотографии модели","kind":"model-view","photos":[{"src":"/assets/house-p3-1536.webp","scene":"outside","caption":"Квадро Хаус · общий вид"}]}]}
+  }
+}

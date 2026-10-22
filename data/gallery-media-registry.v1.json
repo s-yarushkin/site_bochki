@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 2,
+  "source": "Parus_photo_strategy_2026-10-22.html (user's project Library)",
+  "publicationStatus": "NOT_APPROVED_FOR_LIVE",
+  "models": {
+    "kvadro": {
+      "name": "Квадро",
+      "objects": [],
+      "plans": []
+    },
+    "viking": {
+      "name": "Викинг",
+      "objects": [],
+      "plans": []
+    },
+    "parus": {
+      "name": "Парус",
+      "objects": [
+        {
+          "id": "parus-20261022-01",
+          "modelId": "parus",
+          "label": "Дерево и белое остекление",
+          "photos": [
+            {
+              "sourceFilename": "IMG_20261022_081137.jpg",
+              "scene": "detail",
+              "caption": "Печь и дымоход",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081223.jpg",
+              "scene": "outside",
+              "caption": "Вечерний фасад",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081246.jpg",
+              "scene": "outside",
+              "caption": "Боковой ракурс",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081250.jpg",
+              "scene": "outside",
+              "caption": "Общий вид вечером",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081254.jpg",
+              "scene": "outside",
+              "caption": "Общий вид вечером, другой ракурс",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            }
+          ]
+        },
+        {
+          "id": "parus-20261022-02",
+          "modelId": "parus",
+          "label": "Дерево и тёмные рейки",
+          "photos": [
+            {
+              "sourceFilename": "IMG_20261022_081318.jpg",
+              "scene": "outside",
+              "caption": "Фасад",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081332.jpg",
+              "scene": "outside",
+              "caption": "Фасад, ближе",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081336.jpg",
+              "scene": "outside",
+              "caption": "Общий вид",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081340.jpg",
+              "scene": "outside",
+              "caption": "Общий вид, близкий ракурс",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081343.jpg",
+              "scene": "outside",
+              "caption": "Боковая стена",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081347.jpg",
+              "scene": "outside",
+              "caption": "Фасад и боковая стена",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081406.jpg",
+              "scene": "lounge",
+              "caption": "Комната отдыха",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081416.jpg",
+              "scene": "inside",
+              "caption": "Вход и дверь",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081424.jpg",
+              "scene": "steam",
+              "caption": "Парная",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081428.jpg",
+              "scene": "steam",
+              "caption": "Парная, близкий ракурс",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081431.jpg",
+              "scene": "detail",
+              "caption": "Дверь и топка",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            }
+          ]
+        },
+        {
+          "id": "parus-20261022-03",
+          "modelId": "parus",
+          "label": "Бирюзовый Парус с террасой",
+          "photos": [
+            {
+              "sourceFilename": "IMG_20261022_081643.jpg",
+              "scene": "outside",
+              "caption": "Вечерний вид сбоку",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081659.jpg",
+              "scene": "outside",
+              "caption": "Вечерний ракурс с торца",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081704.jpg",
+              "scene": "outside",
+              "caption": "Вечерний фасад с террасой",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081708.jpg",
+              "scene": "outside",
+              "caption": "Вечерний фасад с тёплым светом",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081711.jpg",
+              "scene": "outside",
+              "caption": "Дневной фасад",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081715.jpg",
+              "scene": "outside",
+              "caption": "Общий вид днём",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            }
+          ]
+        },
+        {
+          "id": "parus-20261022-04",
+          "modelId": "parus",
+          "label": "Светлая отделка, тёмные акценты",
+          "photos": [
+            {
+              "sourceFilename": "IMG_20261022_081743.jpg",
+              "scene": "outside",
+              "caption": "Общий вид",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081755.jpg",
+              "scene": "outside",
+              "caption": "Боковая стена",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081759.jpg",
+              "scene": "outside",
+              "caption": "Фасад, близкий ракурс",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081802.jpg",
+              "scene": "outside",
+              "caption": "Общий вид днём",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081807.jpg",
+              "scene": "detail",
+              "caption": "Деталь кровли",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081814.jpg",
+              "scene": "inside",
+              "caption": "Помещение с дверью и топкой",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            },
+            {
+              "sourceFilename": "IMG_20261022_081836.jpg",
+              "scene": "detail",
+              "caption": "Печь и ограждение",
+              "src": null,
+              "status": "AWAITING_APPROVED_WEB_EXPORT"
+            }
+          ]
+        }
+      ],
+      "plans": []
+    },
+    "kvadro-house": {
+      "name": "Квадро Хаус",
+      "objects": [],
+      "plans": []
+    }
+  },
+  "principle": "WORK_PHOTOS_ONLY_LINK_TO_MODEL_AND_OBJECT; MODEL_PLANS_SEPARATE; CATALOG_PRICES_SEPARATE"
+}
