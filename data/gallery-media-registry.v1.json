@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "Parus_photo_strategy_2026-10-22.html (user's project Library)",
   "publicationStatus": "NOT_APPROVED_FOR_LIVE",
   "models": {
@@ -56,10 +56,7 @@
               "src": null,
               "status": "AWAITING_APPROVED_WEB_EXPORT"
             }
-          ],
-          "plans": [],
-          "sizeId": null,
-          "priceRub": null
+          ]
         },
         {
           "id": "parus-20261022-02",
@@ -143,10 +140,7 @@
               "src": null,
               "status": "AWAITING_APPROVED_WEB_EXPORT"
             }
-          ],
-          "plans": [],
-          "sizeId": null,
-          "priceRub": null
+          ]
         },
         {
           "id": "parus-20261022-03",
@@ -195,10 +189,7 @@
               "src": null,
               "status": "AWAITING_APPROVED_WEB_EXPORT"
             }
-          ],
-          "plans": [],
-          "sizeId": null,
-          "priceRub": null
+          ]
         },
         {
           "id": "parus-20261022-04",
@@ -254,10 +245,7 @@
               "src": null,
               "status": "AWAITING_APPROVED_WEB_EXPORT"
             }
-          ],
-          "plans": [],
-          "sizeId": null,
-          "priceRub": null
+          ]
         }
       ],
       "plans": []
@@ -267,5 +255,6 @@
       "objects": [],
       "plans": []
     }
-  }
+  },
+  "principle": "WORK_PHOTOS_ONLY_LINK_TO_MODEL_AND_OBJECT; MODEL_PLANS_SEPARATE; CATALOG_PRICES_SEPARATE"
 }
