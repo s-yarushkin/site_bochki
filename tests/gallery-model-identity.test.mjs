@@ -6,18 +6,21 @@ const ids=['kvadro','viking','parus','kvadro-house'];
 test('exact model identities, never public by default',()=>{
   assert.deepEqual(Object.keys(manifest.models).sort(),ids.slice().sort());
   assert.equal(manifest.publicationStatus,'NOT_APPROVED_FOR_LIVE');
+  assert.equal(manifest.schemaVersion,2);
+  assert.match(manifest.principle,/MODEL_PLANS_SEPARATE/);
 });
 test('all 29 new Parus photos belong to exactly one real object',()=>{
  const all=new Set();
  const objects=manifest.models.parus.objects;
  assert.equal(objects.length,4);
+ assert.deepEqual(manifest.models.parus.plans,[],'plans remain at model level only');
  for(const obj of objects){
    assert.equal(obj.modelId,'parus');
    assert.match(obj.id,/^parus-20261022-0[1-4]$/);
    assert.ok(obj.photos.length);
-   assert.deepEqual(obj.plans,[],'plan cannot be inferred from photos');
-   assert.equal(obj.sizeId,null);
-   assert.equal(obj.priceRub,null);
+   assert.ok(!Object.hasOwn(obj,'plans'),'completed-work photo set must not reference plan');
+   assert.ok(!Object.hasOwn(obj,'sizeId'),'completed-work example must not show a size');
+   assert.ok(!Object.hasOwn(obj,'priceRub'),'completed-work example must not show a price');
    for(const p of obj.photos){
      assert.match(p.sourceFilename,/^IMG_20261022_\d{6}\.jpg$/);
      assert.ok(['outside','lounge','steam','inside','detail'].includes(p.scene));
