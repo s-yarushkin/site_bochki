@@ -4,7 +4,7 @@ param(
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
-$ExpectedHash='308926ef7720133b2db75a5ab43c860f56afbdd8ba18141b8cbadd423ab2769a'
+$ExpectedHash='ffc87e696e1393ec843fc70b65853d32e85ebadad4ba18be1647d2c8cd6b0cb2'
 $Server='deploy@135.106.137.195'
 $Remote='/tmp/dachapar-r80-'+[guid]::NewGuid().ToString('N')
 if (-not (Test-Path -LiteralPath $PackagePath -PathType Leaf)) { throw "R80_PACKAGE_NOT_FOUND=$PackagePath" }
