@@ -18,6 +18,8 @@
 .pp-dialog .pp-object-tabs>button img{display:block;flex:0 0 45px;width:45px!important;height:51px!important;object-fit:cover;border-radius:4px}
 .pp-dialog .pp-object-tabs>button span{min-width:0}
 .pp-dialog .pp-gallery-stage{display:grid!important;grid-template-columns:44px minmax(0,1fr) 44px!important;align-items:stretch!important;position:relative;min-width:0;min-height:min(53dvh,600px);overflow:hidden}
+/* P0 root cause: with one photo both arrow buttons become [hidden].
+   Explicit grid-column 2 prevents auto-placement into the 44px/36px arrow column. */
 .pp-dialog .pp-gallery-stage>img#pp-gallery-image{
  display:block!important;grid-column:2!important;grid-row:1!important;
  justify-self:stretch!important;align-self:stretch!important;
