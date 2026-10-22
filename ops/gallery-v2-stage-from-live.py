@@ -11,7 +11,7 @@ EXPECTED={
  'parus-media_widget.css':'BA6CC1CE1D41F4A545A77A68853F39505F8A9B3E44BD5944712B0D10385E2E72',
  'parus-media_content.mjs':'C71B32B2AE4A07DB722F5D2CB97D4613AEB68A844EFD7D37E395CADCD02276F4',
 }
-VERSION='20261022-gallery-p0-rc1'
+VERSION='20261022-gallery-p0-rc2'
 def sha256(data:bytes)->str:return hashlib.sha256(data).hexdigest().upper()
 def stage(source:pathlib.Path,patch:pathlib.Path,dest:pathlib.Path):
  if not source.is_file():raise ValueError('SOURCE_ZIP_MISSING')
