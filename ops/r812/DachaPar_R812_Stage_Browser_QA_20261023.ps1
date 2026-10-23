@@ -14,7 +14,7 @@ if([string]::IsNullOrWhiteSpace($Self)){throw 'R812_QA_SELF_PATH_MISSING'}
 $Dir=[IO.Path]::GetDirectoryName($Self)
 $BrowserFile=Join-Path $Dir 'DachaPar_R812_Browser_QA.mjs'
 $ManifestFile=Join-Path $Dir 'manifest.json'
-$ExpectedBrowserSha='a9361c2c40ceab3bae93adb0e2e5543d447b3c53f79e3ceb536ad7b29d71ad8f'
+$ExpectedBrowserSha='669b01c22e868d55c4174a30593b6c6934dfa97bdbd979db3dc438e453ecf016'
 $ExpectedManifestSha='77a56fb426dda619e09e08cb22af0a45ad8ed6f4802e89d3f0c8d4342291563a'
 foreach($p in @($BrowserFile,$ManifestFile)){ if(-not (Test-Path -LiteralPath $p -PathType Leaf)){throw ('R812_QA_MISSING_FILE='+$p)} }
 if((Get-FileHash $BrowserFile -Algorithm SHA256).Hash.ToLowerInvariant() -cne $ExpectedBrowserSha){throw 'R812_QA_BROWSER_SCRIPT_SHA_MISMATCH'}
