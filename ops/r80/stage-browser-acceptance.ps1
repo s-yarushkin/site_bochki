@@ -8,7 +8,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 $ExpectedStage='/srv/sites/dachapar-preview/releases/CJM-R80-20261022-1792731611547801280'
 $ExpectedPrevious='/srv/sites/dachapar-preview/releases/GALLERY-UNIFIED-20261022-parus-qh-v1-1792680175428407103'
-$ExpectedScriptSHA='2c7d8f8d34da66a984e53a0618c598b2b696d6ffa15453f9100da5067d48471e'
+$ExpectedScriptSHA='30d74fc807c6fd654897e3da551e0171dc848d4cd9c638ddfe439d71ef562917'
 $Server='deploy@135.106.137.195'
 $Options=@('-o','ConnectTimeout=15','-o','StrictHostKeyChecking=yes')
 if($Stage -ne $ExpectedStage){throw 'R80_WRONG_STAGE_PATH'}
