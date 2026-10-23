@@ -63,7 +63,15 @@ class CDP{
 async function poll(expression,timeout=25000){const since=Date.now();let x;while(Date.now()-since<timeout){try{x=await cdp.eval(expression);if(x)return x}catch(e){x=e.message}await sleep(200);}throw Error('R812_NOT_READY_'+expression.slice(0,75)+' / '+JSON.stringify(x))}
 async function go(url){await cdp.send('Page.navigate',{url:`http://127.0.0.1:${port}`+url});const where=new URL(url,'http://127.0.0.1').pathname;await poll(`location.pathname===${JSON.stringify(where)} && document.readyState==="complete"`);await sleep(250)}
 async function viewport(width){await cdp.send('Emulation.setDeviceMetricsOverride',{width,height:890,deviceScaleFactor:1,mobile:width<=390});}
-async function screenshot(file){const r=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false,fromSurface:true});fs.writeFileSync(file,Buffer.from(r.data,'base64'));captured.push(file)}
+async function screenshot(file){
+ let r;
+ try{
+   const layout=await cdp.send('Page.getLayoutMetrics');const size=layout.cssContentSize||layout.contentSize;
+   const width=Math.max(1,Math.ceil(size.width)),height=Math.min(13500,Math.max(890,Math.ceil(size.height)));
+   r=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,fromSurface:true,clip:{x:0,y:0,width,height,scale:1}});
+ }catch(e){r=await cdp.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:false,fromSurface:true});}
+ fs.writeFileSync(file,Buffer.from(r.data,'base64'));captured.push(file);
+}
 async function run(){
  const bin=findBrowser();if(!bin)throw Error('R812_CHROME_OR_EDGE_REQUIRED');
  httpServer=http.createServer(serve);await new Promise((ok,fail)=>{httpServer.once('error',fail);httpServer.listen(0,'127.0.0.1',ok)});port=httpServer.address().port;
