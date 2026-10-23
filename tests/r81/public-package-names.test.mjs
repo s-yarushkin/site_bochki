@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { publicPackageName } from './public-package-names.mjs';
+const catalog = {featuredBundle:{modelId:'kvadro',sizeId:'500',selectedOptionIds:['window','door','light']},options:{window:{quantity:1},door:{quantity:1},light:{quantity:2}}};
+const state = {model:'kvadro',size:'500',options:['window','door','light'],quantities:{light:2}};
+test('all standard models label Комфорт',()=>{for(const model of ['kvadro','parus','viking','kvadro-house'])assert.equal(publicPackageName(catalog,{model,size:'500',options:[]}), 'Комфорт')});
+test('exact featured package label Делюкс',()=>assert.equal(publicPackageName(catalog,state),'Делюкс'));
+test('option reorder does not affect featured identity',()=>assert.equal(publicPackageName(catalog,{...state,options:['light','door','window']}),'Делюкс'));
+test('changed quantity revokes Делюкс',()=>assert.equal(publicPackageName(catalog,{...state,quantities:{light:3}}),'Комфорт с выбранными дополнениями'));
+test('missing option revokes Делюкс',()=>assert.equal(publicPackageName(catalog,{...state,options:['window','door']}),'Комфорт с выбранными дополнениями'));
+test('extra option revokes Делюкс',()=>assert.equal(publicPackageName({...catalog,options:{...catalog.options,extra:{quantity:1}}},{...state,options:[...state.options,'extra']}),'Комфорт с выбранными дополнениями'));
+test('another length or model cannot get Делюкс',()=>{for(const obj of [{...state,size:'600'},{...state,model:'parus'}])assert.equal(publicPackageName(catalog,obj),'Комфорт с выбранными дополнениями')});
+test('invalid quantity revokes Делюкс',()=>assert.equal(publicPackageName(catalog,{...state,quantities:{light:0}}),'Комфорт с выбранными дополнениями'));
+test('input state remains unchanged',()=>{const b=JSON.stringify(state);publicPackageName(catalog,state);assert.equal(JSON.stringify(state),b)});
