@@ -90,6 +90,14 @@ async function checkWidth(c,port,w){
     await navigate(c,host+'/bani/'+slug+'/');
     await inspect(c,prefix+slug.toUpperCase()+'_EXISTING_MODEL_PRICE',x=>x.price&&x.link&&!x.hasOtherMedia,`({price:!!document.querySelector('#r732-size-prices'),link:!!document.querySelector('a[href*="model=${slug}"]'),hasOtherMedia:!!document.querySelector('#photos, #plans')})`);
   }
+  // Work-card deep links must open the specified REAL object, not just its model landing page.
+  for (const [model,work,dialog] of [['parus','slats','#pp-gallery'],['kvadro-haus','terrace-window','#qh-gallery']]) {
+    await navigate(c,host+`/bani/${model}/?work=${work}#photos`);
+    try {
+      await until(c,`document.querySelector(${JSON.stringify(dialog)})?.open===true`,12000);
+      await inspect(c,`${prefix}${model.toUpperCase()}_WORK_DEEP_LINK`,x=>x.open&&x.selected&&x.hash==='#photos',`({open:document.querySelector(${JSON.stringify(dialog)})?.open,selected:document.querySelector(${JSON.stringify(dialog+' [data-object="'+work+'"]')})?.getAttribute('aria-pressed')==='true',hash:location.hash})`);
+    } catch (e) { result(`${prefix}${model.toUpperCase()}_WORK_DEEP_LINK`,false,e.message); }
+  }
   await navigate(c,host+'/#parus-photos');
   await until(c,`location.pathname==='/bani/parus/'&&location.hash==='#photos'`,12000);
   await inspect(c,prefix+'LEGACY_PARUS_HASH',x=>x.path==='/bani/parus/'&&x.hash==='#photos',`({path:location.pathname,hash:location.hash})`);
