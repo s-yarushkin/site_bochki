@@ -1,0 +1,336 @@
+{
+  "release": "R81-CJM-STAGE-20261023",
+  "source_archive_sha256": "5a13dfb5509a4c6ad7ef8a6fd2b3c62af4766bd6c25358e5d2f1b9b5e3cfc3a3",
+  "source_release": "CJM-R80-20261022-1792731611547801280",
+  "modified_files": {
+    "app.mjs": {
+      "sha256": "023dc529e54ee17073f6a531f22a0a2e4bf6b4ecd1a5c99964157e48a3cfc47f",
+      "bytes": 38023,
+      "source_sha256": "0940a8dc9e5849d40089d865a62f71505924eace0a869ce2ae4fa6879a103b1a"
+    },
+    "bani/index.html": {
+      "sha256": "4debe2372728c7b660071e3bae4eefdfb738c48711f792302771983f3bdc003b",
+      "bytes": 10361,
+      "source_sha256": "2b12902163e0aea416e147156c18ac56605213450a3c5708fe277c1545cc45f4"
+    },
+    "bani/kvadro/index.html": {
+      "sha256": "cb7f11943069c0c4243c3548e82726ce5d67c0c074e82695135bb911820ac5d5",
+      "bytes": 19314,
+      "source_sha256": "dfea93edf9a18f5826c61a42988afe7d27e2ad0156f19f5290a8b9f07fc6d2f1"
+    },
+    "bani/kvadro-haus/index.html": {
+      "sha256": "aab7c5ead7f581c81da2d4f43188340d4aaedf12c6b6f5cb4f0de72080b5de7c",
+      "bytes": 27010,
+      "source_sha256": "95fd6c75e5d880fdb547f8cca1ae972ad3b43474e1aae3c78f67a8f0a0433a63"
+    },
+    "bani/parus/index.html": {
+      "sha256": "d54e2d6458e58e6f37613754c3083564d97ae05d7db8c2122c089b865f4e0343",
+      "bytes": 23213,
+      "source_sha256": "996e0211e2b5c239121f8faddf931c30045eb66a92f64a595578c415c51da4cf"
+    },
+    "bani/viking/index.html": {
+      "sha256": "0a9593b4b591c2fd81582f0ef05a20ab01a2d88ccf2f2bc85d93e15574682083",
+      "bytes": 20368,
+      "source_sha256": "b614b7f61aacc308357ad6b6c7db274c51c4e3b3f6f582b91f468507013d099e"
+    },
+    "cjm-r81-pages.mjs": {
+      "sha256": "f622a9f2c33c3322677e1acea522c32b9dd5f14b2e4fce7f576c73311f244de7",
+      "bytes": 1307,
+      "source_sha256": null
+    },
+    "cjm-r81.css": {
+      "sha256": "323ba9bd04186521adb5a7ea0c9e87df78041f98f6f4aa6c0d2526803d40dee2",
+      "bytes": 3870,
+      "source_sha256": null
+    },
+    "compare/index.html": {
+      "sha256": "0823cd7378a8b7b6f4c941ec4591d7cbba3c9394b8f9fd6b9244a763764a089a",
+      "bytes": 12817,
+      "source_sha256": "dcbcb7a1265c53bdbfa7dd6ce1d1ff13273394db3f986b343685896f38dadfab"
+    },
+    "dostavka-i-ustanovka/index.html": {
+      "sha256": "eb7831bce2a10aa14772ef0598d0a5387e3484b9bf3fbe3338e069974e055db7",
+      "bytes": 13738,
+      "source_sha256": "0bfa8fe6eb67f189f6c21da3c4b345d714db2b74a116e1f4fc114576e089c37e"
+    },
+    "index.html": {
+      "sha256": "2d1495b0dfaccff0f72dc46e7cb35e89f0eaa350bb7147b72a43d42246f52a4f",
+      "bytes": 42403,
+      "source_sha256": "3a01309f9bca251ce3d7e69a87a78808c2200dce190d61c2b3de353491006108"
+    },
+    "journal/banya-4-5-6-metrov/index.html": {
+      "sha256": "6b1685f96df4005b239c9b75fb1fbf010e40095abf6d98e375f4c0dd672e3f99",
+      "bytes": 13836,
+      "source_sha256": "52ed28786fc620877585aa9937029466e339b98c8e0e260389da0be8ba0199f1"
+    },
+    "journal/chto-takoe-lunnyy-paz/index.html": {
+      "sha256": "09d0e38fb189145abe29324f5aa4f904023546a27090faaad74dcfb470b61fb6",
+      "bytes": 16661,
+      "source_sha256": "b0bca001ab8f08585605c6361f936d99d89d13fdeddd699d2ed34b0f785b67ea"
+    },
+    "journal/dostavka-i-osnovanie/index.html": {
+      "sha256": "f42e4a4e64dc75aad933d522de7a3316c454dde2deebb7b2b686dab17922e312",
+      "bytes": 12650,
+      "source_sha256": "395a46d9c557b88e31cd0d8fdfd8d8c8bfe8553e3503b7246cb08b9fb436688d"
+    },
+    "journal/drova-ili-brikety-dlya-bani/index.html": {
+      "sha256": "7766fbd5c005de38d78b8b60a47c5a4d5743f6464ff0cc89445c07923cfc2db1",
+      "bytes": 16884,
+      "source_sha256": "e9fbfe303286a6bcc6ef7e1fa8c8c92e3f9cedbecc369b522d0251d87e537c1e"
+    },
+    "journal/el-ili-sosna-dlya-bani/index.html": {
+      "sha256": "c7d47027983af9b203531458297691198c2a493350d58c79309bc3cbce35b960",
+      "bytes": 17872,
+      "source_sha256": "ca4eecf3dad6ec1d390a1891714ec275f0ba091cca9e0b7ab82a7b073fb0e246"
+    },
+    "journal/index.html": {
+      "sha256": "061d36f51c139da4765268e1ef38d60a630f95a854908b307fc05276b0e9186f",
+      "bytes": 17032,
+      "source_sha256": "c9cd84eacde97081aac34f761a5d44b2fa06160e8ae073dfc19169b054444548"
+    },
+    "journal/iz-chego-skladyvaetsya-tsena/index.html": {
+      "sha256": "7f98166a75df7a3056437ecfb75798da59a09cdf922dc7939a74e2de7cf92a82",
+      "bytes": 13904,
+      "source_sha256": "59364d21f8107b46932859f0f72f95ae4ccb18844e173b647d1057ffc7e51712"
+    },
+    "journal/kak-chitat-komplektatsiyu-bani/index.html": {
+      "sha256": "92da65501819ef407cf239db5f0382a7eb852b9d14d31c63486838f55782c16d",
+      "bytes": 13819,
+      "source_sha256": "748ef4b0d1adb20ff814c2b0ce2e3649440b21b4768ce0478adae78ed805c12e"
+    },
+    "journal/kak-par-vliyaet-na-derevo/index.html": {
+      "sha256": "fe4fcccfb47499fa673ce2c05433734ead3c6d1baab3b1b14a390a36239547ba",
+      "bytes": 16076,
+      "source_sha256": "215a559a667afb76f83b2c9b2fb6034ee871ae471cf0d23c084a234d8be48c3f"
+    },
+    "journal/kak-prinyat-gotovuyu-banyu/index.html": {
+      "sha256": "52661a7abd5e9b8dcb22b77e1574f6442aa566c818a9f2b7d3f47a6b0f02f34a",
+      "bytes": 14012,
+      "source_sha256": "91c5f18453bbea0a4728141a2bf117c73de45d737208e7b0df6b5be133765369"
+    },
+    "journal/kak-vybrat-gotovuyu-banyu/index.html": {
+      "sha256": "c313999b8cda01dbbb53412119549f672e9b98673a41e49b5f8fbb783259bc3a",
+      "bytes": 13605,
+      "source_sha256": "a87bf703cc251067731612293bc5b216f3916a0224d180a22f9ab87ec0a768e6"
+    },
+    "journal/kvadro-5-komfort/index.html": {
+      "sha256": "54f8fbf4fee24cb91c999a4bf631ee77710f0d584dd2d13456dc88da90964b2f",
+      "bytes": 14655,
+      "source_sha256": "957ead2d983f69384dc9e5092841175a515a0705d1a063452f2ce882fe81e948"
+    },
+    "journal/uteplenie-pola-v-bane/index.html": {
+      "sha256": "8983408e9168761fcaef77b8dde32961c9825601911be4cebdb70d9559ffe2dc",
+      "bytes": 16043,
+      "source_sha256": "c9271bb6d16982bf99e834c42872a4b357ef6b51f39e3fb0822b4e76242e32f8"
+    },
+    "journal/ventilyatsiya-i-fortochka/index.html": {
+      "sha256": "76039e03386fad1f9363408aac8cb1fd49274a53d023c7f2ec7759262c27cac0",
+      "bytes": 11752,
+      "source_sha256": "01cc3e83e46e9c1a419845a90e4d64e6dcf385ab48df362dfd53d7732a7dcec7"
+    },
+    "kontakty/index.html": {
+      "sha256": "fcbf185988400322de8a0c7622d7bd2ccabb33afcafad1738e08da1ee9f58135",
+      "bytes": 9916,
+      "source_sha256": "5109a83a64a2250a2002b3253530db0f43d456908e992b7cb9aae52e370c6de2"
+    },
+    "kvadro-media/assets/photos/kq-05-1600.webp": {
+      "sha256": "95c58472084746a4c4bbcf75d9e856d28949ca1ad2cf3796d8eedd3fe0198b47",
+      "bytes": 425536,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-05-480.webp": {
+      "sha256": "cced7162987ad93424329728dba86b13a3766b7104d4929d894e1d6abf05ffc1",
+      "bytes": 84928,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-05-960.webp": {
+      "sha256": "97d9ea652f36ccbf3da4620b1674e7436bd21711ae0016626d293ac70c0657dc",
+      "bytes": 302218,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-06-1600.webp": {
+      "sha256": "bf2dcbe3cf1f77f1bf8fe070bd7383bd273810d47811aee6b22ab3b0f402add9",
+      "bytes": 304336,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-06-480.webp": {
+      "sha256": "68925299f5b1af9f00feb0305763eae738668bbae94400b64bd097a644e86b5c",
+      "bytes": 40946,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-06-960.webp": {
+      "sha256": "1d91843b8a8f217550277564b57e58ad24e71828e0f27172fdddb68ca427eeb7",
+      "bytes": 140834,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-08-1600.webp": {
+      "sha256": "1e44dc077ff9b0db8781b3eea26dd55ae57e784b4aacb23ac95a4459c7ec259c",
+      "bytes": 346138,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-08-480.webp": {
+      "sha256": "1d0a8a8e37eca1ac411eb73c30cb5d7d6d00df6c1695740ea6026eaab94db88d",
+      "bytes": 75224,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-08-960.webp": {
+      "sha256": "19d0b30a71e3a8d858368bfec85d739bc1e6fc9f2e17942c7ccb91b5dc900373",
+      "bytes": 247458,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-09-1600.webp": {
+      "sha256": "dfedc61c46e1d1c4539b5685c9a429986a3ab417a61a181d409a3e7689521de6",
+      "bytes": 187174,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-09-480.webp": {
+      "sha256": "9eee0927570a313e48905803460baa2f3b6d059da5f1023a17a3db4f724a972a",
+      "bytes": 43432,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-09-960.webp": {
+      "sha256": "67a8f79a1d128f0abe1343b5a005617ca1e66fcff5d60fd663904d3cd001d8b5",
+      "bytes": 129782,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-10-1600.webp": {
+      "sha256": "87bfa000411bfdab7b91ae712b3d6ef8fb724a06e6fcef9ab143e6b31bb9a17b",
+      "bytes": 241390,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-10-480.webp": {
+      "sha256": "63bfe3f2e540f1b8214f0b00616976a4416c7d6306efade73b8baef3778cf3df",
+      "bytes": 51506,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-10-960.webp": {
+      "sha256": "d3cfb554d8f51cc1be67b6c5217d8545f02d06f5eb249ab0ded4dccaa4c5b470",
+      "bytes": 170376,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-11-1600.webp": {
+      "sha256": "1103ab8bd06e7182b4353e1612e61d554c6395da478def5828172c26100a1c47",
+      "bytes": 212090,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-11-480.webp": {
+      "sha256": "d95111544138c6bf115e2353fadf81de06f5d6f7a4521349a9effdcc45af6264",
+      "bytes": 48616,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-11-960.webp": {
+      "sha256": "140369e57e2f2609b1c246464241caf1d4dd9186731a7781420701a78f2825f9",
+      "bytes": 148090,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-12-1600.webp": {
+      "sha256": "3518a1c0c44df59b4e0a3e81ce3469757a929fc39d653273dfe524274493757c",
+      "bytes": 194514,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-12-480.webp": {
+      "sha256": "557fcdf6b16f63eb994b61aea502f30fbd18f8413933b659f0c1c69c1f35364d",
+      "bytes": 45686,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-12-960.webp": {
+      "sha256": "fd672863ecaff89235ea7febc49e95cfa7e89bdc21e7a447a17a0ad6bd85b7dd",
+      "bytes": 135408,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-13-1600.webp": {
+      "sha256": "c34f103fe1d46d9c49ebf72a878a7353009bcd6f43995418d5292f0036848376",
+      "bytes": 222636,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-13-480.webp": {
+      "sha256": "0f35fcc3104d1a3424bd258bd658feaa7d18305145aac9776412d136bd15ed74",
+      "bytes": 46094,
+      "source_sha256": null
+    },
+    "kvadro-media/assets/photos/kq-13-960.webp": {
+      "sha256": "8d0958b1eba7df34685ac811ffe889df5d6b9e2c8e1767d95dbb9da60a5ba1dd",
+      "bytes": 148836,
+      "source_sha256": null
+    },
+    "kvadro-media/content.mjs": {
+      "sha256": "7ac99d8a1b395f4480ff97d38e54fce174a69beaf0f2d3d55d2e31c166823893",
+      "bytes": 5142,
+      "source_sha256": null
+    },
+    "kvadro-media/widget.css": {
+      "sha256": "7000666752821bf93a6306d067b70f56a22cb1bb3689537eeb72a2675961ebe8",
+      "bytes": 9607,
+      "source_sha256": null
+    },
+    "kvadro-media/widget.mjs": {
+      "sha256": "4b073f709a67504085978060a8cb99ed284be1e6b77ca9d2f4ce0eadc4df5963",
+      "bytes": 8678,
+      "source_sha256": null
+    },
+    "quote.mjs": {
+      "sha256": "3531fdb8da1ba7bed2f8c9be474f43cac5b9631d572ac8c63e3d51027437a29c",
+      "bytes": 5925,
+      "source_sha256": "70b2d0e7327bd2da9959eab6590e3fa4cac5a680fdb09811dbd8c873aec6a5c8"
+    },
+    "r81-package-names.mjs": {
+      "sha256": "13d96400c14a7fd374ab4799982c361d4149c31d7436ec4cd22bbaa4b054a7f6",
+      "bytes": 738,
+      "source_sha256": null
+    },
+    "raboty/index.html": {
+      "sha256": "eab422c724cb055729998554b1e95ed8ef5ee46adc09bf8a94d45bcff1720cca",
+      "bytes": 7604,
+      "source_sha256": "cec8a0cc63dd0cadf67cfc8da54496e89da8fea1825f66a4fe8877d3676d9135"
+    },
+    "viking-media/assets/plans/viking-5-shower-left.svg": {
+      "sha256": "1635e91f4d65553e0dc0362cb4c5b27f75f4bbf776f794d8d62b39ec4b249173",
+      "bytes": 12133,
+      "source_sha256": null
+    },
+    "viking-media/assets/plans/viking-5-shower-right.svg": {
+      "sha256": "8b43d41a44cd05b01f107698a4fe23ac4403dc8fb7341ed0dd7b651b7601f419",
+      "bytes": 12139,
+      "source_sha256": null
+    },
+    "viking-media/assets/plans/viking-6-rest.svg": {
+      "sha256": "01cf22b10909849d46e4e3bc5f5babf3283d1048239eb6321380b293f5432e39",
+      "bytes": 10013,
+      "source_sha256": null
+    },
+    "viking-media/assets/plans/viking-6-shower.svg": {
+      "sha256": "d59b4309c17f45459c84c123acb74713a18a51b433bdc0368a4b76baf4648b49",
+      "bytes": 12104,
+      "source_sha256": null
+    },
+    "viking-media/assets/plans/viking-6-wide-left.svg": {
+      "sha256": "4f73e7069f573bab3764d9f6f86449e46be27f22a84824fc785c43d43740fc3c",
+      "bytes": 13292,
+      "source_sha256": null
+    },
+    "viking-media/assets/plans/viking-6-wide-right.svg": {
+      "sha256": "31a12e9a8ca6efe504ff7b5d2e1929f4927bff67ed3aad3eb3e29224b6b2295a",
+      "bytes": 13542,
+      "source_sha256": null
+    },
+    "viking-media/layouts.json": {
+      "sha256": "7ce4cafa6e46153d26dd78aac5bb9cbaccbed09586dcc583d56697c7eec78085",
+      "bytes": 4964,
+      "source_sha256": null
+    },
+    "voprosy/index.html": {
+      "sha256": "2684b0ec63f1ff0406f136f9881e307dc71de2ca854170e2d84e8e8c2b728fd5",
+      "bytes": 15886,
+      "source_sha256": "cd5b99c2fa4b7f0eca52a988c2a199c658058af45a6f3dcd983e46f915679ce4"
+    }
+  },
+  "protected_files": [
+    "data/catalog-pricebook.json",
+    "data/pricebook.js",
+    "lead-client.mjs",
+    "analytics-runtime.mjs",
+    "privacy.html",
+    "consent.html",
+    "requisites.html"
+  ]
+}
