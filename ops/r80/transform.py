@@ -139,20 +139,49 @@ def model_page(src,model,parts=None):
  media =model in ('parus','kvadro-haus')
  # Existing QH content is included in its original production model page; do not re-add.
  if model=='parus':
-  require('id="parus-photos"' not in src and 'id="parus-layouts"' not in src,'PARUS_ALREADY_HAS_MEDIA')
-  require(parts is not None and 'parus-photos' in parts,'PARUS_PARTS_MISSING')
-  p=parts['parus-photos'].replace('id="parus-photos"','id="photos"',1)
-  q=parts['parus-layouts'].replace('id="parus-layouts"','id="plans"',1)
-  added='<span class="cjm-legacy-anchor" id="parus-photos"></span>'+p+'<span class="cjm-legacy-anchor" id="parus-layouts"></span>'+q
-  # add galleries after the existing size-price table; retain all original existing headings/SEO.
-  if 'id="r732-size-prices"' in src:
-   src=insert_after_grid(src,added)
+  # Release PARUS-MEDIA already placed both sections on its own model page.
+  # Older releases have neither; import them from the homepage in that case.
+  # A partial/ambiguous page must abort rather than duplicating or losing data.
+  def section_for(sec_id):
+   return re.search(r'<section\b[^>]*\bid="'+re.escape(sec_id)+r'"[^>]*>',src)
+  has_photos=bool(section_for('parus-photos'))
+  has_plans=bool(section_for('parus-layouts'))
+  require(has_photos==has_plans,'PARUS_PARTIAL_MEDIA_ABORT')
+  if has_photos:
+   require(src.count('id="parus-photos"')==1 and src.count('id="parus-layouts"')==1,'PARUS_MEDIA_DUPLICATE_ID')
+   require('id="photos"' not in src and 'id="plans"' not in src,'PARUS_TARGET_ID_ALREADY_EXISTS')
+   # Preserve the actual production model page's photo and layout elements.
+   src=src.replace('id="parus-photos"','id="photos"',1).replace('id="parus-layouts"','id="plans"',1)
   else:
-   # Legacy model pages: price table is under the first 'Размеры и базовые цены' h2.
-   m=re.search(r'<h2>Размеры и базовые цены</h2>[\s\S]*?</div>',src)
-   require(bool(m),'PARUS_PRICE_TABLE_MISSING')
-   src=src[:m.end()]+'\n'+added+'\n'+src[m.end():]
-  src=inject_head(src,'<link rel="stylesheet" href="/parus-media/widget.css?v=20261022-gallery-p0-rc2"><script type="module" src="/parus-media/widget.mjs?v=20261022-gallery-p0-rc2"></script>')
+   require('id="parus-photos"' not in src and 'id="parus-layouts"' not in src,'PARUS_MEDIA_LEGACY_ID_CONFLICT')
+   require(parts is not None and 'parus-photos' in parts and 'parus-layouts' in parts,'PARUS_PARTS_MISSING')
+   p=parts['parus-photos'].replace('id="parus-photos"','id="photos"',1)
+   q=parts['parus-layouts'].replace('id="parus-layouts"','id="plans"',1)
+   added=p+q
+   # Insert after the actual price section and before generic content.
+   if 'id="r732-size-prices"' in src:
+    src=insert_after_grid(src,added)
+   else:
+    m=re.search(r'<h2>Размеры и базовые цены</h2>[\s\S]*?</div>',src)
+    require(bool(m),'PARUS_PRICE_TABLE_MISSING')
+    src=src[:m.end()]+'\n'+added+'\n'+src[m.end():]
+  # In both paths, keep old public hashes working and ensure module is loaded once.
+  photo_anchor='<span class="cjm-legacy-anchor" id="parus-photos"></span>'
+  plan_anchor='<span class="cjm-legacy-anchor" id="parus-layouts"></span>'
+  require(src.count('id="photos"')==1 and src.count('id="plans"')==1,'PARUS_MEDIA_NOT_UNIQUE')
+  require('class="pp-section pp-examples"' in src and 'class="pp-section pp-layouts"' in src,'PARUS_EXPECTED_MEDIA_SECTIONS_MISSING')
+  require(len(re.findall(r'data-pp-layout="',src))==5,'PARUS_PLAN_BUTTON_COUNT_MISMATCH')
+  require(len(re.findall(r'class="pp-card"',src))==3,'PARUS_PHOTO_CARDS_MISMATCH')
+  src=src.replace('<section class="pp-section pp-examples" id="photos"',photo_anchor+'<section class="pp-section pp-examples" id="photos"',1)
+  src=src.replace('<section class="pp-section pp-layouts" id="plans"',plan_anchor+'<section class="pp-section pp-layouts" id="plans"',1)
+  require(src.count('id="parus-photos"')==1 and src.count('id="parus-layouts"')==1,'PARUS_LEGACY_ANCHOR_FAIL')
+  have_css=bool(re.search(r'<link[^>]+/parus-media/widget\.css',src))
+  have_js=bool(re.search(r'<script[^>]+/parus-media/widget\.mjs',src))
+  require(have_css==have_js,'PARUS_PARTIAL_WIDGET_IMPORT')
+  if have_js:
+   require(len(re.findall(r'/parus-media/widget\.css',src))==1 and len(re.findall(r'/parus-media/widget\.mjs',src))==1,'PARUS_DUPLICATE_WIDGET_IMPORT')
+  else:
+   src=inject_head(src,'<link rel="stylesheet" href="/parus-media/widget.css?v=20261022-gallery-p0-rc2"><script type="module" src="/parus-media/widget.mjs?v=20261022-gallery-p0-rc2"></script>')
  if model=='kvadro-haus':
   require(src.count('id="qh-photos"')==1 and src.count('id="qh-layouts"')==1,'QH_MEDIA_MISSING_OR_DUPLICATE')
   src=src.replace('id="qh-photos"','id="photos"',1).replace('id="qh-layouts"','id="plans"',1)
