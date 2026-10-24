@@ -89,18 +89,18 @@ async function run(){
  });
  await cdp.send('Page.enable');await cdp.send('Runtime.enable');await cdp.send('Fetch.enable',{patterns:[{urlPattern:'*',requestStage:'Request'}]});
  const faq=html['voprosy/index.html'];
- check('QA01_FAQ_INCLUDED',faq.includes('id="comfort-included-faq"')&&faq.includes('60 × 60 см')&&faq.includes('60 × 80 см'));
+ check('QA01_FAQ_INCLUDED',faq.includes('id="comfort-included-faq"')&&faq.includes('Два комплекта розеток')&&faq.includes('Получить консультацию и планировку бесплатно'));
  check('QA02_P0_PRICES',faq.includes('505')&&faq.includes('618')&&faq.includes('113'));
  check('QA03_NO_GENERIC_WINDOW_CLAIM',modelPaths.every(x=>!html[x.slice(1)+'index.html'].includes('Окна и двери выбранного варианта')));
- check('QA04_DETAILS_IN_ARTICLE',html['journal/kak-chitat-komplektatsiyu-bani/index.html'].includes('70 × 170 см')&&html['journal/kak-chitat-komplektatsiyu-bani/index.html'].includes('60 × 80 см'));
+ check('QA04_DETAILS_IN_ARTICLE',html['journal/kak-chitat-komplektatsiyu-bani/index.html'].includes('ПВХ 700 × 1800 мм')&&html['journal/kak-chitat-komplektatsiyu-bani/index.html'].includes('LED-подсветку'));
  check('QA05_NO_80_PERCENT',files.every(x=>!html[x].includes('80% клиентов')));
- const openings={'kvadro':'60 × 60 см','parus':'60 × 80 см',viking:'ПВХ 80 × 180 см','kvadro-haus':'разные варианты'};
+ const openings={'kvadro':'ПВХ 600 × 800 мм','parus':'ПВХ 600 × 800 мм',viking:'ПВХ 600 × 800 мм','kvadro-haus':'ПВХ 600 × 800 мм'};
  for(const width of [390,768,1366,1920]){
    await viewport(width);
    for(const model of ['kvadro','parus','viking','kvadro-haus']){
      await go('/bani/'+model+'/');
-     const x=await cdp.eval(`(()=>{const c=document.querySelector('#comfort-included');const r=c?.getBoundingClientRect();return {path:location.pathname,sw:document.documentElement.scrollWidth,w:innerWidth,heading:c?.querySelector('h2')?.textContent?.trim(),items:c?.querySelectorAll('li').length,txt:c?.innerText||'',link:!!document.querySelector('a[href="#comfort-included"]'),h1:document.querySelectorAll('h1').length,body:document.body.textContent||'',blockHeight:r?.height}})()`);
-     const ok=x.path==='/bani/'+model+'/' && x.sw<=x.w+4 && x.h1===1 && x.items===7 && x.link&&x.heading==='Что входит в Комфорт' && x.txt.includes(openings[model]) && x.blockHeight>120;
+     const x=await cdp.eval(`(()=>{const c=document.querySelector('#comfort-included');const r=c?.getBoundingClientRect();return {path:location.pathname,sw:document.documentElement.scrollWidth,w:innerWidth,heading:c?.querySelector('h2')?.textContent?.trim(),items:c?.querySelectorAll('.r83-comfort-list li').length,upgradeItems:c?.querySelectorAll('.r83-upgrade-list li').length,txt:c?.textContent||'',primary:c?.querySelector('a.r83-comfort-primary[href="/#configure"]')?.textContent?.trim(),secondary:c?.querySelector('a.r83-comfort-secondary[href="/#relay-lead-form"]')?.textContent?.trim(),details:!!c?.querySelector('details.r83-comfort-details'),link:!!document.querySelector('a[href="#comfort-included"]'),h1:document.querySelectorAll('h1').length,body:document.body.textContent||'',blockHeight:r?.height}})()`);
+     const ok=x.path==='/bani/'+model+'/' && x.sw<=x.w+4 && x.h1===1 && x.items===7 && x.upgradeItems===5 && x.link&&x.heading==='В «Комфорт» уже включено всё необходимое для парения' && x.txt.includes(openings[model])&&x.primary==='Рассчитать баню с улучшениями'&&x.secondary==='Получить консультацию и планировку бесплатно'&&x.details && x.blockHeight>120;
      check('QA06_MODEL_'+model+'_'+width,ok,{scroll:x.sw,width:x.w,items:x.items,opening:openings[model]});
      if((width===390||width===1366)&&model==='kvadro'){
        await cdp.eval(`document.querySelector('#comfort-included').scrollIntoView({block:'start'});true`);
@@ -112,7 +112,7 @@ async function run(){
  for(const width of [390,1366]){
    await viewport(width);await go('/voprosy/');
    const x=await cdp.eval(`(()=>{const d=document.querySelector('#comfort-included-faq');return {width:innerWidth,scroll:document.documentElement.scrollWidth,exist:!!d,text:d?.textContent||'',open:d?.open}})()`);
-   check('QA07_FAQ_'+width,x.exist&&x.scroll<=x.width+4&&x.text.includes('60 × 60 см')&&x.text.includes('60 × 80 см'),{width:x.width,scroll:x.scroll,exist:x.exist});
+   check('QA07_FAQ_'+width,x.exist&&x.scroll<=x.width+4&&x.text.includes('Два комплекта розеток')&&x.text.includes('Получить консультацию и планировку бесплатно'),{width:x.width,scroll:x.scroll,exist:x.exist});
    await cdp.eval(`document.querySelector('#comfort-included-faq').open=true;true`);
    const z=await cdp.eval(`({open:document.querySelector('#comfort-included-faq').open,height:document.querySelector('#comfort-included-faq').getBoundingClientRect().height})`);
    check('QA08_FAQ_EXPANDS_'+width,z.open&&z.height>120,z);
