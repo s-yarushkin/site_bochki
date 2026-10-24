@@ -22,12 +22,17 @@ def test():
    s=BeautifulSoup((dest/f'bani/{model}/index.html').read_text(),'html.parser')
    block=s.select_one('#comfort-included');assert block,model
    assert len(block.select('li'))==7
+   assert 'Окна и двери выбранного варианта' not in block.get_text(' ',strip=True)
+   assert 'Входная дверь и окно в комнате отдыха' in block.get_text(' ',strip=True)
+   assert 'r83-comfort-openings' in str(block)
    assert len(s.select('a[href="#comfort-included"]'))>=1
    assert s.select_one('h1') and len(s.select('h1'))==1
    assert len({t['id'] for t in s.select('[id]')})==len(s.select('[id]'))
   faq=BeautifulSoup((dest/'voprosy/index.html').read_text(),'html.parser').get_text(' ',strip=True).replace('\u00a0',' ')
   for t in ('Что входит в комплектацию Комфорт','505 000 ₽','618 022 ₽','113 022 ₽','Делюкс отличается от Комфорта'):assert t in faq,t
   assert 'Для Квадро 5 м база стоит' not in faq
+  assert 'Квадро 4 м' in faq and '60 × 60 см' in faq and 'Паруса 4 м' in faq and '60 × 80 см' in faq
+  assert 'Окна и двери выбранного варианта' not in faq
   home=BeautifulSoup((dest/'index.html').read_text(),'html.parser');catalog=BeautifulSoup((dest/'bani/index.html').read_text(),'html.parser')
   assert len(home.select('.r83-model-preview'))==4
   assert len(catalog.select('.r83-catalog-kit'))==4
