@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourceUrl": "https://docs.google.com/presentation/d/1SCetq_5FtJrlr1ckeUpS3U9iUVBexamV3KDuTyuDKhA/edit",
-  "slideRevision": "RLsTz9zpYEXjJg",
+  "slideRevision": "8CN826dAxjVXcQ",
   "asOfDate": "2026-10-25",
   "totalSlides": 46,
   "uniquePlans": 23,
@@ -335,11 +335,11 @@
       "selectionLabel": "Парная и чайная зона",
       "title": "Собственная баня для спокойного вечера",
       "eyebrow": "Два помещения",
-      "description": "Небольшая баня с Г-образным полком и отдельной чайной группой. После парения можно сесть за стол напротив окна, попить чаю и отдохнуть.",
+      "description": "Небольшая баня с Г-образным полком и отдельной чайной группой. После парения можно сесть за стол напротив окна и спокойно отдохнуть.",
       "benefits": [
         "Г-образный верхний полок с длинной стороной 220 см.",
         "Стол 110 см, две лавки и окно напротив стола.",
-        "Чайная группа у окна и хранение под лавкой."
+        "Хранение банных принадлежностей под лавкой-рундуком."
       ],
       "bestFor": "Для пары и коротких семейных банных вечеров, когда отдельный душ внутри не нужен.",
       "boundaries": "Отдельного душа, кухни и спальни нет. Не обещать встроенное хранение одежды или точную вместимость компании.",
@@ -350,7 +350,9 @@
       "mirrorImage": "assets/plans/r84/parus_4000_2400_dry_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_4500_2400_dry",
@@ -359,11 +361,11 @@
       "selectionLabel": "С просторной чайной зоной",
       "title": "Для пара и неспешного чая",
       "eyebrow": "Два помещения",
-      "description": "После парения можно посидеть за столом у окна: места для чая и разговоров больше, чем в компактной версии. Банные принадлежности можно убрать под лавку-рундук.",
+      "description": "После парной можно перейти к столу у окна: здесь достаточно места, чтобы спокойно попить чаю и пообщаться. Банные вещи удобно хранить под лавкой-рундуком.",
       "benefits": [
         "Стол и лавки длиной 140 см.",
         "Окно расположено напротив стола.",
-        "Увеличенная чайная группа и лавка-рундук."
+        "Лавка-рундук помогает не загромождать комнату отдыха."
       ],
       "bestFor": "Для семейного отдыха, когда чайная зона важнее отдельной душевой.",
       "boundaries": "Только два помещения. Нет отдельной душевой, кухни, спальни и встроенного гардероба.",
@@ -374,7 +376,9 @@
       "mirrorImage": "assets/plans/r84/parus_4500_2400_dry_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_5000_2400_dry",
@@ -383,11 +387,11 @@
       "selectionLabel": "С длинным столом",
       "title": "Для семейного чаепития после парной",
       "eyebrow": "Два помещения",
-      "description": "После парения можно собраться за столом длиной 180 см напротив окна. Под одной из лавок предусмотрено хранение банных принадлежностей.",
+      "description": "После парения можно собраться за столом длиной 180 см. Окно находится напротив чайной группы, а под одной из лавок предусмотрено место для хранения.",
       "benefits": [
         "Стол и две лавки длиной 180 см.",
         "Г-образный верхний полок в парной длиной 2 м.",
-        "Окно напротив стола и лавка-рундук для принадлежностей."
+        "Окно напротив стола и хранение под лавкой-рундуком."
       ],
       "bestFor": "Для тех, кто любит чередовать парение и разговоры за чаем.",
       "boundaries": "Отдельного душа, кухни, спальни и встроенного гардероба нет. Не обещать точное число мест без проверки посадки.",
@@ -398,7 +402,9 @@
       "mirrorImage": "assets/plans/r84/parus_5000_2400_dry_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_5000_2400_wash",
@@ -407,11 +413,11 @@
       "selectionLabel": "Душ и небольшой стол",
       "title": "После душа — за чашку чая",
       "eyebrow": "Три помещения",
-      "description": "После парной можно принять душ в отдельной моечной и вернуться к небольшому столу на чай. Полотенца и принадлежности можно убрать под лавку.",
+      "description": "После парной можно принять душ в отдельной моечной, переодеться и вернуться к небольшому столу. Полотенца и банные принадлежности можно убрать под лавку-рундук.",
       "benefits": [
         "Отдельная моечная с поддоном 90 × 90 см.",
         "Небольшой стол 100 см и окно напротив него.",
-        "Отдельная моечная и лавка-рундук."
+        "Лавка-рундук для полотенец и банных принадлежностей."
       ],
       "bestFor": "Для пары, которой нужны и отдельный душ, и небольшая чайная зона.",
       "boundaries": "Топка из моечной. Стол и лавки по метру; не обещать большую компанию. Кухни и спальни нет.",
@@ -422,7 +428,9 @@
       "mirrorImage": "assets/plans/r84/parus_5000_2400_wash_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_5500_2400_dry",
@@ -431,11 +439,11 @@
       "selectionLabel": "Больше пара и общения",
       "title": "Увеличенная парная и двухметровый стол",
       "eyebrow": "Два помещения",
-      "description": "После парения в увеличенной парной можно задержаться за двухметровым столом у окна, а банные принадлежности убрать под лавку-рундук.",
+      "description": "После парения в увеличенной парной можно задержаться за двухметровым столом у окна. Банные вещи можно убрать в лавку-рундук, чтобы не занимать стол и место для отдыха.",
       "benefits": [
         "Парная 230 × 220 см с Г-образным верхним полком.",
         "Стол и две лавки длиной 200 см.",
-        "Двухметровый стол у окна и хранение под лавкой."
+        "Место для хранения банных вещей под лавкой-рундуком."
       ],
       "bestFor": "Тем, кому нужны более просторная парная и длинный общий стол вместо отдельного душа.",
       "boundaries": "Нет отдельной душевой, кухни, спальни и гардероба. Рундук предназначен для принадлежностей, а не ночёвки.",
@@ -446,7 +454,9 @@
       "mirrorImage": "assets/plans/r84/parus_5500_2400_dry_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_5500_2400_wash",
@@ -455,11 +465,11 @@
       "selectionLabel": "С моечной со скосом",
       "title": "Отдельный душ и чайная зона у окна",
       "eyebrow": "Моечная со скошенным углом",
-      "description": "После парения можно принять душ в отдельной моечной и устроиться за столом у окна. Скошенный угол помогает организовать проход к душевой.",
+      "description": "После парения можно пройти в отдельную моечную и затем устроиться за столом у окна. Скошенный угол помогает удобно разместить душевую и сохранить отдельную чайную зону.",
       "benefits": [
         "Отдельная моечная со скошенным углом и поддоном 90 × 90 см.",
         "Стол 135 см и угловая группа из двух лавок-рундуков.",
-        "Отдельная душевая зона и удобный переход к ней."
+        "Комната отдыха отделена от душевой."
       ],
       "bestFor": "Тем, кто хочет душ внутри бани и чайную зону без дивана и спальных мест.",
       "boundaries": "Не использовать прежнее описание продольного стола 160 см, двух рундуков по 170 см и шкафа 90 см. Нет дивана, лавки в душевой, кухни или спальни. Прямоугольные размеры моечной — габарит со скосом, не её площадь.",
@@ -470,7 +480,9 @@
       "mirrorImage": "assets/plans/r84/parus_5500_2400_wash_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_6000_2400_dry",
@@ -479,7 +491,7 @@
       "selectionLabel": "С мини-кухней",
       "title": "Чайная зона с собственной мини-кухней",
       "eyebrow": "Два помещения с мини-кухней",
-      "description": "Чай можно подготовить у мини-кухни с мойкой, затем сесть за продольный стол. Под двумя лавками предусмотрены рундуки для банных принадлежностей.",
+      "description": "Чай можно подготовить у мини-кухни с мойкой и затем сесть за продольный стол. Под двумя лавками предусмотрены рундуки для банных вещей.",
       "benefits": [
         "Мини-кухня с мойкой длиной 150 см.",
         "Парная 230 × 220 см с Г-образным верхним полком.",
@@ -494,7 +506,9 @@
       "mirrorImage": "assets/plans/r84/parus_6000_2400_dry_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_6000_2400_wash",
@@ -503,11 +517,11 @@
       "selectionLabel": "С душем и угловой чайной зоной",
       "title": "После душа — за стол у окна",
       "eyebrow": "Моечная со скошенным углом",
-      "description": "Можно попариться, ополоснуться в отдельной моечной и продолжить вечер за столом у окна. Две лавки-рундука образуют угловую чайную группу.",
+      "description": "Можно попариться, ополоснуться в отдельной моечной и продолжить вечер за столом у окна. Две лавки-рундука образуют уютную угловую чайную группу.",
       "benefits": [
         "Отдельная моечная со скосом, без лавки внутри.",
         "Стол 165 см и две угловые лавки-рундука.",
-        "Г-образный верхний полок и две лавки-рундука."
+        "Г-образный верхний полок в парной."
       ],
       "bestFor": "Для семейного отдыха, когда нужны и душ, и отдельная чайная зона.",
       "boundaries": "Нет дивана, лавки внутри душевой, кухни и спальни. Не копировать прежний текст про стол 180 см и шкаф 120 см. Размер отдыха указан как общий габарит Г-образной зоны, а не полный прямоугольник.",
@@ -518,7 +532,9 @@
       "mirrorImage": "assets/plans/r84/parus_6000_2400_wash_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_6000_3000_dry",
@@ -531,7 +547,7 @@
       "benefits": [
         "Парная 240 × 280 см с Г-образным верхним полком.",
         "Мини-кухня с мойкой длиной 160 см.",
-        "Стол 220 см и два рундука."
+        "Стол 220 см и два рундука для банных принадлежностей."
       ],
       "bestFor": "Для совместного отдыха с длинным столом и кухонной зоной внутри бани.",
       "boundaries": "Отдельной моечной, спальни и встроенного гардероба нет. Не обещать раскладные спальные места и неподтверждённую технику.",
@@ -542,7 +558,9 @@
       "mirrorImage": "assets/plans/r84/parus_6000_3000_dry_mirror.webp",
       "mirrorControl": true,
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
-      "techOptionsShownNotIncluded": true
+      "techOptionsShownNotIncluded": true,
+      "imageDescriptionVerifiedAgainstPdf": true,
+      "editorialCorrection": "Excluded unillustrated wardrobe/гардероб from card copy; source slide off-canvas notes still outdated."
     },
     {
       "id": "parus_6000_3000_wash",
@@ -568,5 +586,22 @@
       "sellingStatus": "Возможное планировочное решение, не фиксированная комплектация",
       "techOptionsShownNotIncluded": true
     }
-  ]
+  ],
+  "verification": {
+    "onPagePdfPages": 46,
+    "checkedUniquePlans": 23,
+    "removedUnsupportedWardrobeClaims": [
+      "parus_4000_2400_dry",
+      "parus_4500_2400_dry",
+      "parus_5000_2400_dry",
+      "parus_5000_2400_wash",
+      "parus_5500_2400_dry",
+      "parus_5500_2400_wash",
+      "parus_6000_2400_dry",
+      "parus_6000_2400_wash",
+      "parus_6000_3000_dry"
+    ],
+    "warning": "Nine source off-slide instruction blocks contain wardrobe claims not confirmed by current on-page graphics. Use corrected manifest marketing descriptions only; do not copy source notes verbatim.",
+    "shelfCaution": "Comfort includes one upper and one lower shelf; source schemes often illustrate alternative 2-upper arrangements, which are not standard Comfort"
+  }
 }
