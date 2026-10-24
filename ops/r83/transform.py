@@ -6,34 +6,38 @@ from pathlib import Path
 from collections import defaultdict
 
 MODEL_KIT = [
- 'Печь, дымоход и штатный бак для воды',
- 'Полки и лежаки в парной',
- 'Лавки и место для вещей в комнате отдыха',
- 'Входная дверь и окно в комнате отдыха',
- 'Внутреннее освещение, электрика и предусмотренная электрическая защита',
- 'Вентиляция и слив',
- 'Конструкция пола',
+ 'Печь с дымоходом и баком для воды',
+ 'Удобные полки и лежаки в парной',
+ 'Входная дверь ПВХ 700 × 1800 мм и окно ПВХ 600 × 800 мм',
+ 'Форточка для проветривания парной',
+ 'Два светильника с абажурами в парной и освещение остальных помещений',
+ 'Два комплекта розеток, выключатели и штатная электрика',
+ 'В комнате отдыха — стол, лавки, шкаф и вешалки для одежды',
 ]
 MODEL_SPEC = {
- 'kvadro': 'Центральный вынесенный вход входит в цену.',
- 'parus': 'Расположение входа зависит от выбранной планировки.',
- 'viking': 'Арочный вход по центру входит в цену.',
- 'kvadro-haus': 'Сборка на участке уже включена в показанную стоимость.',
+ 'kvadro': 'У Квадро вход расположен по центру. Планировку подберём под ваши пожелания.',
+ 'parus': 'Для Паруса подберём планировку и расположение входа под выбранный размер.',
+ 'viking': 'У Викинга — характерный арочный вход по центру.',
+ 'kvadro-haus': 'Для Квадро Хауса сборка на участке уже включена в указанную цену.',
 }
-# Verified *contract examples*; never present one customer's exact size as a universal SKU spec.
-# Source: Drive contracts Дусанова (Квадро 4 м), Тимченко (Парус 4 м),
-# Тугушев (Викинг 4,5 м), Караваев/Бенашвили (Квадро Хаус 4х4).
 MODEL_OPENINGS = {
- 'kvadro': 'Для Квадро 4 м подтверждён вариант с деревянной входной дверью 70 × 170 см и открывающимся деревянным окном 60 × 60 см в комнате отдыха. Для другого размера бани параметры укажем в расчёте.',
- 'parus': 'Для Паруса 4 м подтверждён вариант с деревянной входной дверью и открывающимся деревянным окном 60 × 80 см в комнате отдыха. Для другого размера бани параметры укажем в расчёте.',
- 'viking': 'Варианты входной группы и остекления зависят от исполнения. Например, у Викинга 4,5 м встречается дверь ПВХ 80 × 180 см и деревянное окно 60 × 60 см. Ваши размеры и материалы зафиксируем в расчёте.',
- 'kvadro-haus': 'Входная дверь и окно комнаты отдыха входят в состав выбранной бани. Для Квадро Хауса 4 × 4 м встречаются разные варианты: двери ПВХ и металлические, окна разных размеров. Точный состав зафиксируем в расчёте.',
+ 'kvadro': 'Входная дверь ПВХ 700 × 1800 мм, окно ПВХ 600 × 800 мм.',
+ 'parus': 'Входная дверь ПВХ 700 × 1800 мм, окно ПВХ 600 × 800 мм.',
+ 'viking': 'Входная дверь ПВХ 700 × 1800 мм, окно ПВХ 600 × 800 мм.',
+ 'kvadro-haus': 'Входная дверь ПВХ 700 × 1800 мм, окно ПВХ 600 × 800 мм.',
 }
-# Public FAQ must not claim all baths have a wooden door or the same window.
-FAQ_OPENINGS = ('Для Квадро 4 м есть вариант с деревянной входной дверью 70 × 170 см и открывающимся деревянным окном 60 × 60 см; '
-                'для Паруса 4 м — деревянная дверь и окно 60 × 80 см. '
-                'Для Викинга и Квадро Хауса материалы и размеры входной группы отличаются в зависимости от варианта. '
-                'Точные размеры и материалы вашей бани укажем в расчёте перед заказом.')
+FAQ_OPENINGS = ('Во всех четырёх моделях стандарт «Комфорт» включает входную дверь ПВХ 700 × 1800 мм '
+                'и окно ПВХ 600 × 800 мм. Другие размеры и варианты остекления можно обсудить отдельно.')
+DETAILS = ('В комплектацию также входят вентиляция, слив, предусмотренная конструкция пола '
+           'и штатная электрическая защита. Расположение входа и устройство пола зависят от модели; '
+           'подробности менеджер укажет в спецификации и планировке.')
+UPGRADES = [
+ 'Атмосферная LED-подсветка в парной',
+ 'Наружное освещение для вечернего отдыха',
+ 'Откидной стол, чтобы освободить место',
+ 'Лавки-рундуки с местом для хранения',
+ 'Вынос топки в соседнее помещение или наружу — если позволяет выбранная конструкция',
+]
 MODEL_NAMES={'kvadro':'Квадро','parus':'Парус','viking':'Викинг','kvadro-haus':'Квадро Хаус'}
 MODEL_URLS=['bani/'+x+'/index.html' for x in MODEL_NAMES]
 P0=[10,11,12,13,14,15,16]
@@ -140,11 +144,14 @@ def patch_file(name, source):
   else:report.append({'id':30,'result':'ALREADY_OR_UNCHANGED'})
 
  if name=='voprosy/index.html':
-  faq=('''<details class="r83-comfort-faq" id="comfort-included-faq"><summary>Что входит в комплектацию Комфорт?<span aria-hidden="true" class="plus">+</span></summary>'''
-       '<p>Комфорт — стандартная оснащённая баня, не пустой корпус. В указанную стоимость уже входят:</p><ul>'
-       +''.join('<li>'+html.escape(item)+'</li>' for item in MODEL_KIT)+'</ul>'
-       '<p>'+html.escape(FAQ_OPENINGS)+'</p>'
-       '<p>В Квадро предусмотрен центральный вход, в Викинге — арочный. В цену Квадро Хауса также включена сборка на участке. Доставка, разгрузка, основание и внешние подключения рассчитываются отдельно.</p></details>')
+  faq=('<details class="r83-comfort-faq" id="comfort-included-faq"><summary>Что входит в комплектацию Комфорт?<span aria-hidden="true" class="plus">+</span></summary>'
+       '<p>В «Комфорт» уже включено всё необходимое для парения. Баня оснащена для отдыха, а не продаётся как пустой корпус.</p>'
+       '<ul>'+''.join('<li>'+html.escape(item)+'</li>' for item in MODEL_KIT)+'</ul>'
+       '<p>'+html.escape(DETAILS)+'</p>'
+       '<p>По вашему желанию добавим LED-подсветку, наружный свет, откидной стол, лавки-рундуки; возможность вынести топку проверим для вашей модели.</p>'
+       '<p>Доставка, разгрузка, основание и внешние подключения рассчитываются отдельно по адресу.</p>'
+       '<p><a href="/#configure">Рассчитать баню с улучшениями</a> · '
+       '<a href="/#relay-lead-form">Получить консультацию и планировку бесплатно</a></p></details>')
   if 'id="comfort-included-faq"' not in updated:
    m=re.search(r'<div class="faq-list">',updated)
    if m:
@@ -162,12 +169,29 @@ def patch_file(name, source):
 
  if name in MODEL_URLS:
   model=name.split('/')[1]
-  section=('''<section class="r83-comfort-block" id="comfort-included" aria-labelledby="r83-comfort-title"><div class="r83-comfort-head"><p class="r83-comfort-overline">Оснащение без доплат за основные элементы</p><h2 id="r83-comfort-title">Что входит в Комфорт</h2><p>В стандартную цену включена готовая баня с печью и основным оснащением парной и комнаты отдыха.</p></div>'''
+  section=(
+     '<section class="r83-comfort-block" id="comfort-included" aria-labelledby="r83-comfort-title">'
+     '<div class="r83-comfort-head"><p class="r83-comfort-overline">Комфорт — всё необходимое уже в цене</p>'
+     '<h2 id="r83-comfort-title">В «Комфорт» уже включено всё необходимое для парения</h2>'
+     '<p>Мы позаботились об основных удобствах, чтобы вам не пришлось собирать баню по частям. '
+     'Печь, свет, место для отдыха и хранения уже предусмотрены.</p></div>'
      '<ul class="r83-comfort-list">'+''.join('<li>'+html.escape(x)+'</li>' for x in MODEL_KIT)+'</ul>'
-     '<p class="r83-comfort-openings">'+html.escape(MODEL_OPENINGS[model])+'</p>'
      '<p class="r83-comfort-specific">'+html.escape(MODEL_SPEC[model])+'</p>'
-     '<p class="r83-comfort-separator">Доставку, разгрузку, основание и внешние подключения рассчитаем по вашему адресу.</p>'
-     '<a class="r83-comfort-next" href="/#configure">Рассчитать свою баню →</a></section>')
+     '<div class="r83-comfort-upgrades"><h3>Хотите сделать баню ещё удобнее?</h3>'
+     '<p>По вашему желанию добавим удобства, которые подходят именно вашей семье:</p>'
+     '<ul class="r83-upgrade-list">'+''.join('<li>'+html.escape(x)+'</li>' for x in UPGRADES)+'</ul>'
+     '<p>Это лишь примеры. Подберём решения и заранее рассчитаем доплату. '
+     'Все эти улучшения необязательны.</p></div>'
+     '<div class="r83-comfort-actions">'
+     '<a class="r83-comfort-next r83-comfort-primary" href="/#configure">Рассчитать баню с улучшениями</a>'
+     '<a class="r83-comfort-next r83-comfort-secondary" href="/#relay-lead-form">Получить консультацию и планировку бесплатно</a>'
+     '</div>'
+     '<p class="r83-comfort-consult">Менеджер подробно объяснит комплектацию, бесплатно подготовит варианты '
+     'планировки по вашим пожеланиям и проконсультирует по доставке. Заказ оформлять необязательно.</p>'
+     '<details class="r83-comfort-details"><summary>Полная комплектация и технические характеристики</summary>'
+     '<p>'+html.escape(DETAILS)+'</p><p>'+html.escape(MODEL_OPENINGS[model])+'</p></details>'
+     '<p class="r83-comfort-separator">Доставка, разгрузка, основание и внешние подключения '
+     'рассчитываются отдельно по адресу.</p></section>')
   if 'id="comfort-included"' not in updated:
    m=re.search(r'<h2 class="r81-prices-heading">',updated)
    if m:
@@ -175,7 +199,24 @@ def patch_file(name, source):
    else:report.append({'id':'COMFORT_MODEL','result':'NOT_FOUND'})
   else:report.append({'id':'COMFORT_MODEL','result':'ALREADY'})
   if '<style id="r83-comfort-style">' not in updated:
-   css='<style id="r83-comfort-style">.r83-comfort-block{margin:2rem 0;padding:clamp(1.1rem,3vw,2.2rem);background:#f7f6f0;color:#273c32;border:1px solid #d6ded4;border-radius:20px}.r83-comfort-block h2{margin:.3rem 0 1rem;font-size:clamp(1.45rem,2.4vw,2rem)}.r83-comfort-overline{font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}.r83-comfort-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem 1.8rem;padding-left:1.2rem;margin:1.3rem 0}.r83-comfort-list li{line-height:1.5}.r83-comfort-specific{font-weight:650}.r83-comfort-separator{font-size:.94rem;opacity:.85}.r83-comfort-next{display:inline-block;padding:.7rem 1rem;border:1px solid currentColor;border-radius:8px;font-weight:650;margin-top:.45rem}@media(max-width:650px){.r83-comfort-list{grid-template-columns:1fr}.r83-comfort-block{padding:1.1rem}}</style>'
+   css=('<style id="r83-comfort-style">'
+        '.r83-comfort-block{margin:2rem 0;padding:clamp(1.1rem,3vw,2.2rem);background:#f7f6f0;color:#273c32;border:1px solid #d6ded4;border-radius:20px}'
+        '.r83-comfort-block h2{margin:.3rem 0 1rem;font-size:clamp(1.45rem,2.4vw,2rem);line-height:1.25}'
+        '.r83-comfort-block h3{font-size:1.16rem;margin:0 0 .75rem}'
+        '.r83-comfort-overline{font-size:.85rem;letter-spacing:.03em}'
+        '.r83-comfort-list,.r83-upgrade-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem 1.8rem;padding-left:1.2rem;margin:1.3rem 0}'
+        '.r83-comfort-list li,.r83-upgrade-list li{line-height:1.5}'
+        '.r83-comfort-upgrades{margin-top:1.55rem;padding-top:1.35rem;border-top:1px solid #d6ded4}'
+        '.r83-comfort-specific{font-weight:650}'
+        '.r83-comfort-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.5rem}'
+        '.r83-comfort-next{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:46px;padding:.75rem 1rem;border:1px solid #273c32;border-radius:10px;font-weight:650;text-decoration:none;line-height:1.3}'
+        '.r83-comfort-primary{color:white;background:#273c32}.r83-comfort-secondary{color:#273c32;background:transparent}'
+        '.r83-comfort-next:hover{filter:brightness(1.1)}.r83-comfort-next:focus-visible{outline:3px solid #936d43;outline-offset:3px}'
+        '.r83-comfort-consult,.r83-comfort-separator{font-size:.94rem;line-height:1.55}'
+        '.r83-comfort-details{margin-top:1.2rem;padding-top:.75rem;border-top:1px solid #d6ded4}'
+        '.r83-comfort-details summary{cursor:pointer;font-weight:600}'
+        '@media(max-width:650px){.r83-comfort-list,.r83-upgrade-list{grid-template-columns:1fr}.r83-comfort-block{padding:1.1rem}.r83-comfort-actions{flex-direction:column}.r83-comfort-next{width:100%}}'
+        '</style>')
    if '</head>' in updated:
     updated=updated.replace('</head>',css+'</head>',1)
   # clear short within-card callout, link to composition to expose answer near price
@@ -185,7 +226,17 @@ def patch_file(name, source):
 
  if name=='journal/kak-chitat-komplektatsiyu-bani/index.html':
   if 'id="comfort-guide"' not in updated:
-   piece='<section id="comfort-guide" class="r83-article-kit"><h2>Комфорт: что входит в стандартную баню</h2><p>Комфорт — прежняя База с основным оснащением: печью, дымоходом и баком, полками, лавками, входной дверью и окном в комнате отдыха, освещением и электрикой, вентиляцией, сливом и конструкцией пола. В примере Квадро 4 м — деревянная входная дверь 70 × 170 см и открывающееся окно 60 × 60 см; в Парусе 4 м — деревянная дверь и окно 60 × 80 см. Для других размеров и моделей параметры входной группы и окон уточняются в расчёте.</p><p>Делюкс для Квадро 5 м — уже расширенная комплектация: 505 000 ₽ за Комфорт плюс 113 022 ₽ дополнений, итого 618 022 ₽.</p><p><a href="/voprosy/#comfort-included-faq">Посмотреть полный список Комфорт →</a></p></section>'
+   piece=('<section id="comfort-guide" class="r83-article-kit"><h2>Комфорт: всё необходимое для парения</h2>'
+          '<p>«Комфорт» — баня с печью, дымоходом и баком, полками, местом для отдыха, дверью ПВХ 700 × 1800 мм, '
+          'окном ПВХ 600 × 800 мм, светом в помещениях, двумя абажурами в парной, форточкой, '
+          'розетками, столом, лавками, шкафом и вешалками. '
+          'Устройство пола, вентиляции и слива уточняем в подробной спецификации.</p>'
+          '<p>По желанию добавим LED-подсветку, наружные светильники, откидной стол, '
+          'лавки-рундуки или согласуем вынос топки, если конструкция это позволяет.</p>'
+          '<p>Квадро 5 м: действующая цена Комфорта 505 000 ₽, пример исполнения Делюкс 618 022 ₽. '
+          'Дополнительные решения и их стоимость согласуем по составу заказа.</p>'
+          '<p><a href="/#configure">Рассчитать баню</a> · '
+          '<a href="/#relay-lead-form">Получить консультацию и планировку бесплатно</a></p></section>')
    pos=re.search(r'<section\b',updated)
    if pos:updated=updated[:pos.start()]+piece+updated[pos.start():];report.append({'id':'COMFORT_ARTICLE','result':'CHANGED'})
 
@@ -213,7 +264,7 @@ def patch_file(name, source):
   def inject_home(m):
    model=m.group(1); start=m.group(2); middle=m.group(3)
    if 'class="r83-model-preview"' in middle:return m.group(0)
-   preview='<p class="r83-model-preview">Комфорт уже с печью, полками, светом и электрикой. <a href="/bani/'+('kvadro-haus' if model=='kvadro-house' else model)+'/#comfort-included">Весь состав →</a></p>'
+   preview='<p class="r83-model-preview">В «Комфорт» уже включено всё необходимое для парения. <a href="/bani/'+('kvadro-haus' if model=='kvadro-house' else model)+'/#comfort-included">Весь состав →</a></p>'
    end='<p class="model-description">'
    if end not in middle:return m.group(0)
    return '<article class="model-item" data-model-card="'+model+'"'+start+middle.replace(end,preview+end,1)+'</article>'
@@ -226,7 +277,7 @@ def patch_file(name, source):
   def inject_cat(m):
    body=m.group(1)
    if 'class="r83-catalog-kit"' in body:return m.group(0)
-   return '<a class="journal-card"'+body.replace('</strong>', '</strong><small class="r83-catalog-kit">Комфорт: печь, полки, освещение и электрика. Полный состав — на странице модели.</small>',1)+'</a>'
+   return '<a class="journal-card"'+body.replace('</strong>', '</strong><small class="r83-catalog-kit">Комфорт уже с печью, удобной парной и комнатой отдыха. Полный состав — на странице модели.</small>',1)+'</a>'
   updated,n=re.subn(r'<a class="journal-card"(.*?)</a>',inject_cat,updated,flags=re.S)
   if n:
    style='<style id="r83-catalog-kit-style">.r83-catalog-kit{display:block;line-height:1.45;margin:.55rem 0;font-weight:500;opacity:.9}</style>'
