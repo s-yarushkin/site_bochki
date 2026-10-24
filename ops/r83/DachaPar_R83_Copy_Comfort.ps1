@@ -1,4 +1,4 @@
-# DachaPar R8.3.1: guarded editorial / Comfort composition: preflight, stage, browser QA, deploy, status, rollback.
+# DachaPar R8.3.2: guarded editorial / Comfort composition: preflight, stage, browser QA, deploy, status, rollback.
 # PINNED to known last VIKING-BUILT production WEB; refused if site changed.
 [CmdletBinding()]
 param(
@@ -17,10 +17,10 @@ $Self=$MyInvocation.MyCommand.Path
 $Dir=[IO.Path]::GetDirectoryName($Self)
 $Package=Join-Path $Dir 'r83_payload.zip'
 $Browser=Join-Path $Dir 'DachaPar_R83_Browser_QA.mjs'
-$ExpectedPackage='95bfe1745e3431274740e4b0961c31b70600e7669dc5c6914f9fa2ee90813dc4'
-$ExpectedBrowser='936b912f89fbb77bb941cc6c3d83f00657154ff02e97b929f9a81fd71a0d3f7f'
+$ExpectedPackage='__R832_PAYLOAD_SHA256__'
+$ExpectedBrowser='__R832_BROWSER_SHA256__'
 $ExpectedBase='/srv/sites/dachapar-preview/releases/VIKING-BUILT-20261024-1792838766529643617'
-$Prefix='/srv/sites/dachapar-preview/releases/CJM-R83-COPY-COMFORT-20261024-'
+$Prefix='/srv/sites/dachapar-preview/releases/CJM-R832-COMFORT-COPY-20261024-'
 $Server='deploy@135.106.137.195'
 $Opts=@('-o','ConnectTimeout=15','-o','StrictHostKeyChecking=yes')
 if(@(@($Stage,$QA,$Deploy,$Status,$Rollback) | Where-Object {$_}).Count -gt 1){throw 'R83_ONLY_ONE_MODE_PER_RUN'}
@@ -30,7 +30,7 @@ if((Get-FileHash -LiteralPath $Package -Algorithm SHA256).Hash.ToLowerInvariant(
 $Mode='preflight'
 if($Stage){$Mode='stage'}elseif($QA){$Mode='qa'}elseif($Deploy){$Mode='activate'}elseif($Status){$Mode='status'}elseif($Rollback){$Mode='rollback'}
 if($QA -or $Deploy){
- if(-not [regex]::IsMatch($StagePath,'^/srv/sites/dachapar-preview/releases/CJM-R83-COPY-COMFORT-20261024-[0-9]+$')){throw 'R83_STAGE_PATH_REQUIRED_FROM_STAGE_OUTPUT'}
+ if(-not [regex]::IsMatch($StagePath,'^/srv/sites/dachapar-preview/releases/CJM-R832-COMFORT-COPY-20261024-[0-9]+$')){throw 'R83_STAGE_PATH_REQUIRED_FROM_STAGE_OUTPUT'}
 }
 $Rtmp='/tmp/dachapar-r83-'+[guid]::NewGuid().ToString('N')
 $Ltmp=Join-Path $env:TEMP ('DachaPar_R83_QA_'+[guid]::NewGuid().ToString('N'))
@@ -99,7 +99,7 @@ echo R83_QA_REMOTE_ARCHIVE_READY
 }
 # All privileged actions use exactly ONE sudo command per invocation.
 if($Deploy){
- if($Approval -cne 'R83_COPY_COMFORT_APPROVED'){throw 'R83_DEPLOY_APPROVAL_REQUIRED'}
+ if($Approval -cne 'R832_COPY_COMFORT_APPROVED'){throw 'R83_DEPLOY_APPROVAL_REQUIRED'}
  if([string]::IsNullOrWhiteSpace($QaEvidencePath)){
   $candidate=Get-ChildItem -Path $env:TEMP -Filter 'DachaPar_R83_Stage_QA_*.json' -File|Sort-Object LastWriteTime -Descending|Select-Object -First 1
   if($null -eq $candidate){throw 'R83_QA_EVIDENCE_NOT_FOUND_RUN_QA_FIRST'}
@@ -122,7 +122,7 @@ try{
  if($Deploy){
   & scp @Opts $QaEvidencePath ("{0}:{1}/qa.json" -f $Server,$Rtmp)
   if($LASTEXITCODE -ne 0){throw 'R83_QA_UPLOAD_FAILED'}
-  & ssh -tt @Opts $Server "sudo python3 '$Rtmp/installer.py' --mode activate --stage-path '$StagePath' --acceptance-file '$Rtmp/qa.json' --approval R83_COPY_COMFORT_APPROVED"
+  & ssh -tt @Opts $Server "sudo python3 '$Rtmp/installer.py' --mode activate --stage-path '$StagePath' --acceptance-file '$Rtmp/qa.json' --approval R832_COPY_COMFORT_APPROVED"
  } else {
   & ssh -tt @Opts $Server "sudo python3 '$Rtmp/installer.py' --mode $Mode"
  }
