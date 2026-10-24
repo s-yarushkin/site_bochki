@@ -1,0 +1,248 @@
+{
+  "version": "R8.4_2026-10-25_STAGING_DRAFT",
+  "sheetUrl": "https://docs.google.com/spreadsheets/d/1tDbbyKBW5opBRLWk_twPTryKYm9wgaezEcI5hTla06o/edit",
+  "sourceTab": "Цены Комфорт",
+  "sourceColumn": "P",
+  "sourceRange": "P2:P21",
+  "publicationStatus": "NO_GO_PENDING_PARUS_AND_DELUXE_OPTION_VERIFICATION",
+  "models": {
+    "kvadro": {
+      "400": {
+        "sku": "BASE_1",
+        "sizeLabel": "4 м",
+        "publicRub": 390000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 2,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "450": {
+        "sku": "BASE_2",
+        "sizeLabel": "4,5 м",
+        "publicRub": 420000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 3,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "500": {
+        "sku": "BASE_3",
+        "sizeLabel": "5 м",
+        "publicRub": 465000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 4,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "550": {
+        "sku": "BASE_4",
+        "sizeLabel": "5,5 м",
+        "publicRub": 490000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 5,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "600": {
+        "sku": "BASE_5",
+        "sizeLabel": "6 м",
+        "publicRub": 505000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 6,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      }
+    },
+    "viking": {
+      "400": {
+        "sku": "BASE_6",
+        "sizeLabel": "4 м",
+        "publicRub": 460000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 7,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "450": {
+        "sku": "BASE_7",
+        "sizeLabel": "4,5 м",
+        "publicRub": 500000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 8,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "500": {
+        "sku": "BASE_8",
+        "sizeLabel": "5 м",
+        "publicRub": 600000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 9,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "550": {
+        "sku": "BASE_9",
+        "sizeLabel": "5,5 м",
+        "publicRub": 615000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 10,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "600": {
+        "sku": "BASE_10",
+        "sizeLabel": "6 м",
+        "publicRub": 625000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 11,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      }
+    },
+    "parus": {
+      "400": {
+        "sku": "BASE_11",
+        "sizeLabel": "4 м",
+        "publicRub": null,
+        "workingPreliminaryRub": 430000,
+        "approval": "BLOCKED_MISSING_ENTRY_P_RRC",
+        "sheetRow": 12,
+        "sourceStatus": "ПРЕДВАРИТЕЛЬНО: центральный вход Парус НЕ включён; внесите РРЦ!E230"
+      },
+      "450": {
+        "sku": "BASE_12",
+        "sizeLabel": "4,5 м",
+        "publicRub": null,
+        "workingPreliminaryRub": 450000,
+        "approval": "BLOCKED_MISSING_ENTRY_P_RRC",
+        "sheetRow": 13,
+        "sourceStatus": "ПРЕДВАРИТЕЛЬНО: центральный вход Парус НЕ включён; внесите РРЦ!E230"
+      },
+      "500": {
+        "sku": "BASE_13",
+        "sizeLabel": "5 м",
+        "publicRub": null,
+        "workingPreliminaryRub": 490000,
+        "approval": "BLOCKED_MISSING_ENTRY_P_RRC",
+        "sheetRow": 14,
+        "sourceStatus": "ПРЕДВАРИТЕЛЬНО: центральный вход Парус НЕ включён; внесите РРЦ!E230"
+      },
+      "550": {
+        "sku": "BASE_14",
+        "sizeLabel": "5,5 м",
+        "publicRub": null,
+        "workingPreliminaryRub": 505000,
+        "approval": "BLOCKED_MISSING_ENTRY_P_RRC",
+        "sheetRow": 15,
+        "sourceStatus": "ПРЕДВАРИТЕЛЬНО: центральный вход Парус НЕ включён; внесите РРЦ!E230"
+      },
+      "600": {
+        "sku": "BASE_15",
+        "sizeLabel": "6 м",
+        "publicRub": null,
+        "workingPreliminaryRub": 515000,
+        "approval": "BLOCKED_MISSING_ENTRY_P_RRC",
+        "sheetRow": 16,
+        "sourceStatus": "ПРЕДВАРИТЕЛЬНО: центральный вход Парус НЕ включён; внесите РРЦ!E230"
+      }
+    },
+    "kvadro-haus": {
+      "4x4": {
+        "sku": "BASE_16",
+        "sizeLabel": "4×4 м",
+        "publicRub": 665000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 17,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "5x4": {
+        "sku": "BASE_17",
+        "sizeLabel": "5×4 м",
+        "publicRub": 775000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 18,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "6x4": {
+        "sku": "BASE_18",
+        "sizeLabel": "6×4 м",
+        "publicRub": 825000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 19,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "6x5": {
+        "sku": "BASE_19",
+        "sizeLabel": "6×5 м",
+        "publicRub": 885000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 20,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      },
+      "6x6": {
+        "sku": "BASE_20",
+        "sizeLabel": "6×6 м",
+        "publicRub": 945000,
+        "workingPreliminaryRub": null,
+        "approval": "OWNER_APPROVED_SPEC",
+        "sheetRow": 21,
+        "sourceStatus": "РАСЧЁТ; зачёты замен не подтверждены"
+      }
+    }
+  },
+  "pricing": {
+    "basePriceRoundedUpToRub": 5000,
+    "surchargeRrcMultiplier": 1.08324,
+    "factoryRrcMultiplier": 0.918,
+    "assemblyQhExtraRrcMultiplier": 0.102,
+    "assemblyForKvadroVikingParus": {
+      "percentageOfComfort": 10,
+      "addedSeparately": true
+    },
+    "assemblyForQh": {
+      "includedInComfort": true,
+      "rechargeProhibited": true
+    },
+    "repeatRoundAfterOptions": false,
+    "monetaryDecimals": 2
+  },
+  "inclusions": {
+    "entryDoor": "PVC 700x1800",
+    "loungeWindow": "PVC 600x800",
+    "steamShelves": "1 upper and 1 lower",
+    "steamVent": true,
+    "steamLampsWithShades": 2,
+    "extraSocketSets": 1,
+    "cabinet": "single 50x50",
+    "steamDoor": "wood",
+    "hangers": {
+      "marketingClaimApproval": "REQUIRES_FACTORY_CONFIRMATION",
+      "upchargeProhibited": true
+    }
+  },
+  "deluxe": {
+    "availability": "DRAFT_ONLY_NEEDS_PRICE_APPROVAL",
+    "featuresPlanned": [
+      "second upper steam bench",
+      "steam backrests",
+      "pull-out lower bench"
+    ],
+    "unpricedRrcItems": [
+      "OPT_167 backrest",
+      "second upper bench and pull-out mechanism - quote verification required"
+    ],
+    "doNotReplaceExistingOfferRub": 618022
+  },
+  "limits": [
+    "No duplicate charge for vent, cabinet or Comfort contents",
+    "Parus center entry RRC E230 blank",
+    "No public price for unpriced options",
+    "Old orders retain historical price snapshot",
+    "Never silently change existing lead schema"
+  ]
+}
