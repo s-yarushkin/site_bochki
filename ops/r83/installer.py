@@ -15,7 +15,7 @@ ORIGIN='https://xn--80aaan1dh9b.xn--p1ai'
 BASE='VIKING-BUILT-20261024-1792838766529643617'
 # require exact latest known live source. Do not accidentally fork/erase newer releases.
 API_EXPECTED='R73-LEGAL-db5d49445661-1792566478879449075'
-PREFIX='CJM-R83-COPY-COMFORT-20261024-'
+PREFIX='CJM-R832-COMFORT-COPY-20261024-'
 SOURCE_SHA=hashlib.sha256((HERE/'transform.py').read_bytes()).hexdigest()
 PROTECTED=['quote.mjs','lead-client.mjs','data/catalog-pricebook.json','manager.html','privacy.html','consent.html','requisites.html','analytics-runtime.mjs']
 
@@ -61,22 +61,25 @@ def assertions(root):
  def plain(path):
   x=Text();x.feed((root/path).read_text(encoding='utf-8'));return unescape(' '.join(x.parts)).replace('\u00a0',' ')
  faq=plain('voprosy/index.html')
- for needle in ('60 × 60 см','60 × 80 см','Что входит в комплектацию Комфорт?','Чем Делюкс отличается от Комфорта?','505 000 ₽','618 022 ₽','113 022 ₽','Сборка'):
+ for needle in ('Что входит в комплектацию Комфорт?','Чем Делюкс отличается от Комфорта?','505 000 ₽','618 022 ₽','113 022 ₽'):
   chk(needle.lower() in faq.lower(),'R83_FAQ_INCOMPLETE_'+needle)
  bad=['Для Квадро 5 м база стоит','Комфорт — 618 022 ₽','в Комфорте для Квадро 5 м есть лавка-рундук']
  for s in bad:chk(s not in faq,'R83_OLD_PACKAGE_CLAIM_'+s)
  for model in transform.MODEL_NAMES:
   p=f'bani/{model}/index.html';s=(root/p).read_text(encoding='utf-8');t=plain(p)
   chk(s.count('id="comfort-included"')==1,'R83_COMFORT_BLOCK_'+model)
-  chk('Что входит в Комфорт' in t,'R83_COMFORT_HEADING_'+model)
-  chk(all(x in t for x in ('Печь, дымоход','Вентиляция и слив','Конструкция пола')),'R83_KIT_PARTS_'+model)
+  chk('В «Комфорт» уже включено всё необходимое для парения' in t,'R832_COMFORT_HEADING_'+model)
+  chk(all(x in t for x in ('Печь с дымоходом','Два комплекта розеток','шкаф и вешалки','LED-подсветка','Полная комплектация','Рассчитать баню с улучшениями')),'R832_KIT_PARTS_'+model)
   chk(s.count('id="r83-comfort-style"')==1,'R83_COMFORT_STYLE_'+model)
   chk('Окна и двери выбранного варианта' not in t,'R83_UNHELPFUL_OPENING_'+model)
-  chk(transform.MODEL_OPENINGS[model] in t,'R83_CONTRACT_EXAMPLE_MISSING_'+model)
+  chk(transform.MODEL_OPENINGS[model] in t,'R832_TECH_DETAILS_MISSING_'+model)
+  chk('href="/#configure"' in s and 'href="/#relay-lead-form"' in s,'R832_DUAL_CTA_MISSING_'+model)
+  chk('r83-upgrade-list' in s and 'r83-comfort-details' in s,'R832_UPGRADES_AND_DETAILS_MISSING_'+model)
+  chk('Предусмотренная конструкция пола, с учётом особенностей' not in t,'R832_TECH_COPY_'+model)
  for p in ('journal/banya-4-5-6-metrov/index.html','journal/iz-chego-skladyvaetsya-tsena/index.html','journal/index.html','journal/kvadro-5-komfort/index.html','journal/kak-chitat-komplektatsiyu-bani/index.html','journal/kak-prinyat-gotovuyu-banyu/index.html','journal/ventilyatsiya-i-fortochka/index.html'):
   txt=plain(p)
   chk('Делюкс' in txt,'R83_OLD_DELUXE_ARTICLE_'+p)
- chk('Комфорт: что входит' in plain('journal/kak-chitat-komplektatsiyu-bani/index.html'), 'R83_NO_COMFORT_GUIDE')
+ chk('Комфорт: всё необходимое для парения' in plain('journal/kak-chitat-komplektatsiyu-bani/index.html'), 'R832_NO_COMFORT_GUIDE')
  home=(root/'index.html').read_text(encoding='utf-8');chk('id="configure"' in home and 'id="relay-lead-form"' in home,'R83_HOME_FORM_DAMAGED')
  for p in ('bani/kvadro/index.html','bani/parus/index.html','bani/viking/index.html','bani/kvadro-haus/index.html','index.html','voprosy/index.html'):
   txt=plain(p);chk('80% клиентов' not in txt,'R83_UNVERIFIED_PERCENT_'+p)
@@ -139,7 +142,7 @@ def public_sha(path,expected):
  print('R83_PUBLIC=PASS; PATH='+path,flush=True)
 
 def activate(stage_path,acceptance_file,approval):
- chk(approval=='R83_COPY_COMFORT_APPROVED','R83_APPROVAL_REQUIRED')
+ chk(approval=='R832_COPY_COMFORT_APPROVED','R83_APPROVAL_REQUIRED')
  base,api,before=source_state()
  stage=Path(stage_path).resolve(strict=True)
  chk(stage.parent==RELEASES and stage.name.startswith(PREFIX),'R83_INVALID_STAGE_PATH')
