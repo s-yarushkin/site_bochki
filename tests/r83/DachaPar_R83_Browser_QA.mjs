@@ -15,7 +15,7 @@ const BASE=ORIGIN;
 const files=['index.html','bani/index.html','bani/kvadro/index.html','bani/parus/index.html','bani/viking/index.html','bani/kvadro-haus/index.html','voprosy/index.html','journal/kak-chitat-komplektatsiyu-bani/index.html'];
 const modelPaths=['/bani/kvadro/','/bani/parus/','/bani/viking/','/bani/kvadro-haus/'];
 if(audit.stage!==releaseArg || audit.source!==`/srv/sites/dachapar-preview/releases/${BASE_RELEASE}`)throw Error('R83_QA_STALE_RELEASE');
-if(!releaseArg.startsWith('/srv/sites/dachapar-preview/releases/CJM-R83-COPY-COMFORT-20261024-'))throw Error('R83_QA_WRONG_RELEASE_PREFIX');
+if(!releaseArg.startsWith('/srv/sites/dachapar-preview/releases/CJM-R832-COMFORT-COPY-20261024-'))throw Error('R83_QA_WRONG_RELEASE_PREFIX');
 for(const file of files){const current=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex');if(current!==audit.after[file])throw Error('R83_STAGE_FILE_HASH_MISMATCH_'+file)}
 const html=Object.fromEntries(files.map(file=>[file,fs.readFileSync(path.join(root,file),'utf8')]));
 const results=[],exceptions=[],failedResources=[],outside=[],unexpectedPost=[],upstream=[],captured=[];
