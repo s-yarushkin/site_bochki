@@ -61,7 +61,7 @@ def assertions(root):
  def plain(path):
   x=Text();x.feed((root/path).read_text(encoding='utf-8'));return unescape(' '.join(x.parts)).replace('\u00a0',' ')
  faq=plain('voprosy/index.html')
- for needle in ('Что входит в комплектацию Комфорт?','Чем Делюкс отличается от Комфорта?','505 000 ₽','618 022 ₽','113 022 ₽','Сборка'):
+ for needle in ('60 × 60 см','60 × 80 см','Что входит в комплектацию Комфорт?','Чем Делюкс отличается от Комфорта?','505 000 ₽','618 022 ₽','113 022 ₽','Сборка'):
   chk(needle.lower() in faq.lower(),'R83_FAQ_INCOMPLETE_'+needle)
  bad=['Для Квадро 5 м база стоит','Комфорт — 618 022 ₽','в Комфорте для Квадро 5 м есть лавка-рундук']
  for s in bad:chk(s not in faq,'R83_OLD_PACKAGE_CLAIM_'+s)
@@ -71,6 +71,8 @@ def assertions(root):
   chk('Что входит в Комфорт' in t,'R83_COMFORT_HEADING_'+model)
   chk(all(x in t for x in ('Печь, дымоход','Вентиляция и слив','Конструкция пола')),'R83_KIT_PARTS_'+model)
   chk(s.count('id="r83-comfort-style"')==1,'R83_COMFORT_STYLE_'+model)
+  chk('Окна и двери выбранного варианта' not in t,'R83_UNHELPFUL_OPENING_'+model)
+  chk(transform.MODEL_OPENINGS[model] in t,'R83_CONTRACT_EXAMPLE_MISSING_'+model)
  for p in ('journal/banya-4-5-6-metrov/index.html','journal/iz-chego-skladyvaetsya-tsena/index.html','journal/index.html','journal/kvadro-5-komfort/index.html','journal/kak-chitat-komplektatsiyu-bani/index.html','journal/kak-prinyat-gotovuyu-banyu/index.html','journal/ventilyatsiya-i-fortochka/index.html'):
   txt=plain(p)
   chk('Делюкс' in txt,'R83_OLD_DELUXE_ARTICLE_'+p)
@@ -109,7 +111,7 @@ def stage():
   chk(CURRENT.resolve()==base and API.resolve()==api,'R83_CHANGED_DURING_STAGE')
   chk(hashes(base)==before,'R83_SOURCE_MUTATED')
   audit={'state':'STAGED_NO_PUBLIC_SWITCH','source':str(base),'api':str(api),'stage':str(dest),'before':before,'after':after,'modified':changed,'transform_sha256':SOURCE_SHA,'editorial':rep,'created_at':int(time.time())}
-  path=audit_path(dest);path.write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');path.chmod(0o600)
+  path=audit_path(dest);path.write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');path.chmod(0o644)
   results={}
   for group in range(1,44):
    entries=rep['groups'].get(str(group),[])
@@ -163,11 +165,28 @@ def activate(stage_path,acceptance_file,approval):
   raise
  print('R83_DEPLOY=PASS; WEB='+str(stage)+'; PREVIOUS='+str(base)+'; API_UNCHANGED=YES; SQLITE_UNTOUCHED=YES; MAX_POSTS=0',flush=True)
 
+def rollback():
+ api=link(API);chk(api.name==API_EXPECTED,'R83_API_CHANGED')
+ active=link(CURRENT);chk(active.parent==RELEASES,'R83_INVALID_ACTIVE_RELEASE')
+ if active.name==BASE:
+  print('R83_ROLLBACK=ALREADY_ON_PREVIOUS; WEB='+str(active),flush=True);return
+ chk(active.name.startswith(PREFIX),'R83_ROLLBACK_REFUSES_UNRELATED_RELEASE')
+ aud=json.loads(audit_path(active).read_text(encoding='utf8'))
+ old=Path(aud['source']).resolve(strict=True)
+ chk(old==RELEASES/BASE,'R83_ROLLBACK_PREVIOUS_MISMATCH')
+ chk(aud['stage']==str(active) and aud['api']==str(api),'R83_ROLLBACK_AUDIT_MISMATCH')
+ chk(hashes(old)==aud['before'] and hashes(active)==aud['after'],'R83_ROLLBACK_SHA_DRIFT')
+ flip(old)
+ chk(link(CURRENT)==old,'R83_ROLLBACK_POINTER_FAILED')
+ for name in ('index.html','bani/kvadro/index.html','voprosy/index.html'):
+  public_sha(name,aud['before'][name])
+ print('R83_ROLLBACK=PASS; WEB='+str(old)+'; API_UNCHANGED=YES',flush=True)
+
 def status():
  b=link(CURRENT);a=link(API);print('R83_STATUS=PASS; LIVE='+str(b)+'; API='+str(a)+'; NO_WRITES=YES')
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--mode',choices=['preflight','stage','activate','status'],default='preflight');p.add_argument('--stage-path');p.add_argument('--acceptance-file');p.add_argument('--approval');x=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--mode',choices=['preflight','stage','activate','status','rollback'],default='preflight');p.add_argument('--stage-path');p.add_argument('--acceptance-file');p.add_argument('--approval');x=p.parse_args()
  chk(ROOT.is_dir(),'R83_ROOT_MISSING')
  lock=ROOT/'.gallery-r80.lock'
  with lock.open('a') as fh:
@@ -175,6 +194,7 @@ def main():
   if x.mode=='preflight':preflight()
   elif x.mode=='stage':stage()
   elif x.mode=='activate':activate(x.stage_path,x.acceptance_file,x.approval)
+  elif x.mode=='rollback':rollback()
   else:status()
 if __name__=='__main__':
  try:main()
