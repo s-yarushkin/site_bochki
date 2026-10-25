@@ -1,0 +1,244 @@
+{
+  "$schemaVersion": "garant-demo-pricebook-v4",
+  "version": "2026-10-08-demo-v4",
+  "status": "DEMO_ONLY_NOT_APPROVED",
+  "currency": "RUB",
+  "basis": "Provisional visual pricing; product and retail prices NOT approved. Do not include any internal dealer cost or wholesale column in this public file.",
+  "models": [
+    {
+      "id": "kvadro",
+      "name": "Квадро",
+      "sizes": {
+        "400": 409000,
+        "500": 429000,
+        "600": 459000
+      }
+    },
+    {
+      "id": "parus",
+      "name": "Парус",
+      "sizes": {
+        "400": 419000,
+        "500": 469000,
+        "600": 499000
+      }
+    },
+    {
+      "id": "viking",
+      "name": "Викинг",
+      "sizes": {
+        "400": 419000,
+        "500": 539000,
+        "600": 579000
+      }
+    },
+    {
+      "id": "kvadro-house",
+      "name": "Квадро Хаус",
+      "sizes": {
+        "500": 659000,
+        "600": 709000
+      }
+    }
+  ],
+  "options": [
+    {
+      "id": "aspen",
+      "label": "Отделка парной осиной",
+      "demoPrice": 129000,
+      "category": "finish",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "water-piping",
+      "label": "Водоснабжение с разводкой",
+      "demoPrice": 79000,
+      "category": "comfort",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "steam-led",
+      "label": "Светодиодная подсветка парной",
+      "demoPrice": 27000,
+      "category": "light",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "porch",
+      "label": "Крыльцо",
+      "demoPrice": 24000,
+      "category": "outdoors",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "window",
+      "label": "Дополнительное окно",
+      "demoPrice": 9000,
+      "category": "windows",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "firebox",
+      "label": "Выносная топка",
+      "demoPrice": 19000,
+      "category": "stove",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "acrylic-shower",
+      "label": "Акриловый душевой поддон",
+      "demoPrice": 23000,
+      "category": "water",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "polok-light",
+      "label": "Подсветка под полком",
+      "demoPrice": 9000,
+      "category": "light",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "metal-door",
+      "label": "Металлическая входная дверь",
+      "demoPrice": 29000,
+      "category": "doors",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "canopy",
+      "label": "Козырёк",
+      "demoPrice": 9000,
+      "category": "outdoors",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "black-chimney",
+      "label": "Чёрный дымоход",
+      "demoPrice": 11000,
+      "category": "stove",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "shelf",
+      "label": "Дополнительная полка",
+      "demoPrice": 5000,
+      "category": "storage",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "glass-door-170",
+      "label": "Стеклянная дверь 170 × 70",
+      "demoPrice": 19000,
+      "category": "doors",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "glass-door-180",
+      "label": "Стеклянная дверь 180 × 70",
+      "demoPrice": 26000,
+      "category": "doors",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    },
+    {
+      "id": "glass-door-190",
+      "label": "Стеклянная дверь 190 × 70",
+      "demoPrice": 32000,
+      "category": "doors",
+      "discountEligible": true,
+      "compatibility": "PENDING_VERIFICATION"
+    }
+  ],
+  "optionRules": [
+    {
+      "group": "glass-door-size",
+      "members": [
+        "glass-door-170",
+        "glass-door-180",
+        "glass-door-190"
+      ],
+      "maxSelected": 1
+    },
+    {
+      "group": "doors-mutual-exclusion",
+      "members": [
+        "metal-door",
+        "glass-door-170",
+        "glass-door-180",
+        "glass-door-190"
+      ],
+      "status": "REQUIRES_DESIGN_REVIEW"
+    }
+  ],
+  "discounts": {
+    "progressive": {
+      "label": "Выгода на дополнительные опции",
+      "tiers": [
+        {
+          "minCount": 0,
+          "rateBp": 0
+        },
+        {
+          "minCount": 2,
+          "rateBp": 300
+        },
+        {
+          "minCount": 3,
+          "rateBp": 500
+        },
+        {
+          "minCount": 4,
+          "rateBp": 700
+        },
+        {
+          "minCount": 5,
+          "rateBp": 1000
+        }
+      ],
+      "basis": "eligible add-ons only",
+      "notStackableWithBundle": true
+    },
+    "bundles": [
+      {
+        "id": "family-comfort-demo",
+        "name": "Дачный отдых — Комфорт+",
+        "modelId": "kvadro-house",
+        "sizeId": "500",
+        "requiredOptionIds": [
+          "aspen",
+          "water-piping",
+          "steam-led",
+          "porch",
+          "window"
+        ],
+        "fixedDiscountRub": 70000,
+        "claim": "illustrative_popular_not_verified",
+        "stacking": "exclusive_prefer_bundle",
+        "imageSlot": "bundle-comfort"
+      }
+    ]
+  },
+  "fulfillment": {
+    "delivery": "REQUEST_ESTIMATE",
+    "unloading": "REQUEST_ESTIMATE",
+    "base": "REQUEST_ESTIMATE",
+    "connection": "REQUEST_ESTIMATE",
+    "taxes": "REQUIRES_APPROVED_OFFER"
+  },
+  "priceRounding": "integer RUB; discounts rounded to RUB with defined rule",
+  "neverClaim": "These demo values represent an approved offer, real market discount, proven popularity, or that installation/connection are included."
+}

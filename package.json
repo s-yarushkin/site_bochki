@@ -1,0 +1,9 @@
+{
+  "name": "garant-bani-prototype",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check assets/js/app.js && node --check assets/js/manager.js && node --check server/garant-bani-relay.mjs && node --check server/lead-store.mjs && node --check server/manager-auth.mjs && node --check server/manager-api.mjs && node --check assets/js/quote-engine.js && node --check data/pricebook.js && node --test tests/*.test.mjs"
+  }
+}

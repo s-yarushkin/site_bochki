@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+<title>Заявки — Гарант Бани · Менеджер</title>
+<link rel="stylesheet" href="assets/css/manager.css">
+<script defer src="assets/js/manager.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="./">ГАРАНТ БАНИ</a>
+    <span class="top-label">Кабинет главного менеджера · Заявки</span><span id="activeManager" class="active-manager" hidden></span>
+    <button id="logoutButton" class="btn subtle" hidden type="button">Выйти</button>
+  </div>
+</header>
+<main class="container">
+  <section class="login" id="loginView">
+    <div class="login-panel">
+      <p class="eyebrow">ДОСТУП СОТРУДНИКА</p>
+      <h1>Кабинет заявок</h1>
+      <p class="muted">Доступ к полной базе заявок имеют две технические учётные записи главных менеджеров.</p>
+      <form id="loginForm" autocomplete="on">
+        <label>Телефон — логин <input id="managerPhone" type="tel" inputmode="tel" autocomplete="username" maxlength="45" placeholder="+7 (999) 123-45-67" required></label>
+        <label>Пароль <input id="managerPassword" type="password" autocomplete="current-password" minlength="14" required></label>
+        <button class="btn primary" type="submit" id="loginButton">Войти</button>
+        <p id="loginError" class="error" role="alert" aria-live="polite"></p>
+      </form>
+      <p class="muted fine">Вводите логин и пароль своей учётной записи. Пароль от предпросмотра сайта сюда не подходит.</p>
+    </div>
+  </section>
+
+  <section id="dashboard" hidden>
+    <div class="dashboard-header">
+      <div><p class="eyebrow">РАБОТА С КЛИЕНТАМИ</p><h1>Заявки «Гарант Бани»</h1><p class="muted">Каждая заявка и выбранная комплектация сохраняются на сервере. MAX получает уведомление.</p></div>
+      <button class="btn outline" id="refreshButton" type="button">Обновить</button>
+    </div>
+    <section class="stats" aria-label="Показатели заявок">
+      <div class="stat"><span>Всего</span><strong id="countTotal">—</strong></div>
+      <div class="stat"><span>Новые</span><strong id="countNew">—</strong></div>
+      <div class="stat"><span>В работе</span><strong id="countProgress">—</strong></div>
+      <div class="stat"><span>КП отправлено</span><strong id="countQuoted">—</strong></div>
+    </section>
+    <div class="workspace">
+      <section class="leads-pane" aria-label="Список заявок">
+        <form id="filterForm" class="filters">
+          <label class="search-label">Поиск по номеру заявки, имени, телефону или менеджеру
+            <input type="search" id="leadSearch" placeholder="Имя, телефон или GB-..." autocomplete="off">
+          </label>
+          <label class="status-label">Статус
+            <select id="statusFilter">
+              <option value="all">Все заявки</option>
+              <option value="new">Новые</option>
+              <option value="in_progress">В работе</option>
+              <option value="awaiting_customer">Ждём клиента</option>
+              <option value="quote_sent">КП отправлено</option>
+              <option value="won">Продано</option>
+              <option value="lost">Закрыто без продажи</option>
+            </select>
+          </label>
+          <button class="btn outline" type="submit">Найти</button>
+        </form>
+        <p class="muted fine" id="listSummary" role="status"></p>
+        <div id="leadsList" class="leads-list" aria-live="polite"></div>
+        <div class="pager"><button type="button" class="btn outline" id="previousButton">← Назад</button><span id="pageLabel" class="muted fine"></span><button type="button" class="btn outline" id="nextButton">Далее →</button></div>
+      </section>
+      <section class="detail-pane" aria-label="Карточка заявки">
+        <div id="noSelection" class="blank-state">Выберите заявку слева, чтобы увидеть полную конфигурацию бани, контакт и историю обработки.</div>
+        <div id="leadDetail" hidden>
+          <div class="detail-title"><div><p class="eyebrow" id="leadId"></p><h2 id="leadName"></h2><p class="muted" id="leadCreated"></p></div><span id="leadStatus" class="status-pill"></span></div>
+          <div class="detail-block" id="contactBlock">
+            <h3>Контакт клиента</h3>
+            <dl id="contactInfo"></dl>
+          </div>
+          <div class="detail-block" id="configurationBlock">
+            <h3>Что выбрал клиент</h3>
+            <dl id="configurationInfo"></dl>
+            <div class="option-list" id="selectedOptions"></div>
+            <div class="quote-lines" id="quoteLines"></div>
+          </div>
+          <div class="detail-block" id="propertyBlock"><h3>Доставка и участок</h3><dl id="propertyInfo"></dl></div>
+          <div class="detail-block">
+            <h3>Работа по заявке</h3>
+            <form id="leadEditForm">
+              <label>Статус<select id="editStatus" required>
+                <option value="new">Новая</option>
+                <option value="in_progress">В работе</option>
+                <option value="awaiting_customer">Ожидаем клиента</option>
+                <option value="quote_sent">КП отправлено</option>
+                <option value="won">Продано</option>
+                <option value="lost">Закрыто без продажи</option>
+              </select></label>
+              <label>Ответственный менеджер<input id="editAssignee" maxlength="100" placeholder="Например, Иван" autocomplete="off"></label>
+              <label>Заметки менеджера<textarea id="editNote" rows="4" maxlength="2000" placeholder="Когда связались, о чём договорились, следующий шаг"></textarea></label>
+              <button type="submit" id="saveButton" class="btn primary">Сохранить изменения</button>
+              <p id="saveStatus" role="status" class="muted fine"></p>
+            </form>
+          </div>
+          <div class="detail-block">
+            <h3>История заявки</h3>
+            <ol id="eventsList" class="event-list"></ol>
+          </div>
+        </div>
+      </section>
+    </div>
+    <p class="page-footnote">Предварительные цены из демонстрационного прайса не являются офертой. Не копируйте клиентские данные в общедоступные чаты.</p>
+  </section>
+</main>
+<footer class="footer"><div class="container">Закрытый кабинет · <a href="./">Сайт «Гарант Бани»</a></div></footer>
+</body>
+</html>
