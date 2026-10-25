@@ -22,7 +22,9 @@ test('V6.6 retail-facing copy contains no internal rendering or source-provenanc
   assert.match(html,/Четыре модели\. Выберите баню/);
   assert.match(html,/Квадро 5 м · Комфорт/);
   assert.doesNotMatch(html,/Комплектация без обливного устройства/);
-  assert.match(html,/следующие 14 дополнений к готовой бане/);
+  // V7.2 distinguishes the complete 17-item base kit from the featured 14 paid additions.
+  assert.match(html,/к базовой бане добавлены следующие 14 опций, учтённых в указанной сумме/);
+  assert.match(html,/id="base"[\s\S]*?в базовой комплектации/);
   assert.match(css,/\.bundle-list \.bundle-item::before\{content:none;display:none\}/);
   for(const id of ['socket_kit_owner','electrical_distribution_owner','electrical_safety_cabinet_temporary_supply']){
     assert.doesNotMatch(book.options[id].label,/\(.*уточнить|после проверки проекта/);

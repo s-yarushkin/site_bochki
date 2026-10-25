@@ -1,37 +1,37 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-12-v66-owner-review-3",
+  "version": "2026-10-16-sheet-site-v1",
   "status": "CATALOG_DRAFT",
   "currency": "RUB",
-  "source": "Owner-supplied 16-page Garant Grupp PDF, pages 3-14; two electrical 10k lines are owner's provisional estimates; owner-added size-based surcharges and featured bundle corrections on 2026-10-12",
+  "source": "Owner Google Sheets · ЦЕНА НА САЙТЕ (C); reviewed snapshot; no dealer/RRP fallback",
   "prices": {
     "kvadro": {
-      "400": 310000,
-      "450": 330000,
-      "500": 370000,
-      "550": 390000,
-      "600": 405000
+      "400": 445000,
+      "450": 465000,
+      "500": 505000,
+      "550": 525000,
+      "600": 540000
     },
     "parus": {
-      "400": 360000,
-      "450": 385000,
-      "500": 410000,
-      "550": 430000,
-      "600": 445000
+      "400": 540000,
+      "450": 565000,
+      "500": 590000,
+      "550": 610000,
+      "600": 625000
     },
     "viking": {
-      "400": 335000,
-      "450": 385000,
-      "500": 465000,
-      "550": 490000,
-      "600": 520000
+      "400": 490000,
+      "450": 540000,
+      "500": 620000,
+      "550": 645000,
+      "600": 675000
     },
     "kvadro-house": {
-      "4x4": 560000,
-      "5x4": 629000,
-      "6x4": 689000,
-      "6x5": 739000,
-      "6x6": 789000
+      "4x4": 620000,
+      "5x4": 699000,
+      "6x4": 769000,
+      "6x5": 839000,
+      "6x6": 899000
     }
   },
   "models": {
@@ -189,108 +189,108 @@
   "options": {
     "stove_guard": {
       "label": "Ограждение печи",
-      "unitPriceRub": 5000,
+      "unitPriceRub": 7000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p12"
+      "source": "Google Sheets · Рабочий калькулятор!C49"
     },
     "aspen_backrests": {
       "label": "Подспинники из осины, комплект",
       "unitPriceRub": 2500,
       "quantity": 1,
       "unit": "комплект",
-      "source": "catalog-p13"
+      "source": "Google Sheets · Рабочий калькулятор!C64"
     },
     "folding_table": {
       "label": "Откидной стол",
-      "unitPriceRub": 3000,
+      "unitPriceRub": 6000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p14"
+      "source": "Google Sheets · Рабочий калькулятор!C95"
     },
     "bench_chest_spruce": {
       "label": "Лавка-рундук из ели",
       "unitPriceRub": 2000,
       "quantity": 2,
       "unit": "пог. м",
-      "source": "catalog-p14"
+      "source": "Google Sheets · Рабочий калькулятор!C94"
     },
     "glass_sauna_door_700x1700": {
       "label": "Стеклянная дверь 700×1700 мм, 3 петли",
       "unitPriceRub": 9000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p10"
+      "source": "Google Sheets · Рабочий калькулятор!C14"
     },
     "vent_window_small": {
       "label": "Форточка 30×30 / 30×40 см",
       "unitPriceRub": 3000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p11"
+      "source": "Google Sheets · Рабочий калькулятор!C25"
     },
     "tilt_window_1400x800": {
       "label": "Окно 1400×800 мм, откидное",
       "unitPriceRub": 14500,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p11"
+      "source": "Google Sheets · Рабочий калькулятор!C37"
     },
     "oblivasta_connected": {
       "label": "Обливное устройство «Обливаста» с подключением",
       "unitPriceRub": 24000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p12"
+      "source": "Google Sheets · Рабочий калькулятор!C51"
     },
     "remote_firebox_adjacent": {
       "label": "Вынос топки в смежное помещение",
       "unitPriceRub": 10000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p12"
+      "source": "Google Sheets · Рабочий калькулятор!C57"
     },
     "socket_kit_owner": {
       "label": "Комплект розеток",
       "unitPriceRub": 10000,
       "quantity": 1,
       "unit": "комплект",
-      "source": "owner-estimate-2026-10-12"
+      "source": "Google Sheets · Рабочий калькулятор!C105"
     },
     "electrical_distribution_owner": {
       "label": "Разводка электрики",
       "unitPriceRub": 10000,
       "quantity": 1,
       "unit": "комплект",
-      "source": "owner-estimate-2026-10-12"
+      "source": "Google Sheets · Рабочий калькулятор!C106"
     },
     "outdoor_two_lanterns": {
       "label": "Уличное освещение, 2 фонаря за комплект",
       "unitPriceRub": 8000,
       "quantity": 1,
       "unit": "комплект",
-      "source": "catalog-p13"
+      "source": "Google Sheets · Рабочий калькулятор!C79"
     },
     "led_light_10m": {
       "label": "LED-подсветка до 10 м",
       "unitPriceRub": 16000,
       "quantity": 1,
       "unit": "комплект",
-      "source": "catalog-p13"
+      "source": "Google Sheets · Рабочий калькулятор!C81"
     },
     "cabinet_single_50x50": {
       "label": "Шкаф одностворчатый 50×50",
       "unitPriceRub": 10000,
       "quantity": 1,
       "unit": "шт",
-      "source": "catalog-p14"
+      "source": "Google Sheets · Рабочий калькулятор!C99"
     },
     "electrical_safety_cabinet_temporary_supply": {
       "label": "Электрощит с автоматической защитой",
       "unitPriceRub": 15000,
       "quantity": 1,
       "unit": "комплект",
-      "source": "owner-estimate-2026-10-12",
+      "source": "Google Sheets · Рабочий калькулятор!C107",
       "safetyGate": "Проект/монтаж электриком, проверка допустимости временного разъёмного ввода, защитных устройств, допустимой нагрузки и условий влажности. Обычный удлинитель не обещается; до заключения специалиста опция не считается технически подтверждённой.",
       "requiresTechnicalApproval": true
     }
@@ -321,10 +321,10 @@
   },
   "deliveryIncluded": false,
   "checks": {
-    "baseRub": 370000,
-    "optionRub": 120000,
-    "knownSubtotalRub": 490000,
-    "previousKnownSubtotalRub": 469000,
+    "baseRub": 505000,
+    "optionRub": 125000,
+    "knownSubtotalRub": 630000,
+    "previousKnownSubtotalRub": 490000,
     "confirmationRequired": [
       "technical compliance of temporary electrical input",
       "power and leakage protection design",
@@ -334,57 +334,58 @@
     ]
   },
   "notes": [
-    "DRAFT only; must not be loaded into active V6.4 without synchronized verified frontend/backend release",
-    "Two outdoor lamps together are 8000 RUB in PDF p13, not 8000 each",
-    "Color and roof surcharges are UNSET, not zero",
-    "No old demo progressive 3/5/7/10 percent discounts",
-    "Other offered catalog options should be migrated into the same single data file after validation",
-    "Current owner-revised list excludes Oblivasta from featured bundle because connecting it needs prepared water supply; it remains a separate optional product only.",
-    "Electrical panel 15000 RUB is an owner's proposed price, but feasibility of temporary supply requires an approved design and licensed/qualified installation; never market ordinary extension-lead use as safe or universal.",
-    "Owner increases all base prices except Viking: +20000/+25000/+30000/+35000/+40000 for 4/4.5/5/5.5/6 m lengths, respectively.",
-    "Kvadro 5m: 340000 catalog base +30000 owner uplift = 370000; prior selected additions 129000 -24000 Oblivasta +15000 panel=120000. Sum 490000."
+    "Prices are a reviewed snapshot of website column C, not a live Google Sheets connection.",
+    "No dealer prices, RRP, workbook calculations or manual discount cells are published.",
+    "Option quantities in the featured kit stay unchanged; spreadsheet checkboxes and selection quantities are not product price definitions.",
+    "Color/roof surcharges remain unset. Delivery, unloading, foundation and connections are quoted separately.",
+    "Special offer mentioned in free-text sheet notes is not imported as a column-C price or an invented discount."
   ],
   "pricingAdjustments": {
-    "policy": "owner-instructed model base-price uplift, already included in authoritative prices",
-    "excludedModelIds": [
-      "viking"
-    ],
-    "eligibleModelIds": [
-      "kvadro",
-      "parus",
-      "kvadro-house"
-    ],
-    "byLengthMeters": {
-      "4": 20000,
-      "5": 30000,
-      "6": 40000,
-      "4.5": 25000,
-      "5.5": 35000
-    },
-    "houseInterpretation": "For Kvadro House first dimension in NxM size is taken as product length; 6x4, 6x5, 6x6 all +40000. Confirm axis naming with manufacturer prior to publishing.",
-    "calculatedSurchargesByModelSize": {
-      "kvadro": {
-        "400": 20000,
-        "450": 25000,
-        "500": 30000,
-        "550": 35000,
-        "600": 40000
-      },
-      "parus": {
-        "400": 20000,
-        "450": 25000,
-        "500": 30000,
-        "550": 35000,
-        "600": 40000
-      },
-      "kvadro-house": {
-        "4x4": 20000,
-        "5x4": 30000,
-        "6x4": 40000,
-        "6x5": 40000,
-        "6x6": 40000
-      }
-    },
-    "important": "These deltas are ALREADY reflected in prices. Never add them a second time."
+    "policy": "Final site-column amounts are already complete. Never add historic uplifts again."
+  },
+  "priceSource": {
+    "spreadsheetUrl": "https://docs.google.com/spreadsheets/d/1tDbbyKBW5opBRLWk_twPTryKYm9wgaezEcI5hTla06o/edit",
+    "sheet": "Рабочий калькулятор",
+    "column": "C",
+    "header": "ЦЕНА НА САЙТЕ, ₽",
+    "readAt": "2026-10-16T05:21:34.733Z",
+    "syncMode": "REVIEWED_SNAPSHOT",
+    "cells": {
+      "kvadro/400": "C225",
+      "kvadro/450": "C226",
+      "kvadro/500": "C227",
+      "kvadro/550": "C228",
+      "kvadro/600": "C229",
+      "parus/400": "C235",
+      "parus/450": "C236",
+      "parus/500": "C237",
+      "parus/550": "C238",
+      "parus/600": "C239",
+      "viking/400": "C230",
+      "viking/450": "C231",
+      "viking/500": "C232",
+      "viking/550": "C233",
+      "viking/600": "C234",
+      "kvadro-house/4x4": "C240",
+      "kvadro-house/5x4": "C241",
+      "kvadro-house/6x4": "C242",
+      "kvadro-house/6x5": "C243",
+      "kvadro-house/6x6": "C244",
+      "stove_guard": "C49",
+      "aspen_backrests": "C64",
+      "folding_table": "C95",
+      "bench_chest_spruce": "C94",
+      "glass_sauna_door_700x1700": "C14",
+      "vent_window_small": "C25",
+      "tilt_window_1400x800": "C37",
+      "oblivasta_connected": "C51",
+      "remote_firebox_adjacent": "C57",
+      "socket_kit_owner": "C105",
+      "electrical_distribution_owner": "C106",
+      "outdoor_two_lanterns": "C79",
+      "led_light_10m": "C81",
+      "cabinet_single_50x50": "C99",
+      "electrical_safety_cabinet_temporary_supply": "C107"
+    }
   }
 }

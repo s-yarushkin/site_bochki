@@ -15,7 +15,9 @@ class Quiet(http.server.SimpleHTTPRequestHandler):
 httpd=http.server.ThreadingHTTPServer(('127.0.0.1',0),
     functools.partial(Quiet,directory=str(ROOT)))
 threading.Thread(target=httpd.serve_forever,daemon=True).start()
-base=f'http://127.0.0.1:{httpd.server_address[1]}/'
+base=os.environ.get('DACHA_QA_BASE') or f'http://127.0.0.1:{httpd.server_address[1]}/'
+if os.environ.get('DACHA_QA_BASE'):
+ assert base=='https://xn--80aaan1dh9b.xn--p1ai/','UNEXPECTED_LIVE_QA_TARGET'
 
 widths=[('wide',1920,1080),('desktop',1440,900),('laptop',1366,768),
         ('small-laptop',1280,800),('tablet',768,900),
@@ -213,12 +215,25 @@ try:
     assert page.locator('.footer-operator').count()==0,'LEGAL_ADDRESS_VISIBLE_IN_FOOTER'
     assert page.locator('.footer-legal a[href="privacy.html"]').count()==1
     legal=page.request.get(base+'privacy.html')
-    assert legal.status==200 and '1233500004650' in legal.text()
+    assert legal.status==200 and '1263500003590' in legal.text() and 'ГАРАНТ-ГРУПП' not in legal.text()
     page.locator('.footer-bottom').scroll_into_view_if_needed()
     page.screenshot(path=str(SHOT/f'{label}-legal-links-sun.png'))
+    assert page.title()=='Готовые бани с доставкой в Москву и области — Дача Пар',label
+    assert page.locator('#base .base-kit-list li').count()==17,('BASE_KIT_COUNT',label)
+    assert page.locator('#personal .personal-options article').count()==4,('CUSTOM_OPTIONS',label)
+    assert page.locator('#delivery .delivery-choice').count()==2,('DELIVERY_MODES',label)
+    assert page.locator('.footer-legal a[href="requisites.html"]').count()==1
+    assert 'ООО' not in page.locator('footer').inner_text(),('COMPANY_IN_FOOTER',label)
+    assert 'ООО' not in page.locator('#contactDialog').text_content(),('COMPANY_IN_CONSENT_UI',label)
+    assert page.request.get(base+'requisites.html').status==200,('REQUISTES_404',label)
+    page.locator('#base').screenshot(path=str(SHOT/f'{label}-base-kit.png'))
+    page.locator('#personal').screenshot(path=str(SHOT/f'{label}-personalization.png'))
+    page.locator('#delivery').screenshot(path=str(SHOT/f'{label}-delivery-options.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     assert 'Квадро 5 м' in page.locator('#bundleTitle').inner_text()
-    assert '490' in page.locator('#bundleNew').inner_text()
+    assert '630' in page.locator('#bundleNew').inner_text()
+    assert '630 000' in page.locator('#bundleTitle').inner_text().replace('\u00a0',' ')
+    assert page.evaluate('window.__GARANT_DEMO__.quote().pricebookVersion')=='2026-10-16-sheet-site-v1'
     assert page.locator('#bundleOptions li').count()==14
     assert not page.locator('#bundleOptions').get_by_text('₽').count(),'PRICES_LEAKED_IN_KIT_ITEMS'
     assert page.locator('.bundle-photo img[data-v5-photo]').evaluate('(im)=>getComputedStyle(im).objectFit')=='contain','BUNDLE_PHOTO_CROPPED'
@@ -228,12 +243,12 @@ try:
     page.locator('[data-bundle="summary"]').click()
     state=page.evaluate('window.__GARANT_DEMO__.getState()')
     assert state['modelId']=='kvadro' and state['sizeId']=='500' and len(state['optionIds'])==14,(label,state)
-    assert '490' in page.locator('#quoteTotal').inner_text()
+    assert '630' in page.locator('#quoteTotal').inner_text()
     page.locator('[data-weather="rain"]').click()
     expect(page.locator('html')).to_have_attribute('data-theme','rain')
     hero_rain=page.locator('#heroMedia img[data-v5-photo]').get_attribute('src')
     assert hero_rain==hero_sun,'Hero geometry changed'
-    assert '490' in page.locator('#quoteTotal').inner_text()
+    assert '630' in page.locator('#quoteTotal').inner_text()
     page.locator('#catalogGrid').screenshot(path=str(SHOT/f'{label}-catalog-rain.png'))
     page.locator('#bundle').scroll_into_view_if_needed()
     page.locator('#bundle').screenshot(path=str(SHOT/f'{label}-featured-rain.png'))
@@ -241,34 +256,31 @@ try:
     # all 20 sizes in the shared catalogue: verify 4.5m and Kvadro House 6x5.
     page.locator('[data-catalog-select="kvadro"]').click()
     page.locator('[data-choose-size="450"]').click()
-    assert '330' in page.locator('#quoteTotal').inner_text()
+    assert '465' in page.locator('#quoteTotal').inner_text()
     page.locator('[data-catalog-select="kvadro-house"]').click()
     page.locator('[data-choose-size="6x5"]').click()
-    assert '739' in page.locator('#quoteTotal').inner_text()
-    # Callback: without checkbox no network request; consent reinitializes for a new flow.
+    assert '839' in page.locator('#quoteTotal').inner_text()
+    # One of the new manager CTAs carries a topic into the existing callback payload.
+    page.locator('#personal [data-flow="callback"]').click()
+    assert 'индивидуальную комплектацию' in page.locator('#contactForm [name="comment"]').input_value(),('CUSTOM_TOPIC_NOT_PREFILLED',label)
+    page.locator('#dialogClose').click()
+    # One submit, no checkbox; phone-only callback and quote preserve configuration.
     page.locator('.footer-ask [data-flow="callback"]').click()
     form=page.locator('#contactForm')
-    form.locator('input[name="phone"]').fill('+7 999 123-45-67')
-    checkbox=form.locator('[name="leadConsent"]')
-    assert not checkbox.is_checked(),label
-    form.locator('#submitButton').click()
-    assert 'согласие' in page.locator('#formError').inner_text().lower(),label
+    assert form.locator('input[type="checkbox"]').count()==0
     assert calls==[],label
-    checkbox.check()
+    form.locator('input[name="phone"]').fill('+7 999 123-45-67')
     form.locator('#submitButton').click()
     page.locator('#formResult').wait_for(state='visible')
     assert len(calls)==1 and calls[0]['consent'] is True,calls
-    assert calls[0]['consentVersion']=='2026-10-12',calls
+    assert calls[0]['consentVersion']=='2026-10-16' and calls[0]['consentMethod']=='submit-button-v1',calls
     page.locator('#dialogClose').click()
     page.locator('.builder-aside [data-flow="quote"]').click()
-    assert not page.locator('#contactForm [name="leadConsent"]').is_checked(),label
-    page.locator('#contactForm input[name="customerName"]').fill('Тест')
     page.locator('#contactForm input[name="phone"]').fill('+7 999 123-45-67')
-    page.locator('#contactForm input[name="district"]').fill('Вологодский район')
-    page.locator('#contactForm [name="leadConsent"]').check()
     page.locator('#contactForm #submitButton').click()
     page.locator('#formResult').wait_for(state='visible')
     assert len(calls)==2,calls
+    assert calls[1]['name']=='' and calls[1]['district']==''
     assert calls[1]['configuration']['sizeId']=='6x5',calls
     assert calls[1]['configuration']['roof']=='brown',calls
     if w<=390:

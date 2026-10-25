@@ -13,7 +13,7 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.doesNotMatch(html,/href="manager\.html"/);
   assert.doesNotMatch(html,/data-view="plan"/);
   assert.match(html,/Стоимость комплекта/);
-  assert.match(html,/id="bundleNew">490 000 ₽/);
+  assert.match(html,/id="bundleNew">630 000 ₽/);
   assert.match(html,/Расчёт ориентировочный, не является офертой/);
   assert.doesNotMatch(html,/Газон и деревянные дорожки добавлены для наглядности и в комплектацию не входят/);
   assert.doesNotMatch(html,/Это рекламные изображения, а не фото готового заказа/);
@@ -21,11 +21,11 @@ test('client-facing preview has no development labels but preserves honest prici
   assert.match(html,/href="consent\.html"/);
   assert.match(pricebook,/status:CATALOG.status==='APPROVED'\?'APPROVED':'DEMO_ONLY'/); // Owner catalog remains a draft.
   for(const doc of [privacy,consent]){
-    assert.match(doc,/«ГАРАНТ-ГРУПП»/);
-    assert.match(doc,/3525486964/);
-    assert.match(doc,/1233500004650/);
+    assert.match(doc,/«ВУДАРТ-ГРУПП»/);
+    assert.match(doc,/3500023844/);
+    assert.match(doc,/1263500003590/);
     assert.doesNotMatch(doc,/индивидуальному предпринимателю|ОГРНИП|\[ФИО ИП/);
-    assert.match(doc,/Герцена, д\. 114, кв\. 8/); // Postal request address is stated without invented email.
+    assert.match(doc,/Ленинградская, д\. 97, помещение 25/); // Postal request address is stated without invented email.
   }
 });
 
@@ -68,9 +68,10 @@ test('V6.3 short laptop catalog and exact release packaging keep viewport/nav an
   assert.match(styles,/\.hero\{overflow:clip\}/); // No programmatic hero scroll after 320px RAIN click.
   assert.match(styles,/@media\(min-width:1100px\) and \(max-height:800px\)/);
   assert.match(styles,/@media\(min-width:1100px\) and \(max-height:740px\)/);
-  assert.match(html,/assets\/images\/garant-bani-favicon\.svg/);
+  assert.match(html,/assets\/images\/dachapar-favicon\.svg/);
   const packageScript=read('ops/v63-build-preview-zip.ps1');
   assert.match(packageScript,/assets\/images\/garant-bani-favicon\.svg/);
+  assert.match(read('ops/v72-build-preview-bundle.ps1'),/assets\/images\/dachapar-favicon\.svg/);
   assert.doesNotMatch(packageScript,/'assets\/images\/placeholder\.svg'/);
   assert.match(styles,/window-masked dusk|window-masked/i);
 });

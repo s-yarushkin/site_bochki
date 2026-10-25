@@ -34,19 +34,21 @@
 .footer-law-notes{display:grid;gap:9px;align-content:start}
 .footer-law-notes p{font-size:13px;line-height:1.57;margin:0}
 .footer-legal{row-gap:9px}
-.contact-dialog label.lead-consent-label{display:grid;grid-template-columns:20px minmax(0,1fr);
-  align-items:start;gap:12px;margin:18px 0 15px;padding:14px 15px;
-  background:var(--v5-feature,var(--paper));border:1px solid var(--v5-border,var(--line));
-  border-radius:11px;color:var(--v5-text,var(--ink));font-size:13px;line-height:1.6}
-.contact-dialog .lead-consent-label input[type="checkbox"]{
-  appearance:auto;display:block;margin:3px 0 0;width:18px;height:18px;min-width:18px;min-height:18px;
-  accent-color:var(--forest);cursor:pointer}
-.contact-dialog .lead-consent-label span{min-width:0;overflow-wrap:anywhere}
-.contact-dialog .lead-consent-label a{text-decoration:underline;text-underline-offset:2px}
-.contact-dialog .lead-consent-label input[aria-invalid="true"]{outline:2px solid var(--v5-error,#b33333);outline-offset:3px}
-@media(max-width:700px){.footer-operator{grid-template-columns:1fr;gap:19px}}
-@media(max-width:360px){.contact-dialog .lead-consent-label{padding:12px 10px;gap:9px;font-size:12px}}
-
+/* Compact request form: one mandatory phone field, explicit submit notice. */
+.contact-dialog .form-extra{margin:4px 0 18px;border-top:1px solid var(--v5-border,var(--line));padding-top:12px}
+.contact-dialog .form-extra>summary{cursor:pointer;font-size:14px;padding:7px 0;min-height:40px}
+.contact-dialog .form-extra>summary .muted{font-size:12px;margin-left:6px}
+.contact-dialog .form-extra[open]>summary{margin-bottom:12px}
+.contact-dialog .submit-consent-notice{font-size:12px;line-height:1.55;margin:10px 0 8px;color:var(--v5-muted,#536657)}
+.contact-dialog .submit-consent-notice a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.contact-dialog .form-reassurance{font-size:12px;line-height:1.5;margin:0;color:var(--v5-muted,#536657)}
+.contact-dialog .form-quote{font-size:14px;padding:12px 15px;margin-bottom:14px}
+.contact-dialog .form-quote summary{cursor:pointer;line-height:1.5}
+.contact-dialog .form-quote summary span{display:block;font-size:12px;margin-top:3px}
+.contact-dialog .form-quote p{margin:10px 0 0;font-size:13px;line-height:1.5}
+.contact-dialog .contact-desc{margin-bottom:14px}
+.contact-dialog .dialog-inner{padding:26px}
+@media(max-width:550px){.contact-dialog .dialog-inner{padding:24px 18px}.contact-dialog h2{font-size:27px}.contact-dialog .contact-grid{gap:10px}.contact-dialog .form-extra{margin-bottom:14px}.contact-dialog .contact-desc{font-size:14px}}
 
 /* V6.6 canonical catalog, owner-selected featured Kvadro, and color swatches */
 .bundle-mini-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:18px}
@@ -79,3 +81,9 @@
  .color-choices-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}
  .catalog-swatch{height:55px}
 }
+.contact-dialog form{gap:10px}
+
+/* The full quote must not force the mobile grid beyond the viewport. */
+.builder-main,.builder-aside{min-width:0;max-width:100%}
+.quote-row>span:first-child,.summary-table .quote-row>b:first-child{min-width:0;overflow-wrap:anywhere}
+@media(max-width:850px){.builder-layout{grid-template-columns:minmax(0,1fr)}}

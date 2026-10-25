@@ -1,3 +1,5 @@
+import {CONSENT_VERSION,CONSENT_METHOD} from './lead-consent.js';
+import {readLandingModel,readLandingContact} from './landing-model.js';
 import {PRICEBOOK,CATALOG} from '../../data/pricebook.js';
 import {calculateQuote,formatMoney,getModel,getOption} from './quote-engine.js';
 import {syncMedia} from './media-v5.js';
@@ -14,6 +16,7 @@ let formQuote=null;
 let submitted=false;
 let formRequestId=null;
 const money=formatMoney;
+let formTopic='';
 const bundle=PRICEBOOK.bundle;
 const sizeLabel=(model,sz)=>model.sizeKind==='full'?sz.replace('x','×')+' м':(Number(sz)/100).toLocaleString('ru-RU')+' м';
 const sizeHint=model=>model.sizeKind==='full'?'Выберите полный габарит':`Ширина ${model.widthM.toLocaleString('ru-RU')} м`;
@@ -35,7 +38,7 @@ function renderCatalog(){
       <div class="product-body">
         <h3><button type="button" class="gallery-model-title" data-gallery-open="${model.id}">${escaped(model.name)}</button></h3>
         <p>${escaped(model.subtitle)}</p>
-        <div class="product-meta"><div class="product-price"><small>Ориентир от</small>${money(low)}</div>
+        <div class="product-meta"><div class="product-price"><small>Базовая комплектация от</small>${money(low)}</div>
           <div class="product-sizes">${catalogSizes(model)}</div></div>
         <div class="product-card-actions">
           <button class="gallery-photo-action" type="button" data-gallery-open="${model.id}">Смотреть изображения →</button>
@@ -190,7 +193,7 @@ function syncWeatherPhotoFrames(weather){
   $('#previewImage').dataset.slot=weatherPhotoSlot(activeSlot,weather);
   syncMedia();
 }
-function initBuilder(){renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
+function initBuilder(){const landing=readLandingModel(location.search,PRICEBOOK.models);if(landing){state.modelId=landing.id;state.sizeId=Object.keys(landing.sizes)[0];state.step=1;}renderBuilder();$('#builderBack').addEventListener('click',()=>{if(state.step>0){state.step--;renderBuilder();}});$('#builderNext').addEventListener('click',()=>{
   if(state.step===6){state.step=0;state.optionIds=[];state.bundleId=null;state.finish='pine';state.roof='brown';state.region='';state.base='unknown';state.access='unknown';}
   else state.step++;renderBuilder();
  });$('#quoteDetailsToggle').addEventListener('click',()=>{const node=$('#quoteDetails');node.hidden=!node.hidden;$('#quoteDetailsToggle').setAttribute('aria-expanded',String(!node.hidden));});
@@ -222,8 +225,8 @@ function setWeather(weather){
     ?'Небо затянуло тучами.<br>А у вас —<br><em>своя баня.</em>'
     :'Приехали на дачу.<br>Растопили баню.<br><em>Отдых начался.</em>';
   $('#heroLead').textContent=rain
-    ?'Пасмурный вечер на даче. Своя баня, тёплый свет и близкие рядом. Изготовим заранее и доставим готовым изделием — условия установки согласуем под ваш участок.'
-    :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее и доставят готовым изделием — без затяжной стройки на участке.';
+    ?'Пасмурный вечер на даче. Своя баня, тёплый свет и близкие рядом. Изготовим заранее, а способ доставки и установки подберём с учётом вашего участка.'
+    :'Пятничный вечер, близкие рядом, любимая дача. Баню изготовят заранее. Обычно доставим собранной, а если подъезд сложный — согласуем сборку из готовых элементов на участке.';
   syncAtmosphereText(weather);
   syncWeatherPhotoFrames(weather);
 }
@@ -254,12 +257,17 @@ function formatRussianMobile(value){
     (d.length>=7?'-'+d.slice(6,8):'')+
     (d.length>=9?'-'+d.slice(8,10):'');
 }
-function setResultText(){const q=formQuote;$('#formQuote').innerHTML=q?`<b>${escaped(q.modelName)} · ${sizeLabel(getModel(q.modelId),q.sizeId)}</b><br>Допы (${q.options.length}): ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}<br><b>${money(q.total)} (ориентировочно)</b><br><span class="muted">Доставка и подключения — после уточнения.</span>`:'<b>Обратный звонок</b><br>Тема: помощь с выбором готовой бани.';}
-function openForm(flow='quote'){
+function setResultText(){
+ const q=formQuote;
+ $('#formQuote').hidden=!q;
+ $('#formQuote').innerHTML=q?`<details><summary><b>${escaped(q.modelName)} · ${sizeLabel(getModel(q.modelId),q.sizeId)} — ${money(q.total)}</b><span>Посмотреть комплектацию</span></summary><p>Дополнения: ${q.options.length?escaped(q.options.map(option=>option.name).join(', ')):'не выбраны'}. Доставка и подключения рассчитываются отдельно.</p></details>`:'';
+}
+function openForm(flow='quote',topic=''){
   formRequestId=crypto.randomUUID();
+  formTopic=typeof topic==='string'?topic.slice(0,180):'';
   formFlow=flow==='callback'?'callback':'quote';formQuote=formFlow==='quote'?quote():null;
-  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ОБРАТНЫЙ ЗВОНОК':'РАСЧЁТ МОЕЙ БАНИ';$('#contactTitle').textContent=callback?'Перезвоните мне':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте номер телефона, чтобы менеджер «Гарант Бани» перезвонил вам.':'Ваша комплектация уже выбрана. Менеджер подтвердит цену и условия после получения заявки.';
-  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent=callback?'(необязательно)':'';$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
+  const callback=formFlow==='callback';$('#contactEyebrow').textContent=callback?'ПОМОЩЬ С ВЫБОРОМ':'ВАША БАНЯ';$('#contactTitle').textContent=callback?'Связаться с менеджером':'Получить расчёт моей бани';$('#contactDesc').textContent=callback?'Оставьте телефон — обсудим баню и ответим на ваши вопросы.':'Комплектация сохранена. Оставьте телефон — менеджер уточнит доставку и итоговую стоимость.';
+  $('#quoteExtraFields').hidden=callback;$('#nameOptional').textContent='необязательно';$('#formExtra').open=false;$('#submitButton').textContent='Отправить заявку';$('#contactForm').hidden=false;$('#formResult').hidden=true;$('#formError').textContent='';$('#contactForm').reset();$('#contactForm').elements.comment.value=formFlow==='callback'?formTopic:'';submitted=false;$('#formBack').textContent='Изменить заявку';$('#contactChannelField').hidden=callback;$('#contactForm').elements.contactChannel.value='phone';$('#phoneHint').textContent='Номер для ответа на вашу заявку.';$('#phoneHint').dataset.valid='';$('#contactForm').elements.phone.removeAttribute('aria-invalid');
   if(!callback){$('#contactForm').elements.district.value=state.region;$('#contactForm').elements.base.value=state.base;$('#contactForm').elements.access.value=state.access;}
   setResultText();$('#contactDialog').showModal();$('#contactForm').elements.phone.focus();
 }
@@ -276,7 +284,7 @@ function initForms(){
   function showError(message,focusField){
     error.textContent=message;
     error.scrollIntoView({block:'nearest'});
-    if(focusField)focusField.focus({preventScroll:true});
+    if(focusField){const details=focusField.closest('details');if(details)details.open=true;focusField.focus({preventScroll:true});}
   }
   function updatePhoneHint(validateEmpty=false){
     const current=phone.value.trim();
@@ -284,7 +292,7 @@ function initForms(){
     phoneHint.dataset.valid=valid?'true':(current||validateEmpty?'false':'');
     phoneHint.textContent=valid?'Формат номера корректен.':
       current||validateEmpty?'Проверьте номер: требуется +7 (9XX) XXX-XX-XX.':
-      'Введите российский мобильный номер: +7 (9XX) XXX-XX-XX.';
+      'Номер для ответа на вашу заявку.';
     if(valid)phone.removeAttribute('aria-invalid');
     else if(current||validateEmpty)phone.setAttribute('aria-invalid','true');
     else phone.removeAttribute('aria-invalid');
@@ -292,7 +300,7 @@ function initForms(){
   }
   document.addEventListener('click',event=>{
     const trigger=event.target.closest('[data-flow]');
-    if(trigger)openForm(trigger.dataset.flow);
+    if(trigger)openForm(trigger.dataset.flow,trigger.dataset.topic||'');
   });
   $('#dialogClose').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
@@ -319,20 +327,11 @@ function initForms(){
     const contactChannel=formFlow==='callback'?'phone':channel.value;
     const district=f.elements.district.value.trim();
     const comment=f.elements.comment.value.trim();
-    if(formFlow==='quote'&&name.length<2){showError('Укажите имя — минимум два символа.',f.elements.customerName);return;}
-    if(name&&name.length<2){showError('Если указываете имя, напишите минимум два символа.',f.elements.customerName);return;}
     if(!updatePhoneHint(true)){showError('Проверьте мобильный номер: +7 (9XX) XXX-XX-XX.',phone);return;}
-    if(formFlow==='quote'&&district.length<2){
-      showError('Укажите город или район доставки.',f.elements.district);return;
-    }
-    // Explicit user action, never auto-consent: the backend already enforces consent===true.
-    if(!f.elements.leadConsent.checked){
-      showError('Для отправки заявки подтвердите согласие на обработку персональных данных.',f.elements.leadConsent);
-      return;
-    }
+    // Consent evidence is created only after the user submits a valid form.
     const payload={
       flow:formFlow,name,phone:phoneValue,contactChannel,
-      comment,consent:f.elements.leadConsent.checked,consentVersion:'2026-10-12',requestId:formRequestId,website:f.elements.website.value
+      comment,consent:true,consentVersion:CONSENT_VERSION,consentMethod:CONSENT_METHOD,requestId:formRequestId,website:f.elements.website.value
     };
     if(formFlow==='quote'){
       payload.district=district;
@@ -340,7 +339,7 @@ function initForms(){
       payload.access=f.elements.access.value;
       payload.configuration={
         modelId:formQuote.modelId,sizeId:formQuote.sizeId,
-        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish,roof:state.roof
+        optionIds:[...formQuote.optionIds],bundleId:state.bundleId,finish:state.finish,roof:state.roof,pricebookVersion:formQuote.pricebookVersion
       };
     }
     submit.disabled=true;
@@ -380,6 +379,8 @@ function initForms(){
       submit.textContent=originalLabel;
     }
   });
+  const landingTopic=readLandingContact(location.search);
+  if(landingTopic!==null)openForm('callback',landingTopic);
 }
 function boot(){initModelGallery();renderCatalog();renderBundle();initWeather();initAtmosphere();initBuilder();initMobileMenu();initForms();syncMedia();window.__GARANT_DEMO__={quote,applyBundle:()=>{state.modelId=bundle.modelId;state.sizeId=bundle.sizeId;state.optionIds=[...bundle.optionIds];state.bundleId=bundle.id;state.step=6;renderBuilder();},getState:()=>({step:state.step,modelId:state.modelId,sizeId:state.sizeId,optionIds:[...state.optionIds],bundleId:state.bundleId})};}
 boot();

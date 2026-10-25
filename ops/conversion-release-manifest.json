@@ -1,0 +1,354 @@
+{
+  "expectedApi": "/srv/services/garant-bani-relay/releases/20261015-56bf8a1a82d2-v72",
+  "staticBaselines": {
+    "/srv/sites/dachapar-preview/releases/20261015-search-286ab17b3a02": {
+      "index.html": [
+        "16ba8766375fa0c5176d77d81bef6082486ff16425c7f0068ae50a1a819f7ded",
+        "2e1bb40ba7616ae63010cf7786293d2e9946f019075392027b66363c9290de16"
+      ],
+      "assets/js/app.js": [
+        "33fac7b8d264d5666ef1162de5f9bed684af5ab824da7581152e0ad2013a5977",
+        "ec02cdeba5766285f2682bd65be6916b8f5af734c5de67e6653de1652abf9f92"
+      ],
+      "assets/js/landing-model.js": [
+        "11e71027641200083236dacaca8f72271459477d5218cf95ea7ac2e1f884a825",
+        "185ef09669ab79e0a0965884481b594823cec4d429a202bef04318e8ce0834ca"
+      ],
+      "data/catalog-pricebook.json": [
+        "5503f16d0ad3ee82a98af1bf0319c6af428e290d6709b21da64d98aca192237d",
+        "f44f7602516f729758a870f26711f39dae22145b894d24eada40fb20c1389973"
+      ],
+      "llms.txt": [
+        "54b270ea0918125d8f5554628fc0a29905bc543553dd5128915e8a3a6689d555",
+        "907f16d4411c253a3e6ef8d7a0842d9722e9ee96df828cd5abaa6dd6994a465e"
+      ],
+      "sitemap.xml": [
+        "6e38ba744748f745e3b746004c28035c1882859c06d9a5e7382888f1837bb85a",
+        "b3d7d128ea2b68f87d102eb301eaa254fec587c8bb4c7b2ec900cac66358a3d6"
+      ],
+      "bani/index.html": [
+        "2ca53deefbe77c8006383a4d8eb2d8d32f458a739639cb1908dbeb4975b4f74e",
+        "4032452af54f2ffa872bc542b28602ac4a44b2cccafa444cbdc0f2574c4175ab"
+      ],
+      "bani/kvadro/index.html": [
+        "0421e0db38d614f6f9ff7a51d44b361d360d5441ff8cc7766dce3bc7cfd7fe5f",
+        "e3a87571d14e629651e5e9da241cf586640a71b935823d392201cc8f986b8416"
+      ],
+      "bani/parus/index.html": [
+        "3c920f8890380c3183b2d9604bb1564aab90279160a1fee6ab551a961cfbcc8b",
+        "d4f26cca57fee8a15d28babd2a49f6152f483ca9b1afc1440ad224423f9393d8"
+      ],
+      "bani/viking/index.html": [
+        "420368fbe2c2f153026140430412b0e2576350897620ba24cdec6b4454594db4",
+        "4e1261fc8828ebb8d8370dadc8a0b51735d1df0e23e3096e1b77b3fe5e3a9ab2"
+      ],
+      "bani/kvadro-haus/index.html": [
+        "1d7c88b99907c8e20afc425a2ea7aa8052c8917d1f2f4fea70f212b4837fc660",
+        "a546749b2d0e20269a9a29569fb1fccb1c9c2d6d943cc82ce847c232449e64a3"
+      ],
+      "dostavka-i-ustanovka/index.html": [
+        "7791c65a2f80f905e355e5c143a528bba9f5cb230022872a6d75a40e2b40394b",
+        "fe73e1cea1923412a91e08bfd163d2edd684e21cfbfb69dd23ee142bdab06235"
+      ],
+      "voprosy/index.html": [
+        "54aa8b40903f50c7b72309ff3b7d153f6e1950916391e33ed2969d3bd81b7bc3",
+        "8ed13be196619b6e348358ca479357e6437ebedc426decd14f50c25d03f42833"
+      ],
+      "kontakty/index.html": [
+        "40ca548785499a67ff7cb984ef718254efde40dbb7c8091546fce80f7c86e34d",
+        "d30cc135363915b230858ddb0a732e9c29742caf69ec8d5e6980aefa56d31d99"
+      ],
+      "assets/css/site.css": [
+        "23c0bac5d0327b2297b9dcd09784f02014e2aadcbb950f1948833a88ec1fb127",
+        "3f14e2d95cd302d41f1f58ba46bdab112eefbdb5e06d6247bfe852b024613132"
+      ],
+      "consent.html": [
+        "96910af8a0f43f1964c1d458391c5b34be9c4db931e651b128e46a5e3cf11b36",
+        "c7e0c9dd5a9dcda58802f23a1a76ccbcc40b57521f194c6fc312434fa1c8582d"
+      ],
+      "privacy.html": [
+        "270a1a8a7118c1e4176241e4dbdd7f6fe854c4abba6dab53c881a8519a6766e4",
+        "776188fd07b35bf470d31c26a1e78c3ab5654ef80af7d3631e835bb39ecef87d"
+      ]
+    },
+    "/srv/sites/dachapar-preview/releases/20261016-phone-2226029e175e": {
+      "index.html": [
+        "48888b565a344a3954d143cf948e7f2b58c3204a26ed737b757fab8a8bc95fed",
+        "5d47c3e61b6cd9dbc8ee28854d047b99321f0b6aa32df64e1f9cb2b049bdb673"
+      ],
+      "assets/js/app.js": [
+        "2c36e5482cf34ebf838b84dc5e2063892e969bf69ce5194c42dfdd18ec1dd639",
+        "b1071172d6fe25bf7d1de9daf7d4b9c91e3ecda0218c2729cdcadb2a18049443"
+      ],
+      "assets/js/landing-model.js": [
+        "50124ca9d4b2c480bf78d8f0ecd80ebbf54515765bb87e29476cbc520a697882",
+        "72d073dada1720db0a08ffb51d58db174b699034000c502e102d0b4e0ef7ae58"
+      ],
+      "data/catalog-pricebook.json": [
+        "5503f16d0ad3ee82a98af1bf0319c6af428e290d6709b21da64d98aca192237d",
+        "f44f7602516f729758a870f26711f39dae22145b894d24eada40fb20c1389973"
+      ],
+      "llms.txt": [
+        "716fb7feebdce54c160ab7e9c85e91aa44cb6a59913efa91c51e8871b7e8f3f9",
+        "e91d7d7c5eb111f805f6d38e0c6b2ec68059d77d5a40cf0c90c0b5f7eff18fb1"
+      ],
+      "sitemap.xml": [
+        "5cc6b7cc731318f0defaf5f107ee9afec54e4bf661507e2e18732289a11cf39a",
+        "d58d21ede412d5a4569029694cf661ffc6e5b32f4287500e1d4b742f77d33f37"
+      ],
+      "bani/index.html": [
+        "d678f81c46bddb6e1dcb58b8e35d7010a42a115919280702f72c348c5844dd70",
+        "e5f7b1af3948ec696e0ad3a8e60682c1b3640f5046a7c1352d9caaf837781313"
+      ],
+      "bani/kvadro/index.html": [
+        "535a240d78a88178bcaf9591be4c89372266777789d3b6f7d8492e60165c3972",
+        "df3598267b4de189c56e56e94c9c062e767a5faa1a81936f94e1708997e2af59"
+      ],
+      "bani/parus/index.html": [
+        "6ef9bd06c1ae093e075168d781ee345ecafad0fa5f159e54a6dba1803cf44331",
+        "6f8b6a65b6baeea53051f76034ad02bbdce818acbc15a911165259bd937e8c16"
+      ],
+      "bani/viking/index.html": [
+        "4795dbe48ebe766744c6803857c10c181f6b6c11cfd4e9f347fd5c6e0c745ada",
+        "8559937ada3d6782ae933d8dc0725d96b185c91fad06c1781302f46ba60714b6"
+      ],
+      "bani/kvadro-haus/index.html": [
+        "ae152deff1eacc080daf7757c8c86d9011803af3c02c8a275fa761da9081039e",
+        "e2abfd098c7c0c29e08aaf0947ec5f2ae45edce38dccb6122f0d39058dfdff3c"
+      ],
+      "dostavka-i-ustanovka/index.html": [
+        "0e9bf79de49868eae6525794bbe7313e1318630b2738c11e417f4d03e534c2df",
+        "29ce9b2f666fbf6818457fbe6b4a8104037e0b288a2306d416c71b21e4803a7b"
+      ],
+      "voprosy/index.html": [
+        "8b9824fe9f770d5e9f4ffac57c1758242bf1cd9b5f6e3999d1fdae002ad12762",
+        "ef633c6aeeaf83275edf34db4fcc6c4454bf0044fe79882ef5a4f2fe8d8ad5da"
+      ],
+      "kontakty/index.html": [
+        "42fd2abfbe583e525b2a584a17b0e301797ff0fcfccf6b58c12f6c75002317ad",
+        "65ad7594f88208f952c7ce7bc2861265363f6f6da19ddb42dc46f2fe0d56e72a"
+      ],
+      "assets/css/site.css": [
+        "23c0bac5d0327b2297b9dcd09784f02014e2aadcbb950f1948833a88ec1fb127",
+        "3f14e2d95cd302d41f1f58ba46bdab112eefbdb5e06d6247bfe852b024613132"
+      ],
+      "consent.html": [
+        "96910af8a0f43f1964c1d458391c5b34be9c4db931e651b128e46a5e3cf11b36",
+        "c7e0c9dd5a9dcda58802f23a1a76ccbcc40b57521f194c6fc312434fa1c8582d"
+      ],
+      "privacy.html": [
+        "270a1a8a7118c1e4176241e4dbdd7f6fe854c4abba6dab53c881a8519a6766e4",
+        "776188fd07b35bf470d31c26a1e78c3ab5654ef80af7d3631e835bb39ecef87d"
+      ]
+    },
+    "/srv/sites/dachapar-preview/releases/20261016-prices-6cad820aa003": {
+      "index.html": [
+        "59ee2e4fd58522838ae1fa7c338c4e5ffd254c7ca7e54629e472d797e7ff167f",
+        "a11f88a395beb815112630740e25f12f724287e38edf5357edbc0f50d949fcb7"
+      ],
+      "assets/js/app.js": [
+        "777c2a94d4d8ee015a0dffa4ff5c8601b01f6e9944ef6296c2645151cfb9fa2b",
+        "c4a2d310d6e2ff01f31663f88b1fd839e4d046ba582fd232eb4df11ba9375c27"
+      ],
+      "assets/js/landing-model.js": [
+        "50124ca9d4b2c480bf78d8f0ecd80ebbf54515765bb87e29476cbc520a697882",
+        "72d073dada1720db0a08ffb51d58db174b699034000c502e102d0b4e0ef7ae58"
+      ],
+      "data/catalog-pricebook.json": [
+        "218ae4476e8d9fc2581f16e92cc45c46255dc0b0f5cf987cd082b3d63ec7ada6",
+        "26f667c78d863a02f1348ace3fd35605885677e9e9bf1af02ec1522428e923d7"
+      ],
+      "llms.txt": [
+        "716fb7feebdce54c160ab7e9c85e91aa44cb6a59913efa91c51e8871b7e8f3f9",
+        "e91d7d7c5eb111f805f6d38e0c6b2ec68059d77d5a40cf0c90c0b5f7eff18fb1"
+      ],
+      "sitemap.xml": [
+        "5cc6b7cc731318f0defaf5f107ee9afec54e4bf661507e2e18732289a11cf39a",
+        "d58d21ede412d5a4569029694cf661ffc6e5b32f4287500e1d4b742f77d33f37"
+      ],
+      "bani/index.html": [
+        "cb8c760513f2b8bcdba0de6843654f99fc3d25a5c34c327a66e1501cdf6c997a",
+        "f3794783ac719f1609afb6d17f1e05bc7d360f88af6917069ca1708869f62311"
+      ],
+      "bani/kvadro/index.html": [
+        "3b63085caf5febaabdac25a1dc22c7b71cf0e5844a841d98e2e283ba0548f200",
+        "6139cf836e174e9e4d745df5a554fd6959190b2372e6bfa7533fddce8567d9a1"
+      ],
+      "bani/parus/index.html": [
+        "333be927a8ae8cfd96aa9e3f9d0bfba9e5898a1a9512646367eb3e80bf0b77fd",
+        "9f5c69fdb1ddc4a8c769bcf7ed9ece5239fad08f1c4a66105c1d19671d0e1497"
+      ],
+      "bani/viking/index.html": [
+        "73f9c02e0f5c035c2fece7e2f1a6d52aeb46a44231010739ad09ed994e783a9d",
+        "ea1e2adf5b2bbc806e04e2266a687ac41feff6db830f187c951fb3983a2bfed7"
+      ],
+      "bani/kvadro-haus/index.html": [
+        "cdc0c82a8fdadf9e336fe1c7a340534e093703ca0e7ae75bab8992291b31218e",
+        "d41a20bb72d1c314c641ef94f049d2d7168fd52deab43dcb86d62402be82ed54"
+      ],
+      "dostavka-i-ustanovka/index.html": [
+        "0e9bf79de49868eae6525794bbe7313e1318630b2738c11e417f4d03e534c2df",
+        "29ce9b2f666fbf6818457fbe6b4a8104037e0b288a2306d416c71b21e4803a7b"
+      ],
+      "voprosy/index.html": [
+        "8b9824fe9f770d5e9f4ffac57c1758242bf1cd9b5f6e3999d1fdae002ad12762",
+        "ef633c6aeeaf83275edf34db4fcc6c4454bf0044fe79882ef5a4f2fe8d8ad5da"
+      ],
+      "kontakty/index.html": [
+        "42fd2abfbe583e525b2a584a17b0e301797ff0fcfccf6b58c12f6c75002317ad",
+        "65ad7594f88208f952c7ce7bc2861265363f6f6da19ddb42dc46f2fe0d56e72a"
+      ],
+      "assets/css/site.css": [
+        "23c0bac5d0327b2297b9dcd09784f02014e2aadcbb950f1948833a88ec1fb127",
+        "3f14e2d95cd302d41f1f58ba46bdab112eefbdb5e06d6247bfe852b024613132"
+      ],
+      "consent.html": [
+        "96910af8a0f43f1964c1d458391c5b34be9c4db931e651b128e46a5e3cf11b36",
+        "c7e0c9dd5a9dcda58802f23a1a76ccbcc40b57521f194c6fc312434fa1c8582d"
+      ],
+      "privacy.html": [
+        "270a1a8a7118c1e4176241e4dbdd7f6fe854c4abba6dab53c881a8519a6766e4",
+        "776188fd07b35bf470d31c26a1e78c3ab5654ef80af7d3631e835bb39ecef87d"
+      ]
+    }
+  },
+  "apiGuards": {
+    "server/garant-bani-relay.mjs": [
+      "74270a0c4fa6ed599421561d11b927741da9acc3d3fe325fb87635d075ac33bf",
+      "f353c358691e341a6a921cb0bccd681d8a97c63b24a2fb10acce06ff9246a8f0"
+    ],
+    "server/lead-store.mjs": [
+      "9e7eb2f3e4b8d2efc3fd6ea230aab72401c5b1255014a3d042e55f1babc8a796",
+      "fd28de74d5f2fa5d8df155d6511b711f66e34128baf974523abc8467f981519e"
+    ],
+    "server/manager-api.mjs": [
+      "7e19a29aa77fd1077f0d69d46659d4264a8c26fba2d833b8886b9faaf5a55acf",
+      "4e4f270a196369416125290919e8fc01ec21eb428e66cf49202e395fac146c75"
+    ],
+    "server/manager-auth.mjs": [
+      "1fcb55b81bc0a963ffa198f9bae54b2db71e05e6f03ae0637d8104c1aa458a3b",
+      "48d2e9d3448025eb4a925b56563255dcbe62a1ad02a5ffbe4e3a4e15d5356f1b"
+    ],
+    "data/catalog-pricebook.json": [
+      "5503f16d0ad3ee82a98af1bf0319c6af428e290d6709b21da64d98aca192237d",
+      "f44f7602516f729758a870f26711f39dae22145b894d24eada40fb20c1389973"
+    ],
+    "data/pricebook.js": [
+      "75fec12efb993e151bac327aae92ad9cd3ecc0b7d0421f1f5873397d024e768c",
+      "a025f51c4db0a1c03ddd31ae99777f3bf254fb121257739b89428592497fceeb"
+    ],
+    "data/legacy-v64-pricebook.js": [
+      "b32c286e9d7936cb5b5b3deb01a2a2625fde40040781153faa87fed078504f5d",
+      "b77f27c638f67274100b0f6987c374b8b1646c456227c5a6439d38ceeffaea8e"
+    ],
+    "assets/js/quote-engine.js": [
+      "6a25a7695de3917e9158a0c2c90d142ea83fbe2b8a22c64895769408723436dd",
+      "6bb4e5fb59706e587f9a444220e255a5d61b4b5d2978251e22316044c191d79f"
+    ]
+  },
+  "webFiles": [
+    "index.html",
+    "assets/js/app.js",
+    "assets/js/landing-model.js",
+    "data/catalog-pricebook.json",
+    "llms.txt",
+    "sitemap.xml",
+    "bani/index.html",
+    "bani/kvadro/index.html",
+    "bani/parus/index.html",
+    "bani/viking/index.html",
+    "bani/kvadro-haus/index.html",
+    "dostavka-i-ustanovka/index.html",
+    "voprosy/index.html",
+    "kontakty/index.html",
+    "assets/css/site.css",
+    "assets/js/lead-consent.js",
+    "consent.html",
+    "privacy.html"
+  ],
+  "apiFiles": [
+    "server/garant-bani-relay.mjs",
+    "data/catalog-pricebook.json",
+    "data/legacy-v72-catalog.json",
+    "data/legacy-v72-pricebook.js",
+    "assets/js/lead-consent.js"
+  ],
+  "apiBaselines": {
+    "/srv/services/garant-bani-relay/releases/20261015-56bf8a1a82d2-v72": {
+      "server/garant-bani-relay.mjs": [
+        "74270a0c4fa6ed599421561d11b927741da9acc3d3fe325fb87635d075ac33bf",
+        "f353c358691e341a6a921cb0bccd681d8a97c63b24a2fb10acce06ff9246a8f0"
+      ],
+      "server/lead-store.mjs": [
+        "9e7eb2f3e4b8d2efc3fd6ea230aab72401c5b1255014a3d042e55f1babc8a796",
+        "fd28de74d5f2fa5d8df155d6511b711f66e34128baf974523abc8467f981519e"
+      ],
+      "server/manager-api.mjs": [
+        "7e19a29aa77fd1077f0d69d46659d4264a8c26fba2d833b8886b9faaf5a55acf",
+        "4e4f270a196369416125290919e8fc01ec21eb428e66cf49202e395fac146c75"
+      ],
+      "server/manager-auth.mjs": [
+        "1fcb55b81bc0a963ffa198f9bae54b2db71e05e6f03ae0637d8104c1aa458a3b",
+        "48d2e9d3448025eb4a925b56563255dcbe62a1ad02a5ffbe4e3a4e15d5356f1b"
+      ],
+      "data/catalog-pricebook.json": [
+        "5503f16d0ad3ee82a98af1bf0319c6af428e290d6709b21da64d98aca192237d",
+        "f44f7602516f729758a870f26711f39dae22145b894d24eada40fb20c1389973"
+      ],
+      "data/pricebook.js": [
+        "75fec12efb993e151bac327aae92ad9cd3ecc0b7d0421f1f5873397d024e768c",
+        "a025f51c4db0a1c03ddd31ae99777f3bf254fb121257739b89428592497fceeb"
+      ],
+      "data/legacy-v64-pricebook.js": [
+        "b32c286e9d7936cb5b5b3deb01a2a2625fde40040781153faa87fed078504f5d",
+        "b77f27c638f67274100b0f6987c374b8b1646c456227c5a6439d38ceeffaea8e"
+      ],
+      "assets/js/quote-engine.js": [
+        "6a25a7695de3917e9158a0c2c90d142ea83fbe2b8a22c64895769408723436dd",
+        "6bb4e5fb59706e587f9a444220e255a5d61b4b5d2978251e22316044c191d79f"
+      ]
+    },
+    "/srv/services/garant-bani-relay/releases/20261016-prices-6cad820aa003": {
+      "assets/js/quote-engine.js": [
+        "6a25a7695de3917e9158a0c2c90d142ea83fbe2b8a22c64895769408723436dd",
+        "6bb4e5fb59706e587f9a444220e255a5d61b4b5d2978251e22316044c191d79f"
+      ],
+      "data/legacy-v72-catalog.json": [
+        "5503f16d0ad3ee82a98af1bf0319c6af428e290d6709b21da64d98aca192237d",
+        "f44f7602516f729758a870f26711f39dae22145b894d24eada40fb20c1389973"
+      ],
+      "data/legacy-v72-pricebook.js": [
+        "88f3f8cf075616cf912c0ac7cd7a470c0687059c556dcfd6775f537fd7c852a0",
+        "afb5025204ea850f16193ef16c2c229fc8b4df294a6c2cb8941a1f31c6444998"
+      ],
+      "data/catalog-pricebook.json": [
+        "218ae4476e8d9fc2581f16e92cc45c46255dc0b0f5cf987cd082b3d63ec7ada6",
+        "26f667c78d863a02f1348ace3fd35605885677e9e9bf1af02ec1522428e923d7"
+      ],
+      "server/manager-api.mjs": [
+        "4e4f270a196369416125290919e8fc01ec21eb428e66cf49202e395fac146c75",
+        "7e19a29aa77fd1077f0d69d46659d4264a8c26fba2d833b8886b9faaf5a55acf"
+      ],
+      "server/manager-auth.mjs": [
+        "1fcb55b81bc0a963ffa198f9bae54b2db71e05e6f03ae0637d8104c1aa458a3b",
+        "48d2e9d3448025eb4a925b56563255dcbe62a1ad02a5ffbe4e3a4e15d5356f1b"
+      ],
+      "data/legacy-v64-pricebook.js": [
+        "b32c286e9d7936cb5b5b3deb01a2a2625fde40040781153faa87fed078504f5d",
+        "b77f27c638f67274100b0f6987c374b8b1646c456227c5a6439d38ceeffaea8e"
+      ],
+      "server/garant-bani-relay.mjs": [
+        "7ab389096bf718e7c0ec99508330115fb13888b7a197baf7da5f00f2004f2425",
+        "fe69f8ee55e06dba1b7c0d35d4c05acd20decd4d8c28c381806289399ef7f35e"
+      ],
+      "server/lead-store.mjs": [
+        "9e7eb2f3e4b8d2efc3fd6ea230aab72401c5b1255014a3d042e55f1babc8a796",
+        "fd28de74d5f2fa5d8df155d6511b711f66e34128baf974523abc8467f981519e"
+      ],
+      "data/pricebook.js": [
+        "75fec12efb993e151bac327aae92ad9cd3ecc0b7d0421f1f5873397d024e768c",
+        "a025f51c4db0a1c03ddd31ae99777f3bf254fb121257739b89428592497fceeb"
+      ]
+    }
+  }
+}

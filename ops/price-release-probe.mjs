@@ -1,0 +1,16 @@
+// Read-only runtime import. Does not load credentials, open the production DB or send MAX.
+import {pathToFileURL} from 'node:url';
+import {resolve} from 'node:path';
+const root=resolve(process.argv[2]);
+const {validateBaniLead}=await import(pathToFileURL(resolve(root,'server/garant-bani-relay.mjs')));
+const {PRICEBOOK}=await import(pathToFileURL(resolve(root,'data/pricebook.js')));
+const input={flow:'quote',name:'Изолированная проверка',phone:'+79991234567',district:'Изолированный тест',base:'ready',access:'yes',consent:true,consentVersion:'2026-10-14',configuration:{modelId:'kvadro',sizeId:'500',optionIds:[],bundleId:null,finish:'pine',roof:'brown',pricebookVersion:PRICEBOOK.version}};
+const fresh=validateBaniLead(input);if(fresh.estimate.total!==505000)throw Error('NEW_RUNTIME_PRICE_MISMATCH');
+const full=validateBaniLead({...input,configuration:{...input.configuration,optionIds:PRICEBOOK.bundle.optionIds,bundleId:PRICEBOOK.bundle.id}});if(full.estimate.total!==630000)throw Error('BUNDLE_PRICE_MISMATCH');
+delete input.configuration.pricebookVersion;
+if(validateBaniLead(input).estimate.total!==370000)throw Error('OLD_TAB_COMPATIBILITY_BROKEN');
+for(const model of PRICEBOOK.models)for(const [sizeId,amount] of Object.entries(model.sizes)){
+ const got=validateBaniLead({...input,configuration:{...input.configuration,modelId:model.id,sizeId,pricebookVersion:PRICEBOOK.version}});
+ if(got.estimate.total!==amount)throw Error('MATRIX_PRICE_MISMATCH');
+}
+console.log('PRICE_RUNTIME_PROBE=PASS; NEW_AND_OLD_BOOKS=PASS; PERSISTENCE_WRITES=0; MAX_CALLS=0');

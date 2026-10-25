@@ -68,15 +68,17 @@ test('V6.7: featured kit presents 14 included options without line item pricing'
   assert.match(app,/\$\('#bundleOptions'\)\.innerHTML=markup/);
   assert.doesNotMatch(app,/\$\('#bundleOptions'\)\.innerHTML=options\.map/);
   assert.match(html,/id="bundleNew"/);
-  assert.match(html,/Готовый комплект за 490 000 ₽/);
-  assert.match(html,/Доставку рассчитываем отдельно/);
+  assert.match(html,/Готовый комплект за 630 000 ₽/);
+  // V7.2 explicitly prices transport/handling/assembly and site connections separately.
+  assert.match(html,/Доставку, разгрузку, монтаж, основание и внешние подключения рассчитаем отдельно/);
+  assert.match(html,/id="delivery"[\s\S]*?разгрузка манипулятором/);
 });
 test('V6.7: no repeated fake interior section and no legal street address in visible footer',()=>{
   assert.doesNotMatch(html,/id="mood"/);
   assert.doesNotMatch(html,/id="model-interiors"/);
   assert.doesNotMatch(html,/footer-operator/);
   assert.match(html,/href="privacy.html"/);
-  assert.match(read('privacy.html'),/Герцена, д\. 114/);
+  assert.match(read('privacy.html'),/Ленинградская, д\. 97/);
 });
 test('V6.7: standalone gallery module included in exact review ZIP and syntax gate',()=>{
   assert.match(pack,/assets\/js\/catalog-gallery-v67\.js/);
