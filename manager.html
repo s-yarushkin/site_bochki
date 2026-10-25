@@ -45,6 +45,11 @@
       <div class="stat"><span>В работе</span><strong id="countProgress">—</strong></div>
       <div class="stat"><span>КП отправлено</span><strong id="countQuoted">—</strong></div>
     </section>
+    <nav id="siteTabs" class="site-tabs" aria-label="Источник заявки">
+      <button type="button" class="site-tab" data-site="all" aria-pressed="true">Все заявки</button>
+      <button type="button" class="site-tab" data-site="garant-bani" aria-pressed="false">Гарант Бани</button>
+      <button type="button" class="site-tab" data-site="quadro-ready" aria-pressed="false">КВАДРО READY</button>
+    </nav>
     <div class="workspace">
       <section class="leads-pane" aria-label="Список заявок">
         <form id="filterForm" class="filters">
@@ -75,6 +80,12 @@
           <div class="detail-block" id="contactBlock">
             <h3>Контакт клиента</h3>
             <dl id="contactInfo"></dl>
+          </div>
+          <div class="detail-block" id="notificationRetryBlock" hidden>
+            <h3>Уведомление MAX не доставлено</h3>
+            <p class="muted fine">Заявка сохранена. Сначала проверьте, не появилось ли сообщение в группе: после таймаута результат отправки может быть неизвестен.</p>
+            <button id="retryMaxButton" type="button" class="btn outline">Повторить отправку MAX</button>
+            <p id="retryMaxStatus" role="status" class="muted fine"></p>
           </div>
           <div class="detail-block" id="configurationBlock">
             <h3>Что выбрал клиент</h3>
