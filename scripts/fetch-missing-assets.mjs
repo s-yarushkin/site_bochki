@@ -10,4 +10,3 @@ for(const o of JSON.parse(readFileSync(resolve(web,'viking-built-media/catalog.j
 let recovered=[],missing=[];const queue=[...wanted].filter(p=>!existsSync(resolve(web,'.'+p)));
 async function worker(){while(queue.length){const path=queue.shift();try{const r=await fetch(base+path,{signal:AbortSignal.timeout(20000)});if(!r.ok||r.headers.get('content-type')?.includes('text/html')){missing.push(path);continue;}const data=Buffer.from(await r.arrayBuffer());if(!data.length||data.length>20e6)throw Error('SIZE');const dest=resolve(web,'.'+path);mkdirSync(dirname(dest),{recursive:true});writeFileSync(dest,data);recovered.push({path,sha256:createHash('sha256').update(data).digest('hex'),bytes:data.length});}catch{missing.push(path);}}}
 await Promise.all(Array.from({length:4},worker));writeFileSync(resolve(root,'.local/recovered-public-assets.json'),JSON.stringify({recovered,missing},null,2));console.log(JSON.stringify({recovered:recovered.length,missing}));
-
