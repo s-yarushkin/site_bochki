@@ -15,7 +15,7 @@
   const size=q.get('planSize');if(size&&size!=='all'&&/^[0-9x.]{1,18}$/.test(size))dest.searchParams.set('size',size);
   const id=q.get('viewPlan');if(id&&/^[a-zA-Z0-9_-]{1,90}$/.test(id))dest.searchParams.set('plan',id);
   if(id&&q.get('viewMirror')==='1')dest.searchParams.set('mirror','1');
-  for(const name of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid']){const value=q.get(name);if(value&&/^[a-zA-Z0-9а-яА-ЯёЁ_.:+-]{1,180}$/.test(value))dest.searchParams.set(name,value)}
+  for(const name of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid']){const value=q.get(name);if(value&&/^[a-zA-Z0-9а-яА-ЯёЁ _.:+\-/(),]{1,180}$/.test(value))dest.searchParams.set(name,value)}
   return dest.pathname+dest.search;
  }
  root.DachaParPlanRoute=galleryRoute;

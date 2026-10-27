@@ -1,0 +1,6 @@
+* text=auto eol=lf
+# Release guards compare the served bytes, including existing line endings.
+web/** -text
+api/** -text
+*.webp binary
+*.woff2 binary

@@ -1,0 +1,452 @@
+[
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-06",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Боковой вход и корпус",
+    "image": "/kvadro-media/assets/photos/kq-06-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-06#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-08",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Фасад и боковой вход",
+    "image": "/kvadro-media/assets/photos/kq-08-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-08#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-05",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Окно комнаты отдыха",
+    "image": "/kvadro-media/assets/photos/kq-05-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-05#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-13",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Комната отдыха",
+    "image": "/kvadro-media/assets/photos/kq-13-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-13#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-12",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Парная: полки в два яруса",
+    "image": "/kvadro-media/assets/photos/kq-12-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-12#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-11",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Парная с другого ракурса",
+    "image": "/kvadro-media/assets/photos/kq-11-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-11#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-09",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Печь, бак и ограждение",
+    "image": "/kvadro-media/assets/photos/kq-09-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-09#photos"
+  },
+  {
+    "model": "kvadro",
+    "objectId": "timber-graphite",
+    "photoId": "kq-10",
+    "title": "Тёплое дерево и графитовая кровля",
+    "caption": "Вход в парную и выносная топка",
+    "image": "/kvadro-media/assets/photos/kq-10-960.webp",
+    "url": "/bani/kvadro/?work=timber-graphite&photo=kq-10#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "timber",
+    "photoId": "01_night",
+    "title": "Дерево и белое остекление",
+    "caption": "Общий вид вечером",
+    "image": "/parus-media/assets/photos/01_night-960.webp",
+    "url": "/bani/parus/?work=timber&photo=01_night#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "slats",
+    "photoId": "02_exterior",
+    "title": "Дерево и тёмные рейки",
+    "caption": "Фасад и боковая стена",
+    "image": "/parus-media/assets/photos/02_exterior-960.webp",
+    "url": "/bani/parus/?work=slats&photo=02_exterior#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "slats",
+    "photoId": "02_lounge",
+    "title": "Дерево и тёмные рейки",
+    "caption": "Комната отдыха",
+    "image": "/parus-media/assets/photos/02_lounge-960.webp",
+    "url": "/bani/parus/?work=slats&photo=02_lounge#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "slats",
+    "photoId": "02_steam",
+    "title": "Дерево и тёмные рейки",
+    "caption": "Парная",
+    "image": "/parus-media/assets/photos/02_steam-960.webp",
+    "url": "/bani/parus/?work=slats&photo=02_steam#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "terrace",
+    "photoId": "03_evening",
+    "title": "Бирюзовый Парус с террасой",
+    "caption": "Вечерний свет",
+    "image": "/parus-media/assets/photos/03_evening-960.webp",
+    "url": "/bani/parus/?work=terrace&photo=03_evening#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "terrace",
+    "photoId": "03_day",
+    "title": "Бирюзовый Парус с террасой",
+    "caption": "Терраса и вход днём",
+    "image": "/parus-media/assets/photos/03_day-960.webp",
+    "url": "/bani/parus/?work=terrace&photo=03_day#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "cream",
+    "photoId": "04_exterior",
+    "title": "Светлая отделка и тёмные акценты",
+    "caption": "Общий вид",
+    "image": "/parus-media/assets/photos/04_exterior-960.webp",
+    "url": "/bani/parus/?work=cream&photo=04_exterior#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "cream",
+    "photoId": "04_wash",
+    "title": "Светлая отделка и тёмные акценты",
+    "caption": "Внутреннее помещение",
+    "image": "/parus-media/assets/photos/04_wash-960.webp",
+    "url": "/bani/parus/?work=cream&photo=04_wash#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "cream",
+    "photoId": "04_stove",
+    "title": "Светлая отделка и тёмные акценты",
+    "caption": "Печь, бак и ограждение",
+    "image": "/parus-media/assets/photos/04_stove-960.webp",
+    "url": "/bani/parus/?work=cream&photo=04_stove#photos"
+  },
+  {
+    "model": "parus",
+    "objectId": "cream",
+    "photoId": "04_roof",
+    "title": "Светлая отделка и тёмные акценты",
+    "caption": "Кровля и отделка",
+    "image": "/parus-media/assets/photos/04_roof-960.webp",
+    "url": "/bani/parus/?work=cream&photo=04_roof#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "terrace-window",
+    "photoId": "kh7-07",
+    "title": "Терраса и большое окно в парной",
+    "caption": "Фасад и терраса",
+    "image": "/qh-media/assets/photos/kh7-07-960.webp",
+    "url": "/bani/kvadro-haus/?work=terrace-window&photo=kh7-07#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "terrace-window",
+    "photoId": "kh7-06",
+    "title": "Терраса и большое окно в парной",
+    "caption": "Парная с большим окном",
+    "image": "/qh-media/assets/photos/kh7-06-960.webp",
+    "url": "/bani/kvadro-haus/?work=terrace-window&photo=kh7-06#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "terrace-window",
+    "photoId": "kh7-08",
+    "title": "Терраса и большое окно в парной",
+    "caption": "Комната отдыха",
+    "image": "/qh-media/assets/photos/kh7-08-960.webp",
+    "url": "/bani/kvadro-haus/?work=terrace-window&photo=kh7-08#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "terrace-window",
+    "photoId": "kh7-01",
+    "title": "Терраса и большое окно в парной",
+    "caption": "Зона мойки и хранения",
+    "image": "/qh-media/assets/photos/kh7-01-960.webp",
+    "url": "/bani/kvadro-haus/?work=terrace-window&photo=kh7-01#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "terrace-window",
+    "photoId": "kh7-04",
+    "title": "Терраса и большое окно в парной",
+    "caption": "Душевая",
+    "image": "/qh-media/assets/photos/kh7-04-960.webp",
+    "url": "/bani/kvadro-haus/?work=terrace-window&photo=kh7-04#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "terrace-window",
+    "photoId": "kh7-03",
+    "title": "Терраса и большое окно в парной",
+    "caption": "Вид со стороны участка",
+    "image": "/qh-media/assets/photos/kh7-03-960.webp",
+    "url": "/bani/kvadro-haus/?work=terrace-window&photo=kh7-03#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "timber-terrace",
+    "photoId": "kh1-16",
+    "title": "Дерево и просторная терраса",
+    "caption": "Вход и терраса",
+    "image": "/qh-media/assets/photos/kh1-16-960.webp",
+    "url": "/bani/kvadro-haus/?work=timber-terrace&photo=kh1-16#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "timber-terrace",
+    "photoId": "kh1-04",
+    "title": "Дерево и просторная терраса",
+    "caption": "Комната отдыха",
+    "image": "/qh-media/assets/photos/kh1-04-960.webp",
+    "url": "/bani/kvadro-haus/?work=timber-terrace&photo=kh1-04#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "timber-terrace",
+    "photoId": "kh1-06",
+    "title": "Дерево и просторная терраса",
+    "caption": "Зона мойки",
+    "image": "/qh-media/assets/photos/kh1-06-960.webp",
+    "url": "/bani/kvadro-haus/?work=timber-terrace&photo=kh1-06#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "timber-terrace",
+    "photoId": "kh1-13",
+    "title": "Дерево и просторная терраса",
+    "caption": "Полки в парной",
+    "image": "/qh-media/assets/photos/kh1-13-960.webp",
+    "url": "/bani/kvadro-haus/?work=timber-terrace&photo=kh1-13#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "timber-terrace",
+    "photoId": "kh1-11",
+    "title": "Дерево и просторная терраса",
+    "caption": "Печь и ограждение",
+    "image": "/qh-media/assets/photos/kh1-11-960.webp",
+    "url": "/bani/kvadro-haus/?work=timber-terrace&photo=kh1-11#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "timber-terrace",
+    "photoId": "kh1-02",
+    "title": "Дерево и просторная терраса",
+    "caption": "Корпус и кровля",
+    "image": "/qh-media/assets/photos/kh1-02-960.webp",
+    "url": "/bani/kvadro-haus/?work=timber-terrace&photo=kh1-02#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "panoramic",
+    "photoId": "kh3-09",
+    "title": "Панорамный фасад в дереве",
+    "caption": "Фасад и боковая стена",
+    "image": "/qh-media/assets/photos/kh3-09-960.webp",
+    "url": "/bani/kvadro-haus/?work=panoramic&photo=kh3-09#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "panoramic",
+    "photoId": "kh3-05",
+    "title": "Панорамный фасад в дереве",
+    "caption": "Светлая комната отдыха",
+    "image": "/qh-media/assets/photos/kh3-05-960.webp",
+    "url": "/bani/kvadro-haus/?work=panoramic&photo=kh3-05#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "panoramic",
+    "photoId": "kh3-08",
+    "title": "Панорамный фасад в дереве",
+    "caption": "Парная",
+    "image": "/qh-media/assets/photos/kh3-08-960.webp",
+    "url": "/bani/kvadro-haus/?work=panoramic&photo=kh3-08#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "panoramic",
+    "photoId": "kh3-10",
+    "title": "Панорамный фасад в дереве",
+    "caption": "Печь в парной",
+    "image": "/qh-media/assets/photos/kh3-10-960.webp",
+    "url": "/bani/kvadro-haus/?work=panoramic&photo=kh3-10#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "grey",
+    "photoId": "kh4-02",
+    "title": "Светлый фасад и тёмная кровля",
+    "caption": "Общий вид",
+    "image": "/qh-media/assets/photos/kh4-02-960.webp",
+    "url": "/bani/kvadro-haus/?work=grey&photo=kh4-02#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "grey",
+    "photoId": "kh4-01",
+    "title": "Светлый фасад и тёмная кровля",
+    "caption": "Моечная",
+    "image": "/qh-media/assets/photos/kh4-01-960.webp",
+    "url": "/bani/kvadro-haus/?work=grey&photo=kh4-01#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "grey",
+    "photoId": "kh4-03",
+    "title": "Светлый фасад и тёмная кровля",
+    "caption": "Вход в парную",
+    "image": "/qh-media/assets/photos/kh4-03-960.webp",
+    "url": "/bani/kvadro-haus/?work=grey&photo=kh4-03#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "grey",
+    "photoId": "kh4-05",
+    "title": "Светлый фасад и тёмная кровля",
+    "caption": "Печь и дымоход",
+    "image": "/qh-media/assets/photos/kh4-05-960.webp",
+    "url": "/bani/kvadro-haus/?work=grey&photo=kh4-05#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "wide-glazing",
+    "photoId": "kh6-02",
+    "title": "Широкое остекление и светлый интерьер",
+    "caption": "Фасад с широким остеклением",
+    "image": "/qh-media/assets/photos/kh6-02-960.webp",
+    "url": "/bani/kvadro-haus/?work=wide-glazing&photo=kh6-02#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "wide-glazing",
+    "photoId": "kh6-04",
+    "title": "Широкое остекление и светлый интерьер",
+    "caption": "Просторная комната отдыха",
+    "image": "/qh-media/assets/photos/kh6-04-960.webp",
+    "url": "/bani/kvadro-haus/?work=wide-glazing&photo=kh6-04#photos"
+  },
+  {
+    "model": "kvadro-house",
+    "objectId": "wide-glazing",
+    "photoId": "kh6-03",
+    "title": "Широкое остекление и светлый интерьер",
+    "caption": "Парная со светлыми полками",
+    "image": "/qh-media/assets/photos/kh6-03-960.webp",
+    "url": "/bani/kvadro-haus/?work=wide-glazing&photo=kh6-03#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "cream",
+    "photoId": "cream-outside",
+    "title": "Светлый фасад и тёплый свет",
+    "caption": "Светлый фасад с арочным входом",
+    "image": "/viking-built-media/assets/photos/cream-outside-960.webp",
+    "url": "/bani/viking/?work=cream&photo=cream-outside#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "cream",
+    "photoId": "cream-lounge",
+    "title": "Светлый фасад и тёплый свет",
+    "caption": "Комната отдыха со столом и лавками",
+    "image": "/viking-built-media/assets/photos/cream-lounge-960.webp",
+    "url": "/bani/viking/?work=cream&photo=cream-lounge#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "cream",
+    "photoId": "cream-steam",
+    "title": "Светлый фасад и тёплый свет",
+    "caption": "Парная с двумя уровнями полков",
+    "image": "/viking-built-media/assets/photos/cream-steam-960.webp",
+    "url": "/bani/viking/?work=cream&photo=cream-steam#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "brown",
+    "photoId": "brown-outside",
+    "title": "Тёмное дерево и светлая окантовка",
+    "caption": "Общий вид на дачном участке",
+    "image": "/viking-built-media/assets/photos/brown-outside-960.webp",
+    "url": "/bani/viking/?work=brown&photo=brown-outside#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "brown",
+    "photoId": "brown-steam",
+    "title": "Тёмное дерево и светлая окантовка",
+    "caption": "Парная с угловыми полками",
+    "image": "/viking-built-media/assets/photos/brown-steam-960.webp",
+    "url": "/bani/viking/?work=brown&photo=brown-steam#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "brown",
+    "photoId": "brown-lounge",
+    "title": "Тёмное дерево и светлая окантовка",
+    "caption": "Комната отдыха с лавкой-сундуком",
+    "image": "/viking-built-media/assets/photos/brown-lounge-960.webp",
+    "url": "/bani/viking/?work=brown&photo=brown-lounge#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "deck",
+    "photoId": "deck-outside",
+    "title": "С настилом для отдыха на улице",
+    "caption": "Викинг с деревянным настилом",
+    "image": "/viking-built-media/assets/photos/deck-outside-960.webp",
+    "url": "/bani/viking/?work=deck&photo=deck-outside#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "deck",
+    "photoId": "deck-side",
+    "title": "С настилом для отдыха на улице",
+    "caption": "Вход и окно со стороны настила",
+    "image": "/viking-built-media/assets/photos/deck-side-960.webp",
+    "url": "/bani/viking/?work=deck&photo=deck-side#photos"
+  },
+  {
+    "model": "viking",
+    "objectId": "deck",
+    "photoId": "deck-lounge",
+    "title": "С настилом для отдыха на улице",
+    "caption": "Светлая комната отдыха",
+    "image": "/viking-built-media/assets/photos/deck-lounge-960.webp",
+    "url": "/bani/viking/?work=deck&photo=deck-lounge#photos"
+  }
+]

@@ -1,0 +1,21 @@
+name: DachaPar public checks
+on:
+  pull_request:
+  push:
+    branches: [main, 'codex/dachapar-*']
+permissions:
+  contents: read
+jobs:
+  public:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm test
+      - run: python scripts/check-public.py
+      - run: node --check api/server/garant-bani-relay.mjs

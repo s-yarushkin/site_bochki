@@ -1,5 +1,5 @@
 import { normalizeState } from './quote.mjs?v=r93-20261026';
-import { CONSENT_VERSION, CONSENT_METHOD } from './lead-consent.mjs';
+import { CONSENT_VERSION, CONSENT_METHOD } from './lead-consent.mjs?v=r100-20261027';
 
 export const CONTACT_CHANNELS = ['phone', 'max', 'telegram', 'whatsapp'];
 export function normalizeSettlement(value) {

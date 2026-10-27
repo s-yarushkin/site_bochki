@@ -1,0 +1,15 @@
+{
+  "name": "dachapar-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/journey.test.mjs tests/analytics.test.mjs",
+    "dev": "node scripts/dev-server.mjs",
+    "verify:static": "python scripts/check-public.py",
+    "release": "python scripts/build-release.py",
+    "test:api": "node --test tests/api.test.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

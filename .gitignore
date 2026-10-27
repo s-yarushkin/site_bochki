@@ -9,3 +9,6 @@ api/server/private/
 api/server/r85-pricebook.mjs
 api/server/r93-r90-pricebook.mjs
 api/server/r85-public-pricebook.mjs
+
+__pycache__/
+*.pyc

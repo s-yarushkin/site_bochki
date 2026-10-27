@@ -1,7 +1,7 @@
-import {normalizedPhone,submitLead} from './lead-client.mjs?v=r93-20261026';
+import {normalizedPhone,submitLead} from './lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from './phone-mask.mjs';
 import {planLabel} from './r94-plan-labels.mjs?v=r94-20261026';
-import {analytics} from './analytics-runtime.mjs';
+import {analytics} from './analytics-runtime.mjs?v=r100-20261027';
 
 const CHANNELS={telegram:'Telegram',max:'MAX'};
 export function buildPlanInfoRequest(plan,mirror,fields,requestId){

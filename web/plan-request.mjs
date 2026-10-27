@@ -1,8 +1,8 @@
-import {normalizedPhone,submitLead} from './lead-client.mjs?v=r93-20261026';
+import {normalizedPhone,submitLead} from './lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from './phone-mask.mjs';
 const names={kvadro:'Квадро',viking:'Викинг',parus:'Парус','kvadro-house':'Квадро Хаус'};
 const planLabel=p=>(names[p.model]||'')+' '+String(p.dimensions.lengthM).replace('.',',')+' × '+String(p.dimensions.widthM).replace('.',',')+' м · вариант '+p.variantNumber;
-import {analytics} from './analytics-runtime.mjs';
+import {analytics} from './analytics-runtime.mjs?v=r100-20261027';
 
 const CHANNELS={telegram:'Telegram',max:'MAX'};
 export function buildPlanInfoRequest(plan,mirror,fields,requestId){
@@ -47,14 +47,14 @@ export function openPlanInfoRequest(plan,mirror=false){
   const selected=form.querySelector('input[name=channel]:checked').value;let payload;
   try{payload=buildPlanInfoRequest(plan,mirror,{phone:phone.value,channel:selected},ctx.requestId||crypto.randomUUID());}
   catch{error.textContent='Проверьте номер мобильного телефона.';error.hidden=false;phone.setAttribute('aria-invalid','true');phone.focus();return;}
-  const attribution=analytics.attribution();if(attribution)payload.attribution=attribution;
+  const attribution=analytics.attribution(),clientId=await analytics.clientID();if(attribution||clientId)payload.attribution={...attribution,...(clientId?{clientId}:{})};
   const{requestId,...content}=payload,key=JSON.stringify(content);if(key!==ctx.key){ctx.key=key;ctx.requestId=crypto.randomUUID();}payload.requestId=ctx.requestId;
   ctx.sending=true;for(const n of form.elements)n.disabled=true;submit.textContent='Отправляем…';
   try{
    const confirmation=await submitLead(payload,await settings(),location.origin);
    resultTitle.textContent=confirmation.duplicate?'Запрос уже получен':'Запрос получен';resultText.textContent='Менеджер пришлёт подробности об этой планировке в '+CHANNELS[selected]+'. Если не получится написать, позвоним, чтобы уточнить контакт.';
    form.hidden=true;intro.hidden=true;result.hidden=false;back.focus();
-   analytics.confirmed(confirmation.receipt,{flow:'callback',requestId:payload.requestId});
+   analytics.confirmed(confirmation.receipt,{flow:'callback',requestId:payload.requestId,purpose:'plan_info',model:plan.model,plan_id:plan.id,mirrored:mirror});
   }catch(e){
    error.textContent=e.message==='RATE_LIMITED'?'Слишком много попыток. Попробуйте позже или позвоните: +7 (951) 734-99-99.':e.message==='IN_PROGRESS'?'Запрос ещё отправляется. Подождите немного и повторите попытку.':'Не удалось отправить запрос. Попробуйте ещё раз или позвоните: +7 (951) 734-99-99.';error.hidden=false;
   }finally{ctx.sending=false;for(const n of form.elements)n.disabled=false;submit.textContent='Пришлите мне подробности';if(!dialog.open)cleanup();}

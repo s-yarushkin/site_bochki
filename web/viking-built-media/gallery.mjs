@@ -1,3 +1,4 @@
+import {choosePhoto} from '../photo-choice.mjs?v=r100-20261027';
 // Isolated built-object gallery. No pricing, form, API or authentication writes.
 const catalogURL = new URL('./catalog.json', import.meta.url);
 const assetURL = new URL('./assets/photos/', import.meta.url);
@@ -49,7 +50,7 @@ function createDialog(objects) {
   const title = el('h2'); title.id='vk-gallery-title';
   const description = el('p'); description.id='vk-description';
   const note = el('p','vk-note'); note.id='vk-note';
-  const cta = el('a','vk-button','Обсудить свой Викинг'); cta.href='/?model=viking&request=custom#configure';
+  const cta=button('Выбрать эту баню как ориентир','vk-button');cta.addEventListener('click',()=>choosePhoto('viking',current,current.photos[index]));
   caption.append(counter,title,description,note,cta);
   shell.append(close,el('p','vk-eyebrow','Викинг · Примеры выполненных работ'),tabs,stage,status,thumbs,caption); d.append(shell); document.body.append(d);
   d.addEventListener('click', event => {
@@ -90,7 +91,7 @@ async function openPhoto(id, from) {
   const catalog=await loadCatalog(), object=catalog.objects.find(o=>o.id===id);
   if(!object)return;
   if(!dialog)dialog=createDialog(catalog.objects);
-  current=object;index=0;origin=from||document.activeElement;draw();if(!dialog.open)dialog.showModal();
+  current=object;const start=new URLSearchParams(location.search).get('work')===id?new URLSearchParams(location.search).get('photo'):null;index=Math.max(0,object.photos.findIndex(p=>p.id===start));origin=from||document.activeElement;draw();if(!dialog.open)dialog.showModal();
 }
 document.addEventListener('click',e=>{
   const trigger=e.target.closest('[data-vk-object]');

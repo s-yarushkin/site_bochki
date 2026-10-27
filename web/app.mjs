@@ -1,10 +1,11 @@
+import {CHOICE_KEY,REFERENCE_KEY,readJSON,writeJSON,cleanReference,referenceFromURL,variantURL,selectPlan,selectionChange} from './journey-state.mjs?v=r100-20261027';
 import {applyPlanLabels} from './r94-plan-labels.mjs?v=r94-20261026';
 import { appendReference as appendQhReference } from './qh-media/content.mjs';
 import { appendReference as appendKqReference, referenceLabel as kqReferenceLabel } from './kvadro-media/content.mjs';
 import { appendReference } from './parus-media/content.mjs';
 import { MODEL_IDS, DEFAULT_STATE, normalizeState, availableOptions, sizeLabel, calculate, pricedOption, comfortState, dossier, rub } from './quote.mjs?v=r93-20261026';
-import {analytics} from './analytics-runtime.mjs';
-import { buildLead, buildCallback, normalizeSettlement, submitLead } from './lead-client.mjs?v=r93-20261026';
+import {analytics} from './analytics-runtime.mjs?v=r100-20261027';
+import { buildLead, buildCallback, normalizeSettlement, submitLead } from './lead-client.mjs?v=r100-20261027';
 import { attachPhoneMask } from './phone-mask.mjs';
 import { publicPackageName } from './r81-package-names.mjs?v=r93-20261026';
 
@@ -17,8 +18,12 @@ const profiles = {
   'kvadro-house': { image: 'house-p3', name: 'Квадро Хаус', description: 'Форматы 4 × 4, 5 × 4, 6 × 4, 6 × 5 и 6 × 6 м' },
 };
 document.addEventListener('dp:r85-change',event=>{if(!catalog)return;const patch=event.detail;state=normalizeState(catalog,{...state,...patch});interaction('dp_builder_interaction',{step:3,model:state.model,placement:'builder'});render();});
-document.addEventListener('dp:r85-plan',event=>{if(!catalog)return;const plan=catalog.r85.plans.find(x=>x.id===event.detail.id);if(!plan)return;const same=state.model===plan.model&&state.size===plan.size;state=normalizeState(catalog,{...(same?state:{}),model:plan.model,size:plan.size,planId:plan.id,mirror:event.detail.mirror});interaction('dp_builder_interaction',{step:3,model:state.model,placement:'builder'});render();});
-const STORAGE_KEY = 'dachapar-choice-r85-v1';
+document.addEventListener('dp:r85-plan',event=>{if(!catalog)return;const plan=catalog.r85.plans.find(x=>x.id===event.detail.id);if(!plan)return;state=selectPlan(catalog,plan,event.detail.mirror,state);interaction('dp_plan_select',{plan_id:plan.id,mirrored:state.mirror,model:state.model,placement:'builder'});render();});
+const STORAGE_KEY=CHOICE_KEY;
+let photoReferences=[],photoReference=null,activePurpose='callback',lastQuoteView=null;
+function purposeFor(flow,placement){const p=new URLSearchParams(location.search);return placement==='delivery'||p.get('callback')==='delivery'?'delivery':photoReference?'photo':p.get('request')==='custom'?'selection_help':flow==='quote'?'quote':'callback'}
+function journeyContext(){return {purpose:activePurpose,pagePath:location.pathname,...(settlement?{district:settlement}:{}),...(photoReference?{reference:cleanReference(photoReference)}:{}),...(activeFlow==='callback'&&quoteSnapshot?{configuration:buildLead(catalog,quoteSnapshot,{phone:$('#lead-phone').value,channel:'phone'},crypto.randomUUID()).configuration}:{})};}
+function renderReference(){const box=$('#r100-reference');if(!box)return;box.replaceChildren();box.hidden=!photoReference;if(!photoReference)return;const im=document.createElement('img');im.src=photoReference.image;im.alt=photoReference.caption;im.width=140;im.height=100;const text=document.createElement('p');text.textContent='Ориентир: '+photoReference.title+' · '+photoReference.caption+'. Детали исполнения согласуем отдельно.';const remove=makeButton('Убрать ориентир',()=>{photoReference=null;try{localStorage.removeItem(REFERENCE_KEY)}catch{}persist();renderReference();});box.append(im,text,remove);}
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const contactDialog = $('#contact-dialog'), galleryDialog = $('#gallery-dialog');
 let settlement = '', activeFlow = 'callback', quoteSnapshot = null;
@@ -50,6 +55,14 @@ function interaction(event, params = {}) {
 function persist() {
   if (!catalog || !hasSelection) return;
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { /* Selection remains available in memory. */ }
+  // A shared link becomes the current variant after editing. Keep campaigns intact.
+  const u=new URL(location.href);
+  if(u.searchParams.has('choice')||u.searchParams.has('model')||u.searchParams.has('plan')){
+    u.searchParams.set('choice',JSON.stringify(state));u.searchParams.set('model',state.model);u.searchParams.set('size',state.size);if(photoReference)u.searchParams.set('reference',JSON.stringify(cleanReference(photoReference)));else u.searchParams.delete('reference');
+    for(const key of ['plan','planMirror'])u.searchParams.delete(key);
+    if(state.planId){u.searchParams.set('plan',state.planId);if(state.mirror)u.searchParams.set('planMirror','1');}
+    history.replaceState(history.state,'',u);
+  }
 }
 
 function makeButton(text, onClick, pressed = false, key = '') {
@@ -72,7 +85,7 @@ function paintControls() {
   modelBox.replaceChildren(...MODEL_IDS.map(id => makeButton(profiles[id].name, () => selectModel(id, false), state.model === id, 'model-' + id)));
   $('#size-legend').textContent = catalog.models[state.model].sizeKind === 'full' ? 'Размер бани' : 'Длина бани';
   sizeBox.replaceChildren(...Object.keys(catalog.prices[state.model]).map(id => makeButton(sizeLabel(catalog, state.model, id), () => {
-    state = normalizeState(catalog, { ...state, size: id });
+    const changed=selectionChange(catalog,state,{size:id});state=changed.state;if(changed.planRemoved)toast('Для нового размера выберите подходящую планировку.');
     interaction('dp_size_select', { size: id, model: state.model, placement: 'landing_selection' });
     render();
   }, state.size === id, 'size-' + id)));
@@ -204,7 +217,8 @@ function render() {
   $('#comfort-choice').hidden = !catalog.r85.models[state.model]?.sizes[state.size]?.deluxe;
   if($('#comfort-choice .package-caption'))$('#comfort-choice .package-caption').textContent=catalog.models[state.model].name;
   $('#region').value = settlement;
-  updateQuote(); persist();
+  updateQuote(); persist();renderReference();
+  const planLink=$('#r100-select-plan');if(planLink){const u=new URL('/planirovki/',location.origin);u.searchParams.set('model',state.model);const p=catalog.r85.plans.find(x=>x.id===state.planId);if(p){u.searchParams.set('plan',p.id);if(state.mirror)u.searchParams.set('mirror','1')}planLink.href=u.pathname+u.search;planLink.textContent=p?'Изменить планировку ↗':'Выбрать планировку ↗';}
   window.__r85={book:catalog.r85,state:structuredClone(state),siteModels:catalog.models};document.dispatchEvent(new CustomEvent('dp:r85-render',{detail:window.__r85}));
 }
 
@@ -218,6 +232,7 @@ function selectModel(model, scroll = true) {
   if (catalog) {
     const matchingSize = Object.hasOwn(catalog.prices[model], state.size) ? state.size : Object.keys(catalog.prices[model])[0];
     state = normalizeState(catalog, { ...state, model, size: matchingSize, options: [] });
+    if(photoReference&&photoReference.model!==model){photoReference=null;try{localStorage.removeItem(REFERENCE_KEY)}catch{}toast('Выбрана другая модель. Фотоориентир можно выбрать в её галерее.');}
     interaction('dp_model_select', { model, placement: scroll ? 'landing_catalog' : 'landing_selection' });
     render();
   } else initialModel = model;
@@ -230,6 +245,7 @@ $$('[data-select-model]').forEach(b => b.addEventListener('click', () => selectM
 $$('[data-cta]').forEach(a => a.addEventListener('click', () => track('dp_cta_click', { placement: 'landing_' + a.dataset.cta })));
 
 function openContact(flow = 'callback', placement = 'page') {
+  activePurpose=purposeFor(flow,placement);
   setMenu(false);
   if (sendingLead) { if (!contactDialog.open) contactDialog.showModal(); return; }
   activeFlow = flow === 'quote' && catalog ? 'quote' : 'callback';
@@ -238,18 +254,18 @@ function openContact(flow = 'callback', placement = 'page') {
   if(!callback)markBuilderStart();
   // A request for a free plan is not itself a model selection. Never create a
   // default 5 m Quadro order merely because the visitor opened this dialog.
-  if (!callback && hasSelection) { updateQuote(); persist(); quoteSnapshot = structuredClone(state); }
+  if (catalog && hasSelection) { updateQuote(); persist(); quoteSnapshot = structuredClone(state); }
   else quoteSnapshot = null;
   $('#contact-eyebrow').textContent = callback ? 'Поможем с выбором' : quoteSnapshot ? 'Ваш выбранный вариант' : 'Подберём ваш вариант';
   $('#contact-title').textContent = callback ? (new URLSearchParams(location.search).has('request') ? 'Поможем выбрать баню бесплатно' : 'Перезвоните мне') : 'Бесплатная планировка и расчёт вашей бани';
   $('.dialog-intro', contactDialog).textContent = callback ? 'Оставьте телефон — менеджер перезвонит и ответит на ваши вопросы.' : 'Подберём индивидуальную комплектацию, подготовим планировку, чертёж и расчёт и пришлём вам. Оставьте контакт для ответа.';
-  $('#contact-variant').replaceChildren(); $('#contact-variant').hidden = callback;
+  $('#contact-variant').replaceChildren(); $('#contact-variant').hidden = !quoteSnapshot&&!photoReference;
   if (!callback && !quoteSnapshot) {
     const name = document.createElement('strong'); name.textContent = 'Помочь выбрать модель';
     const note = document.createElement('span'); note.textContent = 'Расскажите, что важно в вашей бане. Начнём с телефонного звонка, затем подготовим планировку и расчёт.';
     $('#contact-variant').append(name, note);
   }
-  if (!callback && quoteSnapshot) {
+  if (quoteSnapshot) {
     const q = calculate(catalog, quoteSnapshot);
     const name = document.createElement('strong'); name.textContent = profiles[quoteSnapshot.model].name + ' · ' + sizeLabel(catalog, quoteSnapshot.model, quoteSnapshot.size) + ' · ' + publicPackageName(catalog,quoteSnapshot) + ' · ' + (q.priceStatus==='calculated'&&!q.wideBody?'≈ '+rub(q.knownTotalRub):rub(q.total));
     const note = document.createElement('span'); note.textContent = (q.priceStatus==='calculated'&&!q.wideBody?'Предварительная цена: состав и стоимость подтвердим до заказа. ':'')+'Доставку и подготовку участка рассчитаем по вашему адресу.';
@@ -259,6 +275,7 @@ function openContact(flow = 'callback', placement = 'page') {
     for (const text of [...catalog.baseInclusions.common, ...(q.plan?['Планировка: '+q.plan.title+(q.plan.mirror?' · зеркально':'')]:[]), ...q.lines.filter(x=>!x.included).map(x=>x.name+' · '+x.quantity+' '+x.unit+' · '+rub(x.price)), ...q.pendingReasons.map(x=>'Уточним: '+x),...(quoteSnapshot.finish?['Оттенок корпуса: '+catalog.finishes.body.find(x=>x.id===quoteSnapshot.finish).name]:[]),...(quoteSnapshot.roof?['Кровля: '+catalog.finishes.roof.find(x=>x.id===quoteSnapshot.roof).name]:[])]) { const item = document.createElement('li'); item.textContent = text; list.append(item); }
     details.append(summary, list); $('#contact-variant').append(name, note, details);
   }
+  if(photoReference){const ref=document.createElement('p');ref.textContent='Фотоориентир: '+photoReference.title+' · '+photoReference.caption+'. Обсудим нужные детали, отделку и оснащение отдельно.';$('#contact-variant').append(ref);}
   $('#quote-contact-fields').hidden = callback;
   $('#lead-name-field').hidden = callback; $('#lead-name').disabled = callback; $('.lead-form-grid').classList.toggle('callback-only',callback);
   if (!quoteSnapshot) $('#lead-channel').value = 'phone';
@@ -270,7 +287,7 @@ function openContact(flow = 'callback', placement = 'page') {
   if (!contactDialog.open) contactDialog.showModal();
   if(!callback && quoteSnapshot){const key=JSON.stringify(quoteSnapshot);if(key!==lastReviewedKey){lastReviewedKey=key;track('dp_builder_complete',{placement:'builder',model:quoteSnapshot.model});}}
   $('#lead-phone').focus();
-  track('dp_cta_click', { placement: 'landing_' + placement }); track('dp_form_open', { flow: activeFlow });
+  track('dp_cta_click', { placement: 'landing_' + placement }); track('dp_form_open', {flow:activeFlow,purpose:activePurpose,placement,model:quoteSnapshot?.model,plan_id:quoteSnapshot?.planId});
 }
 $$('[data-flow]').forEach(b => b.addEventListener('click', () => openContact(b.dataset.flow, b.dataset.placement || 'page')));
 contactDialog.addEventListener('close', () => {if(!formSucceeded)track('dp_form_close', { flow: activeFlow });});
@@ -303,11 +320,11 @@ $$('a[href^="tel:"]').forEach(a => a.addEventListener('click', () => track('dp_p
 $$('input[name=package]').forEach(input => input.addEventListener('change', () => {
   if (!catalog) return;
   state = input.value === 'comfort' ? comfortState(catalog, state) : normalizeState(catalog, { ...state, package:'comfort',doors:[{id:'entry',sku:'OPT_16'},{id:'steam',sku:'OPT_14'}],windows:[{id:'window1',sku:'OPT_28'}] });
-  interaction('dp_builder_interaction', { step: 3, package:input.value, model:state.model, size:state.size, placement: 'landing_selection' });
+  interaction('dp_package_select', { step: 3, package:state.package, model:state.model, size:state.size, placement: 'landing_selection' });
   render();
 }));
 $('#region').addEventListener('input', () => { settlement = normalizeSettlement($('#region').value); });
-function variantText() { return dossier(catalog, state) + (settlement ? '\n\nОбласть, населённый пункт: ' + settlement : ''); }
+function variantText() { return dossier(catalog, state)+(photoReference?'\n\nФотоориентир: '+photoReference.title+' · '+photoReference.caption+'\n'+new URL(photoReference.url,location.origin).href+'\nДетали исполнения согласуем отдельно.':'') + (settlement ? '\n\nОбласть, населённый пункт: ' + settlement : ''); }
 $('#save-variant').addEventListener('click', () => {
   if (!catalog) return;
   hasSelection = true; updateQuote();
@@ -315,15 +332,12 @@ $('#save-variant').addEventListener('click', () => {
   const url = URL.createObjectURL(blob), a = document.createElement('a');
   a.href = url; a.download = 'DachaPar-' + state.model + '-' + state.size + '.txt'; document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  toast('Вариант подготовлен для сохранения.');
+  persist();track('dp_quote_save',{placement:'result',model:state.model,plan_id:state.planId});toast('Вариант подготовлен для сохранения.');
 });
 $('#share-variant').addEventListener('click', () => {
   if (!catalog) return;
-  const url = new URL(location.href); url.search = ''; url.hash = 'configure';
-  url.searchParams.set('model', state.model); url.searchParams.set('size', state.size);if(state.finish)url.searchParams.set('finish',state.finish);if(state.roof)url.searchParams.set('roof',state.roof);
-  url.searchParams.set('choice',JSON.stringify(state));
-  if(Object.keys(state.quantities).length)url.searchParams.set('area',Object.entries(state.quantities).map(([id,n])=>id+':'+n).join(','));
-  // Contact details and location are never placed into a shared URL.
+  const url=new URL(variantURL(location.origin,state,photoReference));
+  track('dp_quote_share',{placement:'result',model:state.model,plan_id:state.planId});
   copy(url.href, 'Ссылка на выбранную баню скопирована.');
 });
 
@@ -356,6 +370,7 @@ if ('IntersectionObserver' in window) {
   $$('[data-model-card]').forEach(el => observer.observe(el));
 }
 drawScene();
+if('IntersectionObserver' in window){new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&catalog){const key=JSON.stringify(state);if(key!==lastQuoteView){lastQuoteView=key;track('dp_quote_view',{placement:'result',model:state.model,package:state.package,plan_id:state.planId});}}},{threshold:.3}).observe($('#quote-total'));}
 
 try { window.ScrollCraft?.mount(document); }
 catch { document.documentElement.classList.remove('sc-ready'); $$('[data-sc-in]').forEach(el => el.classList.add('sc-in')); }
@@ -414,7 +429,8 @@ $('#relay-lead-form').addEventListener('submit', async e => {
     payload.consent = true;
     payload.consentVersion = '2026-10-21';
     payload.consentMethod = 'submit-button-v2';
-    const attribution=analytics.attribution();if(attribution)payload.attribution=attribution;
+    const attribution=analytics.attribution();const clientId=await analytics.clientID();if(attribution||clientId)payload.attribution={...attribution,...(clientId?{clientId}:{})};
+    payload.journeyContext=journeyContext();
     if (flow === 'quote' || new URLSearchParams(location.search).get('request')) {
       const params = new URLSearchParams(location.search);
       const plan = quoteSnapshot?.planId || (params.get('plan')||'').match(/^[a-zA-Z0-9_-]{1,90}$/)?.[0] || '';
@@ -431,6 +447,7 @@ $('#relay-lead-form').addEventListener('submit', async e => {
   } catch {
     $('#relay-error').textContent = 'Проверьте номер мобильного телефона.'; $('#relay-error').hidden = false; $('#lead-phone').setAttribute('aria-invalid','true'); $('#lead-phone').focus(); track('dp_form_error',{flow}); return;
   }
+  track('dp_form_submit_attempt',{flow,purpose:activePurpose,model:quoteSnapshot?.model,plan_id:quoteSnapshot?.planId});
   sendingLead = true;
   $$('#relay-lead-form input, #relay-lead-form select, #relay-lead-form button').forEach(el => {el.disabled = true;});
   const label = $('#relay-submit').textContent; $('#relay-submit').textContent = 'Отправляем…';
@@ -441,7 +458,7 @@ $('#relay-lead-form').addEventListener('submit', async e => {
     $('#relay-result-text').textContent = flow === 'quote' || new URLSearchParams(location.search).has('request') ? 'Запрос получили. Уточним пожелания, подготовим планировку и расчёт и пришлём вам.' : flow === 'callback' || fields.channel === 'phone' ? 'Менеджер перезвонит по указанному номеру.' : 'Ответим в ' + names[fields.channel] + ' по указанному номеру. Если написать не получится, позвоним.';
     $('#relay-result').hidden = false; $('#relay-lead-form').hidden = true;
     formSucceeded=true;
-    analytics.confirmed(result.receipt,{flow,requestId:payload.requestId});
+    analytics.confirmed(result.receipt,{flow,requestId:payload.requestId,purpose:activePurpose,model:quoteSnapshot?.model,plan_id:quoteSnapshot?.planId});
   } catch (error) {
     $('#relay-error').textContent = error.message === 'RATE_LIMITED' ? 'Слишком много попыток. Попробуйте позже или позвоните нам.' : error.message === 'IN_PROGRESS' ? 'Заявка ещё отправляется. Подождите немного и повторите попытку.' : 'Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.';
     $('#relay-error').hidden = false; track('dp_form_error',{flow});
@@ -459,6 +476,10 @@ try {
   if (!response.ok) throw new Error('Catalog load failed');
   catalog = await response.json();
   applyPlanLabels(catalog.r85.plans);
+  try{photoReferences=await fetch('/data/photo-references.json').then(r=>r.ok?r.json():[]);}catch{}
+  const wanted=referenceFromURL(new URLSearchParams(location.search))||cleanReference(readJSON(localStorage,REFERENCE_KEY));
+  photoReference=photoReferences.find(p=>p.model===wanted?.model&&p.objectId===wanted?.objectId&&p.photoId===wanted?.photoId)||null;
+  if(photoReference)writeJSON(localStorage,REFERENCE_KEY,cleanReference(photoReference));
   if (catalog.version !== 'DP-DELUXE-ALL-MODELS-20261026-R93' || MODEL_IDS.some(id => !catalog.prices[id])) throw new Error('Catalog revision mismatch');
   let saved;
   try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)||localStorage.getItem('dachapar-weekend-variant-v1')); } catch { saved = null; }
@@ -469,6 +490,8 @@ try {
   const shared = r85Shared || ((params.has('model')||params.has('plan')) ? { model: params.get('model')||oldPlan?.model||'kvadro', size: params.get('size')||oldPlan?.size||undefined, options: (params.get('options') || '').split(','),quantities:areas,finish:params.get('finish'),roof:params.get('roof'),planId:params.get('plan'),mirror:params.get('planMirror')==='1',package:params.get('request')==='deluxe'?'deluxe':'comfort' } : null);
   state = normalizeState(catalog, {...(shared || saved || {...DEFAULT_STATE,size:'400'}),region:''});
   hasSelection = Boolean(shared || saved);
+  if(photoReference&&photoReference.model!==state.model)photoReference=null;
+  if(shared||saved)track('dp_quote_restore',{placement:'builder',model:state.model,plan_id:state.planId});
   $('#config-app').hidden = false;$('#base-kit-open').hidden=false;
   render();
   if (initialModel) selectModel(initialModel, false);
