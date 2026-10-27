@@ -1,0 +1,20 @@
+/* Text-only additions. Existing photos, layout drawings and product imagery are untouched. */
+.r732-section{margin-block:2rem;scroll-margin-top:6rem}
+.r732-section>p,.r732-section>ul{max-width:76ch}
+.r732-section li+li{margin-top:.45rem}
+.r732-model-content .r732-section:first-child{margin-top:0}
+.r732-model-content .article-cta{margin-top:2rem}
+.r732-faq-more{margin-top:1.25rem}
+.r732-model-content .related-links{margin-top:1rem}
+.r732-section .table-scroll{margin-block:1rem}
+.r732-section th[scope=row]{font-weight:600;text-align:left}
+.r732-journal-intro{max-width:70ch;margin:0 0 1.5rem}
+.journal-card--text-only.r732-new-story{min-height:0;justify-content:flex-start}
+.r732-new-story h3{overflow-wrap:break-word}
+.r732-new-story .read-story{margin-top:auto;padding-top:1rem}
+@media(max-width:767px){
+ .r732-section{margin-block:1.5rem}
+ .r732-section .related-links a{max-width:100%;white-space:normal}
+ .r732-section .content-table th,.r732-section .content-table td{padding:.8rem}
+ .r732-section .content-table{font-size:.94rem}
+}

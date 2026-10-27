@@ -1,0 +1,3 @@
+/* Site entry links only. The gallery has its own independent page and styles. */
+.r94-header-plans{display:none}
+@media(max-width:900px){.r94-header-plans{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:700;white-space:nowrap}.site-header{gap:12px}.site-header .brand{font-size:24px;gap:8px}.site-header .header-phone>span{display:none}.site-header .header-phone{min-height:44px;min-width:32px;justify-content:center}}

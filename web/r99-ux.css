@@ -1,0 +1,81 @@
+/* ДачаПар R93 · редакционный UX-проход, без изменений цен и логики заявок */
+.brand .brand-dot{display:none!important}
+/* Декоративные точки у заголовков не несут смысловой нагрузки. */
+.hero h1::after,.section-top h2::after,.content-header h1::after,.r81-model-faq h2::after,.ritual-heading h2::after,.questions-heading h2::after,.closing-content h2::after{content:none!important}
+/* Скролл-подсказки больше не конкурируют с основными CTA */
+.hero-scroll,.scroll-prompt,.scroll-indicator,.scroll-cue,[data-scroll-hint],[data-scroll-cue],a[href="#models"].scroll-down{display:none!important}
+.models{padding-bottom:clamp(36px,5vw,72px)!important}
+.models .model-description,.models>.media-note,.models>.r81-custom-plan{display:none!important}
+.model-grid{row-gap:clamp(28px,3vw,50px)}
+.models .model-item{display:flex;flex-direction:column}
+.models .model-heading{margin-top:12px;margin-bottom:8px}
+.models .model-heading p{font-size:12px;white-space:nowrap;margin-top:3px}
+.models .model-heading strong{font-size:17px}
+.models .model-bottom{margin-top:auto;padding-top:10px}
+.models .model-page-link{margin-top:9px}
+.models .pp-catalog-hint,.models .pp-card-note,.models .qh-catalog-hint{display:none!important}
+.ritual-heading h2{max-width:760px!important;letter-spacing:-.035em;font-size:clamp(32px,4.1vw,60px);line-height:1.07}
+.configure-top #base-kit-open{display:none!important}
+.r93-kvadro-hero .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.r93-kvadro-hero .r93-intro{max-width:700px;font-size:clamp(16px,1.5vw,19px);line-height:1.55}
+.r93-kvadro-hero .r81-included-assembly{font-size:17px;margin:18px 0}
+.r93-kvadro-hero .r81-header-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.r93-package-compare{padding:clamp(28px,4vw,60px) 0}
+.r93-package-compare .r93-compare-intro{max-width:750px;color:var(--muted,#5b6c60);font-size:15px;line-height:1.5;margin:10px 0 25px}
+.r93-package-compare .r93-package-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.r93-package-compare .r93-package-card{display:flex;flex-direction:column;gap:10px;padding:clamp(22px,3vw,36px);border-radius:18px;background:#f9f8f1;border:1px solid #cbd7cd;min-width:0}
+.r93-package-compare .r93-package-card.r81-deluxe{background:#edf3eb}
+.r93-package-compare .r93-pack-label{margin:0;text-transform:none;font-size:12px;color:#586c5e}
+.r93-package-compare .r93-package-card h3{margin:0;font-size:clamp(21px,2.4vw,28px)}
+.r93-package-compare .r93-package-card .r81-big-price{display:block;font-size:clamp(24px,2.8vw,36px);margin:0 0 10px;color:#20392f}
+.r93-package-compare .r93-package-list{list-style:none;padding:0;margin:0 0 20px;display:grid;gap:12px;line-height:1.45;font-size:14px}
+.r93-package-compare .r93-package-list li{position:relative;padding-left:20px}
+.r93-package-compare .r93-package-list li::before{content:'✓';position:absolute;left:0;color:#2a6447;font-weight:700}
+.r93-package-compare .r93-package-card .r81-primary{margin-top:auto;align-self:flex-start}
+.r93-package-compare .r93-compare-footnote{color:#56665e;font-size:12px;margin:16px 0 0;line-height:1.5}
+#r732-size-prices{display:block;max-width:920px;margin-left:auto;margin-right:auto}
+#r732-size-prices>div{width:100%}
+#r732-size-prices .content-table{width:100%}
+.r88-comfort-inclusions{max-width:960px;margin-left:auto;margin-right:auto}
+.r88-comfort-inclusions ul{line-height:1.55}
+.r81-model-finish{margin-top:36px}
+.r93-plans-back{display:flex;align-items:center;gap:12px;max-width:1240px;margin:16px auto 14px;padding:0 20px;font-size:14px}
+.r93-plans-back a{display:inline-flex;align-items:center;gap:8px;color:#214b37;text-decoration:underline;text-underline-offset:4px;font-weight:650;padding:10px 12px;border-radius:8px}
+.r93-plans-back a:hover,.r93-plans-back a:focus-visible{background:#e0e9db;outline-offset:3px}
+.r93-plans-exit{display:inline-flex;gap:8px;align-items:center;font-size:14px;font-weight:650}
+@media(max-width:700px){
+ .r93-package-compare .r93-package-grid{grid-template-columns:1fr}
+ .r93-package-compare .r93-package-card{padding:22px}
+ .models .model-heading p{font-size:12px}
+ .ritual-heading h2{font-size:clamp(30px,8vw,43px)}
+ .r93-plans-back{padding:0 14px;margin-top:8px}
+ .r93-kvadro-hero .r93-intro{font-size:16px}
+}
+
+/* Исправление узкого экрана галереи Квадро */
+.kq-one-object,.kq-cover,.kq-one-object img{box-sizing:border-box;min-width:0;max-width:100%}
+.kq-cover{width:100%;overflow:hidden}
+.kq-cover img{display:block;width:100%;max-width:100%;height:auto;object-fit:cover}
+.r93-plans-back{justify-content:space-between;flex-wrap:wrap}
+.r93-plans-back .r93-plans-exit{margin-left:auto;color:#42594b}
+
+/* R99 overlay on actual R98. Do not modify any JS-controlled elements. */
+body.r98-home .hero-cta:empty,body.r98-home .r98-scroll{display:none!important}
+body.r98-home .models .model-description,body.r98-home .models>.media-note,body.r98-home .models>.r81-custom-plan{display:none!important}
+body.r98-home .model-item .model-bottom{margin-top:auto}
+body.r98-home .ritual-heading h2{max-width:min(100%,1100px)!important;text-wrap:balance;font-size:clamp(30px,3.4vw,52px);line-height:1.1}
+body.r98-home .configure-top #base-kit-open{display:none!important}
+body.r98-home .questions-heading h2,body.r98-home .r98-help h2{text-wrap:balance}
+/* The R98 image gallery remains interactive; prevent narrow screen overspill */
+.kq-section,.kq-wrap,.kq-one-object,.kq-cover,.kq-one-object img{min-width:0;max-width:100%;box-sizing:border-box}
+.kq-cover{width:100%;overflow:hidden}
+.kq-cover img{max-width:100%;width:100%;height:auto;object-fit:cover}
+/* Comparison has five concrete value lines in both packages; no image duplication */
+.r93-package-compare .r93-package-card{height:100%}
+.r93-package-compare .r93-package-list{margin-bottom:18px}
+.r93-package-compare .r93-package-grid{align-items:stretch}
+@media(max-width:700px){
+ body.r98-home .ritual-heading h2{font-size:clamp(28px,7vw,38px)!important;max-width:100%}
+ .r93-package-compare .r93-package-grid{grid-template-columns:minmax(0,1fr)!important}
+ .r93-package-compare .r93-package-card{width:100%;box-sizing:border-box}
+}

@@ -1,0 +1,6 @@
+/* R99 exit navigation on latest R97 plans page */
+.r99-plans-nav{max-width:1480px;margin:0 auto;padding:8px 24px 15px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.r99-plans-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:9px 13px;border:1px solid #b9cbbb;border-radius:9px;color:#254b39;text-decoration:none;font-size:14px;font-weight:700;background:#f4f8f1}
+.r99-plans-nav a:hover,.r99-plans-nav a:focus-visible{background:#dce9dc;outline-offset:2px}
+.r99-plans-exit{background:#fffdfa!important}
+@media(max-width:650px){.r99-plans-nav{padding:7px 14px 12px;gap:8px}.r99-plans-nav a{font-size:12px;flex:1 1 130px;padding:9px 7px;min-height:42px}}

@@ -1,0 +1,585 @@
+{
+  "source": "Owner-provided Garant Grupp catalog PDF (16pp, 2026)",
+  "sha256_pdf": "d07c4b6f45c7fc2a55f0b23ab525c0f08f3af4cb16b7b7e14e6a675dbaebac19",
+  "publicationStatus": "OWNER_MEDIA_RIGHTS_AND_RENDER_TRUTH_TO_VERIFY",
+  "images": [
+    {
+      "file": "kvadro-outside.webp",
+      "model": "kvadro",
+      "scene": "outside",
+      "sourcePage": 8,
+      "pixelCrop": [
+        63,
+        713,
+        1214,
+        1581
+      ],
+      "width": 1151,
+      "height": 868,
+      "sha256": "e92925e82bda0cd74f05cc5302ab589f28281e5ab3a6955dd948ed0bc93e2d5f",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-steam.webp",
+      "model": "kvadro",
+      "scene": "steam",
+      "sourcePage": 8,
+      "pixelCrop": [
+        0,
+        1581,
+        414,
+        2036
+      ],
+      "width": 414,
+      "height": 455,
+      "sha256": "2baa6f6fed7ddc883e4ef9e93ae393698075d708cc2ffb590051c13f173d5ae9",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-lounge.webp",
+      "model": "kvadro",
+      "scene": "lounge",
+      "sourcePage": 8,
+      "pixelCrop": [
+        420,
+        1581,
+        832,
+        2036
+      ],
+      "width": 412,
+      "height": 455,
+      "sha256": "586e3a7edafd98ec8baadd55b902717694fff8963e192f552357c5d038102e5f",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-entry.webp",
+      "model": "kvadro",
+      "scene": "entry",
+      "sourcePage": 8,
+      "pixelCrop": [
+        832,
+        1581,
+        1250,
+        2036
+      ],
+      "width": 418,
+      "height": 455,
+      "sha256": "81ac37785a54db9869f48f9a777ff4badad720f00dfbddc9748f5f5717d21b2b",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "parus-outside.webp",
+      "model": "parus",
+      "scene": "outside",
+      "sourcePage": 5,
+      "pixelCrop": [
+        45,
+        650,
+        1250,
+        1350
+      ],
+      "width": 1205,
+      "height": 700,
+      "sha256": "0f226017bab4e990d2e967583dc26810b40105a68fdf442e31a90bdb819e6b71",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "parus-steam.webp",
+      "model": "parus",
+      "scene": "steam",
+      "sourcePage": 5,
+      "pixelCrop": [
+        0,
+        1943,
+        250,
+        2174
+      ],
+      "width": 250,
+      "height": 231,
+      "sha256": "3210425084cc26ff97db4d9921da75cd38db30dd647b3f44d5833bc1a26e92c0",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "parus-lounge.webp",
+      "model": "parus",
+      "scene": "lounge",
+      "sourcePage": 5,
+      "pixelCrop": [
+        250,
+        1943,
+        504,
+        2174
+      ],
+      "width": 254,
+      "height": 231,
+      "sha256": "15928caa770497fe537e277f2f17023e411116d447547f469e0a6961e50a84ef",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "parus-stove.webp",
+      "model": "parus",
+      "scene": "stove",
+      "sourcePage": 5,
+      "pixelCrop": [
+        500,
+        1943,
+        754,
+        2174
+      ],
+      "width": 254,
+      "height": 231,
+      "sha256": "ec300dba026ce3c5579fc843c4a54e9a6270479f409f78adba4106819c6ee701",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "parus-shower.webp",
+      "model": "parus",
+      "scene": "shower",
+      "sourcePage": 5,
+      "pixelCrop": [
+        750,
+        1943,
+        1004,
+        2174
+      ],
+      "width": 254,
+      "height": 231,
+      "sha256": "59bfb64654d7e39523cf82574f136470b9a5498eadc3a1478065bb76a000b65c",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "viking-outside.webp",
+      "model": "viking",
+      "scene": "outside",
+      "sourcePage": 7,
+      "pixelCrop": [
+        98,
+        717,
+        1214,
+        1513
+      ],
+      "width": 1116,
+      "height": 796,
+      "sha256": "24ac3c277bc12ee09962c597388fd8fd6ac8571154a23e567a4a1990330bcc49",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "viking-steam.webp",
+      "model": "viking",
+      "scene": "steam",
+      "sourcePage": 7,
+      "pixelCrop": [
+        0,
+        1523,
+        411,
+        1965
+      ],
+      "width": 411,
+      "height": 442,
+      "sha256": "6f8a7ff968d1aeb22515c7599e598488f64a37b8906a1cd108d79410f0dfadaa",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "viking-lounge.webp",
+      "model": "viking",
+      "scene": "lounge",
+      "sourcePage": 7,
+      "pixelCrop": [
+        418,
+        1523,
+        834,
+        1965
+      ],
+      "width": 416,
+      "height": 442,
+      "sha256": "a483f2aebb06ca970f57d715a86cb1279c361baaadc7b5a4ff14f65e0ea65f13",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "viking-stove.webp",
+      "model": "viking",
+      "scene": "stove",
+      "sourcePage": 7,
+      "pixelCrop": [
+        839,
+        1523,
+        1248,
+        1965
+      ],
+      "width": 409,
+      "height": 442,
+      "sha256": "d7d57c561500d38201bdf3b8047e30b63af40450ab8f35d5a739b465f69ec9e2",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-house-outside.webp",
+      "model": "kvadro-house",
+      "scene": "outside",
+      "sourcePage": 4,
+      "pixelCrop": [
+        89,
+        778,
+        1250,
+        1519
+      ],
+      "width": 1161,
+      "height": 741,
+      "sha256": "0ec0cfe6741c83658170e504cea65fb44e50e9df9d06f4ccff1fbc2b0584b1eb",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-house-steam.webp",
+      "model": "kvadro-house",
+      "scene": "steam",
+      "sourcePage": 4,
+      "pixelCrop": [
+        0,
+        1525,
+        420,
+        1903
+      ],
+      "width": 420,
+      "height": 378,
+      "sha256": "9883789c4e7f75a8ca2ee62aa379f07d3c64bfa859c6eb0d754474c096ce652b",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-house-lounge.webp",
+      "model": "kvadro-house",
+      "scene": "lounge",
+      "sourcePage": 4,
+      "pixelCrop": [
+        425,
+        1525,
+        839,
+        1903
+      ],
+      "width": 414,
+      "height": 378,
+      "sha256": "22ba780245df6b3423b8aa70471e1a5e3edff476be2ef7074e32f09468730e42",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-house-stove.webp",
+      "model": "kvadro-house",
+      "scene": "stove",
+      "sourcePage": 4,
+      "pixelCrop": [
+        843,
+        1525,
+        1264,
+        1903
+      ],
+      "width": 421,
+      "height": 378,
+      "sha256": "19cda51b7f31fd839481205e24eaad2f2a8a2302393568f01c07b4663f0ea700",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "kvadro-house-veranda.webp",
+      "model": "kvadro-house",
+      "scene": "veranda",
+      "sourcePage": 4,
+      "pixelCrop": [
+        795,
+        1935,
+        1257,
+        2284
+      ],
+      "width": 462,
+      "height": 349,
+      "sha256": "b1029b120f4a5205af7582a334f201e93b816970c44c60954bfd346f92d5d5dc",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_ADVERTISING_RENDER_OR_COMPOSITE_NOT_VERIFIED_REAL_PHOTO"
+    },
+    {
+      "file": "body-pine.webp",
+      "model": null,
+      "scene": "body-swatch:pine",
+      "sourcePage": 9,
+      "pixelCrop": [
+        80,
+        1085,
+        279,
+        1372
+      ],
+      "width": 199,
+      "height": 287,
+      "sha256": "a380d9a54ee5ed23e722cf4d7801b0fd6b24bb1f760bbfd5bba006e62dfd0f4c",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-teak.webp",
+      "model": null,
+      "scene": "body-swatch:teak",
+      "sourcePage": 9,
+      "pixelCrop": [
+        339,
+        1085,
+        536,
+        1372
+      ],
+      "width": 197,
+      "height": 287,
+      "sha256": "9146d04bc147ff786582f75f02686b844dac3860d54b4080b9639031e0e8c9c6",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-rosewood.webp",
+      "model": null,
+      "scene": "body-swatch:rosewood",
+      "sourcePage": 9,
+      "pixelCrop": [
+        593,
+        1085,
+        789,
+        1372
+      ],
+      "width": 196,
+      "height": 287,
+      "sha256": "87492891e1806285643b144603f51a6dd2c3a88d80044edf9b6281a696691efc",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-larch.webp",
+      "model": null,
+      "scene": "body-swatch:larch",
+      "sourcePage": 9,
+      "pixelCrop": [
+        827,
+        1085,
+        1025,
+        1372
+      ],
+      "width": 198,
+      "height": 287,
+      "sha256": "8a75414f0b15680182df92bfd2d7291950c7027a70f4ea2dd220235fe6040abd",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-redwood.webp",
+      "model": null,
+      "scene": "body-swatch:redwood",
+      "sourcePage": 9,
+      "pixelCrop": [
+        1077,
+        1085,
+        1284,
+        1372
+      ],
+      "width": 207,
+      "height": 287,
+      "sha256": "c1090a569f342ef1ec6d99d09626968991e7ebb2fe8fc2035b870e5666771f1e",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-walnut_wood.webp",
+      "model": null,
+      "scene": "body-swatch:walnut_wood",
+      "sourcePage": 9,
+      "pixelCrop": [
+        1309,
+        1085,
+        1500,
+        1372
+      ],
+      "width": 191,
+      "height": 287,
+      "sha256": "3b6b72b7596894ab4bafb80fe40fcefa1adeed66d25a604a29acf0f0c2e6b041",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-iceberg.webp",
+      "model": null,
+      "scene": "body-swatch:iceberg",
+      "sourcePage": 9,
+      "pixelCrop": [
+        1550,
+        1085,
+        1732,
+        1372
+      ],
+      "width": 182,
+      "height": 287,
+      "sha256": "e88d582fb8e4940a2e6f5575be0ef5a3119538c5390e59d42be13e9b4e8f3dae",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-north_sea.webp",
+      "model": null,
+      "scene": "body-swatch:north_sea",
+      "sourcePage": 9,
+      "pixelCrop": [
+        143,
+        1508,
+        375,
+        1720
+      ],
+      "width": 232,
+      "height": 212,
+      "sha256": "e0f504764f52d0ac257fb7c15b7f415af303431f8c55916b9312c087dbdb69ea",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-scandinavian_gray.webp",
+      "model": null,
+      "scene": "body-swatch:scandinavian_gray",
+      "sourcePage": 9,
+      "pixelCrop": [
+        463,
+        1508,
+        679,
+        1720
+      ],
+      "width": 216,
+      "height": 212,
+      "sha256": "57c7e062193ffef7db93c09498d6add25fefbe197bded7e7936751073511b1ee",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-oak_dufa.webp",
+      "model": null,
+      "scene": "body-swatch:oak_dufa",
+      "sourcePage": 9,
+      "pixelCrop": [
+        782,
+        1508,
+        1036,
+        1720
+      ],
+      "width": 254,
+      "height": 212,
+      "sha256": "2b638d1bd9d21859df396cbda1bc25a21dfe917411023e0f5cfdfe62efff6dac",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-licorice.webp",
+      "model": null,
+      "scene": "body-swatch:licorice",
+      "sourcePage": 9,
+      "pixelCrop": [
+        1125,
+        1508,
+        1357,
+        1720
+      ],
+      "width": 232,
+      "height": 212,
+      "sha256": "595d595f7b8c2ce1acc9312992e648cbcb46af00e870dad09c5a3addc042879f",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "body-ral_7024.webp",
+      "model": null,
+      "scene": "body-swatch:ral_7024",
+      "sourcePage": 9,
+      "pixelCrop": [
+        1411,
+        1508,
+        1643,
+        1720
+      ],
+      "width": 232,
+      "height": 212,
+      "sha256": "7ac9319bb075781a1ab96ee2abae8ef751b3a2720b1150277a170b39379c8bf2",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "roof-green.webp",
+      "model": null,
+      "scene": "roof-swatch:green",
+      "sourcePage": 9,
+      "pixelCrop": [
+        80,
+        1918,
+        423,
+        2116
+      ],
+      "width": 343,
+      "height": 198,
+      "sha256": "2527a4f938753329f226d1368ac03df0ca023d2c1de7c0ad76500d5b938024d6",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "roof-brown.webp",
+      "model": null,
+      "scene": "roof-swatch:brown",
+      "sourcePage": 9,
+      "pixelCrop": [
+        507,
+        1918,
+        850,
+        2116
+      ],
+      "width": 343,
+      "height": 198,
+      "sha256": "0dc76c9cf5be20ccaacb03b4f7a301b29d75dd2af37add4d410c4b9b350e4834",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "roof-red.webp",
+      "model": null,
+      "scene": "roof-swatch:red",
+      "sourcePage": 9,
+      "pixelCrop": [
+        929,
+        1918,
+        1282,
+        2116
+      ],
+      "width": 353,
+      "height": 198,
+      "sha256": "b6ac6abc1c46977af1a3c1b1e4a51a758bc95c46ec91b85c947c38b7a82e8cc2",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    },
+    {
+      "file": "roof-gray.webp",
+      "model": null,
+      "scene": "roof-swatch:gray",
+      "sourcePage": 9,
+      "pixelCrop": [
+        1361,
+        1918,
+        1706,
+        2116
+      ],
+      "width": 345,
+      "height": 198,
+      "sha256": "87bbb8d5f8de56f1a69fab819753e82bdfd3d331be2913eeec0727ccc7440dd6",
+      "license": "PENDING_OWNER_CONFIRMATION",
+      "visualProvenance": "CATALOG_PALETTE_SAMPLE_NOT_AN_EXACT_PHYSICAL_COLOR_REFERENCE"
+    }
+  ]
+}

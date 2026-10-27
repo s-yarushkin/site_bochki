@@ -1,0 +1,31 @@
+{
+  "origin": "https://xn--80aaan1dh9b.xn--p1ai",
+  "basePath": "/",
+  "indexing": true,
+  "brand": "Дача Пар",
+  "phone": "+79517349999",
+  "vkUrl": null,
+  "maxChatUrl": null,
+  "productionOrigin": "https://xn--80aaan1dh9b.xn--p1ai",
+  "recommendedPublicBasePath": "/",
+  "lead": {
+    "enabled": true,
+    "endpoint": "/api/lead",
+    "allowedOrigins": [
+      "https://xn--80aaan1dh9b.xn--p1ai"
+    ],
+    "requiredPricebookVersion": "DP-DELUXE-ALL-MODELS-20261026-R93"
+  },
+  "deploymentMode": "replace-root",
+  "analytics": {
+    "enabled": true,
+    "counterId": 113675581,
+    "allowedOrigins": [
+      "https://xn--80aaan1dh9b.xn--p1ai"
+    ],
+    "webvisor": false
+  },
+  "r85": {
+    "requiredPricebookVersion": "DP-DELUXE-ALL-MODELS-20261026-R93"
+  }
+}

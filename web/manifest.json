@@ -1,0 +1,53 @@
+{
+  "release": "R99-UX-ON-R98-20261027",
+  "expectedWeb": "/srv/sites/dachapar-preview/releases/R98-JOURNEY-3b68e9885b3e",
+  "expectedApi": "/srv/services/garant-bani-relay/releases/R96-PLAN-INFO-004d95fb2255",
+  "sourceSnapshotSha256": "14abdda34eb81b308be0fe6750fd57061b389918bf91a59b6ec4111a04620456",
+  "baseFileSha256": {
+    "index.html": "b715de811a3402c1a35de60d4ca8d7ff68ac035cbd8ffc75a2a4bb143c881abe",
+    "bani/kvadro/index.html": "c2f19c635da7185a81c34fcf6d448a81d2b62e11e09cf1203ae9a7b9cc0971af",
+    "bani/index.html": "f2e09a0cacc31189fbd89ac29ab2fdac9f68ebcd1ee3818f00bbc7ecb97f0d00",
+    "bani/parus/index.html": "bb8b799fb4a5dc3296de1c5cdcd91f14bcc1440239e57f0c489d10b683c1618e",
+    "bani/viking/index.html": "7957137e96dae41512ba85a5f1c3463f8802ddd39bb55e3e221515da3881eb72",
+    "bani/kvadro-haus/index.html": "18ae0f145fb0d6a52282650278edbefd581600616e16368ea8dc5bbdbf256a54",
+    "planirovki/index.html": "ae8d12278425861b2474c1753f3522a2535c088b76968d0c067b352f01d0d168",
+    "plans-page.mjs": "31c2976818cfbef5031a2076f6be7a94b8f84a4cded83bc6db1c5015b052a6d2"
+  },
+  "newFileSha256": {
+    "index.html": "a56df864ead357c95507ec5150075dc6462b03b8c488f112aabb2e62d4a5ee8c",
+    "bani/kvadro/index.html": "81bec21a24c4676018ee543c436162701aab99794c1e82c3850eabbb232a6878",
+    "bani/index.html": "a2a234d8ce0de34f30649173fa8396282963c716d9b8c01911ef5f63abcf095c",
+    "bani/parus/index.html": "e30fe8fe30393a360cb53848777fdb63b3ed3a8eb19557c113ac0421743349d2",
+    "bani/viking/index.html": "8290b142967e029905822d032cdf056e54b41bcec2e0e360d005be701cce53bf",
+    "bani/kvadro-haus/index.html": "a36502b1c3b4a41e3c9dc07115eb9fc518c88215efa1f7968887bc4354b69882",
+    "planirovki/index.html": "b910329469d0ca5d2a07c1f7a35c44a349565e56019fd0f01f0f49920dd2a886",
+    "plans-page.mjs": "20d4c416f8070bdebf31007c392cfbc9288cb00f55d36bbe61ac97e1a8d0efaf",
+    "r99-ux.css": "57e33875368e96e6d904699fde3248becc9838cdb56d5cc12f3966a892039f0f",
+    "r99-plans.css": "c5021b2320834fc1e551b77bc5785a34dd16de7bae39ca5b4ebbce5789e78933"
+  },
+  "changedFiles": [
+    "index.html",
+    "bani/kvadro/index.html",
+    "bani/index.html",
+    "bani/parus/index.html",
+    "bani/viking/index.html",
+    "bani/kvadro-haus/index.html",
+    "planirovki/index.html",
+    "plans-page.mjs",
+    "r99-ux.css",
+    "r99-plans.css"
+  ],
+  "publicGetPaths": [
+    "index.html",
+    "bani/kvadro/index.html",
+    "bani/index.html",
+    "bani/parus/index.html",
+    "bani/viking/index.html",
+    "bani/kvadro-haus/index.html",
+    "planirovki/index.html",
+    "plans-page.mjs",
+    "r99-ux.css",
+    "r99-plans.css"
+  ],
+  "notes": "WEB only. No changes to pricebook API sqlite MAX lead handlers. Preserve latest R98 journey and R97 plans gallery."
+}

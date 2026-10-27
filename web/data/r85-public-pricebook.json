@@ -1,0 +1,4299 @@
+{
+  "version": "DP-DELUXE-ALL-MODELS-20261026-R93",
+  "models": {
+    "kvadro": {
+      "name": "Квадро",
+      "sizes": {
+        "400": {
+          "label": "4 м",
+          "priceRub": 410000,
+          "preFinalComfortPriceRub": 390000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 484000,
+            "comfortPriceRub": 410000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 8.4,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 8.4,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 94707.67,
+            "preFinalComfortPriceRub": 390000,
+            "floorAreaCalculation": "Длина (м) × 2,1 м; расчетная площадь всего пола",
+            "areaBasisConfirmed": "model_nominal_2_1m_width",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца"
+          }
+        },
+        "450": {
+          "label": "4,5 м",
+          "priceRub": 440000,
+          "preFinalComfortPriceRub": 420000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 516000,
+            "comfortPriceRub": 440000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 9.45,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 9.45,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 96072.56,
+            "preFinalComfortPriceRub": 420000,
+            "floorAreaCalculation": "Длина (м) × 2,1 м; расчетная площадь всего пола",
+            "areaBasisConfirmed": "model_nominal_2_1m_width",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца"
+          }
+        },
+        "500": {
+          "label": "5 м",
+          "priceRub": 485000,
+          "deluxe": {
+            "priceRub": 562000,
+            "comfortPriceRub": 485000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 10.5,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 10.5,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 97437.44,
+            "preFinalComfortPriceRub": 465000,
+            "floorAreaCalculation": "Длина (м) × 2,1 м; расчетная площадь всего пола",
+            "areaBasisConfirmed": "model_nominal_2_1m_width",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца"
+          },
+          "preFinalComfortPriceRub": 465000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          }
+        },
+        "550": {
+          "label": "5,5 м",
+          "priceRub": 510000,
+          "preFinalComfortPriceRub": 490000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 588000,
+            "comfortPriceRub": 510000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 11.55,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 11.55,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 98802.32,
+            "preFinalComfortPriceRub": 490000,
+            "floorAreaCalculation": "Длина (м) × 2,1 м; расчетная площадь всего пола",
+            "areaBasisConfirmed": "model_nominal_2_1m_width",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца"
+          }
+        },
+        "600": {
+          "label": "6 м",
+          "priceRub": 525000,
+          "deluxe": {
+            "priceRub": 605000,
+            "comfortPriceRub": 525000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 12.6,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 12.6,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 100167.2,
+            "preFinalComfortPriceRub": 505000,
+            "floorAreaCalculation": "Длина (м) × 2,1 м; расчетная площадь всего пола",
+            "areaBasisConfirmed": "model_nominal_2_1m_width",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца"
+          },
+          "preFinalComfortPriceRub": 505000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          }
+        }
+      }
+    },
+    "viking": {
+      "name": "Викинг",
+      "sizes": {
+        "400": {
+          "label": "4 м",
+          "priceRub": 480000,
+          "preFinalComfortPriceRub": 460000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 569000,
+            "comfortPriceRub": 480000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 9.6,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 9.6,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 109808.04,
+            "preFinalComfortPriceRub": 460000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "450": {
+          "label": "4,5 м",
+          "priceRub": 520000,
+          "preFinalComfortPriceRub": 500000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 611000,
+            "comfortPriceRub": 520000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 10.8,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 10.8,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 111367.9,
+            "preFinalComfortPriceRub": 500000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "500": {
+          "label": "5 м",
+          "priceRub": 620000,
+          "preFinalComfortPriceRub": 600000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 712000,
+            "comfortPriceRub": 620000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 12,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 12,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 112927.77,
+            "preFinalComfortPriceRub": 600000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "550": {
+          "label": "5,5 м",
+          "priceRub": 635000,
+          "preFinalComfortPriceRub": 615000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 729000,
+            "comfortPriceRub": 635000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 13.2,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 13.2,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 114487.64,
+            "preFinalComfortPriceRub": 615000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "600": {
+          "label": "6 м",
+          "priceRub": 645000,
+          "preFinalComfortPriceRub": 625000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 741000,
+            "comfortPriceRub": 645000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 14.4,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 14.4,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 116047.5,
+            "preFinalComfortPriceRub": 625000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        }
+      }
+    },
+    "parus": {
+      "name": "Парус",
+      "sizes": {
+        "400": {
+          "label": "4 м",
+          "priceRub": 450000,
+          "preFinalComfortPriceRub": 430000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 526000,
+            "comfortPriceRub": 450000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 9.6,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 9.6,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 96267.54,
+            "preFinalComfortPriceRub": 430000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 2,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 0,
+            "requiresProductionReview": true
+          }
+        },
+        "450": {
+          "label": "4,5 м",
+          "priceRub": 470000,
+          "preFinalComfortPriceRub": 450000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 547000,
+            "comfortPriceRub": 470000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 10.8,
+              "OPT_95": 1
+            },
+            "floorAreaM2": 10.8,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 97827.4,
+            "preFinalComfortPriceRub": 450000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 2,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 0,
+            "requiresProductionReview": true
+          }
+        },
+        "500": {
+          "label": "5 м",
+          "priceRub": 510000,
+          "preFinalComfortPriceRub": 490000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 602000,
+            "comfortPriceRub": 510000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 12,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 12,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 112927.77,
+            "preFinalComfortPriceRub": 490000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "550": {
+          "label": "5,5 м",
+          "priceRub": 525000,
+          "preFinalComfortPriceRub": 505000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 619000,
+            "comfortPriceRub": 525000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 13.2,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 13.2,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 114487.64,
+            "preFinalComfortPriceRub": 505000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "600": {
+          "label": "6 м",
+          "priceRub": 535000,
+          "preFinalComfortPriceRub": 515000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 631000,
+            "comfortPriceRub": 535000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 14.4,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1
+            },
+            "floorAreaM2": 14.4,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 116047.5,
+            "preFinalComfortPriceRub": 515000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        }
+      }
+    },
+    "kvadro-house": {
+      "name": "Квадро Хаус",
+      "sizes": {
+        "4x4": {
+          "label": "4×4 м",
+          "priceRub": 685000,
+          "preFinalComfortPriceRub": 665000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 797000,
+            "comfortPriceRub": 685000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 16,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1,
+              "OPT_69": 1
+            },
+            "floorAreaM2": 16,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 121377.04,
+            "preFinalComfortPriceRub": 665000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "5x4": {
+          "label": "5×4 м",
+          "priceRub": 795000,
+          "preFinalComfortPriceRub": 775000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 913000,
+            "comfortPriceRub": 795000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 20,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1,
+              "OPT_69": 1
+            },
+            "floorAreaM2": 20,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 126576.59,
+            "preFinalComfortPriceRub": 775000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "6x4": {
+          "label": "6×4 м",
+          "priceRub": 845000,
+          "preFinalComfortPriceRub": 825000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 969000,
+            "comfortPriceRub": 845000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 24,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1,
+              "OPT_69": 1
+            },
+            "floorAreaM2": 24,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 131776.15,
+            "preFinalComfortPriceRub": 825000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "6x5": {
+          "label": "6×5 м",
+          "priceRub": 905000,
+          "preFinalComfortPriceRub": 885000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 1039000,
+            "comfortPriceRub": 905000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 30,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1,
+              "OPT_70": 1
+            },
+            "floorAreaM2": 30,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 141200.33,
+            "preFinalComfortPriceRub": 885000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        },
+        "6x6": {
+          "label": "6×6 м",
+          "priceRub": 965000,
+          "preFinalComfortPriceRub": 945000,
+          "comfortIncluded": {
+            "OPT_46": 1,
+            "OPT_49": 1
+          },
+          "deluxe": {
+            "priceRub": 1109000,
+            "comfortPriceRub": 965000,
+            "included": {
+              "OPT_45": 1,
+              "OPT_46": 1,
+              "OPT_47": 1,
+              "OPT_48": 1,
+              "OPT_49": 1,
+              "OPT_54": 1,
+              "OPT_57": 1,
+              "OPT_64": 1,
+              "OPT_67": 1,
+              "OPT_78": 1,
+              "OPT_79": 1,
+              "OPT_81": 1,
+              "OPT_87": 36,
+              "OPT_95": 1,
+              "ADDED_ROOM": 1,
+              "OPT_71": 1
+            },
+            "floorAreaM2": 36,
+            "defaultEntrySku": "OPT_17",
+            "defaultWindowSku": "OPT_33",
+            "customerExtraBeforeRoundingRub": 150624.52,
+            "preFinalComfortPriceRub": 945000,
+            "floorAreaCalculation": "Длина × ширина выбранного корпуса; площадь уточняется по рабочему чертежу",
+            "areaBasisConfirmed": "nominal_dimensions_pending_drawing",
+            "furniture": {
+              "ordinaryTableCount": 0,
+              "foldingTableCount": 1,
+              "originalTableRrcCreditRub": 0,
+              "creditConfirmation": "NO_CREDIT_BY_OWNER_DECISION"
+            },
+            "priceCalculationNote": "РРЦ доплаты за замену обычного стола откидным ровно 3 000 ₽; зачёт обычного стола не применяется по решению владельца",
+            "priceStatus": "calculated",
+            "roomCount": 3,
+            "assumedBaseRooms": 2,
+            "roomAllowance": 1,
+            "requiresProductionReview": true
+          }
+        }
+      }
+    }
+  },
+  "items": {
+    "OPT_14": {
+      "id": "OPT_14",
+      "label": "Стеклянная дверь 700×1700 мм, 3 петли",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 974916.0,
+      "qhAssemblyUnitCents": 91800.0,
+      "roles": [
+        "steam",
+        "extra"
+      ]
+    },
+    "OPT_15": {
+      "id": "OPT_15",
+      "label": "Железная входная дверь 700×1700",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 2058156.0,
+      "qhAssemblyUnitCents": 193800.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_16": {
+      "id": "OPT_16",
+      "label": "Входная дверь ПВХ 700 × 1800 мм",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 2112318.0,
+      "qhAssemblyUnitCents": 198900.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_17": {
+      "id": "OPT_17",
+      "label": "Дверь ПВХ 800×1800",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 2166480.0,
+      "qhAssemblyUnitCents": 204000.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_18": {
+      "id": "OPT_18",
+      "label": "Дверь ПВХ 800×1900",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 2220642.0,
+      "qhAssemblyUnitCents": 209100.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_19": {
+      "id": "OPT_19",
+      "label": "Дверь ПВХ 900×1800",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 2220642.0,
+      "qhAssemblyUnitCents": 209100.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_20": {
+      "id": "OPT_20",
+      "label": "Две двери ПВХ 1400×1700, белый пластик",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "компл.",
+      "customerUnitCents": 4062150.0,
+      "qhAssemblyUnitCents": 382500.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_21": {
+      "id": "OPT_21",
+      "label": "Две двери ПВХ 1400×1800, белый пластик",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "компл.",
+      "customerUnitCents": 4224636.0,
+      "qhAssemblyUnitCents": 397800.0,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_22": {
+      "id": "OPT_22",
+      "label": "Дверь и большое окно одним комплектом — подберём под вашу баню",
+      "group": "Двери",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "roles": [
+        "entry",
+        "extra"
+      ]
+    },
+    "OPT_23": {
+      "id": "OPT_23",
+      "label": "Тонировка зеркальная двери или окна (+30%)",
+      "group": "Двери",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_24": {
+      "id": "OPT_24",
+      "label": "Ламинация окна или двери, одна сторона (+30%)",
+      "group": "Двери",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_25": {
+      "id": "OPT_25",
+      "label": "Форточка 30×30 / 30×40 см",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 324972.0,
+      "qhAssemblyUnitCents": 30600.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_26": {
+      "id": "OPT_26",
+      "label": "Окно в деревянной раме 60×60, открывающееся",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 433296.0,
+      "qhAssemblyUnitCents": 40800.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_27": {
+      "id": "OPT_27",
+      "label": "Окно в деревянной раме 60×80, открывающееся",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 487458.0,
+      "qhAssemblyUnitCents": 45900.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_28": {
+      "id": "OPT_28",
+      "label": "Окно ПВХ 600 × 800 мм",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1191564.0,
+      "qhAssemblyUnitCents": 112200.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_29": {
+      "id": "OPT_29",
+      "label": "ПВХ 800×400, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 866592.0,
+      "qhAssemblyUnitCents": 81600.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_30": {
+      "id": "OPT_30",
+      "label": "ПВХ 900×500, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 974916.0,
+      "qhAssemblyUnitCents": 91800.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_31": {
+      "id": "OPT_31",
+      "label": "ПВХ 900×900 открывается и откидывается",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1354050.0,
+      "qhAssemblyUnitCents": 127500.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_32": {
+      "id": "OPT_32",
+      "label": "ПВХ 1000×700, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1191564.0,
+      "qhAssemblyUnitCents": 112200.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_33": {
+      "id": "OPT_33",
+      "label": "ПВХ 1200×700, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1354050.0,
+      "qhAssemblyUnitCents": 127500.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_34": {
+      "id": "OPT_34",
+      "label": "ПВХ 1200×700, створка 450 мм открывается и откидывается",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1408212.0,
+      "qhAssemblyUnitCents": 132600.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_35": {
+      "id": "OPT_35",
+      "label": "ПВХ 1200×900, створка 600 мм, 2 створки открывается и откидывается",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 2003994.0,
+      "qhAssemblyUnitCents": 188700.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_36": {
+      "id": "OPT_36",
+      "label": "ПВХ 1400×700, откидное",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1408212.0,
+      "qhAssemblyUnitCents": 132600.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_37": {
+      "id": "OPT_37",
+      "label": "ПВХ 1400×800, откидное",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1570698.0,
+      "qhAssemblyUnitCents": 147900.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_38": {
+      "id": "OPT_38",
+      "label": "ПВХ 1400×1000, створка 700 мм открывается и откидывается",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1679022.0,
+      "qhAssemblyUnitCents": 158100.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_39": {
+      "id": "OPT_39",
+      "label": "ПВХ 1500×900, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1711519.2,
+      "qhAssemblyUnitCents": 161160.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_40": {
+      "id": "OPT_40",
+      "label": "ПВХ 1600×900, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 2166480.0,
+      "qhAssemblyUnitCents": 204000.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_41": {
+      "id": "OPT_41",
+      "label": "ПВХ 1800×1000, фрамуга",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 2437290.0,
+      "qhAssemblyUnitCents": 229500.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_42": {
+      "id": "OPT_42",
+      "label": "ПВХ 1800×1800, глухое",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 2653938.0,
+      "qhAssemblyUnitCents": 249900.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_43": {
+      "id": "OPT_43",
+      "label": "ПВХ 2000×1000, глухое",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 1949832.0,
+      "qhAssemblyUnitCents": 183600.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_44": {
+      "id": "OPT_44",
+      "label": "ПВХ 2000×1800, верхняя створка 450 мм",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": 4224636.0,
+      "qhAssemblyUnitCents": 397800.0,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_45": {
+      "id": "OPT_45",
+      "label": "Второй верхний полок в парной",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 541620.0,
+      "qhAssemblyUnitCents": 51000.0,
+      "minQuantity": 1,
+      "maxQuantity": 1
+    },
+    "OPT_46": {
+      "id": "OPT_46",
+      "label": "Выдвижной нижний полок",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0,
+      "minQuantity": 1,
+      "maxQuantity": 1
+    },
+    "OPT_47": {
+      "id": "OPT_47",
+      "label": "Расширение полка из осины на 10 см",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 162486.0,
+      "qhAssemblyUnitCents": 15300.0
+    },
+    "OPT_48": {
+      "id": "OPT_48",
+      "label": "Подшивка между полками",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 379134.0,
+      "qhAssemblyUnitCents": 35700.0
+    },
+    "OPT_49": {
+      "id": "OPT_49",
+      "label": "Ограждение печи",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 541620.0,
+      "qhAssemblyUnitCents": 51000.0,
+      "minQuantity": 1,
+      "maxQuantity": 1
+    },
+    "OPT_50": {
+      "id": "OPT_50",
+      "label": "«Второе дыхание»",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 1949832.0,
+      "qhAssemblyUnitCents": 183600.0
+    },
+    "OPT_51": {
+      "id": "OPT_51",
+      "label": "Обливное устройство «Обливаста» с подключением",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 2599776.0,
+      "qhAssemblyUnitCents": 244800.0
+    },
+    "OPT_52": {
+      "id": "OPT_52",
+      "label": "Вывод крана печи в моечную",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0
+    },
+    "OPT_53": {
+      "id": "OPT_53",
+      "label": "Габро-Диабаз (20 кг)",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "упак.",
+      "customerUnitCents": 54162.0,
+      "qhAssemblyUnitCents": 5100.0
+    },
+    "OPT_54": {
+      "id": "OPT_54",
+      "label": "Замена Габро на Жадеит (20 кг)",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "упак.",
+      "customerUnitCents": 254561.4,
+      "qhAssemblyUnitCents": 23970.0
+    },
+    "OPT_55": {
+      "id": "OPT_55",
+      "label": "Замена печи по согласованию",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_56": {
+      "id": "OPT_56",
+      "label": "влагостойкий материал поддон парной",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 649944.0,
+      "qhAssemblyUnitCents": 61200.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_57": {
+      "id": "OPT_57",
+      "label": "Вынос топки в смежное помещение / на улицу",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 1083240.0,
+      "qhAssemblyUnitCents": 102000.0
+    },
+    "OPT_58": {
+      "id": "OPT_58",
+      "label": "Кубаста — приточка под печь",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_59": {
+      "id": "OPT_59",
+      "label": "Угловая проходная моечная",
+      "group": "Моечная",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 1083240.0,
+      "qhAssemblyUnitCents": 102000.0
+    },
+    "OPT_60": {
+      "id": "OPT_60",
+      "label": "Душевая до 1×1 м",
+      "group": "Моечная",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 1083240.0,
+      "qhAssemblyUnitCents": 102000.0
+    },
+    "OPT_61": {
+      "id": "OPT_61",
+      "label": "влагостойкий материал поддон моечной",
+      "group": "Моечная",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 649944.0,
+      "qhAssemblyUnitCents": 61200.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_62": {
+      "id": "OPT_62",
+      "label": "Можжевеловое панно",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_63": {
+      "id": "OPT_63",
+      "label": "LED-подсветка можжевелового панно",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_64": {
+      "id": "OPT_64",
+      "label": "Подспинники в парной — удобнее сидеть",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 270810.0,
+      "qhAssemblyUnitCents": 25500.0
+    },
+    "OPT_65": {
+      "id": "OPT_65",
+      "label": "Поленница «Соты», одна секция",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "секция",
+      "customerUnitCents": 162486.0,
+      "qhAssemblyUnitCents": 15300.0
+    },
+    "OPT_66": {
+      "id": "OPT_66",
+      "label": "Тонировка мебели и элементов, баня до 2,4 м шириной",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": 1624860.0,
+      "qhAssemblyUnitCents": 153000.0
+    },
+    "OPT_67": {
+      "id": "OPT_67",
+      "label": "Обработка полов по всей бане до 2,4 м шириной",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": 541620.0,
+      "qhAssemblyUnitCents": 51000.0
+    },
+    "OPT_68": {
+      "id": "OPT_68",
+      "label": "за обработку полов до 3 м",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": 162486.0,
+      "qhAssemblyUnitCents": 15300.0
+    },
+    "OPT_69": {
+      "id": "OPT_69",
+      "label": "за обработку полов до 4 м",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": 324972.0,
+      "qhAssemblyUnitCents": 30600.0
+    },
+    "OPT_70": {
+      "id": "OPT_70",
+      "label": "за обработку полов до 5 м",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": 487458.0,
+      "qhAssemblyUnitCents": 45900.0
+    },
+    "OPT_71": {
+      "id": "OPT_71",
+      "label": "за обработку полов до 6 м",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": 649944.0,
+      "qhAssemblyUnitCents": 61200.0
+    },
+    "OPT_72": {
+      "id": "OPT_72",
+      "label": "Обработка стен полностью или частично",
+      "group": "Отделка и материалы",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_73": {
+      "id": "OPT_73",
+      "label": "Ещё одна двойная розетка",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 270810.0,
+      "qhAssemblyUnitCents": 25500.0
+    },
+    "OPT_74": {
+      "id": "OPT_74",
+      "label": "Дополнительный двухклавишный выключатель",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 270810.0,
+      "qhAssemblyUnitCents": 25500.0
+    },
+    "OPT_75": {
+      "id": "OPT_75",
+      "label": "Дополнительный автомат",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 162486.0,
+      "qhAssemblyUnitCents": 15300.0
+    },
+    "OPT_76": {
+      "id": "OPT_76",
+      "label": "Дополнительный абажур с плафоном",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 270810.0,
+      "qhAssemblyUnitCents": 25500.0
+    },
+    "OPT_77": {
+      "id": "OPT_77",
+      "label": "Плафон",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0
+    },
+    "OPT_78": {
+      "id": "OPT_78",
+      "label": "Вывод двух проводов и выключатель для уличного освещения",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 270810.0,
+      "qhAssemblyUnitCents": 25500.0
+    },
+    "OPT_79": {
+      "id": "OPT_79",
+      "label": "Уличное освещение, 2 фонаря",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 866592.0,
+      "qhAssemblyUnitCents": 81600.0
+    },
+    "OPT_80": {
+      "id": "OPT_80",
+      "label": "LED-подсветка до 5 м с блоком и пультом",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 1029078.0,
+      "qhAssemblyUnitCents": 96900.0,
+      "exclusiveGroup": "led"
+    },
+    "OPT_81": {
+      "id": "OPT_81",
+      "label": "LED-подсветка до 10 м",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 1733184.0,
+      "qhAssemblyUnitCents": 163200.0,
+      "exclusiveGroup": "led"
+    },
+    "OPT_82": {
+      "id": "OPT_82",
+      "label": "LED-подсветка до 15 м",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 2383128.0,
+      "qhAssemblyUnitCents": 224400.0,
+      "exclusiveGroup": "led"
+    },
+    "OPT_83": {
+      "id": "OPT_83",
+      "label": "Ретро-проводка",
+      "group": "Освещение и электрика",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 2708100.0,
+      "qhAssemblyUnitCents": 255000.0
+    },
+    "OPT_84": {
+      "id": "OPT_84",
+      "label": "Терраса открытая",
+      "group": "Террасы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 1408212.0,
+      "qhAssemblyUnitCents": 132600.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100,
+      "exclusiveGroup": "terrace"
+    },
+    "OPT_85": {
+      "id": "OPT_85",
+      "label": "Терраса закрытая с крышей",
+      "group": "Террасы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 2166480.0,
+      "qhAssemblyUnitCents": 204000.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100,
+      "exclusiveGroup": "terrace"
+    },
+    "OPT_86": {
+      "id": "OPT_86",
+      "label": "Каркасный съёмный пол в каждом отделении",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "отд.",
+      "customerUnitCents": 162486.0,
+      "qhAssemblyUnitCents": 15300.0
+    },
+    "OPT_87": {
+      "id": "OPT_87",
+      "label": "Утепление пола пеноплекс 50 мм",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 129988.8,
+      "qhAssemblyUnitCents": 12240.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_88": {
+      "id": "OPT_88",
+      "label": "Утепление пола пеноплекс 100 мм",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 249145.2,
+      "qhAssemblyUnitCents": 23460.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_89": {
+      "id": "OPT_89",
+      "label": "влагостойкий материал поддон",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 649944.0,
+      "qhAssemblyUnitCents": 61200.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_90": {
+      "id": "OPT_90",
+      "label": "Кварцвинил",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 379134.0,
+      "qhAssemblyUnitCents": 35700.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_91": {
+      "id": "OPT_91",
+      "label": "Ламинат",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_92": {
+      "id": "OPT_92",
+      "label": "Тёплый пол с регулятором",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_93": {
+      "id": "OPT_93",
+      "label": "Проливной пол в парилке",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0
+    },
+    "OPT_94": {
+      "id": "OPT_94",
+      "label": "Лавка-рундук из ели",
+      "group": "Комната отдыха",
+      "kind": "extra",
+      "unit": "пог. м",
+      "customerUnitCents": 216648.0,
+      "qhAssemblyUnitCents": 20400.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_95": {
+      "id": "OPT_95",
+      "label": "Откидной стол — замена обычного",
+      "group": "Комната отдыха",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 324972.0,
+      "qhAssemblyUnitCents": 30600.0,
+      "minQuantity": 1,
+      "maxQuantity": 1
+    },
+    "OPT_96": {
+      "id": "OPT_96",
+      "label": "Спальное место",
+      "group": "Комната отдыха",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 866592.0,
+      "qhAssemblyUnitCents": 81600.0
+    },
+    "OPT_97": {
+      "id": "OPT_97",
+      "label": "Кухня: столешница 60 см, раковина, смеситель и 2 шкафа",
+      "group": "Кухня",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 3791340.0,
+      "qhAssemblyUnitCents": 357000.0
+    },
+    "OPT_98": {
+      "id": "OPT_98",
+      "label": "Барная стойка из ели с двумя шкафчиками",
+      "group": "Кухня",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 1299888.0,
+      "qhAssemblyUnitCents": 122400.0
+    },
+    "OPT_99": {
+      "id": "OPT_99",
+      "label": "Ещё один шкаф для вещей",
+      "group": "Кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 1083240.0,
+      "qhAssemblyUnitCents": 102000.0
+    },
+    "OPT_100": {
+      "id": "OPT_100",
+      "label": "Шкаф двухстворчатый 100×100",
+      "group": "Кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 1516536.0,
+      "qhAssemblyUnitCents": 142800.0
+    },
+    "OPT_101": {
+      "id": "OPT_101",
+      "label": "Полка в шкаф",
+      "group": "Кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 108324.0,
+      "qhAssemblyUnitCents": 10200.0
+    },
+    "OPT_102": {
+      "id": "OPT_102",
+      "label": "Стол передвижной 150×80 / 200×80",
+      "group": "Кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": 866592.0,
+      "qhAssemblyUnitCents": 81600.0
+    },
+    "OPT_103": {
+      "id": "OPT_103",
+      "label": "Установка свай",
+      "group": "Работы",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_104": {
+      "id": "OPT_104",
+      "label": "Дополнительный блок",
+      "group": "Работы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_105": {
+      "id": "OPT_105",
+      "label": "Комплект розеток",
+      "group": "Электрика по согласованию",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_106": {
+      "id": "OPT_106",
+      "label": "Разводка электрики",
+      "group": "Электрика по согласованию",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_108": {
+      "id": "OPT_108",
+      "label": "Арка",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_109": {
+      "id": "OPT_109",
+      "label": "Выносная топка с самодельным экраном / топка с ушами на улицу",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_110": {
+      "id": "OPT_110",
+      "label": "Козырек",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_111": {
+      "id": "OPT_111",
+      "label": "Ящик под бойлер, обшитый с двух сторон, 60×60",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_112": {
+      "id": "OPT_112",
+      "label": "Ящик под бойлер, обшитый с двух сторон, 120×70",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_113": {
+      "id": "OPT_113",
+      "label": "Душевой поддон акриловый 120х80/70 или 110 х 80",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_114": {
+      "id": "OPT_114",
+      "label": "Душевой поддон металлический 70х70 / 80х80",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_115": {
+      "id": "OPT_115",
+      "label": "Ящик под потолком закрывающийся 1шт 40 см глубина.",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_116": {
+      "id": "OPT_116",
+      "label": "Полка",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_117": {
+      "id": "OPT_117",
+      "label": "Ящик для вещей под пологом",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_118": {
+      "id": "OPT_118",
+      "label": "Рундук более 250 см",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_119": {
+      "id": "OPT_119",
+      "label": "Бойлер / насосная станция/система кранов и труб/ смеситель с лейкой С ПЛАСТИКОВЫМИ ТРУБАМИ И ПОЛНОЙ РАЗВОДКОЙ",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_120": {
+      "id": "OPT_120",
+      "label": "Черный дымоход",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_121": {
+      "id": "OPT_121",
+      "label": "Вывод крана от бака через стену",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_122": {
+      "id": "OPT_122",
+      "label": "Входная дверь Металлическая",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_123": {
+      "id": "OPT_123",
+      "label": "Стеклянная дверь 170×70",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_124": {
+      "id": "OPT_124",
+      "label": "Стеклянная дверь 180×70",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_125": {
+      "id": "OPT_125",
+      "label": "Стеклянная дверь 190×70",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_126": {
+      "id": "OPT_126",
+      "label": "Форточка 30х40",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_127": {
+      "id": "OPT_127",
+      "label": "Окно 60х80",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_128": {
+      "id": "OPT_128",
+      "label": "Дополнительная лента",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_129": {
+      "id": "OPT_129",
+      "label": "Увеличение диаметра / ширины и высоты на 20 см",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_130": {
+      "id": "OPT_130",
+      "label": "Обшивка парной осиновой вагонкой",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_131": {
+      "id": "OPT_131",
+      "label": "Крыльцо",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_132": {
+      "id": "OPT_132",
+      "label": "Боковой вход Баня Бочка/Квадробочка",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "models": [
+        "kvadro"
+      ]
+    },
+    "OPT_133": {
+      "id": "OPT_133",
+      "label": "Боковой вход Парус",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "models": [
+        "parus"
+      ]
+    },
+    "OPT_134": {
+      "id": "OPT_134",
+      "label": "Боковой вход викинг",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_135": {
+      "id": "OPT_135",
+      "label": "Боковой вход Викинг с козырьком",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "models": [
+        "viking"
+      ]
+    },
+    "OPT_136": {
+      "id": "OPT_136",
+      "label": "Боковой вход с тамбуром 1.5 м",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_137": {
+      "id": "OPT_137",
+      "label": "Подголовник (1 шт.)",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_138": {
+      "id": "OPT_138",
+      "label": "Камни (20 кг)",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_139": {
+      "id": "OPT_139",
+      "label": "Ограждение печи (ЗАБОР)",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_140": {
+      "id": "OPT_140",
+      "label": "Кухня: 60х120 (два ящика сверх / два ящика снизу / столешница с раковиной и краном / подсветка /выключатель с розеткой",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_141": {
+      "id": "OPT_141",
+      "label": "Спальное место раскладное",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_142": {
+      "id": "OPT_142",
+      "label": "Небольшая помывочная, угловая / П-образная, влагостойкий материал обшивка",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_143": {
+      "id": "OPT_143",
+      "label": "Полноценное отделение до 250 см и изогнутая помывочная",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_144": {
+      "id": "OPT_144",
+      "label": "Не стандарт Г-образные и размер свыше 260х260",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_145": {
+      "id": "OPT_145",
+      "label": "Летний душ Бак на 50-60 л + лейка + крепление.",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_146": {
+      "id": "OPT_146",
+      "label": "Бак с подогревом на крыше 110 литров (автомат, розетка, пластиковый подвод)",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_147": {
+      "id": "OPT_147",
+      "label": "Перенос окна с торца на боковую часть",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_148": {
+      "id": "OPT_148",
+      "label": "Выдвижной полок в парной",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_149": {
+      "id": "OPT_149",
+      "label": "Скамейка под воду",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_150": {
+      "id": "OPT_150",
+      "label": "Крыльцо к бане 120х200",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_151": {
+      "id": "OPT_151",
+      "label": "Унитаз с установкой",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_152": {
+      "id": "OPT_152",
+      "label": "Обшивка пластиковыми панелями всей душевой кабинки",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_153": {
+      "id": "OPT_153",
+      "label": "Обшивка душевой с двух сторон как на фото",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_154": {
+      "id": "OPT_154",
+      "label": "Душевой поддон 90х90 из дерева с трапиком и внутри обработанный резиновой краской",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_155": {
+      "id": "OPT_155",
+      "label": "Приставной стол",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_156": {
+      "id": "OPT_156",
+      "label": "Подсветка под полоком (два плафона на отдельный выключатель)",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_157": {
+      "id": "OPT_157",
+      "label": "Светодиодная подсветка в парной",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_158": {
+      "id": "OPT_158",
+      "label": "Обработка Тикурила",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_159": {
+      "id": "OPT_159",
+      "label": "Люстра в КО",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_160": {
+      "id": "OPT_160",
+      "label": "Подсветка парус вместо лент 1 метр погонный",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_161": {
+      "id": "OPT_161",
+      "label": "Кварцвинил с утеплением пола",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_162": {
+      "id": "OPT_162",
+      "label": "Кварцвинил без утепления пола",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100
+    },
+    "OPT_163": {
+      "id": "OPT_163",
+      "label": "Дровник соты 60х40 за 1 штуку (соту)",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_164": {
+      "id": "OPT_164",
+      "label": "Абажур на имеющуюся лампу",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_165": {
+      "id": "OPT_165",
+      "label": "Абажур с лампой",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_166": {
+      "id": "OPT_166",
+      "label": "Длинная светодиодная лампа",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_167": {
+      "id": "OPT_167",
+      "label": "Спинка над лавкой",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_168": {
+      "id": "OPT_168",
+      "label": "Притопочный лист",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_169": {
+      "id": "OPT_169",
+      "label": "Душевая шторка прямая",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_170": {
+      "id": "OPT_170",
+      "label": "Душевая шторка угловая",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_171": {
+      "id": "OPT_171",
+      "label": "Бак для хол. воды",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_172": {
+      "id": "OPT_172",
+      "label": "Тройная ступенька в высоту",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_173": {
+      "id": "OPT_173",
+      "label": "Ступень двойная в ширину",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_174": {
+      "id": "OPT_174",
+      "label": "Замена пропитки на колеруемый «Пинотекс»",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_175": {
+      "id": "OPT_175",
+      "label": "Вентиляционная решётка, 1 стена с двух сторон",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": 324972.0,
+      "qhAssemblyUnitCents": 30600.0
+    },
+    "OPT_176": {
+      "id": "OPT_176",
+      "label": "Вентиляционные решётки, 3 стены с двух сторон",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_177": {
+      "id": "OPT_177",
+      "label": "Вентиляционные решётки, 4 стены с двух сторон",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "компл.",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_178": {
+      "id": "OPT_178",
+      "label": "Вывод кабеля под светильник на улицу (2 шт.)",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_179": {
+      "id": "OPT_179",
+      "label": "Два светильника у входной двери (стоимость без учета вывода кабеля под светильники)",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_180": {
+      "id": "OPT_180",
+      "label": "Окно для Овала 4.20х180 Без ламинации",
+      "group": "Окна",
+      "kind": "window",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "roles": [
+        "window"
+      ]
+    },
+    "OPT_181": {
+      "id": "OPT_181",
+      "label": "Обработка бани в 3 слоя",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_182": {
+      "id": "OPT_182",
+      "label": "Обработка квадроовалов в 3 слоя",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "баня",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_183": {
+      "id": "OPT_183",
+      "label": "Поддоконник",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_184": {
+      "id": "OPT_184",
+      "label": "ящики",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_185": {
+      "id": "OPT_185",
+      "label": "Угловая помывочная 100х100 (БЕЗ ДВЕРИ)",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_186": {
+      "id": "OPT_186",
+      "label": "П-образная помывочная 100х100 (БЕЗ ДВЕРИ)",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_187": {
+      "id": "OPT_187",
+      "label": "Большая изогнутая помывочная (БЕЗ ДВЕРИ)",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_188": {
+      "id": "OPT_188",
+      "label": "Скрытая электрика в пэшке бани парус и бкб",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_189": {
+      "id": "OPT_189",
+      "label": "Замена бруса 150×100",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_190": {
+      "id": "OPT_190",
+      "label": "Замена бруса 150×150",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_191": {
+      "id": "OPT_191",
+      "label": "Замена бруса 200×200",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_192": {
+      "id": "OPT_192",
+      "label": "Кран имени трушина",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_193": {
+      "id": "OPT_193",
+      "label": "Удлинение дымохода",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_194": {
+      "id": "OPT_194",
+      "label": "Басту",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_195": {
+      "id": "OPT_195",
+      "label": "Сетка каменка стандарт и арабеска",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_196": {
+      "id": "OPT_196",
+      "label": "Сетка каменка грилд",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_197": {
+      "id": "OPT_197",
+      "label": "Диф автомат",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_198": {
+      "id": "OPT_198",
+      "label": "Автомат 16А",
+      "group": "Электрика и свет",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_199": {
+      "id": "OPT_199",
+      "label": "Ргкм проводка в парной",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_200": {
+      "id": "OPT_200",
+      "label": "Минеритная плита «Фаспан», под кирпич (обычно 3 листа)",
+      "group": "Прочие допы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_201": {
+      "id": "OPT_201",
+      "label": "Вынос бака через теплообменник в моечную",
+      "group": "Моечная и вода",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_202": {
+      "id": "OPT_202",
+      "label": "Козырёк над выносной топкой",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_203": {
+      "id": "OPT_203",
+      "label": "Козырек над боковым входом",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_204": {
+      "id": "OPT_204",
+      "label": "Внутренняя обработка бани защитным составом",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_205": {
+      "id": "OPT_205",
+      "label": "Внутренняя обработка крупных Квадроовалов, Викингов, Парус Ш300",
+      "group": "Отделка",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null,
+      "models": [
+        "kvadro"
+      ]
+    },
+    "OPT_206": {
+      "id": "OPT_206",
+      "label": "Стеллаж на 3 полки",
+      "group": "Мебель и кухня",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_207": {
+      "id": "OPT_207",
+      "label": "Стеллаж на 5 полок",
+      "group": "Парная и печь",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_208": {
+      "id": "OPT_208",
+      "label": "Ровный пол в квадроовалах",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_209": {
+      "id": "OPT_209",
+      "label": "Ровный пол в парусах и квадробочках",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_210": {
+      "id": "OPT_210",
+      "label": "Черепица до пола в квадроовалах",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_211": {
+      "id": "OPT_211",
+      "label": "Черепица до пола в квадробочках и парусах",
+      "group": "Полы",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_212": {
+      "id": "OPT_212",
+      "label": "Деревянная дверь 170×70, глухая",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_213": {
+      "id": "OPT_213",
+      "label": "Деревянная дверь 170×70, со стеклом",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_214": {
+      "id": "OPT_214",
+      "label": "Деревянная дверь 180×70, глухая",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_215": {
+      "id": "OPT_215",
+      "label": "Деревянная дверь 180×70, со стеклом",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_216": {
+      "id": "OPT_216",
+      "label": "Деревянная дверь 180×80, глухая",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_217": {
+      "id": "OPT_217",
+      "label": "Деревянная дверь 180×80, со стеклом",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_218": {
+      "id": "OPT_218",
+      "label": "Деревянная дверь 190×80, глухая",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_219": {
+      "id": "OPT_219",
+      "label": "Деревянная дверь 190×80, со стеклом",
+      "group": "Вход и конструкции",
+      "kind": "extra",
+      "unit": "шт",
+      "customerUnitCents": null,
+      "qhAssemblyUnitCents": null
+    },
+    "OPT_220": {
+      "id": "OPT_220",
+      "label": "Терраса из древесный композит — полная стоимость",
+      "group": "Террасы",
+      "kind": "extra",
+      "unit": "м²",
+      "customerUnitCents": 1733184.0,
+      "qhAssemblyUnitCents": 163200.0,
+      "fractional": true,
+      "minQuantity": 0.1,
+      "maxQuantity": 100,
+      "exclusiveGroup": "terrace"
+    },
+    "WOOD_STEAM": {
+      "id": "WOOD_STEAM",
+      "label": "Деревянная дверь в парную",
+      "group": "Двери",
+      "kind": "door",
+      "unit": "шт",
+      "customerUnitCents": 0.0,
+      "qhAssemblyUnitCents": 0.0,
+      "roles": [
+        "steam"
+      ]
+    },
+    "ADDED_ROOM": {
+      "id": "ADDED_ROOM",
+      "label": "Дополнительная комната со светом и вентиляцией",
+      "group": "Дополнительные помещения",
+      "kind": "extra",
+      "unit": "комната",
+      "customerUnitCents": 1354050.0,
+      "qhAssemblyUnitCents": 127500.0
+    }
+  },
+  "plans": [
+    {
+      "id": "p1",
+      "model": "kvadro",
+      "size": "400",
+      "sizeLabel": "Квадро 4 × 2,1 м",
+      "dimensions": {
+        "lengthM": 4.0,
+        "widthM": 2.1
+      },
+      "title": "Попариться и посидеть за чаем",
+      "button": "Парная и чай",
+      "description": "Попариться после рабочего дня, перевести дух за чашкой чая и сделать ещё один заход. В этой небольшой бане парная отделена от комнаты отдыха со столом и двумя лавками. Одежду можно повесить у входа и спокойно переключиться на свой банный вечер.",
+      "benefits": [
+        "Отдельная комната для перерывов между заходами.",
+        "Стол и две лавки: есть где поставить чай и присесть после пара.",
+        "Вешалка у входа даёт своё место верхней одежде; открытые полки — банным принадлежностям."
+      ],
+      "audience": "Для пары и тех, кто ищет небольшую баню для спокойного отдыха.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 1,
+      "mirrorSlide": 2,
+      "sourceObjectId": "p1",
+      "image": "assets/plans/r93/p1.webp",
+      "mirrorImage": "assets/plans/r93/p1_mirror.webp"
+    },
+    {
+      "id": "p3",
+      "model": "kvadro",
+      "size": "500",
+      "sizeLabel": "Квадро 5 × 2,1 м",
+      "dimensions": {
+        "lengthM": 5.0,
+        "widthM": 2.1
+      },
+      "title": "Остаться за столом после парной",
+      "button": "Больше места для чая",
+      "description": "Банный вечер может продолжаться и после последнего захода: за столом можно поговорить, выпить чаю и разложить угощение. Одежду и банные принадлежности удобно убрать в шкаф. Комната отдыха отделена от парной, поэтому у каждого занятия здесь своё место.",
+      "benefits": [
+        "Стол длиной 135 см подходит для чаепития с близкими.",
+        "Шкаф помогает убрать вещи со стола и лавок.",
+        "Парная и отдых находятся в отдельных комнатах."
+      ],
+      "audience": "Для пары или небольшой семьи, которая любит задержаться за чаем.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 3,
+      "mirrorSlide": 4,
+      "sourceObjectId": "p3",
+      "image": "assets/plans/r93/p3.webp",
+      "mirrorImage": "assets/plans/r93/p3_mirror.webp"
+    },
+    {
+      "id": "p5",
+      "model": "kvadro",
+      "size": "600",
+      "sizeLabel": "Квадро 6 × 2,1 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.1
+      },
+      "title": "Ополоснуться и вернуться к чаю",
+      "button": "С душевой нишей",
+      "description": "Выйти из парной, ополоснуться в душевой нише и снова присесть за стол — всё это можно сделать внутри бани. Для одежды предусмотрены шкаф и вешалка. Такой вариант объединяет привычный банный вечер с возможностью принять душ после пара.",
+      "benefits": [
+        "Душевая ниша рядом с парной позволяет ополоснуться между заходами.",
+        "Удлинённая лавка и стол остаются местом для чая и разговора.",
+        "Шкаф и вешалка помогают держать одежду отдельно от чайного стола."
+      ],
+      "audience": "Для тех, кому нужен душ внутри бани вместе с отдельным местом для отдыха.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 5,
+      "mirrorSlide": 6,
+      "sourceObjectId": "p5",
+      "image": "assets/plans/r93/p5.webp",
+      "mirrorImage": "assets/plans/r93/p5_mirror.webp"
+    },
+    {
+      "id": "p7",
+      "model": "kvadro",
+      "size": "600",
+      "sizeLabel": "Квадро 6 × 2,1 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.1
+      },
+      "title": "Больше места для самого парения",
+      "button": "С большой парной",
+      "description": "Если главное в банном вечере — парение, эта планировка отдаёт больше длины именно парной. На длинном полке можно вытянуться, а затем перейти за чайный стол. В отдельной комнате отдыха предусмотрены две лавки и шкаф для вещей.",
+      "benefits": [
+        "Парная длиной 2,4 м даёт больше места для банных процедур.",
+        "Стол длиной 160 см и две лавки позволяют продолжить вечер вместе.",
+        "Вещи можно убрать в отдельный шкаф."
+      ],
+      "audience": "Для любителей парения, которым важнее большая парная, чем душ внутри бани.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 7,
+      "mirrorSlide": 8,
+      "sourceObjectId": "p7",
+      "image": "assets/plans/r93/p7.webp",
+      "mirrorImage": "assets/plans/r93/p7_mirror.webp"
+    },
+    {
+      "id": "v03_Q6_rest",
+      "model": "kvadro",
+      "size": "600",
+      "sizeLabel": "Квадро 6 × 2,1 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.1
+      },
+      "title": "Чай, угощение и долгие разговоры",
+      "button": "С кухней для чая",
+      "description": "Налить чай, разложить закуски и помыть чашки можно в самой бане. Мини-кухня с мойкой расположена рядом с общим столом, а для одежды предусмотрен шкаф. Это вариант для вечеров, в которых разговоры за столом занимают не меньше времени, чем парение.",
+      "benefits": [
+        "Рабочая поверхность и мойка помогают подготовить чаепитие.",
+        "Стол и две лавки собраны в отдельном месте для отдыха.",
+        "Шкаф освобождает посадочные места от одежды и сумок."
+      ],
+      "audience": "Для тех, кто любит приглашать близких на чай после бани.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 9,
+      "mirrorSlide": 10,
+      "sourceObjectId": "v03_Q6_rest",
+      "image": "assets/plans/r93/v03_Q6_rest.webp",
+      "mirrorImage": "assets/plans/r93/v03_Q6_rest_mirror.webp"
+    },
+    {
+      "id": "v04_Q6_fullwash",
+      "model": "kvadro",
+      "size": "600",
+      "sizeLabel": "Квадро 6 × 2,1 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.1
+      },
+      "title": "Парная, душ и чай в отдельных комнатах",
+      "button": "С отдельным душем",
+      "description": "После парения можно пройти в отдельную душевую, а затем вернуться за чайный стол. Вещи остаются в шкафу в комнате отдыха. Планировка подойдёт тем, кто хочет выделить для душа собственную комнату и сохранить отдельное место для переодевания и чаепития.",
+      "benefits": [
+        "У душа своя комната с дверью.",
+        "В комнате отдыха стоят стол, две лавки и шкаф.",
+        "Из парной в отдых проходят через душевую."
+      ],
+      "audience": "Для тех, кому важна отдельная душевая, а не ниша со шторой.",
+      "firebox": "Дрова добавляют из комнаты с душем.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 11,
+      "mirrorSlide": 12,
+      "sourceObjectId": "v04_Q6_fullwash",
+      "image": "assets/plans/r93/v04_Q6_fullwash.webp",
+      "mirrorImage": "assets/plans/r93/v04_Q6_fullwash_mirror.webp"
+    },
+    {
+      "id": "p9",
+      "model": "kvadro-house",
+      "size": "4x4",
+      "sizeLabel": "Квадро Хаус 4 × 4 м",
+      "dimensions": {
+        "lengthM": 4.0,
+        "widthM": 4.0
+      },
+      "title": "Свой банный вечер от пара до чая",
+      "button": "Три комнаты",
+      "description": "Переодеться, попариться, принять душ и собраться за чаем можно внутри одной бани. Каждому этапу отведена своя комната. Шкаф у входа помогает убрать одежду, а стол с двумя лавками становится местом, где банный вечер продолжается после душа.",
+      "benefits": [
+        "Душевая отделена дверью от комнаты отдыха.",
+        "Стол и две лавки расположены у окна.",
+        "Шкаф позволяет оставить одежду рядом с входом."
+      ],
+      "audience": "Для семейных банных вечеров с душем и общим чаепитием.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 13,
+      "mirrorSlide": 14,
+      "sourceObjectId": "p9",
+      "image": "assets/plans/r93/p9.webp",
+      "mirrorImage": "assets/plans/r93/p9_mirror.webp"
+    },
+    {
+      "id": "p11",
+      "model": "kvadro-house",
+      "size": "5x4",
+      "sizeLabel": "Квадро Хаус 4 × 5 м",
+      "dimensions": {
+        "lengthM": 4.0,
+        "widthM": 5.0
+      },
+      "title": "Собраться за семейным столом",
+      "button": "С длинным столом",
+      "description": "Здесь есть место для семейного чаепития: на длинном столе удобно поставить чашки и угощение, а вдоль него стоят две лавки. Душ расположен в отдельной комнате. Одежду можно убрать в шкаф у входа и оставить стол для общения.",
+      "benefits": [
+        "Стол длиной 180 см подходит для чая и общего угощения.",
+        "Отдельная душевая позволяет завершить банные процедуры перед отдыхом.",
+        "Шкаф у входа даёт место одежде и банным принадлежностям."
+      ],
+      "audience": "Для семьи и тех, кто любит собирать близких за одним столом.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 15,
+      "mirrorSlide": 16,
+      "sourceObjectId": "p11",
+      "image": "assets/plans/r93/p11.webp",
+      "mirrorImage": "assets/plans/r93/p11_mirror.webp"
+    },
+    {
+      "id": "p13",
+      "model": "kvadro-house",
+      "size": "6x4",
+      "sizeLabel": "Квадро Хаус 4 × 6 м",
+      "dimensions": {
+        "lengthM": 4.0,
+        "widthM": 6.0
+      },
+      "title": "Чай у окна и пауза на диване",
+      "button": "С диваном",
+      "description": "За столом можно выпить чаю и поговорить, а на диване — присесть между заходами. В этой планировке комната отдыха позволяет чередовать оба занятия. Парная и душевая находятся отдельно, для одежды предусмотрен шкаф.",
+      "benefits": [
+        "Диван даёт ещё одно место для отдыха помимо лавок.",
+        "Чайный стол расположен у окна.",
+        "Душевая и шкаф помогают организовать переодевание после парения."
+      ],
+      "audience": "Для тех, кто проводит в бане несколько часов и любит отдыхать не только за столом.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 17,
+      "mirrorSlide": 18,
+      "sourceObjectId": "p13",
+      "image": "assets/plans/r93/p13.webp",
+      "mirrorImage": "assets/plans/r93/p13_mirror.webp"
+    },
+    {
+      "id": "p15",
+      "model": "kvadro-house",
+      "size": "6x5",
+      "sizeLabel": "Квадро Хаус 5 × 6 м",
+      "dimensions": {
+        "lengthM": 5.0,
+        "widthM": 6.0
+      },
+      "title": "Все удобства для долгого вечера",
+      "button": "С отдельным туалетом",
+      "description": "Можно запланировать целый банный вечер: попариться, принять душ и собраться с гостями за большим столом у окна. Туалет с раковиной находится в отдельной комнате. Для вещей есть шкаф и открытое место для одежды у входа.",
+      "benefits": [
+        "Отдельный туалет с раковиной находится внутри бани.",
+        "Стол длиной 240 см позволяет поставить чай и угощение для гостей.",
+        "Шкаф и место для одежды у входа помогают сохранить порядок."
+      ],
+      "audience": "Для семьи и гостей, которым нужны душ, туалет и место для общего отдыха.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 4,
+      "wideBody": false,
+      "sourceSlide": 19,
+      "mirrorSlide": 20,
+      "sourceObjectId": "p15",
+      "image": "assets/plans/r93/p15.webp",
+      "mirrorImage": "assets/plans/r93/p15_mirror.webp"
+    },
+    {
+      "id": "p17",
+      "model": "kvadro-house",
+      "size": "6x6",
+      "sizeLabel": "Квадро Хаус 6 × 6 м · для компании",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 6.0
+      },
+      "title": "Большой стол для вашей компании",
+      "button": "Для встреч с друзьями",
+      "description": "Пока одни парятся, остальные могут общаться за общим столом и готовить чай. Кухонная поверхность с мойкой помогает разложить угощение и убрать посуду после встречи. Отдельные душевая и туалет делают эту планировку удобной для продолжительного вечера с друзьями.",
+      "benefits": [
+        "Большой стол и длинные лавки собраны в общей комнате отдыха.",
+        "Кухонная поверхность и мойка помогают организовать угощение.",
+        "Душевая и туалет находятся в отдельных комнатах."
+      ],
+      "audience": "Для дружеских встреч и семейных праздников с баней и общим столом.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 4,
+      "wideBody": false,
+      "sourceSlide": 21,
+      "mirrorSlide": 22,
+      "sourceObjectId": "p17",
+      "image": "assets/plans/r93/p17.webp",
+      "mirrorImage": "assets/plans/r93/p17_mirror.webp"
+    },
+    {
+      "id": "p19",
+      "model": "kvadro-house",
+      "size": "6x6",
+      "sizeLabel": "Квадро Хаус 6 × 6 м · со спальней",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 6.0
+      },
+      "title": "Остаться на ночь после бани",
+      "button": "Со спальней и шкафами",
+      "description": "Банный вечер можно завершить ночёвкой в отдельной спальне. Кровать стоит в своей комнате, а чайный стол остаётся местом для общения и отдыха. Душ, туалет и несколько шкафов помогают подготовиться к ночи и разложить привезённые вещи.",
+      "benefits": [
+        "Кровать находится в отдельной спальне.",
+        "Душ и туалет расположены в своих комнатах.",
+        "Три шкафа дают разные места для одежды и вещей для ночёвки."
+      ],
+      "audience": "Для пары и гостей, которые хотят переночевать после банного вечера.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 5,
+      "wideBody": false,
+      "sourceSlide": 23,
+      "mirrorSlide": 24,
+      "sourceObjectId": "p19",
+      "image": "assets/plans/r93/p19.webp",
+      "mirrorImage": "assets/plans/r93/p19_mirror.webp"
+    },
+    {
+      "id": "v04_sleep_layout_B",
+      "model": "kvadro-house",
+      "size": "6x6",
+      "sizeLabel": "Квадро Хаус 6 × 6 м · со спальней",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 6.0
+      },
+      "title": "Переночевать и оставить вещи до следующего раза",
+      "button": "Со спальней и хранением",
+      "description": "Привезти сменную одежду, провести вечер в бане и остаться на ночь можно в этой версии со спальней. Полотенца и другие принадлежности убираются в шкафы и под сиденья лавок. Стол у окна остаётся для чая, а кровать — в отдельной комнате.",
+      "benefits": [
+        "Отдельная спальня позволяет завершить вечер ночёвкой.",
+        "Под двумя лавками предусмотрено место для банных вещей.",
+        "Душ, туалет и шкафы помогают организовать длительный отдых."
+      ],
+      "audience": "Для тех, кто хочет иметь место для ночёвки и хранить в бане свой банный набор.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 5,
+      "wideBody": false,
+      "sourceSlide": 25,
+      "mirrorSlide": 26,
+      "sourceObjectId": "v04_sleep_layout_B",
+      "image": "assets/plans/r93/v04_sleep_layout_B.webp",
+      "mirrorImage": "assets/plans/r93/v04_sleep_layout_B_mirror.webp"
+    },
+    {
+      "id": "parus_4000_2400_dry",
+      "model": "parus",
+      "size": "400",
+      "sizeLabel": "Парус 4 × 2,4 м",
+      "dimensions": {
+        "lengthM": 4.0,
+        "widthM": 2.4
+      },
+      "title": "Чай у окна, вещи на своих местах",
+      "button": "Небольшая с хранением",
+      "description": "Зайти, повесить одежду и оставить обувь у входа, а после парной присесть за чайным столом у окна. Для сложенных вещей предусмотрен открытый шкаф, для банных принадлежностей — место под сиденьями лавок. Каждый предмет помогает использовать небольшую комнату отдыха по делу.",
+      "benefits": [
+        "Крючки и полки для обуви расположены у входа.",
+        "Открытый шкаф подходит для полотенец и сложенной одежды.",
+        "Стол у окна и две лавки остаются для чаепития."
+      ],
+      "audience": "Для тех, кто выбирает короткую баню и хочет сразу продумать место для вещей.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 27,
+      "mirrorSlide": 28,
+      "sourceObjectId": "parus_4000_2400_dry",
+      "image": "assets/plans/r93/parus_4000_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/parus_4000_2400_dry_mirror.webp"
+    },
+    {
+      "id": "parus_4500_2400_dry",
+      "model": "parus",
+      "size": "450",
+      "sizeLabel": "Парус 4,5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 4.5,
+        "widthM": 2.4
+      },
+      "title": "Приехать, переодеться и спокойно выпить чаю",
+      "button": "С тумбой и полками",
+      "description": "В этой планировке одежду можно повесить у входа, полотенца разложить на полках, а нужные мелочи оставить на отдельной тумбе. После парения вы возвращаетесь к столу у окна. Под сиденьями лавок есть дополнительное место для банных принадлежностей.",
+      "benefits": [
+        "Вешалка у входа даёт место верхней одежде.",
+        "Тумба и настенная полка добавляют места для вещей.",
+        "Чайный стол длиной 140 см расположен у окна."
+      ],
+      "audience": "Для пары или семьи, которая любит держать банные вещи под рукой.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 29,
+      "mirrorSlide": 30,
+      "sourceObjectId": "parus_4500_2400_dry",
+      "image": "assets/plans/r93/parus_4500_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/parus_4500_2400_dry_mirror.webp"
+    },
+    {
+      "id": "parus_5000_2400_dry",
+      "model": "parus",
+      "size": "500",
+      "sizeLabel": "Парус 5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 5.0,
+        "widthM": 2.4
+      },
+      "title": "Собраться за чаем и задержаться подольше",
+      "button": "С местом для чайника",
+      "description": "Поставить чайник и посуду можно на отдельную поверхность, а за длинным столом — разложить угощение и собраться вместе. Одежда остаётся на вешалке и полках у входа. Под обеими лавками предусмотрено дополнительное место для банных принадлежностей.",
+      "benefits": [
+        "Стол длиной 180 см подходит для общего чаепития.",
+        "Отдельная поверхность помогает держать чайник и посуду рядом.",
+        "Вешалка, открытые полки и хранение под сиденьями дополняют друг друга."
+      ],
+      "audience": "Для тех, кто любит длинные перерывы за чаем и разговором.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 31,
+      "mirrorSlide": 32,
+      "sourceObjectId": "parus_5000_2400_dry",
+      "image": "assets/plans/r93/parus_5000_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/parus_5000_2400_dry_mirror.webp"
+    },
+    {
+      "id": "parus_5000_2400_wash",
+      "model": "parus",
+      "size": "500",
+      "sizeLabel": "Парус 5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 5.0,
+        "widthM": 2.4
+      },
+      "title": "Принять душ и вернуться к своему столу",
+      "button": "Душ и компактный отдых",
+      "description": "После парения можно принять душ за отдельной дверью, переодеться и присесть за стол у окна. Небольшая чайная группа оставляет место открытым полкам и шкафу для сложенных вещей. Одежду можно повесить у входа, а полотенца убрать под сиденья лавок.",
+      "benefits": [
+        "Душ расположен в отдельной комнате между парной и отдыхом.",
+        "Небольшой стол у окна подходит для спокойного чаепития.",
+        "Вешалка, полки и открытый шкаф дают разные места для хранения."
+      ],
+      "audience": "Для пары, которой важны душ внутри бани и собственное место для чая.",
+      "firebox": "Дрова добавляют из комнаты с душем.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 33,
+      "mirrorSlide": 34,
+      "sourceObjectId": "parus_5000_2400_wash",
+      "image": "assets/plans/r93/parus_5000_2400_wash.webp",
+      "mirrorImage": "assets/plans/r93/parus_5000_2400_wash_mirror.webp"
+    },
+    {
+      "id": "parus_5500_2400_dry",
+      "model": "parus",
+      "size": "550",
+      "sizeLabel": "Парус 5,5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 5.5,
+        "widthM": 2.4
+      },
+      "title": "Попариться основательно и собраться за столом",
+      "button": "Большая парная и стол",
+      "description": "Здесь больше длины отдано парной, а в комнате отдыха стоит двухметровый стол для чаепития с близкими. Чайник и посуду можно разместить на отдельной тумбе. Для одежды и полотенец предусмотрены вешалка, полки и хранение под сиденьями.",
+      "benefits": [
+        "Увеличенная парная подойдёт тем, кто ставит парение на первое место.",
+        "Двухметровый стол оставляет место для чашек и общего угощения.",
+        "Чайная тумба и полки помогают держать стол свободным для отдыха."
+      ],
+      "audience": "Для любителей парения и общих банных вечеров за длинным столом.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 35,
+      "mirrorSlide": 36,
+      "sourceObjectId": "parus_5500_2400_dry",
+      "image": "assets/plans/r93/parus_5500_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/parus_5500_2400_dry_mirror.webp"
+    },
+    {
+      "id": "parus_5500_2400_wash",
+      "model": "parus",
+      "size": "550",
+      "sizeLabel": "Парус 5,5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 5.5,
+        "widthM": 2.4
+      },
+      "title": "Душ после пара и чай у окна",
+      "button": "С душем и полками",
+      "description": "Можно выйти из парной, принять душ в отдельной комнате и устроиться за столом у окна. У входа расположены вешалка и открытые полки для сложенных вещей. Под лавками есть место для принадлежностей, которые удобно оставлять в бане между приездами.",
+      "benefits": [
+        "У душа отдельная комната с дверью.",
+        "Стол и лавки стоят у окна комнаты отдыха.",
+        "Полки, вешалка и места под сиденьями помогают разложить вещи."
+      ],
+      "audience": "Для тех, кто хочет отдельный душ и спокойный отдых после парения.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 37,
+      "mirrorSlide": 38,
+      "sourceObjectId": "parus_5500_2400_wash",
+      "image": "assets/plans/r93/parus_5500_2400_wash.webp",
+      "mirrorImage": "assets/plans/r93/parus_5500_2400_wash_mirror.webp"
+    },
+    {
+      "id": "parus_6000_2400_dry",
+      "model": "parus",
+      "size": "600",
+      "sizeLabel": "Парус 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Всё для чаепития в самой бане",
+      "button": "С мини-кухней",
+      "description": "Разложить закуски на кухонной поверхности, налить чай и собраться за столом у окна — удобный способ продолжить банный вечер. В мини-кухне есть мойка. Вешалка, длинные открытые полки и места под лавками помогают убрать одежду и принадлежности.",
+      "benefits": [
+        "Мини-кухня с мойкой помогает подготовить и завершить чаепитие.",
+        "Стол у окна находится отдельно от кухонной поверхности.",
+        "Открытые полки и хранение под лавками освобождают стол от вещей."
+      ],
+      "audience": "Для тех, кто любит угощать близких и проводить за чаем много времени.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 39,
+      "mirrorSlide": 40,
+      "sourceObjectId": "parus_6000_2400_dry",
+      "image": "assets/plans/r93/parus_6000_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/parus_6000_2400_dry_mirror.webp"
+    },
+    {
+      "id": "parus_6000_2400_wash",
+      "model": "parus",
+      "size": "600",
+      "sizeLabel": "Парус 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Банный вечер с душем и неспешным чаем",
+      "button": "Душ и отдых за столом",
+      "description": "У парения, душа и чаепития здесь свои комнаты. После душа можно переодеться, убрать принадлежности на полки и вернуться к столу у окна. Вешалка и места под лавками помогают держать одежду и банные вещи отдельно от чаепития.",
+      "benefits": [
+        "Отдельная душевая расположена рядом с парной.",
+        "Стол длиной 165 см подходит для чая и угощения.",
+        "Хранение у входа и под сиденьями дополняет чайную группу."
+      ],
+      "audience": "Для семьи, которой нужны душ и отдельная комната для отдыха.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 41,
+      "mirrorSlide": 42,
+      "sourceObjectId": "parus_6000_2400_wash",
+      "image": "assets/plans/r93/parus_6000_2400_wash.webp",
+      "mirrorImage": "assets/plans/r93/parus_6000_2400_wash_mirror.webp"
+    },
+    {
+      "id": "parus_6000_3000_dry",
+      "model": "parus",
+      "size": "600",
+      "sizeLabel": "Парус 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Большой стол и два места для приготовления чая",
+      "button": "Шире, с кухней",
+      "description": "В широком «Парусе» можно подготовить угощение на кухонной поверхности, поставить чайник отдельно и собраться за двухметровым столом. После парения удобно продолжить вечер вместе. Банные принадлежности убираются под сиденья лавок.",
+      "benefits": [
+        "Двухметровый стол становится общим местом для чаепития.",
+        "Мини-кухня с мойкой и отдельная чайная поверхность дают место посуде.",
+        "Под лавками предусмотрено хранение для банных вещей."
+      ],
+      "audience": "Для тех, кто выбирает широкий корпус и любит общий стол после бани.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": true,
+      "sourceSlide": 43,
+      "mirrorSlide": 44,
+      "sourceObjectId": "parus_6000_3000_dry",
+      "image": "assets/plans/r93/parus_6000_3000_dry.webp",
+      "mirrorImage": "assets/plans/r93/parus_6000_3000_dry_mirror.webp"
+    },
+    {
+      "id": "parus_6000_3000_wash",
+      "model": "parus",
+      "size": "600",
+      "sizeLabel": "Парус 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Принять душ, переодеться и отдохнуть",
+      "button": "Шире, с душем и шкафом",
+      "description": "После парения можно принять душ в отдельной комнате и переодеться перед чаепитием. Одежда убирается в закрытый шкаф, а полотенца и другие принадлежности — под сиденья лавок. За столом у окна остаётся место для чашек, угощения и разговора.",
+      "benefits": [
+        "Душ находится в отдельной комнате.",
+        "Закрытый шкаф даёт место одежде рядом с входом.",
+        "Чайная группа дополнена хранением под сиденьями лавок."
+      ],
+      "audience": "Для тех, кому нужны отдельный душ и шкаф для одежды.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": true,
+      "sourceSlide": 45,
+      "mirrorSlide": 46,
+      "sourceObjectId": "parus_6000_3000_wash",
+      "image": "assets/plans/r93/parus_6000_3000_wash.webp",
+      "mirrorImage": "assets/plans/r93/parus_6000_3000_wash_mirror.webp"
+    },
+    {
+      "id": "viking_4500_2400_dry",
+      "model": "viking",
+      "size": "450",
+      "sizeLabel": "Викинг 4,5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 4.5,
+        "widthM": 2.4
+      },
+      "title": "Свой банный вечер и порядок в вещах",
+      "button": "Небольшая с чаем и шкафом",
+      "description": "Зайти в свою баню, убрать полотенца на полки и попариться в удобном для себя ритме. Между заходами можно присесть за столом у окна. В комнате отдыха предусмотрен открытый шкаф, а под одной из лавок — место для банных принадлежностей.",
+      "benefits": [
+        "Парная отделена от комнаты отдыха.",
+        "Стол у окна и две лавки подходят для перерывов между заходами.",
+        "Открытый шкаф и место под лавкой помогают убрать принадлежности."
+      ],
+      "audience": "Для пары и тех, кто ищет небольшую баню с продуманным хранением.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 47,
+      "mirrorSlide": 48,
+      "sourceObjectId": "viking_4500_2100_dry",
+      "image": "assets/plans/r93/viking_4500_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/viking_4500_2400_dry_mirror.webp"
+    },
+    {
+      "id": "viking_5000_2400_dry",
+      "model": "viking",
+      "size": "500",
+      "sizeLabel": "Викинг 5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 5.0,
+        "widthM": 2.4
+      },
+      "title": "Чайник рядом, вечер за общим столом",
+      "button": "С длинным столом и шкафом",
+      "description": "Чашки и банные принадлежности можно убрать в открытый шкаф, а за столом у окна собраться с близкими. Открытые полки и место под лавкой помогают разложить банные вещи. В этой версии основное место отдано парению и отдыху за чаем.",
+      "benefits": [
+        "Стол длиной 180 см подходит для общего чаепития.",
+        "Открытый шкаф даёт место посуде и принадлежностям.",
+        "Парная и комната отдыха разделены дверью."
+      ],
+      "audience": "Для тех, кому важны длинный чайный стол и хранение рядом с ним.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 49,
+      "mirrorSlide": 50,
+      "sourceObjectId": "viking_5000_2400_dry",
+      "image": "assets/plans/r93/viking_5000_2400_dry.webp",
+      "mirrorImage": "assets/plans/r93/viking_5000_2400_dry_mirror.webp"
+    },
+    {
+      "id": "viking_5000_2400_wash",
+      "model": "viking",
+      "size": "500",
+      "sizeLabel": "Викинг 5 × 2,4 м",
+      "dimensions": {
+        "lengthM": 5.0,
+        "widthM": 2.4
+      },
+      "title": "Ополоснуться после пара и присесть за чаем",
+      "button": "С душевой нишей",
+      "description": "После парения можно ополоснуться в душевой нише со шторой, а затем присесть за стол у окна. Чайная группа сделана небольшой, чтобы разместить душ внутри пятиметровой бани. Для полотенец и сложенной одежды предусмотрены открытые полки.",
+      "benefits": [
+        "Душевая ниша со шторой позволяет ополоснуться внутри бани.",
+        "Стол и две лавки остаются местом для чая.",
+        "Открытые полки и хранение под лавкой дают место принадлежностям."
+      ],
+      "audience": "Для пары, которой нужен душ внутри небольшой бани.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 51,
+      "mirrorSlide": 52,
+      "sourceObjectId": "viking_5000_2400_wash",
+      "image": "assets/plans/r93/viking_5000_2400_wash.webp",
+      "mirrorImage": "assets/plans/r93/viking_5000_2400_wash_mirror.webp"
+    },
+    {
+      "id": "viking_6000_2400_rest",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Приготовить чай и собрать близких за столом",
+      "button": "С кухней и полками",
+      "description": "В мини-кухне можно подготовить чай, разложить угощение и помыть посуду после вечера. Рядом стоит длинный стол с двумя лавками. Отдельные полки и место под лавкой помогают оставить стол для чаепития, а вещи — убрать на свои места.",
+      "benefits": [
+        "Мини-кухня с мойкой помогает организовать чаепитие в самой бане.",
+        "Стол длиной 190 см подходит для общения с близкими.",
+        "Открытые полки дают место полотенцам и сложенной одежде."
+      ],
+      "audience": "Для тех, кто проводит в бане долгие вечера с чаем и угощением.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 53,
+      "mirrorSlide": 54,
+      "sourceObjectId": "viking_6000_2400_rest",
+      "image": "assets/plans/r93/viking_6000_2400_rest.webp",
+      "mirrorImage": "assets/plans/r93/viking_6000_2400_rest_mirror.webp"
+    },
+    {
+      "id": "viking_6000_2400_steam",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Больше парения и неспешный отдых у окна",
+      "button": "С большой парной",
+      "description": "Эта версия подойдёт тем, кто любит сам процесс парения и возвращается в парную несколько раз за вечер. Между заходами можно посидеть за длинным столом у окна. Для чайника и посуды есть отдельная полка, для полотенец и одежды — открытое хранение.",
+      "benefits": [
+        "Увеличенная парная даёт больше места для банных процедур.",
+        "Стол длиной 190 см позволяет продолжить вечер за чаем.",
+        "Чайник, посуда и банные вещи получают отдельные места."
+      ],
+      "audience": "Для любителей парения, которые выбирают большую парную и отдых за столом.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": false,
+      "sourceSlide": 55,
+      "mirrorSlide": 56,
+      "sourceObjectId": "viking_6000_2400_steam",
+      "image": "assets/plans/r93/viking_6000_2400_steam.webp",
+      "mirrorImage": "assets/plans/r93/viking_6000_2400_steam_mirror.webp"
+    },
+    {
+      "id": "viking_6000_2400_wash",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Душ после пара, чай после душа",
+      "button": "С отдельным душем",
+      "description": "Выйти из парной, принять душ за отдельной дверью и вернуться к своему столу. Полотенца и сложенную одежду можно убрать на открытые полки, а принадлежности — под лавку. Эта планировка объединяет все три части банного вечера в отдельных комнатах.",
+      "benefits": [
+        "Душ расположен отдельно от комнаты отдыха.",
+        "Стол длиной 180 см подходит для чая и общего угощения.",
+        "Полки и место под лавкой помогают разложить банные вещи."
+      ],
+      "audience": "Для семьи и тех, кто хочет принимать душ в отдельной комнате.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 57,
+      "mirrorSlide": 58,
+      "sourceObjectId": "viking_6000_2400_wash",
+      "image": "assets/plans/r93/viking_6000_2400_wash.webp",
+      "mirrorImage": "assets/plans/r93/viking_6000_2400_wash_mirror.webp"
+    },
+    {
+      "id": "viking_6000_3000_dry",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Переодеться, попариться и устроить чаепитие",
+      "button": "Шире, с кухней и шкафом",
+      "description": "Одежду можно убрать в шкаф или повесить у входа, подготовить чай в мини-кухне и присесть за длинным столом. В широком корпусе каждому занятию отведено своё место. Парная находится отдельно, а под одной из лавок есть дополнительное хранение.",
+      "benefits": [
+        "Закрытый шкаф и вешалка дают разные места для одежды.",
+        "Мини-кухня с мойкой помогает подготовить чай и убрать посуду.",
+        "Стол у окна и две лавки собраны для общего отдыха."
+      ],
+      "audience": "Для тех, кому нужны широкий корпус, кухня для чая и шкаф для одежды.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 2,
+      "wideBody": true,
+      "sourceSlide": 59,
+      "mirrorSlide": 60,
+      "sourceObjectId": "viking_6000_3000_dry",
+      "image": "assets/plans/r93/viking_6000_3000_dry.webp",
+      "mirrorImage": "assets/plans/r93/viking_6000_3000_dry_mirror.webp"
+    },
+    {
+      "id": "viking_6000_3000_wash",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Душ, переодевание и спокойный чай",
+      "button": "Шире, с душем и шкафом",
+      "description": "После парной можно принять душ в своей комнате и переодеться перед чаепитием. Одежда хранится в закрытом шкафу и на вешалке, а стол у окна остаётся для отдыха. Под лавкой предусмотрено место для банного набора, который удобно держать в самой бане.",
+      "benefits": [
+        "У душа отдельная комната с дверью.",
+        "Закрытый шкаф и вешалка помогают организовать переодевание.",
+        "Длинный стол у окна подходит для чаепития после душа."
+      ],
+      "audience": "Для тех, кто хочет совместить отдельный душ и хранение одежды.",
+      "firebox": "Дрова добавляют из парной.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": true,
+      "sourceSlide": 61,
+      "mirrorSlide": 62,
+      "sourceObjectId": "viking_6000_3000_wash",
+      "image": "assets/plans/r93/viking_6000_3000_wash.webp",
+      "mirrorImage": "assets/plans/r93/viking_6000_3000_wash_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_2400_out_arch",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Душ внутри, дрова с улицы",
+      "button": "Три комнаты, дрова с улицы",
+      "description": "Внутри бани последовательно расположены парная, душевая и комната отдыха. После душа можно вернуться к чайному столу, поставить посуду на отдельную тумбу и убрать полотенца на полки. Дрова добавляют с улицы: дверца печи находится снаружи.",
+      "benefits": [
+        "У парения, душа и чаепития отдельные комнаты.",
+        "Чайная тумба и открытые полки расположены у входной стены.",
+        "Для добавления дров используют наружную дверцу печи."
+      ],
+      "audience": "Для тех, кто хочет три отдельные комнаты и предпочитает добавлять дрова с улицы.",
+      "firebox": "Дрова добавляют с улицы.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 63,
+      "mirrorSlide": 64,
+      "sourceObjectId": "viking_three_6000_2400_out_arch",
+      "image": "assets/plans/r93/viking_three_6000_2400_out_arch.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_2400_out_arch_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_2400_out_tambur",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Войти через тамбур и остаться на чай",
+      "button": "С тамбуром, дрова с улицы",
+      "description": "С улицы вы сначала попадаете в небольшой тамбур с двумя дверями, а затем — в комнату отдыха. Дальше расположены отдельная душевая и парная. После банных процедур можно посидеть за чаем; для посуды и принадлежностей есть тумба и полки. Дрова добавляют снаружи.",
+      "benefits": [
+        "Между улицей и комнатой отдыха находятся две двери.",
+        "Парная и душевая выделены в отдельные комнаты.",
+        "Тумба для чая и полки помогают разложить вещи у входа."
+      ],
+      "audience": "Для тех, кому нужен отдельный входной тамбур и наружная дверца печи.",
+      "firebox": "Дрова добавляют с улицы.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 4,
+      "wideBody": false,
+      "sourceSlide": 65,
+      "mirrorSlide": 66,
+      "sourceObjectId": "viking_three_6000_2400_out_tambur",
+      "image": "assets/plans/r93/viking_three_6000_2400_out_tambur.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_2400_out_tambur_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_2400_wash_arch",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Принимать душ и добавлять дрова изнутри",
+      "button": "Три комнаты, дрова из душевой",
+      "description": "После парения можно пройти в отдельную душевую, а затем вернуться за стол у окна. Дрова добавляют из комнаты с душем, поэтому для этого не нужно заходить в парную. Чайник и посуду удобно держать на отдельной тумбе, полотенца — на полках у входа.",
+      "benefits": [
+        "Парная, душевая и комната отдыха разделены дверями.",
+        "Дрова можно добавлять из душевой, не заходя в парную.",
+        "Для чая и сложенных вещей выделены тумба и открытые полки."
+      ],
+      "audience": "Для тех, кто выбирает три комнаты и хочет добавлять дрова внутри бани.",
+      "firebox": "Дрова добавляют из комнаты с душем.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": false,
+      "sourceSlide": 67,
+      "mirrorSlide": 68,
+      "sourceObjectId": "viking_three_6000_2400_wash_arch",
+      "image": "assets/plans/r93/viking_three_6000_2400_wash_arch.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_2400_wash_arch_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_2400_wash_tambur",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 2,4 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 2.4
+      },
+      "title": "Через тамбур — к своему банному вечеру",
+      "button": "С тамбуром, дрова из душевой",
+      "description": "У входа предусмотрен небольшой тамбур, за ним — комната со столом для отдыха. Душевая и парная находятся отдельно. Добавлять дрова можно из комнаты с душем, а паузы между заходами проводить за чаем. Для посуды есть тумба, для полотенец и сложенных вещей — открытые полки.",
+      "benefits": [
+        "Две двери отделяют улицу от комнаты отдыха.",
+        "Душ находится в отдельной комнате рядом с парной.",
+        "Дрова добавляют из душевой; чай и вещи размещают в комнате отдыха."
+      ],
+      "audience": "Для тех, кому важны вход через тамбур и доступ к печи изнутри.",
+      "firebox": "Дрова добавляют из комнаты с душем.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 4,
+      "wideBody": false,
+      "sourceSlide": 69,
+      "mirrorSlide": 70,
+      "sourceObjectId": "viking_three_6000_2400_wash_tambur",
+      "image": "assets/plans/r93/viking_three_6000_2400_wash_tambur.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_2400_wash_tambur_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_3000_out_arch",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Длинный стол для чая после душа",
+      "button": "Шире, дрова с улицы",
+      "description": "В этой широкой версии можно пройти из парной в отдельную душевую и собраться за двухметровым столом у окна. Посуда располагается на чайной тумбе, банные вещи — на открытых полках. Дрова добавляют с улицы через наружную дверцу печи.",
+      "benefits": [
+        "Двухметровый стол подходит для общего чаепития.",
+        "Парение и душ проходят в отдельных комнатах.",
+        "Тумба и полки дополняют отдых; дрова добавляют снаружи."
+      ],
+      "audience": "Для семьи и гостей, которым нужны отдельный душ и длинный стол.",
+      "firebox": "Дрова добавляют с улицы.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": true,
+      "sourceSlide": 71,
+      "mirrorSlide": 72,
+      "sourceObjectId": "viking_three_6000_3000_out_arch",
+      "image": "assets/plans/r93/viking_three_6000_3000_out_arch.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_3000_out_arch_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_3000_out_tambur",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Тамбур, душ и большой стол для встречи",
+      "button": "Шире, с тамбуром",
+      "description": "Сначала войти в тамбур, затем оставить вещи и устроить свой банный вечер. В широком «Викинге» есть отдельные парная и душевая, а в комнате отдыха — двухметровый стол. Чайник можно поставить на тумбу, полотенца убрать на полки. Дрова добавляют с улицы.",
+      "benefits": [
+        "Перед комнатой отдыха расположен тамбур с двумя дверями.",
+        "Двухметровый стол позволяет собраться за общим чаепитием.",
+        "Парная и душевая находятся отдельно; дверца печи — снаружи."
+      ],
+      "audience": "Для семьи и друзей, которым нужны длинный стол и вход через тамбур.",
+      "firebox": "Дрова добавляют с улицы.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 4,
+      "wideBody": true,
+      "sourceSlide": 73,
+      "mirrorSlide": 74,
+      "sourceObjectId": "viking_three_6000_3000_out_tambur",
+      "image": "assets/plans/r93/viking_three_6000_3000_out_tambur.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_3000_out_tambur_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_3000_rest_arch",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Поддерживать огонь во время перерыва за чаем",
+      "button": "Дрова из комнаты отдыха",
+      "description": "Между заходами можно присесть за чайным столом и добавить дрова через дверцу в комнате отдыха. Парная и душевая находятся в своих комнатах. Для чайника и посуды предусмотрена тумба, для полотенец и сложенных вещей — открытые полки у входа.",
+      "benefits": [
+        "Дрова добавляют из комнаты отдыха, не заходя в парную.",
+        "Двухметровый стол подходит для чаепития с близкими.",
+        "Отдельная душевая, чайная тумба и полки дополняют банный вечер."
+      ],
+      "audience": "Для тех, кому удобно поддерживать огонь из комнаты отдыха.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 3,
+      "wideBody": true,
+      "sourceSlide": 75,
+      "mirrorSlide": 76,
+      "sourceObjectId": "viking_three_6000_3000_rest_arch",
+      "image": "assets/plans/r93/viking_three_6000_3000_rest_arch.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_3000_rest_arch_mirror.webp"
+    },
+    {
+      "id": "viking_three_6000_3000_rest_tambur",
+      "model": "viking",
+      "size": "600",
+      "sizeLabel": "Викинг 6 × 3 м",
+      "dimensions": {
+        "lengthM": 6.0,
+        "widthM": 3.0
+      },
+      "title": "Пар, чай и вход через тамбур",
+      "button": "С тамбуром и дровами из отдыха",
+      "description": "За входным тамбуром начинается комната отдыха с длинным столом у окна. Здесь же находится дверца печи, чтобы добавлять дрова между заходами в парную. Душ расположен отдельно. Посуда и банные принадлежности получают свои места на тумбе и открытых полках.",
+      "benefits": [
+        "Тамбур с двумя дверями расположен перед комнатой отдыха.",
+        "Дрова добавляют из комнаты отдыха, рядом с чайной группой.",
+        "Отдельная душевая и двухметровый стол помогают провести весь банный вечер внутри."
+      ],
+      "audience": "Для тех, кто хочет вход через тамбур и доступ к печи из комнаты отдыха.",
+      "firebox": "Дрова добавляют из комнаты отдыха.",
+      "note": "На плане показан вариант обустройства. Мебель и оснащение согласуем при расчёте вашей бани.",
+      "rooms": 4,
+      "wideBody": true,
+      "sourceSlide": 77,
+      "mirrorSlide": 78,
+      "sourceObjectId": "viking_three_6000_3000_rest_tambur",
+      "image": "assets/plans/r93/viking_three_6000_3000_rest_tambur.webp",
+      "mirrorImage": "assets/plans/r93/viking_three_6000_3000_rest_tambur_mirror.webp"
+    }
+  ],
+  "asOf": "2026-10-26",
+  "finishes": {
+    "body": [
+      {
+        "id": "pine",
+        "name": "Сосна",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "teak",
+        "name": "Тиковое дерево",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "rosewood",
+        "name": "Палисандр",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "larch",
+        "name": "Лиственница",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "redwood",
+        "name": "Красное дерево",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "walnut_wood",
+        "name": "Ореховое дерево",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "iceberg",
+        "name": "Айсберг",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "north_sea",
+        "name": "Северное море",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "scandinavian_gray",
+        "name": "Скандинавский серый",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "oak_dufa",
+        "name": "Орех (DUFA)",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "licorice",
+        "name": "Лакрица",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "ral_7024",
+        "name": "RAL 7024",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      }
+    ],
+    "roof": [
+      {
+        "id": "green",
+        "name": "Зелёный",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "brown",
+        "name": "Коричневый",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "red",
+        "name": "Красный",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      },
+      {
+        "id": "gray",
+        "name": "Серый",
+        "priceDeltaRub": null,
+        "requiresPriceConfirmation": true
+      }
+    ]
+  },
+  "legacyOptionLabels": {
+    "stove_guard": "Ограждение печи",
+    "aspen_backrests": "Подспинники из осины, комплект",
+    "folding_table": "Откидной стол",
+    "bench_chest_spruce": "Лавка-рундук 2 м вместо базовой лавки",
+    "glass_sauna_door_700x1700": "Стеклянная дверь 700×1700 мм, 3 петли",
+    "vent_window_small": "Форточка 30×30 / 30×40 см",
+    "tilt_window_1400x800": "Окно 1400×800 мм, откидное",
+    "oblivasta_connected": "Обливное устройство «Обливаста» с подключением",
+    "remote_firebox_adjacent": "Вынос топки в смежное помещение",
+    "outdoor_two_lanterns": "Уличное освещение, 2 фонаря за комплект",
+    "led_light_10m": "LED-подсветка до 10 м",
+    "cabinet_single_50x50": "Шкаф одностворчатый между душевой и парной",
+    "floor_insulation_50mm_kvadro_500": "Утепление пола пеноплэкс 50 мм · 10,5 м² (Квадро 5 м)",
+    "floor_insulation_50mm_area": "Утепление пола пеноплэкс 50 мм",
+    "floor_insulation_100mm_area": "Утепление пола пеноплэкс 100 мм",
+    "terrace_roof_area": "Терраса с крышей — площадь по проекту",
+    "terrace_open_area": "Терраса без крыши — площадь по проекту",
+    "terrace_dpk_area": "Терраса из ДПК — полная стоимость"
+  },
+  "deluxeDescription": "«Делюкс» сохраняет оснащение «Комфорта», но штатный обычный стол ЗАМЕНЁН одним откидным. Второй стол не поставляется. Остальные включённые изделия повторно не оплачиваются.",
+  "deluxeInclusions": [
+    "Оснащение «Комфорта», но штатный обычный стол заменён одним откидным",
+    "Второй верхний полок, расширение и подшивка полков",
+    "Жадеит 20 кг вместо габбро",
+    "Вынос топки из парной",
+    "Подспинники в парной",
+    "Обработка пола",
+    "Проводка для внешнего освещения, выключатель и два наружных фонаря",
+    "LED-подсветка до 10 м",
+    "Утепление пола пеноплексом 50 мм (площадь по размеру бани)",
+    "Один откидной стол вместо обычного (замена)",
+    "Увеличенная входная дверь и увеличенное штатное окно"
+  ],
+  "comfortInclusionsExtra": [
+    "Стеклянная дверь в парную 700×1700 мм, 3 петли",
+    "Выдвижной нижний полок",
+    "Ограждение печи"
+  ],
+  "deluxeFloorAreaBasis": "Квадро: условная расчетная площадь для утепления пола = длина × 2,1 м (без подтверждения обмером)",
+  "parusCentralEntrance": {
+    "included": true,
+    "extraRrcRub": 0,
+    "basis": "owner decision 2026-10-26"
+  },
+  "vikingArchedEntrance": {
+    "included": true,
+    "includedRrcRub": 30000,
+    "basis": "RRC!E229, in all five base Comfort prices; no second fee"
+  },
+  "deluxeFurnitureReplacement": {
+    "includedInComfort": "Обычный стол: 1 шт",
+    "includedInDeluxe": "Откидной стол: 1 шт вместо обычного",
+    "originalTableDeliveredInDeluxe": false,
+    "foldingTableSku": "OPT_95",
+    "foldingTableRrcRub": 3000,
+    "originalTableRrcCreditRub": 0,
+    "originalTableRrcCreditStatus": "NO_CREDIT_BY_OWNER_DECISION",
+    "creditSource": "Owner approved full OPT_95 RRC 3000 without standard-table deduction",
+    "customerDeluxePricesAwaitingVerifiedCredit": false,
+    "numberOfTablesInEachPackage": 1
+  },
+  "priceStatuses": {
+    "comfort": "approved",
+    "kvadroDeluxe": "approved",
+    "otherDeluxe": "calculated"
+  },
+  "deluxeApprovalNote": "Для новых моделей цена предварительная: подтвердим помещения, полки, вынос топки и оснащение до заказа.",
+  "planAliases": {
+    "viking_4500_2100_dry": "viking_4500_2400_dry"
+  }
+}
