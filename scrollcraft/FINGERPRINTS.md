@@ -32,6 +32,8 @@ changes only grammar and world will fail it.
 
 First recorded local build. No earlier rows to compare at the planning gate.
 
+Revision note, same build, 28.10.2026: owner feedback removed birch and protruding paper type from the hero. Revision 2 adds a dedicated oak-broom cutout occluding oversized live typography between the hero and catalogue, and new macro/sauna-rest imagery. This is a revision of the same local candidate, not a new uniqueness-gate entry. The original registry row remains unchanged as historical evidence.
+
 ---
 
 ## What is taken

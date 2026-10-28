@@ -1,0 +1,63 @@
+/* R101 visual revision: independent, bounded depth; native page scrolling. */
+.hero-copy{min-width:0}
+.hero-visual{isolation:isolate}
+.hero-photo{transform:scale(1.055) translateY(calc(var(--hero-p,0)*24px))}
+.hero-visual:after{content:'01 / ПАРНАЯ С ВИДОМ';position:absolute;bottom:24px;left:24px;color:#fff;background:#253e32;padding:9px 13px;font-size:10px;letter-spacing:.12em}
+.breath{background:#e5e3d7;isolation:isolate;overflow:clip;--depth-p:0}
+.breath-stage{position:relative;max-width:1800px;margin:auto;height:clamp(720px,60vw,1000px);background:radial-gradient(ellipse at 69% 50%,#f1efdf 0,transparent 64%)}
+.breath-kicker{position:absolute;top:44px;left:var(--g);z-index:3;font-size:10px;color:#52604b}
+.breath-word{position:absolute;left:3.2%;top:80px;z-index:1;font-size:clamp(150px,22vw,360px);font-weight:500;line-height:1;letter-spacing:-.08em;color:#374832;max-width:none;transform:translateY(calc(var(--depth-p)*-30px));user-select:none}
+.breath-object{position:absolute;z-index:2;width:65%;height:auto;right:0;top:145px;transform:translateY(calc(var(--depth-p)*24px)) rotate(calc(var(--depth-p)*-1deg));transform-origin:55% 70%;pointer-events:none}
+.breath-copy{position:absolute;z-index:3;left:var(--g);bottom:67px;width:27%;max-width:340px}
+.breath-copy h2{font-size:clamp(26px,2.5vw,41px);line-height:1.15;letter-spacing:-.04em;text-wrap:initial}
+.breath-copy p{font-size:14px;line-height:1.65;margin:20px 0 12px;max-width:29ch;color:#52604b}
+.breath-copy .textlink{font-size:13px}
+.breath-note{position:absolute;bottom:26px;right:var(--g);font-size:10px;line-height:1.5;color:#53604d;z-index:3;text-align:right}
+.breath-line{position:absolute;left:var(--g);bottom:31px;width:38%;height:1px;background:#bac2ad;transform:scaleX(calc(.25 + var(--depth-p)*.75));transform-origin:left}
+.ritual-stage{aspect-ratio:auto;overflow:visible}
+.ritual-images{position:relative;aspect-ratio:1.04;overflow:hidden;background:#26352b}
+.ritual-picture{transform:scale(1.055);transition:opacity .6s ease,transform 1.15s var(--ease)}
+.ritual-picture.active{transform:scale(1)}
+.ritual-stage .caption{position:static;background:none;padding:16px 0 0;color:#b7c2b1;min-height:58px;font-size:11px;max-width:62ch}
+.ritual-notes{counter-reset:ritual}
+.ritual-note{counter-increment:ritual}
+.ritual-note button:before{content:'0' counter(ritual);display:block;font-size:12px;letter-spacing:.1em;color:#b2c7a2;margin-bottom:17px}
+.ritual-note button[aria-pressed="false"]{color:#c1cbbd}
+.ritual-note button[aria-pressed="true"]{color:#fff}
+.ritual-note button{transition:color .3s ease}
+.ritual-tabs{display:none}
+.work>a{display:block;overflow:hidden}
+.work>a>img{transition:transform .85s var(--ease)}
+.btn span[aria-hidden]{transition:transform .22s var(--ease)}
+@media(hover:hover) and (pointer:fine){.work>a:hover img{transform:scale(1.025)}.btn:hover span[aria-hidden]{transform:translate(3px,-3px)}}
+@media(min-width:761px){.model-grid .model:nth-child(even){padding-top:64px}.hero-copy .eyebrow{font-size:10px}.hero-copy .lede{max-width:36ch}}
+@media(min-width:1600px){.breath-object{top:180px}.breath-copy{bottom:110px}}
+@media(max-width:1080px) and (min-width:761px){.hero-copy{padding-right:26px}.hero-copy h1{font-size:4.6vw}.breath-stage{height:650px}.breath-word{top:100px}.breath-object{top:150px;width:62%}.breath-copy{bottom:68px;width:29%}.breath-copy h2{font-size:26px}.breath-copy p{font-size:13px}}
+@media(max-width:760px){
+ .hero-copy h1{font-size:clamp(38px,9.5vw,66px);line-height:1.07}
+ .hero-visual{margin-inline:var(--g);aspect-ratio:1.15}
+ .hero-visual:after{left:14px;bottom:14px;font-size:9px}
+ .hero{padding-bottom:26px}
+ .included-strip{margin-bottom:28px}
+ .breath-stage{height:auto;padding-bottom:72px}
+ .breath-kicker{top:27px;max-width:25ch;font-size:9px;line-height:1.7}
+ .breath-word{font-size:22.3vw;top:106px;left:4%;transform:translateY(calc(var(--depth-p)*-14px))}
+ .breath-object{position:relative;width:110%;max-width:none;right:auto;left:-4%;top:auto;padding-top:132px;transform:translateY(calc(var(--depth-p)*14px))}
+ .breath-copy{position:relative;left:auto;bottom:auto;margin:26px var(--g) 0;width:calc(100% - var(--g)*2);max-width:440px}
+ .breath-copy h2{font-size:29px}
+ .breath-copy p{max-width:36ch;font-size:13px;margin:16px 0 6px}
+ .breath-copy .textlink{font-size:13px}
+ .breath-note{left:var(--g);right:auto;bottom:20px;text-align:left;font-size:9px}
+ .breath-line{display:none}
+ .ritual-images{aspect-ratio:1.16}
+ .ritual-stage .caption{padding-top:12px;min-height:53px;font-size:10px}
+ .ritual-tabs{display:flex;gap:8px;margin-top:14px}
+ .ritual-tabs button{flex:1;background:transparent;border:1px solid #61715a;color:#c1cbbd;min-height:44px;font-size:12px}
+ .ritual-tabs button[aria-pressed="true"]{background:#e9eddf;color:#253e32;border-color:#e9eddf}
+ .ritual-notes{gap:24px;padding:0 0 10px;scrollbar-color:#879a79 #334738;scrollbar-width:thin}
+ .ritual-note{padding-top:22px;min-height:315px}
+ .ritual-note button{font-size:31px}
+ .ritual-note button:before{margin-bottom:12px}
+}
+@media(max-width:370px){.breath-copy h2{font-size:27px}}
+@media(prefers-reduced-motion:reduce){.breath-word,.breath-object,.breath-line,.hero-photo,.ritual-picture{transform:none!important}.ritual-stage{position:relative;top:auto}.ritual-picture{transition:none!important}.ritual-note button{transition:none!important}}

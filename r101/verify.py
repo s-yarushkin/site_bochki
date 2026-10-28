@@ -1,6 +1,7 @@
 import sys,json,hashlib,re
 from pathlib import Path
 from urllib.parse import urlsplit,unquote
+from collections import Counter
 root=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(root/'.local/python'))
 from bs4 import BeautifulSoup
@@ -27,6 +28,9 @@ for f in out.rglob('*.html'):
    if target.suffix=='.html' and not BeautifulSoup(target.read_text('utf-8'),'html.parser').find(id=parts.fragment):errors.append('Broken fragment '+u)
  for img in soup.select('img'):
   if not img.has_attr('alt'):errors.append('Missing image alt')
+ image_ids=[re.sub(r'-(?:480|640|960|1280|1440|1600|1920)(?=\.)','',urlsplit(i.get('src','')).path) for i in soup.select('img[src]')]
+ for src,count in Counter(image_ids).items():
+  if count>1:errors.append(str(f.relative_to(out))+': repeated image '+src)
 selected=json.loads((out/'r101/plans.json').read_text('utf-8'))
 assert not {'p9','p11'}&{p['id'] for p in selected}
 for plan in ['p9','p11']:

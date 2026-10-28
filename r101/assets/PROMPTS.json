@@ -1,0 +1,19 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-28",
+  "assets": [
+    {
+      "file": "oak-basin-layer.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: premium Russian sauna editorial website foreground cutout for layered typography. Create one photorealistic freshly steamed oak bath broom standing diagonally in a low broad wooden coopered sauna basin, water droplets on deep olive oak leaves, natural russet handle tied with plain linen cord. Basin at lower center, dense oak foliage fans upward and to left, a few individual leaves give an organic silhouette. Entire object visible with generous transparent margins. Landscape canvas 1536x1024. Camera slightly above basin rim, realistic commercial still-life photography, raking warm side light from upper left, rich natural wood, muted olive not neon, detailed wet leaves, subtly imperfect. Genuinely transparent background, no floor, no room, no rectangular backdrop, no text, no branding, no added decorative props. Minimal translucent steam only close to leaves, preserve crisp silhouette for clean overlap with HTML text.",
+      "transparent": true
+    },
+    {
+      "file": "conifer-rest.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: full-bleed editorial photograph for Russian sauna website. Close relaxed side view of one adult's two bare feet and lower calves resting comfortably on a thick soft bed of fresh fir boughs on a wide pale wooden sauna bench. Only lower calves and feet visible, no other body parts, no sexualization. Natural anatomically accurate feet, all toes correct, relaxed pose, pine needles detailed but not spiky threatening. Foreground fir boughs large and tactile, afternoon light through an out-of-focus sauna window, gentle humid atmosphere, warm honey timber and deep olive needles. Landscape 1536x1024, quiet documentary luxury editorial photography, realistic texture, shallow depth of field, no text, logos, slippers, towel bundles or other people."
+    },
+    {
+      "file": "oak-steam.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: large tactile editorial detail photograph for Russian sauna website. Extreme close-up of freshly steamed oak sauna broom with wet soft broad lobed oak leaves, a hand-bound twig handle crossing lower right, fine droplets and a very light curl of warm steam. Oak leaves fill the foreground, sitting on a damp honey-colored wooden sauna bench, background softly blurred warm wooden wall. Cropped intimate photographic detail, no basin, no hands, no people. Landscape 1536x1024. Natural low side light, deep muted olive and copper brown, rich realistic botanical texture, atmospheric authentic Russian banya mood, no glowing fog, no text or logo."
+    }
+  ]
+}

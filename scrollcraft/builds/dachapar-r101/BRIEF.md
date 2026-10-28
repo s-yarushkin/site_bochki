@@ -1,5 +1,12 @@
 # ДачаПар R101
 
+## Visual revision 2, feedback 28.10.2026
+Keep the real panoramic sauna hero unobstructed. Remove the birch overlay and the heading's white protrusion. Expand emotional photography without repeating any image on a page.
+
+New depth contract: an editorial oak-broom scene after the hero, with a warm mineral background (z0), oversized live text «ВЫДОХ.» (z1), a genuinely transparent photographic oak broom in a wooden basin (z2), and small descriptive copy / catalogue link in a separate safe region (z3). The foreground occludes only the decorative word, never the offer or controls. Text travels up by at most 30px; subject travels independently by at most 24px. Native scroll, no wheel interception. Mobile is independently composed; reduced motion is static and equally legible.
+
+Assets: oak-basin-layer.png (transparent foreground, no background plate); oak-steam.png (close photographic detail); conifer-rest.png (adult lower legs resting on fir boughs in a sauna). Existing tea scene is used only at the closing CTA. Birch is removed from page compositions for now. Real project photos remain separate from generated mood illustrations.
+
 Self-authored under explicit creative delegation. 28.10.2026.
 
 ## Задание и решения
@@ -28,7 +35,8 @@ Chaptered editorial: навигация по вопросам покупател
 ## Сценарий движения
 | Глава | Устройство | Назначение |
 |---|---|---|
-| Парная | parallax: реальная фотография, независимый ближний лист, текст | Сцена становится ближе при коротком естественном скролле |
+| Парная | цельная реальная фотография с коротким ходом, текст в отдельной колонке | Чистый вид на окно, предложение и цена сразу |
+| Выдох | текст за прозрачным веником и тазом, разные скорости слоёв | Эмоциональный переход к выбору собственной бани |
 | Каталог | flow/in | Открытая цена без анимационной задержки |
 | Банный вечер | sticky предметный кадр + ручной reveal | Деталь сменяется по смыслу, состав остаётся читаемым |
 | Реальные объекты | нативный pan/scroll-snap | Связанные фотографии реальной бани |
@@ -36,7 +44,7 @@ Chaptered editorial: навигация по вопросам покупател
 | Запрос | flow, тактильные кнопки | Отправка только по действию пользователя |
 
 ## Контракт слоёв hero
-Дальний/средний планы: цельная реальная фотография парной kh7-06; конструкцию окна не разрезаем, она физически связана. Ближний: прозрачная ветвь берёзы в нижнем правом углу, движется чуть быстрее. Типографика на отдельной светлой левой поверхности; перекрывает край фотографии и остаётся неподвижной. Полупрозрачный мягкий свет не закрывает детали. Mobile: текст над кадром, короткий ход слоя, полная CTA до каталога; reduced motion сохраняет композицию без перемещения.
+Цельная реальная фотография парной kh7-06; конструкцию окна не разрезаем. Типографика на отдельной светлой левой поверхности без выступов на фото. Ветка исключена по замечанию владельца. Mobile: текст над кадром, CTA и цена до фотографии. Глубина перенесена в самостоятельную сцену с дубовым веником по контракту редакции 2 выше; reduced motion сохраняет композицию без перемещения.
 
 ## Технические условия
 Проверка doctor: Node24 и Chrome есть; ffmpeg отсутствует, playwright-core не установлен. Видео не используется, поэтому кодирование не требуется. Проверка UI через доступный CUA вместо стороннего browser harness. Генерация встроенной моделью, без Kie/API ключей. Локальный browser localhost ранее запрещён сохранённой политикой: не обходить; если запрет сохраняется, честно отметить отсутствие визуальной проверки, предоставить локальный просмотр пользователю.
