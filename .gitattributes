@@ -2,6 +2,6 @@
 # Release guards compare the served bytes, including existing line endings.
 web/** -text
 api/** -text
-r101/vendor/** -text
+r101/vendor/** -text whitespace=cr-at-eol
 *.webp binary
 *.woff2 binary

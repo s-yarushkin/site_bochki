@@ -8,8 +8,9 @@ sys.stdout.reconfigure(encoding='utf-8')
 out=root/'output/r101-site';manifest=json.loads((root/'output/r101-manifest.json').read_text('utf-8'));errors=[]
 for name,sha in manifest['protected'].items():
  if hashlib.sha256((root/'web'/name).read_bytes()).hexdigest()!=sha:errors.append('Protected source changed: '+name)
-for name in ['scrollcraft.js','scrollcraft.css']:
- if (out/'r101/vendor'/name).read_bytes()!=(root/'.local/scroll-craft-source/plugins/nateherk-design/skills/scroll-craft/engine'/name).read_bytes():errors.append('Engine modified: '+name)
+upstream=json.loads((root/'r101/vendor/UPSTREAM.json').read_text('utf-8'))
+for name,sha in upstream['sha256'].items():
+ if hashlib.sha256((out/'r101/vendor'/name).read_bytes()).hexdigest()!=sha:errors.append('Engine modified: '+name)
 for f in out.rglob('*.html'):
  if f.name in ['consent.html','privacy.html','requisites.html','manager.html']:continue
  soup=BeautifulSoup(f.read_text('utf-8'),'html.parser')
