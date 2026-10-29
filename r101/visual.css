@@ -61,3 +61,79 @@
 }
 @media(max-width:370px){.breath-copy h2{font-size:27px}}
 @media(prefers-reduced-motion:reduce){.breath-word,.breath-object,.breath-line,.hero-photo,.ritual-picture{transform:none!important}.ritual-stage{position:relative;top:auto}.ritual-picture{transition:none!important}.ritual-note button{transition:none!important}}
+
+/* V3: one photographic language, a shorter path to a personal proposal. */
+.hero-visual:after{display:none}
+.model-figure{aspect-ratio:1.5;display:block}
+.model-figure img{object-position:center}
+.model-desc{min-height:48px;max-width:48ch}
+.catalog-note{font-size:12px;line-height:1.6;color:var(--muted);max-width:85ch;margin-top:30px}
+.model .price-line .btn{gap:12px;padding-inline:18px}
+.product-lead>figure img{aspect-ratio:1.5;object-fit:cover}
+.product-lead>figure figcaption{margin-top:14px;max-width:60ch}
+.personalize{background:#f5f3ec}
+.personalize .split{grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px);align-items:center}
+.personalize h2,.closing h2{margin-top:18px}
+.personalize .lede{font-size:18px}
+.personalize figure img{aspect-ratio:.95;object-fit:cover}
+.personalize figcaption{margin-top:14px}
+.possibilities{list-style:none;margin:24px 0;padding:0}
+.possibilities li{padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.possibilities li:before{content:'+';color:#6c7e5b;margin-right:14px}
+.personalize .muted{font-size:13px;max-width:50ch}
+.personalize .textlink{margin-top:16px;font-size:14px}
+.invitation .breath-stage{height:clamp(610px,48vw,820px)}
+.invitation .breath-word{font-size:clamp(90px,13.4vw,220px);top:85px;left:4%;letter-spacing:-.065em;word-spacing:.12em;white-space:nowrap}
+.invitation .breath-object{width:min(61%,1020px);top:105px;right:0}
+.invitation .breath-copy{bottom:68px;width:32%;max-width:440px}
+.invitation .breath-copy h2{font-size:clamp(26px,2.65vw,42px)}
+.invitation .breath-copy p{max-width:33ch}
+.invitation .btn{margin-top:10px}
+.ritual-note{min-height:290px;padding-block:32px}
+.ritual-note p{font-size:17px;max-width:34ch}
+.ritual-images{max-height:calc(100svh - 170px)}
+.process-row{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-bottom:24px}
+.process-row li{align-content:start;border-bottom:0;border-top:1px solid var(--line);padding-top:24px}
+.plan .eyebrow{margin-top:20px;font-size:11px;color:var(--green)}
+.plan h3{margin:10px 0 14px}
+.plan>p:not(.eyebrow){min-height:45px}
+.plan .btn{margin-top:20px}
+.construction .photo-rail{margin-top:28px}
+.table-scroll{overflow:auto;margin-bottom:32px}
+.comparison{width:100%;border-collapse:collapse;min-width:720px;text-align:left}
+.comparison th,.comparison td{padding:25px 22px;border-bottom:1px solid var(--line);vertical-align:top;font-size:14px}
+.comparison thead th{background:#eef0e9;font-weight:600}
+.comparison tbody th{font-size:19px;font-weight:500;min-width:175px}
+.comparison td:last-child{white-space:nowrap}
+.dialog-body>.eyebrow{font-size:10px;margin-bottom:14px;color:var(--muted)}
+.dialog-body h2{font-size:36px;line-height:1.15;letter-spacing:-.04em}
+.dialog-body .selection-summary{font-size:14px;padding:17px 0;margin:24px 0}
+.dialog-body .dialog-intro{font-size:15px;line-height:1.6}
+.contact-fields{margin-top:18px}
+.form-details{margin-top:6px;font-size:13px}
+.form-details summary{cursor:pointer;padding:10px 0;color:var(--green);text-decoration:underline;text-underline-offset:5px}
+.form-details .form-grid{margin-top:12px}
+.form-status:empty{display:none}
+.dialog-contact{font-size:13px;color:var(--muted);margin-top:22px}
+.dialog-contact a{white-space:nowrap;color:var(--ink)}
+#preview-note{margin-top:14px;font-size:10px}
+.closing .eyebrow{margin:0}
+@media(min-width:761px){.model-grid .model:nth-child(even){padding-top:32px}}
+@media(max-width:1080px) and (min-width:761px){.invitation .breath-stage{height:600px}.invitation .breath-object{top:165px;width:59%}.invitation .breath-copy{width:35%}.invitation .breath-copy h2{font-size:26px}.process-row{gap:18px}.process-row li{grid-template-columns:24px 1fr;gap:10px}}
+@media(max-width:760px){
+ .model-grid{gap:56px}.model-figure{aspect-ratio:1.5}.model-desc{min-height:0}
+ .personalize .split{grid-template-columns:1fr}.personalize figure{order:-1}.personalize figure img{aspect-ratio:1.5}
+ .personalize .lede{font-size:16px}.possibilities li{font-size:14px}.personalize .eyebrow{font-size:10px}
+ .invitation .breath-stage{height:auto;padding-bottom:38px}
+ .invitation .breath-word{font-size:12.9vw;top:96px;left:4%}
+ .invitation .breath-object{width:108%;top:auto;left:-4%;right:auto;padding-top:90px}
+ .invitation .breath-copy{position:relative;bottom:auto;width:auto;max-width:none;margin:24px var(--g) 0}
+ .invitation .breath-copy h2{font-size:29px}.invitation .breath-copy p{max-width:38ch}
+ .ritual-note{min-height:235px;padding-block:24px}.ritual-note p{font-size:15px}
+ .ritual-tabs{margin-top:18px}.ritual-images{max-height:none}
+ .process-row{grid-template-columns:1fr;gap:0}
+ .product-controls{padding-top:0}.plan>p:not(.eyebrow){min-height:0}
+ .dialog-body h2{font-size:28px}.dialog-body .dialog-intro{font-size:14px}.dialog-body .selection-summary{font-size:13px;margin:18px 0}
+ .contact-fields{grid-template-columns:1fr;gap:14px}.consent{font-size:11px;line-height:1.55}
+ .resume{gap:8px;font-size:10px}.resume button{font-size:10px;max-width:115px}
+}

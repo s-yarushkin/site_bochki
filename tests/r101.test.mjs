@@ -36,3 +36,10 @@ test('shared link has only model and size, no personal or obsolete configuration
  assert.equal(selectionLink('https://дачапар.рф',{model:'kvadro-house',size:'6x4'}),'https://xn--80aaan1dh9b.xn--p1ai/bani/kvadro-haus/?size=6x4');
  assert.equal(comfortSelection(book,{model:'<script>'}),null);
 });
+test('proposal requests retain MAX, exact price and optional wishes without adding paid extras',()=>{
+ const s=comfortSelection(book,{model:'kvadro-house',size:'6x5'});
+ const lead=validateBaniLead(inquiryPayload(book,s,{...fields,comment:'Обсудить LED и расположение розеток'},{purpose:'quote',pagePath:'/bani/kvadro-haus/'},randomUUID()));
+ assert.equal(lead.estimate.total,905000);assert.equal(lead.contactChannel,'max');
+ assert.equal(lead.journeyContext.purpose,'quote');assert.equal(lead.configuration.selection.planId,null);
+ assert.match(lead.comment,/LED/);assert.deepEqual(lead.configuration.selection.options,[]);
+});

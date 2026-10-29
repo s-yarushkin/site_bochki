@@ -25,7 +25,7 @@ export function inquiryPayload(book,state,fields,context,id){
  if(fields.settlement)payload.journeyContext.district=fields.settlement.trim().slice(0,140);
  if(context.reference&&chosen&&context.reference.model===chosen.model)payload.journeyContext.reference=context.reference;
  const plan=context.plan&&!withdrawnPlans.has(context.plan.id)&&chosen&&context.plan.model===chosen.model&&context.plan.size===chosen.size?context.plan:null;
- const info=[chosen?'Расчёт бани в комплектации Комфорт. Доставку и условия участка уточнить.':'Помощь с выбором бани. Модель и размер пока не выбраны.',plan?'Пожелание: планировка '+plan.id+'. Не является обязательным выбором для цены.':'',fields.settlement?'Населённый пункт: '+fields.settlement.trim().slice(0,100)+'.':'',fields.comment||''];
+ const info=[chosen?'Предложение по бане в комплектации Комфорт. Пожелания, доставку и условия участка уточнить.':'Помощь с выбором бани. Модель и размер пока не выбраны.',plan?'Пожелание: планировка '+plan.id+'. Не является обязательным выбором для цены.':'',fields.settlement?'Населённый пункт: '+fields.settlement.trim().slice(0,100)+'.':'',fields.comment||''];
  payload.comment=info.filter(Boolean).join(' ').replace(/[\u0000-\u001f\u007f]/g,' ').slice(0,500);
  return payload;
 }

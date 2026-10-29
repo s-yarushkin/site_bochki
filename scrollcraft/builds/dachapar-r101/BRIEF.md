@@ -1,5 +1,8 @@
 # ДачаПар R101
 
+## Revision 3, 29.10.2026
+Owner feedback: unify the model imagery with emotional scenes; remove the raw-work gallery from the main flow, repetitive machine-like captions and full stops; make the conversion action honest. Four facade images are edits of original photos, not invented buildings. Keep geometry recognizable and retain original interior details in a deliberate disclosure. Eight selected schemes only. The catalogue now follows the hero directly. The layered broom scene moves after personalization: decorative live text «ВАША БАНЯ», foreground basin, separate readable invitation and CTA. The decorative word may be occluded; offer and controls must remain fully visible. Native scroll and reduced-motion behavior remain. Previous revision contracts below are historical when they differ from this one.
+
 ## Visual revision 2, feedback 28.10.2026
 Keep the real panoramic sauna hero unobstructed. Remove the birch overlay and the heading's white protrusion. Expand emotional photography without repeating any image on a page.
 

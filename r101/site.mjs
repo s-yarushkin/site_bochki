@@ -9,6 +9,7 @@ const dialog=$('#inquiry-dialog'),form=$('#inquiry-form'),status=$('#form-status
 const getField=name=>form.elements.namedItem(name);
 const announce=text=>{const t=$('.toast');t.textContent=text;t.hidden=false;clearTimeout(announce.timer);announce.timer=setTimeout(()=>t.hidden=true,4200)};
 const track=(event,extra={})=>analytics?.track(event,{...extra,experiment_id:'r101_comfort',variant:'editorial'});
+const placement=el=>el.closest('.hero')?'hero':el.closest('[data-model-card]')?(location.pathname.startsWith('/bani/')&&location.pathname!=='/bani/'?'model':'catalog'):el.closest('.closing')?'final':el.closest('#individual,#breath')?'personal':el.closest('.plan')?'plans':el.closest('.resume')?'mobile':'result';
 const storage={read(){try{return JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{return null}},write(v){try{localStorage.setItem('dp_r101_choice',JSON.stringify(v))}catch{}}};
 function choiceText(s){return s?`${names[s.model]} · ${book.r85.models[s.model].sizes[s.size].label} · ${money(comfortPrice(book,s))}`:'Модель и размер пока не выбраны';}
 function updateSelection(s,persist=true){
@@ -22,22 +23,25 @@ function updateSelection(s,persist=true){
 }
 function closeDialog(){dialog.close();lastFocus?.focus();track('dp_form_close',{placement:'result'});}
 function openInquiry(button){
- lastFocus=button;const purpose=button.dataset.inquiry||'delivery';
+ lastFocus=button;const purpose=button.dataset.inquiry||'quote';
  if(!book){announce('Не удалось загрузить расчёт. Позвоните: +7 (951) 734-99-99');return;}
  let selected=button.dataset.model?comfortSelection(book,{model:button.dataset.model,size:button.dataset.photo&&choice?.model===button.dataset.model?choice.size:button.dataset.size}):choice;
  if(selected)updateSelection(selected);
  const ref=button.dataset.photo?safeReference(photos,button.dataset.photo,selected?.model):null;
  const plan=button.dataset.plan?plans.find(p=>p.id===button.dataset.plan&&!withdrawnPlans.has(p.id)):null;
- context={purpose,pagePath:location.pathname,reference:ref,plan,selection:selected};
- $('#inquiry-title').textContent=purpose==='selection_help'&&!selected?'Поможем выбрать баню':purpose==='photo'?'Обсудим похожую баню':purpose==='plan'?'Обсудим планировку':'Расчёт для вашего участка';
- $('#inquiry-summary').textContent=choiceText(selected)+(selected?' · Комфорт. Доставка и работы на участке ещё не рассчитаны.':'')+(plan?' Пожелание: '+plan.title+'.':'')+(ref?' Фотоориентир передадим менеджеру.':'');
- getField('channel').disabled=!selected;if(!selected)getField('channel').value='phone';
- $('.dialog-intro',dialog).textContent=(selected?'Уточним доставку и работы на участке. Подготовим расчёт и согласуем состав вашей бани.':'Оставьте номер для звонка. Поможем определиться с моделью и размером. Для запроса по выбранной модели также доступен MAX.')+(location.hostname==='127.0.0.1'?' Локальный предпросмотр: тестовые заявки не отправляются менеджерам.':'');
+ context={purpose,pagePath:location.pathname,reference:ref,plan,selection:selected,placement:placement(button)};
+ track('dp_cta_click',{purpose,model:selected?.model,size:selected?.size,placement:context.placement});
+ $('#inquiry-title').textContent='Как с вами связаться';
+ $('#inquiry-summary').textContent=selected?choiceText(selected)+' · Комфорт'+(plan?' · '+plan.title:'')+(ref?' · Обсудим выбранное исполнение':''):'Поможем выбрать модель и размер';
  if(sent){form.reset();sent=false;requestId=null;lastBody='';}
+ getField('channel').disabled=!selected;$('#channel-field').hidden=!selected;if(!selected)getField('channel').value='phone';
+ $('.dialog-intro',dialog).textContent=selected?'Обсудим пожелания и участок. Подготовим предложение с подходящим оснащением и доставкой.':'Позвоним, чтобы понять ваши пожелания и подобрать баню. Затем подготовим предложение для вашего участка.';
+ $('.form-submit',dialog).textContent=selected?'Получить предложение':'Обсудить выбор бани';
+ $('#preview-note').hidden=location.hostname!=='127.0.0.1';
  status.textContent='';status.className='form-status';fields.hidden=false;
  fields.disabled=!(selected?leadAvailable(settings,location.origin,book.version):callbackAvailable(settings,location.origin));
- if(fields.disabled)status.textContent='Это версия для просмотра. Онлайн-отправка здесь отключена. Для обращения используйте телефон.';
- dialog.showModal();getField('phone').focus();track('dp_form_open',{purpose,model:selected?.model,size:selected?.size,placement:'result'});
+ if(fields.disabled)status.textContent='Сейчас заявку можно оставить по телефону: +7 (951) 734-99-99.';
+ dialog.showModal();getField('phone').focus();track('dp_form_open',{purpose,model:selected?.model,size:selected?.size,placement:context.placement});
 }
 $('.menu-button').addEventListener('click',e=>{const b=e.currentTarget;const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));$('#mobile-menu').hidden=!open;});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#mobile-menu').hidden){$('#mobile-menu').hidden=true;$('.menu-button').setAttribute('aria-expanded','false');$('.menu-button').focus();}});
@@ -45,10 +49,11 @@ $('.dialog-close').addEventListener('click',closeDialog);
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeDialog();}});
 dialog.addEventListener('cancel',()=>{track('dp_form_close',{placement:'result'});});
 for(const a of $$('a[href^="tel:"]'))a.addEventListener('click',()=>track('dp_phone_click',{placement:a.closest('header')?'header':'footer'}));
+for(const a of $$('a.btn'))a.addEventListener('click',()=>track('dp_cta_click',{placement:placement(a)}));
 for(const b of $$('[data-inquiry]'))b.addEventListener('click',()=>openInquiry(b));
 $('[data-resume-inquiry]').addEventListener('click',e=>openInquiry(e.currentTarget));
 $('[data-dismiss-resume]').addEventListener('click',()=>$('#resume').hidden=true);
-for(const d of $$('details'))d.addEventListener('toggle',()=>{if(d.open)track(d.querySelector('table')?'dp_quote_view':'dp_faq_open',{placement:'faq'});});
+for(const d of $$('details:not(.form-details)'))d.addEventListener('toggle',()=>{if(d.open)track(d.querySelector('table')?'dp_quote_view':'dp_faq_open',{placement:'faq'});});
 form.addEventListener('submit',async e=>{
  e.preventDefault();if(sending||sent||fields.disabled||!form.reportValidity())return;
  const values=Object.fromEntries(['name','phone','channel','settlement','comment'].map(n=>[n,getField(n).value]));
@@ -74,7 +79,7 @@ function depthFrame(){
 function scheduleDepth(){if(!ticking&&!reduce.matches){ticking=true;requestAnimationFrame(depthFrame);}}
 addEventListener('scroll',scheduleDepth,{passive:true});addEventListener('resize',scheduleDepth,{passive:true});scheduleDepth();
 reduce.addEventListener('change',()=>{if(hero)hero.style.setProperty('--hero-p','0');for(const scene of depthScenes)scene.style.setProperty('--depth-p','0');scheduleDepth();});
-function ritual(key){for(const img of $$('[data-ritual-image]'))img.classList.toggle('active',img.dataset.ritualImage===key);for(const b of $$('[data-ritual]'))b.setAttribute('aria-pressed',String(b.dataset.ritual===key));const c=$('#ritual-caption');if(c)c.textContent=key==='rest'?'Атмосферная сцена, созданная ИИ. Хвойные ветки и банные принадлежности не входят в комплект.':key==='steam'?'Атмосферная сцена, созданная ИИ. Веник вы выбираете сами.':'Атмосферная иллюстрация. Модель печи фиксируется в спецификации.';}
+function ritual(key){for(const img of $$('[data-ritual-image]')){const active=img.dataset.ritualImage===key;img.classList.toggle('active',active);img.setAttribute('aria-hidden',String(!active));}for(const b of $$('[data-ritual]'))b.setAttribute('aria-pressed',String(b.dataset.ritual===key));}
 for(const b of $$('[data-ritual]'))b.addEventListener('click',()=>{
  ritual(b.dataset.ritual);
  if(matchMedia('(max-width:760px)').matches){const rail=$('.ritual-notes'),target=$(`[data-ritual-step="${b.dataset.ritual}"]`);if(rail&&target)rail.scrollTo({left:target.offsetLeft-rail.offsetLeft,behavior:reduce.matches?'instant':'smooth'});}
@@ -91,6 +96,9 @@ try{
  let initial=pathModel?{model:pathModel,size:q.get('size')}:q.has('model')&&!location.pathname.startsWith('/planirovki')?{model:q.get('model'),size:q.get('size')}:storage.read();
  if(initial)updateSelection(initial,false);
  if(pathModel)track('dp_model_view',{model:pathModel,placement:'model'});
+ if(location.hash==='#photos')$('.construction')?.setAttribute('open','');
+ const requestedPhoto=pathModel&&safeReference(photos,q.get('photo'),pathModel);
+ if(requestedPhoto){const trigger=$(`[data-photo="${CSS.escape(requestedPhoto.photoId)}"]`);if(trigger){$('.construction')?.setAttribute('open','');trigger.closest('figure')?.scrollIntoView({block:'center',behavior:'instant'});}}
  if(q.get('plan')&&withdrawnPlans.has(q.get('plan'))){const note=$('#plan-notice');if(note){note.hidden=false;note.textContent='Эта схема уточняется и временно не показывается. Можно обсудить помещения с менеджером.';}}
  if(location.pathname==='/planirovki/'){
   const filter=Object.hasOwn(names,q.get('model'))?q.get('model'):null;
