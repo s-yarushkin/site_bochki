@@ -16,8 +16,8 @@
 .breath-line{position:absolute;left:var(--g);bottom:31px;width:38%;height:1px;background:#bac2ad;transform:scaleX(calc(.25 + var(--depth-p)*.75));transform-origin:left}
 .ritual-stage{aspect-ratio:auto;overflow:visible}
 .ritual-images{position:relative;aspect-ratio:1.04;overflow:hidden;background:#26352b}
-.ritual-picture{transform:scale(1.055);transition:opacity .6s ease,transform 1.15s var(--ease)}
-.ritual-picture.active{transform:scale(1)}
+.ritual-picture{transform:none;transition:opacity .6s ease}
+.ritual-picture.active{transform:none}
 .ritual-stage .caption{position:static;background:none;padding:16px 0 0;color:#b7c2b1;min-height:58px;font-size:11px;max-width:62ch}
 .ritual-notes{counter-reset:ritual}
 .ritual-note{counter-increment:ritual}
@@ -30,7 +30,7 @@
 .work>a>img{transition:transform .85s var(--ease)}
 .btn span[aria-hidden]{transition:transform .22s var(--ease)}
 @media(hover:hover) and (pointer:fine){.work>a:hover img{transform:scale(1.025)}.btn:hover span[aria-hidden]{transform:translate(3px,-3px)}}
-@media(min-width:761px){.model-grid .model:nth-child(even){padding-top:64px}.hero-copy .eyebrow{font-size:10px}.hero-copy .lede{max-width:36ch}}
+@media(min-width:761px){.hero-copy .eyebrow{font-size:10px}.hero-copy .lede{max-width:36ch}}
 @media(min-width:1600px){.breath-object{top:180px}.breath-copy{bottom:110px}}
 @media(max-width:1080px) and (min-width:761px){.hero-copy{padding-right:26px}.hero-copy h1{font-size:4.6vw}.breath-stage{height:650px}.breath-word{top:100px}.breath-object{top:150px;width:62%}.breath-copy{bottom:68px;width:29%}.breath-copy h2{font-size:26px}.breath-copy p{font-size:13px}}
 @media(max-width:760px){
@@ -118,7 +118,11 @@
 .dialog-contact a{white-space:nowrap;color:var(--ink)}
 #preview-note{margin-top:14px;font-size:10px}
 .closing .eyebrow{margin:0}
-@media(min-width:761px){.model-grid .model:nth-child(even){padding-top:32px}}
+@media(min-width:761px){
+ .model-grid .model:nth-child(even){padding-top:0}
+ .ritual-stage{top:100px}
+ .ritual-note{min-height:max(640px,90svh);padding-block:100px}
+}
 @media(max-width:1080px) and (min-width:761px){.invitation .breath-stage{height:600px}.invitation .breath-object{top:165px;width:59%}.invitation .breath-copy{width:35%}.invitation .breath-copy h2{font-size:26px}.process-row{gap:18px}.process-row li{grid-template-columns:24px 1fr;gap:10px}}
 @media(max-width:760px){
  .model-grid{gap:56px}.model-figure{aspect-ratio:1.5}.model-desc{min-height:0}

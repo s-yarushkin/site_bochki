@@ -19,7 +19,7 @@ for f in out.rglob('*.html'):
  if 'делюкс' in soup.get_text().lower():errors.append(str(f)+' visible Deluxe')
  for phrase in ['JavaScript','API','JSON','CTA','backend','frontend','деплой','продакшен','эндпоинт']:
   if re.search(r'(?<!\w)'+re.escape(phrase)+r'(?!\w)',soup.get_text(' ',strip=True),re.I):errors.append(str(f.relative_to(out))+': developer language '+phrase)
- for phrase in ['созданная ИИ','создано ИИ','Атмосферная сцена','Рассчитать доставку','Расчёт доставки ↗']:
+ for phrase in ['созданная ИИ','создано ИИ','Атмосферная сцена','Рассчитать доставку','Расчёт доставки ↗','работы на участке — отдельно','работы на участке отдельно','рассчитываются отдельно','Доставка отдельно','Панорамное остекление и декоративную подсветку можно добавить к Комфорту']:
   if phrase.lower() in soup.get_text().lower():errors.append(str(f.relative_to(out))+': obsolete copy '+phrase)
  for heading in soup.select('h1,h2,h3,.ritual-note button'):
   if heading.get_text(strip=True).endswith('.'):errors.append(str(f.relative_to(out))+': heading full stop')
@@ -47,6 +47,8 @@ for plan in ['p9','p11']:
  for suffix in ['', '_mirror']:
   assert not (out/f'assets/plans/r93/{plan}{suffix}.webp').exists()
 assert 'Время для себя' in (out/'index.html').read_text('utf-8')
+home=BeautifulSoup((out/'index.html').read_text('utf-8'),'html.parser')
+assert not home.select('.photo-note,.included-strip'), 'Remove duplicate strip and technical hero caption'
 assert len(manifest['routes'])==len(set(manifest['routes']))
 print(json.dumps({'routes':len(manifest['routes']),'plans':len(selected),'protected':len(manifest['protected']),'errors':errors},ensure_ascii=False,indent=2))
 sys.exit(bool(errors))
