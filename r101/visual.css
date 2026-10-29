@@ -141,3 +141,47 @@
  .contact-fields{grid-template-columns:1fr;gap:14px}.consent{font-size:11px;line-height:1.55}
  .resume{gap:8px;font-size:10px}.resume button{font-size:10px;max-width:115px}
 }
+
+/* Touch controls and the delivery consultation have their own compact layout. */
+.delivery-consultation{margin-top:50px;padding:36px;background:#eef0e9;border-radius:3px;max-width:920px}
+.delivery-consultation h2{font-size:clamp(28px,4vw,42px)}
+.delivery-consultation .lede{font-size:18px;max-width:58ch;margin:20px 0}
+.region-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.region-grid article{border-top:1px solid var(--line);padding-top:24px}
+.region-grid h2{font-size:30px}.region-grid p{margin-top:18px;color:var(--muted);max-width:50ch}
+.resume.is-consultation{max-width:650px;gap:18px}
+.resume.is-consultation [data-resume-inquiry]{background:var(--green);color:white;border-radius:3px;padding:12px 18px;font-size:13px;line-height:1.35;max-width:280px}
+.resume [data-dismiss-resume]{min-width:44px;flex-shrink:0}
+.menu-button{min-width:44px}
+@media(max-width:760px){
+ body{padding-bottom:110px}
+ .btn,.price-line .btn,.model .price-line .btn{font-size:14px;min-height:52px;line-height:1.4;white-space:normal}
+ .price-line{flex-direction:column;align-items:stretch}
+ .price-line .btn{width:100%;justify-content:center;gap:18px}
+ .hero-copy .actions{width:100%}.hero-copy .actions .btn{flex:1}
+ .form-grid input,.form-grid select,.form-grid textarea{font-size:16px;min-height:50px}
+ .form-submit{width:100%}
+ .model-foot .textlink,.filters a,.footer-links a,.textlink,.mobile-menu a{min-height:44px;display:inline-flex;align-items:center;line-height:1.4}
+ .site-header .phone{min-height:44px;display:flex;align-items:center;font-size:11px;white-space:nowrap}
+ .menu-button{padding:0 4px;font-size:13px}
+ .filters a{padding:10px 14px}
+ .ritual-tabs button{min-width:44px;min-height:48px;font-size:14px}
+ .form-details summary,.disclosure summary{min-height:44px;align-content:center}
+ .dialog-body{padding-top:58px}.dialog-body h2{font-size:28px}
+ .resume{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,1fr) 44px;gap:8px;left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom));padding:10px;font-size:11px;max-width:none}
+ .resume button{font-size:12px;max-width:none;min-height:48px;line-height:1.35;padding:6px}
+ .resume strong{font-size:12px;line-height:1.4}.resume small{font-size:10px}
+ .resume.is-consultation{grid-template-columns:minmax(0,1fr) 44px;max-width:none;gap:8px}
+ .resume.is-consultation>div{grid-column:1}.resume.is-consultation>div strong{display:none}
+ .resume.is-consultation [data-resume-inquiry]{grid-column:1;grid-row:2;max-width:none;width:100%;font-size:14px;min-height:48px}
+ .resume.is-consultation [data-dismiss-resume]{grid-column:2;grid-row:1 / span 2;align-self:center}
+ .region-grid{grid-template-columns:1fr;gap:32px}.region-grid h2{font-size:27px}
+ .delivery-consultation{padding:24px;margin-top:32px}.delivery-consultation .lede{font-size:16px}
+ .delivery-consultation .actions{align-items:stretch;flex-direction:column}.delivery-consultation .btn{width:100%}
+}
+@media(max-width:360px){.site-header{gap:8px}.site-header .wordmark{font-size:20px;gap:6px}.site-header .mark{width:18px}.site-header .phone{font-size:10.5px}}
+@media(max-width:760px){.spec-list a{min-height:44px;display:inline-flex;align-items:center}.ritual-note button{min-height:44px}}
+@media(max-width:760px){.resume [data-resume-inquiry]{font-size:14px}.footer-links a{font-size:14px}}
+.desktop-nav a{display:inline-flex;align-items:center;min-height:44px}
+dialog{overscroll-behavior:contain;max-height:calc(100dvh - 24px)}
+@media(max-width:760px){.spec-list li{grid-template-columns:1fr;gap:10px;padding-block:22px}.spec-list strong{font-size:16px}.spec-list p{font-size:15px;line-height:1.65}}

@@ -47,7 +47,7 @@ def final_files(manifest):
     return result
 def public_check(manifest):
     expected=final_files(manifest)
-    for name in ['index.html','r101/site.mjs','r101/visual.css','data/site-settings.json','data/catalog-pricebook.json','robots.txt','manager.html']:
+    for name in ['index.html','r101/site.mjs','r101/visual.css','data/site-settings.json','data/catalog-pricebook.json','robots.txt','sitemap.xml','regiony/index.html','manager.html']:
         path='/' if name=='index.html' else '/'+name
         request=urllib.request.Request(ORIGIN+path+'?release_check='+manifest['release'],headers={'Cache-Control':'no-cache','User-Agent':'DachaPar-release-check'})
         with urllib.request.urlopen(request,timeout=15) as response:
@@ -59,7 +59,7 @@ def validate(manifest,archive):
     if digest((HERE/'payload.zip').read_bytes())!=manifest['payloadSha256']:fail('payload digest')
     names=[e['path'] for e in manifest['files']]
     if len(names)!=len(set(names)) or len(archive.namelist())!=len(names) or set(archive.namelist())!=set(names):fail('unexpected archive contents')
-    if set(e['path'] for e in manifest['remove'])!={'assets/plans/r93/'+p+s+'.webp' for p in ['p9','p11'] for s in ['','_mirror']}:fail('unexpected removal')
+    if set(e['path'] for e in manifest['remove'])!={'assets/plans/r93/'+p+s+'.webp' for p in ['p9','p11'] for s in ['','_mirror']}|{'qh-media/assets/plans/kh-4x4-three-rooms.svg'}:fail('unexpected removal')
     for e in manifest['files']:
         checked(Path('/tmp/r101-path-check'),e['path'])
         if digest(archive.read(e['path']))!=e['newSha256']:fail('archive entry digest')

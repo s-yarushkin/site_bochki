@@ -43,3 +43,20 @@ test('proposal requests retain MAX, exact price and optional wishes without addi
  assert.equal(lead.journeyContext.purpose,'quote');assert.equal(lead.configuration.selection.planId,null);
  assert.match(lead.comment,/LED/);assert.deepEqual(lead.configuration.selection.options,[]);
 });
+
+test('free delivery consultation preserves the selected model and works without one',()=>{
+ const s=comfortSelection(book,{model:'kvadro',size:'500'});
+ const chosen=validateBaniLead(inquiryPayload(book,s,fields,{purpose:'delivery',pagePath:'/dostavka-i-ustanovka/'},randomUUID()));
+ assert.equal(chosen.estimate.total,485000);assert.equal(chosen.journeyContext.purpose,'delivery');assert.equal(chosen.contactChannel,'max');
+ assert.match(chosen.comment,/Бесплатная консультация/);assert.deepEqual(chosen.configuration.selection.options,[]);
+ const noModel=validateBaniLead(inquiryPayload(book,null,fields,{purpose:'delivery',pagePath:'/regiony/'},randomUUID()));
+ assert.equal(noModel.flow,'callback');assert.equal(noModel.journeyContext.purpose,'delivery');assert.equal(noModel.configuration,undefined);assert.match(noModel.comment,/Бесплатная консультация/);
+});
+
+test('the full allowed customer wish survives plan and location context',()=>{
+ const s=comfortSelection(book,{model:'viking',size:'600'}),wish='Я'.repeat(300);
+ const lead=validateBaniLead(inquiryPayload(book,s,{...fields,settlement:'А'.repeat(140),comment:wish},{purpose:'plan',plan:{id:'viking_6000_2400_wash',model:'viking',size:'600'}},randomUUID()));
+ assert.ok(lead.comment.length<=500);assert.ok(lead.comment.endsWith(wish));assert.match(lead.comment,/viking_6000_2400_wash/);
+ const delivery=validateBaniLead(inquiryPayload(book,s,{...fields,settlement:'А'.repeat(140),comment:wish},{purpose:'delivery'},randomUUID()));
+ assert.ok(delivery.comment.endsWith(wish));assert.ok(delivery.comment.length<=500);
+});

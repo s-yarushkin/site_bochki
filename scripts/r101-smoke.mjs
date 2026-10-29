@@ -18,4 +18,7 @@ for(const [model,sizes] of Object.entries(book.prices))for(const [size,expected]
 assert.equal(prices,20);
 const callback=validateBaniLead(inquiryPayload(book,null,fields,{purpose:'selection_help'},'10101010-1010-4010-8010-101010101011'));
 assert.equal(callback.flow,'callback');assert.equal(callback.contactChannel,'phone');
-console.log('SERVER_VALIDATION=PASS; prices=20; MAX context=PASS; callback=PASS; no lead submitted');
+const delivery=validateBaniLead(inquiryPayload(book,comfortSelection(book,{model:'kvadro',size:'500'}),fields,{purpose:'delivery',pagePath:'/dostavka-i-ustanovka/'},'10101010-1010-4010-8010-101010101012'));
+assert.equal(delivery.estimate.total,485000);assert.match(delivery.comment,/Бесплатная консультация/);assert.equal(delivery.journeyContext.purpose,'delivery');
+const freeCallback=validateBaniLead(inquiryPayload(book,null,fields,{purpose:'delivery',pagePath:'/regiony/'},'10101010-1010-4010-8010-101010101013'));assert.equal(freeCallback.flow,'callback');assert.equal(freeCallback.journeyContext.purpose,'delivery');
+console.log('SERVER_VALIDATION=PASS; prices=20; MAX context=PASS; callback=PASS; delivery consultation=PASS; no lead submitted');

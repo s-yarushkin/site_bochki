@@ -3,22 +3,33 @@ import {submitLead,leadAvailable,callbackAvailable} from '../lead-client.mjs';
 import {analytics} from '../analytics-core.mjs';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const names={kvadro:'Квадро',parus:'Парус',viking:'Викинг','kvadro-house':'Квадро Хаус'};
+const consultationPage=['/dostavka-i-ustanovka/','/regiony/'].includes(location.pathname);
 const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
 let book,settings,photos=[],plans=[],choice=null,context={},lastFocus=null,sending=false,sent=false,lastBody='',requestId=null;
 const dialog=$('#inquiry-dialog'),form=$('#inquiry-form'),status=$('#form-status'),fields=$('#form-fields');
 const getField=name=>form.elements.namedItem(name);
 const announce=text=>{const t=$('.toast');t.textContent=text;t.hidden=false;clearTimeout(announce.timer);announce.timer=setTimeout(()=>t.hidden=true,4200)};
 const track=(event,extra={})=>analytics?.track(event,{...extra,experiment_id:'r101_comfort',variant:'editorial'});
-const placement=el=>el.closest('.hero')?'hero':el.closest('[data-model-card]')?(location.pathname.startsWith('/bani/')&&location.pathname!=='/bani/'?'model':'catalog'):el.closest('.closing')?'final':el.closest('#individual,#breath')?'personal':el.closest('.plan')?'plans':el.closest('.resume')?'mobile':'result';
+const placement=el=>el.closest('.delivery-consultation')||consultationPage&&el.closest('.resume')?'delivery':el.closest('.hero')?'hero':el.closest('[data-model-card]')?(location.pathname.startsWith('/bani/')&&location.pathname!=='/bani/'?'model':'catalog'):el.closest('.closing')?'final':el.closest('#individual,#breath')?'personal':el.closest('.plan')?'plans':el.closest('.resume')?'mobile':'result';
 const storage={read(){try{return JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{return null}},write(v){try{localStorage.setItem('dp_r101_choice',JSON.stringify(v))}catch{}}};
 function choiceText(s){return s?`${names[s.model]} · ${book.r85.models[s.model].sizes[s.size].label} · ${money(comfortPrice(book,s))}`:'Модель и размер пока не выбраны';}
+function syncResume(){
+ const bar=$('#resume'),button=$('[data-resume-inquiry]');
+ bar.classList.toggle('is-consultation',consultationPage);
+ bar.setAttribute('aria-label',consultationPage?'Бесплатная консультация по доставке и размещению':'Ваш выбранный вариант');
+ if(consultationPage){
+  $('small',bar).textContent='Доставка и размещение';$('#resume-title').textContent='Баня на вашем участке';
+  button.dataset.inquiry='delivery';button.textContent='Бесплатная консультация ↗';
+  button.setAttribute('aria-label','Получить бесплатную консультацию по доставке и размещению бани на участке');bar.hidden=false;
+ }else if(choice){$('#resume-title').textContent=choiceText(choice);bar.hidden=false;}
+}
 function updateSelection(s,persist=true){
  choice=comfortSelection(book,s);if(!choice)return;
  if(persist)storage.write(choice);
  for(const select of $$(`[data-size-picker="${choice.model}"]`))select.value=choice.size;
  for(const el of $$(`[data-price="${choice.model}"]`))el.textContent=money(comfortPrice(book,choice));
  for(const el of $$(`[data-model-card="${choice.model}"] [data-inquiry]`))el.dataset.size=choice.size;
- $('#resume-title').textContent=choiceText(choice);$('#resume').hidden=false;
+ syncResume();
  for(const el of $$('[data-closing-choice]')){el.hidden=false;el.textContent='Ваш выбор: '+choiceText(choice)+' · Комфорт';}
 }
 function closeDialog(){dialog.close();lastFocus?.focus();track('dp_form_close',{placement:'result'});}
@@ -32,11 +43,17 @@ function openInquiry(button){
  context={purpose,pagePath:location.pathname,reference:ref,plan,selection:selected,placement:placement(button)};
  track('dp_cta_click',{purpose,model:selected?.model,size:selected?.size,placement:context.placement});
  $('#inquiry-title').textContent='Как с вами связаться';
- $('#inquiry-summary').textContent=selected?choiceText(selected)+' · Комфорт'+(plan?' · '+plan.title:'')+(ref?' · Обсудим выбранное исполнение':''):'Поможем выбрать модель и размер';
+ $('.dialog-body>.eyebrow').textContent=purpose==='delivery'?'Бесплатная консультация':'Ваша будущая баня';
+ $('#inquiry-summary').textContent=selected?choiceText(selected)+' · Комфорт'+(plan?' · '+(button.dataset.planLabel||plan.title):'')+(ref?' · Обсудим выбранное исполнение':''):'Поможем выбрать модель и размер';
  if(sent){form.reset();sent=false;requestId=null;lastBody='';}
  getField('channel').disabled=!selected;$('#channel-field').hidden=!selected;if(!selected)getField('channel').value='phone';
  $('.dialog-intro',dialog).textContent=selected?'Поможем продумать вашу баню и подготовим предложение с выбранным оснащением и доставкой.':'Позвоним, чтобы понять ваши пожелания и подобрать баню. Затем подготовим предложение для вашего участка.';
  $('.form-submit',dialog).textContent=selected?'Получить предложение':'Обсудить выбор бани';
+ if(purpose==='delivery'){
+  $('.dialog-intro',dialog).textContent='Подскажем, как разместить баню на участке, подготовить подъезд и организовать доставку.';
+  $('#inquiry-summary').textContent=selected?'Обсудим '+names[selected.model]+' · '+book.r85.models[selected.model].sizes[selected.size].label:'Доставка и размещение бани на вашем участке';
+  $('.form-submit',dialog).textContent='Получить консультацию';
+ }
  $('#preview-note').hidden=location.hostname!=='127.0.0.1';
  status.textContent='';status.className='form-status';fields.hidden=false;
  fields.disabled=!(selected?leadAvailable(settings,location.origin,book.version):callbackAvailable(settings,location.origin));
@@ -95,6 +112,7 @@ try{
  const q=new URLSearchParams(location.search),pathModel=Object.keys(names).find(m=>location.pathname===`/bani/${m==='kvadro-house'?'kvadro-haus':m}/`);
  let initial=pathModel?{model:pathModel,size:q.get('size')}:q.has('model')&&!location.pathname.startsWith('/planirovki')?{model:q.get('model'),size:q.get('size')}:storage.read();
  if(initial)updateSelection(initial,false);
+ syncResume();
  if(pathModel)track('dp_model_view',{model:pathModel,placement:'model'});
  if(location.hash==='#photos')$('.construction')?.setAttribute('open','');
  const requestedPhoto=pathModel&&safeReference(photos,q.get('photo'),pathModel);

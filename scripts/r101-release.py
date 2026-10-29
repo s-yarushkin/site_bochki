@@ -36,11 +36,12 @@ payload['llms.txt']=('# ДачаПар\n\nГотовые бани в компл�
     'Комплектация: https://xn--80aaan1dh9b.xn--p1ai/komplektaciya/\n'
     'Примеры планировок: https://xn--80aaan1dh9b.xn--p1ai/planirovki/\n'
     'Доставка: https://xn--80aaan1dh9b.xn--p1ai/dostavka-i-ustanovka/\n'
+    'Производство: Вологда. География доставки: https://xn--80aaan1dh9b.xn--p1ai/regiony/\n'
     'Телефон: +7 (951) 734-99-99\n\n'
     'Печь и дымоход, полки, мебель, электрика и стандартное освещение входят в Комфорт. '
-    'Доставку, разгрузку, основание, внешние подключения и дополнительное оснащение согласуют отдельно. '
+    'Персональное предложение учитывает выбранное оснащение, доставку и условия установки. '
     'Сборка Квадро Хаус включена в его цену. Фасады показывают варианты исполнения; состав заказа согласуется индивидуально.\n').encode()
-removed=[f'assets/plans/r93/{p}{suffix}.webp' for p in ['p9','p11'] for suffix in ['','_mirror']]
+removed=[f'assets/plans/r93/{p}{suffix}.webp' for p in ['p9','p11'] for suffix in ['','_mirror']]+['qh-media/assets/plans/kh-4x4-three-rooms.svg']
 entries=[{'path':n,'oldSha256':snapshot['files'].get(n),'newSha256':sha(b),'bytes':len(b)} for n,b in sorted(payload.items())]
 deletions=[{'path':n,'oldSha256':snapshot['files'][n]} for n in removed if n in snapshot['files']]
 release='R101-V3-'+sha(json.dumps([entries,deletions],sort_keys=True).encode())[:12]
