@@ -1,0 +1,21 @@
+{
+  "stableRelease": "R102-MOBILE-41dbaf3847e3",
+  "date": "2026-10-30",
+  "webBaseline": "R101-V3-128a975b2184",
+  "apiRelease": "R100-CRO-0a7d323b55c3",
+  "manifestSha256": "4fe75c82ae36d0f4d02b89542d30c86d5acd5f853f887c66526051e1d43b1ba0",
+  "baselineManifestSha256": "151e45f93734ed405264a485c250793f904cb661626ad8ba1b7d363b49801a50",
+  "postInstall": {
+    "release": "R102-MOBILE-41dbaf3847e3",
+    "postInstall": "PASS",
+    "publicFiles": 50,
+    "marketingPages": 30,
+    "protectedFiles": 13,
+    "prices": 20,
+    "apiUnchanged": true,
+    "browserShortViewport": "PASS",
+    "physicalKeyboardTested": false,
+    "leadSubmitted": false
+  },
+  "policy": "No website changes as part of advertising setup; future changes get a separate release."
+}

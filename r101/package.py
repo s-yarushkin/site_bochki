@@ -19,7 +19,8 @@ with ZipFile(dest,'w',ZIP_DEFLATED,compresslevel=6) as z:
  for f in (root/'output/qa').glob('r101-*.png'):z.write(f,'qa/'+f.name)
  z.write(root/'output/r101-manifest.json','manifest.json')
  z.write(root/'output/r101-search-audit.json','docs/search-audit.json')
- z.writestr('qa/README.txt','Снимки в этой папке относятся к предыдущей визуально проверенной редакции. Новые мобильные размеры и консультация ещё не подтверждены скриншотами; см. r101/VERIFICATION.md.\n')
+ z.write(root/'output/qa/r101-final-mobile-audit.json','qa/r101-final-mobile-audit.json')
+ z.writestr('qa/README.txt','Актуальная редакция: r101-final-*.png, измерения r101-final-mobile-audit.json. Остальные снимки сохранены как история.\n')
  z.write(root.parent/'СТАТУС-R101.md','СТАТУС-R101.md')
  z.writestr('README.txt','ДачаПар R101, версия для просмотра.\nsite/ — готовая публичная сборка, запускать HTTP-сервером из этого корня.\ndocs/ — архитектура, карта сайта, CJM, CTA и воронка.\nsource/r101/ — исходники новой оболочки; повторная сборка использует web/ исходного репозитория.\nqa/ — снимки проверенной версии.\nКандидат закрыт от индексирования. Не копировать на production без отдельного выпуска.\nКабинет, API и реальные уведомления не изменялись.\n')
 result={'zip':str(dest),'bytes':dest.stat().st_size,'sha256':hashlib.sha256(dest.read_bytes()).hexdigest()}

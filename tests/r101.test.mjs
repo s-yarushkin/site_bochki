@@ -60,3 +60,16 @@ test('the full allowed customer wish survives plan and location context',()=>{
  const delivery=validateBaniLead(inquiryPayload(book,s,{...fields,settlement:'А'.repeat(140),comment:wish},{purpose:'delivery'},randomUUID()));
  assert.ok(delivery.comment.endsWith(wish));assert.ok(delivery.comment.length<=500);
 });
+
+test('floating help waits until the catalogue has passed and respects dismissal and the form',async()=>{
+ const {resumeVisible}=await import('../output/r101-site/r101/state.mjs');
+ assert.equal(resumeVisible({ready:true,anchorBottom:1900,threshold:100}),false,'restored choice must not bypass the first screen');
+ assert.equal(resumeVisible({ready:true,anchorBottom:180,threshold:100}),false,'catalogue still visible');
+ assert.equal(resumeVisible({ready:true,anchorBottom:100,threshold:100}),true);
+ assert.equal(resumeVisible({ready:true,anchorBottom:-20,threshold:100}),true);
+ assert.equal(resumeVisible({ready:true,anchorBottom:900,threshold:100}),false,'returning up hides the action');
+ assert.equal(resumeVisible({ready:true,anchorBottom:-20,dismissed:true}),false);
+ assert.equal(resumeVisible({ready:true,anchorBottom:-20,modalOpen:true}),false);
+ assert.equal(resumeVisible({ready:false,anchorBottom:-20}),false);
+ assert.equal(resumeVisible({ready:true,anchorBottom:null}),false);
+});

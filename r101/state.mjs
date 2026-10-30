@@ -29,3 +29,8 @@ export function inquiryPayload(book,state,fields,context,id){
  payload.comment=info.filter(Boolean).join(' ').replace(/[\u0000-\u001f\u007f]/g,' ').slice(0,500);
  return payload;
 }
+
+
+export function resumeVisible({ready=false,anchorBottom=null,threshold=100,dismissed=false,modalOpen=false}={}){
+ return ready&&!dismissed&&!modalOpen&&Number.isFinite(anchorBottom)&&anchorBottom<=threshold;
+}

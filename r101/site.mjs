@@ -1,31 +1,49 @@
-import {comfortSelection,comfortPrice,selectionLink,safeReference,inquiryPayload,withdrawnPlans} from './state.mjs';
+import {comfortSelection,comfortPrice,selectionLink,safeReference,inquiryPayload,withdrawnPlans,resumeVisible} from './state.mjs';
 import {submitLead,leadAvailable,callbackAvailable} from '../lead-client.mjs';
 import {analytics} from '../analytics-core.mjs';
+import {mobileDialog} from './mobile-dialog.mjs';
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const names={kvadro:'Квадро',parus:'Парус',viking:'Викинг','kvadro-house':'Квадро Хаус'};
 const consultationPage=['/dostavka-i-ustanovka/','/regiony/'].includes(location.pathname);
 const money=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';
 let book,settings,photos=[],plans=[],choice=null,context={},lastFocus=null,sending=false,sent=false,lastBody='',requestId=null;
 const dialog=$('#inquiry-dialog'),form=$('#inquiry-form'),status=$('#form-status'),fields=$('#form-fields');
+const mobileInquiry=mobileDialog(dialog);
+const resumeAnchor=location.pathname==='/'?$('#models'):location.pathname==='/bani/'?$('.model-grid'):$('.product-lead')||(consultationPage?$('.page-head'):$('main article.editorial')||$('.page-head'));
+let resumeDismissed=false,resumeTicking=false;
 const getField=name=>form.elements.namedItem(name);
 const announce=text=>{const t=$('.toast');t.textContent=text;t.hidden=false;clearTimeout(announce.timer);announce.timer=setTimeout(()=>t.hidden=true,4200)};
 const track=(event,extra={})=>analytics?.track(event,{...extra,experiment_id:'r101_comfort',variant:'editorial'});
 const placement=el=>el.closest('.delivery-consultation')||consultationPage&&el.closest('.resume')?'delivery':el.closest('.hero')?'hero':el.closest('[data-model-card]')?(location.pathname.startsWith('/bani/')&&location.pathname!=='/bani/'?'model':'catalog'):el.closest('.closing')?'final':el.closest('#individual,#breath')?'personal':el.closest('.plan')?'plans':el.closest('.resume')?'mobile':'result';
 const storage={read(){try{return JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{return null}},write(v){try{localStorage.setItem('dp_r101_choice',JSON.stringify(v))}catch{}}};
 function choiceText(s){return s?`${names[s.model]} · ${book.r85.models[s.model].sizes[s.size].label} · ${money(comfortPrice(book,s))}`:'Модель и размер пока не выбраны';}
+function syncResumeVisibility(){
+ const headerBottom=$('.site-header')?.getBoundingClientRect().bottom||84;
+ $('#resume').hidden=!resumeVisible({ready:!!book,anchorBottom:resumeAnchor?.getBoundingClientRect().bottom,threshold:headerBottom+16,dismissed:resumeDismissed,modalOpen:dialog.open});
+}
+function scheduleResume(){if(!resumeTicking){resumeTicking=true;requestAnimationFrame(()=>{resumeTicking=false;syncResumeVisibility()})}}
 function syncResume(){
  const bar=$('#resume'),button=$('[data-resume-inquiry]');
  bar.classList.toggle('is-consultation',consultationPage);
- bar.setAttribute('aria-label',consultationPage?'Бесплатная консультация по доставке и размещению':'Ваш выбранный вариант');
+ bar.setAttribute('aria-label',consultationPage?'Бесплатная консультация по доставке и размещению':'Помощь с выбором бани');
  if(consultationPage){
   $('small',bar).textContent='Доставка и размещение';$('#resume-title').textContent='Баня на вашем участке';
   button.dataset.inquiry='delivery';button.textContent='Бесплатная консультация ↗';
-  button.setAttribute('aria-label','Получить бесплатную консультацию по доставке и размещению бани на участке');bar.hidden=false;
- }else if(choice){$('#resume-title').textContent=choiceText(choice);bar.hidden=false;}
+  button.setAttribute('aria-label','Получить бесплатную консультацию по доставке и размещению бани на участке');
+ }else if(choice){
+  $('small',bar).textContent='Ваш выбор';$('#resume-title').textContent=choiceText(choice);button.dataset.inquiry='quote';
+  button.textContent='Получить предложение ↗';button.setAttribute('aria-label','Получить предложение по выбранной бане');
+ }else{
+  $('small',bar).textContent='Ваша будущая баня';$('#resume-title').textContent='Поможем выбрать подходящую';button.dataset.inquiry='selection_help';
+  button.textContent='Помогите выбрать ↗';button.setAttribute('aria-label','Получить помощь с выбором бани');
+ }
+ syncResumeVisibility();
 }
+addEventListener('scroll',scheduleResume,{passive:true});addEventListener('resize',scheduleResume,{passive:true});addEventListener('load',scheduleResume,{once:true});
+dialog.addEventListener('close',scheduleResume);
 function updateSelection(s,persist=true){
  choice=comfortSelection(book,s);if(!choice)return;
- if(persist)storage.write(choice);
+ if(persist){storage.write(choice);resumeDismissed=false;}
  for(const select of $$(`[data-size-picker="${choice.model}"]`))select.value=choice.size;
  for(const el of $$(`[data-price="${choice.model}"]`))el.textContent=money(comfortPrice(book,choice));
  for(const el of $$(`[data-model-card="${choice.model}"] [data-inquiry]`))el.dataset.size=choice.size;
@@ -58,7 +76,7 @@ function openInquiry(button){
  status.textContent='';status.className='form-status';fields.hidden=false;
  fields.disabled=!(selected?leadAvailable(settings,location.origin,book.version):callbackAvailable(settings,location.origin));
  if(fields.disabled)status.textContent='Сейчас заявку можно оставить по телефону: +7 (951) 734-99-99.';
- dialog.showModal();getField('phone').focus();track('dp_form_open',{purpose,model:selected?.model,size:selected?.size,placement:context.placement});
+ dialog.showModal();scheduleResume();if(!mobileInquiry.open())getField('phone').focus();track('dp_form_open',{purpose,model:selected?.model,size:selected?.size,placement:context.placement});
 }
 $('.menu-button').addEventListener('click',e=>{const b=e.currentTarget;const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));$('#mobile-menu').hidden=!open;});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#mobile-menu').hidden){$('#mobile-menu').hidden=true;$('.menu-button').setAttribute('aria-expanded','false');$('.menu-button').focus();}});
@@ -69,7 +87,7 @@ for(const a of $$('a[href^="tel:"]'))a.addEventListener('click',()=>track('dp_ph
 for(const a of $$('a.btn'))a.addEventListener('click',()=>track('dp_cta_click',{placement:placement(a)}));
 for(const b of $$('[data-inquiry]'))b.addEventListener('click',()=>openInquiry(b));
 $('[data-resume-inquiry]').addEventListener('click',e=>openInquiry(e.currentTarget));
-$('[data-dismiss-resume]').addEventListener('click',()=>$('#resume').hidden=true);
+$('[data-dismiss-resume]').addEventListener('click',()=>{resumeDismissed=true;syncResumeVisibility()});
 for(const d of $$('details:not(.form-details)'))d.addEventListener('toggle',()=>{if(d.open)track(d.querySelector('table')?'dp_quote_view':'dp_faq_open',{placement:'faq'});});
 form.addEventListener('submit',async e=>{
  e.preventDefault();if(sending||sent||fields.disabled||!form.reportValidity())return;

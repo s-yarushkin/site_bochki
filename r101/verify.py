@@ -49,6 +49,10 @@ for plan in ['p9','p11']:
 assert 'Время для себя' in (out/'index.html').read_text('utf-8')
 home=BeautifulSoup((out/'index.html').read_text('utf-8'),'html.parser')
 assert not home.select('.photo-note,.included-strip'), 'Remove duplicate strip and technical hero caption'
+hero=home.select_one('.hero')
+assert 'Производим бани в Вологде. Поможем выбрать вашу.' in hero.get_text(' ',strip=True)
+assert 'Комфорт' not in hero.get_text() and not hero.select('.hero-price')
+assert [a.get_text(' ',strip=True) for a in hero.select('.actions a')]==['Посмотреть бани ↗']
 assert len(manifest['routes'])==len(set(manifest['routes']))
 print(json.dumps({'routes':len(manifest['routes']),'plans':len(selected),'protected':len(manifest['protected']),'errors':errors},ensure_ascii=False,indent=2))
 sys.exit(bool(errors))

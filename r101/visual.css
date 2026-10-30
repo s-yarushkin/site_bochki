@@ -185,3 +185,19 @@
 .desktop-nav a{display:inline-flex;align-items:center;min-height:44px}
 dialog{overscroll-behavior:contain;max-height:calc(100dvh - 24px)}
 @media(max-width:760px){.spec-list li{grid-template-columns:1fr;gap:10px;padding-block:22px}.spec-list strong{font-size:16px}.spec-list p{font-size:15px;line-height:1.65}}
+
+/* A restrained warm edge appears only on the contextual floating action. */
+.resume[hidden]{display:none!important}
+.resume [data-resume-inquiry],.resume.is-consultation [data-resume-inquiry]{
+ border:1px solid transparent;border-radius:3px;background:linear-gradient(#253e32,#253e32) padding-box,linear-gradient(110deg,#64806a 30%,#e7d3a5 47%,#f5e9c9 50%,#64806a 66%) border-box;
+ background-size:100% 100%,300% 100%;background-position:0 0,170% 50%;color:#fff;padding:12px 18px;line-height:1.35;
+ box-shadow:0 0 9px #c6b17d14;animation:resume-edge-glint 10s ease-in-out infinite;
+}
+@keyframes resume-edge-glint{0%,70%{background-position:0 0,170% 50%}95%,100%{background-position:0 0,-70% 50%}}
+@media(prefers-reduced-motion:reduce){.resume [data-resume-inquiry],.resume.is-consultation [data-resume-inquiry]{animation:none;background:#253e32;border-color:#64806a;box-shadow:none}}
+.site-header .phone{display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:760px){.dialog-body h2{font-size:clamp(24px,7.2vw,28px);text-wrap:wrap}}
+@media(max-width:760px){
+ #inquiry-dialog[open]{position:fixed;inset:auto 0 auto;top:calc(var(--inquiry-visible-top,0px) + 8px);margin:0 auto;max-height:calc(var(--inquiry-visible-height,100dvh) - 16px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scroll-behavior:auto;scroll-padding-block:16px}
+ #inquiry-dialog .dialog-body{padding-bottom:max(28px,env(safe-area-inset-bottom))}
+}
