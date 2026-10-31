@@ -39,7 +39,6 @@ const hideInvite=(dismissed=false)=>{if(invite)invite.hidden=true;if(dismissed){
 const canInvite=()=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
   return !shownThisVisit && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && Date.now()-startedAt>12000 && !location.hash && !document.activeElement?.matches?.('input,textarea,select');};
 const maybeInvite=()=>{if(!canInvite()||!scrollSeen)return;shownThisVisit=true;invite.hidden=false;trace('dp_quiz_invite_view')};
-const slideLink=p=>quiz.sourceAlbum+'#slide=id.'+encodeURIComponent(p.slideId);
 function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
   hideInvite();
@@ -86,7 +85,7 @@ function detailView(){
   const mirror=state.mirror&&p.mirrorImage;
   const image=mirror?p.mirrorImage:p.image;
   const cost=planPrice(p,state.answers.party,book,quiz.priceRules);
-  return commonHeader()+'<button class="dp-quiz-link" data-dpq="results">← Все подходящие варианты</button><h2 id="dp-quiz-title">'+safe(models[p.model].name)+' · '+safe(sizeName(p))+'</h2><p class="dp-quiz-copy">'+safe(caption(p))+'</p>'+(image?'<img class="dp-quiz-detail-image" alt="Планировка '+safe(p.code)+(mirror?' зеркальная':' основная')+'" src="'+safe(image)+'" width="1620" height="1080">':'<div class="dp-quiz-results-note">Эта схема обновлена в альбоме v04. Изображение ещё не перенесено в каталог сайта — покажем оригинальный слайд, а не устаревший план.</div>')+'<div class="dp-quiz-detail-meta"><span class="dp-quiz-pill">'+safe(p.code)+'</span><span class="dp-quiz-pill">'+(p.wash==='Отдельная'?'Есть отдельная помывочная':'Без отдельной помывочной')+'</span>'+(p.bedroom?'<span class="dp-quiz-pill">Со спальней</span>':'')+'</div><div class="dp-quiz-plan-price"><small>'+(cost.rub===null?'Расчёт по запросу':'Предварительная стоимость')+'</small>'+(cost.rub===null?'Стоимость уточним':rub(cost.rub))+'</div><div class="dp-quiz-plan-actions" style="margin-top:18px">'+(p.mirrorImage?'<button class="dp-quiz-action dp-quiz-action--subtle" data-dpq="mirror">'+(state.mirror?'Показать основной вариант':'Зеркальная планировка')+'</button>':'')+'<a class="dp-quiz-link" href="'+safe(slideLink(p))+'" target="_blank" rel="noopener noreferrer">Открыть в альбоме ↗</a></div><div class="dp-quiz-cta"><div><strong>Нравится этот вариант?</strong><p>Сохраним его в вашей подборке и уточним комплектацию.</p></div><button class="dp-quiz-action" type="button" data-dpq="form">Получить предложение →</button></div>';
+  return commonHeader()+'<button class="dp-quiz-link" data-dpq="results">← Все подходящие варианты</button><h2 id="dp-quiz-title">'+safe(models[p.model].name)+' · '+safe(sizeName(p))+'</h2><p class="dp-quiz-copy">'+safe(caption(p))+'</p>'+(image?'<img class="dp-quiz-detail-image" alt="Планировка '+safe(p.code)+(mirror?' зеркальная':' основная')+'" src="'+safe(image)+'" width="1620" height="1080">':'<div class="dp-quiz-results-note">Эта схема обновлена в альбоме v04. Изображение ещё не перенесено в каталог сайта — пришлём актуальную планировку вместе с подборкой.</div>')+'<div class="dp-quiz-detail-meta"><span class="dp-quiz-pill">'+safe(models[p.model].name)+'</span><span class="dp-quiz-pill">'+(p.wash==='Отдельная'?'Есть отдельная помывочная':'Без отдельной помывочной')+'</span>'+(p.bedroom?'<span class="dp-quiz-pill">Со спальней</span>':'')+'</div><div class="dp-quiz-plan-price"><small>'+(cost.rub===null?'Расчёт по запросу':'Предварительная стоимость')+'</small>'+(cost.rub===null?'Стоимость уточним':rub(cost.rub))+'</div><div class="dp-quiz-plan-actions" style="margin-top:18px">'+(p.mirrorImage?'<button class="dp-quiz-action dp-quiz-action--subtle" data-dpq="mirror">'+(state.mirror?'Показать основной вариант':'Зеркальная планировка')+'</button>':'')+'<span class="dp-quiz-stepnote">Актуальную схему пришлём в подборке</span></div><div class="dp-quiz-cta"><div><strong>Нравится этот вариант?</strong><p>Сохраним его в вашей подборке и уточним комплектацию.</p></div><button class="dp-quiz-action" type="button" data-dpq="form">Получить предложение →</button></div>';
 }
 function formView(){
   const found=rankPlans(quiz.plans,state.answers,4);
@@ -127,7 +126,7 @@ async function submitForm(form){
     const wash=({w_yes:'отдельная нужна',w_no:'не нужна',w_compare:'сравнить оба'})[state.answers.wash];
     const bed=state.answers.bedroom==='b_yes'?'нужна':'не нужна';
     payload.comment='КВИЗ ДачаПар: прислать подробные планировки, комплектации и цены. Гостей: '+count+'; помывочная: '+wash+'; спальня: '+bed+'. Подборка: '+ids+selected+'. Цены предварительные, состав уточнить.';
-    payload.journeyContext={purpose:'selection_help',pagePath:location.pathname,source:'quiz_v1'};
+    payload.journeyContext={purpose:'selection_help',pagePath:location.pathname};
     const attribution=analytics?.attribution?.();if(attribution)payload.attribution=attribution;
     state.error='';state.sending=true;render();
     trace('dp_form_submit_attempt',{flow:'callback',purpose:'selection_help'});
