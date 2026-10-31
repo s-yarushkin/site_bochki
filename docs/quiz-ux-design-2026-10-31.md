@@ -11,6 +11,8 @@
 - **Фактический стиль сайта:** `web/styles.css`, `web/premium.css`, `web/r94-layouts.css`, `web/r100-journey.css`, `web/index.html` репозитория `s-yarushkin/site_bochki`. `docs/r101-architecture.md` описывает дальнейшее направление, но не означает, что всё уже развернуто.
 - UX-исследования: [NN/g — Overlays](https://www.nngroup.com/articles/overlay-overload/), [NN/g — Popups](https://www.nngroup.com/articles/popups/), [Baymard — Page Control / Stepper](https://baymard.com/blog/page-control-ui), [W3C — Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/), [web.dev — INP](https://web.dev/articles/optimize-inp).
 
+**Важное ограничение дизайна:** все цены и предварительные расчёты подчиняются одному [контракту проверки цен](PRICING_PARITY.md). UX-макеты не являются источником денежных сумм.
+
 ## 0. Самое важное решение
 
 **НЕ** открывать полупрозрачный полноэкранный попап сам по себе. Сначала — небольшая **приглашающая карточка**, которая появляется только при сигналах поверхностного просмотра. **Только по клику** открывается полноценный дизайнерский трёхшаговый опросник. Весь выбор до результата **без телефона**, без «вы выиграли» и искусственной срочности.
