@@ -9,13 +9,14 @@ const parity=read('./fixtures/pricing-parity-2026-10-31.json');
 const parties=['p2','p4','p6','p8'],wash=['w_yes','w_no','w_compare'],beds=['b_yes','b_no'];
 test('41 stable unique v04 plan codes; exactly 39 published images and two honest fallbacks',()=>{
  assert.equal(quiz.plans.length,41);
+ assert.equal(Object.hasOwn(quiz,'sourceAlbum'),false);
  assert.equal(new Set(quiz.plans.map(p=>p.code)).size,41);
  assert.equal(quiz.plans.filter(p=>p.image).length,39);
  assert.deepEqual(quiz.plans.filter(p=>!p.image).map(p=>p.code),['DP-PL-022','DP-PL-023']);
  quiz.plans.forEach((p,i)=>{
    assert.equal(p.code,'DP-PL-'+String(i+1).padStart(3,'0'));
-   assert.match(p.slideId,/^[\w-]+$/);
-   assert.notEqual(p.slideId,p.mirrorSlideId);
+   assert.equal(Object.hasOwn(p,'slideId'),false);
+   assert.equal(Object.hasOwn(p,'mirrorSlideId'),false);
    assert.equal(p.wideBody,parity.quizPlans[i].wideBody);
    assert.equal(p.model,parity.quizPlans[i].model);
    assert.equal(p.size,parity.quizPlans[i].size);
