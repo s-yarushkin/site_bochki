@@ -134,7 +134,7 @@ async function submitForm(form){
     const sent=await submitLead(payload,settings,location.origin);
     state.sending=false;state.view='success';state.success=true;save();
     analytics?.confirmed?.(sent.receipt,{flow:'callback',requestId:payload.requestId,purpose:'selection_help',placement:'catalog'});
-    trace('dp_quiz_lead_confirmed');render();hideInvite(true);
+    trace('dp_quiz_catalog_sent');render();hideInvite(true);
   }catch(error){
     state.sending=false;
     state.error=error.message==='PHONE_INVALID'?'Проверьте номер телефона.':error.message==='RATE_LIMITED'?'Слишком много попыток. Попробуйте позже.':error.message==='LEAD_NOT_CONNECTED'?'Сервис заявок сейчас недоступен. Позвоните нам по телефону на сайте.':'Не удалось отправить запрос. Попробуйте ещё раз.';
