@@ -64,7 +64,8 @@ for name in ['quiz-v1-remote.py','Quiz-V1-Deploy.ps1','verify-quiz-public.py']:
   '3. .\\Quiz-V1-Deploy.ps1 -Mode Stage (copies releases; NO switch)\n'
   '4. .\\Quiz-V1-Deploy.ps1 -Mode Apply (backup SQLite; atomically switch code)\n'
   '5. After Apply: python verify-quiz-public.py --manifest manifest.json (read-only).\n'
-  '6. Separately check manager/MAX and one authorized test lead; no ad traffic before success.\\n'\n  '7. Rollback command printed by Apply; DOES NOT overwrite SQLite leads.\n'
+  '6. Separately check manager/MAX and one authorized test lead; no ad traffic before success.\n'
+  '7. Rollback command printed by Apply; DOES NOT overwrite SQLite leads.\n'
   'If Check fails because production differs, STOP. Do not change expected hashes.\n'
   'IMPORTANT: This package does not contain credentials, private data or any price changes.\n',
   encoding='utf8'
