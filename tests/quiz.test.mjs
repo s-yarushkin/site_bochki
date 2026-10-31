@@ -91,8 +91,13 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
    assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
  }
- assert.match(ui,/Цены — ориентир/);
- assert.match(ui,/Получить планировку →/);
- assert.match(ui,/Подробную планировку этого варианта пришлём/);
- assert.match(ui,/Стоимость по запросу/);
+ assert.match(ui,/Куда отправить подборку\?/);
+ assert.match(ui,/Выберите мессенджер/);
+ assert.match(ui,/name="channel"/);
+ for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1,'Contact invitation occurs once after results');
+ for(const phrase of ['без телефона','Без телефона','По вашему запросу','Стоимость по запросу','Получить планировку →','Пришлём подробную планировку','Номер телефона нужен, только если'])
+   assert.equal(ui.includes(phrase),false,'Repeated sales message: '+phrase);
+ assert.match(ui,/payload\.purpose='quiz_catalog'/);
+ assert.match(ui,/payload\.contactChannel=state\.channel/);
 });
