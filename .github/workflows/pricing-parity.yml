@@ -32,5 +32,7 @@ jobs:
           node-version: "24"
       - name: Check price parity against the Google Sheets reference snapshot
         run: npm run test:pricing
+      - name: Check quiz routing, plan images and preliminary prices
+        run: npm run test:quiz
       - name: Explain live Google Sheets requirement
         run: echo "Offline PASS checks repo only. For price releases run npm run test:pricing:live with a fresh authorized Google Sheets export. See docs/PRICING_PARITY.md."

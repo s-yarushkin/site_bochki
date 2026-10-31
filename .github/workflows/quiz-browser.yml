@@ -1,0 +1,43 @@
+name: DachaPar quiz browser smoke
+
+on:
+  pull_request:
+    paths:
+      - "web/**"
+      - "scripts/quiz-browser-smoke.mjs"
+      - ".github/workflows/quiz-browser.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    name: Visual quiz regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install isolated browser tooling
+        run: |
+          npm install --no-save --no-package-lock playwright@1.52.0
+          npx playwright install --with-deps chromium
+      - name: Serve static preview
+        run: |
+          python -m http.server 8765 --directory web --bind 127.0.0.1 > /tmp/dachapar-quiz-http.log 2>&1 &
+          sleep 2
+          curl -fsS http://127.0.0.1:8765/data/quiz-v1.json >/dev/null
+      - name: Screenshot and test real browser interactions
+        run: node scripts/quiz-browser-smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dachapar-quiz-desktop-mobile
+          path: output/quiz-browser/
+          retention-days: 7
