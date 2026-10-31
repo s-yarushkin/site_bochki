@@ -94,7 +94,7 @@ test('customer-facing quiz text has no internal pricing or development language'
  assert.match(ui,/Куда отправить подборку\?/);
  assert.match(ui,/Выберите мессенджер/);
  assert.match(ui,/name="channel"/);
- for(const channel of ['max','whatsapp','telegram'])assert.match(ui,new RegExp("value='"+channel+"'"));
+ for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1,'Contact invitation occurs once after results');
  for(const phrase of ['без телефона','Без телефона','По вашему запросу','Стоимость по запросу','Получить планировку →','Пришлём подробную планировку','Номер телефона нужен, только если'])
    assert.equal(ui.includes(phrase),false,'Repeated sales message: '+phrase);
