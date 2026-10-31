@@ -153,8 +153,11 @@ def stage_release(result):
             shutil.rmtree(newweb,ignore_errors=True);shutil.rmtree(newapi,ignore_errors=True);raise
     check_staged(newweb,newapi,m,files,html,api_text)
     # Import and validate the real staged API with its private, installed dependencies.
-    source="import {pathToFileURL} from 'node:url';const m=await import(pathToFileURL(process.argv[1]).href);for(const channel of ['max','whatsapp','telegram']){const p={flow:'callback',purpose:'quiz_catalog',contactChannel:channel,phone:'+79990000001',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2',comment:'Quiz smoke only'};const lead=m.validateBaniLead(p);if(lead.contactChannel!==channel||lead.purpose!=='quiz_catalog')throw Error('QUIZ_API_CHANNEL_MISMATCH')}const ordinary={flow:'callback',contactChannel:'whatsapp',phone:'+79990000001',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2'};let rejected=false;try{m.validateBaniLead(ordinary)}catch{rejected=true}if(!rejected)throw Error('ORDINARY_CALLBACK_WEAKENED');console.log('QUIZ_STAGED_API_SMOKE=PASS; no lead submitted')"
-    subprocess.run(['node','--input-type=module','-e',source,str(newapi/'server/garant-bani-relay.mjs')],check=True)
+    # Import without passing the module path as argv[1]: the relay's CLI guard
+    # treats argv[1] equal to its module path as an instruction to start a server.
+    module_url=(newapi/'server/garant-bani-relay.mjs').as_uri()
+    source="const m=await import("+json.dumps(module_url)+");for(const channel of ['max','whatsapp','telegram']){const p={flow:'callback',purpose:'quiz_catalog',contactChannel:channel,phone:'+79990000001',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2',comment:'Quiz smoke only'};const lead=m.validateBaniLead(p);if(lead.contactChannel!==channel||lead.purpose!=='quiz_catalog')throw Error('QUIZ_API_CHANNEL_MISMATCH')}const ordinary={flow:'callback',contactChannel:'whatsapp',phone:'+79990000001',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2'};let rejected=false;try{m.validateBaniLead(ordinary)}catch{rejected=true}if(!rejected)throw Error('ORDINARY_CALLBACK_WEAKENED');console.log('QUIZ_STAGED_API_SMOKE=PASS; no lead submitted')"
+    subprocess.run(['node','--input-type=module','-e',source],check=True)
     return newweb,newapi
 def rollback(state_file):
     state_file=state_file.resolve(strict=True)
