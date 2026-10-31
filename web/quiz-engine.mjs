@@ -44,6 +44,8 @@ export function scorePlan(p,a){
   if(a.party==='p6'&&l>=6)score+=11;
   if(a.party==='p8'){score+=p.model==='kvadro-house'?30:0;score+=(p.size==='6x6'||p.size==='6x5')?16:0;score+=p.wideBody?8:0;}
   if(a.party==='p4'&&l===5)score+=7;
+  // Small parties first see standard compact bodies; bedrooms still filter to House.
+  if(['p2','p4'].includes(a.party)&&p.model!=='kvadro-house'&&!p.wideBody)score+=10;
   if(a.wash==='w_compare'&&p.wash==='Отдельная')score+=2;
   if(p.wideBody)score-=6;
   if(p.bedroom&&a.bedroom==='b_yes')score+=14;

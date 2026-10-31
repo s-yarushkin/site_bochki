@@ -65,6 +65,16 @@ test('invalid answers and unknown stove are blocked',()=>{
  assert.throws(()=>rankPlans(quiz.plans,{party:'p12',wash:'w_no',bedroom:'b_no'}),/QUIZ_ANSWERS_INCOMPLETE/);
  assert.throws(()=>selectStove('p12',quiz.priceRules),/QUIZ_PARTY_INVALID/);
 });
+
+test('small parties see standard compact bodies before larger House alternatives',()=>{
+ for(const party of ['p2','p4']){
+  const result=rankPlans(quiz.plans,{party,wash:'w_compare',bedroom:'b_no'},4);
+  assert.notEqual(result.top[0].model,'kvadro-house');
+  assert.ok(result.top.some(p=>p.wash==='Отдельная'));
+  assert.ok(result.top.some(p=>p.wash!=='Отдельная'));
+ }
+ assert.ok(rankPlans(quiz.plans,{party:'p8',wash:'w_yes',bedroom:'b_yes'},4).top.every(p=>p.model==='kvadro-house'&&p.bedroom));
+});
 test('quiz flow is wired into homepage without modifying protected pricebook',()=>{
  const home=readFileSync(new URL('../web/index.html',import.meta.url),'utf8');
  assert.match(home,/quiz\.css\?v=dpq-20261031/);
