@@ -1,8 +1,12 @@
 from pathlib import Path
-import hashlib,json,zipfile,shutil
+import hashlib,json,zipfile,shutil,subprocess
 ROOT=Path(__file__).resolve().parents[1];WEB=ROOT/'web';LOCAL=ROOT/'.local';baseline=json.loads((LOCAL/'r99-baseline-hashes.json').read_text('utf8'))
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 protected=['quote.mjs','r85-pricing.mjs','data/catalog-pricebook.json','data/site-settings.json','consent.html','privacy.html']
+# NO PACKAGE when Comfort prices drift between the workbook snapshot, the site and the quiz.
+# A current authenticated Google Sheets export should additionally be passed via
+# DACHAPAR_LIVE_PRICE_EXPORT for any price-changing release (see docs/PRICING_PARITY.md).
+subprocess.run(['node','--test','tests/pricing-parity.test.mjs'],cwd=ROOT,check=True)
 assert all(sha(WEB/n)==baseline[n] for n in protected),'Protected quote/legal files changed'
 files=[];assets={};texts={'.html','.mjs','.js','.json','.css','.xml','.txt','.svg'}
 for p in sorted(WEB.rglob('*')):
