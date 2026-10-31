@@ -55,7 +55,7 @@ manifest={
  'note':'Preflight MUST pass on actual active WEB and API. Never bypass guards.'
 }
 (out/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n','utf8')
-for name in ['quiz-v1-remote.py','Quiz-V1-Deploy.ps1']:
+for name in ['quiz-v1-remote.py','Quiz-V1-Deploy.ps1','verify-quiz-public.py']:
  shutil.copy2(ROOT/'scripts'/name,out/name)
 (out/'README.txt').write_text(
   'DachaPar quiz release '+release+'\n'
@@ -63,13 +63,13 @@ for name in ['quiz-v1-remote.py','Quiz-V1-Deploy.ps1']:
   '2. .\\Quiz-V1-Deploy.ps1 -Mode Check (READ ONLY remote)\n'
   '3. .\\Quiz-V1-Deploy.ps1 -Mode Stage (copies releases; NO switch)\n'
   '4. .\\Quiz-V1-Deploy.ps1 -Mode Apply (backup SQLite; atomically switch code)\n'
-  '5. Verify production GET and manager/MAX routing before real ad traffic.\n'
-  '6. Rollback command printed by Apply; DOES NOT overwrite SQLite leads.\n'
+  '5. After Apply: python verify-quiz-public.py --manifest manifest.json (read-only).\n'
+  '6. Separately check manager/MAX and one authorized test lead; no ad traffic before success.\\n'\n  '7. Rollback command printed by Apply; DOES NOT overwrite SQLite leads.\n'
   'If Check fails because production differs, STOP. Do not change expected hashes.\n'
   'IMPORTANT: This package does not contain credentials, private data or any price changes.\n',
   encoding='utf8'
 )
 with zipfile.ZipFile(out/(release+'-handoff.zip'),'w',zipfile.ZIP_DEFLATED) as z:
- for name in ['payload.zip','manifest.json','quiz-v1-remote.py','Quiz-V1-Deploy.ps1','README.txt']:
+ for name in ['payload.zip','manifest.json','quiz-v1-remote.py','Quiz-V1-Deploy.ps1','verify-quiz-public.py','README.txt']:
   z.write(out/name,name)
 print('QUIZ_RELEASE_BUILD=PASS',json.dumps({'release':release,'shipFiles':len(entries),'protected':len(protected),'required':len(additional),'archive':str(out/(release+'-handoff.zip'))},ensure_ascii=False))
