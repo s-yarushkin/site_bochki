@@ -72,3 +72,27 @@ test('quiz flow is wired into homepage without modifying protected pricebook',()
  assert.equal(quiz.priceRules.assertComfortPriceFromExistingPricebook,true);
  assert.ok(quiz.plans.every(p=>!Object.hasOwn(p,'priceRub')));
 });
+
+test('customer-facing quiz text has no internal pricing or development language',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ const engine=readFileSync(new URL('../web/quiz-engine.mjs',import.meta.url),'utf8');
+ for(const phrase of [
+  'Цены предварительные: указаны базовый',
+  'доплата за новые помещения',
+  'Изображение ещё не перенесено',
+  'Эта схема обновлена в альбоме',
+  'Актуальную схему откроем из альбома',
+  'Требуется индивидуальный расчёт',
+  'Комфортное число гостей уточним',
+  'Оснащение уточняется',
+  'Размещение и оснащение согласуем',
+  'Без регистрации и звонков'
+ ]){
+   assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
+   assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
+ }
+ assert.match(ui,/Цены — ориентир/);
+ assert.match(ui,/Получить планировку →/);
+ assert.match(ui,/Подробную планировку этого варианта пришлём/);
+ assert.match(ui,/Стоимость по запросу/);
+});
