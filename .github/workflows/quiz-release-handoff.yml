@@ -7,6 +7,7 @@ on:
       - "scripts/build-quiz-v1-release.py"
       - "scripts/Quiz-V1-Deploy.ps1"
       - "tests/quiz-release.test.py"
+      - "scripts/verify-quiz-public.py"
       - "web/**"
       - "api/server/quiz-channel-policy.mjs"
       - ".github/workflows/quiz-release-handoff.yml"
@@ -35,7 +36,7 @@ jobs:
           python3 scripts/check-public.py
       - name: Check release script syntax and patch safety
         run: |
-          python3 -m py_compile scripts/quiz-v1-remote.py scripts/build-quiz-v1-release.py tests/quiz-release.test.py
+          python3 -m py_compile scripts/quiz-v1-remote.py scripts/build-quiz-v1-release.py scripts/verify-quiz-public.py tests/quiz-release.test.py
           python3 tests/quiz-release.test.py -v
       - name: Build immutable quiz-only release
         run: python3 scripts/build-quiz-v1-release.py
