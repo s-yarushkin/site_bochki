@@ -3,11 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/journey.test.mjs tests/analytics.test.mjs",
+    "test": "node --test tests/journey.test.mjs tests/analytics.test.mjs tests/pricing-parity.test.mjs",
     "dev": "node scripts/dev-server.mjs",
     "verify:static": "python scripts/check-public.py",
     "release": "python scripts/build-release.py",
-    "test:api": "node --test tests/api.test.mjs"
+    "test:api": "node --test tests/api.test.mjs",
+    "test:pricing": "node --test tests/pricing-parity.test.mjs",
+    "test:pricing:live": "node scripts/check-pricing-live.mjs"
   },
   "engines": {
     "node": ">=24"
