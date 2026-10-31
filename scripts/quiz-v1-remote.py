@@ -152,6 +152,9 @@ def stage_release(result):
             # Never leave a partially prepared release that looks ready.
             shutil.rmtree(newweb,ignore_errors=True);shutil.rmtree(newapi,ignore_errors=True);raise
     check_staged(newweb,newapi,m,files,html,api_text)
+    # Import and validate the real staged API with its private, installed dependencies.
+    source="import {pathToFileURL} from 'node:url';const m=await import(pathToFileURL(process.argv[1]).href);for(const channel of ['max','whatsapp','telegram']){const p={flow:'callback',purpose:'quiz_catalog',contactChannel:channel,phone:'+79990000001',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2',comment:'Quiz smoke only'};const lead=m.validateBaniLead(p);if(lead.contactChannel!==channel||lead.purpose!=='quiz_catalog')throw Error('QUIZ_API_CHANNEL_MISMATCH')}const ordinary={flow:'callback',contactChannel:'whatsapp',phone:'+79990000001',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2'};let rejected=false;try{m.validateBaniLead(ordinary)}catch{rejected=true}if(!rejected)throw Error('ORDINARY_CALLBACK_WEAKENED');console.log('QUIZ_STAGED_API_SMOKE=PASS; no lead submitted')"
+    subprocess.run(['node','--input-type=module','-e',source,str(newapi/'server/garant-bani-relay.mjs')],check=True)
     return newweb,newapi
 def rollback(state_file):
     state_file=state_file.resolve(strict=True)
@@ -176,7 +179,7 @@ def main():
     if a.check:
         # Validate the candidate script syntax without any production writes.
         with tempfile.TemporaryDirectory(prefix='dp-quiz-check-') as tmp:
-            p=Path(tmp)/'garant-bani-relay.mjs';p.write_text(result[6+1],'utf8')
+            p=Path(tmp)/'garant-bani-relay.mjs';p.write_text(result[6],'utf8')
             subprocess.run(['node','--check',str(p)],check=True)
         print('QUIZ_PREFLIGHT=PASS; current releases: WEB='+result[3].name+' API='+result[4].name+'; SQLite untouched')
         return
