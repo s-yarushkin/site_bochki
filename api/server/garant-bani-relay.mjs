@@ -1,3 +1,4 @@
+import {validQuizCatalogRequest} from './quiz-channel-policy.mjs';
 import {validateJourneyContext,journeyText} from './journey-context.mjs';
 import {R85_VERSION,R85_PREVIOUS_VERSION,R85_SUPPORTED_VERSIONS,resolveR85Configuration,formatR85Lead} from './r85-quote.mjs';
 import {PUBLIC_R85_BOOK} from './r85-public-pricebook.mjs';
@@ -62,7 +63,7 @@ export function validateBaniLead(value) {
   const quizCatalog=value.purpose==='quiz_catalog';
   if(value.purpose!==undefined&&!planInfo&&!quizCatalog)throw new Error('INVALID_PURPOSE');
   if(planInfo&&(value.flow!=='callback'||!['telegram','max'].includes(contactChannel)))throw new Error('INVALID_PLAN_REQUEST_CHANNEL');
-  if(quizCatalog&&(value.flow!=='callback'||!['max','whatsapp','telegram'].includes(contactChannel)||value.configuration!==undefined))throw new Error('INVALID_QUIZ_REQUEST');
+  if(quizCatalog&&!validQuizCatalogRequest(value,contactChannel))throw new Error('INVALID_QUIZ_REQUEST');
   if(value.flow==='callback' && contactChannel!=='phone'&&!planInfo&&!quizCatalog)throw new Error('CALLBACK_MUST_BE_PHONE');
   // Legacy clients can still submit an optional messenger profile during the rollout.
   // New clients only send a verified phone number for every contact channel.
