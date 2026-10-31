@@ -59,9 +59,11 @@ export function validateBaniLead(value) {
   const contactChannel=value.contactChannel??'phone';
   if(!allowedChannels.has(contactChannel))throw new Error('INVALID_CONTACT_CHANNEL');
   const planInfo=value.purpose==='plan_info';
-  if(value.purpose!==undefined&&!planInfo)throw new Error('INVALID_PURPOSE');
+  const quizCatalog=value.purpose==='quiz_catalog';
+  if(value.purpose!==undefined&&!planInfo&&!quizCatalog)throw new Error('INVALID_PURPOSE');
   if(planInfo&&(value.flow!=='callback'||!['telegram','max'].includes(contactChannel)))throw new Error('INVALID_PLAN_REQUEST_CHANNEL');
-  if(value.flow==='callback' && contactChannel!=='phone'&&!planInfo)throw new Error('CALLBACK_MUST_BE_PHONE');
+  if(quizCatalog&&(value.flow!=='callback'||!['max','whatsapp','telegram'].includes(contactChannel)||value.configuration!==undefined))throw new Error('INVALID_QUIZ_REQUEST');
+  if(value.flow==='callback' && contactChannel!=='phone'&&!planInfo&&!quizCatalog)throw new Error('CALLBACK_MUST_BE_PHONE');
   // Legacy clients can still submit an optional messenger profile during the rollout.
   // New clients only send a verified phone number for every contact channel.
   const contactAccount=field(value.contactAccount??'',140);
@@ -74,6 +76,7 @@ export function validateBaniLead(value) {
     journeyComplete:value.journeyComplete===true,
     consentEvidence:currentSubmit?{version:CONSENT_VERSION,method:CONSENT_METHOD,noticeId:CONSENT_NOTICE_ID,documentSha256:CONSENT_DOCUMENT_SHA256}:historicSubmit?{version:'2026-10-16',method:'submit-button-v1',noticeId:'lead-submit-notice-2026-10-16-v1',documentSha256:'fd858836a3eb8824f6db99c6f00c0e30cb77d58523582b45ea8d515965d96e2a'}:{version:value.consentVersion??'legacy-not-versioned',method:value.consentVersion?'explicit-checkbox-v66':'legacy-consent-true-unverified-action'}};
   const context=validateJourneyContext(value.journeyContext,value.flow,{finishLabels,roofLabels});if(context)lead.journeyContext=context;
+  if(quizCatalog)lead.purpose='quiz_catalog';
   if(planInfo){
     if(!currentSubmit||value.configuration!==undefined)throw new Error('INVALID_PLAN_REQUEST');
     const ref=value.planRequest;
@@ -150,7 +153,7 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
     ['2026-10-14','2026-10-16',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
     ...(createdAt?['Создана: '+createdAt]:[]),
-    'Тип: '+(lead.purpose==='plan_info'?'Подробности о планировке':lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
+    'Тип: '+(lead.purpose==='plan_info'?'Подробности о планировке':lead.purpose==='quiz_catalog'?'Подбор бань: планировки и комплектации':lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
     'Имя: '+(lead.name||'Не указано'),
     'Телефон: '+lead.phone,
     'Связаться: '+channelNames[lead.contactChannel||'phone']+' по номеру телефона'
