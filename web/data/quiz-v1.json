@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "version": "DP-QUIZ-V1-20261031",
   "status": "preliminary",
-  "sourceAlbum": "https://docs.google.com/presentation/d/1SCetq_5FtJrlr1ckeUpS3U9iUVBexamV3KDuTyuDKhA/edit",
   "sourcePriceParity": "docs/PRICING_PARITY.md",
   "priceRules": {
     "extraRoomRub": 13540.5,
@@ -37,8 +36,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "p1",
-      "mirrorSlideId": "dp_mirror_01",
       "sitePlanId": "p1",
       "image": "/assets/plans/r93/p1.webp",
       "mirrorImage": "/assets/plans/r93/p1_mirror.webp"
@@ -52,8 +49,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "p3",
-      "mirrorSlideId": "dp_mirror_02",
       "sitePlanId": "p3",
       "image": "/assets/plans/r93/p3.webp",
       "mirrorImage": "/assets/plans/r93/p3_mirror.webp"
@@ -67,8 +62,6 @@
       "baseRooms": 2,
       "wash": "Ниша",
       "bedroom": false,
-      "slideId": "p5",
-      "mirrorSlideId": "dp_mirror_03",
       "sitePlanId": "p5",
       "image": "/assets/plans/r93/p5.webp",
       "mirrorImage": "/assets/plans/r93/p5_mirror.webp"
@@ -82,8 +75,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "p7",
-      "mirrorSlideId": "dp_mirror_04",
       "sitePlanId": "p7",
       "image": "/assets/plans/r93/p7.webp",
       "mirrorImage": "/assets/plans/r93/p7_mirror.webp"
@@ -97,8 +88,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "v03_Q6_rest",
-      "mirrorSlideId": "dp_mirror_05",
       "sitePlanId": "v03_Q6_rest",
       "image": "/assets/plans/r93/v03_Q6_rest.webp",
       "mirrorImage": "/assets/plans/r93/v03_Q6_rest_mirror.webp"
@@ -112,8 +101,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "v04_Q6_fullwash",
-      "mirrorSlideId": "dp_mirror_12",
       "sitePlanId": "v04_Q6_fullwash",
       "image": "/assets/plans/r93/v04_Q6_fullwash.webp",
       "mirrorImage": "/assets/plans/r93/v04_Q6_fullwash_mirror.webp"
@@ -127,8 +114,6 @@
       "baseRooms": 3,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "p9",
-      "mirrorSlideId": "dp_mirror_06",
       "sitePlanId": "p9",
       "image": "/assets/plans/r93/p9.webp",
       "mirrorImage": "/assets/plans/r93/p9_mirror.webp"
@@ -142,8 +127,6 @@
       "baseRooms": 3,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "p11",
-      "mirrorSlideId": "dp_mirror_07",
       "sitePlanId": "p11",
       "image": "/assets/plans/r93/p11.webp",
       "mirrorImage": "/assets/plans/r93/p11_mirror.webp"
@@ -157,8 +140,6 @@
       "baseRooms": 3,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "p13",
-      "mirrorSlideId": "dp_mirror_08",
       "sitePlanId": "p13",
       "image": "/assets/plans/r93/p13.webp",
       "mirrorImage": "/assets/plans/r93/p13_mirror.webp"
@@ -172,8 +153,6 @@
       "baseRooms": 4,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "p15",
-      "mirrorSlideId": "dp_mirror_09",
       "sitePlanId": "p15",
       "image": "/assets/plans/r93/p15.webp",
       "mirrorImage": "/assets/plans/r93/p15_mirror.webp"
@@ -187,8 +166,6 @@
       "baseRooms": 4,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "p17",
-      "mirrorSlideId": "dp_mirror_10",
       "sitePlanId": "p17",
       "image": "/assets/plans/r93/p17.webp",
       "mirrorImage": "/assets/plans/r93/p17_mirror.webp"
@@ -202,8 +179,6 @@
       "baseRooms": 4,
       "wash": "Отдельная",
       "bedroom": true,
-      "slideId": "p19",
-      "mirrorSlideId": "dp_mirror_11",
       "sitePlanId": "p19",
       "image": "/assets/plans/r93/p19.webp",
       "mirrorImage": "/assets/plans/r93/p19_mirror.webp"
@@ -217,8 +192,6 @@
       "baseRooms": 4,
       "wash": "Отдельная",
       "bedroom": true,
-      "slideId": "v04_sleep_layout_B",
-      "mirrorSlideId": "dp_mirror_13",
       "sitePlanId": "v04_sleep_layout_B",
       "image": "/assets/plans/r93/v04_sleep_layout_B.webp",
       "mirrorImage": "/assets/plans/r93/v04_sleep_layout_B_mirror.webp"
@@ -232,8 +205,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "parus_4000_2400_dry",
-      "mirrorSlideId": "parus_4000_2400_dry_mirror",
       "sitePlanId": "parus_4000_2400_dry",
       "image": "/assets/plans/r93/parus_4000_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/parus_4000_2400_dry_mirror.webp"
@@ -247,8 +218,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "parus_4500_2400_dry",
-      "mirrorSlideId": "parus_4500_2400_dry_mirror",
       "sitePlanId": "parus_4500_2400_dry",
       "image": "/assets/plans/r93/parus_4500_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/parus_4500_2400_dry_mirror.webp"
@@ -262,8 +231,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "parus_5000_2400_dry",
-      "mirrorSlideId": "parus_5000_2400_dry_mirror",
       "sitePlanId": "parus_5000_2400_dry",
       "image": "/assets/plans/r93/parus_5000_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/parus_5000_2400_dry_mirror.webp"
@@ -277,8 +244,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "parus_5000_2400_wash",
-      "mirrorSlideId": "parus_5000_2400_wash_mirror",
       "sitePlanId": "parus_5000_2400_wash",
       "image": "/assets/plans/r93/parus_5000_2400_wash.webp",
       "mirrorImage": "/assets/plans/r93/parus_5000_2400_wash_mirror.webp"
@@ -292,8 +257,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "parus_5500_2400_dry",
-      "mirrorSlideId": "parus_5500_2400_dry_mirror",
       "sitePlanId": "parus_5500_2400_dry",
       "image": "/assets/plans/r93/parus_5500_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/parus_5500_2400_dry_mirror.webp"
@@ -307,8 +270,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "parus_5500_2400_wash",
-      "mirrorSlideId": "parus_5500_2400_wash_mirror",
       "sitePlanId": "parus_5500_2400_wash",
       "image": "/assets/plans/r93/parus_5500_2400_wash.webp",
       "mirrorImage": "/assets/plans/r93/parus_5500_2400_wash_mirror.webp"
@@ -322,8 +283,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "parus_6000_2400_dry",
-      "mirrorSlideId": "parus_6000_2400_dry_mirror",
       "sitePlanId": "parus_6000_2400_dry",
       "image": "/assets/plans/r93/parus_6000_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/parus_6000_2400_dry_mirror.webp"
@@ -337,8 +296,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "parus_6000_2400_wash",
-      "mirrorSlideId": "parus_6000_2400_wash_mirror",
       "sitePlanId": "parus_6000_2400_wash",
       "image": "/assets/plans/r93/parus_6000_2400_wash.webp",
       "mirrorImage": "/assets/plans/r93/parus_6000_2400_wash_mirror.webp"
@@ -352,8 +309,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "parus_6000_2400_wash_20261029v2",
-      "mirrorSlideId": "parus_6000_2400_wash_mirror_20261029v2",
       "sitePlanId": null,
       "image": null,
       "mirrorImage": null
@@ -367,8 +322,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "parus_5000_2400_etalon_20261029",
-      "mirrorSlideId": "parus_5000_2400_etalon_mirror_20261029",
       "sitePlanId": null,
       "image": null,
       "mirrorImage": null
@@ -382,8 +335,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "parus_6000_3000_dry",
-      "mirrorSlideId": "parus_6000_3000_dry_mirror",
       "sitePlanId": "parus_6000_3000_dry",
       "image": "/assets/plans/r93/parus_6000_3000_dry.webp",
       "mirrorImage": "/assets/plans/r93/parus_6000_3000_dry_mirror.webp"
@@ -397,8 +348,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "parus_6000_3000_wash",
-      "mirrorSlideId": "parus_6000_3000_wash_mirror",
       "sitePlanId": "parus_6000_3000_wash",
       "image": "/assets/plans/r93/parus_6000_3000_wash.webp",
       "mirrorImage": "/assets/plans/r93/parus_6000_3000_wash_mirror.webp"
@@ -412,8 +361,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "viking_4500_2100_dry",
-      "mirrorSlideId": "viking_4500_2100_dry_mirror",
       "sitePlanId": "viking_4500_2400_dry",
       "image": "/assets/plans/r93/viking_4500_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/viking_4500_2400_dry_mirror.webp"
@@ -427,8 +374,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "viking_5000_2400_dry",
-      "mirrorSlideId": "viking_5000_2400_dry_mirror",
       "sitePlanId": "viking_5000_2400_dry",
       "image": "/assets/plans/r93/viking_5000_2400_dry.webp",
       "mirrorImage": "/assets/plans/r93/viking_5000_2400_dry_mirror.webp"
@@ -442,8 +387,6 @@
       "baseRooms": 2,
       "wash": "Ниша",
       "bedroom": false,
-      "slideId": "viking_5000_2400_wash",
-      "mirrorSlideId": "viking_5000_2400_wash_mirror",
       "sitePlanId": "viking_5000_2400_wash",
       "image": "/assets/plans/r93/viking_5000_2400_wash.webp",
       "mirrorImage": "/assets/plans/r93/viking_5000_2400_wash_mirror.webp"
@@ -457,8 +400,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "viking_6000_2400_rest",
-      "mirrorSlideId": "viking_6000_2400_rest_mirror",
       "sitePlanId": "viking_6000_2400_rest",
       "image": "/assets/plans/r93/viking_6000_2400_rest.webp",
       "mirrorImage": "/assets/plans/r93/viking_6000_2400_rest_mirror.webp"
@@ -472,8 +413,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "viking_6000_2400_steam",
-      "mirrorSlideId": "viking_6000_2400_steam_mirror",
       "sitePlanId": "viking_6000_2400_steam",
       "image": "/assets/plans/r93/viking_6000_2400_steam.webp",
       "mirrorImage": "/assets/plans/r93/viking_6000_2400_steam_mirror.webp"
@@ -487,8 +426,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_6000_2400_wash",
-      "mirrorSlideId": "viking_6000_2400_wash_mirror",
       "sitePlanId": "viking_6000_2400_wash",
       "image": "/assets/plans/r93/viking_6000_2400_wash.webp",
       "mirrorImage": "/assets/plans/r93/viking_6000_2400_wash_mirror.webp"
@@ -502,8 +439,6 @@
       "baseRooms": 2,
       "wash": "Нет",
       "bedroom": false,
-      "slideId": "viking_6000_3000_dry",
-      "mirrorSlideId": "viking_6000_3000_dry_mirror",
       "sitePlanId": "viking_6000_3000_dry",
       "image": "/assets/plans/r93/viking_6000_3000_dry.webp",
       "mirrorImage": "/assets/plans/r93/viking_6000_3000_dry_mirror.webp"
@@ -517,8 +452,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_6000_3000_wash",
-      "mirrorSlideId": "viking_6000_3000_wash_mirror",
       "sitePlanId": "viking_6000_3000_wash",
       "image": "/assets/plans/r93/viking_6000_3000_wash.webp",
       "mirrorImage": "/assets/plans/r93/viking_6000_3000_wash_mirror.webp"
@@ -532,8 +465,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_2400_out_arch",
-      "mirrorSlideId": "viking_three_6000_2400_out_arch_mirror",
       "sitePlanId": "viking_three_6000_2400_out_arch",
       "image": "/assets/plans/r93/viking_three_6000_2400_out_arch.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_2400_out_arch_mirror.webp"
@@ -547,8 +478,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_2400_out_tambur",
-      "mirrorSlideId": "viking_three_6000_2400_out_tambur_mirror",
       "sitePlanId": "viking_three_6000_2400_out_tambur",
       "image": "/assets/plans/r93/viking_three_6000_2400_out_tambur.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_2400_out_tambur_mirror.webp"
@@ -562,8 +491,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_2400_wash_arch",
-      "mirrorSlideId": "viking_three_6000_2400_wash_arch_mirror",
       "sitePlanId": "viking_three_6000_2400_wash_arch",
       "image": "/assets/plans/r93/viking_three_6000_2400_wash_arch.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_2400_wash_arch_mirror.webp"
@@ -577,8 +504,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_2400_wash_tambur",
-      "mirrorSlideId": "viking_three_6000_2400_wash_tambur_mirror",
       "sitePlanId": "viking_three_6000_2400_wash_tambur",
       "image": "/assets/plans/r93/viking_three_6000_2400_wash_tambur.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_2400_wash_tambur_mirror.webp"
@@ -592,8 +517,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_3000_out_arch",
-      "mirrorSlideId": "viking_three_6000_3000_out_arch_mirror",
       "sitePlanId": "viking_three_6000_3000_out_arch",
       "image": "/assets/plans/r93/viking_three_6000_3000_out_arch.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_3000_out_arch_mirror.webp"
@@ -607,8 +530,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_3000_out_tambur",
-      "mirrorSlideId": "viking_three_6000_3000_out_tambur_mirror",
       "sitePlanId": "viking_three_6000_3000_out_tambur",
       "image": "/assets/plans/r93/viking_three_6000_3000_out_tambur.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_3000_out_tambur_mirror.webp"
@@ -622,8 +543,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_3000_rest_arch",
-      "mirrorSlideId": "viking_three_6000_3000_rest_arch_mirror",
       "sitePlanId": "viking_three_6000_3000_rest_arch",
       "image": "/assets/plans/r93/viking_three_6000_3000_rest_arch.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_3000_rest_arch_mirror.webp"
@@ -637,8 +556,6 @@
       "baseRooms": 2,
       "wash": "Отдельная",
       "bedroom": false,
-      "slideId": "viking_three_6000_3000_rest_tambur",
-      "mirrorSlideId": "viking_three_6000_3000_rest_tambur_mirror",
       "sitePlanId": "viking_three_6000_3000_rest_tambur",
       "image": "/assets/plans/r93/viking_three_6000_3000_rest_tambur.webp",
       "mirrorImage": "/assets/plans/r93/viking_three_6000_3000_rest_tambur_mirror.webp"
