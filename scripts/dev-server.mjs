@@ -7,7 +7,7 @@ const port=Number(process.env.DP_TEST_PORT||4173),origin='http://127.0.0.1:'+por
 if(!web.startsWith(root))throw Error('Test web root must stay inside the project.');
 const store=openLeadStore(':memory:'),deliveries=[];
 const handler=createRelayHandler({config:{allowedOrigin:origin,siteBasePath:'/'},store,deliver:async(lead,config,fetch,meta)=>{deliveries.push({id:meta.id,text:formatBaniLead(lead,meta)});},log:line=>console.log(line)});
-const mime={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8'};
+const mime={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.ico':'image/x-icon','.webp':'image/webp','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8'};
 const server=createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,origin);
