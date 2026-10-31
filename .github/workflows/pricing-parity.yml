@@ -1,0 +1,36 @@
+name: DachaPar Comfort price parity
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "tests/**"
+      - "scripts/**"
+      - "package.json"
+      - ".github/workflows/pricing-parity.yml"
+  pull_request:
+    paths:
+      - "web/**"
+      - "tests/**"
+      - "scripts/**"
+      - "package.json"
+      - ".github/workflows/pricing-parity.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prices:
+    name: Verify Comfort prices, site and quiz
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Check price parity against the Google Sheets reference snapshot
+        run: npm run test:pricing
+      - name: Explain live Google Sheets requirement
+        run: echo "Offline PASS checks repo only. For price releases run npm run test:pricing:live with a fresh authorized Google Sheets export. See docs/PRICING_PARITY.md."
