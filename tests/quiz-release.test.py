@@ -27,6 +27,11 @@ class TestGuardedQuizRelease(unittest.TestCase):
    module.patch_api(new)
   with self.assertRaisesRegex(RuntimeError,'API contract drift'):
    module.patch_api(old.replace("if(value.purpose!==undefined&&!planInfo)","if(value.purpose!==undefined&&!planInfo&&!other)"))
+ def test_api_smoke_cannot_start_another_server(self):
+  source=(ROOT/'scripts/quiz-v1-remote.py').read_text('utf8')
+  self.assertIn("subprocess.run(['node','--input-type=module','-e',source],check=True)",source)
+  self.assertNotIn("str(newapi/'server/garant-bani-relay.mjs')],check=True)",source)
+  self.assertIn("module_url=(newapi/'server/garant-bani-relay.mjs').as_uri()",source)
  def test_no_path_traversal(self):
   for name in ['../secret','../../etc/passwd','/etc/passwd','foo/../secrets','C:/windows','foo\\bar']:
    with self.subTest(name=name),self.assertRaises(RuntimeError):
