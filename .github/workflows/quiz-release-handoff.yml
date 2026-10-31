@@ -1,0 +1,47 @@
+name: DachaPar quiz release handoff
+
+on:
+  pull_request:
+    paths:
+      - "scripts/quiz-v1-remote.py"
+      - "scripts/build-quiz-v1-release.py"
+      - "scripts/Quiz-V1-Deploy.ps1"
+      - "tests/quiz-release.test.py"
+      - "web/**"
+      - "api/server/quiz-channel-policy.mjs"
+      - ".github/workflows/quiz-release-handoff.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Verify and create guarded quiz release handoff
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Price, quiz and API policy
+        run: |
+          npm test
+          node --test tests/quiz-channel-policy.test.mjs
+          python3 scripts/check-public.py
+      - name: Check release script syntax and patch safety
+        run: |
+          python3 -m py_compile scripts/quiz-v1-remote.py scripts/build-quiz-v1-release.py tests/quiz-release.test.py
+          python3 -m unittest discover -s tests -p 'quiz-release.test.py' -v
+      - name: Build immutable quiz-only release
+        run: python3 scripts/build-quiz-v1-release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dachapar-quiz-v1-guarded-handoff
+          path: output/quiz-v1/*-handoff.zip
+          if-no-files-found: error
+          retention-days: 14
