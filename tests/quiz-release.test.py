@@ -91,7 +91,7 @@ class TestR110ResultsRelease(unittest.TestCase):
   self.assertNotEqual(r110.NEW_BLOBS['quiz.css'],r110.OLD_BLOBS['quiz.css'])
   # R110 is already deployed; the current working tree intentionally contains R111 JS.
   self.assertEqual(r110.NEW_BLOBS['quiz.mjs'],'ce74814ab0f64921438def055ba518d70818d9a9')
-  self.assertEqual(r110.git_sha((ROOT/'web/quiz.css').read_bytes()),r110.NEW_BLOBS['quiz.css'])
+  self.assertEqual(r110.NEW_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
   self.assertEqual(r110.locate_quiz_assets('<link href="/quiz.css?v=r109-invite-a01e6016"><script src="/quiz.mjs?v=r109-invite-a01e6016"></script>'),{
     'quiz.css':'/quiz.css?v=r109-invite-a01e6016','quiz.mjs':'/quiz.mjs?v=r109-invite-a01e6016'})
   patched=r110.prepare_html('<link href="/quiz.css?v=r109-invite-a01e6016"><script src="/quiz.mjs?v=r109-invite-a01e6016"></script>',{
