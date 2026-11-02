@@ -10,25 +10,25 @@ import urllib.request
 from pathlib import Path
 
 REPO = "s-yarushkin/site_bochki"
-SOURCE_COMMIT = "1e73f1decc369d788858db8ae4e74de5babc4527"
+SOURCE_COMMIT = "a3cb3c8378a7ef82a2a44f67755d5362c5fabd20"
 WEB_LINK = Path("/srv/sites/dachapar-preview/current")
 RELEASES = Path("/srv/sites/dachapar-preview/releases")
 EXPECTED_ACTIVE = "DPQUIZ-r115-footer-0290aab2ae4866a3"
-NEW_NAME = "DPQUIZ-r116-vision-4739ccdf"
+NEW_NAME = "DPQUIZ-r116-vision-d02879b3"
 NEW_RELEASE = RELEASES / NEW_NAME
 OLD_BLOBS = {
     "quiz.mjs": "0290aab2c4c769ad962d9c4b5f6360aaea7fb9f8",
     "quiz.css": "ae4866a32f0dae680f509f76203443f7a4634322",
 }
 NEW_BLOBS = {
-    "quiz.mjs": "4739ccdff6856d305b096f37eca1ec69ad6b2b02",
+    "quiz.mjs": "d02879b3dad79f58e0d0f8e56941c3d7668524d8",
 }
 PHOTOS = {
     "assets/quiz/step1-steamroom.webp": "4099ca2fa5dd61957c9c2a3ac55dca36c0f743c7e52e8944fbddb62ff8c0016c",
     "assets/quiz/step2-washroom.webp": "3871ae9d0207c48354700100cd19b8e9fc28fd8eadd62ad90052ee749bdc5918",
     "assets/quiz/step3-bedroom.webp": "bc308677205f0ae97ab8dd26450cd8ee6a906878735411e02a1a171c1fac8d90",
 }
-VERSION = "r116-vision-4739ccdf"
+VERSION = "r116-vision-d02879b3"
 HTML_ASSETS = {"quiz.mjs": "src"}
 
 def stop(msg):
