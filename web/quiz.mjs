@@ -52,9 +52,13 @@ const save=()=>{try{sessionStorage.setItem(liveKey,JSON.stringify(state.answers)
 const load=()=>{try{const a=JSON.parse(sessionStorage.getItem(liveKey)||'{}');if(a&&typeof a==='object')state.answers={party:ANSWERS.party.includes(a.party)?a.party:undefined,wash:ANSWERS.wash.includes(a.wash)?a.wash:undefined,bedroom:ANSWERS.bedroom.includes(a.bedroom)?a.bedroom:undefined}}catch{}};
 const cancelModelsIdle=()=>{if(modelsIdleTimer!==null){clearTimeout(modelsIdleTimer);modelsIdleTimer=null}};
 const hideInvite=(dismissed=false)=>{if(invite?.open)invite.close();cancelModelsIdle();if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
-const canInvite=()=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
+const canInvite=(reason)=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
+  // A selected model blocks the passive models-idle nudge, not the explicit
+  // arrival at the calculator. Hash navigation (#models/#configure) is valid.
   let savedChoice=false;try{savedChoice=!!JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{}
-  return !shownThisVisit && !savedChoice && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && !document.activeElement?.matches?.('input,textarea,select');};
+  const ready=!shownThisVisit && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !document.activeElement?.matches?.('input,textarea,select');
+  return ready && (reason==='your-bath'||(reason==='models-idle'&&!savedChoice&&!interacted));
+};
 const modelsVisible=()=>{
   const el=$('#models');if(!el)return false;
   const r=el.getBoundingClientRect(),h=innerHeight;
@@ -62,13 +66,19 @@ const modelsVisible=()=>{
 };
 const reachedYourBath=()=>{
   const el=$('#configure');if(!el)return false;
+  // Keep this true after scrolling PAST the section: fast mouse-wheel, touch
+  // fling and anchor jumps can skip the section between scroll events.
+  return el.getBoundingClientRect().top<=innerHeight*0.45;
+};
+const ritualInView=()=>{
+  const el=$('#details');if(!el)return false;
   const r=el.getBoundingClientRect();
-  return r.top<=innerHeight*0.45&&r.bottom>0;
+  return r.top<innerHeight*0.85 && r.bottom>innerHeight*0.15;
 };
 const maybeInvite=(reason)=>{
-  if(!invite||!canInvite())return false;
+  if(!invite||!canInvite(reason))return false;
   if(reason==='models-idle'&&!modelsVisible())return false;
-  if(reason==='your-bath'&&!reachedYourBath())return false;
+  if(reason==='your-bath'&&(!reachedYourBath()||ritualInView()))return false;
   if(reason!=='models-idle'&&reason!=='your-bath')return false;
   shownThisVisit=true;
   try{sessionStorage.setItem(inviteShownSessionKey,'1')}catch{}
@@ -79,12 +89,12 @@ const maybeInvite=(reason)=>{
 };
 const armModelsIdle=()=>{
   cancelModelsIdle();
-  if(!canInvite()||!modelsVisible()||reachedYourBath())return;
+  if(!canInvite('models-idle')||!modelsVisible()||reachedYourBath())return;
   modelsIdleTimer=setTimeout(()=>{modelsIdleTimer=null;maybeInvite('models-idle')},modelsIdleMs);
 };
 const handleActivity=()=>{
   cancelModelsIdle();
-  if(canInvite()&&modelsVisible()&&!reachedYourBath())armModelsIdle();
+  if(canInvite('models-idle')&&modelsVisible()&&!reachedYourBath())armModelsIdle();
 };
 const handleScroll=()=>{
   cancelModelsIdle();
@@ -234,8 +244,10 @@ function bind(){
   for(const type of ['pointermove','pointerdown','keydown','touchstart','touchmove','wheel']){
     window.addEventListener(type,handleActivity,{passive:true});
   }
-  document.addEventListener('visibilitychange',()=>{cancelModelsIdle();if(!document.hidden)armModelsIdle()});
-  armModelsIdle();
+  document.addEventListener('visibilitychange',()=>{cancelModelsIdle();if(!document.hidden)handleScroll()});
+  // The browser can restore scroll position or navigate straight to #configure
+  // before async pricebook data has loaded and bind() is attached.
+  handleScroll();
 }
 async function init(){
   if(!$('#models')||$('#dp-quiz-dialog'))return;
