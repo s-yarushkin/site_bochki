@@ -41,7 +41,7 @@ const offerPrice=offer=>offer.displayMinRub===offer.displayMaxRub?'≈ '+rub(off
 const liveKey='dp_quiz_answers_v1',hiddenKey='dp_quiz_invite_suppressed_until_v1';
 // R111: no generic timers, page-percentage or exit-intent interruptions.
 // Trigger 1: 18s without scroll, pointer, click, touch or keyboard activity while viewing models.
-// Trigger 2: reaching the start of the #configure (your bath) section.
+// Trigger 2: arriving at the editorial 'ВАША БАНЯ' screen (not #configure / footer).
 const modelsIdleMs=18000;
 const inviteShownSessionKey='dp_quiz_invite_seen_session_r111';
 const state={step:0,view:'question',answers:{},selectedCode:null,expanded:false,sending:false,phone:'',channel:'',error:'',success:false,requestId:null};
@@ -69,56 +69,77 @@ const modelsVisible=()=>{
   const r=el.getBoundingClientRect(),h=innerHeight;
   return r.top<=h*0.55&&r.bottom>=h*0.45;
 };
-const reachedYourBath=()=>{
-  const el=$('#configure');
-  // The public HTML may differ from the GitHub fixture. The footer is a
-  // separate and reliable endpoint for fast scroll and section hash jumps.
-  const footer=$('footer.site-footer')||$('footer');
-  const end=footer&&footer.getBoundingClientRect().top<=innerHeight*.9;
-  const calculator=el&&el.getBoundingClientRect().top<=innerHeight*.45;
-  return Boolean(calculator||end);
+// Target the actual visual screen identified by its editorial headings
+// ("ВАША БАНЯ" / "Расскажите, какой вы её представляете").
+// Neither #configure nor the footer nor scroll percentage is a trigger.
+const labelText=node=>(node?.textContent||'').replace(/\\s+/g,' ').trim().toLocaleLowerCase('ru-RU');
+const findBathVision=()=>{
+  const nodes=document.querySelectorAll('h1,h2,h3,[role="heading"],p,span,strong');
+  for(const node of nodes){
+    const title=labelText(node);
+    if(title==='ваша баня'||title==='вашабаня'||
+      (/^расскажите,?\\s+какой/.test(title)&&title.includes('представляете'))){
+      if(!node.getClientRects().length)continue;
+      return node.closest('section,[role="region"],article')||node.parentElement;
+    }
+  }
+  return null;
 };
-const ritualInView=()=>{
-  const el=$('#details');if(!el)return false;
-  const r=el.getBoundingClientRect();
-  return r.top<innerHeight*.85&&r.bottom>innerHeight*.15;
+const bathVisionVisible=()=>{
+  const screen=findBathVision();
+  if(!screen)return false;
+  const rect=screen.getBoundingClientRect(),h=innerHeight;
+  return rect.top<=h*.75&&rect.bottom>=h*.18;
 };
 const maybeInvite=(reason)=>{
   if(!invite||!canInvite(reason))return false;
   if(reason==='models-idle'&&!modelsVisible())return false;
-  if(reason==='your-bath'&&(!reachedYourBath()||ritualInView()))return false;
+  if(reason==='your-bath'&&!bathVisionVisible())return false;
   if(reason!=='models-idle'&&reason!=='your-bath')return false;
-  // Commit one-time status only after the modal was opened successfully.
   try{invite.showModal()}catch(error){console.warn('DachaPar invite could not open:',error);return false}
   shownThisVisit=true;
   try{sessionStorage.setItem(inviteShownSessionKey,'1')}catch{}
   cancelModelsIdle();
+  bathScreenObserver?.disconnect();
+  bathDomObserver?.disconnect();
   trace('dp_quiz_invite_view',{reason});
   return true;
 };
 const armModelsIdle=()=>{
   cancelModelsIdle();
-  if(!canInvite('models-idle')||!modelsVisible()||reachedYourBath())return;
+  if(!canInvite('models-idle')||!modelsVisible()||bathVisionVisible())return;
   modelsIdleTimer=setTimeout(()=>{modelsIdleTimer=null;maybeInvite('models-idle')},modelsIdleMs);
 };
 const handleActivity=()=>{
   cancelModelsIdle();
-  if(canInvite('models-idle')&&modelsVisible()&&!reachedYourBath())armModelsIdle();
+  if(canInvite('models-idle')&&modelsVisible()&&!bathVisionVisible())armModelsIdle();
 };
 const handleScroll=()=>{
   cancelModelsIdle();
-  if(reachedYourBath()){maybeInvite('your-bath');return}
+  // Crucial: do not show the invite at the calculator, ritual or footer.
+  if(bathVisionVisible()){maybeInvite('your-bath');return}
   armModelsIdle();
 };
-let footerObserver=null;
-const watchFooter=()=>{
-  const footer=$('footer.site-footer')||$('footer');
-  if(!footer)return;
-  footerObserver?.disconnect();
-  footerObserver=new IntersectionObserver(entries=>{
-    if(entries.some(entry=>entry.isIntersecting))maybeInvite('your-bath');
-  },{root:null,rootMargin:'0px 0px 140px 0px',threshold:0});
-  footerObserver.observe(footer);
+let bathScreenObserver=null,bathDomObserver=null,observedBathScreen=null;
+const watchBathScreen=()=>{
+  if(shownThisVisit)return;
+  const screen=findBathVision();
+  if(!screen||screen===observedBathScreen)return;
+  bathScreenObserver?.disconnect();
+  observedBathScreen=screen;
+  bathScreenObserver=new IntersectionObserver(entries=>{
+    if(entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=.12))
+      maybeInvite('your-bath');
+  },{root:null,threshold:[0,.12,.4]});
+  bathScreenObserver.observe(screen);
+  // Handle heading added after a navigation or a delayed site transition.
+  if(bathVisionVisible())maybeInvite('your-bath');
+};
+const observeLateBathScreen=()=>{
+  watchBathScreen();
+  bathDomObserver?.disconnect();
+  bathDomObserver=new MutationObserver(()=>watchBathScreen());
+  bathDomObserver.observe(document.body,{childList:true,subtree:true});
 };
 function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
@@ -257,15 +278,14 @@ function bind(){
   invite.addEventListener('click',event=>{if(event.target===invite)hideInvite(true)});
   launcher.addEventListener('click',launch);
   document.addEventListener('click',e=>{if(e.target.closest('#configure,#home-plans,[data-model-card],[data-flow],[data-preset],[data-inquiry],[data-save-choice],[data-size-picker],#contact-dialog,#gallery-dialog,#inquiry-dialog')){interacted=true;cancelModelsIdle()}},{capture:true,passive:true});
-  // Only two automatic entry points. Activity resets the idle clock; scrolling to
-  // the calculator is the one intentional immediate trigger.
+  // Exactly two automatic entry points: models idle, and the editorial 'ВАША БАНЯ' screen.
   window.addEventListener('scroll',handleScroll,{passive:true});
   for(const type of ['pointermove','pointerdown','keydown','touchstart','touchmove','wheel']){
     window.addEventListener(type,handleActivity,{passive:true});
   }
   document.addEventListener('visibilitychange',()=>{cancelModelsIdle();if(!document.hidden)handleScroll()});
-  watchFooter();
-  // Covers restored scroll position, anchor navigation, and loading after scroll.
+  observeLateBathScreen();
+  // Covers restored scroll position, anchor navigation, and late loading.
   handleScroll();
 }
 async function init(){
