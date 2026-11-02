@@ -437,3 +437,29 @@ dialog.dp-quiz-invite .dp-quiz-invite-visual .dp-quiz-invite-photo{
   #dp-quiz-dialog .dp-quiz-cta-label{font-size:11px}
   #dp-quiz-dialog .dp-quiz-cta-primary b{font-size:14px}
 }
+
+/* R114: the optional static entry belongs after the whole page, before footer. */
+.dp-quiz-entry.dp-quiz-entry--bottom{
+  box-sizing:border-box;
+  width:min(1280px,calc(100% - 40px));
+  margin:32px auto 44px;
+  padding:24px 28px;
+  background:#f1f3ef;
+  border:1px solid #dfe5db;
+  border-radius:10px;
+  box-shadow:none;
+}
+.dp-quiz-entry--bottom .dp-quiz-entry-label{
+  display:block;margin-bottom:6px;
+}
+.dp-quiz-entry--bottom strong{font-weight:650;font-size:20px}
+@media(max-width:760px){
+  .dp-quiz-entry.dp-quiz-entry--bottom{
+    width:calc(100% - 28px);
+    margin:24px auto 30px;
+    padding:20px 18px;
+    gap:14px;
+  }
+  .dp-quiz-entry--bottom strong{font-size:18px}
+  .dp-quiz-entry--bottom .dp-quiz-action{width:100%;min-height:52px}
+}
