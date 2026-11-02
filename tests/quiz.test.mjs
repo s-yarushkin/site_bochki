@@ -123,22 +123,31 @@ test('model-only results cover all answers with priced unique models and no imag
  }
 });
 
-test('large center invitation appears after 10s/35%, while quiz itself waits for a click',()=>{
+test('R111 popup only has two triggers: models idle 18s or reaching your bath; no ritual interruption',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
- assert.match(ui,/const inviteDelayMs=10000,inviteScrollFraction=0\.35;/);
- assert.match(ui,/Date\.now\(\)-startedAt>=inviteDelayMs/);
- assert.match(ui,/scrollY\/height>=inviteScrollFraction/);
- assert.match(ui,/window\.setTimeout\(maybeInvite,inviteDelayMs\+500\)/);
- assert.match(ui,/Date\.now\(\)-startedAt>15000/,'Desktop exit signal remains delayed');
- assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
- assert.match(ui,/invite\.showModal\(\)/,'The new invitation itself is a large centered modal');
- assert.match(ui,/invite\.addEventListener\('cancel'/,'Escape dismisses the invitation');
+ const home=readFileSync(new URL('../web/index.html',import.meta.url),'utf8');
+ assert.match(home,/id="models"/);
+ assert.match(home,/id="configure"/);
+ assert.match(home,/id="details"/);
+ assert.match(ui,/const modelsIdleMs=18000;/);
+ assert.match(ui,/const modelsVisible=\(\)=>/);
+ assert.match(ui,/const reachedYourBath=\(\)=>/);
+ assert.match(ui,/maybeInvite\('models-idle'\)/);
+ assert.match(ui,/maybeInvite\('your-bath'\)/);
+ assert.match(ui,/window\.addEventListener\('scroll',handleScroll/);
+ assert.match(ui,/cancelModelsIdle\(\)/);
+ assert.match(ui,/sessionStorage\.setItem\(inviteShownSessionKey,'1'\)/);
+ for(const old of ['inviteDelayMs','inviteScrollFraction','scrollSeen','startedAt','mouseout', 'Date.now()-startedAt']){
+   assert.equal(ui.includes(old),false,'Legacy unsolicited trigger remains: '+old);
+ }
+ assert.match(ui,/invite\.showModal\(\)/);
+ assert.match(ui,/invite\.addEventListener\('cancel'/);
  assert.match(ui,/dialog\.showModal\(\)/);
+ assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
  const builder=readFileSync(new URL('../r107/build.py',import.meta.url),'utf8');
- assert.match(builder,/r107-invite35/,'New preview must invalidate cached R106 script');
- assert.match(builder,/R107-PREVIEW/);
+ assert.match(builder,/r107-invite35/);
  const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('function launch('));
- assert.doesNotMatch(trigger,/dialog\.showModal\(/,'The full quiz still opens only on an intentional click');
+ assert.doesNotMatch(trigger,/dialog\.showModal\(/);
 });
 
 test('R108 buyer choices are literal: straightforward guest counts and requested washing language',()=>{
