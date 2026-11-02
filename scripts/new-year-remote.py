@@ -115,6 +115,7 @@ def baseline(payload_files=None):
         require('class="delivery-geography"' not in new_html and
                 'Основные направления:' not in new_html and
                 'class="delivery-footer-line"' in new_html and
+                'id="delivery-geography-title"' in new_html and
                 'Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области' in new_html,
                 'footer-only delivery geography not found')
         require(all(fragment in new_html for fragment in
