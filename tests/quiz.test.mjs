@@ -121,3 +121,20 @@ test('model-only results cover all answers with priced unique models and no imag
   for(const {plan,price} of found.offers){assert.ok(Number.isFinite(price.rub));assert.equal(plan.bedroom,bedroom==='b_yes');assert.notEqual(plan.sitePlanId,'v03_Q6_rest');}
  }
 });
+
+test('invitation appears earlier but never auto-opens a full-screen quiz',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.match(ui,/const inviteDelayMs=10000,inviteScrollFraction=0\.35;/);
+ assert.match(ui,/Date\.now\(\)-startedAt>=inviteDelayMs/);
+ assert.match(ui,/scrollY\/height>=inviteScrollFraction/);
+ assert.match(ui,/window\.setTimeout\(maybeInvite,inviteDelayMs\+500\)/);
+ assert.match(ui,/Date\.now\(\)-startedAt>15000/,'Desktop exit signal remains delayed');
+ assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
+ assert.match(ui,/invite\.hidden=false/);
+ assert.match(ui,/dialog\.showModal\(\)/);
+ const builder=readFileSync(new URL('../r107/build.py',import.meta.url),'utf8');
+ assert.match(builder,/r107-invite35/,'New preview must invalidate cached R106 script');
+ assert.match(builder,/R107-PREVIEW/);
+ const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('function launch('));
+ assert.doesNotMatch(trigger,/showModal\(/,'Automated invitation must not open a blocking modal');
+});
