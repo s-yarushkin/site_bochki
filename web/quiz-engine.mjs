@@ -84,3 +84,64 @@ export function recommendModels(plans,answers,pricebook,rules,limit=3){
  }
  return {offers,compromise:found.compromise};
 }
+
+/**
+ * R108: suggest a *range* (not one fixed length) for each applicable model.
+ * Valid sizes are 5 and 6 m only; ignore 4.5/5.5 m. The House 4x4 is the
+ * explicitly requested compact comparison exception.
+ *
+ * Deliberately do NOT calculate any Deluxe discount against Comfort prices.
+ */
+export function recommendModelRanges(plans, answers, pricebook, rules) {
+  if(!validAnswers(answers))throw new Error('QUIZ_ANSWERS_INCOMPLETE');
+  const small=['p2','p4'].includes(answers.party);
+  const wantsBedroom=answers.bedroom==='b_yes';
+  const partyLarge=!small;
+  const validWash=p=>answers.wash==='w_compare'||
+    (answers.wash==='w_yes'?p.wash==='Отдельная':p.wash!=='Отдельная');
+  const prepared=plans.filter(p=>!p.wideBody&&p.sitePlanId!=='v03_Q6_rest');
+  const base=prepared.filter(p=>p.bedroom===wantsBedroom);
+  const bedroomConflict=wantsBedroom&&answers.wash==='w_no'&&!base.some(p=>validWash(p));
+  const matches=base.filter(p=>{
+    if(!bedroomConflict&&!validWash(p))return false;
+    if(wantsBedroom)return p.model==='kvadro-house'&&p.size==='6x6';
+    if(p.model==='kvadro'&&partyLarge)return false;
+    if(p.model==='kvadro-house'){
+      if(small)return answers.wash==='w_compare'&&p.size==='4x4';
+      // Large-party House: choose a genuinely more spacious family model.
+      if(answers.wash==='w_no')return false;
+      return answers.party==='p8'?['6x5','6x6'].includes(p.size):
+        ['5x4','6x4'].includes(p.size);
+    }
+    return p.size==='500'||p.size==='600';
+  });
+  const order=wantsBedroom?['kvadro-house']:small?
+    ['kvadro','parus','viking','kvadro-house']:['parus','viking','kvadro-house'];
+  const results=[];
+  for(const model of order){
+    const pool=matches.filter(p=>p.model===model).map(plan=>({
+      plan,price:planPrice(plan,answers.party,pricebook,rules)
+    })).filter(x=>Number.isFinite(x.price.rub));
+    if(!pool.length)continue;
+    // Price range may include both wash variants when the buyer wants to compare.
+    const lower=Math.min(...pool.map(x=>x.price.rub));
+    const upper=Math.max(...pool.map(x=>x.price.rub));
+    const byOrder=[...pool].sort((x,y)=>{
+      const lengthOrder = model==='kvadro-house'
+        ? ['4x4','5x4','6x4','6x5','6x6']
+        : ['500','600'];
+      return lengthOrder.indexOf(x.plan.size)-lengthOrder.indexOf(y.plan.size)||
+        x.price.rub-y.price.rub;
+    });
+    const first=byOrder[0].plan,last=byOrder[byOrder.length-1].plan;
+    const sizes=[...new Set(byOrder.map(x=>x.plan.size))];
+    results.push({
+      model,plans:byOrder.map(x=>x.plan),codes:byOrder.map(x=>x.plan.code),
+      sizes,firstSize:first.size,lastSize:last.size,
+      minRub:lower,maxRub:upper,
+      displayMinRub:Math.ceil(lower/1000)*1000,
+      displayMaxRub:Math.ceil(upper/1000)*1000
+    });
+  }
+  return {offers:results,compromise:bedroomConflict};
+}
