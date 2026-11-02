@@ -61,8 +61,30 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  await page.close();
  return {label,cards,channel,dimensions};
 }
+async function invitePolicySmoke(){
+ const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+ try{
+   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   const ratio=await page.evaluate(()=>{
+     const h=document.documentElement.scrollHeight-innerHeight;
+     if(h<=0)throw new Error('No page scroll for invite test');
+     window.scrollTo({top:Math.ceil(h*0.38),behavior:'instant'});
+     return scrollY/h;
+   });
+   if(ratio<0.35)throw new Error('Invite smoke did not scroll far enough: '+ratio);
+   if(await page.locator('.dp-quiz-invite').isVisible())throw new Error('Invite appeared before 10 seconds');
+   await page.locator('.dp-quiz-invite:not([hidden])').waitFor({state:'visible',timeout:13500});
+   if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error('Automatic invite opened modal without click');
+   await page.locator('[data-dpq-hide]').click();
+   if(await page.locator('.dp-quiz-invite').isVisible())throw new Error('Invite did not dismiss');
+   await page.screenshot({path:OUT+'/invite-dismissed.png'});
+   return {scenario:'invite',threshold:'10s and 35%',modalAutoOpened:false,ratio};
+ }finally{await page.close()}
+}
 try{
  const results=[];
+ results.push(await invitePolicySmoke());
  results.push(await test({width:1440,height:900},'desktop','p4','w_compare','b_no','max'));
  results.push(await test({width:390,height:844},'mobile390','p4','w_compare','b_no','whatsapp'));
  results.push(await test({width:320,height:690},'mobile320','p2','w_no','b_no','telegram'));
