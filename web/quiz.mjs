@@ -52,12 +52,17 @@ const save=()=>{try{sessionStorage.setItem(liveKey,JSON.stringify(state.answers)
 const load=()=>{try{const a=JSON.parse(sessionStorage.getItem(liveKey)||'{}');if(a&&typeof a==='object')state.answers={party:ANSWERS.party.includes(a.party)?a.party:undefined,wash:ANSWERS.wash.includes(a.wash)?a.wash:undefined,bedroom:ANSWERS.bedroom.includes(a.bedroom)?a.bedroom:undefined}}catch{}};
 const cancelModelsIdle=()=>{if(modelsIdleTimer!==null){clearTimeout(modelsIdleTimer);modelsIdleTimer=null}};
 const hideInvite=(dismissed=false)=>{if(invite?.open)invite.close();cancelModelsIdle();if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
-const canInvite=(reason)=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
-  // A selected model blocks the passive models-idle nudge, not the explicit
-  // arrival at the calculator. Hash navigation (#models/#configure) is valid.
-  let savedChoice=false;try{savedChoice=!!JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{}
-  const ready=!shownThisVisit && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !document.activeElement?.matches?.('input,textarea,select');
-  return ready && (reason==='your-bath'||(reason==='models-idle'&&!savedChoice&&!interacted));
+const canInvite=(reason)=>{
+  // One automatic display per tab session. Old seven-day dismissals from
+  // previous releases must not silently suppress a fresh session.
+  const isReady=!shownThisVisit&&!dialog?.open&&!invite?.open&&
+    !document.querySelector('dialog[open]')&&document.visibilityState==='visible';
+  if(!isReady)return false;
+  if(reason==='models-idle'){
+    let savedChoice=false;try{savedChoice=!!JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{}
+    return !savedChoice&&!interacted;
+  }
+  return reason==='your-bath';
 };
 const modelsVisible=()=>{
   const el=$('#models');if(!el)return false;
@@ -65,27 +70,29 @@ const modelsVisible=()=>{
   return r.top<=h*0.55&&r.bottom>=h*0.45;
 };
 const reachedYourBath=()=>{
-  const configure=$('#configure');
-  // The bottom of the page is past the "your bath" section even if a custom
-  // scrollbar or content transition missed intermediate scroll events.
-  const y=scrollY||window.pageYOffset||0;
-  const nearBottom=y+innerHeight>=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)-Math.max(24,innerHeight*.05);
-  return (configure&&configure.getBoundingClientRect().top<=innerHeight*0.45)||nearBottom;
+  const el=$('#configure');
+  // The public HTML may differ from the GitHub fixture. The footer is a
+  // separate and reliable endpoint for fast scroll and section hash jumps.
+  const footer=$('footer.site-footer')||$('footer');
+  const end=footer&&footer.getBoundingClientRect().top<=innerHeight*.9;
+  const calculator=el&&el.getBoundingClientRect().top<=innerHeight*.45;
+  return Boolean(calculator||end);
 };
 const ritualInView=()=>{
   const el=$('#details');if(!el)return false;
   const r=el.getBoundingClientRect();
-  return r.top<innerHeight*0.85 && r.bottom>innerHeight*0.15;
+  return r.top<innerHeight*.85&&r.bottom>innerHeight*.15;
 };
 const maybeInvite=(reason)=>{
   if(!invite||!canInvite(reason))return false;
   if(reason==='models-idle'&&!modelsVisible())return false;
   if(reason==='your-bath'&&(!reachedYourBath()||ritualInView()))return false;
   if(reason!=='models-idle'&&reason!=='your-bath')return false;
+  // Commit one-time status only after the modal was opened successfully.
+  try{invite.showModal()}catch(error){console.warn('DachaPar invite could not open:',error);return false}
   shownThisVisit=true;
   try{sessionStorage.setItem(inviteShownSessionKey,'1')}catch{}
   cancelModelsIdle();
-  invite.showModal();
   trace('dp_quiz_invite_view',{reason});
   return true;
 };
@@ -102,6 +109,16 @@ const handleScroll=()=>{
   cancelModelsIdle();
   if(reachedYourBath()){maybeInvite('your-bath');return}
   armModelsIdle();
+};
+let footerObserver=null;
+const watchFooter=()=>{
+  const footer=$('footer.site-footer')||$('footer');
+  if(!footer)return;
+  footerObserver?.disconnect();
+  footerObserver=new IntersectionObserver(entries=>{
+    if(entries.some(entry=>entry.isIntersecting))maybeInvite('your-bath');
+  },{root:null,rootMargin:'0px 0px 140px 0px',threshold:0});
+  footerObserver.observe(footer);
 };
 function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
@@ -247,8 +264,8 @@ function bind(){
     window.addEventListener(type,handleActivity,{passive:true});
   }
   document.addEventListener('visibilitychange',()=>{cancelModelsIdle();if(!document.hidden)handleScroll()});
-  // The browser can restore scroll position or navigate straight to #configure
-  // before async pricebook data has loaded and bind() is attached.
+  watchFooter();
+  // Covers restored scroll position, anchor navigation, and loading after scroll.
   handleScroll();
 }
 async function init(){
@@ -263,13 +280,18 @@ async function init(){
     if(settings.lead?.requiredPricebookVersion!==book.version)throw new Error('QUIZ_PRICEBOOK_VERSION');
     analytics?.start(settings);
     load();let alreadyShown=false;try{alreadyShown=sessionStorage.getItem(inviteShownSessionKey)==='1'}catch{}shownThisVisit=alreadyShown;
+    // No additional card above the catalog or inside main. A small manual
+    // entry is mounted exclusively in the actual page footer.
+    const footer=$('footer.site-footer')||$('footer');
+    if(!footer)throw new Error('QUIZ_FOOTER_MISSING');
     const mounted=$('[data-quiz-mount]');
-    const entry=mounted||document.createElement('div');
-    entry.className='dp-quiz-entry dp-quiz-entry--bottom wrap';
-    entry.innerHTML='<div><span class="dp-quiz-entry-label">Подбор под ваши пожелания</span><strong>Найдём вашу баню за 3 шага</strong><p>Покажем подходящие варианты и цены, планировки пришлём в мессенджер.</p></div><button type="button" class="dp-quiz-action" id="dp-quiz-open">Подобрать за 3 шага <span aria-hidden="true">→</span></button>';
-    const main=$('main#top');
-    if(!main)throw new Error('QUIZ_BOTTOM_MOUNT_MISSING');
-    main.append(entry);
+    if(mounted)mounted.remove();
+    const oldEntry=$('.dp-quiz-entry');
+    if(oldEntry)oldEntry.remove();
+    const entry=document.createElement('div');
+    entry.className='dp-quiz-footer-cta';
+    entry.innerHTML='<button type="button" class="dp-quiz-action" id="dp-quiz-open">Подобрать баню за 3 шага <span aria-hidden="true">→</span></button>';
+    footer.append(entry);
     launcher=$('#dp-quiz-open');
     invite=document.createElement('dialog');invite.className='dp-quiz-invite';invite.setAttribute('aria-labelledby','dp-quiz-invite-title');
     invite.innerHTML='<div class="dp-quiz-invite-layout"><div class="dp-quiz-invite-visual"><img class="dp-quiz-invite-photo" src="/r101/assets/parus-editorial-960.webp" alt="Готовая баня на загородном участке" width="960" height="720" decoding="async"></div><div class="dp-quiz-invite-inner"><button type="button" class="dp-quiz-invite-close" data-dpq-hide aria-label="Закрыть предложение">×</button><span class="dp-quiz-invite-kicker">ДачаПар · поможем с выбором</span><h2 id="dp-quiz-invite-title">Какая баня подойдёт вам?</h2><p>Ответьте на три коротких вопроса. Покажем подходящие бани и цены, а подробные планировки пришлём в мессенджер.</p><div class="dp-quiz-invite-stages" aria-label="Три вопроса"><span><b>01</b> Сколько гостей</span><span><b>02</b> Помывочная</span><span><b>03</b> Ночёвка</span></div><button type="button" class="dp-quiz-action" data-dpq-open>Подобрать баню <span aria-hidden="true">→</span></button></div></div>';
