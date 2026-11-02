@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#101f2c">
+  <title>Новый год со своим паром · ДачаПар · Концепция</title>
+  <meta name="description" content="Концепция новогоднего лендинга ДачаПар: снежный вечер, своя баня и праздник с близкими.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/winter-sauna.png" as="image">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="experience.js"></script>
+  <script type="module" src="lead.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#main">К содержанию</a>
+  <header class="header">
+    <a class="brand" href="https://дачапар.рф/" aria-label="ДачаПар — основной сайт">дача<span>пар<span class="brand-star" aria-hidden="true">✳</span></span></a>
+    <span class="header-note">Своя баня. Свои люди.</span>
+    <div class="header-contact">
+      <a class="phone" href="tel:+79517349999">+7 (951) 734-99-99</a>
+      <button class="cta header-cta" data-open-lead type="button">Оставить заявку <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="scene hero" aria-labelledby="hero-heading">
+      <img class="world hero-world" src="assets/winter-sauna.png" width="1672" height="941" alt="Зимняя визуализация Квадро: тёплая баня в снегу, гирлянды и красная новогодняя шапка" fetchpriority="high">
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="snow snow-far" aria-hidden="true"></div>
+      <div class="snow snow-near" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="tiny-star" aria-hidden="true">✳</span> Новый год 2027 · ДачаПар</p>
+        <h1 id="hero-heading">Этот Новый год —<br>со своим <em>паром.</em></h1>
+        <p class="intro">Снег хрустит. Баня греется.<br>И все, кого вы любите, — рядом.</p>
+        <div class="offer-panel" aria-label="Выбор размера и цены бани">
+          <div class="festive-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="product-heading"><h2 id="model-name">Квадро</h2><span id="model-dimensions">Ширина 2,1 м</span></div>
+          <p class="model-description" id="model-description">Парная и комната отдыха в компактном корпусе.</p>
+          <fieldset class="size-picker"><legend id="size-label">Длина бани</legend><div class="size-options" id="size-options">
+            <button type="button" data-size="400" aria-pressed="true">4 м</button><button type="button" data-size="450" aria-pressed="false">4,5 м</button><button type="button" data-size="500" aria-pressed="false">5 м</button><button type="button" data-size="550" aria-pressed="false">5,5 м</button><button type="button" data-size="600" aria-pressed="false">6 м</button>
+          </div></fieldset>
+          <div class="price-row" aria-live="polite" aria-atomic="true"><strong id="model-price">от 410 000 ₽</strong><span>Готовая комплектация<br>«Комфорт»</span></div>
+          <p class="inclusions">Печь, полки, мебель, свет и электрика — уже в цене.</p>
+          <button class="cta plans-cta" data-open-lead type="button"><span class="cta-copy">Пришлите мне варианты<br>планировок и комплектаций</span><span aria-hidden="true">↗</span></button>
+          <small>Уточним срок для вашего участка.<br>Доставка, основание и подключения — отдельно.</small>
+          <p class="catalog-status" id="catalog-status" role="status"></p>
+        </div>
+      </div>
+      <div class="calendar-note">
+        <span class="countdown-heading" id="countdown-heading">До вашего Нового года</span>
+        <div class="countdown" id="new-year-countdown" role="timer" aria-live="off" aria-label="Обратный отсчёт до Нового года по московскому времени">
+          <span><strong id="countdown-days">00</strong><small id="countdown-days-label">дней</small></span><b aria-hidden="true">:</b>
+          <span><strong id="countdown-hours">00</strong><small id="countdown-hours-label">часов</small></span><b aria-hidden="true">:</b>
+          <span><strong id="countdown-minutes">00</strong><small id="countdown-minutes-label">минут</small></span>
+        </div>
+        <time class="countdown-zone" datetime="2027-01-01T00:00:00+03:00">1 января, 00:00 · Москва</time>
+      </div>
+      <nav class="model-switch" aria-label="Выберите модель бани">
+        <button type="button" data-model="kvadro" aria-pressed="true">Квадро</button>
+        <button type="button" data-model="parus" aria-pressed="false">Парус</button>
+        <button type="button" data-model="viking" aria-pressed="false">Викинг</button>
+        <button type="button" data-model="kvadro-house" aria-pressed="false">Квадро Хаус</button>
+      </nav>
+      <span class="scene-loading" id="scene-loading" role="status" hidden>Одеваем баню к празднику…</span>
+      <span class="scene-caption">За окном — зима. Впереди — ваш банный вечер.</span>
+    </section>
+
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="https://дачапар.рф/">дача<span>пар</span></a>
+    <p>Производим в Вологде.<br>Доставляем на вашу дачу.</p>
+    <div class="footer-links"><a href="https://дачапар.рф/privacy.html">Политика обработки данных</a><a href="https://дачапар.рф/requisites.html">Реквизиты</a></div>
+    <p class="concept-label">Визуальная концепция · 02.11.2026<br>Изображения — рекламные визуализации.<br>Условия и срок акции требуют подтверждения.</p>
+  </footer>
+  <div class="mobile-bar"><button class="cta" data-open-lead type="button">Планировки и комплектации <span aria-hidden="true">↗</span></button></div>
+
+  <dialog id="lead-dialog" aria-labelledby="form-heading" aria-describedby="form-description">
+    <div class="festive-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <button class="close-dialog" type="button" aria-label="Закрыть форму">×</button>
+    <div class="dialog-winter" aria-hidden="true">
+      <img id="dialog-winter-image" src="assets/winter-sauna.png" width="1672" height="941" alt="">
+      <div class="snow snow-far"></div>
+      <span>Скоро здесь будет<br>ваш Новый год <i>✦</i></span>
+    </div>
+    <p class="eyebrow dialog-eyebrow">Ваш банный Новый год</p>
+    <h2 id="form-heading">Пришлём варианты<br>для вашей мечты</h2>
+    <div id="inquiry-summary" class="selection-summary"></div>
+    <p id="form-description">Оставьте номер — менеджер свяжется с вами и пришлёт варианты планировок и комплектаций выбранной бани. Заодно уточним срок к празднику.</p>
+    <form id="lead-form" action="/api/lead" method="post">
+      <fieldset id="form-fields" disabled>
+        <label for="phone">Ваш телефон</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (999) 123-45-67" maxlength="20" required>
+        <details class="form-details">
+          <summary>Добавить пожелания</summary>
+          <label for="settlement">Где находится участок?</label>
+          <input id="settlement" name="settlement" autocomplete="address-level2" placeholder="Область, город или посёлок" maxlength="140">
+          <label for="name">Как к вам обращаться</label>
+          <input id="name" name="name" autocomplete="name" maxlength="80" placeholder="Необязательно">
+          <label for="comment">Что важно для вашей бани</label>
+          <textarea id="comment" name="comment" rows="2" maxlength="300" placeholder="Расскажите о вашем банном вечере"></textarea>
+        </details>
+        <p class="consent" id="consent-notice">Отправляя заявку, вы подтверждаете <a href="/consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> для ответа на ваше обращение. <a href="/privacy.html" target="_blank" rel="noopener">Политика обработки данных</a>.</p>
+        <button class="cta" id="submit-lead" type="submit" aria-describedby="consent-notice">Получить варианты <span aria-hidden="true">↗</span></button>
+      </fieldset>
+      <p id="form-result" role="status" aria-live="polite"></p>
+      <p class="preview-note" id="preview-note" hidden>Локальный тест: уведомления менеджерам не отправляются.</p>
+    </form>
+    <a class="dialog-phone" href="tel:+79517349999">Позвонить: +7 (951) 734-99-99</a>
+  </dialog>
+  <noscript><div class="no-js">Чтобы обсудить баню к Новому году, позвоните <a href="tel:+79517349999">+7 (951) 734-99-99</a>.</div></noscript>
+</body>
+</html>

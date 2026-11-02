@@ -1,0 +1,30 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-02",
+  "purpose": "Local campaign concept; not real completed customer project photography",
+  "assets": [
+    {
+      "file": "assets/winter-sauna.png",
+      "role": "Winter exterior based on brand's Quadro facade",
+      "reference": "r101/assets/kvadro-editorial.png",
+      "prompt": "Use case: ads-marketing. Asset type: cinematic winter website background, landscape 16:9, no text.\nEdit the reference architectural photo into a photoreal New Year night campaign scene for a Russian ready-made sauna. Preserve exactly the identifiable Quadro sauna: long rounded rectangular tunnel body, black shingled roof, horizontal honey timber siding, central side glass door with small canopy, left end rectangular window and steps, chimney position. Do not add any windows, terrace or luxury construction. Recompose whole building to right 60% of very wide image, around 55% of width, generous margins, camera slightly further away at chest height. Leave left 35% mostly calm dark fir trees and midnight sky with usable negative space for HTML headline. A realistic Russian dacha plot on a very cold deep blue winter NIGHT. Thick fresh snow on roof and ground. Warm amber light glows through the original door and window; subtle steam in cold air. Warm white Christmas string lights trace the original roof edges. One playful large soft red Santa hat with white fur rests on LEFT curved roof end, away from chimney, clearly a festive prop not building structure. Small decorated fir tree by sauna right. Footprints lead from foreground toward entrance; a playful human snow angel imprint in snow near lower right, no person in it. An unobtrusive tiny Ded Moroz in long red winter coat is far in the right background beside the fir, a secondary story detail, no caricature. Sparse soft falling snow, detailed realistic snow texture, blue shadows and warm amber pools of light, expensive cinematic holiday advertising photography with honest wood texture, joyful and inviting. A few modest golden fireworks far upper right, not over the building, no explosions near structure. Physically plausible snow and lighting, no orange oversaturation. No lettering, logos, watermark, UI, banners. Keep the sauna recognizable to the source."
+    },
+    {
+      "file": "assets/new-year-tea.png",
+      "role": "Holiday tea lifestyle scene",
+      "reference": "r101/assets/tea-editorial.png",
+      "prompt": "Use case: ads-marketing. Edit this reference tea scene into a photorealistic intimate Russian sauna New Year night advertising scene, wide 16:9 composition. Preserve the tactile honest small wooden sauna lounge atmosphere, simple pine table and window, ceramic cups and glass teapot. Outside the window it is deep midnight blue, snow falling over snow-covered fir trees and warm tiny fairy lights, absolutely no daylight. On table right side: steaming herbal tea, four different ceramic mugs naturally grouped, a linen towel, a small bowl of tangerines, short fir twigs and a closed red wool Santa hat set on the bench. At far right edge only two cropped adult hands in warm natural skin tones toast with ceramic tea cups, anatomically realistic fingers, belonging to adults sitting around the table, no bodies or faces needed, conveying family togetherness. One small safe sparkler held outside the glass window by an indistinct figure, not burning on wooden table, tiny warm sparkles to upper right. Subtle wool blanket on bench. Leave left 40% of wide scene quieter, mostly deep shadowed timber wall and dark snowy window with few details for overlay HTML text card. Rich but natural amber warmth against frosty blue exterior, cinematic photographic textures, subtle steam, authentic cozy New Year dacha memory rather than luxury spa. No lettering, logos, watermark or UI. No giant windows or expanded architecture."
+    },
+    {
+      "file": "assets/fir-bucket.png",
+      "role": "Transparent foreground props",
+      "transparent_background": true,
+      "prompt": "Use case: ads-marketing. Asset type: isolated photoreal foreground prop for a New Year Russian sauna landing page, genuine transparent background. A beautiful dense soft green FIR sauna broom bound with natural twine, beside a small honest pale wooden sauna bucket with metal hoops and a wooden ladle, a folded red wool mitten resting by the bucket. Broom leans diagonally LEFT, bucket sits lower right; wide 4:3 composition with all objects fully within frame and comfortable transparent margins. Tactile pine needles, droplets on the broom, warm amber rim light from upper right and subtle cool blue fill from left as if at a snowy sauna threshold. Photograph of real objects, not icon, not illustration, not CGI toy. Physical credible connected arrangement anchored on same invisible plane. No floor or rectangle background, no scenery, no people, no smoke, no lettering, no logo or watermark. Keep alpha transparency around all needles and objects."
+    },
+    {
+      "file": "assets/steam-room.png",
+      "role": "Existing atmospheric macro reused without changes",
+      "source": "r101/assets/oak-steam.png"
+    }
+  ]
+}

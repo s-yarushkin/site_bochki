@@ -1,0 +1,46 @@
+name: New Year landing handoff
+
+on:
+  pull_request:
+    paths:
+      - "concepts/new-year-2027/**"
+      - "scripts/build-new-year.py"
+      - "scripts/new-year-remote.py"
+      - "tests/new-year*"
+      - "docs/NEW_YEAR_2027_RELEASE.md"
+      - ".github/workflows/new-year-handoff.yml"
+      - "web/lead-*.mjs"
+      - "web/quote.mjs"
+      - "web/data/catalog-pricebook.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  handoff:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install Pillow==12.0.0
+      - name: Verify pricing, standard leads and Moscow countdown
+        run: node --test tests/new-year.test.mjs tests/new-year-countdown.test.mjs tests/analytics.test.mjs tests/pricing-parity.test.mjs
+      - name: Verify route installer protections and rollback
+        run: python tests/new-year-release.test.py -v
+      - name: Build route and server handoff
+        run: |
+          python scripts/build-new-year.py
+          python output/new-year-2027-deploy/new-year-remote.py --verify-payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dachapar-new-year-2027-handoff
+          path: output/new-year-2027-handoff.zip
+          if-no-files-found: error
+          retention-days: 30

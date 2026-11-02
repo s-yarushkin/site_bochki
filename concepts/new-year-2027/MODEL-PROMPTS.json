@@ -1,0 +1,33 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-02",
+  "assets": [
+    {
+      "file": "assets/winter-parus.png",
+      "role": "Holiday model scene: Parus",
+      "references": [
+        "assets/winter-sauna.png",
+        "r101/assets/parus-editorial.png"
+      ],
+      "prompt": "Use case: ads-marketing, architectural lighting-weather edit for the same Russian sauna campaign. Image 1 is the APPROVED winter scene and compositional template. Image 2 is the EXACT replacement sauna reference. Replace ONLY the sauna in Image 1 with the sauna from Image 2. Preserve the approved night plot, camera distance, calm dark left 35% for HTML headline, snow and fir framing, warm lights, footprint path, snow angel imprint lower right and distant gold fireworks upper right. New building belongs in right 60%, same approximate visual footprint; whole building visible with margin. Match snowy deep-blue New Year NIGHT, believable thick snow on roof and ground, amber glow in ORIGINAL door/windows, warm white Christmas garlands tracing roof edges. Rest a large playful red Santa hat at one left roof edge away from chimney. Keep small decorated fir at right. Preserve exact architecture, windows and doors of second reference, no extra glazing/terrace, no redesign, no new construction. Shadow and contact with snowy ground must be physically plausible, not a floating pasted cutout. Photoreal cinematic holiday advertising, natural wood detail, subtle steam, no daylight. Widescreen 16:9. No text, lettering, logo, UI, watermark.\nThe replacement is Парус: straight rectangular timber body, sloping/chamfered roof end, black trim and vertical slat panels around the ORIGINAL single side window and glass door, dark steps, original chimney. It is NOT a barrel and NOT an A-frame. Preserve the left-end/long-side three-quarter view and exact visible facade features."
+    },
+    {
+      "file": "assets/winter-viking.png",
+      "role": "Holiday model scene: Viking",
+      "references": [
+        "assets/winter-sauna.png",
+        "r101/assets/viking-editorial.png"
+      ],
+      "prompt": "Use case: ads-marketing, architectural lighting-weather edit for the same Russian sauna campaign. Image 1 is the APPROVED winter scene and compositional template. Image 2 is the EXACT replacement sauna reference. Replace ONLY the sauna in Image 1 with the sauna from Image 2. Preserve the approved night plot, camera distance, calm dark left 35% for HTML headline, snow and fir framing, warm lights, footprint path, snow angel imprint lower right and distant gold fireworks upper right. New building belongs in right 60%, same approximate visual footprint; whole building visible with margin. Match snowy deep-blue New Year NIGHT, believable thick snow on roof and ground, amber glow in ORIGINAL door/windows, warm white Christmas garlands tracing roof edges. Rest a large playful red Santa hat at one left roof edge away from chimney. Keep small decorated fir at right. Preserve exact architecture, windows and doors of second reference, no extra glazing/terrace, no redesign, no new construction. Shadow and contact with snowy ground must be physically plausible, not a floating pasted cutout. Photoreal cinematic holiday advertising, natural wood detail, subtle steam, no daylight. Widescreen 16:9. No text, lettering, logo, UI, watermark.\nThe replacement is Викинг: cream-white horizontal siding, distinctive pointed arched tunnel roof in dark shingles, projecting central arched entrance with glass door, brown trim, original end window and vent, wooden steps and original chimney. Preserve that recognisable arched shape, no box or round barrel."
+    },
+    {
+      "file": "assets/winter-house.png",
+      "role": "Holiday model scene: Quadro House",
+      "references": [
+        "assets/winter-sauna.png",
+        "r101/assets/house-editorial.png"
+      ],
+      "prompt": "Use case: ads-marketing, architectural lighting-weather edit for the same Russian sauna campaign. Image 1 is the APPROVED winter scene and compositional template. Image 2 is the EXACT replacement sauna reference. Replace ONLY the sauna in Image 1 with the sauna from Image 2. Preserve the approved night plot, camera distance, calm dark left 35% for HTML headline, snow and fir framing, warm lights, footprint path, snow angel imprint lower right and distant gold fireworks upper right. New building belongs in right 60%, same approximate visual footprint; whole building visible with margin. Match snowy deep-blue New Year NIGHT, believable thick snow on roof and ground, amber glow in ORIGINAL door/windows, warm white Christmas garlands tracing roof edges. Rest a large playful red Santa hat at one left roof edge away from chimney. Keep small decorated fir at right. Preserve exact architecture, windows and doors of second reference, no extra glazing/terrace, no redesign, no new construction. Shadow and contact with snowy ground must be physically plausible, not a floating pasted cutout. Photoreal cinematic holiday advertising, natural wood detail, subtle steam, no daylight. Widescreen 16:9. No text, lettering, logo, UI, watermark.\nThe replacement is Квадро Хаус: broad low timber house with shallow curved roof, ORIGINAL broad front glazing with its exact mullions/transoms, ORIGINAL front terrace with cross-braced wooden rails and centred steps, original exterior wall lamps. Preserve the frontal architectural view and terrace, do not add windows, second floors or increase glazing. Place whole house and entire original terrace toward right 60%, frame slightly farther away if necessary."
+    }
+  ]
+}
