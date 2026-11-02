@@ -9,7 +9,7 @@ OUT = ROOT / 'output/new-year-2027-site'
 PAGE = OUT / 'novyy-god'
 (PAGE / 'assets').mkdir(parents=True, exist_ok=True)
 
-for name in ['style.css', 'experience.js', 'lead.mjs', 'lead-contract.mjs','catalog.mjs','models.mjs','countdown.mjs']:
+for name in ['style.css', 'experience.js', 'lead.mjs', 'lead-contract.mjs','catalog.mjs','models.mjs','countdown.mjs','holiday-quiz.mjs']:
     text = (SOURCE / name).read_text('utf-8')
     # Source contract is importable in Node tests; deployed modules use root paths.
     text = text.replace("'../../web/lead-client.mjs'", "'/lead-client.mjs'")
