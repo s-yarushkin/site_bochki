@@ -251,9 +251,35 @@ test('Deluxe matrix has exactly the 20 approved model and size prices from 2026-
  }
  assert.equal(Object.values(book.deluxePrices).reduce((n,x)=>n+Object.keys(x).length,0),20);
 });
-test('Customer sees simple Comfort–Deluxe label, with individualized plans not falsely priced as included',()=>{
+test('R110 pricing caveat is human and CTA promises only the approved Deluxe bonus',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
- assert.ok(ui.includes('От «Комфорта» меньшего размера до «Делюкса» большего'));
- assert.ok(ui.includes('Цена зависит от планировки; доставка отдельно.'));
- assert.ok(ui.includes('20 000 ₽ скидки'));
+ assert.ok(ui.includes('Окончательная цена зависит от комплектации и планировки.'));
+ assert.ok(ui.includes('Доставка рассчитывается отдельно.'));
+ assert.ok(ui.includes('Получить предложение <b>со скидкой 20 000 ₽'));
+ assert.ok(ui.includes('Скидка 20 000 ₽ — при выборе комплектации «Делюкс».'));
+ assert.ok(ui.includes('Пришлём вам подробные планировки, комплектации и цены'));
+ assert.equal(ui.includes('От «Комфорта» меньшего размера до «Делюкса» большего'),false);
+ assert.equal(ui.includes('Варианты и цены покажем сразу, без номера телефона'),false);
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
+});
+test('R110 results expose one or two real plan previews and external paths for all models',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ for(const path of ['/bani/kvadro/','/bani/parus/','/bani/viking/','/bani/kvadro-haus/','/planirovki/?model='])
+  assert.ok(ui.includes(path),'Missing approved navigation '+path);
+ assert.ok(ui.includes('data-dpq="plan"'));
+ assert.ok(ui.includes('data-dpq="results"'));
+ assert.ok(ui.includes('sitePlanId'));
+ assert.ok(ui.includes('planDetailView()'));
+ assert.ok(ui.includes('dp-quiz-cta-primary'));
+ const validPlans=quiz.plans.filter(p=>p.image&&p.sitePlanId);
+ assert.equal(validPlans.length,39);
+ for(const party of parties)for(const washing of wash)for(const bedroom of beds){
+   const found=recommendModelRanges(quiz.plans,{party,wash:washing,bedroom},book,quiz.priceRules);
+   for(const offer of found.offers){
+     const all=offer.plans.filter(p=>p.image&&p.sitePlanId);
+     const picks=all.length?[all[0],all.find(p=>p.size!==all[0].size||p.wash!==all[0].wash)].filter(Boolean):[];
+     assert.ok(picks.length<=2,offer.model);
+     assert.ok(picks.every(p=>p.model===offer.model&&!p.wideBody&&p.sitePlanId!=='v03_Q6_rest'),offer.model);
+   }
+ }
 });
