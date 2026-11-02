@@ -241,7 +241,7 @@ async function anchorNavigationSmoke(){
   await page.waitForTimeout(450);
   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Calculator URL is not the desired vision screen');
   await insertYourBathVision(page);
-  await page.evaluate(()=>{location.hash='#quiz-vision-ci'});
+  await page.evaluate(()=>{location.hash='#quiz-vision-ci';document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'});});
   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
   await page.locator('[data-dpq-hide]').click();
   await page.reload({waitUntil:'domcontentloaded'});
