@@ -116,7 +116,8 @@ class TestR111TwoTriggers(unittest.TestCase):
   self.assertEqual(r111.OLD_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
   self.assertEqual(set(r111.NEW_BLOBS),{'quiz.mjs'})
   self.assertEqual(set(r111.HTML_ASSETS),{'quiz.mjs'})
-  self.assertEqual(r111.git_sha((ROOT/'web/quiz.mjs').read_bytes()),r111.NEW_BLOBS['quiz.mjs'])
+  # R111 is live; the working tree now holds the R112 correction.
+  self.assertEqual(r111.NEW_BLOBS['quiz.mjs'],'66bfa02ba88eb299cc676375d2e51da369cebb4c')
   page='<link href="/quiz.css?v=r110-leads-ce74814a"><script type="module" src="/quiz.mjs?v=r110-leads-ce74814a"></script>'
   refs=r111.locate_quiz_assets(page)
   changed=r111.prepare_html(page,refs)
@@ -128,5 +129,35 @@ class TestR111TwoTriggers(unittest.TestCase):
    self.assertIn(key,source)
   self.assertNotIn('sqlite3.connect',source)
   self.assertNotIn('systemctl',source)
+
+
+class TestR112CalculatorTrigger(unittest.TestCase):
+ def test_r112_is_guarded_single_file_update_over_live_r111(self):
+  spec=importlib.util.spec_from_file_location('r112_remote',ROOT/'scripts/r112-quiz-trigger-remote.py')
+  r112=importlib.util.module_from_spec(spec);spec.loader.exec_module(r112)
+  self.assertEqual(r112.EXPECTED_ACTIVE,'DPQUIZ-r111-trigger-66bfa02b')
+  self.assertTrue(r112.NEW_NAME.startswith('DPQUIZ-r112-trigger-'))
+  self.assertEqual(r112.OLD_BLOBS['quiz.mjs'],'66bfa02ba88eb299cc676375d2e51da369cebb4c')
+  self.assertEqual(r112.OLD_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
+  self.assertEqual(set(r112.NEW_BLOBS),{'quiz.mjs'})
+  self.assertEqual(set(r112.HTML_ASSETS),{'quiz.mjs'})
+  content=(ROOT/'web/quiz.mjs').read_bytes()
+  self.assertEqual(r112.git_sha(content),r112.NEW_BLOBS['quiz.mjs'])
+  source=content.decode('utf8')
+  self.assertIn('const ritualInView=()=>',source)
+  self.assertIn('const canInvite=(reason)=>',source)
+  self.assertNotIn('!location.hash',source)
+  self.assertNotIn('r.bottom>0;',source)
+  self.assertIn('handleScroll();',source)
+  home='<link href="/quiz.css?v=r110-leads-ce74814a"><script type="module" src="/quiz.mjs?v=r111-trigger-66bfa02b"></script>'
+  changed=r112.prepare_html(home,r112.locate_quiz_assets(home))
+  self.assertIn('/quiz.css?v=r110-leads-ce74814a',changed)
+  self.assertIn('/quiz.mjs?v='+r112.VERSION,changed)
+  self.assertNotIn('/quiz.mjs?v=r111-trigger-66bfa02b',changed)
+  installer=(ROOT/'scripts/r112-quiz-trigger-remote.py').read_text('utf8')
+  for key in ['R112_TRIGGER_PREFLIGHT','R112_TRIGGER_DEPLOY','API_SQLITE=UNTOUCHED','models-idle','your-bath']:
+   self.assertIn(key,installer)
+  self.assertNotIn('sqlite3.connect',installer)
+  self.assertNotIn('systemctl',installer)
 
 if __name__=='__main__':unittest.main()
