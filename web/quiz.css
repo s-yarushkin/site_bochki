@@ -179,3 +179,23 @@
  .dp-quiz-invite .dp-quiz-action{width:100%}
  .dp-quiz-cta{align-items:stretch}
 }
+
+/* R108 approved photo composition: original Parus outside; a distinct photo for each answer step. */
+.dp-quiz-invite{width:min(850px,calc(100vw - 32px));max-width:850px}
+.dp-quiz-invite-layout{display:grid;grid-template-columns:minmax(0,38%) minmax(0,62%);min-height:440px}
+.dp-quiz-invite-photo{width:100%;height:100%;min-height:440px;object-fit:cover;object-position:center}
+.dp-quiz-invite-inner{display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4vw,48px)}
+.dp-quiz-invite-inner .dp-quiz-action{align-self:flex-start}
+.dp-quiz-invite h2{font-size:clamp(29px,3.5vw,41px)}
+#dp-quiz-dialog .dp-quiz-photo:after{display:none}
+#dp-quiz-dialog .dp-quiz-photo img{object-fit:cover;object-position:center}
+@media(max-width:760px){
+  .dp-quiz-invite-layout{display:block;min-height:0}
+  .dp-quiz-invite-photo{display:block;height:145px;min-height:0;max-height:145px;object-position:center 55%}
+  .dp-quiz-invite-inner{display:block;padding:24px 24px 28px}
+  .dp-quiz-invite-kicker{margin-bottom:9px}
+  .dp-quiz-invite h2{font-size:clamp(26px,7vw,34px)}
+  .dp-quiz-invite-inner p{margin-bottom:17px}
+  .dp-quiz-invite-stages{margin-bottom:18px}
+  .dp-quiz-invite-inner .dp-quiz-action{width:100%}
+}
