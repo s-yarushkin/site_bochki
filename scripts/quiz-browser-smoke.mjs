@@ -88,23 +88,28 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  await page.close();
  return {label,cards,channel,dimensions};
 }
-async function invitePolicySmoke(viewport,label){
+async function invitePolicySmoke(viewport,label,scenario){
  const page=await browser.newPage({viewport,deviceScaleFactor:1});
  try{
    // The R101 exterior photo exists in the deployed site's immutable assets, not in the raw /web test fixture.
-   // Serve an approved WebP fixture at that URL to verify actual image decoding and panel geometry.
    await page.route('**/r101/assets/parus-editorial-960.webp',route=>route.fulfill({path:'web/assets/quiz/step1-steamroom.webp',contentType:'image/webp'}));
    await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   const ratio=await page.evaluate(()=>{
-     const h=document.documentElement.scrollHeight-innerHeight;
-     if(h<=0)throw new Error('No page scroll for invite test');
-     window.scrollTo({top:Math.ceil(h*0.38),behavior:'instant'});
-     return scrollY/h;
-   });
-   if(ratio<0.35)throw new Error(label+' invite smoke did not scroll far enough: '+ratio);
-   if(await page.locator('.dp-quiz-invite').isVisible())throw new Error(label+' invite appeared before 10 seconds');
-   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:13500});
+   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' invite appeared at landing');
+   await page.evaluate(target=>{
+     const section=document.querySelector(target);
+     if(!section)throw new Error('Missing target section '+target);
+     window.scrollTo({top:window.scrollY+section.getBoundingClientRect().top+120,behavior:'instant'});
+   },scenario==='models-idle'?'#models':'#configure');
+   if(scenario==='models-idle'){
+     await page.waitForTimeout(600);
+     if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' invite appeared without idle time');
+     // Moving the mouse in the models grid resets the idle countdown.
+     await page.mouse.move(132,156);
+     await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:23000});
+   }else{
+     await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:5000});
+   }
    if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error(label+' automatic invite opened quiz without click');
    const bounds=await page.evaluate(async()=>{
      const dialog=document.querySelector('.dp-quiz-invite'),visual=dialog.querySelector('.dp-quiz-invite-visual');
@@ -139,13 +144,31 @@ async function invitePolicySmoke(viewport,label){
    await page.waitForSelector('#dp-quiz-dialog[open]');
    await page.keyboard.press('Escape');
    if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error(label+' quiz Escape failed');
-   return {scenario:'invite-'+label,threshold:'10s and 35%',photoFillsPanel:true,bounds};
+   // After the first invitation, scrolling to either hotspot must not show it again.
+   await page.evaluate(()=>document.querySelector('#configure').scrollIntoView({block:'start',behavior:'instant'}));
+   await page.waitForTimeout(300);
+   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' invite repeated after first display');
+   return {scenario:'invite-'+label,trigger:scenario,photoFillsPanel:true,bounds};
+ }finally{await page.close()}
+}
+async function aestheticBlockSmoke(){
+ const page=await browser.newPage({viewport:{width:1440,height:900}});
+ try{
+   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   // Jump directly past both hotspots. The stones/broom/bench scene
+   // must never have its own page-percentage or exit-intent trigger.
+   await page.evaluate(()=>{const r=document.querySelector('#details').getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top+40,behavior:'instant'})});
+   await page.waitForTimeout(1500);
+   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Aesthetic block interrupted by quiz');
+   return {scenario:'aesthetic-block',popup:false};
  }finally{await page.close()}
 }
 try{
  const results=[];
- results.push(await invitePolicySmoke({width:1440,height:900},'desktop'));
- results.push(await invitePolicySmoke({width:390,height:844},'mobile390'));
+ results.push(await aestheticBlockSmoke());
+ results.push(await invitePolicySmoke({width:1440,height:900},'desktop-idle','models-idle'));
+ results.push(await invitePolicySmoke({width:390,height:844},'mobile-configure','your-bath'));
  results.push(await test({width:1440,height:900},'desktop','p4','w_compare','b_no','max'));
  results.push(await test({width:390,height:844},'mobile390','p4','w_compare','b_no','whatsapp'));
  results.push(await test({width:320,height:690},'mobile320','p2','w_no','b_no','telegram'));
