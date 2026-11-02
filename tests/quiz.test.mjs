@@ -271,6 +271,7 @@ test('R110 results are deliberately not clickable; primary action requests plans
  assert.ok(ui.includes('dp-quiz-cta-primary'));
  assert.ok(ui.includes('Подберём и пришлём планировки, комплектации и цены'));
  assert.ok(ui.includes('Куда прислать планировки и цены?'));
+ assert.ok(ui.includes('Квиз: отправить подходящие планировки, комплектации и цены.'));
  assert.ok(ui.includes('Свяжемся с вами в '));
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
 });
