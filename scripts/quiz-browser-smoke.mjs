@@ -31,6 +31,10 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  }
  await page.waitForSelector(selectors.result,{timeout:5000});
  const cards=await page.locator('.dp-quiz-plan').count();
+ const prices=await page.locator('.dp-quiz-plan-price').allTextContents();
+ if(prices.some(x=>/\d{6} ₽/.test(x)))throw new Error(label+' price is not grouped into thousands: '+prices.join(' | '));
+ if(await page.locator('.dp-quiz-bonus').count()!==1)throw new Error(label+' Deluxe bonus missing or duplicated');
+
  if(cards<1||cards>3)throw new Error(label+' wrong results count: '+cards);
  if(await page.locator(selectors.phone).count())throw new Error(label+' phone shown before result CTA');
  await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-result.png'});
@@ -76,6 +80,14 @@ async function invitePolicySmoke(){
    if(await page.locator('.dp-quiz-invite').isVisible())throw new Error('Invite appeared before 10 seconds');
    await page.locator('.dp-quiz-invite:not([hidden])').waitFor({state:'visible',timeout:13500});
    if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error('Automatic invite opened modal without click');
+   const box=await page.locator('.dp-quiz-invite[open]').boundingBox();
+   if(!box)throw new Error('Centered invite dialog did not open');
+   const dx=Math.abs(box.x+box.width/2-720),dy=Math.abs(box.y+box.height/2-450);
+   if(dx>40||dy>40||box.width<480)throw new Error('Invite not a large centered popup '+JSON.stringify({box,dx,dy}));
+   const heading=await page.locator('#dp-quiz-invite-title').textContent();
+   if(!heading?.includes('за 3 шага'))throw new Error('Missing 3-step proposition');
+   await page.locator('.dp-quiz-invite').screenshot({path:OUT+'/invite-center.png'});
+
    await page.locator('[data-dpq-hide]').click();
    if(await page.locator('.dp-quiz-invite').isVisible())throw new Error('Invite did not dismiss');
    await page.screenshot({path:OUT+'/invite-dismissed.png'});
