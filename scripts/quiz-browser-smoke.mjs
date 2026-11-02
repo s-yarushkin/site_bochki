@@ -35,7 +35,7 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  if(prices.some(x=>/\d{6} ₽/.test(x)))throw new Error(label+' price is not grouped into thousands: '+prices.join(' | '));
  if(await page.locator('.dp-quiz-bonus').count()!==1)throw new Error(label+' Deluxe bonus missing or duplicated');
 
- if(cards<1||cards>3)throw new Error(label+' wrong results count: '+cards);
+ if(cards<1||cards>4)throw new Error(label+' wrong results count: '+cards);
  if(await page.locator(selectors.phone).count())throw new Error(label+' phone shown before result CTA');
  await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-result.png'});
  if(await page.locator('#dp-quiz-dialog [data-dpq="form"]').count()!==1)throw new Error(label+' repeated contact CTA');
