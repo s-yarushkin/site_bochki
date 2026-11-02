@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels,recommendModelRanges} from '../web/quiz-engine.mjs';
 const read=path=>JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const quiz=read('../web/data/quiz-v1.json');
