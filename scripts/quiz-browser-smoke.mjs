@@ -92,6 +92,16 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  await page.close();
  return {label,cards,channel,dimensions};
 }
+async function insertYourBathVision(page){
+ await page.evaluate(()=>{
+   if(document.querySelector('#quiz-vision-ci'))return;
+   const section=document.createElement('section');
+   section.id='quiz-vision-ci';
+   section.style.cssText='display:block;min-height:105vh;padding:100px 40px;box-sizing:border-box;background:#ebe9dc;';
+   section.innerHTML='<h2>ВАША БАНЯ</h2><h3>Расскажите, какой вы её представляете</h3><p>Тихие вечера вдвоём</p>';
+   document.querySelector('footer').before(section);
+ });
+}
 async function invitePolicySmoke(viewport,label,scenario){
  const page=await browser.newPage({viewport,deviceScaleFactor:1});
  try{
@@ -100,11 +110,12 @@ async function invitePolicySmoke(viewport,label,scenario){
    await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#dp-quiz-open',{timeout:12000});
    if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' invite appeared at landing');
+   if(scenario==='your-bath')await insertYourBathVision(page);
    await page.evaluate(target=>{
      const section=document.querySelector(target);
      if(!section)throw new Error('Missing target section '+target);
      window.scrollTo({top:window.scrollY+section.getBoundingClientRect().top+120,behavior:'instant'});
-   },scenario==='models-idle'?'#models':'#configure');
+   },scenario==='models-idle'?'#models':'#quiz-vision-ci');
    if(scenario==='models-idle'){
      await page.waitForTimeout(600);
      if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' invite appeared without idle time');
@@ -148,111 +159,100 @@ async function invitePolicySmoke(viewport,label,scenario){
    await page.waitForSelector('#dp-quiz-dialog[open]');
    await page.keyboard.press('Escape');
    if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error(label+' quiz Escape failed');
-   // After the first invitation, scrolling to either hotspot must not show it again.
-   await page.evaluate(()=>document.querySelector('#configure').scrollIntoView({block:'start',behavior:'instant'}));
+   // After the first invitation, the other hotspot must never repeat it.
+   await insertYourBathVision(page);
+   await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
    await page.waitForTimeout(300);
    if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' invite repeated after first display');
    return {scenario:'invite-'+label,trigger:scenario,photoFillsPanel:true,bounds};
  }finally{await page.close()}
 }
-async function bottomScrollWithExistingAnswersSmoke(){
- const page=await browser.newPage({viewport:{width:1440,height:900}});
+async function visionScreenSmoke(viewport,label){
+ const page=await browser.newPage({viewport});
  try{
-   await page.addInitScript(()=>{
-     sessionStorage.setItem('dp_quiz_answers_v1',JSON.stringify({party:'p4',wash:'w_no',bedroom:'b_no'}));
-     sessionStorage.removeItem('dp_quiz_invite_seen_session_r111');
-     // Old seven-day suppression from a previous release must not block new sessions.
-     localStorage.setItem('dp_quiz_invite_suppressed_until_v1',String(Date.now()+86400000));
-   });
-   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
-   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   const layout=await page.evaluate(()=>{
-     const button=document.querySelector('#dp-quiz-open');
-     const footer=document.querySelector('footer');
-     return {inFooter:footer?.contains(button),inModels:!!button?.closest('#models'),
-       obsoleteEntry:!!document.querySelector('main .dp-quiz-entry'),
-       footerButtonCount:document.querySelectorAll('footer #dp-quiz-open').length};
-   });
-   if(!layout.inFooter||layout.inModels||layout.obsoleteEntry||layout.footerButtonCount!==1)
-     throw new Error('Quiz entry must only be in footer: '+JSON.stringify(layout));
-   // The live site can use different hash ids than our static fixture.
-   await page.evaluate(()=>{document.querySelector('#configure')?.removeAttribute('id')});
-   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
-   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
-   await page.locator('[data-dpq-hide]').click();
-   await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
-   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
-   await page.waitForTimeout(500);
-   if(await page.locator('.dp-quiz-invite[open]').count())
-     throw new Error('Invite repeated after explicit dismissal in same session');
-   return {scenario:'bottom-with-old-answers-and-old-dismissal',popup:true,footerOnly:true,oneTime:true};
- }finally{await page.close()}
-}
-async function previousSuppressionFreshSessionSmoke(){
- const page=await browser.newPage({viewport:{width:390,height:844}});
- try{
-   await page.addInitScript(()=>{
-     localStorage.setItem('dp_quiz_invite_suppressed_until_v1',String(Date.now()+86400000));
-     sessionStorage.removeItem('dp_quiz_invite_seen_session_r111');
-   });
-   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
-   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
-   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
-   return {scenario:'old-7-day-dismissal-not-a-cross-session-gate',popup:true};
+  await page.addInitScript(()=>{
+   sessionStorage.removeItem('dp_quiz_invite_seen_session_r111');
+   sessionStorage.setItem('dp_quiz_answers_v1',JSON.stringify({party:'p4',wash:'w_no',bedroom:'b_no'}));
+   localStorage.setItem('dp_quiz_invite_suppressed_until_v1',String(Date.now()+86400000));
+  });
+  await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+  await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+  const position=await page.evaluate(()=>{
+    const launcher=document.querySelector('#dp-quiz-open');
+    const footer=document.querySelector('footer');
+    return {footerOnly:footer.contains(launcher),inline:!!document.querySelector('main .dp-quiz-entry')};
+  });
+  if(!position.footerOnly||position.inline)throw new Error(label+' static CTA placement '+JSON.stringify(position));
+  // No quiz when viewing the unrelated calculator or at the actual footer.
+  await page.evaluate(()=>document.querySelector('#configure').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.waitForTimeout(500);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' appeared prematurely at calculator');
+  await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+  await page.waitForTimeout(500);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' appeared prematurely at footer');
+  await insertYourBathVision(page);
+  await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+  await page.locator('[data-dpq-hide]').click();
+  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+  await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.waitForTimeout(300);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' appeared a second time');
+  return {scenario:label,triggerOnlyAtVision:true,oneTime:true,footerOnly:true};
  }finally{await page.close()}
 }
 async function aestheticBlockSmoke(){
  const page=await browser.newPage({viewport:{width:1440,height:900}});
  try{
-   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
-   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   // Jump directly past both hotspots. The stones/broom/bench scene
-   // must never have its own page-percentage or exit-intent trigger.
-   await page.evaluate(()=>{const r=document.querySelector('#details').getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top+40,behavior:'instant'})});
-   await page.waitForTimeout(1500);
-   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Aesthetic block interrupted by quiz');
-   // A visitor who skipped the calculator with a big flick should get the
-   // invitation after the aesthetic section, not on top of the stones/broom.
-   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
-   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
-   return {scenario:'aesthetic-block',popupDuringRitual:false,popupAfterRitual:true};
+  await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+  await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+  await page.evaluate(()=>document.querySelector('#details').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.waitForTimeout(750);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Ritual interrupted');
+  await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+  await page.waitForTimeout(550);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Footer triggered unsolicited popup');
+  await insertYourBathVision(page);
+  await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+  return {scenario:'ritual-then-vision',ritualClean:true,footerClean:true,visionPopup:true};
  }finally{await page.close()}
 }
 async function anchorNavigationSmoke(){
  const page=await browser.newPage({viewport:{width:1440,height:900}});
  try{
-   // Direct or nav-button jump to #configure must not suppress the quiz.
-   await page.route('**/r101/assets/parus-editorial-960.webp',route=>route.fulfill({path:'web/assets/quiz/step1-steamroom.webp',contentType:'image/webp'}));
-   await page.goto(BASE+'/#configure',{waitUntil:'domcontentloaded'});
-   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
-   if(!page.url().includes('#configure'))throw new Error('Anchor was not preserved');
-   await page.locator('[data-dpq-hide]').click();
-   await page.reload({waitUntil:'domcontentloaded'});
-   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   await page.waitForTimeout(600);
-   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Popup repeated after dismissal on same session');
-   return {scenario:'anchor-navigation',popup:true,repeatAfterDismiss:false};
+  await page.route('**/r101/assets/parus-editorial-960.webp',route=>route.fulfill({path:'web/assets/quiz/step1-steamroom.webp',contentType:'image/webp'}));
+  await page.goto(BASE+'/#configure',{waitUntil:'domcontentloaded'});
+  await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+  await page.waitForTimeout(450);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Calculator URL is not the desired vision screen');
+  await insertYourBathVision(page);
+  await page.evaluate(()=>{location.hash='#quiz-vision-ci'});
+  await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+  await page.locator('[data-dpq-hide]').click();
+  await page.reload({waitUntil:'domcontentloaded'});
+  await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+  await page.waitForTimeout(600);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Invite repeated after dismissal');
+  return {scenario:'anchor-to-vision-only',shownOnce:true};
  }finally{await page.close()}
 }
 async function clickedModelNavigationSmoke(){
  const page=await browser.newPage({viewport:{width:1440,height:900}});
  try{
-   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
-   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
-   await page.evaluate(()=>{
-     localStorage.setItem('dp_r101_choice',JSON.stringify({model:'kvadro'}));
-     location.hash='#configure';
-   });
-   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
-   return {scenario:'chosen-model-then-calculator',popup:true};
+  await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+  await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+  await page.evaluate(()=>localStorage.setItem('dp_r101_choice',JSON.stringify({model:'kvadro'})));
+  await insertYourBathVision(page);
+  await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
+  await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+  return {scenario:'chosen-model-then-vision',shownOnce:true};
  }finally{await page.close()}
 }
 try{
  const results=[];
- results.push(await bottomScrollWithExistingAnswersSmoke());
- results.push(await previousSuppressionFreshSessionSmoke());
+ results.push(await visionScreenSmoke({width:1440,height:900},'desktop-vision'));
+ results.push(await visionScreenSmoke({width:390,height:844},'mobile-vision'));
  results.push(await aestheticBlockSmoke());
  results.push(await anchorNavigationSmoke());
  results.push(await clickedModelNavigationSmoke());
