@@ -72,13 +72,13 @@ const modelsVisible=()=>{
 // Target the actual visual screen identified by its editorial headings
 // ("ВАША БАНЯ" / "Расскажите, какой вы её представляете").
 // Neither #configure nor the footer nor scroll percentage is a trigger.
-const labelText=node=>(node?.textContent||'').replace(/\\s+/g,' ').trim().toLocaleLowerCase('ru-RU');
+const labelText=node=>(node?.textContent||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('ru-RU');
 const findBathVision=()=>{
   const nodes=document.querySelectorAll('h1,h2,h3,[role="heading"],p,span,strong');
   for(const node of nodes){
     const title=labelText(node);
     if(title==='ваша баня'||title==='вашабаня'||
-      (/^расскажите,?\\s+какой/.test(title)&&title.includes('представляете'))){
+      (/^расскажите,?\s+какой/.test(title)&&title.includes('представляете'))){
       if(!node.getClientRects().length)continue;
       return node.closest('section,[role="region"],article')||node.parentElement;
     }
