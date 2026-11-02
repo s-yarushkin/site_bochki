@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import os
+import re
 import subprocess
 import sys
 import urllib.request
@@ -29,10 +30,7 @@ PHOTOS = {
     "assets/quiz/step3-bedroom.webp": "bc308677205f0ae97ab8dd26450cd8ee6a906878735411e02a1a171c1fac8d90",
 }
 VERSION = "r109-invite-a01e6016"
-HTML_REPLACEMENTS = {
-    "/quiz.css?v=dpq-20261031": "/quiz.css?v=" + VERSION,
-    "/quiz.mjs?v=dpq-20261031": "/quiz.mjs?v=" + VERSION,
-}
+HTML_ASSETS = {"quiz.css": "href", "quiz.mjs": "src"}
 
 def stop(msg):
     raise RuntimeError("R109_INVITE_STOP: " + msg)
@@ -42,6 +40,19 @@ def git_sha(data):
 
 def sha256(data):
     return hashlib.sha256(data).hexdigest()
+
+def locate_quiz_assets(home):
+    """Find exactly one quiz stylesheet and one module mount; no version guesses."""
+    matches = {}
+    for name, attr in HTML_ASSETS.items():
+        # Match the URL only in its expected HTML attribute, with optional cache version.
+        pattern = r'\b' + attr + r'\s*=\s*(["\'])(/QUIZ_ASSET(?:\?v=[A-Za-z0-9._-]+)?)\1'
+        pattern = pattern.replace('QUIZ_ASSET', re.escape(name))
+        found = [m.group(2) for m in re.finditer(pattern, home)]
+        if len(found) != 1 or home.count("/" + name) != 1:
+            stop("ambiguous or missing HTML mount for /" + name + "; matches=" + str(found))
+        matches[name] = found[0]
+    return matches
 
 def check_active():
     if not WEB_LINK.is_symlink():
@@ -62,10 +73,8 @@ def check_active():
     if (active / "index.html").is_symlink():
         stop("live index.html must be a regular file")
     home = (active / "index.html").read_text("utf-8")
-    for old in HTML_REPLACEMENTS:
-        if home.count(old) != 1:
-            stop("unexpected quiz asset version in live HTML: " + old)
-    return active, home
+    urls = locate_quiz_assets(home)
+    return active, home, urls
 
 def fetch_approved_files():
     files = {}
@@ -78,11 +87,16 @@ def fetch_approved_files():
         files[name] = data
     return files
 
-def prepare_html(home):
-    for old, new in HTML_REPLACEMENTS.items():
+def prepare_html(home, current_urls):
+    for name, old in current_urls.items():
+        new = "/" + name + "?v=" + VERSION
         if home.count(old) != 1:
-            stop("missing unique version anchor: " + old)
+            stop("missing unique original quiz reference: " + old)
         home = home.replace(old, new)
+    actual = locate_quiz_assets(home)
+    for name in HTML_ASSETS:
+        if actual[name] != "/" + name + "?v=" + VERSION:
+            stop("HTML cache-buster mismatch for " + name)
     return home
 
 def main():
@@ -91,11 +105,12 @@ def main():
     group.add_argument("--check", action="store_true")
     group.add_argument("--apply", action="store_true")
     args = p.parse_args()
-    old, old_html = check_active()
+    old, old_html, current_urls = check_active()
     files = fetch_approved_files()
-    new_html = prepare_html(old_html)
+    new_html = prepare_html(old_html, current_urls)
     if args.check:
         print("R109_INVITE_PREFLIGHT=PASS; old=" + str(old) + "; files=2; photos=3; API/SQLite untouched")
+        print("HTML_ORIGINAL=" + str(current_urls))
         return
     if os.geteuid() != 0:
         stop("sudo required only for --apply")
