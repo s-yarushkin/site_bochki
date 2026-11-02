@@ -10,7 +10,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/winter-sauna.png" as="image">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=ny2027-r2">
   <script type="module" src="experience.js"></script>
   <script type="module" src="lead.mjs"></script>
 </head>
@@ -68,6 +68,22 @@
       <span class="scene-caption">За окном — зима. Впереди — ваш банный вечер.</span>
     </section>
 
+    <section class="delivery-geography" aria-labelledby="delivery-geography-title">
+      <div class="delivery-geography-inner">
+        <p class="delivery-geography-kicker">ДачаПар · доставка готовых бань</p>
+        <h2 id="delivery-geography-title">География доставки</h2>
+        <p class="delivery-geography-intro">Доставляем готовые бани в наши основные регионы:</p>
+        <ul class="delivery-regions">
+          <li>Москва и Московская область</li>
+          <li>Ярославская область</li>
+          <li>Вологодская область</li>
+          <li>Ленинградская область</li>
+        </ul>
+        <p class="delivery-geography-directions"><strong>Основные направления:</strong> Сергиев Посад, Ногинск, Ивантеевка, Королёв, Мытищи, Софрино.</p>
+        <p class="delivery-geography-note">Если вашего города нет в списке — оставьте заявку, уточним возможность доставки и срок.</p>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -87,7 +103,7 @@
       <span>Скоро здесь будет<br>ваш Новый год <i>✦</i></span>
     </div>
     <p class="eyebrow dialog-eyebrow">Ваш банный Новый год</p>
-    <h2 id="form-heading">Пришлём варианты<br>для вашей мечты</h2>
+    <h2 id="form-heading">Пришлём подходящие варианты, цены и комплектации</h2>
     <div id="inquiry-summary" class="selection-summary"></div>
     <p id="form-description">Оставьте номер — менеджер свяжется с вами и пришлёт варианты планировок и комплектаций выбранной бани. Заодно уточним срок к празднику.</p>
     <form id="lead-form" action="/api/lead" method="post">
