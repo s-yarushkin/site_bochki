@@ -1,10 +1,11 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels} from '../web/quiz-engine.mjs';
+import {createHash} from 'node:crypto';
+import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels,recommendModelRanges} from '../web/quiz-engine.mjs';
 const read=path=>JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const quiz=read('../web/data/quiz-v1.json');
-const book=read('../web/data/catalog-pricebook.json');
+const book={...read('../web/data/catalog-pricebook.json'),deluxePrices:quiz.deluxePrices};
 const parity=read('./fixtures/pricing-parity-2026-10-31.json');
 const parties=['p2','p4','p6','p8'],wash=['w_yes','w_no','w_compare'],beds=['b_yes','b_no'];
 test('41 stable unique v04 plan codes; exactly 39 published images and two honest fallbacks',()=>{
@@ -101,7 +102,7 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
    assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
  }
- assert.match(ui,/Куда прислать ваши планировки\?/);
+ assert.match(ui,/Куда прислать планировки, комплектации и цены\?/);
  assert.match(ui,/Выберите мессенджер/);
  assert.match(ui,/name="channel"/);
  for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
@@ -122,19 +123,213 @@ test('model-only results cover all answers with priced unique models and no imag
  }
 });
 
-test('invitation appears earlier but never auto-opens a full-screen quiz',()=>{
+test('R111 popup only has two triggers: models idle 18s or reaching your bath; no ritual interruption',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
- assert.match(ui,/const inviteDelayMs=10000,inviteScrollFraction=0\.35;/);
- assert.match(ui,/Date\.now\(\)-startedAt>=inviteDelayMs/);
- assert.match(ui,/scrollY\/height>=inviteScrollFraction/);
- assert.match(ui,/window\.setTimeout\(maybeInvite,inviteDelayMs\+500\)/);
- assert.match(ui,/Date\.now\(\)-startedAt>15000/,'Desktop exit signal remains delayed');
- assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
- assert.match(ui,/invite\.hidden=false/);
+ const home=readFileSync(new URL('../web/index.html',import.meta.url),'utf8');
+ assert.match(home,/id="models"/);
+ assert.match(home,/id="configure"/);
+ assert.match(home,/id="details"/);
+ assert.match(ui,/const modelsIdleMs=18000;/);
+ assert.match(ui,/const modelsVisible=\(\)=>/);
+ assert.match(ui,/const bathVisionVisible=\(\)=>/);
+ assert.match(ui,/maybeInvite\('models-idle'\)/);
+ assert.match(ui,/maybeInvite\('your-bath'\)/);
+ assert.match(ui,/window\.addEventListener\('scroll',handleScroll/);
+ assert.match(ui,/cancelModelsIdle\(\)/);
+ assert.match(ui,/sessionStorage\.setItem\(inviteShownSessionKey,'1'\)/);
+ for(const old of ['inviteDelayMs','inviteScrollFraction','scrollSeen','startedAt','mouseout', 'Date.now()-startedAt']){
+   assert.equal(ui.includes(old),false,'Legacy unsolicited trigger remains: '+old);
+ }
+ assert.match(ui,/invite\.showModal\(\)/);
+ assert.match(ui,/invite\.addEventListener\('cancel'/);
  assert.match(ui,/dialog\.showModal\(\)/);
+ assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
  const builder=readFileSync(new URL('../r107/build.py',import.meta.url),'utf8');
- assert.match(builder,/r107-invite35/,'New preview must invalidate cached R106 script');
- assert.match(builder,/R107-PREVIEW/);
+ assert.match(builder,/r107-invite35/);
  const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('function launch('));
- assert.doesNotMatch(trigger,/showModal\(/,'Automated invitation must not open a blocking modal');
+ assert.doesNotMatch(trigger,/dialog\.showModal\(/);
+});
+
+test('R108 buyer choices are literal: straightforward guest counts and requested washing language',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ for(const phrase of ['1–2 человека','До 4 человек','5–6 человек','Для большой семьи и друзей','До 8 человек','встречать праздники в бане с компанией','Исторически мылись в самой парной','Предпочитаю сэкономить','Хочу сравнить']){
+   assert.ok(ui.includes(phrase),'Missing approved copy: '+phrase);
+ }
+ for(const phrase of ['Вспомните обычный выходной на даче.','Отдельная спальня — или больше места для общего отдыха.','Да, отдельная комната']){
+   assert.equal(ui.includes(phrase),false,'Obsolete question copy '+phrase);
+ }
+});
+test('R108 range matching: 5/6 m, no intermediate 4.5/5.5 m, and no Kvadro for 5–8 guests',()=>{
+ for(const party of parties)for(const wash of ['w_yes','w_no','w_compare'])for(const bedroom of beds){
+   const a={party,wash,bedroom};
+   const {offers,compromise}=recommendModelRanges(quiz.plans,a,book,quiz.priceRules);
+   assert.ok(offers.length>0,'No offers '+JSON.stringify(a));
+   assert.equal(new Set(offers.map(o=>o.model)).size,offers.length);
+   assert.ok(offers.length<=4);
+   if(['p6','p8'].includes(party))assert.ok(offers.every(o=>o.model!=='kvadro'),'Kvadro unexpectedly offered to a large party');
+   if(bedroom==='b_yes')assert.ok(offers.every(o=>o.model==='kvadro-house'&&o.sizes.every(s=>s==='6x6')));
+   if(['p2','p4'].includes(party)&&wash==='w_compare'&&bedroom==='b_no'){
+     assert.ok(offers.some(o=>o.model==='kvadro-house'&&o.sizes.length===1&&o.sizes[0]==='4x4'));
+   }
+   for(const offer of offers){
+     assert.ok(offer.plans.every(p=>!p.wideBody&&!['450','550'].includes(p.size)&&p.sitePlanId!=='v03_Q6_rest'));
+     assert.ok(offer.plans.every(p=>p.model===offer.model));
+     assert.ok(offer.displayMinRub>=offer.minRub&&offer.displayMinRub-offer.minRub<1000);
+     assert.ok(offer.displayMaxRub>=offer.maxRub&&offer.displayMaxRub-offer.maxRub<1000);
+     assert.ok(offer.displayMaxRub>=offer.displayMinRub);
+     assert.equal(offer.rangeLowerPackage,'comfort');
+     assert.equal(offer.rangeUpperPackage,'deluxe');
+     assert.equal(offer.maxRub,book.deluxePrices[offer.model][offer.lastSize],'Deluxe maximum must not add stove or gift twice');
+     if(offer.model!=='kvadro-house')assert.ok(offer.sizes.every(s=>['500','600'].includes(s)));
+   }
+   assert.equal(compromise,bedroom==='b_yes'&&wash==='w_no');
+ }
+ const noWash=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_no',bedroom:'b_no'},book,quiz.priceRules);
+ assert.deepEqual(noWash.offers.map(o=>o.model),['kvadro','parus','viking']);
+ assert.ok(noWash.offers.every(o=>o.firstSize==='500'&&o.lastSize==='600'));
+ const compare=recommendModelRanges(quiz.plans,{party:'p2',wash:'w_compare',bedroom:'b_no'},book,quiz.priceRules);
+ assert.deepEqual(compare.offers.map(o=>o.model),['kvadro','parus','viking','kvadro-house']);
+ const washOnly=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_yes',bedroom:'b_no'},book,quiz.priceRules);
+ const k=washOnly.offers.find(o=>o.model==='kvadro');
+ assert.deepEqual(k?.sizes,['600'],"Do not claim a nonexistent 5m Kvadro with separate washroom");
+});
+test('R108 ranges: lower approved Comfort plan; upper exact larger-size Deluxe with ASTON and gift already included',()=>{
+ const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
+ const {offers}=recommendModelRanges(quiz.plans,a,book,quiz.priceRules);
+ const parus=offers.find(o=>o.model==='parus');
+ assert.equal(parus.minRub,530540.5);
+ assert.equal(parus.maxRub,665000);
+ assert.equal(parus.displayMinRub,531000);
+ assert.equal(parus.displayMaxRub,665000);
+ assert.equal(parus.firstSize,'500');
+ assert.equal(parus.lastSize,'600');
+ const kvadro=offers.find(o=>o.model==='kvadro');
+ assert.equal(kvadro.displayMinRub,546000);
+ assert.equal(kvadro.displayMaxRub,639000);
+ assert.equal(kvadro.firstSize,'600');
+ assert.equal(kvadro.lastSize,'600');
+ const smallNoWash=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_no',bedroom:'b_no'},book,quiz.priceRules);
+ assert.deepEqual(smallNoWash.offers.map(o=>[o.model,o.displayMinRub,o.displayMaxRub]),[
+   ['kvadro',492000,639000],['parus',517000,665000],['viking',627000,775000]
+ ]);
+ const couple=recommendModelRanges(quiz.plans,{party:'p2',wash:'w_no',bedroom:'b_no'},book,quiz.priceRules);
+ assert.equal(couple.offers[0].displayMinRub,485000,'1–2 guests use the already-included Osa');
+ assert.equal(couple.offers[0].displayMaxRub,639000,'Deluxe includes ASTON without extra payment');
+});
+test('Deluxe extra bonus is never subtracted from Comfort price ranges',()=>{
+ const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
+ const offers=recommendModelRanges(quiz.plans,a,book,quiz.priceRules).offers;
+ assert.equal(offers.find(o=>o.model==='parus').minRub,530540.5);
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('20 000 ₽'));
+ assert.equal(ui.includes('Суммируется с остальными акциями'),false);
+ assert.ok(ui.includes('комплектации «Делюкс»'));
+ assert.ok(ui.includes('/privacy.html'));
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
+ assert.equal(ui.includes('cost.rub-20000'),false);
+});
+
+test('R108 approved photography: Parus at entry and a distinct natural-light photo for each question',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ const manifest=read('../r108/quiz-photos.json');
+ assert.equal(manifest.files.length,3);
+ assert.match(ui,/parus-editorial-960\.webp/);
+ for(let i=1;i<=3;i++){
+   assert.ok(ui.includes('/assets/quiz/step'+i+'-'),'Missing step '+i+' photo');
+ }
+ assert.match(ui,/state\.view==='question'/);
+ assert.match(ui,/questionPhotos\[state\.step\]/);
+ assert.doesNotMatch(ui,/dp-quiz-photo-note/,'No slogan overlay on photos');
+ assert.notEqual(manifest.files[0].sha256,manifest.files[1].sha256);
+ assert.notEqual(manifest.files[1].sha256,manifest.files[2].sha256);
+});
+
+test('Deluxe matrix has exactly the 20 approved model and size prices from 2026-11-02',()=>{
+ const fixture=read('./fixtures/deluxe-prices-2026-11-02.json');
+ assert.equal(fixture.type,'DELUXE_APPROVED_SNAPSHOT_NOT_LIVE_AUTHORITY');
+ assert.equal(fixture.stoveUpgradeRubIncluded,12000);
+ assert.equal(fixture.clientGiftRubIncluded,20000);
+ assert.equal(fixture.deluxePrices.length,20);
+ const keys=new Set();
+ for(const {model,size,deluxeRub} of fixture.deluxePrices){
+   const key=model+':'+size;
+   assert.ok(!keys.has(key),'Duplicate approved price '+key);
+   keys.add(key);
+   assert.equal(book.deluxePrices?.[model]?.[size],deluxeRub,key+' price must equal approved table');
+   assert.ok(deluxeRub>book.prices[model][size]);
+ }
+ assert.equal(Object.values(book.deluxePrices).reduce((n,x)=>n+Object.keys(x).length,0),20);
+});
+test('R117 conversion funnel tracks three answers, real submit, close before/after and city-qualified receipt',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ const analytics=readFileSync(new URL('../web/analytics-core.mjs',import.meta.url),'utf8');
+ for(const goal of ['dp_quiz_completed','dp_quiz_submit_attempt','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_quiz_lead_confirmed','dp_quiz_lead_pereslavl_confirmed'])
+   assert.ok(analytics.includes("'"+goal+"'"),'Goal missing: '+goal);
+ assert.ok(ui.includes("trace('dp_quiz_completed')"));
+ assert.ok(ui.includes("trace('dp_quiz_submit_attempt')"));
+ assert.ok(ui.includes("trace('dp_quiz_close_before_completed')"));
+ assert.ok(ui.includes("'dp_quiz_close_after_completed'"));
+ assert.ok(ui.includes("quiz:true,pereslavl:isPereslavlCity(state.city)"));
+ assert.ok(ui.includes('const isPereslavlCity=value=>'));
+ assert.ok(ui.includes("Город установки бани (необязательно)"));
+ assert.ok(ui.includes('name="city"'));
+ assert.ok(ui.includes("Город установки: '+(state.city||'не указан')"));
+ assert.ok(ui.includes("const wasOpen=!!invite?.open"));
+ assert.ok(ui.includes("if(!state.success)"));
+ assert.ok(analytics.includes("if(flow==='callback'&&quiz===true)"));
+ assert.ok(analytics.includes("if(pereslavl===true)emit('dp_quiz_lead_pereslavl_confirmed'"));
+ assert.equal(ui.includes("trace('dp_quiz_lead_confirmed')"),false,'Confirmed goals must not use unverified tracking');
+});
+test('R116 automatic popup tracks only the editorial ВАША БАНЯ screen, never calculator or footer',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes("const findBathVision=()=>"));
+ assert.ok(ui.includes("title==='ваша баня'"));
+ assert.ok(ui.includes("title.includes('представляете')"));
+ assert.ok(ui.includes("const bathVisionVisible=()=>"));
+ assert.ok(ui.includes("const observeLateBathScreen=()=>"));
+ assert.ok(ui.includes("new IntersectionObserver("));
+ assert.ok(ui.includes("new MutationObserver("));
+ assert.ok(ui.includes("reason==='your-bath'&&!bathVisionVisible()"));
+ assert.ok(ui.includes("const modelsIdleMs=18000"));
+ assert.ok(ui.includes("sessionStorage.setItem(inviteShownSessionKey,'1')"));
+ assert.equal(ui.includes("watchFooter()"),false);
+ assert.equal(ui.includes("footerObserver"),false);
+ assert.equal(ui.includes("reachedYourBath()"),false);
+ assert.equal(ui.includes("ritualInView()"),false);
+ assert.ok(ui.includes("entry.className='dp-quiz-footer-cta'"));
+ assert.ok(ui.includes('footer.append(entry)'));
+ assert.equal(ui.includes('main.append(entry)'),false);
+ assert.ok(ui.includes("shownThisVisit=alreadyShown;"));
+});
+test('R110 pricing caveat is human and CTA promises only the approved Deluxe bonus',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('Окончательная цена зависит от комплектации и планировки.'));
+ assert.ok(ui.includes('Доставка рассчитывается отдельно.'));
+ assert.ok(ui.includes('Получить планировки и комплектации с ценами <b>+ скидку 20 000 ₽ на «Делюкс»</b>'));
+ assert.ok(ui.includes('Скидка 20 000 ₽ — при выборе комплектации «Делюкс».'));
+ assert.ok(ui.includes('Подходящие варианты уже найдены'));
+ assert.ok(ui.includes('Куда прислать планировки, комплектации и цены?'));
+ assert.equal(ui.includes('От «Комфорта» меньшего размера до «Делюкса» большего'),false);
+ assert.equal(ui.includes('Варианты и цены покажем сразу, без номера телефона'),false);
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
+});
+test('R113 CTA text promises actual plans and prices, restricts bonus to Deluxe',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('Получить планировки и комплектации с ценами'));
+ assert.ok(ui.includes('+ скидку 20 000 ₽ на «Делюкс»'));
+ assert.equal(ui.includes('Получить предложение'),false);
+ assert.equal(ui.includes('скидку 20%'),false);
+ assert.ok(ui.includes('Нажимая «Получить планировки и цены»'));
+});
+test('R110 results are deliberately not clickable; primary action requests plans by messenger',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ for(const forbidden of ['modelRoutes','modelPlanRoutes','previewPlans(','planDetailView(','dp-quiz-layout-preview','data-dpq="plan"','dp-quiz-layout-all']){
+   assert.equal(ui.includes(forbidden),false,'Unexpected navigation in quiz results: '+forbidden);
+ }
+ assert.ok(ui.includes('dp-quiz-cta-primary'));
+ assert.ok(ui.includes('Подходящие варианты уже найдены'));
+ assert.ok(ui.includes('Куда прислать планировки, комплектации и цены?'));
+ assert.ok(ui.includes('Квиз: отправить подходящие планировки, комплектации и цены.'));
+ assert.ok(ui.includes('Свяжемся с вами в '));
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
 });

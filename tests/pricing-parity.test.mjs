@@ -6,6 +6,8 @@ import {calculateSelection} from '../web/r85-pricing.mjs';
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const contract = JSON.parse(read('./fixtures/pricing-parity-2026-10-31.json'));
 const catalog = JSON.parse(read('../web/data/catalog-pricebook.json'));
+const approvedDeluxe=JSON.parse(read('./fixtures/deluxe-prices-2026-11-02.json'));
+const quizDeluxe=JSON.parse(read('../web/data/quiz-v1.json')).deluxePrices;
 
 const slugs = {kvadro:'kvadro',viking:'viking',parus:'parus','kvadro-house':'kvadro-haus'};
 const rub = value => Number(String(value).replace(/<[^>]*>/g,'').replace(/[^\d]/g,''));
@@ -112,4 +114,25 @@ test('A supplied fresh export of live Google Sheets must equal this repo referen
   assert.deepEqual(live.comfortPrices,contract.comfortPrices,'Live Comfort sheet != repository reference');
   assert.deepEqual(live.quizPlans,contract.quizPlans,'Live quiz sheet != repository reference');
   assert.deepEqual(live.quizRules,contract.quizRules,'Live quiz price inputs != repository reference');
+});
+
+test('20 Deluxe prices from approved 02.11 Google Sheets snapshot share Comfort pricebook without double-upgrades',()=>{
+ assert.equal(approvedDeluxe.deluxePrices.length,20);
+ assert.equal(approvedDeluxe.clientGiftRubIncluded,20000);
+ assert.equal(approvedDeluxe.stoveUpgradeRubIncluded,12000);
+ const seen=new Set();
+ for(const {model,size,deluxeRub} of approvedDeluxe.deluxePrices){
+   const key=model+':'+size;
+   assert.ok(!seen.has(key),'Duplicate '+key);
+   seen.add(key);
+   assert.equal(quizDeluxe?.[model]?.[size],deluxeRub,key+' differs from approved sheet snapshot');
+   assert.equal(catalog.prices?.[model]?.[size],baseByKey.get(key),key+' Comfort drift');
+   assert.ok(deluxeRub>baseByKey.get(key),key+' inverted price');
+ }
+ assert.equal(seen.size,20);
+ assert.equal(Object.values(quizDeluxe).reduce((total,m)=>total+Object.keys(m).length,0),20);
+ // Exact approved references. Neither ASTON 12k nor the gift 20k can be added again.
+ assert.equal(quizDeluxe.kvadro['500'],597000);
+ assert.equal(quizDeluxe.parus['600'],665000);
+ assert.equal(quizDeluxe['kvadro-house']['6x6'],1142000);
 });
