@@ -257,29 +257,20 @@ test('R110 pricing caveat is human and CTA promises only the approved Deluxe bon
  assert.ok(ui.includes('Доставка рассчитывается отдельно.'));
  assert.ok(ui.includes('Получить предложение <b>со скидкой 20 000 ₽'));
  assert.ok(ui.includes('Скидка 20 000 ₽ — при выборе комплектации «Делюкс».'));
- assert.ok(ui.includes('Пришлём вам подробные планировки, комплектации и цены'));
+ assert.ok(ui.includes('Подберём и пришлём планировки, комплектации и цены'));
+ assert.ok(ui.includes('Куда прислать планировки и цены?'));
  assert.equal(ui.includes('От «Комфорта» меньшего размера до «Делюкса» большего'),false);
  assert.equal(ui.includes('Варианты и цены покажем сразу, без номера телефона'),false);
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
 });
-test('R110 results expose one or two real plan previews and external paths for all models',()=>{
+test('R110 results are deliberately not clickable; primary action requests plans by messenger',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
- for(const path of ['/bani/kvadro/','/bani/parus/','/bani/viking/','/bani/kvadro-haus/','/planirovki/?model='])
-  assert.ok(ui.includes(path),'Missing approved navigation '+path);
- assert.ok(ui.includes('data-dpq="plan"'));
- assert.ok(ui.includes('data-dpq="results"'));
- assert.ok(ui.includes('sitePlanId'));
- assert.ok(ui.includes('planDetailView()'));
- assert.ok(ui.includes('dp-quiz-cta-primary'));
- const validPlans=quiz.plans.filter(p=>p.image&&p.sitePlanId);
- assert.equal(validPlans.length,39);
- for(const party of parties)for(const washing of wash)for(const bedroom of beds){
-   const found=recommendModelRanges(quiz.plans,{party,wash:washing,bedroom},book,quiz.priceRules);
-   for(const offer of found.offers){
-     const all=offer.plans.filter(p=>p.image&&p.sitePlanId);
-     const picks=all.length?[all[0],all.find(p=>p.size!==all[0].size||p.wash!==all[0].wash)].filter(Boolean):[];
-     assert.ok(picks.length<=2,offer.model);
-     assert.ok(picks.every(p=>p.model===offer.model&&!p.wideBody&&p.sitePlanId!=='v03_Q6_rest'),offer.model);
-   }
+ for(const forbidden of ['modelRoutes','modelPlanRoutes','previewPlans(','planDetailView(','dp-quiz-layout-preview','data-dpq="plan"','dp-quiz-layout-all']){
+   assert.equal(ui.includes(forbidden),false,'Unexpected navigation in quiz results: '+forbidden);
  }
+ assert.ok(ui.includes('dp-quiz-cta-primary'));
+ assert.ok(ui.includes('Подберём и пришлём планировки, комплектации и цены'));
+ assert.ok(ui.includes('Куда прислать планировки и цены?'));
+ assert.ok(ui.includes('Свяжемся с вами в '));
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
 });
