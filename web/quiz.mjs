@@ -254,8 +254,7 @@ async function submitForm(form){
     trace('dp_quiz_submit_attempt');
     const sent=await submitLead(payload,settings,location.origin);
     state.sending=false;state.view='success';state.success=true;save();
-    const baseCounted=analytics?.confirmed?.(sent.receipt,{flow:'callback',requestId:payload.requestId,purpose:'selection_help',placement:'catalog'})===true;
-    if(baseCounted){trace('dp_quiz_lead_confirmed');if(isPereslavlCity(state.city))trace('dp_quiz_lead_pereslavl_confirmed');}
+    analytics?.confirmed?.(sent.receipt,{flow:'callback',requestId:payload.requestId,purpose:'selection_help',placement:'catalog',quiz:true,pereslavl:isPereslavlCity(state.city)});
     trace('dp_quiz_catalog_sent');render();hideInvite();
   }catch(error){
     state.sending=false;
@@ -281,7 +280,7 @@ function bind(){
   window.visualViewport?.addEventListener('resize',fitViewport,{passive:true});
   window.visualViewport?.addEventListener('scroll',fitViewport,{passive:true});
   dialog.addEventListener('focusin',()=>requestAnimationFrame(fitViewport));
-  dialog.addEventListener('close',()=>{if(!state.success){trace(state.view==='question'?'dp_quiz_close_before_completed':'dp_quiz_close_after_completed');}state.error='';try{lastOpener?.focus?.({preventScroll:true})}catch{};});
+  dialog.addEventListener('close',()=>{if(!state.success){trace(state.completedNotified||state.view!=='question'?'dp_quiz_close_after_completed':'dp_quiz_close_before_completed');}state.error='';try{lastOpener?.focus?.({preventScroll:true})}catch{};});
   invite.querySelector('[data-dpq-open]').addEventListener('click',launch);
   invite.querySelector('[data-dpq-hide]').addEventListener('click',()=>hideInvite(true));
   invite.addEventListener('cancel',event=>{event.preventDefault();hideInvite(true)});
