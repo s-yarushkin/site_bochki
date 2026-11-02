@@ -83,7 +83,7 @@ class TestR110ResultsRelease(unittest.TestCase):
   spec=importlib.util.spec_from_file_location('r110_remote',ROOT/'scripts/r110-quiz-results-remote.py')
   r110=importlib.util.module_from_spec(spec);spec.loader.exec_module(r110)
   self.assertEqual(r110.EXPECTED_ACTIVE,'DPQUIZ-r109-invite-a01e6016ce53')
-  self.assertTrue(r110.NEW_NAME.startswith('DPQUIZ-r110-results-'))
+  self.assertTrue(r110.NEW_NAME.startswith('DPQUIZ-r110-leads-'))
   self.assertEqual(set(r110.NEW_BLOBS),{'quiz.mjs','quiz.css'})
   self.assertEqual(r110.OLD_BLOBS['quiz.mjs'],'a01e6016ca0feabf763f3b8443b7dfa358077d84')
   self.assertEqual(r110.OLD_BLOBS['quiz.css'],'ce5309287a86123b672d8f552d41939c146bc18b')
