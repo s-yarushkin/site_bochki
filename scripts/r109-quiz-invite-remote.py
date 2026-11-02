@@ -53,12 +53,14 @@ def check_active():
         stop("target release already exists; inspect before retry")
     for name, expected in OLD_BLOBS.items():
         source = active / name
-        if not source.is_file() or git_sha(source.read_bytes()) != expected:
+        if source.is_symlink() or not source.is_file() or git_sha(source.read_bytes()) != expected:
             stop("live file drift, refusing overwrite: " + name)
     for name, expected in PHOTOS.items():
         p = active / name
         if not p.is_file() or sha256(p.read_bytes()) != expected:
             stop("approved R108 photo missing or different: " + name)
+    if (active / "index.html").is_symlink():
+        stop("live index.html must be a regular file")
     home = (active / "index.html").read_text("utf-8")
     for old in HTML_REPLACEMENTS:
         if home.count(old) != 1:
@@ -97,7 +99,7 @@ def main():
         return
     if os.geteuid() != 0:
         stop("sudo required only for --apply")
-    # Clone immutable release without altering the original.
+    # Clone immutable release without altering the original. Preflight rejects symlink targets.
     subprocess.run(["cp", "-a", "--", str(old), str(NEW_RELEASE)], check=True)
     try:
         for name, blob in files.items():
