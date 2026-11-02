@@ -4,7 +4,7 @@ import {readFileSync,existsSync} from 'node:fs';
 import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels,recommendModelRanges} from '../web/quiz-engine.mjs';
 const read=path=>JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const quiz=read('../web/data/quiz-v1.json');
-const book=read('../web/data/catalog-pricebook.json');
+const book={...read('../web/data/catalog-pricebook.json'),deluxePrices:quiz.deluxePrices};
 const parity=read('./fixtures/pricing-parity-2026-10-31.json');
 const parties=['p2','p4','p6','p8'],wash=['w_yes','w_no','w_compare'],beds=['b_yes','b_no'];
 test('41 stable unique v04 plan codes; exactly 39 published images and two honest fallbacks',()=>{
