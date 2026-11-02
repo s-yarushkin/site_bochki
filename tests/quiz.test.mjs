@@ -260,6 +260,26 @@ test('Deluxe matrix has exactly the 20 approved model and size prices from 2026-
  }
  assert.equal(Object.values(book.deluxePrices).reduce((n,x)=>n+Object.keys(x).length,0),20);
 });
+test('R117 conversion funnel tracks three answers, real submit, close before/after and city-qualified receipt',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ const analytics=readFileSync(new URL('../web/analytics-core.mjs',import.meta.url),'utf8');
+ for(const goal of ['dp_quiz_completed','dp_quiz_submit_attempt','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_quiz_lead_confirmed','dp_quiz_lead_pereslavl_confirmed'])
+   assert.ok(analytics.includes("'"+goal+"'"),'Goal missing: '+goal);
+ assert.ok(ui.includes("trace('dp_quiz_completed')"));
+ assert.ok(ui.includes("trace('dp_quiz_submit_attempt')"));
+ assert.ok(ui.includes("trace('dp_quiz_close_before_completed')"));
+ assert.ok(ui.includes("'dp_quiz_close_after_completed'"));
+ assert.ok(ui.includes("quiz:true,pereslavl:isPereslavlCity(state.city)"));
+ assert.ok(ui.includes('const isPereslavlCity=value=>'));
+ assert.ok(ui.includes("Город установки бани (необязательно)"));
+ assert.ok(ui.includes('name="city"'));
+ assert.ok(ui.includes("Город установки: '+(state.city||'не указан')"));
+ assert.ok(ui.includes("const wasOpen=!!invite?.open"));
+ assert.ok(ui.includes("if(!state.success)"));
+ assert.ok(analytics.includes("if(flow==='callback'&&quiz===true)"));
+ assert.ok(analytics.includes("if(pereslavl===true)emit('dp_quiz_lead_pereslavl_confirmed'"));
+ assert.equal(ui.includes("trace('dp_quiz_lead_confirmed')"),false,'Confirmed goals must not use unverified tracking');
+});
 test('R116 automatic popup tracks only the editorial ВАША БАНЯ screen, never calculator or footer',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
  assert.ok(ui.includes("const findBathVision=()=>"));
