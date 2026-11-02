@@ -178,7 +178,7 @@ test('R108 range matching: 5/6 m, no intermediate 4.5/5.5 m, and no Kvadro for 5
  assert.deepEqual(compare.offers.map(o=>o.model),['kvadro','parus','viking','kvadro-house']);
  const washOnly=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_yes',bedroom:'b_no'},book,quiz.priceRules);
  const k=washOnly.offers.find(o=>o.model==='kvadro');
- assert.deepEqual(k?.sizes,['600'],'Don't claim a nonexistent 5 m Kvadro with separate washroom');
+ assert.deepEqual(k?.sizes,['600'],"Do not claim a nonexistent 5m Kvadro with separate washroom");
 });
 test('R108 price spans use original Comfort prices, room surcharges and stove surcharges',()=>{
  const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
