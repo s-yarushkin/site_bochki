@@ -48,4 +48,33 @@ class TestGuardedQuizRelease(unittest.TestCase):
   self.assertIn('QUIZ_ROLLED_BACK=PASS; lead database unchanged',code)
   self.assertNotIn('DB.unlink(',code)
   self.assertNotIn('shutil.copy2(backup',code)
+
+class TestR109InviteRelease(unittest.TestCase):
+ def test_mount_detection_accepts_real_release_versions(self):
+  spec=importlib.util.spec_from_file_location('r109_remote',ROOT/'scripts/r109-quiz-invite-remote.py')
+  r109=importlib.util.module_from_spec(spec);spec.loader.exec_module(r109)
+  for css_version,js_version in [
+    ('dpq-20261031','dpq-20261031'),
+    ('r106','r107-invite35'),
+    ('r108-ranges','r108-ranges'),
+    ('r109-preview','r109-preview'),
+  ]:
+   with self.subTest(css=css_version,js=js_version):
+    html='<html><head><link href="/quiz.css?v='+css_version+'" rel="stylesheet"></head><body><script type="module" src="/quiz.mjs?v='+js_version+'"></script></body></html>'
+    refs=r109.locate_quiz_assets(html)
+    self.assertEqual(refs,{'quiz.css':'/quiz.css?v='+css_version,'quiz.mjs':'/quiz.mjs?v='+js_version})
+    updated=r109.prepare_html(html,refs)
+    self.assertEqual(updated.count('quiz.css?v='+r109.VERSION),1)
+    self.assertEqual(updated.count('quiz.mjs?v='+r109.VERSION),1)
+    self.assertIn('<html><head>',updated)
+ def test_mount_detection_refuses_ambiguous_or_missing_quiz_links(self):
+  spec=importlib.util.spec_from_file_location('r109_remote',ROOT/'scripts/r109-quiz-invite-remote.py')
+  r109=importlib.util.module_from_spec(spec);spec.loader.exec_module(r109)
+  html='<link href="/quiz.css?v=r106"><script src="/quiz.mjs?v=r107-invite35"></script>'
+  for damaged in [html.replace('<link','<link href="/quiz.css?v=r105" rel="stylesheet"><link',1),
+                  html.replace('<script src="/quiz.mjs?v=r107-invite35"></script>',''),
+                  html.replace('/quiz.css?v=r106','/unrelated.css')]:
+   with self.subTest(damaged=damaged),self.assertRaisesRegex(RuntimeError,'R109_INVITE_STOP'):
+    r109.locate_quiz_assets(damaged)
+
 if __name__=='__main__':unittest.main()
