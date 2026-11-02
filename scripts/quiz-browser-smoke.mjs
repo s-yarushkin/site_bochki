@@ -263,13 +263,19 @@ async function clickedModelNavigationSmoke(){
   return {scenario:'chosen-model-then-vision',shownOnce:true};
  }finally{await page.close()}
 }
+const runCase=async(name,fn)=>{
+ console.log('QUIZ_SCENARIO_START',name);
+ const outcome=await fn();
+ console.log('QUIZ_SCENARIO_PASS',name);
+ return outcome;
+};
 try{
  const results=[];
- results.push(await visionScreenSmoke({width:1440,height:900},'desktop-vision'));
- results.push(await visionScreenSmoke({width:390,height:844},'mobile-vision'));
- results.push(await aestheticBlockSmoke());
- results.push(await anchorNavigationSmoke());
- results.push(await clickedModelNavigationSmoke());
+ results.push(await runCase('desktop-vision',()=>visionScreenSmoke({width:1440,height:900},'desktop-vision')));
+ results.push(await runCase('mobile-vision',()=>visionScreenSmoke({width:390,height:844},'mobile-vision')));
+ results.push(await runCase('aesthetic',()=>aestheticBlockSmoke()));
+ results.push(await runCase('anchor',()=>anchorNavigationSmoke()));
+ results.push(await runCase('model',()=>clickedModelNavigationSmoke()));
  results.push(await invitePolicySmoke({width:1440,height:900},'desktop-idle','models-idle'));
  results.push(await invitePolicySmoke({width:390,height:844},'mobile-configure','your-bath'));
  results.push(await test({width:1440,height:900},'desktop','p4','w_compare','b_no','max'));
