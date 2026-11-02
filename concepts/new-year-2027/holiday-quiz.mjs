@@ -1,4 +1,4 @@
-import {ANSWERS,validAnswers,guestExplanation,recommendModelRanges} from '/quiz-engine.mjs?v=r108-ranges';
+import {ANSWERS,validAnswers,guestExplanation,recommendModelRanges} from './holiday-quiz-engine.mjs';
 import {buildCallback,submitLead} from '/lead-client.mjs';
 import {attachPhoneMask} from '/phone-mask.mjs';
 import {analytics} from '/analytics-core.mjs';
@@ -238,7 +238,7 @@ async function init(){
   if(!location.pathname.startsWith('/novyy-god/')||$('#dp-quiz-dialog'))return;
   try{
     const [a,b,c]=await Promise.all([
-      fetch('/data/quiz-v1.json',{cache:'no-cache'}),
+      fetch('./holiday-quiz-data.json',{cache:'no-cache'}),
       fetch('/data/catalog-pricebook.json',{cache:'no-cache'}),
       fetch('/data/site-settings.json',{cache:'no-cache'})
     ]);
