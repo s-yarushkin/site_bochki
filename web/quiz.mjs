@@ -4,6 +4,13 @@ import {attachPhoneMask} from './phone-mask.mjs';
 import {analytics} from './analytics-core.mjs';
 
 const $=(selector,root=document)=>root.querySelector(selector);
+// The three editorial photos are approved for this quiz. They illustrate the experience,
+// not documented interiors of any particular production bathhouse.
+const questionPhotos=Object.freeze([
+  '/assets/quiz/step1-steamroom.webp',
+  '/assets/quiz/step2-washroom.webp',
+  '/assets/quiz/step3-bedroom.webp'
+]);
 const models={
   kvadro:{name:'Квадро',photo:'/r101/assets/kvadro-editorial-960.webp',description:'Отдельная парная и комната отдыха. Ширина корпуса — 2,1 м.'},
   viking:{name:'Викинг',photo:'/r101/assets/viking-editorial-960.webp',description:'Отдельная парная и комната отдыха. Ширина корпуса — 2,4 м.'},
@@ -104,7 +111,12 @@ function fitViewport(){
 function render(){
   const frame=$('.dp-quiz-frame',dialog),main=$('.dp-quiz-main',dialog);
   frame.className='dp-quiz-frame '+(state.view==='question'?'':('is-'+state.view));
-  $('.dp-quiz-photo',frame).hidden=state.view!=='question';
+  const photo=$('.dp-quiz-photo',frame);
+  photo.hidden=state.view!=='question';
+  if(state.view==='question'){
+    const img=$('img',photo), src=questionPhotos[state.step];
+    if(img.getAttribute('src')!==src)img.src=src;
+  }
   main.innerHTML=state.view==='question'?questionView():state.view==='results'?resultsView():state.view==='form'?formView():successView();
   main.scrollTop=0;
   if(state.view==='form'){const input=$('#dp-quiz-phone',main);attachPhoneMask(input);if(!matchMedia('(max-width:760px)').matches)input.focus({preventScroll:true});else focusTitle(main);}
@@ -198,9 +210,9 @@ async function init(){
     if(anchor)anchor.insertAdjacentElement('afterend',entry);else $('#models').prepend(entry);}
     launcher=$('#dp-quiz-open');
     invite=document.createElement('dialog');invite.className='dp-quiz-invite';invite.setAttribute('aria-labelledby','dp-quiz-invite-title');
-    invite.innerHTML='<div class="dp-quiz-invite-inner"><button type="button" class="dp-quiz-invite-close" data-dpq-hide aria-label="Закрыть предложение">×</button><span class="dp-quiz-invite-kicker">ДачаПар · помощь с выбором</span><h2 id="dp-quiz-invite-title">Поможем подобрать модель и планировку за 3 шага</h2><p>Расскажите, какой вы представляете свою баню. Покажем подходящие варианты и цены.</p><div class="dp-quiz-invite-stages" aria-label="Три шага"><span>01</span><i></i><span>02</span><i></i><span>03</span></div><button type="button" class="dp-quiz-action" data-dpq-open>Подобрать баню →</button></div>';
+    invite.innerHTML='<div class="dp-quiz-invite-layout"><img class="dp-quiz-invite-photo" src="/r101/assets/parus-editorial-960.webp" alt="" width="440" height="700"><div class="dp-quiz-invite-inner"><button type="button" class="dp-quiz-invite-close" data-dpq-hide aria-label="Закрыть предложение">×</button><span class="dp-quiz-invite-kicker">ДачаПар · помощь с выбором</span><h2 id="dp-quiz-invite-title">Поможем подобрать модель и планировку за 3 шага</h2><p>Расскажите, какой вы представляете свою баню. Покажем подходящие варианты и цены.</p><div class="dp-quiz-invite-stages" aria-label="Три шага"><span>01</span><i></i><span>02</span><i></i><span>03</span></div><button type="button" class="dp-quiz-action" data-dpq-open>Подобрать баню →</button></div></div>';
     dialog=document.createElement('dialog');dialog.id='dp-quiz-dialog';dialog.setAttribute('aria-labelledby','dp-quiz-title');
-    dialog.innerHTML='<div class="dp-quiz-frame"><div class="dp-quiz-photo" aria-hidden="true"><img src="/r101/assets/parus-editorial-960.webp" width="720" height="960" alt=""><div class="dp-quiz-photo-note">У каждого свой<br>банный вечер<small>Подберём баню под ваши привычки.</small></div></div><div class="dp-quiz-main"></div></div>';
+    dialog.innerHTML='<div class="dp-quiz-frame"><div class="dp-quiz-photo" aria-hidden="true"><img src="/assets/quiz/step1-steamroom.webp" width="508" height="764" alt=""></div><div class="dp-quiz-main"></div></div>';
     document.body.append(invite,dialog);bind();
   }catch(error){console.warn('DachaPar quiz inactive:',error.message);}
 }
