@@ -25,7 +25,7 @@ class ReleaseTest(unittest.TestCase):
         self.here = root / 'handoff'
         self.here.mkdir()
         self.backups = root / 'backups'
-        for name in [*deploy.SHARED, 'index.html', 'manager.html', 'journal/index.html']:
+        for name in [*deploy.SHARED, 'quiz.mjs', 'quiz.css', 'index.html', 'manager.html', 'journal/index.html']:
             target = self.old / name
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text('existing: ' + name, encoding='utf-8')
@@ -79,6 +79,23 @@ class ReleaseTest(unittest.TestCase):
         deploy.rollback(self.backups / new.name / 'state.json')
         self.assertEqual(self.current, self.old)
         self.assertEqual(deploy.inventory(self.old), before)
+
+    def test_overlay_preserves_latest_live_quiz_and_metrika_files(self):
+        # The current public site is R117; main lacks these newer quiz events.
+        # Overlay installation must retain active bytes, never restore main copies.
+        self.old.joinpath('quiz.mjs').write_text('LIVE R117 QUIZ', encoding='utf-8')
+        self.old.joinpath('analytics-core.mjs').write_text('LIVE R117 METRIKA', encoding='utf-8')
+        before = {name: (self.old / name).read_bytes() for name in
+                  ['quiz.mjs', 'quiz.css', 'analytics-core.mjs', 'index.html',
+                   'data/catalog-pricebook.json', 'lead-client.mjs']}
+        self.assertFalse((self.old / 'novyy-god').exists())
+        deploy.check()
+        deploy.apply()
+        current = self.current
+        for name, data in before.items():
+            self.assertEqual((current / name).read_bytes(), data, name)
+        self.assertTrue((current / 'novyy-god/index.html').exists())
+        self.assertEqual(deploy.active(), current)
 
     def test_changed_baseline_stops_apply_before_switch(self):
         deploy.check()
