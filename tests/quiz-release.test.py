@@ -251,8 +251,8 @@ class TestR116VisionScreen(unittest.TestCase):
   self.assertEqual(mod.OLD_BLOBS['quiz.css'],'ae4866a32f0dae680f509f76203443f7a4634322')
   self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs'})
   self.assertEqual(set(mod.HTML_ASSETS),{'quiz.mjs'})
-  for name,expected in mod.NEW_BLOBS.items():
-   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  # R116 is already active; working web/quiz.mjs now contains the R117 events.
+  self.assertEqual(mod.NEW_BLOBS['quiz.mjs'],'d02879b3dad79f58e0d0f8e56941c3d7668524d8')
   html='<link href="/quiz.css?v=r115-footer-0290aab2"><script type="module" src="/quiz.mjs?v=r115-footer-0290aab2"></script>'
   changed=mod.prepare_html(html,mod.locate_quiz_assets(html))
   self.assertIn('/quiz.mjs?v='+mod.VERSION,changed)
@@ -265,6 +265,40 @@ class TestR116VisionScreen(unittest.TestCase):
    self.assertNotIn(obsolete,source)
   installer=(ROOT/'scripts/r116-quiz-vision-remote.py').read_text('utf8')
   for phrase in ['R116_VISION_PREFLIGHT','R116_VISION_DEPLOY','API_SQLITE=UNTOUCHED']:
+   self.assertIn(phrase,installer)
+  self.assertNotIn('sqlite3.connect',installer)
+  self.assertNotIn('systemctl',installer)
+
+
+class TestR117QuizMetrikaGoals(unittest.TestCase):
+ def test_r117_two_web_files_are_pinned_to_r116_and_receipt_gate_required(self):
+  spec=importlib.util.spec_from_file_location('r117_remote',ROOT/'scripts/r117-quiz-metrika-remote.py')
+  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+  self.assertEqual(mod.EXPECTED_ACTIVE,'DPQUIZ-r116-vision-d02879b3')
+  self.assertTrue(mod.NEW_NAME.startswith('DPQUIZ-r117-goals-'))
+  self.assertEqual(mod.OLD_BLOBS['quiz.mjs'],'d02879b3dad79f58e0d0f8e56941c3d7668524d8')
+  self.assertEqual(mod.OLD_BLOBS['analytics-core.mjs'],'5af9c9fc6706147a3de21728a6de08f485deff93')
+  self.assertEqual(mod.OLD_BLOBS['quiz.css'],'ae4866a32f0dae680f509f76203443f7a4634322')
+  self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs','analytics-core.mjs'})
+  self.assertEqual(set(mod.HTML_ASSETS),{'quiz.mjs'})
+  for name,expected in mod.NEW_BLOBS.items():
+   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  html='<link href="/quiz.css?v=r115-footer-0290aab2"><script type="module" src="/quiz.mjs?v=r116-vision-d02879b3"></script>'
+  changed=mod.prepare_html(html,mod.locate_quiz_assets(html))
+  self.assertIn('/quiz.mjs?v='+mod.VERSION,changed)
+  self.assertIn('/quiz.css?v=r115-footer-0290aab2',changed)
+  self.assertNotIn('/quiz.mjs?v=r116-vision-d02879b3',changed)
+  code=(ROOT/'web/quiz.mjs').read_text('utf8')
+  analytics=(ROOT/'web/analytics-core.mjs').read_text('utf8')
+  for goal in ['dp_quiz_completed','dp_quiz_submit_attempt','dp_quiz_close_before_completed',
+               'dp_quiz_close_after_completed','dp_quiz_lead_confirmed','dp_quiz_lead_pereslavl_confirmed']:
+   self.assertIn(goal,analytics)
+  self.assertIn("quiz:true,pereslavl:isPereslavlCity(state.city)",code)
+  self.assertIn("if(pereslavl===true)",analytics)
+  self.assertIn("receipt?.analytics?.persisted!==true",analytics)
+  self.assertNotIn("trace('dp_quiz_lead_confirmed')",code)
+  installer=(ROOT/'scripts/r117-quiz-metrika-remote.py').read_text('utf8')
+  for phrase in ['R117_GOALS_PREFLIGHT','R117_GOALS_DEPLOY','API_SQLITE=UNTOUCHED']:
    self.assertIn(phrase,installer)
   self.assertNotIn('sqlite3.connect',installer)
   self.assertNotIn('systemctl',installer)
