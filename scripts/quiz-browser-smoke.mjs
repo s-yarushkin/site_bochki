@@ -58,8 +58,8 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
    throw new Error(label+' caveat not rewritten');
  if(await page.locator('.dp-quiz-plan a,.dp-quiz-layout-preview,.dp-quiz-layout-all').count())
    throw new Error(label+' quiz model cards must not navigate or open layouts');
- if(!(await page.locator('.dp-quiz-cta-copy').innerText()).includes('планировки, комплектации и цены'))
-   throw new Error(label+' missing promise to send suitable plans');
+ if(!(await page.locator('.dp-quiz-cta-copy').innerText()).includes('Подходящие варианты уже найдены'))
+   throw new Error(label+' missing concise results CTA context');
 
  if(cards<1||cards>4)throw new Error(label+' wrong results count: '+cards);
  if(await page.locator(selectors.phone).count())throw new Error(label+' phone shown before result CTA');
