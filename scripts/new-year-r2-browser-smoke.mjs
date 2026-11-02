@@ -2,7 +2,7 @@ import {chromium} from 'playwright';
 import {mkdir} from 'node:fs/promises';
 
 const BASE='http://127.0.0.1:4187/novyy-god/';
-const OUT='output/new-year-r3-browser';
+const OUT='output/new-year-r4-browser';
 await mkdir(OUT,{recursive:true});
 const browser=await chromium.launch({headless:true});
 const sizes=[
@@ -21,10 +21,26 @@ try{
   page.on('pageerror',e=>errors.push(e.message));
   const response=await page.goto(BASE,{waitUntil:'networkidle'});
   if(!response?.ok())throw Error(c.name+' navigation '+response?.status());
-  const geography=page.locator('.delivery-geography');
-  const regions=await geography.locator('.delivery-regions li').allTextContents();
-  const expected=['Москва и Московская область','Ярославская область','Вологодская область','Ленинградская область'];
-  if(JSON.stringify(regions)!==JSON.stringify(expected))throw Error(c.name+' shipping regions mismatch');
+  if(await page.locator('.delivery-geography').count()!==0)
+    throw Error(c.name+' oversized shipping block still shown');
+  const footer=page.locator('footer .delivery-footer-line');
+  const footerText=await footer.innerText();
+  if(!footerText.includes('Доставка: Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области.'))
+    throw Error(c.name+' footer regional text mismatch: '+footerText);
+  for(const forbidden of ['Сергиев Посад','Ногинск','Ивантеевка','Королёв','Мытищи','Софрино','Основные направления:'])
+    if((await page.locator('footer').innerText()).includes(forbidden))
+      throw Error(c.name+' unexpected city/phrase: '+forbidden);
+  const footerStyle=await footer.evaluate(el=>({
+    px:parseFloat(getComputedStyle(el).fontSize),
+    width:el.getBoundingClientRect().width,
+    scrollWidth:document.documentElement.scrollWidth
+  }));
+  if(footerStyle.px>12||footerStyle.scrollWidth>c.width+2)
+    throw Error(c.name+' footer too big or horizontal overflow '+JSON.stringify(footerStyle));
+  if(c.name==='desktop1440'||c.name==='mobile390'){
+    await footer.scrollIntoViewIfNeeded();
+    await page.screenshot({path:OUT+'/'+c.name+'-footer.png'});
+  }
   await page.locator('.header [data-open-lead]').click();
   await page.locator('#lead-dialog[open]').waitFor();
   const measured=await page.evaluate(()=>{
@@ -73,12 +89,12 @@ try{
   await page.keyboard.press('Escape');
   if(await page.locator('#lead-dialog[open]').count())throw Error(c.name+' Escape close broken');
   if(errors.length)throw Error(c.name+' JS runtime errors '+errors.join('; '));
-  console.log('NY2027_R3_BROWSER_SCENE=PASS',c.name,JSON.stringify({
+  console.log('NY2027_R4_BROWSER_SCENE=PASS',c.name,JSON.stringify({
     dialogWidth:measured.width,dialogHeight:measured.height,dialogScroll:measured.scrollHeight-measured.clientHeight,
     titlePx:measured.headingPx,ctaPx:measured.buttonPx,ctaHeight:measured.buttonHeight
   }));
   await page.close();
  }
- console.log('NY2027_R3_BROWSER=PASS');
-}catch(e){console.error('NY2027_R3_BROWSER=FAIL',e.message);process.exitCode=1}
+ console.log('NY2027_R4_BROWSER=PASS');
+}catch(e){console.error('NY2027_R4_BROWSER=FAIL',e.message);process.exitCode=1}
 finally{await browser.close()}
