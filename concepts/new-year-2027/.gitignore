@@ -1,0 +1,3 @@
+# Keep the four current review screenshots; older local iterations stay local.
+preview-*.jpg
+!preview-holiday-*.jpg

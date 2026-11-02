@@ -1,0 +1,113 @@
+import {chromium} from 'playwright';
+import {mkdir} from 'node:fs/promises';
+
+const BASE='http://127.0.0.1:4187/novyy-god/';
+const OUT='output/new-year-r5-browser';
+await mkdir(OUT,{recursive:true});
+const browser=await chromium.launch({headless:true});
+const errors=[];
+async function doCase(width,height,name){
+ const page=await browser.newPage({viewport:{width,height}});
+ try{
+  page.on('pageerror',e=>errors.push(name+': '+e.message));
+  page.on('console',m=>{if(m.type()==='warning'||m.type()==='error')errors.push(name+': console '+m.text())});
+  page.on('requestfailed',r=>errors.push(name+': HTTP request failed '+r.url()+' '+r.failure()?.errorText));
+  const res=await page.goto(BASE,{waitUntil:'networkidle'});
+  if(!res.ok())throw Error(name+' page status '+res.status());
+  try{await page.locator('#dp-quiz-open').waitFor({timeout:6000});}
+  catch(error){
+    const diag=await page.evaluate(async()=>{
+      const files=['/data/quiz-v1.json','/data/catalog-pricebook.json','/data/site-settings.json','/quiz-engine.mjs','/analytics-core.mjs','/lead-client.mjs'];
+      return {route:location.pathname,quizModule:[...document.querySelectorAll('script')].filter(x=>x.src.includes('holiday')).map(x=>x.src),
+        links:[...document.querySelectorAll('link[rel="stylesheet"]')].map(x=>x.href),
+        footer:!!document.querySelector('footer .footer-links'),
+        responses:await Promise.all(files.map(async x=>{try{return [x,(await fetch(x)).status]}catch(e){return [x,String(e)]}}))};
+    });
+    throw Error(name+' QUIZ_INIT_DIAG '+JSON.stringify(diag)+' ERRORS '+errors.join('; ')+' '+error.message);
+  }
+  if(await page.locator('.dp-quiz-invite[open]').count())throw Error(name+' popped before eight seconds');
+  // The timer starts only while page is visible; no scrolling or inactivity required.
+  await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:11000});
+  // Read actual rendered colors. Dark-on-dark or pale-on-white must fail.
+  const contrast=await page.evaluate(()=>{
+    const css=selector=>{
+      const el=document.querySelector(selector);
+      if(!el)throw Error('missing '+selector);
+      const style=getComputedStyle(el);
+      return {color:style.color,background:style.backgroundColor,
+              fontSize:parseFloat(style.fontSize)};
+    };
+    const rgb=str=>{
+      const values=str.match(/[\d.]+/g)?.slice(0,3).map(Number);
+      if(!values||values.length!==3)throw Error('invalid rgb '+str);
+      return values;
+    };
+    const lum=color=>{
+      const v=rgb(color).map(x=>{
+        const s=x/255;return s<=.04045?s/12.92:((s+.055)/1.055)**2.4;
+      });
+      return v[0]*.2126+v[1]*.7152+v[2]*.0722;
+    };
+    const ratio=({color,background})=>{
+      const a=lum(color),b=lum(background);
+      return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    };
+    const chip=css('.dp-ny-quiz-invite .dp-quiz-invite-stages span');
+    const step=css('.dp-ny-quiz-invite .dp-quiz-invite-stages b');
+    const close=css('.dp-ny-quiz-invite .dp-quiz-invite-close');
+    return {chip:{...chip,ratio:ratio(chip)},
+            step:{...step,ratio:ratio({...step,background:chip.background})},
+            close:{...close,ratio:ratio(close)}};
+  });
+  if(contrast.chip.ratio<4.5||contrast.step.ratio<4.5||contrast.close.ratio<4.5)
+    throw Error(name+' unreadable holiday invite foreground/background: '+JSON.stringify(contrast));
+  if(contrast.chip.fontSize<12 && width>=350)
+    throw Error(name+' invitation chip font too small: '+JSON.stringify(contrast));
+  console.log('NY2027_R51_CONTRAST=PASS',name,JSON.stringify(contrast));
+  await page.screenshot({path:OUT+'/'+name+'-invitation.png'});
+  if(await page.locator('#lead-dialog[open]').count())throw Error(name+' unrelated form opened');
+  await page.locator('.dp-quiz-invite [data-dpq-open]').click();
+  await page.locator('#dp-quiz-dialog[open]').waitFor();
+  const cases=[
+    {title:'Сколько человек обычно будет в бане?',values:['p2','p4','p6','p8'],answer:'p4',labels:['1–2 человека','До 4 человек','5–6 человек','До 8 человек']},
+    {title:'Нужна отдельная помывочная?',values:['w_yes','w_no','w_compare'],answer:'w_compare',labels:['Да, отдельная помывочная','Без отдельной помывочной','Хочу сравнить']},
+    {title:'Нужно место, чтобы остаться на ночь?',values:['b_yes','b_no'],answer:'b_no',labels:['Да, со спальней','Только для банного отдыха']}
+  ];
+  for(let i=0;i<cases.length;i++){
+   const q=cases[i];
+   const title=await page.locator('#dp-quiz-title').innerText();
+   if(title!==q.title)throw Error(name+' quiz question changed: '+title);
+   const opts=await page.locator('#dp-quiz-dialog [data-dpq="answer"]').evaluateAll(xs=>xs.map(x=>({id:x.dataset.value,label:x.querySelector('strong')?.textContent})));
+   if(JSON.stringify(opts.map(x=>x.id))!==JSON.stringify(q.values)||JSON.stringify(opts.map(x=>x.label))!==JSON.stringify(q.labels))
+    throw Error(name+' quiz answer set/order changed '+JSON.stringify(opts));
+   if(i===0)await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+name+'-questions.png'});
+   await page.locator('#dp-quiz-dialog [data-dpq="answer"][data-value="'+q.answer+'"]').click();
+  }
+  await page.locator('#dp-quiz-dialog .dp-quiz-results').waitFor();
+  if(await page.locator('#dp-quiz-dialog .dp-quiz-plan').count()<1)throw Error(name+' original engine produced no recommendations');
+  if(!await page.locator('#dp-quiz-dialog .dp-quiz-cta').innerText().then(x=>x.includes('20 000 ₽')))throw Error(name+' Deluxe price benefit missing');
+  await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+name+'-results.png'});
+  await page.locator('#dp-quiz-dialog [data-dpq="form"]').click();
+  await page.locator('#dp-quiz-dialog #dp-quiz-contact-form').waitFor();
+  await page.locator('#dp-quiz-phone').fill('9991234567');
+  await page.locator('#dp-quiz-city').fill('Переславль-Залесский');
+  await page.locator('#dp-quiz-dialog label.dp-quiz-channel').filter({hasText:'MAX'}).click();
+  await page.locator('#dp-quiz-contact-form button[type="submit"]').click();
+  await page.locator('#dp-quiz-dialog .dp-quiz-good').waitFor({timeout:12000});
+  const receipt=await page.evaluate(async()=>await (await fetch('/_test/receipts')).json());
+  if(receipt.last?.source!=='квиз новый год'||receipt.last?.flow!=='callback'||receipt.last?.pagePath!=='/novyy-god/'||
+    !receipt.last?.hasHolidayContext||!receipt.last?.answers?.includes('помывочная сравнить оба'))
+    throw Error(name+' quiz source/answers lost in MAX lead '+JSON.stringify(receipt));
+  await page.getByRole('button',{name:'Вернуться на сайт'}).click();
+  await page.waitForTimeout(850);
+  if(await page.locator('.dp-quiz-invite[open]').count())throw Error(name+' quiz invite repeated within same session');
+  if(errors.length)throw Error(name+' JS page errors '+errors.join('; '));
+  console.log('NY2027_R5_QUIZ_SCENE=PASS',name,JSON.stringify({titleCount:cases.length,leadSource:receipt.last.source,answerSummary:receipt.last.answers}));
+ }finally{await page.close()}
+}
+try{
+ await doCase(1440,900,'desktop1440');
+ await doCase(390,844,'mobile390');
+ console.log('NY2027_R5_QUIZ_BROWSER=PASS');
+}catch(e){console.error('NY2027_R5_QUIZ_BROWSER=FAIL',e.message);process.exitCode=1}
+finally{await browser.close()}
