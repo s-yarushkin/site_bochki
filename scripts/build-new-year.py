@@ -9,12 +9,31 @@ OUT = ROOT / 'output/new-year-2027-site'
 PAGE = OUT / 'novyy-god'
 (PAGE / 'assets').mkdir(parents=True, exist_ok=True)
 
-for name in ['style.css', 'experience.js', 'lead.mjs', 'lead-contract.mjs','catalog.mjs','models.mjs','countdown.mjs','holiday-quiz.mjs','holiday-quiz-engine.mjs','holiday-quiz-data.json','holiday-quiz.css']:
+# Keep R117's immutable original quiz assets byte-identical on Linux AND Windows.
+# On Windows, Path.write_text() translates LF to CRLF and silently changes Git blobs.
+# Build the three pinned snapshots with binary I/O; normalize only checkout newlines,
+# then fail closed if any actual content differs from the production R117 snapshot.
+R117_QUIZ_BLOBS = {
+    'holiday-quiz-engine.mjs': 'b131f6e9186be5a79d38756d91f60edd918675d0',
+    'holiday-quiz-data.json': 'd0721b7df99475fc1605e30c889cb00dd40263f0',
+    'holiday-quiz.css': 'ae4866a32f0dae680f509f76203443f7a4634322',
+}
+for name in ['style.css', 'experience.js', 'lead.mjs', 'lead-contract.mjs',
+             'catalog.mjs', 'models.mjs', 'countdown.mjs', 'holiday-quiz.mjs']:
     text = (SOURCE / name).read_text('utf-8')
     # Source contract is importable in Node tests; deployed modules use root paths.
     text = text.replace("'../../web/lead-client.mjs'", "'/lead-client.mjs'")
     text = text.replace("'../../web/quote.mjs'", "'/quote.mjs'")
     (PAGE / name).write_text(text, encoding='utf-8')
+for name, expected in R117_QUIZ_BLOBS.items():
+    data = (SOURCE / name).read_bytes().replace(b'\r\n', b'\n')
+    git_sha = hashlib.sha1(b'blob ' + str(len(data)).encode('ascii') + bytes([0]) + data).hexdigest()
+    if git_sha != expected:
+        raise RuntimeError('R117_SNAPSHOT_SOURCE_DRIFT: ' + name + ' actual=' + git_sha)
+    (PAGE / name).write_bytes(data)
+    if (PAGE / name).read_bytes() != data:
+        raise RuntimeError('R117_SNAPSHOT_COPY_ERROR: ' + name)
+print('NY2027_R5_QUIZ_SNAPSHOT=PASS; 3 original R117 blobs; LF byte-identical')
 
 html = (SOURCE / 'index.html').read_text('utf-8')
 html = html.replace(' · Концепция</title>', '</title>')
