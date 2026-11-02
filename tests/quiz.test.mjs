@@ -102,7 +102,7 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
    assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
  }
- assert.match(ui,/Куда прислать планировки и цены\?/);
+ assert.match(ui,/Куда прислать планировки, комплектации и цены\?/);
  assert.match(ui,/Выберите мессенджер/);
  assert.match(ui,/name="channel"/);
  for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
@@ -276,13 +276,21 @@ test('R110 pricing caveat is human and CTA promises only the approved Deluxe bon
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
  assert.ok(ui.includes('Окончательная цена зависит от комплектации и планировки.'));
  assert.ok(ui.includes('Доставка рассчитывается отдельно.'));
- assert.ok(ui.includes('Получить предложение <b>со скидкой 20 000 ₽'));
+ assert.ok(ui.includes('Получить планировки и комплектации с ценами <b>+ скидку 20 000 ₽ на «Делюкс»</b>'));
  assert.ok(ui.includes('Скидка 20 000 ₽ — при выборе комплектации «Делюкс».'));
- assert.ok(ui.includes('Подберём и пришлём планировки, комплектации и цены'));
- assert.ok(ui.includes('Куда прислать планировки и цены?'));
+ assert.ok(ui.includes('Подходящие варианты уже найдены'));
+ assert.ok(ui.includes('Куда прислать планировки, комплектации и цены?'));
  assert.equal(ui.includes('От «Комфорта» меньшего размера до «Делюкса» большего'),false);
  assert.equal(ui.includes('Варианты и цены покажем сразу, без номера телефона'),false);
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
+});
+test('R113 CTA text promises actual plans and prices, restricts bonus to Deluxe',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('Получить планировки и комплектации с ценами'));
+ assert.ok(ui.includes('+ скидку 20 000 ₽ на «Делюкс»'));
+ assert.equal(ui.includes('Получить предложение'),false);
+ assert.equal(ui.includes('скидку 20%'),false);
+ assert.ok(ui.includes('Нажимая «Получить планировки и цены»'));
 });
 test('R110 results are deliberately not clickable; primary action requests plans by messenger',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
@@ -290,8 +298,8 @@ test('R110 results are deliberately not clickable; primary action requests plans
    assert.equal(ui.includes(forbidden),false,'Unexpected navigation in quiz results: '+forbidden);
  }
  assert.ok(ui.includes('dp-quiz-cta-primary'));
- assert.ok(ui.includes('Подберём и пришлём планировки, комплектации и цены'));
- assert.ok(ui.includes('Куда прислать планировки и цены?'));
+ assert.ok(ui.includes('Подходящие варианты уже найдены'));
+ assert.ok(ui.includes('Куда прислать планировки, комплектации и цены?'));
  assert.ok(ui.includes('Квиз: отправить подходящие планировки, комплектации и цены.'));
  assert.ok(ui.includes('Свяжемся с вами в '));
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
