@@ -31,16 +31,12 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  }
  await page.waitForSelector(selectors.result,{timeout:5000});
  const cards=await page.locator('.dp-quiz-plan').count();
- if(cards<2||cards>4)throw new Error(label+' wrong results count: '+cards);
+ if(cards<1||cards>3)throw new Error(label+' wrong results count: '+cards);
  if(await page.locator(selectors.phone).count())throw new Error(label+' phone shown before result CTA');
  await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-result.png'});
  if(await page.locator('#dp-quiz-dialog [data-dpq="form"]').count()!==1)throw new Error(label+' repeated contact CTA');
- const anyPlan=page.locator('.dp-quiz-plan [data-dpq="detail"]').first();
- await anyPlan.click();
- await page.waitForSelector('.dp-quiz-detail-meta');
- if(await page.locator('#dp-quiz-dialog [data-dpq="form"]').count()!==0)throw new Error(label+' contact CTA inside plan detail');
- await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-detail.png'});
- await page.locator('[data-dpq="results"]').click();
+ if(await page.locator('#dp-quiz-dialog [data-dpq="detail"]').count())throw new Error(label+' obsolete floor-plan action');
+ if(await page.locator('.dp-quiz-plan-thumb').count())throw new Error(label+' obsolete floor-plan image');
  await page.locator('[data-dpq="form"]').click();
  await page.waitForSelector(selectors.phone);
  const options=await page.locator('#dp-quiz-contact-form input[name="channel"]').count();
