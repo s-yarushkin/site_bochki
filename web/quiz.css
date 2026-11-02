@@ -199,3 +199,16 @@
   .dp-quiz-invite-stages{margin-bottom:18px}
   .dp-quiz-invite-inner .dp-quiz-action{width:100%}
 }
+/* R108 mobile: photos must remain visible at all three steps, without covering answers. */
+@media(max-width:760px){
+ #dp-quiz-dialog .dp-quiz-frame:not(.is-results):not(.is-form):not(.is-success){
+  display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:clamp(120px,20dvh,165px) minmax(0,1fr);
+ }
+ #dp-quiz-dialog .dp-quiz-frame:not(.is-results):not(.is-form):not(.is-success) .dp-quiz-photo{
+  display:block;min-height:0;height:100%;width:100%;overflow:hidden;
+ }
+ #dp-quiz-dialog .dp-quiz-photo img{object-position:center 42%}
+ #dp-quiz-dialog .dp-quiz-frame:not(.is-results):not(.is-form):not(.is-success) .dp-quiz-main{
+  min-height:0;height:100%;max-height:100%;overflow-y:auto;
+ }
+}
