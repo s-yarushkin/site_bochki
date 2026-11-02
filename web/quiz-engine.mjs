@@ -123,9 +123,11 @@ export function recommendModelRanges(plans, answers, pricebook, rules) {
       plan,price:planPrice(plan,answers.party,pricebook,rules)
     })).filter(x=>Number.isFinite(x.price.rub));
     if(!pool.length)continue;
-    // Price range may include both wash variants when the buyer wants to compare.
-    const lower=Math.min(...pool.map(x=>x.price.rub));
-    const upper=Math.max(...pool.map(x=>x.price.rub));
+    // Lower end: Comfort of the smallest actually suitable layout with its already
+    // approved preliminary room/stove adjustments. Upper end: the *published*
+    // Deluxe matrix of the largest suitable standard size. The Deluxe matrix
+    // ALREADY contains the ASTON +12k upgrade and the +20k customer gift:
+    // never apply a second stove charge or an inferred room charge to it.
     const byOrder=[...pool].sort((x,y)=>{
       const lengthOrder = model==='kvadro-house'
         ? ['4x4','5x4','6x4','6x5','6x6']
@@ -135,9 +137,13 @@ export function recommendModelRanges(plans, answers, pricebook, rules) {
     });
     const first=byOrder[0].plan,last=byOrder[byOrder.length-1].plan;
     const sizes=[...new Set(byOrder.map(x=>x.plan.size))];
+    const lower=Math.min(...byOrder.filter(x=>x.plan.size===first.size).map(x=>x.price.rub));
+    const upper=pricebook?.deluxePrices?.[model]?.[last.size];
+    if(!Number.isFinite(upper)||upper<lower)throw new Error('QUIZ_DELUXE_PRICE_MISSING_OR_INVALID:'+model+':'+last.size);
     results.push({
       model,plans:byOrder.map(x=>x.plan),codes:byOrder.map(x=>x.plan.code),
       sizes,firstSize:first.size,lastSize:last.size,
+      rangeLowerPackage:'comfort',rangeUpperPackage:'deluxe',
       minRub:lower,maxRub:upper,
       displayMinRub:Math.ceil(lower/1000)*1000,
       displayMaxRub:Math.ceil(upper/1000)*1000
