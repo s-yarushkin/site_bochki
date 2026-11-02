@@ -132,6 +132,9 @@ test('invitation appears earlier but never auto-opens a full-screen quiz',()=>{
  assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
  assert.match(ui,/invite\.hidden=false/);
  assert.match(ui,/dialog\.showModal\(\)/);
+ const builder=readFileSync(new URL('../r107/build.py',import.meta.url),'utf8');
+ assert.match(builder,/r107-invite35/,'New preview must invalidate cached R106 script');
+ assert.match(builder,/R107-PREVIEW/);
  const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('function launch('));
  assert.doesNotMatch(trigger,/showModal\(/,'Automated invitation must not open a blocking modal');
 });
