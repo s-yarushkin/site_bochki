@@ -272,6 +272,21 @@ test('R112 calculator invitation supports #configure and skipped scroll without 
  assert.equal(ui.includes('r.bottom>0;'),false,'Do not miss the calculator after fast scroll');
  assert.equal(ui.includes('inviteScrollFraction'),false,'No global scroll percentage trigger');
 });
+test('R114 stores actual invite display, mounts static CTA after site sections and catches fast scroll to footer',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes("shownThisVisit=alreadyShown;"),'Earlier answers should not suppress the auto invitation');
+ assert.equal(ui.includes('shownThisVisit=alreadyShown||Object.values(state.answers).some(Boolean)'),false);
+ assert.ok(ui.includes("nearBottom=y+innerHeight>=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)"));
+ assert.ok(ui.includes("entry.className='dp-quiz-entry dp-quiz-entry--bottom wrap'"));
+ assert.ok(ui.includes('main.append(entry)'));
+ assert.ok(ui.includes("if(!main)throw new Error('QUIZ_BOTTOM_MOUNT_MISSING')"));
+ assert.equal(ui.includes("$('#models').prepend(entry)"),false);
+ assert.equal(ui.includes("anchor.insertAdjacentElement('afterend',entry)"),false);
+ assert.ok(ui.includes("sessionStorage.setItem(inviteShownSessionKey,'1')"));
+ assert.ok(ui.includes("const ritualInView=()=>"));
+ const css=readFileSync(new URL('../web/quiz.css',import.meta.url),'utf8');
+ assert.ok(css.includes('.dp-quiz-entry.dp-quiz-entry--bottom'));
+});
 test('R110 pricing caveat is human and CTA promises only the approved Deluxe bonus',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
  assert.ok(ui.includes('Окончательная цена зависит от комплектации и планировки.'));
