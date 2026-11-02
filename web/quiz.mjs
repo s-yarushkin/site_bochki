@@ -30,6 +30,8 @@ const question=[
 const safe=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const rub=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Math.ceil(n))+' ₽';
 const liveKey='dp_quiz_answers_v1',hiddenKey='dp_quiz_invite_suppressed_until_v1';
+// Invitе is non-modal: the full quiz opens only when the visitor clicks its button.
+const inviteDelayMs=10000,inviteScrollFraction=0.35;
 const state={step:0,view:'question',answers:{},selectedCode:null,expanded:false,sending:false,phone:'',channel:'',error:'',success:false,requestId:null};
 let quiz=null,book=null,settings=null,dialog=null,invite=null,launcher=null,scrollSeen=false,interacted=false,shownThisVisit=false,startedAt=Date.now(),lastOpener=null;
 const trace=(name,params={})=>{try{analytics?.track(name,{placement:'catalog',...params})}catch{}};
@@ -38,7 +40,7 @@ const load=()=>{try{const a=JSON.parse(sessionStorage.getItem(liveKey)||'{}');if
 const hideInvite=(dismissed=false)=>{if(invite)invite.hidden=true;if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
 const canInvite=()=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
   let savedChoice=false;try{savedChoice=!!JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{}
-  return !shownThisVisit && !savedChoice && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && Date.now()-startedAt>12000 && !location.hash && !document.activeElement?.matches?.('input,textarea,select');};
+  return !shownThisVisit && !savedChoice && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && Date.now()-startedAt>=inviteDelayMs && !location.hash && !document.activeElement?.matches?.('input,textarea,select');};
 const maybeInvite=()=>{if(!canInvite()||!scrollSeen)return;shownThisVisit=true;invite.hidden=false;trace('dp_quiz_invite_view')};
 function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
@@ -163,9 +165,9 @@ function bind(){
   invite.querySelector('[data-dpq-hide]').addEventListener('click',()=>hideInvite(true));
   launcher.addEventListener('click',launch);
   document.addEventListener('click',e=>{if(e.target.closest('#configure,#home-plans,[data-model-card],[data-flow],[data-preset],[data-inquiry],[data-save-choice],[data-size-picker],#contact-dialog,#gallery-dialog,#inquiry-dialog'))interacted=true},{capture:true,passive:true});
-  window.addEventListener('scroll',()=>{const height=document.documentElement.scrollHeight-innerHeight;if(height>0&&scrollY/height>.60)scrollSeen=true;maybeInvite()},{passive:true});
+  window.addEventListener('scroll',()=>{const height=document.documentElement.scrollHeight-innerHeight;if(height>0&&scrollY/height>=inviteScrollFraction)scrollSeen=true;maybeInvite()},{passive:true});
   document.addEventListener('visibilitychange',maybeInvite);
-  window.setTimeout(maybeInvite,12500);
+  window.setTimeout(maybeInvite,inviteDelayMs+500);
   if(matchMedia('(hover:hover) and (pointer:fine)').matches){document.addEventListener('mouseout',e=>{if(e.clientY<=0&&e.relatedTarget===null&&scrollY>180&&Date.now()-startedAt>15000){scrollSeen=true;maybeInvite()}},{passive:true})}
 }
 async function init(){
