@@ -170,8 +170,9 @@ class TestR113CommercialCTA(unittest.TestCase):
   self.assertEqual(r113.OLD_BLOBS['quiz.mjs'],'139becc2573f69eebd49e374cf93b138a1fa059f')
   self.assertEqual(r113.OLD_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
   self.assertEqual(set(r113.NEW_BLOBS),{'quiz.mjs','quiz.css'})
-  for name,expected in r113.NEW_BLOBS.items():
-   self.assertEqual(r113.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  # R113 was deployed; current working files belong to the next release.
+  self.assertEqual(r113.NEW_BLOBS['quiz.mjs'],'02caec189a3e3e28c2c05825d3bf86d168fa7271')
+  self.assertEqual(r113.NEW_BLOBS['quiz.css'],'fdb2f9a3d2dfbee30096f2197ae351251836602e')
   oldhtml='<link href="/quiz.css?v=r110-leads-ce74814a"><script type="module" src="/quiz.mjs?v=r112-trigger-139becc2"></script>'
   result=r113.prepare_html(oldhtml,r113.locate_quiz_assets(oldhtml))
   self.assertIn('/quiz.mjs?v='+r113.VERSION,result)
@@ -188,5 +189,28 @@ class TestR113CommercialCTA(unittest.TestCase):
    self.assertIn(phrase,script)
   self.assertNotIn('sqlite3.connect',script)
   self.assertNotIn('systemctl',script)
+
+
+class TestR114ScrollAndBottomMount(unittest.TestCase):
+ def test_r114_deploy_is_pinned_to_live_r113_without_api_or_sqlite(self):
+  spec=importlib.util.spec_from_file_location('r114_remote',ROOT/'scripts/r114-quiz-scroll-remote.py')
+  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+  self.assertEqual(mod.EXPECTED_ACTIVE,'DPQUIZ-r113-cta-02caec18fdb2f9a3')
+  self.assertTrue(mod.NEW_NAME.startswith('DPQUIZ-r114-scroll-'))
+  self.assertEqual(mod.OLD_BLOBS['quiz.mjs'],'02caec189a3e3e28c2c05825d3bf86d168fa7271')
+  self.assertEqual(mod.OLD_BLOBS['quiz.css'],'fdb2f9a3d2dfbee30096f2197ae351251836602e')
+  self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs','quiz.css'})
+  for name,expected in mod.NEW_BLOBS.items():
+   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  home='<link href="/quiz.css?v=r113-cta-02caec18"><script type="module" src="/quiz.mjs?v=r113-cta-02caec18"></script>'
+  html=mod.prepare_html(home,mod.locate_quiz_assets(home))
+  for asset in ['quiz.mjs','quiz.css']:
+   self.assertIn('/'+asset+'?v='+mod.VERSION,html)
+   self.assertNotIn('/'+asset+'?v=r113-cta-02caec18',html)
+  installer=(ROOT/'scripts/r114-quiz-scroll-remote.py').read_text('utf8')
+  for needle in ['R114_SCROLL_PREFLIGHT','R114_SCROLL_DEPLOY','API_SQLITE=UNTOUCHED','nearBottom=y+innerHeight>=','dp-quiz-entry--bottom wrap']:
+   self.assertIn(needle,installer)
+  self.assertNotIn('sqlite3.connect',installer)
+  self.assertNotIn('systemctl',installer)
 
 if __name__=='__main__':unittest.main()
