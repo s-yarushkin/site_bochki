@@ -74,21 +74,26 @@ test('selected model and size use a standard quote payload for the existing MAX 
 });
 
 
-test('R2 holiday lead dialog has agreed sales headline, larger readable typography and delivery geography',()=>{
+test('R3 lead dialog has two columns, compact offer, large CTA and unchanged delivery geography',()=>{
  const html=readFileSync(new URL('../concepts/new-year-2027/index.html',import.meta.url),'utf8');
  const css=readFileSync(new URL('../concepts/new-year-2027/style.css',import.meta.url),'utf8');
  assert.match(html,/<h2 id="form-heading">Пришлём подходящие варианты, цены и комплектации<\/h2>/);
- assert.doesNotMatch(html,/Пришлём варианты<br>для вашей мечты/);
+ assert.match(html,/class="dialog-story"/);
+ assert.match(html,/class="dialog-action"/);
+ assert.match(html,/<div class="dialog-winter" aria-hidden="true">/);
+ assert.match(html,/<form id="lead-form" action="\/api\/lead" method="post">/);
+ assert.match(html,/id="form-description"/);
  assert.match(html,/<section class="delivery-geography" aria-labelledby="delivery-geography-title">/);
- assert.match(html,/<h2 id="delivery-geography-title">География доставки<\/h2>/);
  for(const region of ['Москва и Московская область','Ярославская область','Вологодская область','Ленинградская область'])
    assert.ok(html.includes('<li>'+region+'</li>'),region);
- assert.ok(html.indexOf('delivery-geography')>html.indexOf('</section>'),'Delivery must be below hero');
- assert.ok(html.indexOf('delivery-geography')<html.indexOf('</main>'),'Delivery must precede footer');
- assert.match(html,/style\.css\?v=ny2027-r2/);
- assert.match(css,/#lead-dialog\{\s*width:min\(660px,calc\(100% - 40px\)\)/);
- assert.match(css,/#lead-dialog h2\{font-size:clamp\(34px,3vw,42px\)/);
- assert.match(css,/@media\(max-width:700px\)\{\s*#lead-dialog\{width:calc\(100% - 20px\)/);
- assert.match(css,/\.delivery-regions\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
- assert.match(css,/\.delivery-regions\{grid-template-columns:1fr/);
+ assert.ok(html.indexOf('delivery-geography')>html.indexOf('</section>'));
+ assert.ok(html.indexOf('delivery-geography')<html.indexOf('</main>'));
+ assert.match(html,/style\.css\?v=ny2027-r3/);
+ assert.match(css,/#lead-dialog\{[\s\S]*?width:min\(1280px,calc\(100vw - 48px\)\)/);
+ assert.match(css,/#lead-dialog\[open\]\{\s*display:grid;/);
+ assert.match(css,/grid-template-columns:minmax\(0,1\.05fr\) minmax\(0,\.95fr\)/);
+ assert.match(css,/#lead-dialog #submit-lead\{\s*min-height:90px/);
+ assert.match(css,/@media\(max-width:900px\)\{/);
+ assert.match(css,/#lead-dialog\[open\]\{grid-template-columns:1fr\}/);
+ assert.match(css,/@media\(max-width:420px\)\{/);
 });
