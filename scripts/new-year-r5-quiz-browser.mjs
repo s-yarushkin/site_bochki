@@ -62,7 +62,7 @@ async function doCase(width,height,name){
   if(receipt.last?.source!=='квиз новый год'||receipt.last?.flow!=='callback'||receipt.last?.pagePath!=='/novyy-god/'||
     !receipt.last?.hasHolidayContext||!receipt.last?.answers?.includes('помывочная сравнить оба'))
     throw Error(name+' quiz source/answers lost in MAX lead '+JSON.stringify(receipt));
-  await page.locator('#dp-quiz-dialog [data-dpq="close"]').click();
+  await page.getByRole('button',{name:'Вернуться на сайт'}).click();
   await page.waitForTimeout(850);
   if(await page.locator('.dp-quiz-invite[open]').count())throw Error(name+' quiz invite repeated within same session');
   if(errors.length)throw Error(name+' JS page errors '+errors.join('; '));
