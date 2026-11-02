@@ -110,70 +110,76 @@ class ReleaseTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'route already exists'):
             deploy.check()
 
-    def install_r4_route_fixture(self):
-        approved = self.releases / deploy.R5_OLD_RELEASE
+    def install_r5_fixture(self):
+        approved = self.releases / deploy.R51_OLD_RELEASE
         self.old.rename(approved)
         self.old = approved
         self.current = approved
+        # R5 is already live: all 28 holiday files, including frozen quiz assets.
         for name, data in self.files.items():
-            if name in deploy.R5_NEW:
-                continue
             p = self.old / name
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_bytes(data)
         (self.old / 'novyy-god/index.html').write_text(
-            '<html><link href="style.css?v=ny2027-r4"><h2>Пришлём подходящие варианты, цены и комплектации</h2>'
-            '<p id="delivery-geography-title">География</p><div class="dialog-story"></div></html>', encoding='utf-8')
+            '<html><link href="style.css?v=ny2027-r5">'
+            '<link href="holiday-quiz.css?v=ny2027-r5">'
+            '<a href="/consent.html">Согласие</a>'
+            '<div class="dialog-story"></div>'
+            '<script src="holiday-quiz.mjs?v=ny2027-r5"></script></html>',
+            encoding='utf-8')
         (self.old / 'novyy-god/style.css').write_text(
-            '/* NY2027 R4 */ #lead-dialog{max-width:1280px;}', encoding='utf-8')
+            '/* NY2027 R5 — winter quiz */'
+            '.dp-ny-quiz-invite .dp-quiz-invite-stages{color:#f8e1bd}',
+            encoding='utf-8')
         self.files['novyy-god/index.html'] = (
-            '<html><link href="style.css?v=ny2027-r5"><link href="holiday-quiz.css?v=ny2027-r5">'
-            '<h2>Пришлём подходящие варианты, цены и комплектации</h2>'
-            '<a href="/consent.html">Согласие на обработку</a>'
-            '<a href="/privacy.html">Политика обработки данных</a>'
-            '<p id="delivery-geography-title">Регионы</p>'
-            '<div class="dialog-story"></div><script src="holiday-quiz.mjs?v=ny2027-r5"></script></html>'
+            '<html><link href="style.css?v=ny2027-r51-contrast">'
+            '<link href="holiday-quiz.css?v=ny2027-r5">'
+            '<a href="/consent.html">Согласие</a>'
+            '<div class="dialog-story"></div>'
+            '<script src="holiday-quiz.mjs?v=ny2027-r5"></script></html>'
         ).encode('utf-8')
-        self.files['novyy-god/style.css'] = b'/* NY2027 R5 */ #lead-dialog{max-width:1280px;}'
-        self.files['novyy-god/lead.mjs'] = b"import {callbackAvailable} from '/lead-client.mjs'; campaignInquiry(values,crypto.randomUUID());"
+        self.files['novyy-god/style.css'] = (
+            '/* NY2027 R5 — winter quiz */'
+            '.dp-ny-quiz-invite .dp-quiz-invite-stages{color:#f8e1bd}'
+            '/* NY2027 R5.1 CONTRAST */'
+            'dialog.dp-ny-quiz-invite .dp-quiz-invite-stages span{color:#fff5e4;background:#234b3e}'
+            'dialog.dp-ny-quiz-invite .dp-quiz-invite-close{color:#193a2e;background:#fff8ea}'
+        ).encode('utf-8')
+        for name in deploy.R117_GIT_BLOBS:
+            self.files[name] = (ROOT / 'concepts/new-year-2027'
+                                / name.removeprefix('novyy-god/')).read_bytes()
+            (self.old / name).write_bytes(self.files[name])
+        # The holiday quiz itself and its attribution remain unchanged.
         self.files['novyy-god/holiday-quiz.mjs'] = (
-            "const question=[['p2','1–2 человека'],['p4','До 4 человек'],"
-            "['p6','5–6 человек'],['p8','До 8 человек'],"
-            "title:'Нужна отдельная помывочная?',"
-            "title:'Нужно место, чтобы остаться на ночь?'];"
-            "let visibleRemainingMs=8000; const source='Источник: квиз новый год';"
-            "const context={pagePath:'/novyy-god/'};"
-            "const answer=()=>recommendModelRanges();"
-            "const key='dp_ny2027_quiz_invite_seen_session';"
-        ).encode('utf-8')
-        for rel in ['holiday-quiz.mjs','holiday-quiz-engine.mjs','holiday-quiz-data.json','holiday-quiz.css']:
-            self.files['novyy-god/'+rel] = (ROOT/'concepts/new-year-2027'/rel).read_bytes()
+            b'/* original R5 */ Source: ' + 'Источник: квиз новый год'.encode('utf-8')
+        )
+        (self.old / 'novyy-god/holiday-quiz.mjs').write_bytes(
+            self.files['novyy-god/holiday-quiz.mjs'])
         self.pack()
 
-    def test_r5_upgrade_preserves_live_r117_and_old_route_assets(self):
-        self.install_r4_route_fixture()
-        for name, data in [('quiz.mjs', 'R117 live quiz'),
-                           ('analytics-core.mjs', 'R117 live Metrika')]:
-            (self.old / name).write_text(data, encoding='utf-8')
+    def test_r51_upgrades_only_html_css_without_touching_r117_or_quiz(self):
+        self.install_r5_fixture()
+        (self.old / 'quiz.mjs').write_text('R117 unchanged')
+        (self.old / 'analytics-core.mjs').write_text('R117 Metrika unchanged')
         before = deploy.inventory(self.old)
         deploy.check()
         self.assertEqual(self.current, self.old)
         deploy.apply()
         after = deploy.inventory(self.current)
-        diff = {name for name, hashed in after.items() if before.get(name) != hashed}
-        self.assertEqual(diff, deploy.R5_EDITABLE)
-        self.assertEqual((self.current / 'quiz.mjs').read_text(), 'R117 live quiz')
-        self.assertEqual((self.current / 'analytics-core.mjs').read_text(), 'R117 live Metrika')
-        for unchanged in ['index.html','data/catalog-pricebook.json',
-                          'novyy-god/assets/winter-sauna-640.webp','novyy-god/lead-contract.mjs']:
-            self.assertEqual(after[unchanged],before[unchanged])
+        changed = {name for name in after if before.get(name) != after[name]}
+        self.assertEqual(changed, deploy.R51_EDITABLE)
+        for name in ['quiz.mjs', 'analytics-core.mjs',
+                     'novyy-god/holiday-quiz.mjs', 'novyy-god/holiday-quiz-engine.mjs',
+                     'novyy-god/holiday-quiz-data.json','novyy-god/holiday-quiz.css',
+                     'index.html','data/catalog-pricebook.json']:
+            self.assertEqual(after[name],before[name],name)
         state = self.backups / self.current.name / 'state.json'
         deploy.rollback(state)
-        self.assertEqual(deploy.inventory(self.current), before)
+        self.assertEqual(deploy.inventory(self.current),before)
 
-    def test_r5_upgrade_rejects_other_active_release_or_route_asset_drift(self):
-        self.install_r4_route_fixture()
-        (self.old / 'novyy-god/assets/winter-sauna-640.webp').write_bytes(b'altered')
+    def test_r51_rejects_unknown_release_or_changed_route_asset(self):
+        self.install_r5_fixture()
+        (self.old / 'novyy-god/holiday-quiz.css').write_bytes(b'altered')
         with self.assertRaisesRegex(RuntimeError, 'immutable holiday asset drift'):
             deploy.check()
         self.old.rename(self.releases / 'NY2027-unapproved-release')
@@ -182,46 +188,47 @@ class ReleaseTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'route already exists outside approved'):
             deploy.check()
 
-    def test_r5_upgrade_rejects_unapproved_route_changes_and_unexpected_files(self):
-        self.install_r4_route_fixture()
-        (self.old / 'novyy-god/index.html').write_text('unrecognized page',encoding='utf-8')
-        with self.assertRaisesRegex(RuntimeError, 'unexpected previous R4 holiday page'):
+    def test_r51_rejects_drifted_previous_css_or_unknown_files(self):
+        self.install_r5_fixture()
+        (self.old / 'novyy-god/style.css').write_text('unrecognized CSS')
+        with self.assertRaisesRegex(RuntimeError, 'unexpected previous R5 quiz colors'):
             deploy.check()
-        (self.old / 'novyy-god/index.html').write_text(
-            '<link href="style.css?v=ny2027-r4"><p id="delivery-geography-title">Футер</p>'
-            '<div class="dialog-story"></div>',encoding='utf-8')
-        (self.old / 'novyy-god/extra.js').write_text('unexpected',encoding='utf-8')
+        (self.old / 'novyy-god/style.css').write_text(
+            '/* NY2027 R5 — winter quiz */'
+            '.dp-ny-quiz-invite .dp-quiz-invite-stages{color:#f8e1bd}')
+        (self.old / 'novyy-god/extra.js').write_text('unexpected')
         with self.assertRaisesRegex(RuntimeError, 'unexpected files inside existing'):
             deploy.check()
 
-    def test_r5_upgrade_rejects_missing_consent_or_wrong_quiz_source(self):
-        self.install_r4_route_fixture()
-        self.files['novyy-god/index.html'] = self.files['novyy-god/index.html'].replace(b'/consent.html',b'/lost.html')
+    def test_r51_rejects_missing_color_contrast_or_stale_css_version(self):
+        self.install_r5_fixture()
+        self.files['novyy-god/style.css'] = self.files['novyy-god/style.css'].replace(
+            b'background:#234b3e',b'background:#fafafa')
         self.pack()
-        with self.assertRaisesRegex(RuntimeError, 'missing consent'):
+        with self.assertRaisesRegex(RuntimeError, 'R5.1 high-contrast'):
             deploy.check()
-        self.files['novyy-god/index.html'] = self.files['novyy-god/index.html'].replace(b'/lost.html',b'/consent.html')
-        self.files['novyy-god/holiday-quiz.mjs'] = self.files['novyy-god/holiday-quiz.mjs'].replace(
-            b'8000',b'9000'
-        )
+        self.files['novyy-god/style.css'] = self.files['novyy-god/style.css'].replace(
+            b'background:#fafafa',b'background:#234b3e')
+        self.files['novyy-god/index.html'] = self.files['novyy-god/index.html'].replace(
+            b'style.css?v=ny2027-r51-contrast',b'style.css?v=ny2027-r5')
         self.pack()
-        with self.assertRaisesRegex(RuntimeError, 'eight-second NY quiz'):
+        with self.assertRaisesRegex(RuntimeError, 'R5.1 CSS cache'):
             deploy.check()
 
-    def test_r5_upgrade_rolls_back_after_public_failure(self):
-        self.install_r4_route_fixture()
-        before=deploy.inventory(self.old)
+    def test_r51_auto_rolls_back_after_public_mismatch(self):
+        self.install_r5_fixture()
+        before = deploy.inventory(self.old)
         deploy.check()
-        with patch.object(deploy,'public_check',side_effect=RuntimeError('public JS mismatch')):
-            with self.assertRaisesRegex(RuntimeError,'public JS mismatch'):
+        with patch.object(deploy,'public_check',side_effect=RuntimeError('public CSS mismatch')):
+            with self.assertRaisesRegex(RuntimeError,'public CSS mismatch'):
                 deploy.apply()
         self.assertEqual(self.current,self.old)
         self.assertEqual(deploy.inventory(self.current),before)
 
-    def test_r5_upgrade_check_invalidated_when_r117_changes(self):
-        self.install_r4_route_fixture()
+    def test_r51_stops_if_r117_changes_after_check(self):
+        self.install_r5_fixture()
         deploy.check()
-        (self.old/'analytics-core.mjs').write_text('another deployment',encoding='utf-8')
+        (self.old/'analytics-core.mjs').write_text('another release')
         with self.assertRaisesRegex(RuntimeError,'baseline changed'):
             deploy.apply()
         self.assertEqual(self.current,self.old)
