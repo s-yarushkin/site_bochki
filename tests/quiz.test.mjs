@@ -260,6 +260,18 @@ test('Deluxe matrix has exactly the 20 approved model and size prices from 2026-
  }
  assert.equal(Object.values(book.deluxePrices).reduce((n,x)=>n+Object.keys(x).length,0),20);
 });
+test('R112 calculator invitation supports #configure and skipped scroll without interrupting ritual',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('const canInvite=(reason)=>'));
+ assert.ok(ui.includes("reason==='your-bath'||(reason==='models-idle'&&!savedChoice&&!interacted)"));
+ assert.ok(ui.includes('const ritualInView=()=>'));
+ assert.ok(ui.includes("!reachedYourBath()||ritualInView()"));
+ assert.ok(ui.includes('handleScroll();'), 'Evaluate initial scroll after async init');
+ assert.ok(ui.includes("!shownThisVisit && Date.now()>until"));
+ assert.equal(ui.includes("!location.hash"),false,'Anchor URLs must not suppress invite');
+ assert.equal(ui.includes('r.bottom>0;'),false,'Do not miss the calculator after fast scroll');
+ assert.equal(ui.includes('inviteScrollFraction'),false,'No global scroll percentage trigger');
+});
 test('R110 pricing caveat is human and CTA promises only the approved Deluxe bonus',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
  assert.ok(ui.includes('Окончательная цена зависит от комплектации и планировки.'));
