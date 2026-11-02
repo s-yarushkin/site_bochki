@@ -3,6 +3,37 @@
   "version": "DP-QUIZ-V1-20261031",
   "status": "preliminary",
   "sourcePriceParity": "docs/PRICING_PARITY.md",
+  "deluxePrices": {
+    "kvadro": {
+      "400": 519000,
+      "450": 550000,
+      "500": 597000,
+      "550": 623000,
+      "600": 639000
+    },
+    "parus": {
+      "400": 560000,
+      "450": 582000,
+      "500": 637000,
+      "550": 654000,
+      "600": 665000
+    },
+    "viking": {
+      "400": 604000,
+      "450": 646000,
+      "500": 747000,
+      "550": 764000,
+      "600": 775000
+    },
+    "kvadro-house": {
+      "4x4": 830000,
+      "5x4": 946000,
+      "6x4": 1002000,
+      "6x5": 1072000,
+      "6x6": 1142000
+    }
+  },
+  "deluxePriceSource": "Google Sheets Цены и прибыль A4:K23, approved snapshot docs/pricing-update-2026-11-02.md, 2026-11-02. ASTON +12000 and gift +20000 already included; quiz use only",
   "priceRules": {
     "extraRoomRub": 13540.5,
     "stoves": {
