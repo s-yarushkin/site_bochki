@@ -81,7 +81,7 @@ test('R4 preserves the wide lead form and keeps delivery geography as a discreet
  assert.match(html,/class="dialog-story"/);
  assert.match(html,/class="dialog-action"/);
  assert.match(html,/<form id="lead-form" action="\/api\/lead" method="post">/);
- assert.match(html,/<p class="delivery-footer-line">Производство — Вологда\.<br>Доставка: Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области\.<\/p>/);
+ assert.match(html,/<p id="delivery-geography-title" class="delivery-footer-line">Производство — Вологда\.<br>Доставка: Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области\.<\/p>/);
  assert.ok(html.indexOf('class="delivery-footer-line"')>html.indexOf('</main>'),'Delivery belongs only to footer');
  assert.equal(html.includes('class="delivery-geography"'),false,'Oversized shipping section must be removed');
  assert.equal(html.includes('Основные направления:'),false,'Specific towns must be removed');
