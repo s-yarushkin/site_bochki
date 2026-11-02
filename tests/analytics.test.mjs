@@ -32,7 +32,7 @@ test('quiz success and Pereslavl goals need both persisted delivery and a unique
  assert.equal(calls.filter(x=>x[2]==='dp_quiz_lead_pereslavl_confirmed').length,1);
  assert.equal(calls.filter(x=>x[2]==='dp_lead_confirmed').length,1);
  assert.equal(calls.filter(x=>x[2]==='dp_callback_lead_confirmed').length,1);
- assert.deepEqual(Object.keys(calls.find(x=>x[2]==='dp_quiz_lead_pereslavl_confirmed')[3]).sort(),['event_version','flow','placement']);
+ assert.deepEqual(Object.keys(calls.find(x=>x[2]==='dp_quiz_lead_pereslavl_confirmed')[3]).sort(),['event_version','flow','page_path','placement']);
  assert.equal(a.confirmed(ok,{flow:'callback',requestId:'quiz-other-2',quiz:true,pereslavl:false}),true);
  assert.equal(calls.filter(x=>x[2]==='dp_quiz_lead_confirmed').length,2);
  assert.equal(calls.filter(x=>x[2]==='dp_quiz_lead_pereslavl_confirmed').length,1);
