@@ -1,0 +1,26 @@
+{
+  "version": "R108-2026-11-02",
+  "status": "approved editorial illustrations for quiz steps",
+  "note": "AI-generated illustrations; do not claim they are photos of completed DachaPar units",
+  "entryPhoto": "/r101/assets/parus-editorial-960.webp",
+  "files": [
+    {
+      "path": "web/assets/quiz/step1-steamroom.webp",
+      "width": 508,
+      "height": 764,
+      "sha256": "4099ca2fa5dd61957c9c2a3ac55dca36c0f743c7e52e8944fbddb62ff8c0016c"
+    },
+    {
+      "path": "web/assets/quiz/step2-washroom.webp",
+      "width": 495,
+      "height": 764,
+      "sha256": "3871ae9d0207c48354700100cd19b8e9fc28fd8eadd62ad90052ee749bdc5918"
+    },
+    {
+      "path": "web/assets/quiz/step3-bedroom.webp",
+      "width": 512,
+      "height": 764,
+      "sha256": "bc308677205f0ae97ab8dd26450cd8ee6a906878735411e02a1a171c1fac8d90"
+    }
+  ]
+}
