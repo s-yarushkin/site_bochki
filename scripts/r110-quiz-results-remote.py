@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""R110 compact results and genuine plan previews; WEB-only fail-closed release."""
+"""R110 lead-focused results; WEB-only fail-closed release without plan thumbnails."""
 import argparse
 import hashlib
-import json
 import os
 import re
 import subprocess
@@ -11,26 +10,26 @@ import urllib.request
 from pathlib import Path
 
 REPO = "s-yarushkin/site_bochki"
-SOURCE_COMMIT = "ca9710670193af804ecfa18145c61211963f1ed2"
+SOURCE_COMMIT = "166ab77cd3224d323a6939505a3eb57255a72066"
 WEB_LINK = Path("/srv/sites/dachapar-preview/current")
 RELEASES = Path("/srv/sites/dachapar-preview/releases")
 EXPECTED_ACTIVE = "DPQUIZ-r109-invite-a01e6016ce53"
-NEW_NAME = "DPQUIZ-r110-results-d728cb7501c87385"
+NEW_NAME = "DPQUIZ-r110-leads-b0184c95f648068e"
 NEW_RELEASE = RELEASES / NEW_NAME
 OLD_BLOBS = {
     "quiz.mjs": "a01e6016ca0feabf763f3b8443b7dfa358077d84",
     "quiz.css": "ce5309287a86123b672d8f552d41939c146bc18b",
 }
 NEW_BLOBS = {
-    "quiz.mjs": "d728cb75c32dad33e6efcc25d5b491ef8a4e6851",
-    "quiz.css": "01c87385f3ac7ab64476f2fe0e2169ce0033b6f3",
+    "quiz.mjs": "b0184c95c96f084db06609e5b76479123aac9e75",
+    "quiz.css": "f648068eb247dedf25310e39625c51f080b41663",
 }
 PHOTOS = {
     "assets/quiz/step1-steamroom.webp": "4099ca2fa5dd61957c9c2a3ac55dca36c0f743c7e52e8944fbddb62ff8c0016c",
     "assets/quiz/step2-washroom.webp": "3871ae9d0207c48354700100cd19b8e9fc28fd8eadd62ad90052ee749bdc5918",
     "assets/quiz/step3-bedroom.webp": "bc308677205f0ae97ab8dd26450cd8ee6a906878735411e02a1a171c1fac8d90",
 }
-VERSION = "r110-results-d728cb75"
+VERSION = "r110-leads-b0184c95"
 HTML_ASSETS = {"quiz.css": "href", "quiz.mjs": "src"}
 
 def stop(msg):
@@ -71,20 +70,6 @@ def check_active():
         p = active / name
         if not p.is_file() or sha256(p.read_bytes()) != expected:
             stop("approved R108 photo missing or different: " + name)
-    # R110 uses published plan thumbnails: fail rather than show broken images.
-    catalog = json.loads((active / "data/quiz-v1.json").read_text("utf-8"))
-    plans = catalog.get("plans", [])
-    if len(plans) != 41:
-        stop("unexpected quiz layout catalog")
-    for plan in plans:
-        picture = plan.get("image")
-        if not picture:
-            continue
-        if not picture.startswith("/assets/plans/") or ".." in picture:
-            stop("unsafe plan image path: " + str(picture))
-        asset = active / picture.lstrip("/")
-        if asset.is_symlink() or not asset.is_file():
-            stop("published quiz plan image missing: " + picture)
     if (active / "index.html").is_symlink():
         stop("live index.html must be a regular file")
     home = (active / "index.html").read_text("utf-8")
@@ -123,9 +108,12 @@ def main():
     old, old_html, current_urls = check_active()
     files = fetch_approved_files()
     new_html = prepare_html(old_html, current_urls)
-    for phrase in ["со скидкой 20 000 ₽", "Окончательная цена зависит от комплектации и планировки.", "dp-quiz-layout-preview", "planDetailView"]:
+    for phrase in ["со скидкой 20 000 ₽", "Окончательная цена зависит от комплектации и планировки.", "Подберём и пришлём планировки", "Куда прислать планировки и цены?"]:
         if phrase not in files["quiz.mjs"].decode("utf-8"):
             stop("approved results component missing: " + phrase)
+    for obsolete in ["dp-quiz-layout-preview", "modelRoutes", "planDetailView("]:
+        if obsolete in files["quiz.mjs"].decode("utf-8"):
+            stop("unapproved navigation remains in R110 results: " + obsolete)
     if args.check:
         print("R110_RESULTS_PREFLIGHT=PASS; old=" + str(old) + "; files=2; photos=3; API/SQLite untouched")
         print("HTML_ORIGINAL=" + str(current_urls))
