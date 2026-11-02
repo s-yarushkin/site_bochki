@@ -1,7 +1,7 @@
 import {ANSWERS,validAnswers,guestExplanation,recommendModelRanges} from './quiz-engine.mjs?v=r108-ranges';
 import {buildCallback,submitLead} from './lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from './phone-mask.mjs';
-import {analytics} from './analytics-core.mjs';
+import {analytics} from './analytics-core.mjs?v=r117-quiz-goals';
 
 const $=(selector,root=document)=>root.querySelector(selector);
 // The three editorial photos are approved for this quiz. They illustrate the experience,
@@ -44,14 +44,22 @@ const liveKey='dp_quiz_answers_v1',hiddenKey='dp_quiz_invite_suppressed_until_v1
 // Trigger 2: arriving at the editorial 'ВАША БАНЯ' screen (not #configure / footer).
 const modelsIdleMs=18000;
 const inviteShownSessionKey='dp_quiz_invite_seen_session_r111';
-const state={step:0,view:'question',answers:{},selectedCode:null,expanded:false,sending:false,phone:'',channel:'',error:'',success:false,requestId:null};
+const state={step:0,view:'question',answers:{},selectedCode:null,expanded:false,sending:false,phone:'',city:'',channel:'',error:'',success:false,completedNotified:false,requestId:null};
 let quiz=null,book=null,settings=null,dialog=null,invite=null,launcher=null,interacted=false,shownThisVisit=false,lastOpener=null;
 let modelsIdleTimer=null;
 const trace=(name,params={})=>{try{analytics?.track(name,{placement:'catalog',...params})}catch{}};
+// City qualification runs locally; Metrika receives only a true/false event ID,
+// never the settlement text, phone number, or buyer's comment.
+const isPereslavlCity=value=>{
+  const city=String(value||'').normalize('NFKC').toLocaleLowerCase('ru-RU')
+    .replace(/ё/g,'е').replace(/[.,\-–—]/g,' ').replace(/\s+/g,' ').trim();
+  return /^(?:г |город )?переславль(?: залесский)?(?: ярославская (?:обл|область))?$/u.test(city);
+};
+
 const save=()=>{try{sessionStorage.setItem(liveKey,JSON.stringify(state.answers))}catch{}};
 const load=()=>{try{const a=JSON.parse(sessionStorage.getItem(liveKey)||'{}');if(a&&typeof a==='object')state.answers={party:ANSWERS.party.includes(a.party)?a.party:undefined,wash:ANSWERS.wash.includes(a.wash)?a.wash:undefined,bedroom:ANSWERS.bedroom.includes(a.bedroom)?a.bedroom:undefined}}catch{}};
 const cancelModelsIdle=()=>{if(modelsIdleTimer!==null){clearTimeout(modelsIdleTimer);modelsIdleTimer=null}};
-const hideInvite=(dismissed=false)=>{if(invite?.open)invite.close();cancelModelsIdle();if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
+const hideInvite=(dismissed=false)=>{const wasOpen=!!invite?.open;if(wasOpen)invite.close();cancelModelsIdle();if(dismissed&&wasOpen){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close');trace('dp_quiz_close_before_completed')}};
 const canInvite=(reason)=>{
   // One automatic display per tab session. Old seven-day dismissals from
   // previous releases must not silently suppress a fresh session.
@@ -185,7 +193,7 @@ function resultsView(){
 }
 function formView(){
   const options=[['max','MAX'],['whatsapp','WhatsApp'],['telegram','Telegram']].map(([value,label])=>'<label class="dp-quiz-channel"><input type="radio" name="channel" value="'+value+'" required '+(state.channel===value?'checked':'')+'><span>'+label+'</span></label>').join('');
-  return commonHeader()+'<button type="button" class="dp-quiz-link" data-dpq="results">← К подборке</button><h2 id="dp-quiz-title">Куда прислать планировки, комплектации и цены?</h2><form id="dp-quiz-contact-form"><label class="dp-quiz-field" for="dp-quiz-phone">Номер телефона<input id="dp-quiz-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67" required value="'+safe(state.phone)+'"></label><fieldset class="dp-quiz-channel-field"><legend>Выберите мессенджер</legend><div class="dp-quiz-channels">'+options+'</div></fieldset><p class="dp-quiz-form-note">Нажимая «Получить планировки и цены», вы соглашаетесь с <a href="/consent.html" target="_blank" rel="noopener">обработкой персональных данных</a>. <a href="/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a>.</p><p class="dp-quiz-error" role="alert" '+(state.error?'':'hidden')+'>'+safe(state.error)+'</p><button class="dp-quiz-action" type="submit" '+(state.sending?'disabled':'')+'>'+(state.sending?'Отправляем…':'Получить планировки и цены →')+'</button></form>';
+  return commonHeader()+'<button type="button" class="dp-quiz-link" data-dpq="results">← К подборке</button><h2 id="dp-quiz-title">Куда прислать планировки, комплектации и цены?</h2><form id="dp-quiz-contact-form"><label class="dp-quiz-field" for="dp-quiz-phone">Номер телефона<input id="dp-quiz-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67" required value="'+safe(state.phone)+'"></label><label class="dp-quiz-field" for="dp-quiz-city">Город установки бани (необязательно)<input id="dp-quiz-city" name="city" type="text" autocomplete="address-level2" maxlength="140" placeholder="Например, Переславль-Залесский" value="'+safe(state.city)+'"></label><fieldset class="dp-quiz-channel-field"><legend>Выберите мессенджер</legend><div class="dp-quiz-channels">'+options+'</div></fieldset><p class="dp-quiz-form-note">Нажимая «Получить планировки и цены», вы соглашаетесь с <a href="/consent.html" target="_blank" rel="noopener">обработкой персональных данных</a>. <a href="/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a>.</p><p class="dp-quiz-error" role="alert" '+(state.error?'':'hidden')+'>'+safe(state.error)+'</p><button class="dp-quiz-action" type="submit" '+(state.sending?'disabled':'')+'>'+(state.sending?'Отправляем…':'Получить планировки и цены →')+'</button></form>';
 }
 function successView(){
   const name=({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]||'выбранный мессенджер';
@@ -217,12 +225,12 @@ function newAnswer(value){
   const q=question[state.step];if(!q.options.some(o=>o[0]===value))return;
   state.answers[q.key]=value;save();state.selectedCode=null;state.expanded=false;
   trace('dp_quiz_answer',{step:state.step+1,variant:value});
-  if(state.step<2){state.step++;state.view='question';}else{state.view='results';trace('dp_quiz_result');}
+  if(state.step<2){state.step++;state.view='question';}else{state.view='results';if(!state.completedNotified){trace('dp_quiz_completed');state.completedNotified=true;}trace('dp_quiz_result');}
   render();
 }
 async function submitForm(form){
   if(state.sending)return;
-  const field=$('#dp-quiz-phone',form);state.phone=field.value;
+  const field=$('#dp-quiz-phone',form);state.phone=field.value;state.city=($('#dp-quiz-city',form)?.value||'').replace(/\s+/g,' ').trim().slice(0,140);
   state.channel=new FormData(form).get('channel')||'';
   if(!['max','whatsapp','telegram'].includes(state.channel)){state.error='Выберите мессенджер.';render();return;}
   try{
@@ -238,14 +246,16 @@ async function submitForm(form){
     const count=({p2:'1–2',p4:'3–4',p6:'5–6',p8:'до 8'})[state.answers.party];
     const wash=({w_yes:'отдельная нужна',w_no:'не нужна',w_compare:'сравнить оба'})[state.answers.wash];
     const bed=state.answers.bedroom==='b_yes'?'нужна':'не нужна';
-    payload.comment=('Квиз: отправить подходящие планировки, комплектации и цены. Скидка 20 000 ₽ только на Делюкс. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
+    payload.comment=('Квиз: отправить подходящие планировки, комплектации и цены. Город установки: '+(state.city||'не указан')+'. Скидка 20 000 ₽ только на Делюкс. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
     payload.journeyContext={purpose:'selection_help',pagePath:location.pathname};
     const attribution=analytics?.attribution?.();if(attribution)payload.attribution=attribution;
     state.error='';state.sending=true;render();
     trace('dp_form_submit_attempt',{flow:'callback',purpose:'selection_help'});
+    trace('dp_quiz_submit_attempt');
     const sent=await submitLead(payload,settings,location.origin);
     state.sending=false;state.view='success';state.success=true;save();
-    analytics?.confirmed?.(sent.receipt,{flow:'callback',requestId:payload.requestId,purpose:'selection_help',placement:'catalog'});
+    const baseCounted=analytics?.confirmed?.(sent.receipt,{flow:'callback',requestId:payload.requestId,purpose:'selection_help',placement:'catalog'})===true;
+    if(baseCounted){trace('dp_quiz_lead_confirmed');if(isPereslavlCity(state.city))trace('dp_quiz_lead_pereslavl_confirmed');}
     trace('dp_quiz_catalog_sent');render();hideInvite();
   }catch(error){
     state.sending=false;
@@ -267,11 +277,11 @@ function bind(){
   });
   dialog.addEventListener('submit',e=>{if(e.target?.id==='dp-quiz-contact-form'){e.preventDefault();submitForm(e.target)}});
   dialog.addEventListener('change',e=>{if(e.target?.name==='channel'){state.channel=e.target.value;state.requestId=null;}});
-  dialog.addEventListener('input',e=>{if(e.target?.id==='dp-quiz-phone'){state.phone=e.target.value;state.requestId=null;}});
+  dialog.addEventListener('input',e=>{if(e.target?.id==='dp-quiz-phone'){state.phone=e.target.value;state.requestId=null;}if(e.target?.id==='dp-quiz-city'){state.city=e.target.value;state.requestId=null;}});
   window.visualViewport?.addEventListener('resize',fitViewport,{passive:true});
   window.visualViewport?.addEventListener('scroll',fitViewport,{passive:true});
   dialog.addEventListener('focusin',()=>requestAnimationFrame(fitViewport));
-  dialog.addEventListener('close',()=>{state.error='';try{lastOpener?.focus?.({preventScroll:true})}catch{};});
+  dialog.addEventListener('close',()=>{if(!state.success){trace(state.view==='question'?'dp_quiz_close_before_completed':'dp_quiz_close_after_completed');}state.error='';try{lastOpener?.focus?.({preventScroll:true})}catch{};});
   invite.querySelector('[data-dpq-open]').addEventListener('click',launch);
   invite.querySelector('[data-dpq-hide]').addEventListener('click',()=>hideInvite(true));
   invite.addEventListener('cancel',event=>{event.preventDefault();hideInvite(true)});
