@@ -183,3 +183,49 @@ dialog{border:1px solid #fff4df3c;padding:44px;max-width:500px;width:calc(100% -
 /* NY2027 R4: delivery geography is one quiet footer line, like on the main site. */
 footer .delivery-footer-line{font-size:11px;line-height:1.75;max-width:460px;flex:1 1 330px;color:var(--muted)}
 @media(max-width:700px){footer .delivery-footer-line{font-size:11px;line-height:1.7;max-width:none;width:100%;flex-basis:100%}}
+
+/* NY2027 R5 — source quiz questions unchanged; winter celebration appearance only. */
+.dp-ny-quiz-manual{padding:0;border:0;background:none;color:#e7dbbf;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:12px;font-family:inherit}
+.dp-ny-quiz-manual:hover{color:#ffd398}
+.dp-ny-quiz-invite{
+  --dpq-paper:#152e2b;--dpq-card:#183b33;--dpq-ink:#fbf4e7;
+  --dpq-forest:#203e34;--dpq-deep:#112620;--dpq-muted:#d4ddd5;
+  --dpq-warm:#ffd298;--dpq-line:#cba87588;
+  background:linear-gradient(145deg,#13322b,#1d4a3c);
+  color:#fff6e6;border:1px solid #ffd2988a;
+  box-shadow:0 25px 90px #020c19b8;
+}
+.dp-ny-quiz-invite::backdrop{background:#071725b8;backdrop-filter:blur(5px)}
+.dp-ny-quiz-invite .dp-quiz-invite-inner{background:#153b32;color:#fff1dc}
+.dp-ny-quiz-invite .dp-quiz-invite-kicker{color:#ffc887}
+.dp-ny-quiz-invite h2,.dp-ny-quiz-invite p{color:#fff4e5}
+.dp-ny-quiz-invite .dp-quiz-invite-stages{color:#f8e1bd}
+.dp-ny-quiz-invite .dp-quiz-invite-stages b{color:#ffcb86}
+.dp-ny-quiz-invite .dp-quiz-invite-close{color:#fff1db}
+.dp-ny-quiz-invite .dp-quiz-action{background:#ffd298!important;color:#163128!important;border:1px solid #fbd59b}
+.dp-ny-quiz-invite .dp-quiz-invite-photo{object-fit:cover}
+#dp-quiz-dialog.dp-ny-quiz-dialog{
+  --dpq-forest:#24483b;--dpq-deep:#173128;--dpq-paper:#f6efe1;
+  --dpq-card:#fff8ec;--dpq-ink:#213b31;--dpq-muted:#5e6a60;
+  --dpq-line:#c5c3ae;--dpq-warm:#f2bb83;
+  color:#213b31;font-family:Manrope,Arial,sans-serif;
+}
+#dp-quiz-dialog.dp-ny-quiz-dialog::backdrop{background:#081a29c7;backdrop-filter:blur(5px)}
+#dp-quiz-dialog .dp-quiz-frame{border:1px solid #f6d8ab7a;box-shadow:0 20px 90px #071622b0}
+#dp-quiz-dialog .dp-quiz-photo{background:#102d2b}
+#dp-quiz-dialog .dp-quiz-photo img{object-fit:cover}
+#dp-quiz-dialog .dp-quiz-head{border-bottom-color:#d1b992}
+#dp-quiz-dialog .dp-quiz-kicker{color:#976126}
+#dp-quiz-dialog .dp-quiz-choice{background:#fff9ef;border-color:#d9c9af}
+#dp-quiz-dialog .dp-quiz-choice:hover{border-color:#b78550;background:#fff4dc}
+#dp-quiz-dialog .dp-quiz-choice.is-selected{border-color:#1d4d38;background:#e9f1e5}
+#dp-quiz-dialog .dp-quiz-action{background:#1d4435;color:#fff7e7}
+#dp-quiz-dialog .dp-quiz-cta{background:linear-gradient(115deg,#173a32,#22573d);border:1px solid #f6d6a34d}
+#dp-quiz-dialog .dp-quiz-cta .dp-quiz-cta-primary{background:#ffcf8e;border-color:#ffcf8e;color:#183528}
+#dp-quiz-dialog .dp-quiz-cta .dp-quiz-cta-primary:hover{background:#ffdfac}
+#dp-quiz-dialog .dp-quiz-plan{background:#fff9ee;border-color:#dec8a6}
+#dp-quiz-dialog .dp-quiz-plan-photo{object-fit:cover}
+@media(max-width:760px){
+ #dp-quiz-dialog.dp-ny-quiz-dialog{max-width:100vw}
+ .dp-ny-quiz-invite .dp-quiz-invite-visual{min-width:0}
+}
