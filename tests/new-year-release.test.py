@@ -146,7 +146,7 @@ class ReleaseTest(unittest.TestCase):
             "const answer=()=>recommendModelRanges();"
             "const key='dp_ny2027_quiz_invite_seen_session';"
         ).encode('utf-8')
-        for rel in ['holiday-quiz-engine.mjs','holiday-quiz-data.json','holiday-quiz.css']:
+        for rel in ['holiday-quiz.mjs','holiday-quiz-engine.mjs','holiday-quiz-data.json','holiday-quiz.css']:
             self.files['novyy-god/'+rel] = (ROOT/'concepts/new-year-2027'/rel).read_bytes()
         self.pack()
 
