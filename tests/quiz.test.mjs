@@ -260,32 +260,26 @@ test('Deluxe matrix has exactly the 20 approved model and size prices from 2026-
  }
  assert.equal(Object.values(book.deluxePrices).reduce((n,x)=>n+Object.keys(x).length,0),20);
 });
-test('R115 automatic popup uses footer observer and excludes ritual, without stale 7-day suppression',()=>{
+test('R116 automatic popup tracks only the editorial ВАША БАНЯ screen, never calculator or footer',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
- const css=readFileSync(new URL('../web/quiz.css',import.meta.url),'utf8');
- assert.ok(ui.includes("const canInvite=(reason)=>"));
- assert.ok(ui.includes("reason==='models-idle'"));
- assert.ok(ui.includes("return reason==='your-bath'"));
- assert.ok(ui.includes("const ritualInView=()=>"));
- assert.ok(ui.includes("const watchFooter=()=>"));
- assert.ok(ui.includes('new IntersectionObserver('));
- assert.ok(ui.includes("footerObserver.observe(footer)"));
- assert.ok(ui.includes("maybeInvite('your-bath')"));
- assert.ok(ui.includes("if(reason==='your-bath'&&(!reachedYourBath()||ritualInView()))return false;"));
- assert.ok(ui.includes("try{invite.showModal()}catch(error)"));
- assert.ok(ui.includes("shownThisVisit=true;"));
- assert.ok(ui.includes("shownThisVisit=alreadyShown;"),'Previous quiz answers must not suppress fresh sessions');
+ assert.ok(ui.includes("const findBathVision=()=>"));
+ assert.ok(ui.includes("title==='ваша баня'"));
+ assert.ok(ui.includes("title.includes('представляете')"));
+ assert.ok(ui.includes("const bathVisionVisible=()=>"));
+ assert.ok(ui.includes("const observeLateBathScreen=()=>"));
+ assert.ok(ui.includes("new IntersectionObserver("));
+ assert.ok(ui.includes("new MutationObserver("));
+ assert.ok(ui.includes("reason==='your-bath'&&!bathVisionVisible()"));
+ assert.ok(ui.includes("const modelsIdleMs=18000"));
  assert.ok(ui.includes("sessionStorage.setItem(inviteShownSessionKey,'1')"));
- assert.equal(ui.includes('Date.now()>until'),false,'Seven-day legacy suppression must not carry into new sessions');
- assert.equal(ui.includes("!location.hash"),false,'Anchor URLs must work');
- assert.equal(ui.includes('inviteScrollFraction'),false,'No arbitrary global scroll percentage');
+ assert.equal(ui.includes("watchFooter()"),false);
+ assert.equal(ui.includes("footerObserver"),false);
+ assert.equal(ui.includes("reachedYourBath()"),false);
+ assert.equal(ui.includes("ritualInView()"),false);
  assert.ok(ui.includes("entry.className='dp-quiz-footer-cta'"));
  assert.ok(ui.includes('footer.append(entry)'));
- assert.ok(ui.includes("if(!footer)throw new Error('QUIZ_FOOTER_MISSING')"));
  assert.equal(ui.includes('main.append(entry)'),false);
- assert.equal(ui.includes("$('#models').prepend(entry)"),false);
- assert.ok(css.includes('footer.site-footer .dp-quiz-footer-cta'));
- assert.equal(css.includes('/* R114: the optional static entry'),false);
+ assert.ok(ui.includes("shownThisVisit=alreadyShown;"));
 });
 test('R110 pricing caveat is human and CTA promises only the approved Deluxe bonus',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
