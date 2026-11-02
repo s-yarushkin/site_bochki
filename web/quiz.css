@@ -85,6 +85,7 @@
 .dp-quiz-good{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:#dcebd8;color:var(--dpq-forest);font-size:27px;margin-bottom:20px}
 @keyframes dpq-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:760px){
+ .dp-quiz-results{grid-template-columns:1fr}
  .dp-quiz-entry{padding:18px;flex-direction:column;align-items:stretch;gap:10px}.dp-quiz-entry strong{font-size:17px}
  .dp-quiz-invite{left:14px;right:14px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:auto;grid-template-columns:62px 1fr;padding:11px 43px 11px 11px}
  .dp-quiz-invite img{width:62px;height:83px}.dp-quiz-invite strong{font-size:14px}.dp-quiz-invite p{font-size:11px}
