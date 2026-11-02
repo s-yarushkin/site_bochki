@@ -1,0 +1,109 @@
+{
+  "type": "DELUXE_APPROVED_SNAPSHOT_NOT_LIVE_AUTHORITY",
+  "date": "2026-11-02",
+  "source": "docs/pricing-update-2026-11-02.md §2; Google Sheets 'Цены и прибыль' A4:K23",
+  "stoveUpgradeRubIncluded": 12000,
+  "clientGiftRubIncluded": 20000,
+  "deluxePrices": [
+    {
+      "model": "kvadro",
+      "size": "400",
+      "deluxeRub": 519000
+    },
+    {
+      "model": "kvadro",
+      "size": "450",
+      "deluxeRub": 550000
+    },
+    {
+      "model": "kvadro",
+      "size": "500",
+      "deluxeRub": 597000
+    },
+    {
+      "model": "kvadro",
+      "size": "550",
+      "deluxeRub": 623000
+    },
+    {
+      "model": "kvadro",
+      "size": "600",
+      "deluxeRub": 639000
+    },
+    {
+      "model": "viking",
+      "size": "400",
+      "deluxeRub": 604000
+    },
+    {
+      "model": "viking",
+      "size": "450",
+      "deluxeRub": 646000
+    },
+    {
+      "model": "viking",
+      "size": "500",
+      "deluxeRub": 747000
+    },
+    {
+      "model": "viking",
+      "size": "550",
+      "deluxeRub": 764000
+    },
+    {
+      "model": "viking",
+      "size": "600",
+      "deluxeRub": 775000
+    },
+    {
+      "model": "parus",
+      "size": "400",
+      "deluxeRub": 560000
+    },
+    {
+      "model": "parus",
+      "size": "450",
+      "deluxeRub": 582000
+    },
+    {
+      "model": "parus",
+      "size": "500",
+      "deluxeRub": 637000
+    },
+    {
+      "model": "parus",
+      "size": "550",
+      "deluxeRub": 654000
+    },
+    {
+      "model": "parus",
+      "size": "600",
+      "deluxeRub": 665000
+    },
+    {
+      "model": "kvadro-house",
+      "size": "4x4",
+      "deluxeRub": 830000
+    },
+    {
+      "model": "kvadro-house",
+      "size": "5x4",
+      "deluxeRub": 946000
+    },
+    {
+      "model": "kvadro-house",
+      "size": "6x4",
+      "deluxeRub": 1002000
+    },
+    {
+      "model": "kvadro-house",
+      "size": "6x5",
+      "deluxeRub": 1072000
+    },
+    {
+      "model": "kvadro-house",
+      "size": "6x6",
+      "deluxeRub": 1142000
+    }
+  ]
+}
