@@ -45,12 +45,12 @@ jobs:
           npm install --no-save playwright@1.58.2
           npx playwright install --with-deps chromium
       - name: Test R5 winter quiz questions, timer and confirmed source in Chromium
-        run: node scripts/new-year-r5-quiz-browser.mjs
-      - name: Test R4 compact footer delivery and preserved wide lead form in Chromium
         run: |
           node concepts/new-year-2027/preview.mjs > /tmp/ny-preview.log 2>&1 &
-          sleep 2
-          node scripts/new-year-r2-browser-smoke.mjs
+          for i in $(seq 1 20); do curl --fail --silent http://127.0.0.1:4187/novyy-god/ > /dev/null && break || sleep 1; done
+          node scripts/new-year-r5-quiz-browser.mjs
+      - name: Test R4 compact footer delivery and preserved wide lead form in Chromium
+        run: node scripts/new-year-r2-browser-smoke.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
