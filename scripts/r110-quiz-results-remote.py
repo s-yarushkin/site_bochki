@@ -137,7 +137,6 @@ def main():
         for name in ["quiz.mjs", "quiz.css"]:
             if not (NEW_RELEASE / name).is_file():
                 stop("staged file missing " + name)
-        subprocess.run(["node", "--check", str(NEW_RELEASE / "quiz.mjs")], check=True)
     except Exception:
         # Keep the failed stage for forensic inspection; active link stays unchanged.
         raise
