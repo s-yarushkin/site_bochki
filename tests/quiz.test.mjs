@@ -167,6 +167,9 @@ test('R108 range matching: 5/6 m, no intermediate 4.5/5.5 m, and no Kvadro for 5
      assert.ok(offer.displayMinRub>=offer.minRub&&offer.displayMinRub-offer.minRub<1000);
      assert.ok(offer.displayMaxRub>=offer.maxRub&&offer.displayMaxRub-offer.maxRub<1000);
      assert.ok(offer.displayMaxRub>=offer.displayMinRub);
+     assert.equal(offer.rangeLowerPackage,'comfort');
+     assert.equal(offer.rangeUpperPackage,'deluxe');
+     assert.equal(offer.maxRub,book.deluxePrices[offer.model][offer.lastSize],'Deluxe maximum must not add stove or gift twice');
      if(offer.model!=='kvadro-house')assert.ok(offer.sizes.every(s=>['500','600'].includes(s)));
    }
    assert.equal(compromise,bedroom==='b_yes'&&wash==='w_no');
@@ -180,17 +183,28 @@ test('R108 range matching: 5/6 m, no intermediate 4.5/5.5 m, and no Kvadro for 5
  const k=washOnly.offers.find(o=>o.model==='kvadro');
  assert.deepEqual(k?.sizes,['600'],"Do not claim a nonexistent 5m Kvadro with separate washroom");
 });
-test('R108 price spans use original Comfort prices, room surcharges and stove surcharges',()=>{
+test('R108 ranges: lower approved Comfort plan; upper exact larger-size Deluxe with ASTON and gift already included',()=>{
  const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
  const {offers}=recommendModelRanges(quiz.plans,a,book,quiz.priceRules);
  const parus=offers.find(o=>o.model==='parus');
  assert.equal(parus.minRub,530540.5);
- assert.equal(parus.maxRub,555540.5);
+ assert.equal(parus.maxRub,665000);
  assert.equal(parus.displayMinRub,531000);
- assert.equal(parus.displayMaxRub,556000);
+ assert.equal(parus.displayMaxRub,665000);
+ assert.equal(parus.firstSize,'500');
+ assert.equal(parus.lastSize,'600');
  const kvadro=offers.find(o=>o.model==='kvadro');
  assert.equal(kvadro.displayMinRub,546000);
- assert.equal(kvadro.displayMaxRub,546000);
+ assert.equal(kvadro.displayMaxRub,639000);
+ assert.equal(kvadro.firstSize,'600');
+ assert.equal(kvadro.lastSize,'600');
+ const smallNoWash=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_no',bedroom:'b_no'},book,quiz.priceRules);
+ assert.deepEqual(smallNoWash.offers.map(o=>[o.model,o.displayMinRub,o.displayMaxRub]),[
+   ['kvadro',492000,639000],['parus',517000,665000],['viking',627000,775000]
+ ]);
+ const couple=recommendModelRanges(quiz.plans,{party:'p2',wash:'w_no',bedroom:'b_no'},book,quiz.priceRules);
+ assert.equal(couple.offers[0].displayMinRub,485000,'1–2 guests use the already-included Osa');
+ assert.equal(couple.offers[0].displayMaxRub,639000,'Deluxe includes ASTON without extra payment');
 });
 test('Deluxe extra bonus is never subtracted from Comfort price ranges',()=>{
  const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
@@ -218,4 +232,27 @@ test('R108 approved photography: Parus at entry and a distinct natural-light pho
  assert.doesNotMatch(ui,/dp-quiz-photo-note/,'No slogan overlay on photos');
  assert.notEqual(manifest.files[0].sha256,manifest.files[1].sha256);
  assert.notEqual(manifest.files[1].sha256,manifest.files[2].sha256);
+});
+
+test('Deluxe matrix has exactly the 20 approved model and size prices from 2026-11-02',()=>{
+ const fixture=read('./fixtures/deluxe-prices-2026-11-02.json');
+ assert.equal(fixture.type,'DELUXE_APPROVED_SNAPSHOT_NOT_LIVE_AUTHORITY');
+ assert.equal(fixture.stoveUpgradeRubIncluded,12000);
+ assert.equal(fixture.clientGiftRubIncluded,20000);
+ assert.equal(fixture.deluxePrices.length,20);
+ const keys=new Set();
+ for(const {model,size,deluxeRub} of fixture.deluxePrices){
+   const key=model+':'+size;
+   assert.ok(!keys.has(key),'Duplicate approved price '+key);
+   keys.add(key);
+   assert.equal(book.deluxePrices?.[model]?.[size],deluxeRub,key+' price must equal approved table');
+   assert.ok(deluxeRub>book.prices[model][size]);
+ }
+ assert.equal(Object.values(book.deluxePrices).reduce((n,x)=>n+Object.keys(x).length,0),20);
+});
+test('Customer sees simple Comfort–Deluxe label, with individualized plans not falsely priced as included',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('От «Комфорта» меньшего размера до «Делюкса» большего'));
+ assert.ok(ui.includes('Цена зависит от планировки; доставка отдельно.'));
+ assert.ok(ui.includes('20 000 ₽ скидки'));
 });
