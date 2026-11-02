@@ -144,7 +144,8 @@ class TestR112CalculatorTrigger(unittest.TestCase):
   # The pinned R112 source remains immutable; active development now contains R113.
   self.assertEqual(r112.NEW_BLOBS['quiz.mjs'],'139becc2573f69eebd49e374cf93b138a1fa059f')
   source=(ROOT/'web/quiz.mjs').read_text('utf8')
-  self.assertIn('const ritualInView=()=>',source)
+  # Runtime source now implements the R116 editorial trigger; R112 itself is SHA-pinned above.
+  self.assertIn('const findBathVision=()=>',source)
   self.assertIn('const canInvite=(reason)=>',source)
   self.assertNotIn('!location.hash',source)
   self.assertNotIn('r.bottom>0;',source)
