@@ -1,4 +1,4 @@
-import {ANSWERS,validAnswers,guestExplanation,recommendModelRanges} from './quiz-engine.mjs?v=20261031';
+import {ANSWERS,validAnswers,guestExplanation,recommendModelRanges} from './quiz-engine.mjs?v=r108-ranges';
 import {buildCallback,submitLead} from './lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from './phone-mask.mjs';
 import {analytics} from './analytics-core.mjs';
@@ -136,7 +136,7 @@ async function submitForm(form){
     const count=({p2:'1–2',p4:'3–4',p6:'5–6',p8:'до 8'})[state.answers.party];
     const wash=({w_yes:'отдельная нужна',w_no:'не нужна',w_compare:'сравнить оба'})[state.answers.wash];
     const bed=state.answers.bedroom==='b_yes'?'нужна':'не нужна';
-    payload.comment=('Квиз: индивидуальное предложение, планировки и комплектации. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Бонус: дополнительная скидка 20 000 ₽ на все модели Делюкс, суммируется с другими акциями. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
+    payload.comment=('Квиз: индивидуальное предложение. Дополнительная скидка 20 000 ₽ на комплектацию Делюкс для всех моделей, суммируется с остальными акциями. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
     payload.journeyContext={purpose:'selection_help',pagePath:location.pathname};
     const attribution=analytics?.attribution?.();if(attribution)payload.attribution=attribution;
     state.error='';state.sending=true;render();
@@ -193,7 +193,7 @@ async function init(){
     load();shownThisVisit=Object.values(state.answers).some(Boolean);
     const mounted=$('[data-quiz-mount]');
     const entry=mounted||document.createElement('div');entry.className='dp-quiz-entry';
-    entry.innerHTML='<div><span class="dp-quiz-entry-label">Начните со своих пожеланий</span><strong>Какая баня подойдёт вам?</strong><p>Ответьте на три вопроса. Сравните модели и цены.</p></div><button type="button" class="dp-quiz-action" id="dp-quiz-open">Найти свою баню <span aria-hidden="true">↗</span></button>';
+    entry.innerHTML='<div><span class="dp-quiz-entry-label">Начните со своих пожеланий</span><strong>Подберём баню за 3 шага</strong><p>Сравните подходящие модели, размеры и цены.</p></div><button type="button" class="dp-quiz-action" id="dp-quiz-open">Найти свою баню <span aria-hidden="true">↗</span></button>';
     if(!mounted){const anchor=$('#models .section-heading')||$('#models .section-top');
     if(anchor)anchor.insertAdjacentElement('afterend',entry);else $('#models').prepend(entry);}
     launcher=$('#dp-quiz-open');
