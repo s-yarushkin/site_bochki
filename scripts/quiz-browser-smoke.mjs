@@ -192,7 +192,21 @@ async function visionScreenSmoke(viewport,label){
   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error(label+' appeared prematurely at footer');
   await insertYourBathVision(page);
   await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
-  await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+  try{await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});}
+  catch(error){
+    const d=await page.evaluate(()=>{
+      const section=document.querySelector('#quiz-vision-ci'),r=section?.getBoundingClientRect();
+      const title=section?.querySelector('h2'),tr=title?.getBoundingClientRect();
+      return {scrollY,innerHeight,sectionRect:r?{top:r.top,bottom:r.bottom,height:r.height}:null,
+        titleText:title?.textContent,titleRect:tr?{top:tr.top,bottom:tr.bottom}:null,
+        visibility:document.visibilityState,
+        sessionSeen:sessionStorage.getItem('dp_quiz_invite_seen_session_r111'),
+        allDialogs:[...document.querySelectorAll('dialog')].map(x=>({id:x.id,cls:x.className,open:x.open})),
+        footerTop:document.querySelector('footer')?.getBoundingClientRect().top,
+        candidates:[...document.querySelectorAll('h1,h2,h3')].filter(e=>(e.textContent||'').toLowerCase().includes('ваша баня')).map(x=>({text:x.textContent,rects:x.getClientRects().length}))};
+    });
+    throw new Error(label+' VISION_DIAG '+JSON.stringify(d)+' '+error.message);
+  }
   await page.locator('[data-dpq-hide]').click();
   await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
   await page.evaluate(()=>document.querySelector('#quiz-vision-ci').scrollIntoView({block:'start',behavior:'instant'}));
