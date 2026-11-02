@@ -28,6 +28,42 @@ async function doCase(width,height,name){
   if(await page.locator('.dp-quiz-invite[open]').count())throw Error(name+' popped before eight seconds');
   // The timer starts only while page is visible; no scrolling or inactivity required.
   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:11000});
+  // Read actual rendered colors. Dark-on-dark or pale-on-white must fail.
+  const contrast=await page.evaluate(()=>{
+    const css=selector=>{
+      const el=document.querySelector(selector);
+      if(!el)throw Error('missing '+selector);
+      const style=getComputedStyle(el);
+      return {color:style.color,background:style.backgroundColor,
+              fontSize:parseFloat(style.fontSize)};
+    };
+    const rgb=str=>{
+      const values=str.match(/[\d.]+/g)?.slice(0,3).map(Number);
+      if(!values||values.length!==3)throw Error('invalid rgb '+str);
+      return values;
+    };
+    const lum=color=>{
+      const v=rgb(color).map(x=>{
+        const s=x/255;return s<=.04045?s/12.92:((s+.055)/1.055)**2.4;
+      });
+      return v[0]*.2126+v[1]*.7152+v[2]*.0722;
+    };
+    const ratio=({color,background})=>{
+      const a=lum(color),b=lum(background);
+      return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+    };
+    const chip=css('.dp-ny-quiz-invite .dp-quiz-invite-stages span');
+    const step=css('.dp-ny-quiz-invite .dp-quiz-invite-stages b');
+    const close=css('.dp-ny-quiz-invite .dp-quiz-invite-close');
+    return {chip:{...chip,ratio:ratio(chip)},
+            step:{...step,ratio:ratio({...step,background:chip.background})},
+            close:{...close,ratio:ratio(close)}};
+  });
+  if(contrast.chip.ratio<4.5||contrast.step.ratio<4.5||contrast.close.ratio<4.5)
+    throw Error(name+' unreadable holiday invite foreground/background: '+JSON.stringify(contrast));
+  if(contrast.chip.fontSize<12 && width>=350)
+    throw Error(name+' invitation chip font too small: '+JSON.stringify(contrast));
+  console.log('NY2027_R51_CONTRAST=PASS',name,JSON.stringify(contrast));
   await page.screenshot({path:OUT+'/'+name+'-invitation.png'});
   if(await page.locator('#lead-dialog[open]').count())throw Error(name+' unrelated form opened');
   await page.locator('.dp-quiz-invite [data-dpq-open]').click();
