@@ -155,6 +155,45 @@ async function invitePolicySmoke(viewport,label,scenario){
    return {scenario:'invite-'+label,trigger:scenario,photoFillsPanel:true,bounds};
  }finally{await page.close()}
 }
+async function bottomScrollWithExistingAnswersSmoke(){
+ const page=await browser.newPage({viewport:{width:1440,height:900}});
+ try{
+   // Existing answers from a previous session must not be mistaken for an invite dismissal.
+   await page.addInitScript(()=>{
+     sessionStorage.setItem('dp_quiz_answers_v1',JSON.stringify({party:'p4',wash:'w_no',bedroom:'b_no'}));
+     sessionStorage.removeItem('dp_quiz_invite_seen_session_r111');
+     localStorage.removeItem('dp_quiz_invite_suppressed_until_v1');
+     localStorage.removeItem('dp_r101_choice');
+   });
+   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   const layout=await page.evaluate(()=>{
+     const entry=document.querySelector('.dp-quiz-entry');
+     const main=document.querySelector('main#top');
+     if(!entry||!main)throw new Error('Static quiz entry or main missing');
+     return {parent:entry.parentElement?.tagName,lastChild:main.lastElementChild===entry,insideModels:!!entry.closest('#models')};
+   });
+   if(!layout.lastChild||layout.insideModels||layout.parent!=='MAIN')throw new Error('Quiz entry not at bottom of page '+JSON.stringify(layout));
+   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+   return {scenario:'bottom-with-existing-answers',popup:true,movedEntry:true};
+ }finally{await page.close()}
+}
+async function deliberateDismissalSmoke(){
+ const page=await browser.newPage({viewport:{width:1440,height:900}});
+ try{
+   await page.addInitScript(()=>{
+     localStorage.setItem('dp_quiz_invite_suppressed_until_v1',String(Date.now()+86400000));
+     sessionStorage.removeItem('dp_quiz_invite_seen_session_r111');
+   });
+   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+   await page.waitForTimeout(550);
+   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Quiz shown despite deliberate close');
+   return {scenario:'deliberate-dismissal',popup:false};
+ }finally{await page.close()}
+}
 async function aestheticBlockSmoke(){
  const page=await browser.newPage({viewport:{width:1440,height:900}});
  try{
@@ -204,6 +243,8 @@ async function clickedModelNavigationSmoke(){
 }
 try{
  const results=[];
+ results.push(await bottomScrollWithExistingAnswersSmoke());
+ results.push(await deliberateDismissalSmoke());
  results.push(await aestheticBlockSmoke());
  results.push(await anchorNavigationSmoke());
  results.push(await clickedModelNavigationSmoke());
