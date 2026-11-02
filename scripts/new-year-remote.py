@@ -16,13 +16,20 @@ ORIGIN = 'https://xn--80aaan1dh9b.xn--p1ai'
 # Only the exact previously approved route release may be upgraded in place.
 # Every other web release with a /novyy-god/ route is an unknown baseline.
 R5_OLD_RELEASE = 'NY2027-f2985b6b7ac277f9'
-R5_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css', 'novyy-god/lead.mjs', 'novyy-god/holiday-quiz.mjs'}
+R5_NEW = {'novyy-god/holiday-quiz.mjs', 'novyy-god/holiday-quiz-engine.mjs',
+          'novyy-god/holiday-quiz-data.json', 'novyy-god/holiday-quiz.css'}
+R5_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css', 'novyy-god/lead.mjs'} | R5_NEW
+R117_GIT_BLOBS = {
+    'novyy-god/holiday-quiz-engine.mjs': 'b131f6e9186be5a79d38756d91f60edd918675d0',
+    'novyy-god/holiday-quiz-data.json': 'd0721b7df99475fc1605e30c889cb00dd40263f0',
+    'novyy-god/holiday-quiz.css': 'ae4866a32f0dae680f509f76203443f7a4634322',
+}
 SHARED = [
     'lead-client.mjs', 'lead-consent.mjs', 'quote.mjs', 'r85-pricing.mjs',
     'analytics-core.mjs', 'phone-mask.mjs', 'r101/mobile-dialog.mjs',
     'data/site-settings.json', 'data/catalog-pricebook.json',
 ]
-ROUTE_FILES = {'index.html', 'style.css', 'experience.js', 'lead.mjs', 'holiday-quiz.mjs',
+ROUTE_FILES = {'index.html', 'style.css', 'experience.js', 'lead.mjs', 'holiday-quiz.mjs', 'holiday-quiz-engine.mjs', 'holiday-quiz-data.json', 'holiday-quiz.css',
                'lead-contract.mjs', 'catalog.mjs', 'models.mjs', 'countdown.mjs',
                'assets/favicon.svg', 'assets/manrope-cyrillic.woff2',
                'assets/manrope-latin.woff2', 'assets/OFL-Manrope.txt'}
@@ -38,6 +45,10 @@ def require(condition, message):
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def git_blob_sha(data):
+    return hashlib.sha1(b'blob ' + str(len(data)).encode('ascii') + b'\\0' + data).hexdigest()
 
 
 def active():
@@ -93,7 +104,7 @@ def baseline(payload_files=None):
         require(payload_files is not None, 'upgrade requires verified payload')
         expected = {'novyy-god/' + name for name in ROUTE_FILES}
         installed = {name for name in files if name.startswith('novyy-god/')}
-        require(installed == expected - {'novyy-god/holiday-quiz.mjs'},
+        require(installed == expected - R5_NEW,
                 'unexpected files inside existing R4 route')
         for name in sorted(expected - R5_EDITABLE):
             require(files[name] == sha(payload_files[name]), 'immutable holiday asset drift: ' + name)
@@ -134,6 +145,13 @@ def baseline(payload_files=None):
                 "title:'Нужна отдельная помывочная?'" in new_quiz and
                 "title:'Нужно место, чтобы остаться на ночь?'" in new_quiz,
                 'R117 original questions/answers drift')
+        require(all(git_blob_sha(payload_files[name]) == blob
+                    for name,blob in R117_GIT_BLOBS.items()),
+                'production R117 quiz engine/data/CSS snapshot not exact')
+        require("from './holiday-quiz-engine.mjs'" in new_quiz and
+                "fetch('./holiday-quiz-data.json'" in new_quiz and
+                'holiday-quiz.css?v=ny2027-r5' in new_html,
+                'R117 quiz snapshot not linked locally')
         require('visibleRemainingMs=8000' in new_quiz and
                 'Источник: квиз новый год' in new_quiz and
                 "pagePath:'/novyy-god/'" in new_quiz and
@@ -167,7 +185,7 @@ def check():
     (HERE / 'check-state.json').write_text(json.dumps(state, indent=2) + '\n', 'utf-8')
     print('CHECK=PASS; production unchanged; baseline=' + str(root))
     if root.name == R5_OLD_RELEASE:
-        print('NY2027_R5_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css,novyy-god/lead.mjs,novyy-god/holiday-quiz.mjs; protected=R117,API,SQLite,prices')
+        print('NY2027_R5_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css,novyy-god/lead.mjs,novyy-god/holiday-quiz.mjs,novyy-god/holiday-quiz-engine.mjs,novyy-god/holiday-quiz-data.json,novyy-god/holiday-quiz.css; protected=R117,API,SQLite,prices')
 
 
 
@@ -221,7 +239,7 @@ def apply():
         raise
     print('DEPLOYED=' + ORIGIN + '/novyy-god/; API and database unchanged')
     if old.name == R5_OLD_RELEASE:
-        print('NY2027_R5_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css,novyy-god/lead.mjs,novyy-god/holiday-quiz.mjs; R117 preserved')
+        print('NY2027_R5_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css,novyy-god/lead.mjs,novyy-god/holiday-quiz.mjs,novyy-god/holiday-quiz-engine.mjs,novyy-god/holiday-quiz-data.json,novyy-god/holiday-quiz.css; R117 preserved')
 
     print('ROLLBACK: sudo python3 ' + str(HERE / 'new-year-remote.py') + ' --rollback ' + str(state))
 
