@@ -10,7 +10,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/winter-sauna.png" as="image">
-  <link rel="stylesheet" href="style.css?v=ny2027-r2">
+  <link rel="stylesheet" href="style.css?v=ny2027-r3">
   <script type="module" src="experience.js"></script>
   <script type="module" src="lead.mjs"></script>
 </head>
@@ -95,37 +95,43 @@
   <div class="mobile-bar"><button class="cta" data-open-lead type="button">Планировки и комплектации <span aria-hidden="true">↗</span></button></div>
 
   <dialog id="lead-dialog" aria-labelledby="form-heading" aria-describedby="form-description">
-    <div class="festive-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="festive-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <button class="close-dialog" type="button" aria-label="Закрыть форму">×</button>
-    <div class="dialog-winter" aria-hidden="true">
-      <img id="dialog-winter-image" src="assets/winter-sauna.png" width="1672" height="941" alt="">
-      <div class="snow snow-far"></div>
-      <span>Скоро здесь будет<br>ваш Новый год <i>✦</i></span>
+    <div class="dialog-story">
+      <div class="dialog-winter" aria-hidden="true">
+        <img id="dialog-winter-image" src="assets/winter-sauna.png" width="1672" height="941" alt="">
+        <div class="snow snow-far"></div>
+        <span>Скоро здесь будет<br>ваш Новый год <i>✦</i></span>
+      </div>
+      <div class="dialog-story-copy">
+        <p class="eyebrow dialog-eyebrow">Ваш банный Новый год</p>
+        <h2 id="form-heading">Пришлём подходящие варианты, цены и комплектации</h2>
+        <p id="form-description">Оставьте телефон — подберём планировки и комплектации выбранной бани. Срок изготовления и доставки уточнит менеджер.</p>
+      </div>
     </div>
-    <p class="eyebrow dialog-eyebrow">Ваш банный Новый год</p>
-    <h2 id="form-heading">Пришлём подходящие варианты, цены и комплектации</h2>
-    <div id="inquiry-summary" class="selection-summary"></div>
-    <p id="form-description">Оставьте номер — менеджер свяжется с вами и пришлёт варианты планировок и комплектаций выбранной бани. Заодно уточним срок к празднику.</p>
-    <form id="lead-form" action="/api/lead" method="post">
-      <fieldset id="form-fields" disabled>
-        <label for="phone">Ваш телефон</label>
-        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (999) 123-45-67" maxlength="20" required>
-        <details class="form-details">
-          <summary>Добавить пожелания</summary>
-          <label for="settlement">Где находится участок?</label>
-          <input id="settlement" name="settlement" autocomplete="address-level2" placeholder="Область, город или посёлок" maxlength="140">
-          <label for="name">Как к вам обращаться</label>
-          <input id="name" name="name" autocomplete="name" maxlength="80" placeholder="Необязательно">
-          <label for="comment">Что важно для вашей бани</label>
-          <textarea id="comment" name="comment" rows="2" maxlength="300" placeholder="Расскажите о вашем банном вечере"></textarea>
-        </details>
-        <p class="consent" id="consent-notice">Отправляя заявку, вы подтверждаете <a href="/consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> для ответа на ваше обращение. <a href="/privacy.html" target="_blank" rel="noopener">Политика обработки данных</a>.</p>
-        <button class="cta" id="submit-lead" type="submit" aria-describedby="consent-notice">Получить варианты <span aria-hidden="true">↗</span></button>
-      </fieldset>
-      <p id="form-result" role="status" aria-live="polite"></p>
-      <p class="preview-note" id="preview-note" hidden>Локальный тест: уведомления менеджерам не отправляются.</p>
-    </form>
-    <a class="dialog-phone" href="tel:+79517349999">Позвонить: +7 (951) 734-99-99</a>
+    <div class="dialog-action">
+      <div id="inquiry-summary" class="selection-summary"></div>
+      <form id="lead-form" action="/api/lead" method="post">
+        <fieldset id="form-fields" disabled>
+          <label for="phone">Ваш телефон</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (999) 123-45-67" maxlength="20" required>
+          <details class="form-details">
+            <summary>Добавить пожелания</summary>
+            <label for="settlement">Где находится участок?</label>
+            <input id="settlement" name="settlement" autocomplete="address-level2" placeholder="Область, город или посёлок" maxlength="140">
+            <label for="name">Как к вам обращаться</label>
+            <input id="name" name="name" autocomplete="name" maxlength="80" placeholder="Необязательно">
+            <label for="comment">Что важно для вашей бани</label>
+            <textarea id="comment" name="comment" rows="2" maxlength="300" placeholder="Расскажите о вашем банном вечере"></textarea>
+          </details>
+          <p class="consent" id="consent-notice">Отправляя заявку, вы подтверждаете <a href="/consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> для ответа на ваше обращение. <a href="/privacy.html" target="_blank" rel="noopener">Политика обработки данных</a>.</p>
+          <button class="cta" id="submit-lead" type="submit" aria-describedby="consent-notice">Получить варианты <span aria-hidden="true">↗</span></button>
+        </fieldset>
+        <p id="form-result" role="status" aria-live="polite"></p>
+        <p class="preview-note" id="preview-note" hidden>Локальный тест: уведомления менеджерам не отправляются.</p>
+      </form>
+      <a class="dialog-phone" href="tel:+79517349999">Позвонить: +7 (951) 734-99-99</a>
+    </div>
   </dialog>
   <noscript><div class="no-js">Чтобы обсудить баню к Новому году, позвоните <a href="tel:+79517349999">+7 (951) 734-99-99</a>.</div></noscript>
 </body>
