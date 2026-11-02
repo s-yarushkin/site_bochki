@@ -200,8 +200,9 @@ class TestR114ScrollAndBottomMount(unittest.TestCase):
   self.assertEqual(mod.OLD_BLOBS['quiz.mjs'],'02caec189a3e3e28c2c05825d3bf86d168fa7271')
   self.assertEqual(mod.OLD_BLOBS['quiz.css'],'fdb2f9a3d2dfbee30096f2197ae351251836602e')
   self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs','quiz.css'})
-  for name,expected in mod.NEW_BLOBS.items():
-   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  # R114 is already installed; current working tree contains R115 sources.
+  self.assertEqual(mod.NEW_BLOBS['quiz.mjs'],'af9905c64c46fab78b1577d598608897c1b7e006')
+  self.assertEqual(mod.NEW_BLOBS['quiz.css'],'e37254d6db526be8530831d6d5389a0a64177426')
   home='<link href="/quiz.css?v=r113-cta-02caec18"><script type="module" src="/quiz.mjs?v=r113-cta-02caec18"></script>'
   html=mod.prepare_html(home,mod.locate_quiz_assets(home))
   for asset in ['quiz.mjs','quiz.css']:
@@ -212,5 +213,29 @@ class TestR114ScrollAndBottomMount(unittest.TestCase):
    self.assertIn(needle,installer)
   self.assertNotIn('sqlite3.connect',installer)
   self.assertNotIn('systemctl',installer)
+
+
+class TestR115FooterOnly(unittest.TestCase):
+ def test_r115_pins_r114_live_and_updates_quiz_only(self):
+  spec=importlib.util.spec_from_file_location('r115_remote',ROOT/'scripts/r115-quiz-footer-remote.py')
+  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+  self.assertEqual(mod.EXPECTED_ACTIVE,'DPQUIZ-r114-scroll-af9905c6e37254d6')
+  self.assertTrue(mod.NEW_NAME.startswith('DPQUIZ-r115-footer-'))
+  self.assertEqual(mod.OLD_BLOBS['quiz.mjs'],'af9905c64c46fab78b1577d598608897c1b7e006')
+  self.assertEqual(mod.OLD_BLOBS['quiz.css'],'e37254d6db526be8530831d6d5389a0a64177426')
+  self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs','quiz.css'})
+  for name,expected in mod.NEW_BLOBS.items():
+   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  html='<link href="/quiz.css?v=r114-scroll-af9905c6"><script src="/quiz.mjs?v=r114-scroll-af9905c6"></script>'
+  result=mod.prepare_html(html,mod.locate_quiz_assets(html))
+  self.assertIn('/quiz.css?v='+mod.VERSION,result)
+  self.assertIn('/quiz.mjs?v='+mod.VERSION,result)
+  self.assertNotIn('r114-scroll-af9905c6',result)
+  source=(ROOT/'scripts/r115-quiz-footer-remote.py').read_text('utf8')
+  for term in ['R115_FOOTER_PREFLIGHT','R115_FOOTER_DEPLOY','API_SQLITE=UNTOUCHED',
+               'footerObserver.observe(footer)','<footer']:
+   self.assertIn(term,source)
+  self.assertNotIn('sqlite3.connect',source)
+  self.assertNotIn('systemctl',source)
 
 if __name__=='__main__':unittest.main()
