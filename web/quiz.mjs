@@ -39,18 +39,58 @@ const rub=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(n)+
 const offerPrice=offer=>offer.displayMinRub===offer.displayMaxRub?'≈ '+rub(offer.displayMinRub):'от '+rub(offer.displayMinRub)+' до '+rub(offer.displayMaxRub);
 
 const liveKey='dp_quiz_answers_v1',hiddenKey='dp_quiz_invite_suppressed_until_v1';
-// Invitе is non-modal: the full quiz opens only when the visitor clicks its button.
-const inviteDelayMs=10000,inviteScrollFraction=0.35;
+// R111: no generic timers, page-percentage or exit-intent interruptions.
+// Trigger 1: 18s without scroll, pointer, click, touch or keyboard activity while viewing models.
+// Trigger 2: reaching the start of the #configure (your bath) section.
+const modelsIdleMs=18000;
+const inviteShownSessionKey='dp_quiz_invite_seen_session_r111';
 const state={step:0,view:'question',answers:{},selectedCode:null,expanded:false,sending:false,phone:'',channel:'',error:'',success:false,requestId:null};
-let quiz=null,book=null,settings=null,dialog=null,invite=null,launcher=null,scrollSeen=false,interacted=false,shownThisVisit=false,startedAt=Date.now(),lastOpener=null;
+let quiz=null,book=null,settings=null,dialog=null,invite=null,launcher=null,interacted=false,shownThisVisit=false,lastOpener=null;
+let modelsIdleTimer=null;
 const trace=(name,params={})=>{try{analytics?.track(name,{placement:'catalog',...params})}catch{}};
 const save=()=>{try{sessionStorage.setItem(liveKey,JSON.stringify(state.answers))}catch{}};
 const load=()=>{try{const a=JSON.parse(sessionStorage.getItem(liveKey)||'{}');if(a&&typeof a==='object')state.answers={party:ANSWERS.party.includes(a.party)?a.party:undefined,wash:ANSWERS.wash.includes(a.wash)?a.wash:undefined,bedroom:ANSWERS.bedroom.includes(a.bedroom)?a.bedroom:undefined}}catch{}};
-const hideInvite=(dismissed=false)=>{if(invite?.open)invite.close();if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
+const cancelModelsIdle=()=>{if(modelsIdleTimer!==null){clearTimeout(modelsIdleTimer);modelsIdleTimer=null}};
+const hideInvite=(dismissed=false)=>{if(invite?.open)invite.close();cancelModelsIdle();if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
 const canInvite=()=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
   let savedChoice=false;try{savedChoice=!!JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{}
-  return !shownThisVisit && !savedChoice && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && Date.now()-startedAt>=inviteDelayMs && !location.hash && !document.activeElement?.matches?.('input,textarea,select');};
-const maybeInvite=()=>{if(!canInvite()||!scrollSeen||!invite)return;shownThisVisit=true;invite.showModal();trace('dp_quiz_invite_view')};
+  return !shownThisVisit && !savedChoice && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && !document.activeElement?.matches?.('input,textarea,select');};
+const modelsVisible=()=>{
+  const el=$('#models');if(!el)return false;
+  const r=el.getBoundingClientRect(),h=innerHeight;
+  return r.top<=h*0.55&&r.bottom>=h*0.45;
+};
+const reachedYourBath=()=>{
+  const el=$('#configure');if(!el)return false;
+  const r=el.getBoundingClientRect();
+  return r.top<=innerHeight*0.45&&r.bottom>0;
+};
+const maybeInvite=(reason)=>{
+  if(!invite||!canInvite())return false;
+  if(reason==='models-idle'&&!modelsVisible())return false;
+  if(reason==='your-bath'&&!reachedYourBath())return false;
+  if(reason!=='models-idle'&&reason!=='your-bath')return false;
+  shownThisVisit=true;
+  try{sessionStorage.setItem(inviteShownSessionKey,'1')}catch{}
+  cancelModelsIdle();
+  invite.showModal();
+  trace('dp_quiz_invite_view',{reason});
+  return true;
+};
+const armModelsIdle=()=>{
+  cancelModelsIdle();
+  if(!canInvite()||!modelsVisible()||reachedYourBath())return;
+  modelsIdleTimer=setTimeout(()=>{modelsIdleTimer=null;maybeInvite('models-idle')},modelsIdleMs);
+};
+const handleActivity=()=>{
+  cancelModelsIdle();
+  if(canInvite()&&modelsVisible()&&!reachedYourBath())armModelsIdle();
+};
+const handleScroll=()=>{
+  cancelModelsIdle();
+  if(reachedYourBath()){maybeInvite('your-bath');return}
+  armModelsIdle();
+};
 function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
   hideInvite();
@@ -187,11 +227,15 @@ function bind(){
   invite.addEventListener('cancel',event=>{event.preventDefault();hideInvite(true)});
   invite.addEventListener('click',event=>{if(event.target===invite)hideInvite(true)});
   launcher.addEventListener('click',launch);
-  document.addEventListener('click',e=>{if(e.target.closest('#configure,#home-plans,[data-model-card],[data-flow],[data-preset],[data-inquiry],[data-save-choice],[data-size-picker],#contact-dialog,#gallery-dialog,#inquiry-dialog'))interacted=true},{capture:true,passive:true});
-  window.addEventListener('scroll',()=>{const height=document.documentElement.scrollHeight-innerHeight;if(height>0&&scrollY/height>=inviteScrollFraction)scrollSeen=true;maybeInvite()},{passive:true});
-  document.addEventListener('visibilitychange',maybeInvite);
-  window.setTimeout(maybeInvite,inviteDelayMs+500);
-  if(matchMedia('(hover:hover) and (pointer:fine)').matches){document.addEventListener('mouseout',e=>{if(e.clientY<=0&&e.relatedTarget===null&&scrollY>180&&Date.now()-startedAt>15000){scrollSeen=true;maybeInvite()}},{passive:true})}
+  document.addEventListener('click',e=>{if(e.target.closest('#configure,#home-plans,[data-model-card],[data-flow],[data-preset],[data-inquiry],[data-save-choice],[data-size-picker],#contact-dialog,#gallery-dialog,#inquiry-dialog')){interacted=true;cancelModelsIdle()}},{capture:true,passive:true});
+  // Only two automatic entry points. Activity resets the idle clock; scrolling to
+  // the calculator is the one intentional immediate trigger.
+  window.addEventListener('scroll',handleScroll,{passive:true});
+  for(const type of ['pointermove','pointerdown','keydown','touchstart','touchmove','wheel']){
+    window.addEventListener(type,handleActivity,{passive:true});
+  }
+  document.addEventListener('visibilitychange',()=>{cancelModelsIdle();if(!document.hidden)armModelsIdle()});
+  armModelsIdle();
 }
 async function init(){
   if(!$('#models')||$('#dp-quiz-dialog'))return;
@@ -204,7 +248,7 @@ async function init(){
     if(quiz.plans?.length!==41||quiz.priceRules?.assertComfortPriceFromExistingPricebook!==true)throw new Error('QUIZ_DATA_INVALID');
     if(settings.lead?.requiredPricebookVersion!==book.version)throw new Error('QUIZ_PRICEBOOK_VERSION');
     analytics?.start(settings);
-    load();shownThisVisit=Object.values(state.answers).some(Boolean);
+    load();let alreadyShown=false;try{alreadyShown=sessionStorage.getItem(inviteShownSessionKey)==='1'}catch{}shownThisVisit=alreadyShown||Object.values(state.answers).some(Boolean);
     const mounted=$('[data-quiz-mount]');
     const entry=mounted||document.createElement('div');entry.className='dp-quiz-entry';
     entry.innerHTML='<div><span class="dp-quiz-entry-label">Начните со своих пожеланий</span><strong>Подберём баню за 3 шага</strong><p>Сравните подходящие модели, размеры и цены.</p></div><button type="button" class="dp-quiz-action" id="dp-quiz-open">Найти свою баню <span aria-hidden="true">↗</span></button>';
