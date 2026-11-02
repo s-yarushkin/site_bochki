@@ -78,6 +78,9 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
 async function invitePolicySmoke(viewport,label){
  const page=await browser.newPage({viewport,deviceScaleFactor:1});
  try{
+   // The R101 exterior photo exists in the deployed site's immutable assets, not in the raw /web test fixture.
+   // Serve an approved WebP fixture at that URL to verify actual image decoding and panel geometry.
+   await page.route('**/r101/assets/parus-editorial-960.webp',route=>route.fulfill({path:'web/assets/quiz/step1-steamroom.webp',contentType:'image/webp'}));
    await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#dp-quiz-open',{timeout:12000});
    const ratio=await page.evaluate(()=>{
