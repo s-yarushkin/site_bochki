@@ -101,7 +101,7 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
    assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
  }
- assert.match(ui,/Куда прислать ваши планировки\?/);
+ assert.match(ui,/Куда отправить индивидуальное предложение\?/);
  assert.match(ui,/Выберите мессенджер/);
  assert.match(ui,/name="channel"/);
  for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
