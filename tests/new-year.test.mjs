@@ -74,25 +74,60 @@ test('selected model and size use a standard quote payload for the existing MAX 
 });
 
 
-test('R4 preserves the wide lead form and keeps delivery geography as a discreet footer sentence',()=>{
+test('R5 preserves wide lead form, short footer, independent consent link and supports multiple model inquiries',()=>{
  const html=readFileSync(new URL('../concepts/new-year-2027/index.html',import.meta.url),'utf8');
  const css=readFileSync(new URL('../concepts/new-year-2027/style.css',import.meta.url),'utf8');
+ const lead=readFileSync(new URL('../concepts/new-year-2027/lead.mjs',import.meta.url),'utf8');
  assert.match(html,/<h2 id="form-heading">Пришлём подходящие варианты, цены и комплектации<\/h2>/);
  assert.match(html,/class="dialog-story"/);
  assert.match(html,/class="dialog-action"/);
  assert.match(html,/<form id="lead-form" action="\/api\/lead" method="post">/);
  assert.match(html,/<p id="delivery-geography-title" class="delivery-footer-line">Производство — Вологда\.<br>Доставка: Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области\.<\/p>/);
- assert.ok(html.indexOf('class="delivery-footer-line"')>html.indexOf('</main>'),'Delivery belongs only to footer');
- assert.equal(html.includes('class="delivery-geography"'),false,'Oversized shipping section must be removed');
- assert.equal(html.includes('Основные направления:'),false,'Specific towns must be removed');
- for(const place of ['Сергиев Посад','Ногинск','Ивантеевка','Королёв','Мытищи','Софрино'])
-   assert.ok(!html.includes(place),'No city list: '+place);
- assert.match(html,/style\.css\?v=ny2027-r4/);
- assert.match(css,/NY2027 R4/);
- assert.match(css,/footer \.delivery-footer-line\{font-size:11px/);
- assert.doesNotMatch(css,/\.delivery-geography\{/);
+ assert.match(html,/class="footer-links"[\s\S]*?<a href="\/privacy.html">Политика обработки данных<\/a><a href="\/consent.html">Согласие на обработку<\/a>/);
+ assert.ok(html.indexOf('id="delivery-geography-title"')>html.indexOf('</main>'));
+ assert.equal(html.includes('class="delivery-geography"'),false);
+ assert.equal(html.includes('Основные направления:'),false);
+ assert.equal(html.includes('id="inquiry-summary"'),false);
+ assert.equal(html.includes('выбранной бани'),false);
+ assert.match(html,/style\.css\?v=ny2027-r5/);
+ assert.match(html,/holiday-quiz\.mjs\?v=ny2027-r5/);
+ assert.match(html,/\/quiz\.css\?v=r115-footer-0290aab2/);
+ assert.match(css,/NY2027 R5/);
  assert.match(css,/#lead-dialog\{[\s\S]*?width:min\(1280px,calc\(100vw - 48px\)\)/);
- assert.match(css,/#lead-dialog\[open\]\{\s*display:grid;/);
  assert.match(css,/#lead-dialog #submit-lead\{\s*min-height:90px/);
- assert.match(css,/#lead-dialog\[open\]\{grid-template-columns:1fr\}/);
+ assert.match(lead,/callbackAvailable\(settings,location\.origin\)/);
+ assert.match(lead,/campaignInquiry\(values,crypto\.randomUUID\(\)\)/);
+ assert.doesNotMatch(lead,/selectionContext/);
 });
+test('R5 literally retains original questions, options, answer keys, engine and discount',()=>{
+ const js=readFileSync(new URL('../concepts/new-year-2027/holiday-quiz.mjs',import.meta.url),'utf8');
+ const old=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ const questionBlock=s=>s.slice(s.indexOf('const question=['),s.indexOf('const safe=s=>'));
+ // Holiday copy is based on R117; its exact question block must match the immutable original,
+ // even when runtime triggers, illustrations and campaign attribution change.
+ const expected=[
+  ["['p2','1–2 человека','Для спокойного отдыха']","['p4','До 4 человек','Для семьи и небольшой компании']",
+   "['p6','5–6 человек','Для большой семьи и друзей']","['p8','До 8 человек','Когда в планах — встречать праздники в бане с компанией']"],
+  ["title:'Нужна отдельная помывочная?'","['w_yes','Да, отдельная помывочная','Мыться отдельно от парной']",
+   "['w_no','Без отдельной помывочной','Предпочитаю сэкономить']",
+   "['w_compare','Хочу сравнить','Посмотрю оба варианта и решу']"],
+  ["title:'Нужно место, чтобы остаться на ночь?'",
+   "['b_yes','Да, со спальней','Закончить банный вечер и остаться до утра']",
+   "['b_no','Только для банного отдыха','Для ночёвки у нас есть дом']"]
+ ];
+ for(const group of expected)for(const term of group)assert.ok(questionBlock(js).includes(term),term);
+ assert.ok(js.includes("from '/quiz-engine.mjs?v=r108-ranges'"));
+ assert.ok(js.includes('recommendModelRanges(quiz.plans,state.answers,book,quiz.priceRules)'));
+ assert.ok(js.includes('Скидка 20 000 ₽ — при выборе комплектации «Делюкс»'));
+ assert.ok(js.includes("payload.comment=('Источник: квиз новый год. Новый год 2027."));
+ assert.ok(js.includes("pagePath:'/novyy-god/'"));
+ assert.ok(js.includes('visibleRemainingMs=8000'));
+ assert.ok(js.includes('dp_ny2027_quiz_invite_seen_session'));
+ assert.ok(!js.includes('modelsIdleMs=18000'));
+ assert.ok(!js.includes('reachedYourBath'));
+ for(const img of ['winter-house-960.webp','winter-sauna-960.webp','winter-parus-960.webp','winter-viking-960.webp'])
+   assert.ok(js.includes(img),'Winter visual: '+img);
+ // Never claim zero-time delivery from New Year's countdown.
+ assert.ok(!js.includes('Гарантируем к Новому году'));
+});
+
