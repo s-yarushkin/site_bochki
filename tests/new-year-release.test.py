@@ -116,7 +116,7 @@ class ReleaseTest(unittest.TestCase):
         self.old = approved
         self.current = approved
         for name, data in self.files.items():
-            if name == 'novyy-god/holiday-quiz.mjs':
+            if name in deploy.R5_NEW:
                 continue
             p = self.old / name
             p.parent.mkdir(parents=True, exist_ok=True)
@@ -127,7 +127,7 @@ class ReleaseTest(unittest.TestCase):
         (self.old / 'novyy-god/style.css').write_text(
             '/* NY2027 R4 */ #lead-dialog{max-width:1280px;}', encoding='utf-8')
         self.files['novyy-god/index.html'] = (
-            '<html><link href="style.css?v=ny2027-r5">'
+            '<html><link href="style.css?v=ny2027-r5"><link href="holiday-quiz.css?v=ny2027-r5">'
             '<h2>Пришлём подходящие варианты, цены и комплектации</h2>'
             '<a href="/consent.html">Согласие на обработку</a>'
             '<a href="/privacy.html">Политика обработки данных</a>'
@@ -146,6 +146,8 @@ class ReleaseTest(unittest.TestCase):
             "const answer=()=>recommendModelRanges();"
             "const key='dp_ny2027_quiz_invite_seen_session';"
         ).encode('utf-8')
+        for rel in ['holiday-quiz-engine.mjs','holiday-quiz-data.json','holiday-quiz.css']:
+            self.files['novyy-god/'+rel] = (ROOT/'concepts/new-year-2027'/rel).read_bytes()
         self.pack()
 
     def test_r5_upgrade_preserves_live_r117_and_old_route_assets(self):
