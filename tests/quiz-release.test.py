@@ -224,8 +224,9 @@ class TestR115FooterOnly(unittest.TestCase):
   self.assertEqual(mod.OLD_BLOBS['quiz.mjs'],'af9905c64c46fab78b1577d598608897c1b7e006')
   self.assertEqual(mod.OLD_BLOBS['quiz.css'],'e37254d6db526be8530831d6d5389a0a64177426')
   self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs','quiz.css'})
-  for name,expected in mod.NEW_BLOBS.items():
-   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  # R115 is already deployed; working tree contains R116 JavaScript.
+  self.assertEqual(mod.NEW_BLOBS['quiz.mjs'],'0290aab2c4c769ad962d9c4b5f6360aaea7fb9f8')
+  self.assertEqual(mod.NEW_BLOBS['quiz.css'],'ae4866a32f0dae680f509f76203443f7a4634322')
   html='<link href="/quiz.css?v=r114-scroll-af9905c6"><script src="/quiz.mjs?v=r114-scroll-af9905c6"></script>'
   result=mod.prepare_html(html,mod.locate_quiz_assets(html))
   self.assertIn('/quiz.css?v='+mod.VERSION,result)
@@ -237,5 +238,34 @@ class TestR115FooterOnly(unittest.TestCase):
    self.assertIn(term,source)
   self.assertNotIn('sqlite3.connect',source)
   self.assertNotIn('systemctl',source)
+
+
+class TestR116VisionScreen(unittest.TestCase):
+ def test_r116_exact_hero_only_and_js_only_release_from_r115(self):
+  spec=importlib.util.spec_from_file_location('r116_remote',ROOT/'scripts/r116-quiz-vision-remote.py')
+  mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+  self.assertEqual(mod.EXPECTED_ACTIVE,'DPQUIZ-r115-footer-0290aab2ae4866a3')
+  self.assertTrue(mod.NEW_NAME.startswith('DPQUIZ-r116-vision-'))
+  self.assertEqual(mod.OLD_BLOBS['quiz.mjs'],'0290aab2c4c769ad962d9c4b5f6360aaea7fb9f8')
+  self.assertEqual(mod.OLD_BLOBS['quiz.css'],'ae4866a32f0dae680f509f76203443f7a4634322')
+  self.assertEqual(set(mod.NEW_BLOBS),{'quiz.mjs'})
+  self.assertEqual(set(mod.HTML_ASSETS),{'quiz.mjs'})
+  for name,expected in mod.NEW_BLOBS.items():
+   self.assertEqual(mod.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  html='<link href="/quiz.css?v=r115-footer-0290aab2"><script type="module" src="/quiz.mjs?v=r115-footer-0290aab2"></script>'
+  changed=mod.prepare_html(html,mod.locate_quiz_assets(html))
+  self.assertIn('/quiz.mjs?v='+mod.VERSION,changed)
+  self.assertIn('/quiz.css?v=r115-footer-0290aab2',changed)
+  self.assertNotIn('/quiz.mjs?v=r115-footer-0290aab2',changed)
+  source=(ROOT/'web/quiz.mjs').read_text('utf-8')
+  for phrase in ['findBathVision','bathVisionVisible','title===\'ваша баня\'','modelsIdleMs=18000']:
+   self.assertIn(phrase,source)
+  for obsolete in ['watchFooter()', 'footerObserver', 'reachedYourBath()']:
+   self.assertNotIn(obsolete,source)
+  installer=(ROOT/'scripts/r116-quiz-vision-remote.py').read_text('utf8')
+  for phrase in ['R116_VISION_PREFLIGHT','R116_VISION_DEPLOY','API_SQLITE=UNTOUCHED']:
+   self.assertIn(phrase,installer)
+  self.assertNotIn('sqlite3.connect',installer)
+  self.assertNotIn('systemctl',installer)
 
 if __name__=='__main__':unittest.main()
