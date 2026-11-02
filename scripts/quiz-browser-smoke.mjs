@@ -147,8 +147,8 @@ async function invitePolicySmoke(viewport,label){
    if(button.width<180||button.height<48)throw new Error(label+' primary button too small '+JSON.stringify(bounds));
    const heading=await page.locator('#dp-quiz-invite-title').textContent();
    if(!heading?.includes('Какая баня подойдёт вам?'))throw new Error(label+' invitation headline drift');
-   if(!(await page.locator('.dp-quiz-invite-reassurance').textContent()).includes('без номера телефона'))
-     throw new Error(label+' immediate-results reassurance missing');
+   if(await page.locator('.dp-quiz-invite-reassurance').count()!==0)
+     throw new Error(label+' outdated promise without phone still visible');
    await page.locator('.dp-quiz-invite').screenshot({path:OUT+'/invite-'+label+'.png'});
    await page.locator('[data-dpq-open]').click();
    await page.waitForSelector('#dp-quiz-dialog[open]');
