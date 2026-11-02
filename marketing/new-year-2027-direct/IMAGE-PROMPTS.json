@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-02",
+  "tool": "built-in image_gen.imagegen",
+  "mode": "ads-marketing with architectural reference",
+  "assets": [
+    {
+      "id": "01-quadro-new-year",
+      "ref": "winter-sauna.png",
+      "prompt": "Use case: ads-marketing. Create ONE finished photorealistic advertising image, square 1:1 aspect ratio, ideally 1536 by 1536 pixels, for Russian outdoor sauna maker ДачаПар. Input image is an architectural and art-direction reference: preserve exactly this Quadro small transportable timber sauna, rounded rectangular long body, dark shingle upper sides, honey timber, glazed door and front window. Recompose as a NEW premium advertising photograph, cabin large and fully visible centered with safe outer margins, three-quarter view. A magical snowy Russian countryside night at New Year, deep midnight navy snow shadows, amber light pouring out of the sauna, small warm-white garlands outlining eaves, one tasteful large red Santa hat resting on the front roof edge, snow-covered fir trees, a decorated little Christmas tree, a few warm distant fireworks. Foreground contains a subtle human snow-angel impression and footprints leading to the hot sauna, no human body. Clear product silhouette and very believable timber and snow. Sell the feeling 'this could be your New Year in your own sauna'. Keep contrast readable in a small advertising thumbnail. This is a photographic visualization. No writing, no lettering, no price, no logo, no watermark, no graphic borders, no split screen. Do not add a pool or ice hole, do not change sauna architecture.",
+      "reference": "../../concepts/new-year-2027/assets/winter-sauna.png",
+      "output": "assets/01-quadro-new-year.png"
+    },
+    {
+      "id": "02-parus-family",
+      "ref": "winter-parus.png",
+      "prompt": "Use case: ads-marketing. Create ONE finished photorealistic advertising photograph, horizontal 16:9 composition, ideally 1920 by 1080 pixels, for Russian outdoor sauna maker ДачаПар. Input image is an architectural and color/mood reference. Preserve the recognizable Parus model exactly: compact straight-wall timber cabin, rounded sloping roof profile, dark vertical facade accents, correct glazed entrance and front window. New scene: a private snowy countryside plot on a dark New Year evening. Sauna occupies the central two thirds, full building clearly visible with margins and product center kept crop safe. Amber windows and doorway, soft white steam in frosty air, warm-white fairy lights following the roof, small red Santa hat on roof, frosted firs, tiny decorated Christmas tree. A family seen small from behind beside the path, two adults and a child all fully dressed in winter coats, hats and boots, holding steaming tea cups and walking toward the sauna. Keep family secondary and well away from chimney or hot surfaces. Magical affectionate family atmosphere, realistic proportions, warm timber against deep navy blue snow, subtle distant golden fireworks. Premium cinematic but believable product advertising, not a fantasy palace. No writing or typography, no logo, no price, no watermark, no layout or border. Do not alter the product into a different sauna.",
+      "reference": "../../concepts/new-year-2027/assets/winter-parus.png",
+      "output": "assets/02-parus-family.png"
+    },
+    {
+      "id": "03-viking-winter-ritual",
+      "ref": "winter-viking.png",
+      "prompt": "Use case: ads-marketing. Create ONE finished square 1:1 premium photorealistic advertising image, ideally 1536 by 1536 pixels, for Russian outdoor sauna maker ДачаПар. The supplied reference is the exact Viking sauna architecture and art direction, not an image to merely crop. Preserve its distinctive arched gabled front, dark shingled steep curving roof sides, light timber front, glazed front door, side window and compact timber cabin proportions. Recompose as an intimate but complete three-quarter product photograph on a snow-covered private country plot at blue-black winter night, full sauna body visible, sauna fills most of frame, center crop safe. Warm amber interior lighting, real soft steam rising in freezing air, warm fairy lights around eaves and one elegant Santa red hat at roof corner, fir branches under snow and softly glowing little Christmas tree at side. At bottom corner a small wooden outdoor bench with two mugs of steaming herbal tea, a folded thick wool blanket and green spruce sauna brooms, all secondary, no product clutter. A few footprints in fresh snow tell that friends just went inside. Evoke 'outside winter, inside warmth'. Real timber texture, physically believable light, crisp product silhouette readable as a small thumbnail. No people, no lettering, no logo, no price, no watermark, no split screen, no graphic overlay, no swimming pool, no ice hole.",
+      "reference": "../../concepts/new-year-2027/assets/winter-viking.png",
+      "output": "assets/03-viking-winter-ritual.png"
+    },
+    {
+      "id": "04-house-friends",
+      "ref": "winter-house.png",
+      "prompt": "Use case: ads-marketing. Create ONE finished photorealistic horizontal 16:9 advertising photograph, ideally 1920 by 1080 pixels, for Russian sauna maker ДачаПар. Input reference defines the exact Quadro House architecture: broad rounded rectangular timber cabin, full-height glazed front with dark mullions, front timber terrace, distinctive crossed terrace railings, shallow rounded roof. Preserve these product features and compact realistic scale. A NEW New Year scene, dark navy snowy countryside night with fir trees, warm golden light from room behind glass, delicate warm-white garland outlining the entire roof and railings, a tasteful red Santa hat on one roof edge, decorated Christmas tree to the side, small gold fireworks in distant sky. Full building centered, majority of image and clearly readable, avoid cropping the terrace. Four adult friends fully clothed in winter knitwear and coats, secondary small figures on terrace, sharing steaming tea and laughing, no close faces, no alcohol emphasis. Snowy path leads viewer toward the warmth, falling fine snow, authentic timber and soft shadow detail. Sell a private New Year with your own people, cinematic premium but real product proportions. The sauna remains hero, not the people. No writing, no brand lettering, no price, no watermark, no graphic frame, no collage, no pool, no ice hole. Keep full product in center crop-safe area.",
+      "reference": "../../concepts/new-year-2027/assets/winter-house.png",
+      "output": "assets/04-house-friends.png"
+    }
+  ]
+}
