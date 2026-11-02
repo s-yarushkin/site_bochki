@@ -53,3 +53,61 @@ dialog{border:1px solid #fff4df3c;padding:44px;max-width:500px;width:calc(100% -
  .countdown{flex:1;min-width:0;grid-template-columns:1fr 5px 1fr 5px 1fr;gap:2px;text-align:center}.countdown strong{font-size:20px}.countdown small{font-size:7px}.countdown b{font-size:14px}.countdown-zone{display:none}
  .hero-copy{padding-top:410px}.hero-copy>.eyebrow{display:none}
 }
+
+/* NY2027 R2: readable contact dialog and delivery geography. */
+#lead-dialog{
+  width:min(660px,calc(100% - 40px));
+  max-width:660px;
+  padding:0 40px 36px;
+}
+#lead-dialog .dialog-winter{height:156px;margin:0 -40px 26px}
+#lead-dialog .dialog-winter>span{left:40px;font-size:22px}
+#lead-dialog .dialog-eyebrow{font-size:11px;letter-spacing:.13em}
+#lead-dialog h2{font-size:clamp(34px,3vw,42px);line-height:1.15;letter-spacing:-.045em;margin:0 0 20px;max-width:19ch}
+#lead-dialog>p:not(.eyebrow){font-size:16px;line-height:1.65}
+#lead-dialog .selection-summary{font-size:15px;line-height:1.6;padding:14px 16px;margin:20px 0}
+#lead-dialog form{margin-top:22px}
+#lead-dialog label{font-size:15px;line-height:1.45;margin:19px 0 9px}
+#lead-dialog input,#lead-dialog textarea{font-size:17px;min-height:58px;padding:16px}
+#lead-dialog .form-details summary{font-size:15px;min-height:48px}
+#lead-dialog .consent{font-size:12.5px;line-height:1.65;margin:20px 0}
+#lead-dialog #submit-lead{font-size:18px;min-height:72px}
+#lead-dialog .dialog-phone{font-size:14px;margin-top:19px}
+#lead-dialog #form-result{font-size:15px}
+.delivery-geography{
+  position:relative;
+  background:linear-gradient(150deg,#172f35 0%,#10232c 55%,#101f2c 100%);
+  border-top:1px solid #fff4df26;
+  padding:clamp(50px,6vw,88px) var(--page) clamp(56px,6.5vw,96px);
+}
+.delivery-geography-inner{max-width:1280px;margin:0 auto}
+.delivery-geography-kicker{margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ember)}
+.delivery-geography h2{font-size:clamp(32px,3.4vw,52px);line-height:1.13;letter-spacing:-.045em}
+.delivery-geography-intro{font-size:clamp(16px,1.5vw,19px);line-height:1.6;color:#e5e9dd;margin:16px 0 30px}
+.delivery-regions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;list-style:none;margin:0 0 28px;padding:0}
+.delivery-regions li{border:1px solid #d8ddce56;background:#fff4df0d;padding:21px 25px;border-radius:6px;font-size:clamp(16px,1.5vw,20px);line-height:1.4;font-weight:650}
+.delivery-geography-directions{font-size:16px;line-height:1.75;color:#e2e8db;margin:0 0 12px}
+.delivery-geography-directions strong{color:var(--snow);font-weight:750}
+.delivery-geography-note{font-size:15px;line-height:1.75;color:#cddbd3;max-width:78ch;margin:0}
+@media(max-width:700px){
+  #lead-dialog{width:calc(100% - 20px);max-width:none;padding:0 22px 24px}
+  #lead-dialog .dialog-winter{height:116px;margin:0 -22px 20px}
+  #lead-dialog .dialog-winter>span{left:22px;font-size:18px}
+  #lead-dialog h2{font-size:clamp(27px,7vw,34px);line-height:1.13;max-width:none;margin-bottom:17px}
+  #lead-dialog>p:not(.eyebrow){font-size:15px;line-height:1.55}
+  #lead-dialog .selection-summary{font-size:14px;padding:12px 14px;margin:16px 0}
+  #lead-dialog label{font-size:14px}
+  #lead-dialog input,#lead-dialog textarea{font-size:16px;min-height:55px}
+  #lead-dialog .form-details summary{font-size:14px}
+  #lead-dialog .consent{font-size:12px;line-height:1.55}
+  #lead-dialog #submit-lead{font-size:17px;min-height:64px}
+  #lead-dialog .dialog-phone{font-size:13px}
+  .delivery-geography{padding:52px 22px 65px}
+  .delivery-geography-kicker{font-size:10px}
+  .delivery-geography h2{font-size:32px}
+  .delivery-geography-intro{font-size:16px;margin:16px 0 23px}
+  .delivery-regions{grid-template-columns:1fr;gap:10px;margin-bottom:22px}
+  .delivery-regions li{padding:16px 18px;font-size:16px}
+  .delivery-geography-directions{font-size:14px}
+  .delivery-geography-note{font-size:14px}
+}
