@@ -24,7 +24,7 @@ test('quiz success and Pereslavl goals need both persisted delivery and a unique
  assert.equal(a.confirmed({ok:true,delivered:false,analytics:{persisted:true}},x),false);
  assert.equal(a.confirmed({ok:true,delivered:true,analytics:{persisted:false}},x),false);
  assert.equal(a.confirmed({ok:true,delivered:true,analytics:{persisted:true},duplicate:true},x),false);
- assert.equal(calls.filter(x=>x[2]?.startsWith('dp_quiz_lead_')).length,0);
+ assert.equal(calls.filter(x=>typeof x[2]==='string'&&x[2].startsWith('dp_quiz_lead_')).length,0);
  const ok={ok:true,delivered:true,analytics:{persisted:true}};
  assert.equal(a.confirmed(ok,x),true);
  assert.equal(a.confirmed(ok,x),false,'Same request cannot double-count');
