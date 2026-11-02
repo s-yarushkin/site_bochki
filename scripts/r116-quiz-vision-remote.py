@@ -124,7 +124,7 @@ def main():
             stop("R116 forbidden old trigger remains: " + obsolete)
     if "footer.append(entry)" not in code:
         stop("R116 accidentally removed current footer manual entry")
-    if home.count("/quiz.css?v=r115-footer-0290aab2") != 1:
+    if old_html.count("/quiz.css?v=r115-footer-0290aab2") != 1:
         stop("R116 must not change styles")
     if args.check:
         print("R116_VISION_PREFLIGHT=PASS; old=" + str(old) + "; files=1; photos=3; API/SQLite untouched")
