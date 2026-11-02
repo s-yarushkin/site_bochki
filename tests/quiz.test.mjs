@@ -212,7 +212,7 @@ test('Deluxe extra bonus is never subtracted from Comfort price ranges',()=>{
  assert.equal(offers.find(o=>o.model==='parus').minRub,530540.5);
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
  assert.ok(ui.includes('20 000 ₽'));
- assert.ok(ui.includes('Суммируется с остальными акциями'));
+ assert.equal(ui.includes('Суммируется с остальными акциями'),false);
  assert.ok(ui.includes('комплектации «Делюкс»'));
  assert.ok(ui.includes('/privacy.html'));
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
