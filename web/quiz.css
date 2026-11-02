@@ -402,3 +402,38 @@ dialog.dp-quiz-invite .dp-quiz-invite-visual .dp-quiz-invite-photo{
   #dp-quiz-dialog .dp-quiz-cta-copy strong{font-size:14px}
   #dp-quiz-dialog .dp-quiz-cta-primary b{font-size:15px}
 }
+
+/* R113 — the benefit is inside the button; no vague 'offer' and no misleading % symbol. */
+#dp-quiz-dialog .dp-quiz-cta .dp-quiz-cta-primary{
+  min-height:108px;
+  padding:17px 16px;
+  gap:10px;
+}
+#dp-quiz-dialog .dp-quiz-cta-label{
+  flex:1 1 auto;min-width:0;
+  display:block;text-align:left;font-size:clamp(14px,1.4vw,17px);
+  line-height:1.32;
+}
+#dp-quiz-dialog .dp-quiz-cta-primary b{
+  display:block;margin-top:5px;font-size:clamp(17px,1.7vw,21px);
+  line-height:1.22;
+}
+#dp-quiz-dialog .dp-quiz-cta-percent{
+  font-size:23px;font-weight:800;transform:none;
+}
+#dp-quiz-dialog .dp-quiz-cta-arrow{
+  flex:0 0 auto;font-size:25px;font-weight:500;
+}
+@media(max-width:760px){
+  #dp-quiz-dialog .dp-quiz-cta-copy strong{font-size:15px}
+  #dp-quiz-dialog .dp-quiz-cta .dp-quiz-cta-primary{min-height:89px;padding:12px 9px;gap:7px}
+  #dp-quiz-dialog .dp-quiz-cta-label{font-size:12px;line-height:1.25}
+  #dp-quiz-dialog .dp-quiz-cta-primary b{font-size:15px;line-height:1.22;margin-top:4px}
+  #dp-quiz-dialog .dp-quiz-cta-percent{flex-basis:29px;width:29px;height:29px;font-size:19px}
+  #dp-quiz-dialog .dp-quiz-cta-arrow{font-size:18px}
+}
+@media(max-width:350px){
+  #dp-quiz-dialog .dp-quiz-cta .dp-quiz-cta-primary{gap:5px;padding:11px 6px}
+  #dp-quiz-dialog .dp-quiz-cta-label{font-size:11px}
+  #dp-quiz-dialog .dp-quiz-cta-primary b{font-size:14px}
+}
