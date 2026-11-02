@@ -150,3 +150,4 @@
 }
 @media(max-width:350px){.dp-quiz-main{padding-inline:16px}.dp-quiz-main h2{font-size:27px}.dp-quiz-choice-text strong{font-size:14px}.dp-quiz-channels{gap:6px}.dp-quiz-channel span{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.dp-quiz-choices{animation:none}}
+@media(max-width:760px){.dp-quiz-results{grid-template-columns:1fr}}
