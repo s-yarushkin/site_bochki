@@ -204,3 +204,18 @@ test('Deluxe extra bonus is never subtracted from Comfort price ranges',()=>{
  assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
  assert.equal(ui.includes('cost.rub-20000'),false);
 });
+
+test('R108 approved photography: Parus at entry and a distinct natural-light photo for each question',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ const manifest=read('../r108/quiz-photos.json');
+ assert.equal(manifest.files.length,3);
+ assert.match(ui,/parus-editorial-960\.webp/);
+ for(let i=1;i<=3;i++){
+   assert.ok(ui.includes('/assets/quiz/step'+i+'-'),'Missing step '+i+' photo');
+ }
+ assert.match(ui,/state\.view==='question'/);
+ assert.match(ui,/questionPhotos\[state\.step\]/);
+ assert.doesNotMatch(ui,/dp-quiz-photo-note/,'No slogan overlay on photos');
+ assert.notEqual(manifest.files[0].sha256,manifest.files[1].sha256);
+ assert.notEqual(manifest.files[1].sha256,manifest.files[2].sha256);
+});
