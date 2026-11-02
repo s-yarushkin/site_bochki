@@ -74,26 +74,25 @@ test('selected model and size use a standard quote payload for the existing MAX 
 });
 
 
-test('R3 lead dialog has two columns, compact offer, large CTA and unchanged delivery geography',()=>{
+test('R4 preserves the wide lead form and keeps delivery geography as a discreet footer sentence',()=>{
  const html=readFileSync(new URL('../concepts/new-year-2027/index.html',import.meta.url),'utf8');
  const css=readFileSync(new URL('../concepts/new-year-2027/style.css',import.meta.url),'utf8');
  assert.match(html,/<h2 id="form-heading">Пришлём подходящие варианты, цены и комплектации<\/h2>/);
  assert.match(html,/class="dialog-story"/);
  assert.match(html,/class="dialog-action"/);
- assert.match(html,/<div class="dialog-winter" aria-hidden="true">/);
  assert.match(html,/<form id="lead-form" action="\/api\/lead" method="post">/);
- assert.match(html,/id="form-description"/);
- assert.match(html,/<section class="delivery-geography" aria-labelledby="delivery-geography-title">/);
- for(const region of ['Москва и Московская область','Ярославская область','Вологодская область','Ленинградская область'])
-   assert.ok(html.includes('<li>'+region+'</li>'),region);
- assert.ok(html.indexOf('delivery-geography')>html.indexOf('</section>'));
- assert.ok(html.indexOf('delivery-geography')<html.indexOf('</main>'));
- assert.match(html,/style\.css\?v=ny2027-r3/);
+ assert.match(html,/<p class="delivery-footer-line">Производство — Вологда\.<br>Доставка: Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области\.<\/p>/);
+ assert.ok(html.indexOf('class="delivery-footer-line"')>html.indexOf('</main>'),'Delivery belongs only to footer');
+ assert.equal(html.includes('class="delivery-geography"'),false,'Oversized shipping section must be removed');
+ assert.equal(html.includes('Основные направления:'),false,'Specific towns must be removed');
+ for(const place of ['Сергиев Посад','Ногинск','Ивантеевка','Королёв','Мытищи','Софрино'])
+   assert.ok(!html.includes(place),'No city list: '+place);
+ assert.match(html,/style\.css\?v=ny2027-r4/);
+ assert.match(css,/NY2027 R4/);
+ assert.match(css,/footer \.delivery-footer-line\{font-size:11px/);
+ assert.doesNotMatch(css,/\.delivery-geography\{/);
  assert.match(css,/#lead-dialog\{[\s\S]*?width:min\(1280px,calc\(100vw - 48px\)\)/);
  assert.match(css,/#lead-dialog\[open\]\{\s*display:grid;/);
- assert.match(css,/grid-template-columns:minmax\(0,1\.05fr\) minmax\(0,\.95fr\)/);
  assert.match(css,/#lead-dialog #submit-lead\{\s*min-height:90px/);
- assert.match(css,/@media\(max-width:900px\)\{/);
  assert.match(css,/#lead-dialog\[open\]\{grid-template-columns:1fr\}/);
- assert.match(css,/@media\(max-width:420px\)\{/);
 });
