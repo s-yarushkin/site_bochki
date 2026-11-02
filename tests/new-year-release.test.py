@@ -127,7 +127,7 @@ class ReleaseTest(unittest.TestCase):
             '/* NY2027 R3 */ #lead-dialog{max-width:1280px;}', encoding='utf-8')
         self.files['novyy-god/index.html'] = (
             '<html><link href="style.css?v=ny2027-r4"><h2>Пришлём подходящие варианты, цены и комплектации</h2>'
-            '<p class="delivery-footer-line">Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области.</p>'
+            '<p id="delivery-geography-title" class="delivery-footer-line">Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области.</p>'
             '<div class="dialog-story"></div><div class="dialog-action"></div></html>').encode('utf-8')
         self.files['novyy-god/style.css'] = b'/* NY2027 R4 */ #lead-dialog{max-width:1280px;} footer .delivery-footer-line{font-size:11px;}'
         self.pack()
