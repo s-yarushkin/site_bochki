@@ -17,6 +17,8 @@ const sizes=[
 try{
  for(const c of sizes){
   const page=await browser.newPage({viewport:{width:c.width,height:c.height},deviceScaleFactor:1});
+  await page.addInitScript(()=>sessionStorage.setItem('dp_ny2027_quiz_invite_seen_session','1'));
+  // R5 quiz has a separate dedicated 8-second browser smoke below.
   const errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   const response=await page.goto(BASE,{waitUntil:'networkidle'});
