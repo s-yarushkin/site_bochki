@@ -229,3 +229,43 @@ footer .delivery-footer-line{font-size:11px;line-height:1.75;max-width:460px;fle
  #dp-quiz-dialog.dp-ny-quiz-dialog{max-width:100vw}
  .dp-ny-quiz-invite .dp-quiz-invite-visual{min-width:0}
 }
+
+/* NY2027 R5.1 CONTRAST: dark text on light close button; cream text on dark stage chips. */
+/* These overrides are deliberately scoped to the holiday invite, not the main R117 quiz. */
+dialog.dp-ny-quiz-invite .dp-quiz-invite-stages{
+  color:#fff3dc;
+  font-size:13px;
+}
+dialog.dp-ny-quiz-invite .dp-quiz-invite-stages span{
+  color:#fff5e4;
+  background:#234b3e;
+  border:1px solid #a7b6a7;
+  font-size:13px;
+  font-weight:650;
+}
+dialog.dp-ny-quiz-invite .dp-quiz-invite-stages b{
+  color:#ffd395;
+  font-size:12px;
+  font-weight:800;
+}
+dialog.dp-ny-quiz-invite .dp-quiz-invite-close{
+  background:#fff8ea;
+  border:2px solid #285748;
+  color:#193a2e;
+  font-weight:700;
+}
+dialog.dp-ny-quiz-invite .dp-quiz-invite-close:hover{
+  background:#ffdeab;
+  color:#102d24;
+}
+dialog.dp-ny-quiz-invite .dp-quiz-invite-close:focus-visible{
+  outline:3px solid #ffc779;
+  outline-offset:3px;
+}
+@media(max-width:760px){
+  dialog.dp-ny-quiz-invite .dp-quiz-invite-stages span{font-size:12px;padding:8px 10px}
+  dialog.dp-ny-quiz-invite .dp-quiz-invite-stages b{font-size:11px}
+}
+@media(max-width:350px){
+  dialog.dp-ny-quiz-invite .dp-quiz-invite-stages span{font-size:11px;padding:7px 8px}
+}
