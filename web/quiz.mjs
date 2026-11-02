@@ -172,6 +172,8 @@ function bind(){
   dialog.addEventListener('close',()=>{state.error='';try{lastOpener?.focus?.({preventScroll:true})}catch{};});
   invite.querySelector('[data-dpq-open]').addEventListener('click',launch);
   invite.querySelector('[data-dpq-hide]').addEventListener('click',()=>hideInvite(true));
+  invite.addEventListener('cancel',event=>{event.preventDefault();hideInvite(true)});
+  invite.addEventListener('click',event=>{if(event.target===invite)hideInvite(true)});
   launcher.addEventListener('click',launch);
   document.addEventListener('click',e=>{if(e.target.closest('#configure,#home-plans,[data-model-card],[data-flow],[data-preset],[data-inquiry],[data-save-choice],[data-size-picker],#contact-dialog,#gallery-dialog,#inquiry-dialog'))interacted=true},{capture:true,passive:true});
   window.addEventListener('scroll',()=>{const height=document.documentElement.scrollHeight-innerHeight;if(height>0&&scrollY/height>=inviteScrollFraction)scrollSeen=true;maybeInvite()},{passive:true});
@@ -195,8 +197,8 @@ async function init(){
     if(!mounted){const anchor=$('#models .section-heading')||$('#models .section-top');
     if(anchor)anchor.insertAdjacentElement('afterend',entry);else $('#models').prepend(entry);}
     launcher=$('#dp-quiz-open');
-    invite=document.createElement('aside');invite.className='dp-quiz-invite';invite.hidden=true;invite.setAttribute('aria-label','Помощь с выбором бани');
-    invite.innerHTML='<button type="button" class="dp-quiz-invite-close" data-dpq-hide aria-label="Не показывать подсказку">×</button><img src="/r101/assets/kvadro-editorial-640.webp" alt="" width="76" height="104" loading="lazy"><div><strong>Какая баня подойдёт вам?</strong><p>Подберём модели и покажем цены по трём ответам.</p><button type="button" class="dp-quiz-action" data-dpq-open>Подобрать баню →</button></div>';
+    invite=document.createElement('dialog');invite.className='dp-quiz-invite';invite.setAttribute('aria-labelledby','dp-quiz-invite-title');
+    invite.innerHTML='<div class="dp-quiz-invite-inner"><button type="button" class="dp-quiz-invite-close" data-dpq-hide aria-label="Закрыть предложение">×</button><span class="dp-quiz-invite-kicker">ДачаПар · помощь с выбором</span><h2 id="dp-quiz-invite-title">Поможем подобрать модель и планировку за 3 шага</h2><p>Расскажите, какой вы представляете свою баню. Покажем подходящие варианты и цены.</p><div class="dp-quiz-invite-stages" aria-label="Три шага"><span>01</span><i></i><span>02</span><i></i><span>03</span></div><button type="button" class="dp-quiz-action" data-dpq-open>Подобрать баню →</button></div>';
     dialog=document.createElement('dialog');dialog.id='dp-quiz-dialog';dialog.setAttribute('aria-labelledby','dp-quiz-title');
     dialog.innerHTML='<div class="dp-quiz-frame"><div class="dp-quiz-photo" aria-hidden="true"><img src="/r101/assets/parus-editorial-960.webp" width="720" height="960" alt=""><div class="dp-quiz-photo-note">У каждого свой<br>банный вечер<small>Подберём баню под ваши привычки.</small></div></div><div class="dp-quiz-main"></div></div>';
     document.body.append(invite,dialog);bind();
