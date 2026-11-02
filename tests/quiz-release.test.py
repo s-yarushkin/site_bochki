@@ -89,9 +89,9 @@ class TestR110ResultsRelease(unittest.TestCase):
   self.assertEqual(r110.OLD_BLOBS['quiz.css'],'ce5309287a86123b672d8f552d41939c146bc18b')
   self.assertNotEqual(r110.NEW_BLOBS['quiz.mjs'],r110.OLD_BLOBS['quiz.mjs'])
   self.assertNotEqual(r110.NEW_BLOBS['quiz.css'],r110.OLD_BLOBS['quiz.css'])
-  for name in r110.NEW_BLOBS:
-   content=(ROOT/'web'/name).read_bytes()
-   self.assertEqual(r110.git_sha(content),r110.NEW_BLOBS[name],name)
+  # R110 is already deployed; the current working tree intentionally contains R111 JS.
+  self.assertEqual(r110.NEW_BLOBS['quiz.mjs'],'ce74814ab0f64921438def055ba518d70818d9a9')
+  self.assertEqual(r110.git_sha((ROOT/'web/quiz.css').read_bytes()),r110.NEW_BLOBS['quiz.css'])
   self.assertEqual(r110.locate_quiz_assets('<link href="/quiz.css?v=r109-invite-a01e6016"><script src="/quiz.mjs?v=r109-invite-a01e6016"></script>'),{
     'quiz.css':'/quiz.css?v=r109-invite-a01e6016','quiz.mjs':'/quiz.mjs?v=r109-invite-a01e6016'})
   patched=r110.prepare_html('<link href="/quiz.css?v=r109-invite-a01e6016"><script src="/quiz.mjs?v=r109-invite-a01e6016"></script>',{
@@ -102,6 +102,30 @@ class TestR110ResultsRelease(unittest.TestCase):
   self.assertNotIn('published quiz plan image missing',source)
   self.assertNotIn('asset = active / picture.lstrip',source)
   self.assertIn('API_SQLITE=UNTOUCHED',source)
+  self.assertNotIn('sqlite3.connect',source)
+  self.assertNotIn('systemctl',source)
+
+
+class TestR111TwoTriggers(unittest.TestCase):
+ def test_r111_script_pins_deployed_r110_and_updates_only_js(self):
+  spec=importlib.util.spec_from_file_location('r111_remote',ROOT/'scripts/r111-quiz-invite-remote.py')
+  r111=importlib.util.module_from_spec(spec);spec.loader.exec_module(r111)
+  self.assertEqual(r111.EXPECTED_ACTIVE,'DPQUIZ-r110-leads-ce74814af648068e')
+  self.assertTrue(r111.NEW_NAME.startswith('DPQUIZ-r111-trigger-'))
+  self.assertEqual(r111.OLD_BLOBS['quiz.mjs'],'ce74814ab0f64921438def055ba518d70818d9a9')
+  self.assertEqual(r111.OLD_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
+  self.assertEqual(set(r111.NEW_BLOBS),{'quiz.mjs'})
+  self.assertEqual(set(r111.HTML_ASSETS),{'quiz.mjs'})
+  self.assertEqual(r111.git_sha((ROOT/'web/quiz.mjs').read_bytes()),r111.NEW_BLOBS['quiz.mjs'])
+  page='<link href="/quiz.css?v=r110-leads-ce74814a"><script type="module" src="/quiz.mjs?v=r110-leads-ce74814a"></script>'
+  refs=r111.locate_quiz_assets(page)
+  changed=r111.prepare_html(page,refs)
+  self.assertIn('/quiz.css?v=r110-leads-ce74814a',changed,'CSS version must remain unchanged')
+  self.assertIn('/quiz.mjs?v='+r111.VERSION,changed)
+  self.assertNotIn('/quiz.mjs?v=r110-leads-ce74814a',changed)
+  source=(ROOT/'scripts/r111-quiz-invite-remote.py').read_text('utf8')
+  for key in ['R111_TRIGGER_PREFLIGHT','R111_TRIGGER_DEPLOY','API_SQLITE=UNTOUCHED','modelsIdleMs=18000','models-idle','your-bath']:
+   self.assertIn(key,source)
   self.assertNotIn('sqlite3.connect',source)
   self.assertNotIn('systemctl',source)
 
