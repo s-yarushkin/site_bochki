@@ -10,9 +10,21 @@ async function doCase(width,height,name){
  const page=await browser.newPage({viewport:{width,height}});
  try{
   page.on('pageerror',e=>errors.push(name+': '+e.message));
+  page.on('console',m=>{if(m.type()==='warning'||m.type()==='error')errors.push(name+': console '+m.text())});
+  page.on('requestfailed',r=>errors.push(name+': HTTP request failed '+r.url()+' '+r.failure()?.errorText));
   const res=await page.goto(BASE,{waitUntil:'networkidle'});
   if(!res.ok())throw Error(name+' page status '+res.status());
-  await page.locator('#dp-quiz-open').waitFor({timeout:12000});
+  try{await page.locator('#dp-quiz-open').waitFor({timeout:6000});}
+  catch(error){
+    const diag=await page.evaluate(async()=>{
+      const files=['/data/quiz-v1.json','/data/catalog-pricebook.json','/data/site-settings.json','/quiz-engine.mjs','/analytics-core.mjs','/lead-client.mjs'];
+      return {route:location.pathname,quizModule:[...document.querySelectorAll('script')].filter(x=>x.src.includes('holiday')).map(x=>x.src),
+        links:[...document.querySelectorAll('link[rel="stylesheet"]')].map(x=>x.href),
+        footer:!!document.querySelector('footer .footer-links'),
+        responses:await Promise.all(files.map(async x=>{try{return [x,(await fetch(x)).status]}catch(e){return [x,String(e)]}}))};
+    });
+    throw Error(name+' QUIZ_INIT_DIAG '+JSON.stringify(diag)+' ERRORS '+errors.join('; ')+' '+error.message);
+  }
   if(await page.locator('.dp-quiz-invite[open]').count())throw Error(name+' popped before eight seconds');
   // The timer starts only while page is visible; no scrolling or inactivity required.
   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:11000});
