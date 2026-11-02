@@ -28,9 +28,9 @@ const server=http.createServer(async(req,res)=>{
       let body='';for await(const part of req){body+=part;if(body.length>8192)return json(res,413,{ok:false});}
       const payload=JSON.parse(body);
       buildCallback(payload,payload.requestId);
-      if(!['callback','quote'].includes(payload.flow)||payload.consent!==true||payload.contactChannel!=='phone'||payload.consentVersion!==CONSENT_VERSION||payload.consentMethod!==CONSENT_METHOD)return json(res,400,{ok:false});
+      if(!['callback','quote'].includes(payload.flow)||payload.consent!==true||!['phone','max','telegram','whatsapp'].includes(payload.contactChannel)||payload.consentVersion!==CONSENT_VERSION||payload.consentMethod!==CONSENT_METHOD)return json(res,400,{ok:false});
       const duplicate=receipts.has(payload.requestId);
-      receipts.set(payload.requestId,{requestId:payload.requestId,flow:payload.flow,pagePath:payload.journeyContext?.pagePath,purpose:payload.journeyContext?.purpose,hasHolidayContext:/Новый год 2027/.test(payload.comment),model:payload.configuration?.modelId,size:payload.configuration?.sizeId});
+      receipts.set(payload.requestId,{requestId:payload.requestId,flow:payload.flow,pagePath:payload.journeyContext?.pagePath,purpose:payload.journeyContext?.purpose,hasHolidayContext:/Новый год 2027/.test(payload.comment),source:payload.comment?.includes('Источник: квиз новый год')?'квиз новый год':'обычная форма',answers:payload.comment?.match(/Гостей [^;]+; помывочная [^;]+; спальня [^.]+/)?.[0],model:payload.configuration?.modelId,size:payload.configuration?.sizeId});
       return json(res,200,{ok:true,delivered:true,duplicate,analytics:{persisted:true},localTest:true});
     }
     let base,relative;
