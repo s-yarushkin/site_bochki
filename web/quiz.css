@@ -157,7 +157,7 @@
 dialog.dp-quiz-invite{
   box-sizing:border-box;position:fixed;inset:0;margin:auto;z-index:120;
   display:block;width:min(900px,calc(100vw - 36px));max-width:900px;
-  height:auto;max-height:calc(100dvh - 28px);overflow:auto;
+  height:max-content;max-height:calc(100dvh - 28px);overflow:auto;
   padding:0;border:1px solid #d7ddd3;border-radius:14px;
   background:#fafaf7;box-shadow:0 32px 100px rgba(9,24,15,.37);
   color:var(--dpq-ink);animation:dpq-enter .22s ease both;
