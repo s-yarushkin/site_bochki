@@ -15,8 +15,8 @@ HERE = Path(__file__).resolve().parent
 ORIGIN = 'https://xn--80aaan1dh9b.xn--p1ai'
 # Only the exact previously approved route release may be upgraded in place.
 # Every other web release with a /novyy-god/ route is an unknown baseline.
-R2_OLD_RELEASE = 'NY2027-df6946fa7b0b7db2'
-R2_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css'}
+R3_OLD_RELEASE = 'NY2027-824f2b348d29094d'
+R3_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css'}
 SHARED = [
     'lead-client.mjs', 'lead-consent.mjs', 'quote.mjs', 'r85-pricing.mjs',
     'analytics-core.mjs', 'phone-mask.mjs', 'r101/mobile-dialog.mjs',
@@ -88,30 +88,37 @@ def baseline(payload_files=None):
     require('index.html' in files, 'home page missing')
     route = root / 'novyy-god'
     if route.exists():
-        require(root.name == R2_OLD_RELEASE, 'route already exists outside approved NY2027 R1 release')
+        require(root.name == R3_OLD_RELEASE, 'route already exists outside approved NY2027 R2 release')
         require(route.is_dir() and not route.is_symlink(), 'existing route is not an ordinary directory')
         require(payload_files is not None, 'upgrade requires verified payload')
         expected = {'novyy-god/' + name for name in ROUTE_FILES}
         installed = {name for name in files if name.startswith('novyy-god/')}
         require(installed == expected, 'unexpected files inside existing route')
-        for name in sorted(expected - R2_EDITABLE):
+        for name in sorted(expected - R3_EDITABLE):
             require(files[name] == sha(payload_files[name]), 'immutable holiday asset drift: ' + name)
         old_html = (route / 'index.html').read_text('utf-8')
         old_css = (route / 'style.css').read_text('utf-8')
-        require('Пришлём варианты<br>для вашей мечты' in old_html and
-                'delivery-geography' not in old_html,
-                'unexpected previous holiday page content')
-        require('#lead-dialog{padding:0 34px' in old_css and
-                'NY2027 R2' not in old_css,
-                'unexpected previous holiday styles')
+        require('Пришлём подходящие варианты, цены и комплектации' in old_html and
+                'delivery-geography' in old_html and
+                'style.css?v=ny2027-r2' in old_html and
+                'dialog-story' not in old_html,
+                'unexpected previous R2 holiday page content')
+        require('NY2027 R2' in old_css and 'NY2027 R3' not in old_css and
+                'width:min(660px' in old_css,
+                'unexpected previous R2 holiday styles')
         require('Пришлём подходящие варианты, цены и комплектации' in
                 payload_files['novyy-god/index.html'].decode('utf-8'),
                 'new holiday headline absent')
         require('delivery-geography' in
                 payload_files['novyy-god/index.html'].decode('utf-8'),
                 'new holiday shipping regions missing')
-        require(b'NY2027 R2' in payload_files['novyy-god/style.css'],
-                'new holiday CSS marker absent')
+        require(all(fragment in payload_files['novyy-god/index.html'].decode('utf-8')
+                    for fragment in ('class="dialog-story"', 'class="dialog-action"',
+                                     'style.css?v=ny2027-r3')),
+                'wide two-column holiday form absent')
+        require(b'NY2027 R3' in payload_files['novyy-god/style.css'] and
+                b'max-width:1280px' in payload_files['novyy-god/style.css'],
+                'wide R3 holiday CSS missing')
     return root, files
 
 
@@ -136,8 +143,8 @@ def check():
     state = {'oldWeb': str(root), 'oldFiles': files, 'payloadSha256': manifest['payloadSha256']}
     (HERE / 'check-state.json').write_text(json.dumps(state, indent=2) + '\n', 'utf-8')
     print('CHECK=PASS; production unchanged; baseline=' + str(root))
-    if root.name == R2_OLD_RELEASE:
-        print('NY2027_R2_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css; protected=R117,API,SQLite,prices')
+    if root.name == R3_OLD_RELEASE:
+        print('NY2027_R3_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css; protected=R117,API,SQLite,prices')
 
 
 
@@ -168,8 +175,8 @@ def apply():
         path.write_bytes(data)
     expected = {**old_files, **{name: sha(data) for name, data in files.items()}}
     changed = {name for name in expected if old_files.get(name) != expected[name]}
-    if old.name == R2_OLD_RELEASE:
-        require(changed == R2_EDITABLE, 'upgrade must change only holiday HTML and CSS')
+    if old.name == R3_OLD_RELEASE:
+        require(changed == R3_EDITABLE, 'upgrade must change only holiday HTML and CSS')
     require(inventory(destination) == expected, 'candidate differs outside route')
     for path in [destination, *destination.rglob('*')]:
         os.chown(path, 0, 0)
@@ -190,8 +197,8 @@ def apply():
         print('AUTOMATIC_ROLLBACK=PASS; public verification failed')
         raise
     print('DEPLOYED=' + ORIGIN + '/novyy-god/; API and database unchanged')
-    if old.name == R2_OLD_RELEASE:
-        print('NY2027_R2_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css; R117 preserved')
+    if old.name == R3_OLD_RELEASE:
+        print('NY2027_R3_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css; R117 preserved')
 
     print('ROLLBACK: sudo python3 ' + str(HERE / 'new-year-remote.py') + ' --rollback ' + str(state))
 
