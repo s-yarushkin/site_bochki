@@ -25,7 +25,17 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  await page.locator('#dp-quiz-open').click();
  await page.waitForSelector('#dp-quiz-dialog[open]');
  await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-step1.png'});
- for(const value of [party,wash,bedroom]){
+ const quizPhotos=['step1-steamroom.webp','step2-washroom.webp','step3-bedroom.webp'];
+ for(const [step,value] of [party,wash,bedroom].entries()){
+   const photo=page.locator('.dp-quiz-photo img');
+   await photo.waitFor({state:'visible'});
+   const src=await photo.getAttribute('src');
+   if(src!=='/assets/quiz/'+quizPhotos[step])throw new Error(label+' wrong quiz photo at step '+(step+1)+': '+src);
+   const decoded=await photo.evaluate(async img=>{
+     try {await img.decode();return img.naturalWidth>0&&img.naturalHeight>0;} catch{return false;}
+   });
+   if(!decoded)throw new Error(label+' image failed to load at step '+(step+1)+': '+src);
+   await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-step'+(step+1)+'.png'});
    const button=page.locator('#dp-quiz-dialog [data-dpq="answer"][data-value="'+value+'"]');
    await button.click();
  }
