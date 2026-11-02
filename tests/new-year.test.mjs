@@ -91,7 +91,7 @@ test('R5 preserves wide lead form, short footer, independent consent link and su
  assert.equal(html.includes('выбранной бани'),false);
  assert.match(html,/style\.css\?v=ny2027-r5/);
  assert.match(html,/holiday-quiz\.mjs\?v=ny2027-r5/);
- assert.match(html,/\/quiz\.css\?v=r115-footer-0290aab2/);
+ assert.match(html,/holiday-quiz\.css\?v=ny2027-r5/);
  assert.match(css,/NY2027 R5/);
  assert.match(css,/#lead-dialog\{[\s\S]*?width:min\(1280px,calc\(100vw - 48px\)\)/);
  assert.match(css,/#lead-dialog #submit-lead\{\s*min-height:90px/);
@@ -116,12 +116,15 @@ test('R5 literally retains original questions, options, answer keys, engine and 
    "['b_no','Только для банного отдыха','Для ночёвки у нас есть дом']"]
  ];
  for(const group of expected)for(const term of group)assert.ok(questionBlock(js).includes(term),term);
- assert.ok(js.includes("from '/quiz-engine.mjs?v=r108-ranges'"));
+ assert.ok(js.includes("from './holiday-quiz-engine.mjs'"));
  assert.ok(js.includes('recommendModelRanges(quiz.plans,state.answers,book,quiz.priceRules)'));
  assert.ok(js.includes('Скидка 20 000 ₽ — при выборе комплектации «Делюкс»'));
  assert.ok(js.includes("payload.comment=('Источник: квиз новый год. Новый год 2027."));
  assert.ok(js.includes("pagePath:'/novyy-god/'"));
  assert.ok(js.includes('visibleRemainingMs=8000'));
+ assert.ok(js.includes("fetch('./holiday-quiz-data.json'"));
+ const snapshot=readFileSync(new URL('../concepts/new-year-2027/holiday-quiz-data.json',import.meta.url),'utf8');
+ assert.equal(JSON.parse(snapshot).plans.length,41);
  assert.ok(js.includes('dp_ny2027_quiz_invite_seen_session'));
  assert.ok(!js.includes('modelsIdleMs=18000'));
  assert.ok(!js.includes('reachedYourBath'));
