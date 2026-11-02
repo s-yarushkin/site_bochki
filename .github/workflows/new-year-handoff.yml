@@ -73,3 +73,21 @@ jobs:
           path: output/new-year-2027-handoff.zip
           if-no-files-found: error
           retention-days: 30
+
+  windows-payload-parity:
+    name: Verify R117 byte-identical quiz archive on Windows
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install image encoder
+        run: python -m pip install Pillow==12.0.0
+      - name: Build Windows R5 package and verify original R117 Git blobs
+        run: |
+          python scripts/build-new-year.py
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+          python output/new-year-2027-deploy/new-year-remote.py --verify-payload
+          if ($LASTEXITCODE -ne 0) { exit 1 }
