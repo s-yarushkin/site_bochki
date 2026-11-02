@@ -89,10 +89,17 @@ test('R5 preserves wide lead form, short footer, independent consent link and su
  assert.equal(html.includes('Основные направления:'),false);
  assert.equal(html.includes('id="inquiry-summary"'),false);
  assert.equal(html.includes('выбранной бани'),false);
- assert.match(html,/style\.css\?v=ny2027-r5/);
+ assert.match(html,/style\.css\?v=ny2027-r51-contrast/);
  assert.match(html,/holiday-quiz\.mjs\?v=ny2027-r5/);
  assert.match(html,/holiday-quiz\.css\?v=ny2027-r5/);
  assert.match(css,/NY2027 R5/);
+ assert.match(css,/NY2027 R5\.1 CONTRAST/);
+ assert.match(css,/dialog\.dp-ny-quiz-invite \.dp-quiz-invite-stages span\{/);
+ assert.match(css,/background:#234b3e/);
+ assert.match(css,/color:#fff5e4/);
+ assert.match(css,/dialog\.dp-ny-quiz-invite \.dp-quiz-invite-close\{/);
+ assert.match(css,/background:#fff8ea/);
+ assert.match(css,/color:#193a2e/);
  assert.match(css,/#lead-dialog\{[\s\S]*?width:min\(1280px,calc\(100vw - 48px\)\)/);
  assert.match(css,/#lead-dialog #submit-lead\{\s*min-height:90px/);
  assert.match(lead,/callbackAvailable\(settings,location\.origin\)/);
