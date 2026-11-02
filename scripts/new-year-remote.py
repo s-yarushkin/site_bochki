@@ -15,14 +15,14 @@ HERE = Path(__file__).resolve().parent
 ORIGIN = 'https://xn--80aaan1dh9b.xn--p1ai'
 # Only the exact previously approved route release may be upgraded in place.
 # Every other web release with a /novyy-god/ route is an unknown baseline.
-R4_OLD_RELEASE = 'NY2027-8ab90d587dc0e308'
-R4_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css'}
+R5_OLD_RELEASE = 'NY2027-f2985b6b7ac277f9'
+R5_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css', 'novyy-god/lead.mjs', 'novyy-god/holiday-quiz.mjs'}
 SHARED = [
     'lead-client.mjs', 'lead-consent.mjs', 'quote.mjs', 'r85-pricing.mjs',
     'analytics-core.mjs', 'phone-mask.mjs', 'r101/mobile-dialog.mjs',
     'data/site-settings.json', 'data/catalog-pricebook.json',
 ]
-ROUTE_FILES = {'index.html', 'style.css', 'experience.js', 'lead.mjs',
+ROUTE_FILES = {'index.html', 'style.css', 'experience.js', 'lead.mjs', 'holiday-quiz.mjs',
                'lead-contract.mjs', 'catalog.mjs', 'models.mjs', 'countdown.mjs',
                'assets/favicon.svg', 'assets/manrope-cyrillic.woff2',
                'assets/manrope-latin.woff2', 'assets/OFL-Manrope.txt'}
@@ -88,43 +88,60 @@ def baseline(payload_files=None):
     require('index.html' in files, 'home page missing')
     route = root / 'novyy-god'
     if route.exists():
-        require(root.name == R4_OLD_RELEASE, 'route already exists outside approved NY2027 R3 release')
+        require(root.name == R5_OLD_RELEASE, 'route already exists outside approved NY2027 R4 release')
         require(route.is_dir() and not route.is_symlink(), 'existing route is not an ordinary directory')
         require(payload_files is not None, 'upgrade requires verified payload')
         expected = {'novyy-god/' + name for name in ROUTE_FILES}
         installed = {name for name in files if name.startswith('novyy-god/')}
-        require(installed == expected, 'unexpected files inside existing route')
-        for name in sorted(expected - R4_EDITABLE):
+        require(installed == expected - {'novyy-god/holiday-quiz.mjs'},
+                'unexpected files inside existing R4 route')
+        for name in sorted(expected - R5_EDITABLE):
             require(files[name] == sha(payload_files[name]), 'immutable holiday asset drift: ' + name)
         old_html = (route / 'index.html').read_text('utf-8')
         old_css = (route / 'style.css').read_text('utf-8')
-        require('Пришлём подходящие варианты, цены и комплектации' in old_html and
-                'class="delivery-geography"' in old_html and
-                'Основные направления:' in old_html and
-                'style.css?v=ny2027-r3' in old_html and
-                'class="dialog-story"' in old_html,
-                'unexpected previous R3 holiday page content')
-        require('NY2027 R3' in old_css and 'NY2027 R4' not in old_css and
+        require('style.css?v=ny2027-r4' in old_html and
+                'id="delivery-geography-title"' in old_html and
+                'class="dialog-story"' in old_html and
+                'holiday-quiz.mjs' not in old_html,
+                'unexpected previous R4 holiday page content')
+        require('NY2027 R4' in old_css and 'NY2027 R5' not in old_css and
                 'max-width:1280px' in old_css,
-                'unexpected previous R3 holiday styles')
-        require('Пришлём подходящие варианты, цены и комплектации' in
-                payload_files['novyy-god/index.html'].decode('utf-8'),
-                'new holiday headline absent')
+                'unexpected previous R4 holiday styles')
         new_html = payload_files['novyy-god/index.html'].decode('utf-8')
         new_css = payload_files['novyy-god/style.css']
-        require('class="delivery-geography"' not in new_html and
-                'Основные направления:' not in new_html and
-                'class="delivery-footer-line"' in new_html and
-                'id="delivery-geography-title"' in new_html and
-                'Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области' in new_html,
-                'footer-only delivery geography not found')
-        require(all(fragment in new_html for fragment in
-                    ('class="dialog-story"', 'class="dialog-action"', 'style.css?v=ny2027-r4')),
-                'R3 two-column form or R4 stylesheet reference missing')
-        require(b'NY2027 R4' in new_css and
-                b'max-width:1280px' in new_css and b'delivery-footer-line' in new_css and
-                b'.delivery-geography{' not in new_css,
-                'R4 restrained footer styles or R3 dialog preservation missing')
+        new_lead = payload_files['novyy-god/lead.mjs'].decode('utf-8')
+        new_quiz = payload_files['novyy-god/holiday-quiz.mjs'].decode('utf-8')
+        require(all(x in new_html for x in
+                    ('style.css?v=ny2027-r5', 'holiday-quiz.mjs?v=ny2027-r5',
+                     'href="/consent.html"', 'href="/privacy.html"',
+                     'Пришлём подходящие варианты, цены и комплектации',
+                     'id="delivery-geography-title"', 'class="dialog-story"')),
+                'R5 new page missing consent, quiz or prior layout')
+        require('id="inquiry-summary"' not in new_html and
+                'выбранной бани' not in new_html,
+                'single-model lock still in New Year inquiry dialog')
+        require(b'NY2027 R5' in new_css and b'max-width:1280px' in new_css,
+                'R5 festive styles or wide lead dialog absent')
+        require('callbackAvailable' in new_lead and
+                'campaignInquiry(values,crypto.randomUUID())' in new_lead and
+                'selectionContext' not in new_lead,
+                'generic multivariant lead flow missing')
+        require('const question=[' in new_quiz and
+                "['p2','1–2 человека'" in new_quiz and
+                "['p4','До 4 человек'" in new_quiz and
+                "['p6','5–6 человек'" in new_quiz and
+                "['p8','До 8 человек'" in new_quiz and
+                "title:'Нужна отдельная помывочная?'" in new_quiz and
+                "title:'Нужно место, чтобы остаться на ночь?'" in new_quiz,
+                'R117 original questions/answers drift')
+        require('visibleRemainingMs=8000' in new_quiz and
+                'Источник: квиз новый год' in new_quiz and
+                "pagePath:'/novyy-god/'" in new_quiz and
+                'recommendModelRanges(' in new_quiz,
+                'eight-second NY quiz or correct lead source missing')
+        require('dp_ny2027_quiz_invite_seen_session' in new_quiz and
+                'dp_quiz_invite_seen_session_r111' not in new_quiz,
+                'holiday quiz session must be independent of main quiz')
     return root, files
 
 
@@ -149,8 +166,8 @@ def check():
     state = {'oldWeb': str(root), 'oldFiles': files, 'payloadSha256': manifest['payloadSha256']}
     (HERE / 'check-state.json').write_text(json.dumps(state, indent=2) + '\n', 'utf-8')
     print('CHECK=PASS; production unchanged; baseline=' + str(root))
-    if root.name == R4_OLD_RELEASE:
-        print('NY2027_R4_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css; protected=R117,API,SQLite,prices')
+    if root.name == R5_OLD_RELEASE:
+        print('NY2027_R5_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css,novyy-god/lead.mjs,novyy-god/holiday-quiz.mjs; protected=R117,API,SQLite,prices')
 
 
 
@@ -181,8 +198,8 @@ def apply():
         path.write_bytes(data)
     expected = {**old_files, **{name: sha(data) for name, data in files.items()}}
     changed = {name for name in expected if old_files.get(name) != expected[name]}
-    if old.name == R4_OLD_RELEASE:
-        require(changed == R4_EDITABLE, 'upgrade must change only holiday HTML and CSS')
+    if old.name == R5_OLD_RELEASE:
+        require(changed == R5_EDITABLE, 'upgrade must change only holiday HTML and CSS')
     require(inventory(destination) == expected, 'candidate differs outside route')
     for path in [destination, *destination.rglob('*')]:
         os.chown(path, 0, 0)
@@ -203,8 +220,8 @@ def apply():
         print('AUTOMATIC_ROLLBACK=PASS; public verification failed')
         raise
     print('DEPLOYED=' + ORIGIN + '/novyy-god/; API and database unchanged')
-    if old.name == R4_OLD_RELEASE:
-        print('NY2027_R4_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css; R117 preserved')
+    if old.name == R5_OLD_RELEASE:
+        print('NY2027_R5_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css,novyy-god/lead.mjs,novyy-god/holiday-quiz.mjs; R117 preserved')
 
     print('ROLLBACK: sudo python3 ' + str(HERE / 'new-year-remote.py') + ' --rollback ' + str(state))
 
