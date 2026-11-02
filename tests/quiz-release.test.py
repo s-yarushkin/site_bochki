@@ -141,9 +141,9 @@ class TestR112CalculatorTrigger(unittest.TestCase):
   self.assertEqual(r112.OLD_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
   self.assertEqual(set(r112.NEW_BLOBS),{'quiz.mjs'})
   self.assertEqual(set(r112.HTML_ASSETS),{'quiz.mjs'})
-  content=(ROOT/'web/quiz.mjs').read_bytes()
-  self.assertEqual(r112.git_sha(content),r112.NEW_BLOBS['quiz.mjs'])
-  source=content.decode('utf8')
+  # The pinned R112 source remains immutable; active development now contains R113.
+  self.assertEqual(r112.NEW_BLOBS['quiz.mjs'],'139becc2573f69eebd49e374cf93b138a1fa059f')
+  source=(ROOT/'web/quiz.mjs').read_text('utf8')
   self.assertIn('const ritualInView=()=>',source)
   self.assertIn('const canInvite=(reason)=>',source)
   self.assertNotIn('!location.hash',source)
@@ -159,5 +159,34 @@ class TestR112CalculatorTrigger(unittest.TestCase):
    self.assertIn(key,installer)
   self.assertNotIn('sqlite3.connect',installer)
   self.assertNotIn('systemctl',installer)
+
+
+class TestR113CommercialCTA(unittest.TestCase):
+ def test_r113_changes_only_quiz_js_and_css_from_current_r112(self):
+  spec=importlib.util.spec_from_file_location('r113_remote',ROOT/'scripts/r113-quiz-cta-remote.py')
+  r113=importlib.util.module_from_spec(spec);spec.loader.exec_module(r113)
+  self.assertEqual(r113.EXPECTED_ACTIVE,'DPQUIZ-r112-trigger-139becc2')
+  self.assertTrue(r113.NEW_NAME.startswith('DPQUIZ-r113-cta-'))
+  self.assertEqual(r113.OLD_BLOBS['quiz.mjs'],'139becc2573f69eebd49e374cf93b138a1fa059f')
+  self.assertEqual(r113.OLD_BLOBS['quiz.css'],'f648068eb247dedf25310e39625c51f080b41663')
+  self.assertEqual(set(r113.NEW_BLOBS),{'quiz.mjs','quiz.css'})
+  for name,expected in r113.NEW_BLOBS.items():
+   self.assertEqual(r113.git_sha((ROOT/'web'/name).read_bytes()),expected,name)
+  oldhtml='<link href="/quiz.css?v=r110-leads-ce74814a"><script type="module" src="/quiz.mjs?v=r112-trigger-139becc2"></script>'
+  result=r113.prepare_html(oldhtml,r113.locate_quiz_assets(oldhtml))
+  self.assertIn('/quiz.mjs?v='+r113.VERSION,result)
+  self.assertIn('/quiz.css?v='+r113.VERSION,result)
+  self.assertNotIn('/quiz.mjs?v=r112-trigger-139becc2',result)
+  self.assertNotIn('/quiz.css?v=r110-leads-ce74814a',result)
+  js=(ROOT/'web/quiz.mjs').read_text('utf8')
+  self.assertIn('Получить планировки и комплектации с ценами',js)
+  self.assertIn('скидку 20 000 ₽ на «Делюкс»',js)
+  self.assertNotIn('Получить предложение',js)
+  self.assertNotIn('скидку 20%',js)
+  script=(ROOT/'scripts/r113-quiz-cta-remote.py').read_text('utf8')
+  for phrase in ['R113_CTA_PREFLIGHT','R113_CTA_DEPLOY','API_SQLITE=UNTOUCHED']:
+   self.assertIn(phrase,script)
+  self.assertNotIn('sqlite3.connect',script)
+  self.assertNotIn('systemctl',script)
 
 if __name__=='__main__':unittest.main()
