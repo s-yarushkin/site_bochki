@@ -1,4 +1,4 @@
-import {ANSWERS,validAnswers,guestExplanation,recommendModels} from './quiz-engine.mjs?v=20261031';
+import {ANSWERS,validAnswers,guestExplanation,recommendModelRanges} from './quiz-engine.mjs?v=20261031';
 import {buildCallback,submitLead} from './lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from './phone-mask.mjs';
 import {analytics} from './analytics-core.mjs';
@@ -11,24 +11,25 @@ const models={
   'kvadro-house':{name:'Квадро Хаус',photo:'/r101/assets/house-editorial-960.webp',description:'Когда после парной хочется остаться подольше и никуда не торопиться.'}
 };
 const question=[
-  {key:'party',title:'С кем будете отдыхать в бане?',description:'Вспомните обычный выходной на даче.',options:[
-    ['p2','Вдвоём','Своя баня для спокойных выходных'],
-    ['p4','С семьёй · 3–4 человека','Париться и отдыхать с близкими'],
-    ['p6','С друзьями · 5–6 человек','Собираться своей компанией'],
-    ['p8','Большой компанией · до 8 человек','Чтобы было где собраться между заходами']
+  {key:'party',title:'Сколько человек обычно будет в бане?',description:'',options:[
+    ['p2','1–2 человека','Для спокойного отдыха'],
+    ['p4','До 4 человек','Для семьи и небольшой компании'],
+    ['p6','5–6 человек','Для большой семьи и друзей'],
+    ['p8','До 8 человек','Когда в планах — встречать праздники в бане с компанией']
   ]},
-  {key:'wash',title:'Нужна отдельная помывочная?',description:'Выберите, как вам будет удобнее после парной.',options:[
-    ['w_yes','Да, отдельная комната','Мыться отдельно от парной и комнаты отдыха'],
-    ['w_no','Без отдельной помывочной','Больше места для парной и отдыха'],
+  {key:'wash',title:'Нужна отдельная помывочная?',description:'Исторически мылись в самой парной, но с появлением культуры парения удобнее мыться в отдельном помещении.',options:[
+    ['w_yes','Да, отдельная помывочная','Мыться отдельно от парной'],
+    ['w_no','Без отдельной помывочной','Предпочитаю сэкономить'],
     ['w_compare','Хочу сравнить','Посмотрю оба варианта и решу']
   ]},
-  {key:'bedroom',title:'Нужно место, чтобы остаться на ночь?',description:'Отдельная спальня — или больше места для общего отдыха.',options:[
+  {key:'bedroom',title:'Нужно место, чтобы остаться на ночь?',description:'',options:[
     ['b_yes','Да, со спальней','Закончить банный вечер и остаться до утра'],
     ['b_no','Только для банного отдыха','Для ночёвки у нас есть дом']
   ]}
 ];
 const safe=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-const rub=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(Math.ceil(n))+' ₽';
+const rub=n=>new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(n)+' ₽';
+const offerPrice=offer=>offer.displayMinRub===offer.displayMaxRub?'≈ '+rub(offer.displayMinRub):'от '+rub(offer.displayMinRub)+' до '+rub(offer.displayMaxRub);
 const liveKey='dp_quiz_answers_v1',hiddenKey='dp_quiz_invite_suppressed_until_v1';
 // Invitе is non-modal: the full quiz opens only when the visitor clicks its button.
 const inviteDelayMs=10000,inviteScrollFraction=0.35;
@@ -37,11 +38,11 @@ let quiz=null,book=null,settings=null,dialog=null,invite=null,launcher=null,scro
 const trace=(name,params={})=>{try{analytics?.track(name,{placement:'catalog',...params})}catch{}};
 const save=()=>{try{sessionStorage.setItem(liveKey,JSON.stringify(state.answers))}catch{}};
 const load=()=>{try{const a=JSON.parse(sessionStorage.getItem(liveKey)||'{}');if(a&&typeof a==='object')state.answers={party:ANSWERS.party.includes(a.party)?a.party:undefined,wash:ANSWERS.wash.includes(a.wash)?a.wash:undefined,bedroom:ANSWERS.bedroom.includes(a.bedroom)?a.bedroom:undefined}}catch{}};
-const hideInvite=(dismissed=false)=>{if(invite)invite.hidden=true;if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
+const hideInvite=(dismissed=false)=>{if(invite?.open)invite.close();if(dismissed){shownThisVisit=true;try{localStorage.setItem(hiddenKey,String(Date.now()+7*86400000))}catch{}trace('dp_quiz_invite_close')}};
 const canInvite=()=>{let until=0;try{until=Number(localStorage.getItem(hiddenKey)||0)}catch{}
   let savedChoice=false;try{savedChoice=!!JSON.parse(localStorage.getItem('dp_r101_choice')||'null')}catch{}
   return !shownThisVisit && !savedChoice && Date.now()>until && !dialog?.open && !document.querySelector('dialog[open]') && document.visibilityState==='visible' && !interacted && Date.now()-startedAt>=inviteDelayMs && !location.hash && !document.activeElement?.matches?.('input,textarea,select');};
-const maybeInvite=()=>{if(!canInvite()||!scrollSeen)return;shownThisVisit=true;invite.hidden=false;trace('dp_quiz_invite_view')};
+const maybeInvite=()=>{if(!canInvite()||!scrollSeen||!invite)return;shownThisVisit=true;invite.showModal();trace('dp_quiz_invite_view')};
 function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
   hideInvite();
@@ -60,26 +61,34 @@ function progress(){
 function questionView(){
   const q=question[state.step];
   const rows=q.options.map(([value,title,desc])=>'<button type="button" class="dp-quiz-choice '+(state.answers[q.key]===value?'is-selected':'')+'" data-dpq="answer" data-value="'+value+'" aria-pressed="'+(state.answers[q.key]===value)+'"><span class="dp-quiz-choice-text"><strong>'+safe(title)+'</strong><small>'+safe(desc)+'</small></span><span class="dp-quiz-circle" aria-hidden="true">'+(state.answers[q.key]===value?'✓':'')+'</span></button>').join('');
-  return commonHeader()+progress()+'<h2 id="dp-quiz-title">'+safe(q.title)+'</h2><p class="dp-quiz-copy">'+safe(q.description)+'</p><div class="dp-quiz-choices" role="group" aria-label="'+safe(q.title)+'">'+rows+'</div><div class="dp-quiz-foot">'+(state.step>0?'<button type="button" class="dp-quiz-link" data-dpq="back">← Назад</button>':'<span></span>')+'</div>';
+  return commonHeader()+progress()+'<h2 id="dp-quiz-title">'+safe(q.title)+'</h2>'+(q.description?'<p class="dp-quiz-copy">'+safe(q.description)+'</p>':'')+'<div class="dp-quiz-choices" role="group" aria-label="'+safe(q.title)+'">'+rows+'</div><div class="dp-quiz-foot">'+(state.step>0?'<button type="button" class="dp-quiz-link" data-dpq="back">← Назад</button>':'<span></span>')+'</div>';
 }
-const caption=p=>p.bedroom?'Отдельная спальня, парная, помывочная и комната отдыха.':p.wash==='Отдельная'?'Парная, отдельная помывочная и комната отдыха.':p.wash==='Ниша'?'Парная и комната отдыха. Для душа предусмотрена ниша.':models[p.model].description;
-function modelCard({plan:p,price:cost}){
-  const photo=models[p.model];
-  return '<article class="dp-quiz-plan"><img class="dp-quiz-plan-photo" src="'+safe(photo.photo)+'" width="960" height="720" alt="Внешний вид модели '+safe(photo.name)+'" loading="lazy" decoding="async"><div class="dp-quiz-plan-body"><div class="dp-quiz-plan-title">'+safe(photo.name)+' · '+safe(sizeName(p))+'</div><p class="dp-quiz-plan-description">'+safe(caption(p))+'</p><div class="dp-quiz-plan-price">≈ '+rub(cost.rub)+'</div></div></article>';
+function modelCard(offer){
+  const photo=models[offer.model];
+  const name=photo.name;
+  const size=offer.model==='kvadro-house'?houseSizeLabel(offer):offer.firstSize==='500'&&offer.lastSize==='600'?'5–6 м':(Number(offer.firstSize)/100)+' м';
+  const description=state.answers.bedroom==='b_yes'?'Со спальней и отдельной помывочной':
+    offer.model==='kvadro-house'?'С отдельной парной, помывочной и комнатой отдыха':
+    state.answers.wash==='w_compare'?'Есть варианты с помывочной и без неё':
+    state.answers.wash==='w_yes'?'С отдельной помывочной':'С парной и комнатой отдыха';
+  return '<article class="dp-quiz-plan"><img class="dp-quiz-plan-photo" src="'+safe(photo.photo)+'" width="960" height="720" alt="Баня '+safe(name)+'" loading="lazy" decoding="async"><div class="dp-quiz-plan-body"><div class="dp-quiz-plan-title">'+safe(name)+' · '+safe(size)+'</div><p class="dp-quiz-plan-description">'+safe(description)+'</p><div class="dp-quiz-plan-price">'+offerPrice(offer)+'</div></div></article>';
 }
-function sizeName(p){
-  if(p.model==='kvadro-house'){return ({'4x4':'4 × 4 м','5x4':'4 × 5 м','6x4':'4 × 6 м','6x5':'5 × 6 м','6x6':'6 × 6 м'})[p.size]||p.size}
-  const l=(Number(p.size)/100).toLocaleString('ru-RU',{maximumFractionDigits:1});return l+' м'+(p.wideBody?' · ширина 3 м':'');
+function houseSizeLabel(offer){
+ const dictionary={'4x4':'4 × 4 м','5x4':'4 × 5 м','6x4':'4 × 6 м','6x5':'5 × 6 м','6x6':'6 × 6 м'};
+ const a=dictionary[offer.firstSize]||offer.firstSize;
+ const b=dictionary[offer.lastSize]||offer.lastSize;
+ return a===b?a:a+' — '+b;
 }
+function houseOrStandard(offer){return offer.model==='kvadro-house'?houseSizeLabel(offer):offer.firstSize==='500'&&offer.lastSize==='600'?'5–6 м':Number(offer.firstSize)/100+' м';}
 function resultsView(){
-  const found=recommendModels(quiz.plans,state.answers,book,quiz.priceRules);
-  const pills=[({p2:'Вдвоём',p4:'Семья · 3–4',p6:'Компания · 5–6',p8:'Компания · до 8'})[state.answers.party],({w_yes:'С помывочной',w_no:'Без отдельной помывочной',w_compare:'Сравнить помывочную'})[state.answers.wash],state.answers.bedroom==='b_yes'?'Со спальней':'Без спальни'].map(x=>'<span class="dp-quiz-pill">'+safe(x)+'</span>').join('');
-  const compromise=found.compromise?'<div class="dp-quiz-results-note">Для отдельной спальни подойдёт «Квадро Хаус». Варианты со спальней также предусматривают помывочную.</div>':'';
-  return commonHeader()+'<h2 id="dp-quiz-title">Под ваши пожелания подобрали</h2><p class="dp-quiz-copy">'+safe(guestExplanation(state.answers))+'</p><div class="dp-quiz-pillbar">'+pills+'</div><button type="button" class="dp-quiz-link" data-dpq="edit">Изменить ответы</button>'+compromise+'<div class="dp-quiz-results">'+found.offers.map(modelCard).join('')+'</div><p class="dp-quiz-price-note">Ориентировочные цены. Точное оснащение и доставку учтём в вашем предложении.</p><div class="dp-quiz-cta"><div><strong>Получите планировки под ваши пожелания</strong></div><button type="button" class="dp-quiz-action" data-dpq="form">Получить планировки →</button></div>';
+  const found=recommendModelRanges(quiz.plans,state.answers,book,quiz.priceRules);
+  const pills=[({p2:'1–2 человека',p4:'До 4 человек',p6:'5–6 человек',p8:'До 8 человек'})[state.answers.party],({w_yes:'С помывочной',w_no:'Без отдельной помывочной',w_compare:'Сравнить оба варианта'})[state.answers.wash],state.answers.bedroom==='b_yes'?'Со спальней':'Без спальни'].map(x=>'<span class="dp-quiz-pill">'+safe(x)+'</span>').join('');
+  const compromise=found.compromise?'<div class="dp-quiz-results-note">Если нужна отдельная спальня, подойдёт вариант с помывочной. Посмотрите его или измените ответ.</div>':'';
+  return commonHeader()+'<h2 id="dp-quiz-title">Вот какие бани вам подойдут</h2><div class="dp-quiz-pillbar">'+pills+'</div><button type="button" class="dp-quiz-link" data-dpq="edit">Изменить ответы</button>'+compromise+'<div class="dp-quiz-results">'+found.offers.map(modelCard).join('')+'</div><p class="dp-quiz-price-note">Ориентировочные цены без доставки. Подробную комплектацию подберём вместе.</p><div class="dp-quiz-cta"><div><strong>Получите индивидуальное предложение</strong><p>Подберём подробные планировки, комплектации и цены под ваши пожелания. Вы спокойно всё сравните и выберете свою баню.</p><p class="dp-quiz-bonus"><strong>Ваш бонус: ещё 20 000 ₽ скидки на любую модель в комплектации «Делюкс».</strong> Суммируется с остальными акциями.</p></div><button type="button" class="dp-quiz-action" data-dpq="form">Получить предложение →</button></div>';
 }
 function formView(){
   const options=[['max','MAX'],['whatsapp','WhatsApp'],['telegram','Telegram']].map(([value,label])=>'<label class="dp-quiz-channel"><input type="radio" name="channel" value="'+value+'" required '+(state.channel===value?'checked':'')+'><span>'+label+'</span></label>').join('');
-  return commonHeader()+'<button type="button" class="dp-quiz-link" data-dpq="results">← К подборке</button><h2 id="dp-quiz-title">Куда прислать ваши планировки?</h2><p class="dp-quiz-copy">Подготовим варианты для вашего отдыха. Пришлём планировки, комплектацию и цены в выбранный мессенджер.</p><form id="dp-quiz-contact-form"><label class="dp-quiz-field" for="dp-quiz-phone">Номер телефона<input id="dp-quiz-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67" required value="'+safe(state.phone)+'"></label><fieldset class="dp-quiz-channel-field"><legend>Выберите мессенджер</legend><div class="dp-quiz-channels">'+options+'</div></fieldset><p class="dp-quiz-form-note">Нажимая «Получить планировки», вы соглашаетесь с <a href="/consent.html" target="_blank" rel="noopener">обработкой персональных данных</a>.</p><p class="dp-quiz-error" role="alert" '+(state.error?'':'hidden')+'>'+safe(state.error)+'</p><button class="dp-quiz-action" type="submit" '+(state.sending?'disabled':'')+'>'+(state.sending?'Отправляем…':'Получить планировки →')+'</button></form>';
+  return commonHeader()+'<button type="button" class="dp-quiz-link" data-dpq="results">← К подборке</button><h2 id="dp-quiz-title">Куда отправить индивидуальное предложение?</h2><form id="dp-quiz-contact-form"><label class="dp-quiz-field" for="dp-quiz-phone">Номер телефона<input id="dp-quiz-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (999) 123-45-67" required value="'+safe(state.phone)+'"></label><fieldset class="dp-quiz-channel-field"><legend>Выберите мессенджер</legend><div class="dp-quiz-channels">'+options+'</div></fieldset><p class="dp-quiz-form-note">Нажимая «Получить предложение», вы соглашаетесь с <a href="/consent.html" target="_blank" rel="noopener">обработкой персональных данных</a>. <a href="/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a>.</p><p class="dp-quiz-error" role="alert" '+(state.error?'':'hidden')+'>'+safe(state.error)+'</p><button class="dp-quiz-action" type="submit" '+(state.sending?'disabled':'')+'>'+(state.sending?'Отправляем…':'Получить предложение →')+'</button></form>';
 }
 function successView(){
   const name=({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]||'выбранный мессенджер';
@@ -121,13 +130,13 @@ async function submitForm(form){
     payload.purpose='quiz_catalog';
     payload.contactChannel=state.channel;
     state.requestId=requestId;
-    const found=recommendModels(quiz.plans,state.answers,book,quiz.priceRules);
-    const ids=found.offers.map(({plan:p})=>models[p.model].name+' '+sizeName(p)+' ['+p.code+']').join(', ');
-    const selected=state.selectedCode?'; просмотрена '+state.selectedCode:'';
+    const found=recommendModelRanges(quiz.plans,state.answers,book,quiz.priceRules);
+    const ids=found.offers.map(o=>models[o.model].name+' '+houseOrStandard(o)+' ['+o.codes[0]+(o.codes.length>1?', '+o.codes[o.codes.length-1]:'')+']').join('; ');
+    const selected='';
     const count=({p2:'1–2',p4:'3–4',p6:'5–6',p8:'до 8'})[state.answers.party];
     const wash=({w_yes:'отдельная нужна',w_no:'не нужна',w_compare:'сравнить оба'})[state.answers.wash];
     const bed=state.answers.bedroom==='b_yes'?'нужна':'не нужна';
-    payload.comment='Квиз: планировки, комплектации, цены. Гостей: '+count+'; помывочная: '+wash+'; спальня: '+bed+'. Планировки: '+ids+selected+'. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'. Если не получится написать по номеру — позвонить.';
+    payload.comment=('Квиз: индивидуальное предложение, планировки и комплектации. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Бонус: дополнительная скидка 20 000 ₽ на все модели Делюкс, суммируется с другими акциями. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
     payload.journeyContext={purpose:'selection_help',pagePath:location.pathname};
     const attribution=analytics?.attribution?.();if(attribution)payload.attribution=attribution;
     state.error='';state.sending=true;render();
