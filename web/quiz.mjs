@@ -198,7 +198,9 @@ async function init(){
   try{
     const [a,b,c]=await Promise.all([fetch('/data/quiz-v1.json',{cache:'no-cache'}),fetch('/data/catalog-pricebook.json',{cache:'no-cache'}),fetch('/data/site-settings.json',{cache:'no-cache'})]);
     if(!a.ok||!b.ok||!c.ok)throw new Error('QUIZ_FETCH_FAIL');
-    quiz=await a.json();book=await b.json();settings=await c.json();
+    quiz=await a.json();const comfortBook=await b.json();settings=await c.json();
+    if(Object.values(quiz.deluxePrices||{}).reduce((n,m)=>n+Object.keys(m).length,0)!==20)throw new Error('QUIZ_DELUXE_DATA_INVALID');
+    book={...comfortBook,deluxePrices:quiz.deluxePrices}; // Quiz-only snapshot; public Comfort catalog stays byte-identical.
     if(quiz.plans?.length!==41||quiz.priceRules?.assertComfortPriceFromExistingPricebook!==true)throw new Error('QUIZ_DATA_INVALID');
     if(settings.lead?.requiredPricebookVersion!==book.version)throw new Error('QUIZ_PRICEBOOK_VERSION');
     analytics?.start(settings);
