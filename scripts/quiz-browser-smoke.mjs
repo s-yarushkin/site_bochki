@@ -53,25 +53,10 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
    throw new Error(label+' prominent discount CTA missing');
  if(!(await page.locator('.dp-quiz-price-note').innerText()).includes('Окончательная цена зависит от комплектации и планировки.'))
    throw new Error(label+' caveat not rewritten');
- if(await page.locator('.dp-quiz-plan-title a').count()!==cards)
-   throw new Error(label+' some models are not clickable');
- if(await page.locator('.dp-quiz-layout-all').count()!==cards)
-   throw new Error(label+' missing model-specific plan page link');
- const thumbs=page.locator('.dp-quiz-layout-preview');
- for(const count of await page.locator('.dp-quiz-layout-row').evaluateAll(rows=>rows.map(row=>row.children.length))){
-   if(count>2)throw new Error(label+' more than two preview plans in a model');
- }
- if(await thumbs.count()){
-   await thumbs.first().click();
-   await page.waitForSelector('.dp-quiz-frame.is-detail');
-   const planImage=page.locator('.dp-quiz-detail-image');
-   await planImage.evaluate(async img=>{await img.decode()});
-   if(await planImage.evaluate(img=>img.naturalWidth<150))
-     throw new Error(label+' plan preview image not loaded');
-   await page.locator('.dp-quiz-frame.is-detail [data-dpq="results"]').click();
-   await page.waitForSelector('.dp-quiz-frame.is-results');
- }
-
+ if(await page.locator('.dp-quiz-plan a,.dp-quiz-layout-preview,.dp-quiz-layout-all').count())
+   throw new Error(label+' quiz model cards must not navigate or open layouts');
+ if(!(await page.locator('.dp-quiz-cta-copy').innerText()).includes('планировки, комплектации и цены'))
+   throw new Error(label+' missing promise to send suitable plans');
 
  if(cards<1||cards>4)throw new Error(label+' wrong results count: '+cards);
  if(await page.locator(selectors.phone).count())throw new Error(label+' phone shown before result CTA');
