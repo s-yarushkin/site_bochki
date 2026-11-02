@@ -180,7 +180,7 @@ async function submitForm(form){
     const count=({p2:'1–2',p4:'3–4',p6:'5–6',p8:'до 8'})[state.answers.party];
     const wash=({w_yes:'отдельная нужна',w_no:'не нужна',w_compare:'сравнить оба'})[state.answers.wash];
     const bed=state.answers.bedroom==='b_yes'?'нужна':'не нужна';
-    payload.comment=('Источник: квиз новый год. Отправить подходящие планировки, комплектации и цены. Город установки: '+(state.city||'не указан')+'. Скидка 20 000 ₽ только на Делюкс. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
+    payload.comment=('Источник: квиз новый год. Новый год 2027. Отправить подходящие планировки, комплектации и цены. Город установки: '+(state.city||'не указан')+'. Скидка 20 000 ₽ только на Делюкс. Гостей '+count+'; помывочная '+wash+'; спальня '+bed+'. Варианты: '+ids+selected+'. Мессенджер: '+({max:'MAX',whatsapp:'WhatsApp',telegram:'Telegram'})[state.channel]+'.').slice(0,490);
     payload.journeyContext={purpose:'selection_help',pagePath:'/novyy-god/'};
     const attribution=analytics?.attribution?.();if(attribution)payload.attribution=attribution;
     state.error='';state.sending=true;render();
