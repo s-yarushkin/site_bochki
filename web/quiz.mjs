@@ -280,6 +280,9 @@ function bind(){
   document.addEventListener('click',e=>{if(e.target.closest('#configure,#home-plans,[data-model-card],[data-flow],[data-preset],[data-inquiry],[data-save-choice],[data-size-picker],#contact-dialog,#gallery-dialog,#inquiry-dialog')){interacted=true;cancelModelsIdle()}},{capture:true,passive:true});
   // Exactly two automatic entry points: models idle, and the editorial 'ВАША БАНЯ' screen.
   window.addEventListener('scroll',handleScroll,{passive:true});
+  // Anchored jumps and restored pages may not emit a fresh scroll event.
+  window.addEventListener('hashchange',()=>requestAnimationFrame(()=>{watchBathScreen();handleScroll()}));
+  window.addEventListener('pageshow',()=>requestAnimationFrame(()=>{watchBathScreen();handleScroll()}));
   for(const type of ['pointermove','pointerdown','keydown','touchstart','touchmove','wheel']){
     window.addEventListener(type,handleActivity,{passive:true});
   }
