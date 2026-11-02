@@ -9,6 +9,7 @@ const selectors={dialog:'#dp-quiz-dialog',result:'.dp-quiz-results',phone:'#dp-q
 async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',channel='max'){
  const page=await browser.newPage({viewport,deviceScaleFactor:1});
  const errors=[];let sent=null;
+ await page.addInitScript(()=>{window.__quizGoalEvents=[];document.addEventListener('dachapar:event',e=>window.__quizGoalEvents.push(e.detail));});
  page.on('pageerror',e=>errors.push(e.message));
  await page.route('**/data/site-settings.json',async route=>{
    const response=await route.fetch(),data=await response.json();
@@ -40,6 +41,8 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
    await button.click();
  }
  await page.waitForSelector(selectors.result,{timeout:5000});
+ if(await page.evaluate(()=>window.__quizGoalEvents.filter(e=>e.name==='dp_quiz_completed').length)!==1)
+   throw new Error(label+' quiz completion goal was not tracked exactly once');
  const cards=await page.locator('.dp-quiz-plan').count();
  const prices=await page.locator('.dp-quiz-plan-price').allTextContents();
  if(prices.some(x=>/\d{6} ₽/.test(x)))throw new Error(label+' price is not grouped into thousands: '+prices.join(' | '));
@@ -74,6 +77,8 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  if(options!==3)throw new Error(label+' expected MAX WhatsApp Telegram');
  await page.locator('#dp-quiz-contact-form input[name="channel"][value="'+channel+'"]').check();
  await page.locator(selectors.phone).fill('9991234567');
+ const city=label==='desktop'?'г. Переславль-Залесский':'Ярославль';
+ await page.locator('#dp-quiz-city').fill(city);
  await page.locator('#dp-quiz-dialog').screenshot({path:OUT+'/'+label+'-form.png'});
  const dimensions=await page.evaluate(()=>{
    const root=document.querySelector('#dp-quiz-dialog'),frame=root.querySelector('.dp-quiz-frame'),main=root.querySelector('.dp-quiz-main');
@@ -86,11 +91,48 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  if(!sent)throw new Error(label+' no lead request');
  if(sent.purpose!=='quiz_catalog'||sent.flow!=='callback'||sent.contactChannel!==channel)throw new Error(label+' wrong channel payload '+JSON.stringify({purpose:sent.purpose,flow:sent.flow,contactChannel:sent.contactChannel}));
  if(!sent.comment?.includes('DP-PL-'))throw new Error(label+' layout codes missing');
+ if(!sent.comment?.includes('Город установки: '+city))throw new Error(label+' city omitted from manager lead');
+ const tracked=await page.evaluate(()=>window.__quizGoalEvents||[]);
+ const count=name=>tracked.filter(e=>e.name===name).length;
+ if(count('dp_quiz_submit_attempt')!==1||count('dp_quiz_lead_confirmed')!==1)
+   throw new Error(label+' quiz submit/confirmed goals missing '+JSON.stringify(tracked.map(e=>e.name)));
+ if(count('dp_quiz_lead_pereslavl_confirmed')!==(label==='desktop'?1:0))
+   throw new Error(label+' wrong Pereslavl qualification '+JSON.stringify(tracked.map(e=>e.name)));
+ if(tracked.some(e=>JSON.stringify(e.params||{}).includes('Переславль')||JSON.stringify(e.params||{}).includes('7999')))
+   throw new Error(label+' contact or settlement leaked to Metrika goal params');
  await page.keyboard.press('Escape');
  if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error(label+' Escape failed');
  if(errors.length)throw new Error(label+' JS errors: '+errors.join('; '));
  await page.close();
  return {label,cards,channel,dimensions};
+}
+async function quizCloseGoalSmoke(){
+ const page=await browser.newPage({viewport:{width:1360,height:820}});
+ try{
+  await page.addInitScript(()=>{window.__quizGoalEvents=[];document.addEventListener('dachapar:event',e=>window.__quizGoalEvents.push(e.detail));});
+  await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+  await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+  const events=()=>page.evaluate(()=>window.__quizGoalEvents.map(e=>e.name));
+  // Abandon before answering all questions, including Escape closing.
+  await page.locator('#dp-quiz-open').click();
+  await page.waitForSelector('#dp-quiz-dialog[open]');
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>!document.querySelector('#dp-quiz-dialog')?.open);
+  if((await events()).filter(x=>x==='dp_quiz_close_before_completed').length!==1)
+   throw new Error('Closing unanswered quiz should count before-completion abandonment once');
+  // Reopen manually, answer all 3, close on the result screen with no lead.
+  await page.locator('#dp-quiz-open').click();
+  for(const answer of ['p2','w_no','b_no'])
+   await page.locator('#dp-quiz-dialog [data-dpq="answer"][data-value="'+answer+'"]').click();
+  await page.waitForSelector('.dp-quiz-results');
+  await page.locator('#dp-quiz-dialog [data-dpq="close"]').click();
+  await page.waitForFunction(()=>!document.querySelector('#dp-quiz-dialog')?.open);
+  const names=await events();
+  for(const name of ['dp_quiz_completed','dp_quiz_close_before_completed','dp_quiz_close_after_completed'])
+   if(names.filter(x=>x===name).length!==1)throw new Error('Goal count wrong '+name+' '+JSON.stringify(names));
+  if(names.includes('dp_quiz_lead_confirmed'))throw new Error('Closing results falsely counted a lead');
+  return {scenario:'close-before-and-after',abandonBefore:true,abandonAfter:true,noLead:true};
+ }finally{await page.close()}
 }
 async function insertYourBathVision(page){
  await page.evaluate(()=>{
@@ -276,6 +318,7 @@ try{
  results.push(await runCase('aesthetic',()=>aestheticBlockSmoke()));
  results.push(await runCase('anchor',()=>anchorNavigationSmoke()));
  results.push(await runCase('model',()=>clickedModelNavigationSmoke()));
+ results.push(await runCase('close-goals',()=>quizCloseGoalSmoke()));
  results.push(await invitePolicySmoke({width:1440,height:900},'desktop-idle','models-idle'));
  results.push(await invitePolicySmoke({width:390,height:844},'mobile-configure','your-bath'));
  results.push(await test({width:1440,height:900},'desktop','p4','w_compare','b_no','max'));
