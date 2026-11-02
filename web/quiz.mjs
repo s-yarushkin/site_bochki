@@ -65,10 +65,12 @@ const modelsVisible=()=>{
   return r.top<=h*0.55&&r.bottom>=h*0.45;
 };
 const reachedYourBath=()=>{
-  const el=$('#configure');if(!el)return false;
-  // Keep this true after scrolling PAST the section: fast mouse-wheel, touch
-  // fling and anchor jumps can skip the section between scroll events.
-  return el.getBoundingClientRect().top<=innerHeight*0.45;
+  const configure=$('#configure');
+  // The bottom of the page is past the "your bath" section even if a custom
+  // scrollbar or content transition missed intermediate scroll events.
+  const y=scrollY||window.pageYOffset||0;
+  const nearBottom=y+innerHeight>=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight)-Math.max(24,innerHeight*.05);
+  return (configure&&configure.getBoundingClientRect().top<=innerHeight*0.45)||nearBottom;
 };
 const ritualInView=()=>{
   const el=$('#details');if(!el)return false;
@@ -105,7 +107,7 @@ function launch(event){
   lastOpener=event?.currentTarget||document.activeElement;
   hideInvite();
   if(validAnswers(state.answers)){state.view='results'}else{state.view='question';state.step=question.findIndex(q=>!state.answers[q.key]);if(state.step<0)state.step=0}
-  shownThisVisit=true;interacted=true;dialog.showModal();fitViewport();render();trace('dp_quiz_start');
+  shownThisVisit=true;interacted=true;try{sessionStorage.setItem(inviteShownSessionKey,'1')}catch{}dialog.showModal();fitViewport();render();trace('dp_quiz_start');
 }
 function close(){
   if(dialog.open)dialog.close();
@@ -260,12 +262,14 @@ async function init(){
     if(quiz.plans?.length!==41||quiz.priceRules?.assertComfortPriceFromExistingPricebook!==true)throw new Error('QUIZ_DATA_INVALID');
     if(settings.lead?.requiredPricebookVersion!==book.version)throw new Error('QUIZ_PRICEBOOK_VERSION');
     analytics?.start(settings);
-    load();let alreadyShown=false;try{alreadyShown=sessionStorage.getItem(inviteShownSessionKey)==='1'}catch{}shownThisVisit=alreadyShown||Object.values(state.answers).some(Boolean);
+    load();let alreadyShown=false;try{alreadyShown=sessionStorage.getItem(inviteShownSessionKey)==='1'}catch{}shownThisVisit=alreadyShown;
     const mounted=$('[data-quiz-mount]');
-    const entry=mounted||document.createElement('div');entry.className='dp-quiz-entry';
-    entry.innerHTML='<div><span class="dp-quiz-entry-label">Начните со своих пожеланий</span><strong>Подберём баню за 3 шага</strong><p>Сравните подходящие модели, размеры и цены.</p></div><button type="button" class="dp-quiz-action" id="dp-quiz-open">Найти свою баню <span aria-hidden="true">↗</span></button>';
-    if(!mounted){const anchor=$('#models .section-heading')||$('#models .section-top');
-    if(anchor)anchor.insertAdjacentElement('afterend',entry);else $('#models').prepend(entry);}
+    const entry=mounted||document.createElement('div');
+    entry.className='dp-quiz-entry dp-quiz-entry--bottom wrap';
+    entry.innerHTML='<div><span class="dp-quiz-entry-label">Подбор под ваши пожелания</span><strong>Найдём вашу баню за 3 шага</strong><p>Покажем подходящие варианты и цены, планировки пришлём в мессенджер.</p></div><button type="button" class="dp-quiz-action" id="dp-quiz-open">Подобрать за 3 шага <span aria-hidden="true">→</span></button>';
+    const main=$('main#top');
+    if(!main)throw new Error('QUIZ_BOTTOM_MOUNT_MISSING');
+    main.append(entry);
     launcher=$('#dp-quiz-open');
     invite=document.createElement('dialog');invite.className='dp-quiz-invite';invite.setAttribute('aria-labelledby','dp-quiz-invite-title');
     invite.innerHTML='<div class="dp-quiz-invite-layout"><div class="dp-quiz-invite-visual"><img class="dp-quiz-invite-photo" src="/r101/assets/parus-editorial-960.webp" alt="Готовая баня на загородном участке" width="960" height="720" decoding="async"></div><div class="dp-quiz-invite-inner"><button type="button" class="dp-quiz-invite-close" data-dpq-hide aria-label="Закрыть предложение">×</button><span class="dp-quiz-invite-kicker">ДачаПар · поможем с выбором</span><h2 id="dp-quiz-invite-title">Какая баня подойдёт вам?</h2><p>Ответьте на три коротких вопроса. Покажем подходящие бани и цены, а подробные планировки пришлём в мессенджер.</p><div class="dp-quiz-invite-stages" aria-label="Три вопроса"><span><b>01</b> Сколько гостей</span><span><b>02</b> Помывочная</span><span><b>03</b> Ночёвка</span></div><button type="button" class="dp-quiz-action" data-dpq-open>Подобрать баню <span aria-hidden="true">→</span></button></div></div>';
