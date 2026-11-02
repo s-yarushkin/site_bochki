@@ -131,7 +131,7 @@ test('R111 popup only has two triggers: models idle 18s or reaching your bath; n
  assert.match(home,/id="details"/);
  assert.match(ui,/const modelsIdleMs=18000;/);
  assert.match(ui,/const modelsVisible=\(\)=>/);
- assert.match(ui,/const reachedYourBath=\(\)=>/);
+ assert.match(ui,/const bathVisionVisible=\(\)=>/);
  assert.match(ui,/maybeInvite\('models-idle'\)/);
  assert.match(ui,/maybeInvite\('your-bath'\)/);
  assert.match(ui,/window\.addEventListener\('scroll',handleScroll/);
