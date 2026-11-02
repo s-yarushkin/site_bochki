@@ -15,8 +15,8 @@ HERE = Path(__file__).resolve().parent
 ORIGIN = 'https://xn--80aaan1dh9b.xn--p1ai'
 # Only the exact previously approved route release may be upgraded in place.
 # Every other web release with a /novyy-god/ route is an unknown baseline.
-R3_OLD_RELEASE = 'NY2027-824f2b348d29094d'
-R3_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css'}
+R4_OLD_RELEASE = 'NY2027-8ab90d587dc0e308'
+R4_EDITABLE = {'novyy-god/index.html', 'novyy-god/style.css'}
 SHARED = [
     'lead-client.mjs', 'lead-consent.mjs', 'quote.mjs', 'r85-pricing.mjs',
     'analytics-core.mjs', 'phone-mask.mjs', 'r101/mobile-dialog.mjs',
@@ -88,37 +88,42 @@ def baseline(payload_files=None):
     require('index.html' in files, 'home page missing')
     route = root / 'novyy-god'
     if route.exists():
-        require(root.name == R3_OLD_RELEASE, 'route already exists outside approved NY2027 R2 release')
+        require(root.name == R4_OLD_RELEASE, 'route already exists outside approved NY2027 R3 release')
         require(route.is_dir() and not route.is_symlink(), 'existing route is not an ordinary directory')
         require(payload_files is not None, 'upgrade requires verified payload')
         expected = {'novyy-god/' + name for name in ROUTE_FILES}
         installed = {name for name in files if name.startswith('novyy-god/')}
         require(installed == expected, 'unexpected files inside existing route')
-        for name in sorted(expected - R3_EDITABLE):
+        for name in sorted(expected - R4_EDITABLE):
             require(files[name] == sha(payload_files[name]), 'immutable holiday asset drift: ' + name)
         old_html = (route / 'index.html').read_text('utf-8')
         old_css = (route / 'style.css').read_text('utf-8')
         require('Пришлём подходящие варианты, цены и комплектации' in old_html and
-                'delivery-geography' in old_html and
-                'style.css?v=ny2027-r2' in old_html and
-                'dialog-story' not in old_html,
-                'unexpected previous R2 holiday page content')
-        require('NY2027 R2' in old_css and 'NY2027 R3' not in old_css and
-                'width:min(660px' in old_css,
-                'unexpected previous R2 holiday styles')
+                'class="delivery-geography"' in old_html and
+                'Основные направления:' in old_html and
+                'style.css?v=ny2027-r3' in old_html and
+                'class="dialog-story"' in old_html,
+                'unexpected previous R3 holiday page content')
+        require('NY2027 R3' in old_css and 'NY2027 R4' not in old_css and
+                'max-width:1280px' in old_css,
+                'unexpected previous R3 holiday styles')
         require('Пришлём подходящие варианты, цены и комплектации' in
                 payload_files['novyy-god/index.html'].decode('utf-8'),
                 'new holiday headline absent')
-        require('delivery-geography' in
-                payload_files['novyy-god/index.html'].decode('utf-8'),
-                'new holiday shipping regions missing')
-        require(all(fragment in payload_files['novyy-god/index.html'].decode('utf-8')
-                    for fragment in ('class="dialog-story"', 'class="dialog-action"',
-                                     'style.css?v=ny2027-r3')),
-                'wide two-column holiday form absent')
-        require(b'NY2027 R3' in payload_files['novyy-god/style.css'] and
-                b'max-width:1280px' in payload_files['novyy-god/style.css'],
-                'wide R3 holiday CSS missing')
+        new_html = payload_files['novyy-god/index.html'].decode('utf-8')
+        new_css = payload_files['novyy-god/style.css']
+        require('class="delivery-geography"' not in new_html and
+                'Основные направления:' not in new_html and
+                'class="delivery-footer-line"' in new_html and
+                'Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области' in new_html,
+                'footer-only delivery geography not found')
+        require(all(fragment in new_html for fragment in
+                    ('class="dialog-story"', 'class="dialog-action"', 'style.css?v=ny2027-r4')),
+                'R3 two-column form or R4 stylesheet reference missing')
+        require(b'NY2027 R4' in new_css and
+                b'max-width:1280px' in new_css and b'delivery-footer-line' in new_css and
+                b'.delivery-geography{' not in new_css,
+                'R4 restrained footer styles or R3 dialog preservation missing')
     return root, files
 
 
@@ -143,8 +148,8 @@ def check():
     state = {'oldWeb': str(root), 'oldFiles': files, 'payloadSha256': manifest['payloadSha256']}
     (HERE / 'check-state.json').write_text(json.dumps(state, indent=2) + '\n', 'utf-8')
     print('CHECK=PASS; production unchanged; baseline=' + str(root))
-    if root.name == R3_OLD_RELEASE:
-        print('NY2027_R3_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css; protected=R117,API,SQLite,prices')
+    if root.name == R4_OLD_RELEASE:
+        print('NY2027_R4_UPGRADE=READY; changed=novyy-god/index.html,novyy-god/style.css; protected=R117,API,SQLite,prices')
 
 
 
@@ -175,8 +180,8 @@ def apply():
         path.write_bytes(data)
     expected = {**old_files, **{name: sha(data) for name, data in files.items()}}
     changed = {name for name in expected if old_files.get(name) != expected[name]}
-    if old.name == R3_OLD_RELEASE:
-        require(changed == R3_EDITABLE, 'upgrade must change only holiday HTML and CSS')
+    if old.name == R4_OLD_RELEASE:
+        require(changed == R4_EDITABLE, 'upgrade must change only holiday HTML and CSS')
     require(inventory(destination) == expected, 'candidate differs outside route')
     for path in [destination, *destination.rglob('*')]:
         os.chown(path, 0, 0)
@@ -197,8 +202,8 @@ def apply():
         print('AUTOMATIC_ROLLBACK=PASS; public verification failed')
         raise
     print('DEPLOYED=' + ORIGIN + '/novyy-god/; API and database unchanged')
-    if old.name == R3_OLD_RELEASE:
-        print('NY2027_R3_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css; R117 preserved')
+    if old.name == R4_OLD_RELEASE:
+        print('NY2027_R4_DEPLOY=PASS; changed=novyy-god/index.html,novyy-god/style.css; R117 preserved')
 
     print('ROLLBACK: sudo python3 ' + str(HERE / 'new-year-remote.py') + ' --rollback ' + str(state))
 
