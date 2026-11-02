@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove} from '../web/quiz-engine.mjs';
+import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels} from '../web/quiz-engine.mjs';
 const read=path=>JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const quiz=read('../web/data/quiz-v1.json');
 const book=read('../web/data/catalog-pricebook.json');
@@ -101,7 +101,7 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
    assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
  }
- assert.match(ui,/Куда отправить подборку\?/);
+ assert.match(ui,/Куда прислать ваши планировки\?/);
  assert.match(ui,/Выберите мессенджер/);
  assert.match(ui,/name="channel"/);
  for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
@@ -110,4 +110,14 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Repeated sales message: '+phrase);
  assert.match(ui,/payload\.purpose='quiz_catalog'/);
  assert.match(ui,/payload\.contactChannel=state\.channel/);
+});
+
+test('model-only results cover all answers with priced unique models and no image dependency',()=>{
+ const noImages=quiz.plans.map(({image,mirrorImage,...p})=>p);
+ for(const party of parties)for(const washing of wash)for(const bedroom of beds){
+  const found=recommendModels(noImages,{party,wash:washing,bedroom},book,quiz.priceRules);
+  assert.ok(found.offers.length>=1&&found.offers.length<=3);
+  assert.equal(new Set(found.offers.map(o=>o.plan.model)).size,found.offers.length);
+  for(const {plan,price} of found.offers){assert.ok(Number.isFinite(price.rub));assert.equal(plan.bedroom,bedroom==='b_yes');assert.notEqual(plan.sitePlanId,'v03_Q6_rest');}
+ }
 });

@@ -71,3 +71,16 @@ export function guestExplanation(a){
     a.party==='p6'?'Для банных вечеров с друзьями: хороший пар, чай и время для разговоров.':
     a.party==='p4'?'Чтобы провести вечер с близкими, без спешки и лишних хлопот.':'Для тех вечеров, когда хочется отдохнуть вдвоём и никуда не спешить.';
 }
+
+/** Model offers do not require a published floor-plan image. */
+export function recommendModels(plans,answers,pricebook,rules,limit=3){
+ const found=rankPlans(plans,answers,plans.length),seen=new Set(),offers=[];
+ for(const plan of found.all){
+  if(plan.sitePlanId==='v03_Q6_rest'||seen.has(plan.model))continue;
+  const price=planPrice(plan,answers.party,pricebook,rules);
+  if(price.rub===null)continue;
+  seen.add(plan.model);offers.push({plan,price});
+  if(offers.length>=limit)break;
+ }
+ return {offers,compromise:found.compromise};
+}

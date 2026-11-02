@@ -102,6 +102,8 @@
 @media(max-width:350px){.dp-quiz-choice-text strong{font-size:14px}.dp-quiz-choice-text small{font-size:12px}.dp-quiz-main{padding-left:12px;padding-right:12px}.dp-quiz-main h2{font-size:24px}}
 @media(prefers-reduced-motion:reduce){.dp-quiz-invite{animation:none}.dp-quiz-action,.dp-quiz-choice{transition:none}.dp-quiz-action:hover,.dp-quiz-choice:hover{transform:none}}
 /* R106: align with the published editorial site. */
+.dp-quiz-results{grid-template-columns:repeat(3,minmax(0,1fr))}
+.dp-quiz-results:has(>.dp-quiz-plan:only-child){grid-template-columns:minmax(0,1fr);max-width:560px}
 .dp-quiz-plan-viewport{max-height:65dvh;overflow:auto;overscroll-behavior:contain;background:#fff;border:1px solid #d4d8cf;margin:20px 0}
 .dp-quiz-plan-viewport .dp-quiz-detail-image{border:0;margin:0}
 .dp-quiz-plan-viewport.is-zoomed .dp-quiz-detail-image{min-width:1200px;width:1200px;max-height:none;height:auto}
