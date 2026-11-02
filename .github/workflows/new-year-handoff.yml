@@ -43,7 +43,7 @@ jobs:
         run: |
           npm install --no-save playwright@1.58.2
           npx playwright install --with-deps chromium
-      - name: Test R2 holiday modal and delivery geography in Chromium
+      - name: Test R3 wide lead form, CTA visibility and mobile in Chromium
         run: |
           node concepts/new-year-2027/preview.mjs > /tmp/ny-preview.log 2>&1 &
           sleep 2
@@ -51,8 +51,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: dachapar-new-year-r2-browser
-          path: output/new-year-r2-browser/
+          name: dachapar-new-year-r3-browser
+          path: output/new-year-r3-browser/
           if-no-files-found: warn
           retention-days: 14
       - uses: actions/upload-artifact@v4
