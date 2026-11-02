@@ -161,12 +161,48 @@ async function aestheticBlockSmoke(){
    await page.evaluate(()=>{const r=document.querySelector('#details').getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top+40,behavior:'instant'})});
    await page.waitForTimeout(1500);
    if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Aesthetic block interrupted by quiz');
-   return {scenario:'aesthetic-block',popup:false};
+   // A visitor who skipped the calculator with a big flick should get the
+   // invitation after the aesthetic section, not on top of the stones/broom.
+   await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+   return {scenario:'aesthetic-block',popupDuringRitual:false,popupAfterRitual:true};
+ }finally{await page.close()}
+}
+async function anchorNavigationSmoke(){
+ const page=await browser.newPage({viewport:{width:1440,height:900}});
+ try{
+   // Direct or nav-button jump to #configure must not suppress the quiz.
+   await page.route('**/r101/assets/parus-editorial-960.webp',route=>route.fulfill({path:'web/assets/quiz/step1-steamroom.webp',contentType:'image/webp'}));
+   await page.goto(BASE+'/#configure',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+   if(!page.url().includes('#configure'))throw new Error('Anchor was not preserved');
+   await page.locator('[data-dpq-hide]').click();
+   await page.reload({waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   await page.waitForTimeout(600);
+   if(await page.locator('.dp-quiz-invite[open]').count())throw new Error('Popup repeated after dismissal on same session');
+   return {scenario:'anchor-navigation',popup:true,repeatAfterDismiss:false};
+ }finally{await page.close()}
+}
+async function clickedModelNavigationSmoke(){
+ const page=await browser.newPage({viewport:{width:1440,height:900}});
+ try{
+   await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#dp-quiz-open',{timeout:12000});
+   await page.evaluate(()=>{
+     localStorage.setItem('dp_r101_choice',JSON.stringify({model:'kvadro'}));
+     location.hash='#configure';
+   });
+   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:6500});
+   return {scenario:'chosen-model-then-calculator',popup:true};
  }finally{await page.close()}
 }
 try{
  const results=[];
  results.push(await aestheticBlockSmoke());
+ results.push(await anchorNavigationSmoke());
+ results.push(await clickedModelNavigationSmoke());
  results.push(await invitePolicySmoke({width:1440,height:900},'desktop-idle','models-idle'));
  results.push(await invitePolicySmoke({width:390,height:844},'mobile-configure','your-bath'));
  results.push(await test({width:1440,height:900},'desktop','p4','w_compare','b_no','max'));
