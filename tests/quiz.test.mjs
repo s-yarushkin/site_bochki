@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels} from '../web/quiz-engine.mjs';
+import {validAnswers,matchingPlans,rankPlans,planPrice,selectStove,recommendModels,recommendModelRanges} from '../web/quiz-engine.mjs';
 const read=path=>JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const quiz=read('../web/data/quiz-v1.json');
 const book=read('../web/data/catalog-pricebook.json');
@@ -122,7 +122,7 @@ test('model-only results cover all answers with priced unique models and no imag
  }
 });
 
-test('invitation appears earlier but never auto-opens a full-screen quiz',()=>{
+test('large center invitation appears after 10s/35%, while quiz itself waits for a click',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
  assert.match(ui,/const inviteDelayMs=10000,inviteScrollFraction=0\.35;/);
  assert.match(ui,/Date\.now\(\)-startedAt>=inviteDelayMs/);
@@ -130,11 +130,77 @@ test('invitation appears earlier but never auto-opens a full-screen quiz',()=>{
  assert.match(ui,/window\.setTimeout\(maybeInvite,inviteDelayMs\+500\)/);
  assert.match(ui,/Date\.now\(\)-startedAt>15000/,'Desktop exit signal remains delayed');
  assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
- assert.match(ui,/invite\.hidden=false/);
+ assert.match(ui,/invite\.showModal\(\)/,'The new invitation itself is a large centered modal');
+ assert.match(ui,/invite\.addEventListener\('cancel'/,'Escape dismisses the invitation');
  assert.match(ui,/dialog\.showModal\(\)/);
  const builder=readFileSync(new URL('../r107/build.py',import.meta.url),'utf8');
  assert.match(builder,/r107-invite35/,'New preview must invalidate cached R106 script');
  assert.match(builder,/R107-PREVIEW/);
  const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('function launch('));
- assert.doesNotMatch(trigger,/showModal\(/,'Automated invitation must not open a blocking modal');
+ assert.doesNotMatch(trigger,/dialog\.showModal\(/,'The full quiz still opens only on an intentional click');
+});
+
+test('R108 buyer choices are literal: straightforward guest counts and requested washing language',()=>{
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ for(const phrase of ['1–2 человека','До 4 человек','5–6 человек','Для большой семьи и друзей','До 8 человек','встречать праздники в бане с компанией','Исторически мылись в самой парной','Предпочитаю сэкономить','Хочу сравнить']){
+   assert.ok(ui.includes(phrase),'Missing approved copy: '+phrase);
+ }
+ for(const phrase of ['Вспомните обычный выходной на даче.','Отдельная спальня — или больше места для общего отдыха.','Да, отдельная комната']){
+   assert.equal(ui.includes(phrase),false,'Obsolete question copy '+phrase);
+ }
+});
+test('R108 range matching: 5/6 m, no intermediate 4.5/5.5 m, and no Kvadro for 5–8 guests',()=>{
+ for(const party of parties)for(const wash of ['w_yes','w_no','w_compare'])for(const bedroom of beds){
+   const a={party,wash,bedroom};
+   const {offers,compromise}=recommendModelRanges(quiz.plans,a,book,quiz.priceRules);
+   assert.ok(offers.length>0,'No offers '+JSON.stringify(a));
+   assert.equal(new Set(offers.map(o=>o.model)).size,offers.length);
+   assert.ok(offers.length<=4);
+   if(['p6','p8'].includes(party))assert.ok(offers.every(o=>o.model!=='kvadro'),'Kvadro unexpectedly offered to a large party');
+   if(bedroom==='b_yes')assert.ok(offers.every(o=>o.model==='kvadro-house'&&o.sizes.every(s=>s==='6x6')));
+   if(['p2','p4'].includes(party)&&wash==='w_compare'&&bedroom==='b_no'){
+     assert.ok(offers.some(o=>o.model==='kvadro-house'&&o.sizes.length===1&&o.sizes[0]==='4x4'));
+   }
+   for(const offer of offers){
+     assert.ok(offer.plans.every(p=>!p.wideBody&&!['450','550'].includes(p.size)&&p.sitePlanId!=='v03_Q6_rest'));
+     assert.ok(offer.plans.every(p=>p.model===offer.model));
+     assert.ok(offer.displayMinRub>=offer.minRub&&offer.displayMinRub-offer.minRub<1000);
+     assert.ok(offer.displayMaxRub>=offer.maxRub&&offer.displayMaxRub-offer.maxRub<1000);
+     assert.ok(offer.displayMaxRub>=offer.displayMinRub);
+     if(offer.model!=='kvadro-house')assert.ok(offer.sizes.every(s=>['500','600'].includes(s)));
+   }
+   assert.equal(compromise,bedroom==='b_yes'&&wash==='w_no');
+ }
+ const noWash=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_no',bedroom:'b_no'},book,quiz.priceRules);
+ assert.deepEqual(noWash.offers.map(o=>o.model),['kvadro','parus','viking']);
+ assert.ok(noWash.offers.every(o=>o.firstSize==='500'&&o.lastSize==='600'));
+ const compare=recommendModelRanges(quiz.plans,{party:'p2',wash:'w_compare',bedroom:'b_no'},book,quiz.priceRules);
+ assert.deepEqual(compare.offers.map(o=>o.model),['kvadro','parus','viking','kvadro-house']);
+ const washOnly=recommendModelRanges(quiz.plans,{party:'p4',wash:'w_yes',bedroom:'b_no'},book,quiz.priceRules);
+ const k=washOnly.offers.find(o=>o.model==='kvadro');
+ assert.deepEqual(k?.sizes,['600'],'Don't claim a nonexistent 5 m Kvadro with separate washroom');
+});
+test('R108 price spans use original Comfort prices, room surcharges and stove surcharges',()=>{
+ const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
+ const {offers}=recommendModelRanges(quiz.plans,a,book,quiz.priceRules);
+ const parus=offers.find(o=>o.model==='parus');
+ assert.equal(parus.minRub,530540.5);
+ assert.equal(parus.maxRub,555540.5);
+ assert.equal(parus.displayMinRub,531000);
+ assert.equal(parus.displayMaxRub,556000);
+ const kvadro=offers.find(o=>o.model==='kvadro');
+ assert.equal(kvadro.displayMinRub,546000);
+ assert.equal(kvadro.displayMaxRub,546000);
+});
+test('Deluxe extra bonus is never subtracted from Comfort price ranges',()=>{
+ const a={party:'p4',wash:'w_yes',bedroom:'b_no'};
+ const offers=recommendModelRanges(quiz.plans,a,book,quiz.priceRules).offers;
+ assert.equal(offers.find(o=>o.model==='parus').minRub,530540.5);
+ const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
+ assert.ok(ui.includes('20 000 ₽'));
+ assert.ok(ui.includes('Суммируется с остальными акциями'));
+ assert.ok(ui.includes('комплектации «Делюкс»'));
+ assert.ok(ui.includes('/privacy.html'));
+ assert.equal((ui.match(/data-dpq="form"/g)||[]).length,1);
+ assert.equal(ui.includes('cost.rub-20000'),false);
 });
