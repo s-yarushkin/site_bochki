@@ -49,8 +49,11 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
    throw new Error(label+' CTA too small '+JSON.stringify(ctaBox));
  if(ctaBox.y<0||ctaBox.y+ctaBox.height>viewport.height+1)
    throw new Error(label+' CTA hidden outside viewport '+JSON.stringify(ctaBox));
- if(!(await cta.innerText()).includes('со скидкой 20 000 ₽'))
-   throw new Error(label+' prominent discount CTA missing');
+ const ctaText=await cta.innerText();
+ if(!ctaText.includes('Получить планировки и комплектации с ценами')||!ctaText.includes('скидку 20 000 ₽ на «Делюкс»'))
+   throw new Error(label+' explicit plans and conditional bonus missing from CTA: '+ctaText);
+ if(ctaText.includes('Получить предложение')||ctaText.includes('20%'))
+   throw new Error(label+' CTA still promises a generic offer or unapproved percentage discount');
  if(!(await page.locator('.dp-quiz-price-note').innerText()).includes('Окончательная цена зависит от комплектации и планировки.'))
    throw new Error(label+' caveat not rewritten');
  if(await page.locator('.dp-quiz-plan a,.dp-quiz-layout-preview,.dp-quiz-layout-all').count())
@@ -66,6 +69,7 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  if(await page.locator('.dp-quiz-plan-thumb').count())throw new Error(label+' obsolete floor-plan image');
  await page.locator('[data-dpq="form"]').click();
  await page.waitForSelector(selectors.phone);
+ if(!(await page.locator('#dp-quiz-title').innerText()).includes('Куда прислать планировки, комплектации и цены?'))throw new Error(label+' plan delivery contact heading missing');
  const options=await page.locator('#dp-quiz-contact-form input[name="channel"]').count();
  if(options!==3)throw new Error(label+' expected MAX WhatsApp Telegram');
  await page.locator('#dp-quiz-contact-form input[name="channel"][value="'+channel+'"]').check();
