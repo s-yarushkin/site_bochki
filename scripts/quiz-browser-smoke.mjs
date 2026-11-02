@@ -75,8 +75,8 @@ async function test(viewport,label,party='p4',wash='w_compare',bedroom='b_no',ch
  await page.close();
  return {label,cards,channel,dimensions};
 }
-async function invitePolicySmoke(){
- const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+async function invitePolicySmoke(viewport,label){
+ const page=await browser.newPage({viewport,deviceScaleFactor:1});
  try{
    await page.goto(BASE+'/',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#dp-quiz-open',{timeout:12000});
@@ -86,27 +86,50 @@ async function invitePolicySmoke(){
      window.scrollTo({top:Math.ceil(h*0.38),behavior:'instant'});
      return scrollY/h;
    });
-   if(ratio<0.35)throw new Error('Invite smoke did not scroll far enough: '+ratio);
-   if(await page.locator('.dp-quiz-invite').isVisible())throw new Error('Invite appeared before 10 seconds');
-   await page.locator('.dp-quiz-invite:not([hidden])').waitFor({state:'visible',timeout:13500});
-   if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error('Automatic invite opened modal without click');
-   const box=await page.locator('.dp-quiz-invite[open]').boundingBox();
-   if(!box)throw new Error('Centered invite dialog did not open');
-   const dx=Math.abs(box.x+box.width/2-720),dy=Math.abs(box.y+box.height/2-450);
-   if(dx>40||dy>40||box.width<480)throw new Error('Invite not a large centered popup '+JSON.stringify({box,dx,dy}));
+   if(ratio<0.35)throw new Error(label+' invite smoke did not scroll far enough: '+ratio);
+   if(await page.locator('.dp-quiz-invite').isVisible())throw new Error(label+' invite appeared before 10 seconds');
+   await page.locator('.dp-quiz-invite[open]').waitFor({state:'visible',timeout:13500});
+   if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error(label+' automatic invite opened quiz without click');
+   const bounds=await page.evaluate(async()=>{
+     const dialog=document.querySelector('.dp-quiz-invite'),visual=dialog.querySelector('.dp-quiz-invite-visual');
+     const photo=dialog.querySelector('.dp-quiz-invite-photo'),button=dialog.querySelector('[data-dpq-open]');
+     try{await photo.decode()}catch{}
+     const rect=node=>{const r=node.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom}};
+     return {dialog:rect(dialog),visual:rect(visual),photo:rect(photo),button:rect(button),
+       naturalWidth:photo.naturalWidth,naturalHeight:photo.naturalHeight,fit:getComputedStyle(photo).objectFit,
+       scrollWidth:dialog.scrollWidth,clientWidth:dialog.clientWidth};
+   });
+   const {dialog,visual,photo,button}=bounds;
+   if(bounds.naturalWidth<300||bounds.naturalHeight<200)throw new Error(label+' invite photo did not load '+JSON.stringify(bounds));
+   if(bounds.fit!=='cover'||Math.abs(photo.width-visual.width)>2||Math.abs(photo.height-visual.height)>2)
+     throw new Error(label+' photo reduced to strip instead of filling panel '+JSON.stringify(bounds));
+   if(dialog.width>viewport.width+1||dialog.x<0||dialog.x+dialog.width>viewport.width+1)
+     throw new Error(label+' invite overflows viewport '+JSON.stringify(bounds));
+   if(bounds.scrollWidth>bounds.clientWidth+2)throw new Error(label+' horizontal invite overflow '+JSON.stringify(bounds));
+   if(viewport.width>760){
+     const dx=Math.abs(dialog.x+dialog.width/2-viewport.width/2),dy=Math.abs(dialog.y+dialog.height/2-viewport.height/2);
+     if(dx>40||dy>40||dialog.width<780||visual.width<320||visual.height<420)
+       throw new Error(label+' image panel not balanced and centered '+JSON.stringify(bounds));
+   }else if(visual.width<dialog.width-4||visual.height<120){
+     throw new Error(label+' mobile hero image missing '+JSON.stringify(bounds));
+   }
+   if(button.width<180||button.height<48)throw new Error(label+' primary button too small '+JSON.stringify(bounds));
    const heading=await page.locator('#dp-quiz-invite-title').textContent();
-   if(!heading?.includes('за 3 шага'))throw new Error('Missing 3-step proposition');
-   await page.locator('.dp-quiz-invite').screenshot({path:OUT+'/invite-center.png'});
-
-   await page.locator('[data-dpq-hide]').click();
-   if(await page.locator('.dp-quiz-invite').isVisible())throw new Error('Invite did not dismiss');
-   await page.screenshot({path:OUT+'/invite-dismissed.png'});
-   return {scenario:'invite',threshold:'10s and 35%',modalAutoOpened:false,ratio};
+   if(!heading?.includes('Какая баня подойдёт вам?'))throw new Error(label+' invitation headline drift');
+   if(!(await page.locator('.dp-quiz-invite-reassurance').textContent()).includes('без номера телефона'))
+     throw new Error(label+' immediate-results reassurance missing');
+   await page.locator('.dp-quiz-invite').screenshot({path:OUT+'/invite-'+label+'.png'});
+   await page.locator('[data-dpq-open]').click();
+   await page.waitForSelector('#dp-quiz-dialog[open]');
+   await page.keyboard.press('Escape');
+   if(await page.locator('#dp-quiz-dialog[open]').count())throw new Error(label+' quiz Escape failed');
+   return {scenario:'invite-'+label,threshold:'10s and 35%',photoFillsPanel:true,bounds};
  }finally{await page.close()}
 }
 try{
  const results=[];
- results.push(await invitePolicySmoke());
+ results.push(await invitePolicySmoke({width:1440,height:900},'desktop'));
+ results.push(await invitePolicySmoke({width:390,height:844},'mobile390'));
  results.push(await test({width:1440,height:900},'desktop','p4','w_compare','b_no','max'));
  results.push(await test({width:390,height:844},'mobile390','p4','w_compare','b_no','whatsapp'));
  results.push(await test({width:320,height:690},'mobile320','p2','w_no','b_no','telegram'));
