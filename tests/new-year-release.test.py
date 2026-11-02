@@ -110,8 +110,8 @@ class ReleaseTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'route already exists'):
             deploy.check()
 
-    def install_r2_route_fixture(self):
-        approved = self.releases / deploy.R3_OLD_RELEASE
+    def install_r3_route_fixture(self):
+        approved = self.releases / deploy.R4_OLD_RELEASE
         self.old.rename(approved)
         self.old = approved
         self.current = approved
@@ -120,17 +120,20 @@ class ReleaseTest(unittest.TestCase):
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_bytes(data)
         (self.old / 'novyy-god/index.html').write_text(
-            '<html><link href="style.css?v=ny2027-r2"><h2>Пришлём подходящие варианты, цены и комплектации</h2><section class="delivery-geography"></section></html>', encoding='utf-8')
-        (self.old / 'novyy-god/style.css').write_text(
-            '/* NY2027 R2 */ #lead-dialog{width:min(660px,calc(100% - 40px));}', encoding='utf-8')
-        self.files['novyy-god/index.html'] = (
             '<html><link href="style.css?v=ny2027-r3"><h2>Пришлём подходящие варианты, цены и комплектации</h2>'
-            '<section class="delivery-geography"></section><div class="dialog-story"></div><div class="dialog-action"></div></html>').encode('utf-8')
-        self.files['novyy-god/style.css'] = b'/* NY2027 R3 */ #lead-dialog{max-width:1280px;}'
+            '<section class="delivery-geography"><p>Основные направления:</p></section>'
+            '<div class="dialog-story"></div></html>', encoding='utf-8')
+        (self.old / 'novyy-god/style.css').write_text(
+            '/* NY2027 R3 */ #lead-dialog{max-width:1280px;}', encoding='utf-8')
+        self.files['novyy-god/index.html'] = (
+            '<html><link href="style.css?v=ny2027-r4"><h2>Пришлём подходящие варианты, цены и комплектации</h2>'
+            '<p class="delivery-footer-line">Москва и Подмосковье, Петербург и Ленобласть, Вологодская и Ярославская области.</p>'
+            '<div class="dialog-story"></div><div class="dialog-action"></div></html>').encode('utf-8')
+        self.files['novyy-god/style.css'] = b'/* NY2027 R4 */ #lead-dialog{max-width:1280px;} footer .delivery-footer-line{font-size:11px;}'
         self.pack()
 
-    def test_r3_upgrade_preserves_r117_main_site_and_22_unmodified_route_assets(self):
-        self.install_r2_route_fixture()
+    def test_r4_upgrade_preserves_r117_main_site_and_22_unmodified_route_assets(self):
+        self.install_r3_route_fixture()
         # Existing live site may have later JS than main. Never replace it.
         for name, data in [('quiz.mjs', 'R117 live quiz'), ('analytics-core.mjs', 'R117 live Metrika')]:
             (self.old / name).write_text(data, encoding='utf-8')
@@ -140,7 +143,7 @@ class ReleaseTest(unittest.TestCase):
         deploy.apply()
         after = deploy.inventory(self.current)
         diff = {name for name, hashed in after.items() if before.get(name) != hashed}
-        self.assertEqual(diff, deploy.R3_EDITABLE)
+        self.assertEqual(diff, deploy.R4_EDITABLE)
         self.assertEqual((self.current / 'quiz.mjs').read_text(), 'R117 live quiz')
         self.assertEqual((self.current / 'analytics-core.mjs').read_text(), 'R117 live Metrika')
         self.assertEqual(after['index.html'], before['index.html'])
@@ -151,34 +154,36 @@ class ReleaseTest(unittest.TestCase):
         deploy.rollback(state)
         self.assertEqual(deploy.inventory(self.current), before)
 
-    def test_r3_upgrade_rejects_unapproved_existing_route_changes(self):
-        self.install_r2_route_fixture()
+    def test_r4_upgrade_rejects_unapproved_existing_route_changes(self):
+        self.install_r3_route_fixture()
         (self.old / 'novyy-god/assets/winter-sauna-640.webp').write_bytes(b'altered')
         with self.assertRaisesRegex(RuntimeError, 'immutable holiday asset drift'):
             deploy.check()
         self.assertEqual(self.current, self.old)
 
-    def test_r3_upgrade_rejects_unknown_active_release_with_same_route(self):
-        self.install_r2_route_fixture()
+    def test_r4_upgrade_rejects_unknown_active_release_with_same_route(self):
+        self.install_r3_route_fixture()
         self.old.rename(self.releases / 'NY2027-unapproved-other-release')
         self.old = self.releases / 'NY2027-unapproved-other-release'
         self.current = self.old
         with self.assertRaisesRegex(RuntimeError, 'route already exists outside approved'):
             deploy.check()
 
-    def test_r3_upgrade_rejects_unknown_changes_to_old_html_or_extra_assets(self):
-        self.install_r2_route_fixture()
+    def test_r4_upgrade_rejects_unknown_changes_to_old_html_or_extra_assets(self):
+        self.install_r3_route_fixture()
         (self.old / 'novyy-god/index.html').write_text('unrecognized page', encoding='utf-8')
-        with self.assertRaisesRegex(RuntimeError, 'unexpected previous R2 holiday page'):
+        with self.assertRaisesRegex(RuntimeError, 'unexpected previous R3 holiday page'):
             deploy.check()
         (self.old / 'novyy-god/index.html').write_text(
-            '<link href="style.css?v=ny2027-r2"><h2>Пришлём подходящие варианты, цены и комплектации</h2><section class="delivery-geography"></section>', encoding='utf-8')
+            '<link href="style.css?v=ny2027-r3"><h2>Пришлём подходящие варианты, цены и комплектации</h2>'
+            '<section class="delivery-geography"><p>Основные направления:</p></section>'
+            '<div class="dialog-story"></div>', encoding='utf-8')
         (self.old / 'novyy-god/extra.js').write_text('unauthorized', encoding='utf-8')
         with self.assertRaisesRegex(RuntimeError, 'unexpected files inside existing route'):
             deploy.check()
 
-    def test_r3_upgrade_rolls_back_if_public_css_validation_fails(self):
-        self.install_r2_route_fixture()
+    def test_r4_upgrade_rolls_back_if_public_css_validation_fails(self):
+        self.install_r3_route_fixture()
         before = deploy.inventory(self.old)
         deploy.check()
         with patch.object(deploy, 'public_check', side_effect=RuntimeError('public CSS mismatch')):
@@ -187,8 +192,8 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual(self.current, self.old)
         self.assertEqual(deploy.inventory(self.current), before)
 
-    def test_r3_upgrade_check_is_invalidated_if_production_changes(self):
-        self.install_r2_route_fixture()
+    def test_r4_upgrade_check_is_invalidated_if_production_changes(self):
+        self.install_r3_route_fixture()
         deploy.check()
         (self.old / 'analytics-core.mjs').write_text('another release', encoding='utf-8')
         with self.assertRaisesRegex(RuntimeError, 'baseline changed'):
