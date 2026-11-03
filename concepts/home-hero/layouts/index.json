@@ -1,0 +1,216 @@
+{
+  "version": "catalog-14-1-2026-11-03",
+  "plans": [
+    {
+      "id": "dp3d-01",
+      "number": 1,
+      "models": [
+        "kvadro"
+      ],
+      "size": "400",
+      "drawing": "drawings/01.svg",
+      "model": "models/01.glb",
+      "spec": "specs/01.json",
+      "sha256": "147b914929777b30fef9f7838fc6db1816b413781f5565e672fa63f8597b91b5",
+      "dimension_sha256": "37adc98d0757e5efee299eb99f28a4b94e9f83d11dcdadba01a64c4a5abefcc3",
+      "label": "01 · 4 × 2,1 м",
+      "preview": "previews/01.webp"
+    },
+    {
+      "id": "dp3d-02",
+      "number": 2,
+      "models": [
+        "kvadro"
+      ],
+      "size": "500",
+      "drawing": "drawings/02.svg",
+      "model": "models/02.glb",
+      "spec": "specs/02.json",
+      "sha256": "3032eea51bbf2dad343a5eb5f09a40afa7c7129df6f653ac62cce7abe176bb16",
+      "dimension_sha256": "f9c512a67a3c1b0dc37b77f92cf1bb05781d5380976300c5a4ff94d473bd9d0f",
+      "label": "02 · 5 × 2,1 м",
+      "preview": "previews/02.webp"
+    },
+    {
+      "id": "dp3d-03",
+      "number": 3,
+      "models": [
+        "kvadro"
+      ],
+      "size": "600",
+      "drawing": "drawings/03.svg",
+      "model": "models/03.glb",
+      "spec": "specs/03.json",
+      "sha256": "bf27ae2f80d33fcc502d276f189ff4bf8646f9fe64b5b8d351a13f3cc4191a97",
+      "dimension_sha256": "229ced90d0bf27bf95cc9a492a3dce7a9393f99d21f54a0e1568ac0e2c7fcfdc",
+      "label": "03 · 6 × 2,1 м",
+      "preview": "previews/03.webp"
+    },
+    {
+      "id": "dp3d-04",
+      "number": 4,
+      "models": [
+        "kvadro"
+      ],
+      "size": "600",
+      "drawing": "drawings/04.svg",
+      "model": "models/04.glb",
+      "spec": "specs/04.json",
+      "sha256": "043d39e5ad62df2dfc27fd052f0765e10d8c5228a2cde654c3810d3836d99a27",
+      "dimension_sha256": "6f6fd89d3ac9d97377e81dc920623b0e9f7688b1bf09c78d10b1aa0475d2ecaf",
+      "label": "04 · 6 × 2,1 м",
+      "preview": "previews/04.webp"
+    },
+    {
+      "id": "dp3d-05",
+      "number": 5,
+      "models": [
+        "kvadro"
+      ],
+      "size": "600",
+      "drawing": "drawings/05.svg",
+      "model": "models/05.glb",
+      "spec": "specs/05.json",
+      "sha256": "5e51b7bf0b8e71bfe9428f7005e028885d9f15e7e494a70cba36da786818f7e2",
+      "dimension_sha256": "313d8897cb908d4872d82796b66f31c0a486c99d06ddf9e45d169678dcb0d5d4",
+      "label": "05 · 6 × 2,1 м",
+      "preview": "previews/05.webp"
+    },
+    {
+      "id": "dp3d-06",
+      "number": 6,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "4x4",
+      "drawing": "drawings/06.svg",
+      "model": "models/06.glb",
+      "spec": "specs/06.json",
+      "sha256": "789623961e7119980d7df665f6e90d9fcdfdc7e32d7e30abe727683c381dc55c",
+      "dimension_sha256": "52f66a81081bff0623dafbf0614a8820e8192e040e2343e05d8f7a6cddb32eba",
+      "label": "06 · 4 × 4 м",
+      "preview": "previews/06.webp"
+    },
+    {
+      "id": "dp3d-07",
+      "number": 7,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x5",
+      "drawing": "drawings/07.svg",
+      "model": "models/07.glb",
+      "spec": "specs/07.json",
+      "sha256": "14e266add5f330b55d55eedf7a6fb8d5f38933528e9db177a45f22fa6432378b",
+      "dimension_sha256": "08d9655cb39265a0e3380271a6f61981020178747c6e4abef5559b7d612b97db",
+      "label": "07 · 5 × 6 м",
+      "preview": "previews/07.webp"
+    },
+    {
+      "id": "dp3d-08",
+      "number": 8,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "drawings/08.svg",
+      "model": "models/08.glb",
+      "spec": "specs/08.json",
+      "sha256": "99d5f7f6c5be42a358da4e63dfdf32247c3f18e69ea837e3719d82aa9f8ff1e2",
+      "dimension_sha256": "2b44422768dba079e5fe0560986e2491fafc6502cc9a07b7604c6331f24258ab",
+      "label": "08 · 6 × 6 м",
+      "preview": "previews/08.webp"
+    },
+    {
+      "id": "dp3d-09",
+      "number": 9,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "drawings/09.svg",
+      "model": "models/09.glb",
+      "spec": "specs/09.json",
+      "sha256": "a256787efde09127bb3095719720eea00275e87f8e742267c572b37c90f1ed07",
+      "dimension_sha256": "2f0972b3c847160c56a792caa025cb83a0df3a2e84b166c70d80d43acfc64076",
+      "label": "09 · 6 × 6 м",
+      "preview": "previews/09.webp"
+    },
+    {
+      "id": "dp3d-10",
+      "number": 10,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x4",
+      "drawing": "drawings/10.svg",
+      "model": "models/10.glb",
+      "spec": "specs/10.json",
+      "sha256": "ab1cb8dc783162a116dacf8fb77a44ce1d6ccd6e2ef65d64ecc28dd1e6129ae3",
+      "dimension_sha256": "933b7ddb85515efb8bfa4a50eb6c922d9cc176ec9aebf45d62558d7f4c4dab2a",
+      "label": "10 · 4 × 6 м",
+      "preview": "previews/10.webp"
+    },
+    {
+      "id": "dp3d-11",
+      "number": 11,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "drawings/11.svg",
+      "model": "models/11.glb",
+      "spec": "specs/11.json",
+      "sha256": "e224ec420bc9e5ca4eef1f92eb3ae3b2f43fcac4b35ae2efcd29c8673fea3139",
+      "dimension_sha256": "2f636b4f0917196e82cf342cd1417a7a4ab60e7bdd552af978a25a49af8f0dea",
+      "label": "11 · 6 × 6 м",
+      "preview": "previews/11.webp"
+    },
+    {
+      "id": "dp3d-12",
+      "number": 12,
+      "models": [
+        "parus"
+      ],
+      "size": "500",
+      "drawing": "drawings/12.svg",
+      "model": "models/12.glb",
+      "spec": "specs/12.json",
+      "sha256": "8652d3dc894dee4f5f85dcea0a8d6ef77abe0e8d1d199bf7ef62b6d9d456022d",
+      "dimension_sha256": "8e7b1d427c2a73f68068d47b81d205a831fcd66308deb386ef860bbdc15cb2a3",
+      "label": "12 · 5 × 2,4 м",
+      "preview": "previews/12.webp"
+    },
+    {
+      "id": "dp3d-13",
+      "number": 13,
+      "models": [
+        "viking"
+      ],
+      "size": "600",
+      "drawing": "drawings/13.svg",
+      "model": "models/13.glb",
+      "spec": "specs/13.json",
+      "sha256": "90c0c9627a912599d4e3614f5708b68c0b19e8bdcca60c624f9a70565b385d4b",
+      "dimension_sha256": "0302a7b4170ab090dcae36df546ef8ee2812a533c9f102d28106a75c90dfc024",
+      "label": "13 · 6 × 2,4 м",
+      "preview": "previews/13.webp"
+    },
+    {
+      "id": "dp3d-14",
+      "number": 14,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "400",
+      "drawing": "drawings/14.svg",
+      "model": "models/14.glb",
+      "spec": "specs/14.json",
+      "sha256": "5c6bd998f15e493c4e97e6f4b3bb560ee02fd2e5191eba3b1d91b7f0e3f6bb1c",
+      "dimension_sha256": "8b7b62633f35e93ee673ec2a9e1d6206f7d2aee6bde45d355b0f25e763fc82d2",
+      "label": "14 · 4 × 2,4 м",
+      "preview": "previews/14.webp"
+    }
+  ]
+}
