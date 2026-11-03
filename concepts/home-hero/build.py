@@ -1,5 +1,6 @@
 """Build an isolated hero overlay on the captured LIVE home. Does not publish."""
 import hashlib
+import argparse
 import json
 import re
 import shutil
@@ -12,6 +13,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 OUT = ROOT / 'output/home-hero-site'
 BASELINE = HERE / 'baseline/index.html'
+PLANS_BASELINE = HERE / 'baseline/plans.html'
 
 
 def sha(data):
@@ -41,10 +43,14 @@ def compose(original, hero):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--plans-baseline', type=Path, default=PLANS_BASELINE,
+                        help='HTML to receive the return navigation, defaults to the review snapshot')
+    args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     destination = OUT / 'home-hero'
     (destination / 'assets').mkdir(parents=True, exist_ok=True)
-    for name in ['hero.css', 'hero.mjs', 'catalog.mjs', 'roof-points.mjs']:
+    for name in ['hero.css', 'hero.mjs', 'catalog.mjs', 'roof-points.mjs', 'plan-navigation.mjs']:
         shutil.copy2(HERE / name, destination / name)
     for name in ['kvadro', 'parus', 'viking', 'house']:
         original = Image.open(HERE / 'assets' / (name + '.png')).convert('RGB')
@@ -70,9 +76,22 @@ def main():
     else:
         page = page.replace('</head>', '<meta name="robots" content="noindex,nofollow"></head>')
     (OUT / 'index.html').write_text(page, 'utf-8')
-    manifest = {'published': False, 'scope': 'home hero + its header styling only',
+    plans = args.plans_baseline.read_text('utf-8')
+    main_tag = '<main id="main">'
+    if plans.count(main_tag) != 1 or 'class="filters"' not in plans:
+        raise RuntimeError('HOME_HERO_STOP: unexpected plans baseline')
+    navigation = ('<nav class="wrap hh-plans-navigation" aria-label="Назад к выбору бани">'
+                  '<a data-return-catalog href="/#models">← К моделям на главной</a>'
+                  '<a data-return-hero href="/#main">Первый экран ↑</a></nav>')
+    plans = plans.replace(main_tag, main_tag + navigation, 1)
+    plans = plans.replace('</head>', '<link rel="stylesheet" href="/home-hero/hero.css"></head>', 1)
+    plans = plans.replace('</body>', '<script type="module" src="/home-hero/plan-navigation.mjs"></script></body>', 1)
+    (OUT / 'planirovki').mkdir(exist_ok=True)
+    (OUT / 'planirovki/index.html').write_text(plans, 'utf-8')
+    manifest = {'published': False, 'scope': 'home hero, compact catalogue and return navigation on plans',
                 'liveOrigin': 'https://xn--80aaan1dh9b.xn--p1ai', 'capturedDate': '2026-11-02',
                 'baselineHtmlSha256': sha(BASELINE.read_bytes()), 'originalTailSha256': tail_hash,
+                'baselinePlansHtmlSha256': sha(args.plans_baseline.read_bytes()),
                 'cataloguePreserved': True, 'sharedApplicationModulesChanged': False,
                 'pricebookChanged': False, 'apiChanged': False,
                 'files': [{'path': p.relative_to(OUT).as_posix(), 'sha256': sha(p.read_bytes()), 'bytes': p.stat().st_size}

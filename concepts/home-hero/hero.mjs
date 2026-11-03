@@ -10,6 +10,19 @@ const request=document.querySelector('.hh-header-request');
 const depthImage=document.querySelector('#hh-depth-image');
 const depthViewport=matchMedia('(min-width:1101px)');
 const initial=validHeroModel(new URL(location.href).searchParams.get('model'));
+for(const card of document.querySelectorAll('#models [data-model-card]')){
+  const id=card.dataset.modelCard;
+  const footer=card.querySelector('.model-foot');
+  if(!Object.hasOwn(HERO_MODELS,id)||!footer)continue;
+  const detail=footer.querySelector('a');
+  if(detail)detail.textContent='О модели ↗';
+  const link=document.createElement('a');
+  link.className='textlink hh-card-plans';
+  link.href='/planirovki/?model='+id;
+  link.textContent='Планировки ↗';
+  link.setAttribute('aria-label','Планировки бани '+HERO_MODELS[id].name);
+  footer.prepend(link);
+}
 let model='kvadro',sequence=0,book=null;
 const money=price=>'от '+new Intl.NumberFormat('ru-RU').format(price)+' ₽';
 const sources=id=>({src:`/home-hero/assets/${HERO_MODELS[id].asset}-1920.webp`,srcset:[640,1280,1920].map(width=>`/home-hero/assets/${HERO_MODELS[id].asset}-${width}.webp ${width}w`).join(', ')});

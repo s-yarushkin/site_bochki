@@ -48,3 +48,38 @@
  .hh-trust strong{font-size:15px}
  .hh-trust span{font-size:9px;line-height:1.35}
 }
+/* Compact comparison on the homepage. Existing length and price controls stay interactive. */
+.hh-page #models{padding-bottom:52px}
+.hh-page #models .model-grid{gap:24px 18px}
+.hh-page #models .model-figure{aspect-ratio:2 / 1;margin:0 0 10px}
+.hh-page #models .model-head{margin:0;gap:4px 8px;flex-wrap:wrap}
+.hh-page #models .model-head h3{margin:0;font-size:clamp(19px,1.7vw,26px)}
+.hh-page #models .model-head small{font-size:11px}
+.hh-page #models .model-desc{margin:6px 0 10px;line-height:1.4;font-size:13px}
+.hh-page #models .size-control{margin:0 0 8px}
+.hh-page #models .size-control label{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hh-page #models .size-control select{width:auto;min-height:44px;padding-block:6px}
+.hh-page #models .price-line{margin:0;padding:7px 0;gap:8px;align-items:center;flex-wrap:wrap}
+.hh-page #models .price-line strong{font-size:21px;white-space:nowrap}
+.hh-page #models .price-line .btn{min-height:44px;padding:8px 10px;font-size:11px}
+.hh-page #models .model-foot{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0 12px;margin:0;padding:0}
+.hh-page #models .model-foot>*{min-height:44px;display:inline-flex;align-items:center;font-size:12px}
+.hh-page #models .model-foot .hh-card-plans{font-weight:750;color:#2b4e32}
+.hh-page #models .disclosure{margin-top:0}
+.hh-page #models .disclosure summary{padding-block:8px;font-size:12px}
+.hh-plans-navigation{display:flex;flex-wrap:wrap;align-items:center;gap:0 22px;padding-top:12px}
+.hh-plans-navigation a{display:inline-flex;align-items:center;min-height:44px;font-weight:650;font-size:14px}
+@media(min-width:1200px){
+ .hh-page #models .model-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .hh-page #models .model-figure{aspect-ratio:1.85}
+ .hh-page #models .model{display:flex;flex-direction:column}
+ .hh-page #models .model-desc{flex:1}
+}
+html:has(body.hh-page){scroll-padding-top:0}
+.hh-page #models .disclosure{padding-block:0}
+.hh-page #models .price-line .btn{width:auto;min-width:0}
+.hh-page #models .section-heading{margin-bottom:24px}
+@media(min-width:1200px){
+ .hh-page #models .price-line{flex-direction:row;flex-wrap:nowrap}
+ .hh-page #models .price-line .btn{white-space:normal;text-align:center}
+}

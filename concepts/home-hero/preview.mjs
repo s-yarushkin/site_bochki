@@ -32,6 +32,7 @@ const server=http.createServer(async(req,res)=>{
   }
   let bytes,filename;
   if(pathname==='/'){bytes=await fs.readFile(path.join(out,'index.html'));filename='index.html';}
+  else if(pathname==='/planirovki/'){bytes=await fs.readFile(path.join(out,'planirovki/index.html'));filename='index.html';}
   else if(pathname.startsWith('/home-hero/')){
    filename=path.resolve(out,'.'+pathname);if(!filename.startsWith(out+path.sep))throw Error('PATH');bytes=await fs.readFile(filename);
   }else{
