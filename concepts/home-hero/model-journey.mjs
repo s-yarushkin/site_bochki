@@ -51,7 +51,10 @@ export function mountModelJourney(pricebook){
     price.dataset.bathPrice = '';
     price.textContent = 'от ' + price.textContent;
     const content = document.createElement('div');
-    content.append(name, spec, desc, price);
+    const action = document.createElement('span');
+    action.className = 'hh-catalog-action';
+    action.textContent = 'Размеры и планировки →';
+    content.append(name, spec, desc, price, action);
     link.replaceChildren(figure,content);
     card.replaceChildren(link);
   }
@@ -79,6 +82,7 @@ export function mountModelJourney(pricebook){
           <label class="hh-bath-variant" hidden>Вариант <select></select></label>
           <figure hidden><img alt=""><figcaption></figcaption></figure>
           <p class="hh-bath-plan-status" role="status"></p>
+          <button class="hh-bath-plan-alternative" type="button" hidden></button>
         </div>
       </div>
       <div class="hh-bath-offer">
@@ -101,6 +105,7 @@ export function mountModelJourney(pricebook){
   const prices = find('.hh-bath-prices');
   const figure = find('figure');
   const planStatus = find('.hh-bath-plan-status');
+  const planAlternative = find('.hh-bath-plan-alternative');
   let book, pricesUnavailable, plans, planLoad, shownPlans = [], current, size, lastCard;
 
   function drawPlan(){
@@ -114,6 +119,7 @@ export function mountModelJourney(pricebook){
   }
 
   function drawSize(){
+    planAlternative.hidden = true;
     find('.hh-bath-variant').hidden = true;
     figure.hidden = true;
     if(!book){
@@ -134,6 +140,14 @@ export function mountModelJourney(pricebook){
     shownPlans = plans?.filter(plan=>plan.model === current && plan.size === size) ?? [];
     planStatus.textContent = shownPlans.length ? '' : plans ? 'Для этого размера схему пришлём в подборке.' :
       planLoad ? 'Загружаем схемы…' : 'Схемы сейчас недоступны. Пришлём их в подборке.';
+    if(!shownPlans.length && plans){
+      const alternative = [...sizePicker.options].find(option=>plans.some(plan=>plan.model === current && plan.size === option.value));
+      if(alternative){
+        planAlternative.dataset.size = alternative.value;
+        planAlternative.textContent = 'Посмотреть схему для размера ' + alternative.textContent;
+        planAlternative.hidden = false;
+      }
+    }
     variant.replaceChildren(...shownPlans.map((_, index)=>new Option('Вариант ' + (index + 1), index)));
     find('.hh-bath-variant').hidden = shownPlans.length < 2;
     drawPlan();
@@ -198,10 +212,16 @@ export function mountModelJourney(pricebook){
       if(id !== current) move('bath-model',id);
     }else move(link.dataset.bathRoute ?? 'models');
   });
-  sizePicker.addEventListener('change',()=>{
+  function changeSize(){
     size=sizePicker.value;
     history.replaceState(history.state,'',route('bath-model',current,size));
     drawSize();
+  }
+  sizePicker.addEventListener('change',changeSize);
+  planAlternative.addEventListener('click',()=>{
+    sizePicker.value=planAlternative.dataset.size;
+    changeSize();
+    sizePicker.focus();
   });
   variant.addEventListener('change',drawPlan);
   find('.hh-bath-offer button').addEventListener('click',event=>openModelRequest({

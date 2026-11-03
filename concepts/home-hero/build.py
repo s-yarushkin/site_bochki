@@ -61,8 +61,6 @@ def main():
     hero = (HERE / 'hero.html').read_text('utf-8')
     roof = (HERE / 'roof-points.mjs').read_text('utf-8')
     hero = hero.replace('{{roof}}', re.search(r"kvadro: '([^']+)'", roof)[1])
-    for model, prices in book['prices'].items():
-        hero = hero.replace('{{' + model + '}}', f'{min(prices.values()):,}'.replace(',', ' '))
     original = BASELINE.read_text('utf-8')
     for model, prices in book['prices'].items():
         row = re.search(r'data-price="' + re.escape(model) + r'"[^>]*>([^<]+)', original)
