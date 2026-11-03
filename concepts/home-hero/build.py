@@ -30,12 +30,10 @@ def compose(original, hero):
     # Preserve every byte of the catalogue, other sections, dialog and original scripts.
     baseline_tail = after
     before = before.replace('</head>', '<link rel="stylesheet" href="/home-hero/hero.css"></head>')
+    before = before.replace('<a href="/bani/">Бани и цены</a>', '<a href="#models" data-bath-route="models">Бани и цены</a>')
     if 'class="hh-page"' in before:
         raise RuntimeError('HOME_HERO_STOP: already overlaid')
     before = re.sub(r'<body\b', '<body class="hh-page"', before, count=1)
-    request = '<button class="btn hh-header-request" type="button" data-inquiry="quote" data-model="kvadro" data-size="400">Обсудить баню <span aria-hidden="true">↗</span></button>'
-    before = before.replace('<button aria-controls="mobile-menu"', request + '<button aria-controls="mobile-menu"', 1)
-    assert request in before, 'known mobile menu button missing'
     # Load after the original application scripts, without editing their contract.
     after = after.replace('</body>', '<script type="module" src="/home-hero/hero.mjs"></script></body>')
     assert after.replace('<script type="module" src="/home-hero/hero.mjs"></script>', '') == baseline_tail
@@ -50,7 +48,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     destination = OUT / 'home-hero'
     (destination / 'assets').mkdir(parents=True, exist_ok=True)
-    for name in ['hero.css', 'hero.mjs', 'catalog.mjs', 'roof-points.mjs', 'plan-navigation.mjs']:
+    for name in ['hero.css', 'hero.mjs', 'catalog.mjs', 'roof-points.mjs', 'plan-navigation.mjs',
+                 'model-journey.mjs', 'model-request.mjs']:
         shutil.copy2(HERE / name, destination / name)
     for name in ['kvadro', 'parus', 'viking', 'house']:
         original = Image.open(HERE / 'assets' / (name + '.png')).convert('RGB')
@@ -88,7 +87,7 @@ def main():
     plans = plans.replace('</body>', '<script type="module" src="/home-hero/plan-navigation.mjs"></script></body>', 1)
     (OUT / 'planirovki').mkdir(exist_ok=True)
     (OUT / 'planirovki/index.html').write_text(plans, 'utf-8')
-    manifest = {'published': False, 'scope': 'home hero, compact catalogue and return navigation on plans',
+    manifest = {'published': False, 'scope': 'home hero, inline model catalogue and return navigation on plans',
                 'liveOrigin': 'https://xn--80aaan1dh9b.xn--p1ai', 'capturedDate': '2026-11-02',
                 'baselineHtmlSha256': sha(BASELINE.read_bytes()), 'originalTailSha256': tail_hash,
                 'baselinePlansHtmlSha256': sha(args.plans_baseline.read_bytes()),

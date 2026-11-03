@@ -8,7 +8,8 @@ const bundled=await fs.access(path.join(here,'site/index.html')).then(()=>true,(
 const root=bundled?here:path.resolve(here,'../..');
 const out=bundled?path.join(here,'site'):path.join(root,'output/home-hero-site');
 const cache=path.join(root,'.local/home-hero-http-cache');
-const origin='https://xn--80aaan1dh9b.xn--p1ai',local='http://127.0.0.1:4188';
+const port=Number(process.env.HOME_HERO_PREVIEW_PORT||4188);
+const origin='https://xn--80aaan1dh9b.xn--p1ai',local='http://127.0.0.1:'+port;
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.svg':'image/svg+xml'};
 const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
 async function upstream(pathname){
@@ -43,4 +44,4 @@ const server=http.createServer(async(req,res)=>{
   res.end(req.method==='HEAD'?undefined:bytes);
  }catch(error){json(res,404,{ok:false,error:'Local preview resource unavailable'});}
 });
-server.listen(4188,'127.0.0.1',()=>console.log(local+'/ — current home + proposed hero; analytics disabled, no POST forwarding'));
+server.listen(port,'127.0.0.1',()=>console.log(local+'/ — current home + proposed hero; analytics disabled, no POST forwarding'));

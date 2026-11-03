@@ -48,38 +48,59 @@
  .hh-trust strong{font-size:15px}
  .hh-trust span{font-size:9px;line-height:1.35}
 }
-/* Compact comparison on the homepage. Existing length and price controls stay interactive. */
+
 .hh-page #models{padding-bottom:52px}
-.hh-page #models .model-grid{gap:24px 18px}
-.hh-page #models .model-figure{aspect-ratio:2 / 1;margin:0 0 10px}
-.hh-page #models .model-head{margin:0;gap:4px 8px;flex-wrap:wrap}
-.hh-page #models .model-head h3{margin:0;font-size:clamp(19px,1.7vw,26px)}
-.hh-page #models .model-head small{font-size:11px}
-.hh-page #models .model-desc{margin:6px 0 10px;line-height:1.4;font-size:13px}
-.hh-page #models .size-control{margin:0 0 8px}
-.hh-page #models .size-control label{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.hh-page #models .size-control select{width:auto;min-height:44px;padding-block:6px}
-.hh-page #models .price-line{margin:0;padding:7px 0;gap:8px;align-items:center;flex-wrap:wrap}
-.hh-page #models .price-line strong{font-size:21px;white-space:nowrap}
-.hh-page #models .price-line .btn{min-height:44px;padding:8px 10px;font-size:11px}
-.hh-page #models .model-foot{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0 12px;margin:0;padding:0}
-.hh-page #models .model-foot>*{min-height:44px;display:inline-flex;align-items:center;font-size:12px}
-.hh-page #models .model-foot .hh-card-plans{font-weight:750;color:#2b4e32}
-.hh-page #models .disclosure{margin-top:0}
-.hh-page #models .disclosure summary{padding-block:8px;font-size:12px}
-.hh-plans-navigation{display:flex;flex-wrap:wrap;align-items:center;gap:0 22px;padding-top:12px}
-.hh-plans-navigation a{display:inline-flex;align-items:center;min-height:44px;font-weight:650;font-size:14px}
-@media(min-width:1200px){
- .hh-page #models .model-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
- .hh-page #models .model-figure{aspect-ratio:1.85}
- .hh-page #models .model{display:flex;flex-direction:column}
- .hh-page #models .model-desc{flex:1}
-}
-html:has(body.hh-page){scroll-padding-top:0}
-.hh-page #models .disclosure{padding-block:0}
-.hh-page #models .price-line .btn{width:auto;min-width:0}
+.hh-page #models [hidden]{display:none!important}
 .hh-page #models .section-heading{margin-bottom:24px}
-@media(min-width:1200px){
- .hh-page #models .price-line{flex-direction:row;flex-wrap:nowrap}
- .hh-page #models .price-line .btn{white-space:normal;text-align:center}
-}
+.hh-page #models .model-grid{gap:16px}
+.hh-page #models .model{padding:0;overflow:hidden}
+.hh-catalog-card{display:block;height:100%;text-decoration:none;color:inherit}
+.hh-catalog-card:hover h3{text-decoration:underline;text-underline-offset:4px}
+.hh-catalog-card:focus-visible{outline:3px solid #496b43;outline-offset:-3px}
+.hh-catalog-card>img{display:block;width:100%;height:auto;aspect-ratio:1.8;object-fit:cover}
+.hh-catalog-card>div{padding:16px}
+.hh-catalog-card h3{margin:0 0 3px}
+.hh-catalog-card h3::after{content:' →';color:#486c42}
+.hh-catalog-card small,.hh-bath-prices small{color:#4e5c51}
+.hh-catalog-card .model-desc{margin:8px 0;font-size:14px}
+.hh-catalog-card strong{font-size:18px}
+.hh-catalog-nav,.hh-bath-switch,.hh-plans-navigation{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px}
+.hh-catalog-nav a,.hh-bath-switch a,.hh-plans-navigation a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:650}
+.hh-plans-navigation{padding-top:12px}
+.hh-bath-switch{gap:6px;margin:8px 0 22px}
+.hh-bath-switch a{padding:0 14px;border:1px solid #c8d1c7;border-radius:8px;text-decoration:none}
+.hh-bath-switch [aria-current=true]{background:#263f32;color:white;border-color:#263f32}
+.hh-bath-panel h2{margin:0}
+.hh-bath-description{margin:8px 0 20px}
+.hh-bath-columns{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"photo options" "offer options";gap:14px 22px;align-items:start}
+.hh-bath-photo{grid-area:photo}
+.hh-bath-photo img{display:block;width:100%;height:auto;aspect-ratio:1.8;max-height:330px;object-fit:cover;border-radius:12px}
+.hh-bath-options{grid-area:options}
+.hh-bath-options{background:#edf1e9;padding:18px;border-radius:12px;min-width:0}
+.hh-bath-size,.hh-bath-variant{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-weight:650}
+.hh-bath-options select,.hh-bath-dialog select,.hh-bath-dialog input{min-height:44px;padding:8px 12px;border:1px solid #98aa9c;border-radius:8px;background:white;color:#203628;font:inherit}
+.hh-bath-prices{display:flex;flex-wrap:wrap;gap:6px 18px;margin:13px 0 16px}
+.hh-bath-prices span{font-weight:750;white-space:nowrap}
+.hh-bath-prices small{flex-basis:100%}
+.hh-bath-plan{border-top:1px solid #c5cec1;padding-top:12px}
+.hh-bath-plan h3{font-size:17px;margin:0 0 8px}
+.hh-bath-plan figure{margin:8px 0 0}
+.hh-bath-plan img{display:block;width:100%;height:auto;max-height:270px;object-fit:contain;background:white;border-radius:6px}
+.hh-bath-plan figcaption,.hh-bath-plan-status{font-size:14px;margin:8px 0 0}
+.hh-bath-plan-status:empty{display:none}
+.hh-bath-offer{grid-area:offer;display:grid;gap:12px;padding:18px;background:#263f32;color:white;border-radius:12px}
+.hh-bath-offer strong{font-size:20px}
+.hh-bath-offer p{margin:4px 0 0}
+.hh-bath-offer .btn,.hh-bath-dialog .btn{min-height:48px;background:#e5edc9;color:#203628;justify-content:center;text-align:center}
+.hh-bath-dialog{width:min(500px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:26px;border:0;border-radius:16px;background:#f7f8f1;color:#203628}
+.hh-bath-dialog::backdrop{background:#12271caa}
+.hh-bath-dialog h2{font-size:clamp(24px,5vw,34px);margin:6px 0;line-height:1.1}
+.hh-bath-dialog form,.hh-bath-dialog form label{display:grid;gap:8px}
+.hh-bath-dialog form{gap:14px}
+.hh-request-model{font-weight:750;padding-right:44px;margin:0}
+.hh-request-close{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;border-radius:50%;background:#e5ebdf;color:inherit;font-size:25px}
+.hh-request-consent,.hh-request-error{font-size:13px;margin:0}
+.hh-request-error{color:#8b241d}
+@media(min-width:1100px){.hh-page #models .model-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:720px){.hh-bath-columns{grid-template-columns:1fr;grid-template-areas:"photo" "options" "offer";gap:12px}.hh-bath-photo img{aspect-ratio:2.2}.hh-bath-offer .btn{width:100%}.hh-bath-switch a{padding:0 10px}}
+html:has(body.hh-page){scroll-padding-top:0}
