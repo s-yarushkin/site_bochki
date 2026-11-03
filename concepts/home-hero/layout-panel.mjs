@@ -37,20 +37,16 @@ function specification(spec){
   const fragment = document.createDocumentFragment();
   const text = spec.public_specification;
   if(!text) throw Error('VERIFIED_SPECIFICATION_UNAVAILABLE');
-  fragment.append(table('Помещения',['Помещение','Размеры по альбому','Площадь'],text.rooms.map(room=>[
+  fragment.append(table('Помещения',['Помещение','Размеры','Площадь'],text.rooms.map(room=>[
     room.number+'. '+room.label,room.dimensions,room.area
   ])));
-  fragment.append(table('Мебель, полки и оборудование',['На чертеже','Размеры по альбому'],text.items.map(item=>[
+  fragment.append(table('Мебель, полки и оборудование',['На чертеже','Размеры'],text.items.map(item=>[
     item.code+' · '+item.label,item.dimensions
   ])));
   const openings = spec.items.filter(item=>['door','window'].includes(item.kind));
   if(openings.length) fragment.append(table('Двери и окна',['На чертеже','Ширина проёма'],openings.map(item=>[
     item.code+' · '+item.label,mm.format(item.opening_width_mm)+' мм'
   ])));
-  fragment.append(element('p','Толщина стен и перегородок — 45 мм, по альбому.'));
-  const note = element('p','Размеры мебели и оборудования приведены по легенде альбома. Для дверей и окон указана только ширина проёма в плане; высоты уточняются при заказе.');
-  note.className = 'hh-layout-note';
-  fragment.append(note);
   return fragment;
 }
 
