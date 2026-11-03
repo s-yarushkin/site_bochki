@@ -3128,5 +3128,106 @@
     0.75,
     1.35,
     1.15
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p8",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "8,29 м²",
+        "dimensions": "3010 × 2755 мм"
+      },
+      {
+        "number": 2,
+        "label": "Помывочная",
+        "area": "4,15 м²",
+        "dimensions": "1505 × 2755 мм"
+      },
+      {
+        "number": 3,
+        "label": "Санузел",
+        "area": "3,60 м²",
+        "dimensions": "1305 × 2755 мм"
+      },
+      {
+        "number": 4,
+        "label": "Комната отдыха",
+        "area": "18,38 м²",
+        "dimensions": "5910 × 3110 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "2900 × 700 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "2000 × 700 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "2200 × 400 мм"
+      },
+      {
+        "code": "НС2",
+        "label": "Нижний полок",
+        "dimensions": "1600 × 400 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "2500 × 450 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "2500 × 450 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "2400 × 800 мм"
+      },
+      {
+        "code": "Ш1",
+        "label": "Шкаф",
+        "dimensions": "900 × 600 мм"
+      },
+      {
+        "code": "КХ1",
+        "label": "Кухня",
+        "dimensions": "1800 × 600 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 16",
+        "dimensions": "420 × 670 мм"
+      },
+      {
+        "code": "Д1",
+        "label": "Душ",
+        "dimensions": "900 × 900 мм"
+      },
+      {
+        "code": "У1",
+        "label": "Унитаз",
+        "dimensions": "700 × 450 мм"
+      },
+      {
+        "code": "Р1",
+        "label": "Раковина",
+        "dimensions": "350 × 350 мм"
+      },
+      {
+        "code": "Р2",
+        "label": "Мойка в кухне",
+        "dimensions": "450 × 450 мм"
+      }
+    ]
+  }
 }

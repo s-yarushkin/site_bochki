@@ -3583,5 +3583,117 @@
     0.75,
     1.35,
     1.15
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p11",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "6,93 м²",
+        "dimensions": "2610 × 2655 мм"
+      },
+      {
+        "number": 2,
+        "label": "Помывочная",
+        "area": "4,93 м²",
+        "dimensions": "1855 × 2655 мм"
+      },
+      {
+        "number": 3,
+        "label": "Санузел",
+        "area": "3,60 м²",
+        "dimensions": "1355 × 2655 мм"
+      },
+      {
+        "number": 4,
+        "label": "Спальня",
+        "area": "7,56 м²",
+        "dimensions": "2355 × 3210 мм"
+      },
+      {
+        "number": 5,
+        "label": "Комната отдыха",
+        "area": "11,27 м²",
+        "dimensions": "3510 × 3210 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "2500 × 700 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "1000 × 700 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "1800 × 400 мм"
+      },
+      {
+        "code": "НС2",
+        "label": "Нижний полок",
+        "dimensions": "600 × 400 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "2000 × 450 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "2000 × 450 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1900 × 700 мм"
+      },
+      {
+        "code": "Ш1",
+        "label": "Шкаф",
+        "dimensions": "600 × 600 мм"
+      },
+      {
+        "code": "Ш2",
+        "label": "Шкаф",
+        "dimensions": "1600 × 400 мм"
+      },
+      {
+        "code": "В1",
+        "label": "Вешалка",
+        "dimensions": "650 × 100 мм"
+      },
+      {
+        "code": "К1",
+        "label": "Кровать",
+        "dimensions": "2000 × 1400 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 16",
+        "dimensions": "420 × 670 мм"
+      },
+      {
+        "code": "Д1",
+        "label": "Душ",
+        "dimensions": "900 × 900 мм"
+      },
+      {
+        "code": "У1",
+        "label": "Унитаз",
+        "dimensions": "700 × 450 мм"
+      },
+      {
+        "code": "Р1",
+        "label": "Раковина",
+        "dimensions": "350 × 350 мм"
+      }
+    ]
+  }
 }

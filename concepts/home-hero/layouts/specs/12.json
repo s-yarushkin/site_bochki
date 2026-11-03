@@ -2770,5 +2770,95 @@
     0.75,
     1.35,
     1.15
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p12",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "3,93 м²",
+        "dimensions": "1700 × 2310 мм"
+      },
+      {
+        "number": 2,
+        "label": "Помывочная",
+        "area": "2,77 м²",
+        "dimensions": "Со скосом"
+      },
+      {
+        "number": 3,
+        "label": "Комната отдыха",
+        "area": "4,42 м²",
+        "dimensions": "Со скосом"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "2310 × 700 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "1000 × 400 мм"
+      },
+      {
+        "code": "СТ1",
+        "label": "Ступень",
+        "dimensions": "940 × 300 мм"
+      },
+      {
+        "code": "СТ2",
+        "label": "Ступень",
+        "dimensions": "940 × 300 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "1600 × 350 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "1000 × 350 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1000 × 550 мм"
+      },
+      {
+        "code": "М1",
+        "label": "Лавка в помывочной",
+        "dimensions": "1000 × 350 мм"
+      },
+      {
+        "code": "М2",
+        "label": "Лавка в помывочной",
+        "dimensions": "550 × 350 мм"
+      },
+      {
+        "code": "Ш2",
+        "label": "Шкаф",
+        "dimensions": "900 × 250 мм"
+      },
+      {
+        "code": "ОБ",
+        "label": "Полка для обуви",
+        "dimensions": "300 × 300 мм"
+      },
+      {
+        "code": "В1",
+        "label": "Вешалка",
+        "dimensions": "650 × 100 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 12",
+        "dimensions": "420 × 687 мм"
+      }
+    ]
+  }
 }

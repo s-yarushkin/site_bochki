@@ -33,38 +33,24 @@ function table(title, headings, rows){
   return node;
 }
 
-function itemDimensions(item){
-  const opening = ['window','door'].includes(item.kind);
-  const dimensions = opening ? [item.opening_width_mm,item.height_mm] : [...item.size_mm,item.height_mm];
-  return dimensions.filter(Number.isFinite).map(value=>mm.format(value)).join(' × ')+' мм';
-}
-
 function specification(spec){
   const fragment = document.createDocumentFragment();
-  const rooms = [...spec.rooms].sort((a,b)=>a.number-b.number);
-  fragment.append(table('Помещения',['Помещение','Площадь'],rooms.map(room=>[
-    room.number+'. '+(roomNames[room.kind] ?? spec.items.find(item=>item.kind==='floor' && item.code==='П'+room.number)?.label ?? 'Помещение'),
-    area.format(room.area_m2)+' м²'
+  const text = spec.public_specification;
+  if(!text) throw Error('VERIFIED_SPECIFICATION_UNAVAILABLE');
+  fragment.append(table('Помещения',['Помещение','Размеры по альбому','Площадь'],text.rooms.map(room=>[
+    room.number+'. '+room.label,room.dimensions,room.area
   ])));
-  const sections = [
-    ['Двери и окна',item=>['door','window'].includes(item.kind)],
-    ['Мебель, полки и оборудование',item=>!['door','window','wall','floor','accessory'].includes(item.kind)],
-    ['Стены и перегородки',item=>item.kind==='wall'],
-    ['Основание и принадлежности',item=>item.kind==='accessory']
-  ];
-  for(const [title,filter] of sections){
-    const items = spec.items.filter(filter);
-    if(items.length) fragment.append(table(title,['На чертеже','Габариты'],items.map(item=>[
-      item.code+' · '+item.label,itemDimensions(item)
-    ])));
-  }
-  const note = element('p','Размеры дверей и окон указаны по проёмам. Высоты, отмеченные инженером как принятые для 3D, уточняются перед изготовлением.');
+  fragment.append(table('Мебель, полки и оборудование',['На чертеже','Размеры по альбому'],text.items.map(item=>[
+    item.code+' · '+item.label,item.dimensions
+  ])));
+  const openings = spec.items.filter(item=>['door','window'].includes(item.kind));
+  if(openings.length) fragment.append(table('Двери и окна',['На чертеже','Ширина проёма'],openings.map(item=>[
+    item.code+' · '+item.label,mm.format(item.opening_width_mm)+' мм'
+  ])));
+  fragment.append(element('p','Толщина стен и перегородок — 45 мм, по альбому.'));
+  const note = element('p','Размеры мебели и оборудования приведены по легенде альбома. Для дверей и окон указана только ширина проёма в плане; высоты уточняются при заказе.');
   note.className = 'hh-layout-note';
-  const assumptions = element('details');
-  const list = element('ul');
-  list.append(...spec.assumptions.map(value=>element('li',value)));
-  assumptions.append(element('summary','Примечания к чертежу и 3D'),list);
-  fragment.append(note,assumptions);
+  fragment.append(note);
   return fragment;
 }
 
@@ -172,4 +158,20 @@ export function createLayoutPanel(container){
       image.src = base+path;
     }
   };
+}
+
+export function createLayoutGallery(container,plans){
+  container.hidden = plans.length === 0;
+  container.replaceChildren();
+  for(const plan of plans){
+    const card = element('article');
+    card.className = 'hh-layout-example';
+    card.dataset.layoutExample = plan.id;
+    const heading = element('h4','Пример '+plan.label);
+    const tiles = element('div');
+    tiles.className = 'hh-layout-panel';
+    card.append(heading,tiles);
+    container.append(card);
+    createLayoutPanel(tiles)(plan);
+  }
 }

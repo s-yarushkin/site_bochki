@@ -2347,5 +2347,85 @@
     0.75,
     1.35,
     1.15
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p10",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "6,52 м²",
+        "dimensions": "2455 × 2655 мм"
+      },
+      {
+        "number": 2,
+        "label": "Помывочная",
+        "area": "3,74 м²",
+        "dimensions": "1410 × 2655 мм"
+      },
+      {
+        "number": 3,
+        "label": "Комната отдыха",
+        "area": "12,55 м²",
+        "dimensions": "3910 × 3210 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "2400 × 700 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "1900 × 600 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "1800 × 400 мм"
+      },
+      {
+        "code": "НС2",
+        "label": "Нижний полок",
+        "dimensions": "1500 × 400 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "1600 × 450 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "1600 × 450 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1500 × 800 мм"
+      },
+      {
+        "code": "Ш1",
+        "label": "Шкаф",
+        "dimensions": "1500 × 600 мм"
+      },
+      {
+        "code": "ДВ1",
+        "label": "Диван",
+        "dimensions": "1500 × 700 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 16",
+        "dimensions": "420 × 670 мм"
+      },
+      {
+        "code": "Д1",
+        "label": "Душ",
+        "dimensions": "900 × 900 мм"
+      }
+    ]
+  }
 }

@@ -1730,5 +1730,69 @@
     1.2,
     1.65,
     0.3
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p3",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "4,93 м²",
+        "dimensions": "2455 × 2010 мм"
+      },
+      {
+        "number": 2,
+        "label": "Комната отдыха",
+        "area": "6,85 м²",
+        "dimensions": "3410 × 2010 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "1100 × 650 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "2010 × 600 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "700 × 300 мм"
+      },
+      {
+        "code": "НС2",
+        "label": "Выдвижной нижний полок",
+        "dimensions": "2010 × 400 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "2520 × 450 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "1800 × 450 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1600 × 700 мм"
+      },
+      {
+        "code": "Ш1",
+        "label": "Шкаф",
+        "dimensions": "800 × 500 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 12",
+        "dimensions": "420 × 687 мм"
+      }
+    ]
+  }
 }

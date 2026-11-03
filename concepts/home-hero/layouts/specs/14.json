@@ -1838,5 +1838,74 @@
     0.75,
     1.35,
     1.15
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p14",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "4,29 м²",
+        "dimensions": "1855 × 2310 мм"
+      },
+      {
+        "number": 2,
+        "label": "Комната отдыха",
+        "area": "4,64 м²",
+        "dimensions": "2010 × 2310 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "2310 × 650 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "1205 × 600 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Ступень",
+        "dimensions": "1250 × 300 мм"
+      },
+      {
+        "code": "НС2",
+        "label": "Ступень",
+        "dimensions": "905 × 300 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "1100 × 350 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "1100 × 350 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1100 × 550 мм"
+      },
+      {
+        "code": "Ш2",
+        "label": "Открытые полки",
+        "dimensions": "800 × 300 мм"
+      },
+      {
+        "code": "В1",
+        "label": "Вешалка с полкой",
+        "dimensions": "400 × 350 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 12",
+        "dimensions": "420 × 687 мм"
+      }
+    ]
+  }
 }

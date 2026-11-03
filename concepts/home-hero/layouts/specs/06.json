@@ -2423,5 +2423,90 @@
     0.75,
     1.35,
     1.15
-  ]
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.p6",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "5,05 м²",
+        "dimensions": "2455 × 2055 мм"
+      },
+      {
+        "number": 2,
+        "label": "Помывочная",
+        "area": "2,90 м²",
+        "dimensions": "1410 × 2055 мм"
+      },
+      {
+        "number": 3,
+        "label": "Комната отдыха",
+        "area": "7,08 м²",
+        "dimensions": "3910 × 1810 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "1200 × 700 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "1355 × 600 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "855 × 400 мм"
+      },
+      {
+        "code": "СТ1",
+        "label": "Ступень",
+        "dimensions": "955 × 300 мм"
+      },
+      {
+        "code": "СТ2",
+        "label": "Ступень",
+        "dimensions": "300 × 300 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "1500 × 450 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "1500 × 450 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1400 × 600 мм"
+      },
+      {
+        "code": "М1",
+        "label": "Лавка в помывочной",
+        "dimensions": "900 × 350 мм"
+      },
+      {
+        "code": "М2",
+        "label": "Лавка в помывочной",
+        "dimensions": "1000 × 350 мм"
+      },
+      {
+        "code": "Ш1",
+        "label": "Шкаф",
+        "dimensions": "900 × 600 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 16",
+        "dimensions": "420 × 670 мм"
+      }
+    ]
+  }
 }

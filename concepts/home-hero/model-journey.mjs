@@ -1,6 +1,6 @@
 import {HERO_MODELS} from './catalog.mjs';
 import {openModelRequest} from './model-request.mjs';
-import {createLayoutPanel,layoutJson} from './layout-panel.mjs';
+import {createLayoutGallery,layoutJson} from './layout-panel.mjs';
 
 const rubles = new Intl.NumberFormat('ru-RU', {style:'currency', currency:'RUB', maximumFractionDigits:0});
 
@@ -78,20 +78,20 @@ export function mountModelJourney(pricebook){
       <div class="hh-bath-options">
         <label class="hh-bath-size">Размер бани <select></select></label>
         <p class="hh-bath-prices" aria-live="polite"></p>
-        <div class="hh-bath-plan">
-          <h3>Примеры планировок</h3>
-          <label class="hh-bath-variant" hidden>Пример <select></select></label>
-          <p class="hh-layout-single" hidden></p>
-          <div class="hh-layout-panel" hidden></div>
-          <p class="hh-bath-plan-status" role="status"></p>
-        </div>
+
       </div>
       <div class="hh-bath-offer">
         <div><strong>Скидка 20 000 ₽ на «Делюкс»</strong>
         <p>Пришлём расширенную подборку планировок и комплектаций с ценами в удобный мессенджер.</p></div>
         <button class="btn" type="button">Получить планировки и цены</button>
       </div>
-    </div>`;
+    </div>
+    <section class="hh-bath-plan" aria-labelledby="hh-examples-title">
+      <h3 id="hh-examples-title">Примеры планировок для этой бани</h3>
+      <p class="hh-examples-note">Посмотрите разные варианты размещения помещений и мебели. У каждого примера свои габариты, указанные на чертеже. Размер для расчёта стоимости выбирается выше.</p>
+      <div class="hh-layout-gallery"></div>
+      <p class="hh-bath-plan-status" role="status"></p>
+    </section>`;
   grid.after(panel);
   for(const link of document.querySelectorAll('footer a[href="/bani/"]')){
     link.href = '#models';
@@ -102,29 +102,16 @@ export function mountModelJourney(pricebook){
   const switcher = find('.hh-bath-switch');
   switcher.append(...Object.keys(HERO_MODELS).map(modelLink));
   const sizePicker = find('.hh-bath-size select');
-  const variant = find('.hh-bath-variant select');
   const prices = find('.hh-bath-prices');
-  const setLayout = createLayoutPanel(find('.hh-layout-panel'));
   const planStatus = find('.hh-bath-plan-status');
   let book, pricesUnavailable, layouts, planLoad, planError, shownPlans = [], current, size, lastCard;
 
-  function drawPlan(){
-    setLayout(shownPlans.find(plan=>plan.id === variant.value));
-  }
-
   function drawExamples(){
-    const selected = variant.value;
     shownPlans = (layouts ?? []).filter(plan=>plan.models.includes(current));
-    variant.replaceChildren(...shownPlans.map(plan=>new Option(plan.label,plan.id)));
-    if(shownPlans.some(plan=>plan.id === selected)) variant.value = selected;
-    find('.hh-bath-variant').hidden = shownPlans.length < 2;
-    const single = find('.hh-layout-single');
-    single.hidden = shownPlans.length !== 1;
-    single.textContent = shownPlans.length === 1 ? shownPlans[0].label : '';
+    createLayoutGallery(find('.hh-layout-gallery'),shownPlans);
     planStatus.textContent = shownPlans.length ? '' : planError ?
       'Примеры сейчас недоступны. Попробуйте обновить страницу.' : layouts ?
       'Примеры планировок для этой модели готовятся.' : 'Загружаем примеры…';
-    drawPlan();
   }
 
   function drawSize(){
@@ -138,8 +125,7 @@ export function mountModelJourney(pricebook){
       prices.append(line);
     }
     const note = document.createElement('small');
-    note.textContent = 'Цены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.' +
-      (row.deluxe?.priceStatus === 'calculated' ? ' Цена «Делюкса» предварительная.' : '');
+    note.textContent = 'Цены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.';
     prices.append(note);
   }
 
@@ -151,7 +137,7 @@ export function mountModelJourney(pricebook){
     grid.hidden = heading.hidden = listNav.hidden = Boolean(current);
     if(entry) entry.hidden = Boolean(current);
     if(!current){
-      setLayout(null);
+      find('.hh-layout-gallery').replaceChildren();
       return;
     }
     title.textContent = HERO_MODELS[current].name;
@@ -211,11 +197,9 @@ export function mountModelJourney(pricebook){
     drawSize();
   }
   sizePicker.addEventListener('change',changeSize);
-  variant.addEventListener('change',drawPlan);
   find('.hh-bath-offer button').addEventListener('click',event=>openModelRequest({
     name:HERO_MODELS[current].name,
     size:sizePicker.selectedOptions[0]?.textContent,
-    layout:variant.value || undefined,
     opener:event.currentTarget
   }));
   window.addEventListener('popstate',sync);
