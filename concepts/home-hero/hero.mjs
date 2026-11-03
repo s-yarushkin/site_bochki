@@ -1,17 +1,28 @@
 import {HERO_MODELS,validHeroModel,heroOffer} from './catalog.mjs';
 import {analytics} from '/analytics-core.mjs';
+import {roofPoints} from './roof-points.mjs';
 const hero=document.querySelector('[data-home-hero]');
 let image=document.querySelector('#hh-world');
 const buttons=[...document.querySelectorAll('[data-hh-model]')];
 const status=document.querySelector('#hh-status');
 const plans=document.querySelector('#hh-plans');
 const request=document.querySelector('.hh-header-request');
+const depthImage=document.querySelector('#hh-depth-image');
+const depthViewport=matchMedia('(min-width:1101px)');
 const initial=validHeroModel(new URL(location.href).searchParams.get('model'));
 let model='kvadro',sequence=0,book=null;
 const money=price=>'от '+new Intl.NumberFormat('ru-RU').format(price)+' ₽';
 const sources=id=>({src:`/home-hero/assets/${HERO_MODELS[id].asset}-1920.webp`,srcset:[640,1280,1920].map(width=>`/home-hero/assets/${HERO_MODELS[id].asset}-${width}.webp ${width}w`).join(', ')});
+function syncDepth(){
+  if(depthViewport.matches)depthImage.setAttribute('href',image.currentSrc||image.src);
+  else depthImage.removeAttribute('href');
+}
+depthViewport.addEventListener('change',syncDepth);
+image.addEventListener('load',syncDepth);
 function render(){
   const data=HERO_MODELS[model];
+  document.querySelector('#hh-roof-points').setAttribute('points',roofPoints[model]);
+  syncDepth();
   for(const button of buttons)button.setAttribute('aria-pressed',String(button.dataset.hhModel===model));
   document.querySelector('#hh-model-name').textContent=data.name;
   document.querySelector('#hh-model-spec').textContent=data.spec;

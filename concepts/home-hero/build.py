@@ -27,9 +27,7 @@ def compose(original, hero):
         raise RuntimeError('HOME_HERO_STOP: captured live baseline is not the reviewed home')
     # Preserve every byte of the catalogue, other sections, dialog and original scripts.
     baseline_tail = after
-    before = before.replace('</head>', '<link rel="stylesheet" href="/home-hero/hero.css">'
-                            '<link rel="preload" as="image" href="/home-hero/assets/kvadro-1920.webp">'
-                            '</head>')
+    before = before.replace('</head>', '<link rel="stylesheet" href="/home-hero/hero.css"></head>')
     if 'class="hh-page"' in before:
         raise RuntimeError('HOME_HERO_STOP: already overlaid')
     before = re.sub(r'<body\b', '<body class="hh-page"', before, count=1)
@@ -46,7 +44,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     destination = OUT / 'home-hero'
     (destination / 'assets').mkdir(parents=True, exist_ok=True)
-    for name in ['hero.css', 'hero.mjs', 'catalog.mjs']:
+    for name in ['hero.css', 'hero.mjs', 'catalog.mjs', 'roof-points.mjs']:
         shutil.copy2(HERE / name, destination / name)
     for name in ['kvadro', 'parus', 'viking', 'house']:
         original = Image.open(HERE / 'assets' / (name + '.png')).convert('RGB')
@@ -56,6 +54,8 @@ def main():
                 destination / 'assets' / f'{name}-{width}.webp', quality=85, method=6)
     book = json.loads((ROOT / 'web/data/catalog-pricebook.json').read_text('utf-8'))
     hero = (HERE / 'hero.html').read_text('utf-8')
+    roof = (HERE / 'roof-points.mjs').read_text('utf-8')
+    hero = hero.replace('{{roof}}', re.search(r"kvadro: '([^']+)'", roof)[1])
     for model, prices in book['prices'].items():
         hero = hero.replace('{{' + model + '}}', f'{min(prices.values()):,}'.replace(',', ' '))
     original = BASELINE.read_text('utf-8')
