@@ -10,7 +10,7 @@ const out=bundled?path.join(here,'site'):path.join(root,'output/home-hero-site')
 const cache=path.join(root,'.local/home-hero-http-cache');
 const port=Number(process.env.HOME_HERO_PREVIEW_PORT||4188);
 const origin='https://xn--80aaan1dh9b.xn--p1ai',local='http://127.0.0.1:'+port;
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.svg':'image/svg+xml'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.svg':'image/svg+xml','.glb':'model/gltf-binary'};
 const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
 async function upstream(pathname){
   const key=path.resolve(cache,'.'+(pathname.endsWith('/')?pathname+'index.html':pathname));
@@ -34,6 +34,9 @@ const server=http.createServer(async(req,res)=>{
   let bytes,filename;
   if(pathname==='/'){bytes=await fs.readFile(path.join(out,'index.html'));filename='index.html';}
   else if(pathname==='/planirovki/'){bytes=await fs.readFile(path.join(out,'planirovki/index.html'));filename='index.html';}
+  else if(/^\/bani\/(kvadro|parus|viking|kvadro-haus)\/$/.test(pathname)){
+   filename='index.html';bytes=await fs.readFile(path.join(out,'.'+pathname,filename));
+  }
   else if(pathname.startsWith('/home-hero/')){
    filename=path.resolve(out,'.'+pathname);if(!filename.startsWith(out+path.sep))throw Error('PATH');bytes=await fs.readFile(filename);
   }else{

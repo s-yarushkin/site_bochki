@@ -75,8 +75,6 @@
 .hh-bath-prices small{flex-basis:100%}
 .hh-bath-plan{border-top:1px solid #c5cec1;padding-top:12px}
 .hh-bath-plan h3{font-size:17px;margin:0 0 8px}
-.hh-bath-plan figure{margin:8px 0 0}
-.hh-bath-plan img{display:block;width:100%;height:auto;max-height:270px;object-fit:contain;background:white;border-radius:6px}
 .hh-bath-plan figcaption,.hh-bath-plan-status{font-size:14px;margin:8px 0 0}
 .hh-bath-plan-status:empty{display:none}
 .hh-bath-offer{grid-area:offer;display:grid;gap:12px;padding:18px;background:#263f32;color:white;border-radius:12px}
@@ -96,4 +94,33 @@
 @media(max-width:720px){.hh-bath-columns{grid-template-columns:1fr;grid-template-areas:"photo" "options" "offer";gap:12px}.hh-bath-photo img{aspect-ratio:2.2}.hh-bath-offer .btn{width:100%}.hh-bath-switch a{padding:0 10px}}
 html:has(body.hh-page){scroll-padding-top:0}
 
-.hh-bath-plan-alternative{min-height:44px;border:0;padding:0;background:none;color:#2d5637;text-decoration:underline;cursor:pointer;font:inherit}
+.hh-layout-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.hh-layout-tile{display:grid;align-content:start;width:100%;padding:0;border:1px solid #d1d8cb;border-radius:9px;overflow:hidden;background:#f6f4ed;color:#263f32;text-align:left;cursor:pointer}
+.hh-layout-tile:hover span{text-decoration:underline}
+.hh-layout-tile img{display:block;width:100%;height:auto;aspect-ratio:1.6;object-fit:contain}
+.hh-layout-tile span{display:block;padding:10px 12px;font-size:13px;font-weight:650}
+.hh-layout-tools button,.hh-layout-dialog header button{min-height:44px;border:1px solid #bdcbbd;border-radius:8px;background:#fafbf7;color:#263f32;padding:6px 12px;font:inherit;font-weight:650;cursor:pointer}
+@media(max-width:540px){.hh-layout-panel{grid-template-columns:1fr}}
+.hh-layout-stage{overflow:hidden;border:1px solid #d1d8cb;border-radius:9px;background:#eeece2}
+.hh-layout-stage canvas{display:block;width:100%;height:clamp(210px,28vw,330px);cursor:grab}
+.hh-layout-stage canvas:active{cursor:grabbing}
+.hh-layout-hint,.hh-layout-status{font-size:13px;margin:8px 10px}
+.hh-layout-status:empty{display:none}
+.hh-layout-tools{display:flex;flex-wrap:wrap;gap:5px;padding:0 8px 8px}
+.hh-layout-tools button{min-width:44px}
+.hh-layout-dialog{width:min(900px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:0;border:0;border-radius:14px;background:#fafbf7;color:#263f32;overflow:auto}
+.hh-layout-dialog::backdrop{background:#14261fc2}
+.hh-layout-dialog header{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 16px;background:#fafbf7;border-bottom:1px solid #d1d8cb}
+.hh-layout-dialog header h2{margin:0;font-size:clamp(18px,3vw,27px)}
+.hh-layout-dialog>img{display:block;width:100%;max-height:58dvh;object-fit:contain;background:#f6f4ed}
+.hh-layout-spec{padding:12px clamp(12px,4vw,28px) 24px}
+.hh-layout-spec table{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 20px}
+.hh-layout-spec caption{text-align:left;font-weight:750;font-size:17px;padding-bottom:6px}
+.hh-layout-spec th,.hh-layout-spec td{text-align:left;padding:8px 6px;border-bottom:1px solid #d1d8cb;vertical-align:top}
+.hh-layout-spec td:last-child{font-variant-numeric:tabular-nums}
+.hh-layout-note,.hh-layout-spec details{font-size:13px}
+.hh-layout-code{margin:12px clamp(12px,4vw,28px) 0;font-size:13px;color:#4b6151}
+.hh-layout-3d-dialog .hh-layout-stage{border:0;border-radius:0}
+.hh-layout-3d-dialog canvas{height:clamp(240px,57dvh,540px)}
+.hh-layout-dialog [hidden]{display:none!important}
+.hh-layout-stage>img{display:block;width:100%;max-height:57dvh;object-fit:contain}

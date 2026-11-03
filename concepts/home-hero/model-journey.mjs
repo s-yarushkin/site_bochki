@@ -1,5 +1,6 @@
 import {HERO_MODELS} from './catalog.mjs';
 import {openModelRequest} from './model-request.mjs';
+import {createLayoutPanel,layoutJson} from './layout-panel.mjs';
 
 const rubles = new Intl.NumberFormat('ru-RU', {style:'currency', currency:'RUB', maximumFractionDigits:0});
 
@@ -78,11 +79,11 @@ export function mountModelJourney(pricebook){
         <label class="hh-bath-size">Размер бани <select></select></label>
         <p class="hh-bath-prices" aria-live="polite"></p>
         <div class="hh-bath-plan">
-          <h3>Планировка</h3>
-          <label class="hh-bath-variant" hidden>Вариант <select></select></label>
-          <figure hidden><img alt=""><figcaption></figcaption></figure>
+          <h3>Примеры планировок</h3>
+          <label class="hh-bath-variant" hidden>Пример <select></select></label>
+          <p class="hh-layout-single" hidden></p>
+          <div class="hh-layout-panel" hidden></div>
           <p class="hh-bath-plan-status" role="status"></p>
-          <button class="hh-bath-plan-alternative" type="button" hidden></button>
         </div>
       </div>
       <div class="hh-bath-offer">
@@ -103,29 +104,31 @@ export function mountModelJourney(pricebook){
   const sizePicker = find('.hh-bath-size select');
   const variant = find('.hh-bath-variant select');
   const prices = find('.hh-bath-prices');
-  const figure = find('figure');
+  const setLayout = createLayoutPanel(find('.hh-layout-panel'));
   const planStatus = find('.hh-bath-plan-status');
-  const planAlternative = find('.hh-bath-plan-alternative');
-  let book, pricesUnavailable, plans, planLoad, shownPlans = [], current, size, lastCard;
+  let book, pricesUnavailable, layouts, planLoad, planError, shownPlans = [], current, size, lastCard;
 
   function drawPlan(){
-    const plan = shownPlans[Number(variant.value)];
-    figure.hidden = !plan;
-    if(!plan) return;
-    const image = figure.querySelector('img');
-    image.alt = plan.title;
-    image.src = '/' + plan.image;
-    figure.querySelector('figcaption').textContent = plan.description;
+    setLayout(shownPlans.find(plan=>plan.id === variant.value));
+  }
+
+  function drawExamples(){
+    const selected = variant.value;
+    shownPlans = (layouts ?? []).filter(plan=>plan.models.includes(current));
+    variant.replaceChildren(...shownPlans.map(plan=>new Option(plan.label,plan.id)));
+    if(shownPlans.some(plan=>plan.id === selected)) variant.value = selected;
+    find('.hh-bath-variant').hidden = shownPlans.length < 2;
+    const single = find('.hh-layout-single');
+    single.hidden = shownPlans.length !== 1;
+    single.textContent = shownPlans.length === 1 ? shownPlans[0].label : '';
+    planStatus.textContent = shownPlans.length ? '' : planError ?
+      'Примеры сейчас недоступны. Попробуйте обновить страницу.' : layouts ?
+      'Примеры планировок для этой модели готовятся.' : 'Загружаем примеры…';
+    drawPlan();
   }
 
   function drawSize(){
-    planAlternative.hidden = true;
-    find('.hh-bath-variant').hidden = true;
-    figure.hidden = true;
-    if(!book){
-      planStatus.textContent = pricesUnavailable ? 'Планировку пришлём в подборке.' : 'Выберите размер после загрузки цен.';
-      return;
-    }
+    if(!size || !book) return;
     const row = book.r85.models[current].sizes[size];
     prices.replaceChildren();
     for(const [name, price] of [['Комфорт', row.priceRub], ['Делюкс', row.deluxe?.priceRub]]){
@@ -135,22 +138,9 @@ export function mountModelJourney(pricebook){
       prices.append(line);
     }
     const note = document.createElement('small');
-    note.textContent = (row.deluxe?.priceStatus === 'calculated' ? 'Цена «Делюкса» предварительная. ' : '') + 'Доставка рассчитывается отдельно.';
+    note.textContent = 'Цены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.' +
+      (row.deluxe?.priceStatus === 'calculated' ? ' Цена «Делюкса» предварительная.' : '');
     prices.append(note);
-    shownPlans = plans?.filter(plan=>plan.model === current && plan.size === size) ?? [];
-    planStatus.textContent = shownPlans.length ? '' : plans ? 'Для этого размера схему пришлём в подборке.' :
-      planLoad ? 'Загружаем схемы…' : 'Схемы сейчас недоступны. Пришлём их в подборке.';
-    if(!shownPlans.length && plans){
-      const alternative = [...sizePicker.options].find(option=>plans.some(plan=>plan.model === current && plan.size === option.value));
-      if(alternative){
-        planAlternative.dataset.size = alternative.value;
-        planAlternative.textContent = 'Посмотреть схему для размера ' + alternative.textContent;
-        planAlternative.hidden = false;
-      }
-    }
-    variant.replaceChildren(...shownPlans.map((_, index)=>new Option('Вариант ' + (index + 1), index)));
-    find('.hh-bath-variant').hidden = shownPlans.length < 2;
-    drawPlan();
   }
 
   function sync(){
@@ -160,7 +150,10 @@ export function mountModelJourney(pricebook){
     panel.hidden = !current;
     grid.hidden = heading.hidden = listNav.hidden = Boolean(current);
     if(entry) entry.hidden = Boolean(current);
-    if(!current) return;
+    if(!current){
+      setLayout(null);
+      return;
+    }
     title.textContent = HERO_MODELS[current].name;
     find('.hh-bath-description').textContent = descriptions[current].description;
     find('.hh-bath-photo').replaceChildren(descriptions[current].figure.cloneNode(true));
@@ -175,14 +168,14 @@ export function mountModelJourney(pricebook){
     sizePicker.disabled = !sizes;
     if(size) sizePicker.value = size;
     if(!sizes) prices.textContent = pricesUnavailable ? 'Цены сейчас недоступны. Пришлём их в подборке.' : 'Загружаем цены…';
-    if(!planLoad && !plans){
-      planLoad = fetch('/data/r94-layouts.json',{signal:AbortSignal.timeout(10000)})
-        .then(response=>{if(!response.ok) throw Error('PLANS'); return response.json();})
-        .then(data=>{plans=data.plans;})
-        .catch(()=>{planLoad=null;})
-        .finally(()=>{if(current) drawSize();});
+    if(!planLoad){
+      planLoad = layoutJson('index.json')
+        .then(data=>{layouts=data.plans;})
+        .catch(()=>{planError=true;})
+        .finally(()=>{if(current) drawExamples();});
     }
     drawSize();
+    drawExamples();
   }
 
   function move(hash, id){
@@ -218,15 +211,11 @@ export function mountModelJourney(pricebook){
     drawSize();
   }
   sizePicker.addEventListener('change',changeSize);
-  planAlternative.addEventListener('click',()=>{
-    sizePicker.value=planAlternative.dataset.size;
-    changeSize();
-    sizePicker.focus();
-  });
   variant.addEventListener('change',drawPlan);
   find('.hh-bath-offer button').addEventListener('click',event=>openModelRequest({
     name:HERO_MODELS[current].name,
     size:sizePicker.selectedOptions[0]?.textContent,
+    layout:variant.value || undefined,
     opener:event.currentTarget
   }));
   window.addEventListener('popstate',sync);

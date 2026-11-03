@@ -1,8 +1,14 @@
 import {HERO_MODELS} from './catalog.mjs';
 
-const model=new URL(location.href).searchParams.get('model');
-if(Object.hasOwn(HERO_MODELS,model)){
-  const home='/?model='+encodeURIComponent(model);
-  document.querySelector('[data-return-catalog]').href=home+'#models';
-  document.querySelector('[data-return-hero]').href=home+'#main';
+const previous = new URL(location.href);
+const model = previous.searchParams.get('model');
+const target = new URL('/',location.origin);
+for(const [key,value] of previous.searchParams){
+  if(key.startsWith('utm_') || key === 'yclid') target.searchParams.append(key,value);
 }
+target.hash = 'models';
+if(Object.hasOwn(HERO_MODELS,model)){
+  target.searchParams.set('bath',model);
+  target.hash = 'bath-model';
+}
+location.replace(target);

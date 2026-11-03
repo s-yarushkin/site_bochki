@@ -2,7 +2,7 @@ import {buildCallback, submitLead} from '/lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from '/phone-mask.mjs';
 import {analytics} from '/analytics-core.mjs?v=r117-quiz-goals';
 
-export function openModelRequest({name,size,opener}){
+export function openModelRequest({name,size,layout,opener}){
   const dialog = document.createElement('dialog');
   dialog.className = 'hh-bath-dialog';
   dialog.setAttribute('aria-labelledby','hh-request-title');
@@ -42,7 +42,7 @@ export function openModelRequest({name,size,opener}){
       const payload = buildCallback({phone:form.elements.phone.value},requestId ??= crypto.randomUUID());
       payload.purpose = 'quiz_catalog';
       payload.contactChannel = form.elements.channel.value;
-      payload.comment = 'Каталог: '+selection+'. Прислать расширенные планировки, комплектации и цены. Скидка 20 000 ₽ при выборе «Делюкса».';
+      payload.comment = 'Источник: карточка модели. Размер для расчёта: '+selection+'. '+(layout ? 'Пример планировки: '+layout.toUpperCase()+'. ' : '')+'Прислать расширенные планировки, комплектации и цены. Скидка 20 000 ₽ при выборе «Делюкса».';
       payload.journeyContext = {purpose:'selection_help',pagePath:location.pathname};
       const attribution = analytics?.attribution?.();
       if(attribution) payload.attribution = attribution;
