@@ -25,4 +25,4 @@ Compared against the current Google Slides album 1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GA
 
 Reviewed live baseline: /srv/sites/dachapar-preview/releases/HH-2cf7533f5d534d0a.
 The prepared overlay changes 18 existing files only. Installation checks all source hashes, copies the complete previous release, verifies the exact changed-file set and public hashes, and restores the previous symlink if checks fail.
-Interactive sudo authentication is required; publication has not been performed.
+Published after the user supplied interactive sudo authentication. Active release: /srv/sites/dachapar-preview/releases/SPEC-GALLERY-cbb7195d5568adf8. Independent post-publication checks passed for all 18 overlay files, 28 SVG/GLB hashes, the complete previous release inventory, API health, four model views and four standalone pages at 1440/390 pixel widths. Browser results: layout-gallery-public-browser-checks.json. Rollback: sudo python3 /tmp/dachapar-spec-gallery-reviewed/install.py --rollback

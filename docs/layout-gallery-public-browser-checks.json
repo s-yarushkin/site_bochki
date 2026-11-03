@@ -1,0 +1,132 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "width": 1440,
+      "model": "kvadro",
+      "examples": [
+        "dp3d-01",
+        "dp3d-02",
+        "dp3d-03",
+        "dp3d-04",
+        "dp3d-05"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 485 000 ₽\nДелюкс · 562 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "model": "parus",
+      "examples": [
+        "dp3d-12",
+        "dp3d-14"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 510 000 ₽\nДелюкс · 602 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "model": "viking",
+      "examples": [
+        "dp3d-13",
+        "dp3d-14"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 620 000 ₽\nДелюкс · 712 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "model": "kvadro-house",
+      "examples": [
+        "dp3d-06",
+        "dp3d-07",
+        "dp3d-08",
+        "dp3d-09",
+        "dp3d-10",
+        "dp3d-11"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 685 000 ₽\nДелюкс · 797 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 390,
+      "model": "kvadro",
+      "examples": [
+        "dp3d-01",
+        "dp3d-02",
+        "dp3d-03",
+        "dp3d-04",
+        "dp3d-05"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 485 000 ₽\nДелюкс · 562 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 390,
+      "model": "parus",
+      "examples": [
+        "dp3d-12",
+        "dp3d-14"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 510 000 ₽\nДелюкс · 602 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 390,
+      "model": "viking",
+      "examples": [
+        "dp3d-13",
+        "dp3d-14"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 620 000 ₽\nДелюкс · 712 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    },
+    {
+      "width": 390,
+      "model": "kvadro-house",
+      "examples": [
+        "dp3d-06",
+        "dp3d-07",
+        "dp3d-08",
+        "dp3d-09",
+        "dp3d-10",
+        "dp3d-11"
+      ],
+      "below": true,
+      "selects": 1,
+      "overflow": false,
+      "preliminary": false,
+      "oldPrice": "Комфорт · 685 000 ₽\nДелюкс · 797 000 ₽\nЦены за комплектации выбранного размера. Оснащение по чертежу и доставка рассчитываются отдельно.",
+      "pass": true
+    }
+  ],
+  "errors": []
+}
