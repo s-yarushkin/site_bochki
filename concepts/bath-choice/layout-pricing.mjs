@@ -6,7 +6,7 @@ export function quoteLayout(catalog,bill,packageId){
  if(!base)throw Error('UNKNOWN_MODEL_SIZE');
  if(!bill.geometryId||!bill.dimensionSha256||bill.dimensionSha256!==bill.geometryDimensionSha256)throw Error('GEOMETRY_REVISION_MISMATCH');
  if(!Number.isInteger(bill.roomCount)||bill.roomCount<1)throw Error('INVALID_ROOM_COUNT');
- const pending=[...(bill.pending||[])],lines=[];
+ const pending=[...(bill.pending||[])],lines=[],separateAgreementItems=[],bundleUsed=new Map();
  const remaining={...(base.included||{})};
  const amount=n=>Number.isSafeInteger(n)&&n>=0;
  if(!amount(base.priceCents))throw Error('INVALID_BASE_PRICE');
@@ -30,6 +30,20 @@ export function quoteLayout(catalog,bill,packageId){
   if(selection.status!=='resolved'){
    unresolved('ITEM_UNCONFIRMED',line.id+': '+line.label);
    lines.push({id:line.id,label:line.label,quantity,totalCents:null,candidates:selection.candidates||[]});continue;
+  }
+  if(selection.operation==='separate_agreement'){
+   const item={id:line.id,label:line.label,quantity,totalCents:null,separateAgreement:true};
+   separateAgreementItems.push(item);lines.push(item);continue;
+  }
+  if(selection.operation==='bundle_part'){
+   const parent=bill.lines.find(item=>item.id===selection.bundleLineId&&item.id!==line.id);
+   const bundle=parent?.packages?.[packageId]||parent;
+   const used=bundleUsed.get(selection.bundleLineId)||0;
+   if(!bundle||bundle.status!=='resolved'||bundle.operation!=='extra'||bundle.sku!==selection.bundleSku||rate(bundle.sku)===null||used+quantity>(bundle.quantity??1)){
+    unresolved('BUNDLE_NOT_COVERED',line.id);lines.push({id:line.id,quantity,totalCents:null});continue;
+   }
+   bundleUsed.set(selection.bundleLineId,used+quantity);
+   lines.push({id:line.id,label:line.label,quantity,totalCents:0,included:true,bundledWith:parent.id});continue;
   }
   if(selection.operation==='included'){
    const allowance=remaining[selection.inclusionKey];
@@ -57,7 +71,8 @@ export function quoteLayout(catalog,bill,packageId){
  const approved=complete&&bill.approval==='approved'&&catalog.approval==='approved';
  return {geometryId:bill.geometryId,dimensionSha256:bill.dimensionSha256,model:bill.model,size:bill.size,package:packageId,
   baseCents:base.priceCents,knownSubtotalCents:known,calculatedTotalCents:complete?known:null,
-  publicTotalCents:approved?known:null,status:approved?'approved':complete?'needs_approval':'incomplete',lines,pending};
+  publicTotalCents:approved?known:null,status:approved?'approved':complete?'needs_approval':'incomplete',lines,pending,
+  priceScope:'bath_and_included_goods',separateAgreementItems};
 }
 
 export function quizLayoutQuote(catalog,bills,aliases,quizPlanId,packageId){

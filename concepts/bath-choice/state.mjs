@@ -27,3 +27,9 @@ export function choicePrice(book,state){
   const row=book.r85.models[state.model].sizes[state.size];
   return state.package==='deluxe'?row.deluxe.priceRub:row.priceRub;
 }
+
+// Customer labels use width × length; historical price keys stay unchanged.
+export function choiceSizeLabel(book,model,size){
+  const house={'4x4':'4×4 м','5x4':'4×5 м','6x4':'4×6 м','6x5':'5×6 м','6x6':'6×6 м'};
+  return model==='kvadro-house'?house[size]:book.r85.models[model].sizes[size].label;
+}

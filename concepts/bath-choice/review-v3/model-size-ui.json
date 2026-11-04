@@ -1,0 +1,182 @@
+[
+  {
+    "comfort": "410 000 ₽",
+    "deluxe": "484 000 ₽",
+    "help": false,
+    "model": "Квадро",
+    "plan": "/home-hero/layouts/album/01.webp",
+    "size": "4 м",
+    "summary": "Квадро · 4 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "440 000 ₽",
+    "deluxe": "516 000 ₽",
+    "help": true,
+    "model": "Квадро",
+    "plan": null,
+    "size": "4,5 м",
+    "summary": "Квадро · 4,5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "485 000 ₽",
+    "deluxe": "562 000 ₽",
+    "help": false,
+    "model": "Квадро",
+    "plan": "/home-hero/layouts/album/02.webp",
+    "size": "5 м",
+    "summary": "Квадро · 5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "510 000 ₽",
+    "deluxe": "588 000 ₽",
+    "help": true,
+    "model": "Квадро",
+    "plan": null,
+    "size": "5,5 м",
+    "summary": "Квадро · 5,5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "525 000 ₽",
+    "deluxe": "605 000 ₽",
+    "help": false,
+    "model": "Квадро",
+    "plan": "/home-hero/layouts/album/03.webp",
+    "size": "6 м",
+    "summary": "Квадро · 6 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "450 000 ₽",
+    "deluxe": "526 000 ₽",
+    "help": false,
+    "model": "Парус",
+    "plan": "/home-hero/layouts/album/14.webp",
+    "size": "4 м",
+    "summary": "Парус · 4 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "470 000 ₽",
+    "deluxe": "547 000 ₽",
+    "help": true,
+    "model": "Парус",
+    "plan": null,
+    "size": "4,5 м",
+    "summary": "Парус · 4,5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "510 000 ₽",
+    "deluxe": "602 000 ₽",
+    "help": false,
+    "model": "Парус",
+    "plan": "/home-hero/layouts/album/12.webp",
+    "size": "5 м",
+    "summary": "Парус · 5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "525 000 ₽",
+    "deluxe": "619 000 ₽",
+    "help": true,
+    "model": "Парус",
+    "plan": null,
+    "size": "5,5 м",
+    "summary": "Парус · 5,5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "535 000 ₽",
+    "deluxe": "631 000 ₽",
+    "help": false,
+    "model": "Парус",
+    "plan": "/home-hero/layouts/album/13.webp",
+    "size": "6 м",
+    "summary": "Парус · 6 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "480 000 ₽",
+    "deluxe": "569 000 ₽",
+    "help": false,
+    "model": "Викинг",
+    "plan": "/home-hero/layouts/album/14.webp",
+    "size": "4 м",
+    "summary": "Викинг · 4 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "520 000 ₽",
+    "deluxe": "611 000 ₽",
+    "help": true,
+    "model": "Викинг",
+    "plan": null,
+    "size": "4,5 м",
+    "summary": "Викинг · 4,5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "620 000 ₽",
+    "deluxe": "712 000 ₽",
+    "help": false,
+    "model": "Викинг",
+    "plan": "/home-hero/layouts/album/12.webp",
+    "size": "5 м",
+    "summary": "Викинг · 5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "635 000 ₽",
+    "deluxe": "729 000 ₽",
+    "help": true,
+    "model": "Викинг",
+    "plan": null,
+    "size": "5,5 м",
+    "summary": "Викинг · 5,5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "645 000 ₽",
+    "deluxe": "741 000 ₽",
+    "help": false,
+    "model": "Викинг",
+    "plan": "/home-hero/layouts/album/13.webp",
+    "size": "6 м",
+    "summary": "Викинг · 6 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "685 000 ₽",
+    "deluxe": "797 000 ₽",
+    "help": false,
+    "model": "Квадро Хаус",
+    "plan": "/home-hero/layouts/album/06.webp",
+    "size": "4×4 м",
+    "summary": "Квадро Хаус · 4×4 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "795 000 ₽",
+    "deluxe": "913 000 ₽",
+    "help": true,
+    "model": "Квадро Хаус",
+    "plan": null,
+    "size": "5×4 м",
+    "summary": "Квадро Хаус · 5×4 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "845 000 ₽",
+    "deluxe": "969 000 ₽",
+    "help": false,
+    "model": "Квадро Хаус",
+    "plan": "/home-hero/layouts/album/10.webp",
+    "size": "6×4 м",
+    "summary": "Квадро Хаус · 6×4 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "905 000 ₽",
+    "deluxe": "1 039 000 ₽",
+    "help": false,
+    "model": "Квадро Хаус",
+    "plan": "/home-hero/layouts/album/07.webp",
+    "size": "6×5 м",
+    "summary": "Квадро Хаус · 6×5 м · в комплектации «Комфорт»"
+  },
+  {
+    "comfort": "965 000 ₽",
+    "deluxe": "1 109 000 ₽",
+    "help": false,
+    "model": "Квадро Хаус",
+    "plan": "/home-hero/layouts/album/08.webp",
+    "size": "6×6 м",
+    "summary": "Квадро Хаус · 6×6 м · в комплектации «Комфорт»"
+  }
+]

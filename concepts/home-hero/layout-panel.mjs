@@ -1,9 +1,5 @@
+import {renderLayoutOverview} from './layout-story.mjs';
 const base = '/home-hero/layouts/';
-const mm = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1});
-const area = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2,minimumFractionDigits:2});
-const roomNames = {steam:'Парная',lounge:'Комната отдыха',wash:'Помывочная',
-  shower:'Душевая',wc:'Санузел',bedroom:'Спальня'};
-
 export async function layoutJson(path, signal = AbortSignal.timeout(10000)){
   const response = await fetch(base+path,{signal});
   if(!response.ok) throw Error('LAYOUT_UNAVAILABLE');
@@ -16,41 +12,7 @@ function element(tag,text){
   return node;
 }
 
-function table(title, headings, rows){
-  const node = element('table');
-  node.createCaption().textContent = title;
-  const heading = node.createTHead().insertRow();
-  for(const label of headings){
-    const cell = element('th',label);
-    cell.scope = 'col';
-    heading.append(cell);
-  }
-  const body = node.createTBody();
-  for(const row of rows){
-    const entry = body.insertRow();
-    for(const value of row) entry.insertCell().textContent = value;
-  }
-  return node;
-}
-
-function specification(spec){
-  const fragment = document.createDocumentFragment();
-  const text = spec.public_specification;
-  if(!text) throw Error('VERIFIED_SPECIFICATION_UNAVAILABLE');
-  fragment.append(table('Помещения',['Помещение','Размеры','Площадь'],text.rooms.map(room=>[
-    room.number+'. '+room.label,room.dimensions,room.area
-  ])));
-  fragment.append(table('Мебель, полки и оборудование',['На чертеже','Размеры'],text.items.map(item=>[
-    item.code+' · '+item.label,item.dimensions
-  ])));
-  const openings = spec.items.filter(item=>['door','window'].includes(item.kind));
-  if(openings.length) fragment.append(table('Двери и окна',['На чертеже','Ширина проёма'],openings.map(item=>[
-    item.code+' · '+item.label,mm.format(item.opening_width_mm)+' мм'
-  ])));
-  return fragment;
-}
-
-function openSpecification(plan,opener){
+function openSpecification(plan,opener,onRequest){
   const dialog = element('dialog');
   dialog.dataset.layoutId = plan.id;
   dialog.className = 'hh-layout-dialog';
@@ -63,13 +25,21 @@ function openSpecification(plan,opener){
   close.addEventListener('click',()=>dialog.close());
   header.append(title,close);
   const drawing = element('img');
-  drawing.alt = 'Размерный чертёж · '+plan.label;
+  drawing.alt = 'Планировка · '+plan.label;
   drawing.src = base+plan.drawing;
+  const view=element('div');view.className='hh-plan-view';
+  const tools=element('div');tools.className='hh-plan-tools';
+  const smaller=element('button','−'),larger=element('button','+'),hint=element('span','Рассмотрите план крупнее');
+  smaller.type=larger.type='button';smaller.setAttribute('aria-label','Уменьшить план');larger.setAttribute('aria-label','Увеличить план');
+  const viewport=element('div');viewport.className='hh-plan-viewport';viewport.tabIndex=0;viewport.setAttribute('aria-label','План бани с увеличением');viewport.append(drawing);
+  let scale=1;function zoom(delta){scale=Math.min(4,Math.max(1,scale+delta));drawing.style.width=(scale*100)+'%';viewport.classList.toggle('is-zoomed',scale>1);smaller.disabled=scale===1;larger.disabled=scale===4;}
+  smaller.addEventListener('click',()=>zoom(-.5));larger.addEventListener('click',()=>zoom(.5));zoom(0);
+  tools.append(smaller,larger,hint);view.append(tools,viewport);
   const body = element('div');
   body.className = 'hh-layout-spec';
-  body.append(element('p','Загружаем спецификацию…'));
+  body.append(element('p','Загружаем описание планировки…'));
   body.setAttribute('aria-live','polite');
-  dialog.append(header,drawing,body);
+  dialog.append(header,view,body);
   const controller = new AbortController();
   dialog.addEventListener('close',()=>{
     controller.abort();
@@ -79,8 +49,11 @@ function openSpecification(plan,opener){
   document.body.append(dialog);
   dialog.showModal();
   layoutJson(plan.spec,AbortSignal.any([controller.signal,AbortSignal.timeout(10000)]))
-    .then(spec=>{if(dialog.open) body.replaceChildren(specification(spec));})
-    .catch(()=>{if(dialog.open) body.replaceChildren(element('p','Спецификация временно недоступна. Чертёж можно посмотреть выше.'));});
+    .then(spec=>{if(dialog.open){
+      body.replaceChildren(renderLayoutOverview(spec));
+      if(onRequest){const request=element('button','Запросить цену этой планировки и комплектации ↗');request.type='button';request.className='choice-primary';request.addEventListener('click',()=>{dialog.close();onRequest(opener);});body.querySelector('.hh-plan-overview').append(request);}
+    }})
+    .catch(()=>{if(dialog.open) body.replaceChildren(element('p','Описание временно недоступно. План можно посмотреть выше.'));});
 }
 
 function openViewer(plan, opener){
@@ -131,18 +104,18 @@ function openViewer(plan, opener){
   });
 }
 
-export function createLayoutPanel(container){
+export function createLayoutPanel(container,{onRequest}={}){
   container.innerHTML = `
     <button type="button" class="hh-layout-tile" data-drawing>
-      <img alt=""><span>Чертёж и спецификация ↗</span>
+      <img alt=""><span>Посмотреть план крупнее ↗</span>
     </button>
     <button type="button" class="hh-layout-tile" data-preview>
-      <img alt=""><span>Открыть в 3D ↗</span>
+      <img alt=""><span>Рассмотреть в 3D ↗</span>
     </button>`;
   const drawing = container.querySelector('[data-drawing]');
   const preview = container.querySelector('[data-preview]');
   let plan;
-  drawing.addEventListener('click',()=>openSpecification(plan,drawing));
+  drawing.addEventListener('click',()=>openSpecification(plan,drawing,onRequest));
   preview.addEventListener('click',()=>openViewer(plan,preview));
   return next=>{
     plan = next;

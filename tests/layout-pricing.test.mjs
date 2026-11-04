@@ -27,6 +27,25 @@ test('an included furniture allowance cannot cover a third bench',()=>{
  const lines=[{id:'benches',status:'resolved',operation:'included',inclusionKey:'bench',quantity:3}];
  assert.equal(quoteLayout(catalog,{...bill,lines},'comfort').publicTotalCents,null);
 });
+test('owner-excluded furniture stays a separate agreement and never becomes a free included item',()=>{
+ const lines=[{id:'bed',label:'Кровать',status:'resolved',operation:'separate_agreement'}];
+ const q=quoteLayout(catalog,{...bill,lines},'comfort');
+ assert.equal(q.publicTotalCents,base.priceCents);
+ assert.equal(q.separateAgreementItems[0].totalCents,null);
+ assert.equal(q.separateAgreementItems[0].separateAgreement,true);
+ assert.equal(q.lines.find(i=>i.id==='bed').included,undefined);
+});
+test('the approved kitchen is charged once and its sink needs that paid bundle',()=>{
+ const decision=JSON.parse(readFileSync(new URL('../concepts/bath-choice/pricing-decisions.json',import.meta.url)));
+ const c=structuredClone(catalog);c.items[decision.kitchen.sku]={customerUnitCents:{standard:decision.kitchen.customerRub*100,house:decision.kitchen.customerRub*100}};
+ const sink={id:'sink',label:'Мойка кухни',status:'resolved',operation:'bundle_part',bundleLineId:'kitchen',bundleSku:decision.kitchen.sku};
+ const kitchen={id:'kitchen',label:'Кухня',status:'resolved',operation:'extra',sku:decision.kitchen.sku};
+ const q=quoteLayout(c,{...bill,lines:[sink,kitchen]},'comfort');
+ assert.equal(q.publicTotalCents,44790000);assert.equal(q.lines.find(i=>i.id==='sink').bundledWith,'kitchen');
+ assert.equal(q.separateAgreementItems.length,0);
+ const absent=quoteLayout(c,{...bill,lines:[sink]},'comfort');assert.equal(absent.publicTotalCents,null);assert.ok(absent.pending.some(i=>i.code==='BUNDLE_NOT_COVERED'));
+ assert.equal(quoteLayout(c,{...bill,lines:[sink,{...sink,id:'second-sink'},kitchen]},'comfort').publicTotalCents,null);
+});
 test('prices cannot silently transfer to a different geometry revision or unknown body size',()=>{
  assert.throws(()=>quoteLayout(catalog,{...bill,dimensionSha256:'changed'},'comfort'),/REVISION/);
  assert.throws(()=>quoteLayout(catalog,{...bill,size:'6x3'},'comfort'),/UNKNOWN_MODEL_SIZE/);

@@ -108,7 +108,7 @@ html:has(body.hh-page){scroll-padding-top:0}
 .hh-layout-status:empty{display:none}
 .hh-layout-tools{display:flex;flex-wrap:wrap;gap:5px;padding:0 8px 8px}
 .hh-layout-tools button{min-width:44px}
-.hh-layout-dialog{width:min(900px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:0;border:0;border-radius:14px;background:#fafbf7;color:#263f32;overflow:auto}
+.hh-layout-dialog{width:min(900px,calc(100% - 24px));max-width:none;max-height:calc(100dvh - 24px);padding:0;border:0;border-radius:14px;background:#fafbf7;color:#263f32;overflow:auto}
 .hh-layout-dialog::backdrop{background:#14261fc2}
 .hh-layout-dialog header{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 16px;background:#fafbf7;border-bottom:1px solid #d1d8cb}
 .hh-layout-dialog header h2{margin:0;font-size:clamp(18px,3vw,27px)}
@@ -123,6 +123,21 @@ html:has(body.hh-page){scroll-padding-top:0}
 .hh-layout-3d-dialog .hh-layout-stage{border:0;border-radius:0}
 .hh-layout-3d-dialog canvas{height:clamp(240px,57dvh,540px)}
 .hh-layout-dialog [hidden]{display:none!important}
+.hh-plan-view{padding:16px}
+.hh-plan-tools{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hh-plan-tools button{min-width:44px;min-height:44px;border:1px solid #bdcbbd;border-radius:8px;background:#fafbf7;color:#263f32;font:inherit;cursor:pointer}
+.hh-plan-tools span{font-size:14px}
+.hh-plan-viewport{overflow:auto;max-height:68dvh;background:#f6f4ed;overscroll-behavior:contain}
+.hh-plan-viewport img{display:block;width:100%;height:60dvh;max-width:none;object-fit:contain}
+.hh-plan-viewport.is-zoomed img{height:auto}
+.hh-plan-overview h3{margin:16px 0;font-size:23px}
+.hh-plan-rooms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.hh-plan-rooms article{padding:16px;border:1px solid #d1d8cb;border-radius:10px;background:#f2f5e9}
+.hh-plan-rooms h4{display:flex;justify-content:space-between;gap:12px;margin:0 0 9px;font-size:18px}
+.hh-plan-rooms h4 span{flex-shrink:0;font-size:15px;font-weight:500}
+.hh-plan-rooms p{margin:0;font-size:16px;line-height:1.6}
+.hh-plan-overview>.hh-plan-agreement{margin:20px 0 0;max-width:760px;font-size:15px;line-height:1.7}
+@media(max-width:600px){.hh-plan-rooms{grid-template-columns:1fr}}
 .hh-layout-stage>img{display:block;width:100%;max-height:57dvh;object-fit:contain}
 
 .hh-bath-panel>.hh-bath-plan{margin-top:44px;padding-top:32px}

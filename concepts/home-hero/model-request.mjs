@@ -24,6 +24,7 @@ export function openModelRequest({name,size,layout,packageName,reason,opener}){
   const error = form.querySelector('[role=alert]');
   const selection = [name,size,packageName?'в комплектации «'+packageName+'»':null].filter(Boolean).join(' · ');
   const actions={
+    layout_quote:{title:'Рассчитаем выбранную планировку',intro:'Подготовим предложение с выбранной комплектацией, доставкой и установкой на вашем участке. Пришлём его в удобный мессенджер.',button:'Запросить цену планировки',success:'Подготовим расчёт вашей планировки и свяжемся с вами в выбранном мессенджере.'},
     quote:{title:'Куда прислать расчёт?',intro:'Подготовим предложение с выбранной комплектацией, доставкой и установкой на вашем участке.',button:'Получить расчёт',success:'Подготовим расчёт и свяжемся с вами в выбранном мессенджере.'},
     production:{title:'Покажем производство онлайн',intro:'Подберём удобное время для видеозвонка, покажем бани в работе и ответим на ваши вопросы.',button:'Договориться о показе',success:'Свяжемся с вами в выбранном мессенджере и договоримся о времени показа.'},
     foundation:{title:'Поможем с вашим участком',intro:'Бесплатно проконсультируем по основанию, обсудим проезд и способ установки вашей бани.',button:'Получить консультацию',success:'Свяжемся с вами в выбранном мессенджере и обсудим ваш участок.'}
@@ -57,6 +58,7 @@ export function openModelRequest({name,size,layout,packageName,reason,opener}){
       if(reason==='production')payload.comment+=' Пожелание: онлайн-показ производства.';
       if(reason==='foundation')payload.comment+=' Пожелание: консультация по основанию и установке.';
       if(reason==='quote')payload.comment+=' Пожелание: расчёт доставки и установки.';
+      if(reason==='layout_quote')payload.comment+=' Пожелание: точный расчёт выбранной планировки и комплектации, доставки и установки.';
       payload.journeyContext = {purpose:'selection_help',pagePath:location.pathname};
       const attribution = analytics?.attribution?.();
       if(attribution) payload.attribution = attribution;

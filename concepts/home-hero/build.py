@@ -100,7 +100,7 @@ def main():
     destination = output / 'home-hero'
     (destination / 'assets').mkdir(parents=True, exist_ok=True)
     for name in ['hero.css', 'hero.mjs', 'catalog.mjs', 'roof-points.mjs', 'plan-navigation.mjs',
-                 'model-journey.mjs', 'model-request.mjs', 'layout-panel.mjs', 'layout-viewer.mjs',
+                 'model-journey.mjs', 'model-request.mjs', 'layout-panel.mjs', 'layout-story.mjs', 'layout-viewer.mjs',
                  'model-examples.mjs']:
         shutil.copy2(HERE / name, destination / name)
     for name in ['kvadro', 'parus', 'viking', 'house']:

@@ -40,6 +40,9 @@ for sku,item in rrc.items():
         standard=cents(Decimal(str(value))*factor)
         house=cents(Decimal(str(value))*(factor+(1+reserve)*assembly))
     catalog['items'][sku]={'label':item['label'],'unit':item['unit'],'customerUnitCents':{'standard':standard,'house':house},'source':f"РРЦ!E{item['row']}"}
+kitchen=decisions['kitchen']
+assert rrc[kitchen['sku']]['rrc']==kitchen['rrcRub']
+catalog['items'][kitchen['sku']].update(customerUnitCents={model:cents(kitchen['customerRub']) for model in ['standard','house']},approvedBy=kitchen['approvedBy'],bundleIncludes=kitchen['includes'])
 for name,rule_row in [('ASTON_12_SWAP',7),('ASTON_16_SWAP',8)]:
     value=cents(tables['Квиз_header']['values'][rule_row][1])
     catalog['items'][name]={'label':'Замена штатной печи на '+name.removesuffix('_SWAP'),'unit':'шт','customerUnitCents':{'standard':value,'house':value},'source':f'Квиз!B{rule_row+1}'}
@@ -81,6 +84,7 @@ for plan in registry['plans']:
     spec=json.loads((base_path/plan['spec']).read_text('utf8'))
     rooms=[i for i in spec['items'] if i['kind']=='floor']
     counts=collections.Counter();lines=[]
+    kitchen_item=next((i for i in spec['items'] if i['kind']=='kitchen'),None)
     for item in spec['items']:
         kind=item['kind'];code=item['code'];label=item['label'];record=item.get('source_record',{})
         if kind in ['floor','wall']:continue
@@ -88,7 +92,12 @@ for plan in registry['plans']:
         if kind=='accessory' and label=='Банные принадлежности':continue
         counts[kind]+=1;number=counts[kind];w,d=item.get('size_mm',[0,0]);candidate=[]
         proposed={'comfort':pending(),'deluxe':pending()}
-        if kind=='stove':
+        if kind=='kitchen':proposed={p:extra(kitchen['sku']) for p in ['comfort','deluxe']}
+        elif kind=='kitchen_sink' and kitchen_item:
+            proposed={p:{'status':'resolved','operation':'bundle_part','bundleLineId':kitchen_item['id'],'bundleSku':kitchen['sku']} for p in ['comfort','deluxe']}
+        elif kind in decisions['separateAgreement']['kinds'] or kind=='kitchen_sink':
+            proposed={p:{'status':'resolved','operation':'separate_agreement','approvedBy':decisions['separateAgreement']['approvedBy']} for p in ['comfort','deluxe']}
+        elif kind=='stove':
             match=re.search(r'ASTON (12|16)',label)
             if match:
                 sku='ASTON_'+match[1]+'_SWAP'
@@ -115,12 +124,6 @@ for plan in registry['plans']:
         elif kind=='storage':proposed={p:pending(['OPT_99','OPT_100']) for p in ['comfort','deluxe']}
         elif kind=='open_storage':proposed={p:pending(['OPT_206','OPT_207']) for p in ['comfort','deluxe']}
         elif kind in ['bench','wash_bench']:proposed={p:pending(['OPT_94','OPT_149']) for p in ['comfort','deluxe']}
-        elif kind=='shower':proposed={p:pending(['OPT_60','OPT_113','OPT_114','OPT_154']) for p in ['comfort','deluxe']}
-        elif kind=='toilet':proposed={p:pending(['OPT_151']) for p in ['comfort','deluxe']}
-        elif kind=='kitchen':proposed={p:pending(['OPT_97','OPT_140']) for p in ['comfort','deluxe']}
-        elif kind=='sink':proposed={p:pending() for p in ['comfort','deluxe']}
-        elif kind=='bed':proposed={p:pending() for p in ['comfort','deluxe']}
-        elif kind=='bucket':proposed={p:pending() for p in ['comfort','deluxe']}
         elif kind=='accessory' and 'Короб' in label:proposed={p:included('firebox') for p in ['comfort','deluxe']}
         elif kind=='accessory' and label=='Основание и настилы':proposed={p:included('structure') for p in ['comfort','deluxe']}
         line={'id':item['id'],'code':code,'label':label,'kind':kind,'sizeMm':[round(w,1),round(d,1)],'quantity':1,'packages':proposed}
@@ -153,6 +156,8 @@ f'- 20 из 20 цен в комплектации «Делюкс» из теку
 f'- Дополнительное помещение: {rub(cents(room_raw))} ₽ исходных позиций → {rub(catalog["roomUnitCents"]["standard"])} ₽ клиенту; для «Квадро Хаус» с добавочной сборкой — {rub(catalog["roomUnitCents"]["house"])} ₽.',
 '- Эта сумма состоит из конструкции, светильника, выключателя и вентиляции. Дверь, мебель, душ и сантехника в неё не включены.',
 f'- Извлечён фактический состав {len(inventory)} геометрий; подготовлено {len(bills)} модельных ведомостей, каждая для двух комплектаций.',
+f'- Владелец утвердил кухню {kitchen["sku"]}: 35 000 ₽ РРЦ, {kitchen["customerRub"]:,} ₽ клиенту. Раковина и смеситель входят в комплект; повторной доплаты за них нет.',
+'- Диван, кровать и сантехника вне кухонного комплекта исключены из суммы бани и вынесены на отдельное согласование. Это исключение из объёма, а не бесплатные товары.',
 '## Матрица составов',
 '| Схема | Модели | Размер | Помещений | Позиций | Требуют уточнения |','|---|---|---|---:|---:|---:|']
 for p in inventory:summary.append('| '+p['id']+' | '+', '.join(catalog['models'][m]['name'] for m in p['models'])+' | '+catalog['models'][p['models'][0]]['sizes'][p['size']]['label']+' | '+str(p['roomCount'])+' | '+str(p['items'])+' | '+str(p['unresolvedItems'])+' |')
@@ -160,7 +165,7 @@ summary+=['## Что нужно закрепить до конечных цен'
 '1. Владелец утвердил базу помещений «Квадро Хаус» 3/4 для обеих комплектаций: 3 в 4×4, 5×4, 6×4; 4 в 6×5, 6×6. В рабочих ведомостях применено; источники production пока не перезаписаны.',
 '2. В ряде пакетов в комплектации «Делюкс» уже оплачено 3 помещения, а на схеме 2. Нужен пересчёт пакета по реальному составу, а не ещё одна доплата поверх него.',
 '3. Для каждого изделия нужны точное соответствие позиции справочника, размер/метраж и зачёт базовой мебели. Обычную лавку нельзя автоматически оценить как лавку-рундук.',
-'4. В справочнике отсутствуют цены части сантехники, стеллажей, кровати и ступеней. Пустая цена остаётся пустой.',
+'4. Диван, кровать и сантехника согласуются отдельно по решению владельца. Для оставшейся мебели и ступеней нужно подтвердить тип изделия и тариф; пустая цена не заменяется нулём.',
 '5. Существующий квиз использует 41 схему старого альбома с другими кодами. Нужна явная связь с новыми геометриями; сходство модели и длины не доказывает одинаковый состав.',
 '## Изделия, требующие цены или правила сопоставления',
 '| Изделие | Встречается в схемах | Кандидаты справочника |','|---|---|---|']

@@ -1,10 +1,17 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice} from '../concepts/bath-choice/state.mjs';
+import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} from '../concepts/bath-choice/state.mjs';
 const captured=new URL('../.local/renewal-baseline/catalog-pricebook.json',import.meta.url);
 const book=JSON.parse(readFileSync(existsSync(captured)?captured:new URL('../web/data/catalog-pricebook.json',import.meta.url)));
 const plans=JSON.parse(readFileSync(new URL('../concepts/home-hero/layouts/index.json',import.meta.url))).plans.map(p=>[12,13].includes(p.number)?{...p,models:['parus','viking']}:p);
+
+test('House width × length labels match its floor plans while preserving price keys',()=>{
+ const state=normalizeChoice(book,plans,{model:'kvadro-house',size:'6x5'});
+ assert.equal(state.size,'6x5');assert.equal(choiceSizeLabel(book,state.model,state.size),'5×6 м');
+ assert.equal(choiceSizeLabel(book,'kvadro-house','5x4'),'4×5 м');
+ assert.equal(choicePrice(book,state),book.r85.models['kvadro-house'].sizes['6x5'].priceRub);
+});
 
 test('all 20 model/size selections retain exact keys and both current package prices',()=>{
  let count=0;
