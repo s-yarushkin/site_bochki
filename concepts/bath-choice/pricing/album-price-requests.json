@@ -1,0 +1,2381 @@
+{
+  "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+  "requiredRevisionId": "_zykrPIMQZUlfQ",
+  "requests": [
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_1_0040",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_1_0040",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_1_0040",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 431 082,12 ₽ · в комплектации «Делюкс» - 522 249,72 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_1_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p1_i774",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p1_i774",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p1_i774",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_1_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_1_0040",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_2_0040",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_2_0040",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_2_0040",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 502 832,40 ₽ · в комплектации «Делюкс» - 597 000 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_2_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p2_i1116",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p2_i1116",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p2_i1116",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_2_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_2_0040",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_3_0046",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_3_0046",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_3_0046",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 555 831,28 ₽ · в комплектации «Делюкс» - 646 582,68 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_3_0046",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p3_i35",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p3_i35",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p3_i35",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_3_0046",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_3_0046",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_4_0053",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_4_0053",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_4_0053",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 582 370,66 ₽ · в комплектации «Делюкс» - 673 122,06 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_4_0053",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p4_i355",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p4_i355",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p4_i355",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_4_0053",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_4_0053",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_5_0057",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_5_0057",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_5_0057",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 563 955,58 ₽ · в комплектации «Делюкс» - 660 123,18 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_5_0057",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p5_i1456",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p5_i1456",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p5_i1456",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_5_0057",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_5_0057",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_6_0057",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_6_0057",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_6_0057",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 744 409,60 ₽ · в комплектации «Делюкс» - 859 631 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_6_0057",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p6_i1679",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p6_i1679",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p6_i1679",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_6_0057",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_6_0057",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_7_0073",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_7_0073",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_7_0073",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 984 558,68 ₽ · в комплектации «Делюкс» - 1 121 780,08 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_7_0073",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p7_i1993",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p7_i1993",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p7_i1993",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_7_0073",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_7_0073",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_8_0066",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_8_0066",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_8_0066",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 1 081 273,44 ₽ · в комплектации «Делюкс» - 1 232 050,56 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_8_0066",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p8_i2387",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p8_i2387",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p8_i2387",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_8_0066",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_8_0066",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_9_0073",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_9_0073",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_9_0073",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 1 065 300,38 ₽ · в комплектации «Делюкс» - 1 214 299,64 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_9_0073",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p9_i2785",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p9_i2785",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, кровать, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p9_i2785",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_9_0073",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_9_0073",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_10_0051",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_10_0051",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_10_0051",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 893 742,44 ₽ · в комплектации «Делюкс» - 1 020 963,84 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_10_0051",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p10_i3729",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p10_i3729",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, диван, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p10_i3729",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_10_0051",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_10_0051",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_11_0069",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_11_0069",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_11_0069",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 1 065 300,38 ₽ · в комплектации «Делюкс» - 1 214 299,64 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_11_0069",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p11_i4146",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p11_i4146",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, кровать, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p11_i4146",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_11_0069",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_11_0069",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_12_0064",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.2286,
+          "translateX": 48,
+          "translateY": 830,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_12_0064",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_12_0064",
+        "insertionIndex": 0,
+        "text": "Парус: В комплектации «Комфорт» - 582 536,02 ₽ · в комплектации «Делюкс» - 679 787,98 ₽\nВикинг: В комплектации «Комфорт» - 692 536,02 ₽ · в комплектации «Делюкс» - 789 787,98 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_12_0064",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p12_i4453",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p12_i4453",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p12_i4453",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_12_0064",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_12_0064",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_13_0064",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.2286,
+          "translateX": 48,
+          "translateY": 830,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_13_0064",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_13_0064",
+        "insertionIndex": 0,
+        "text": "Парус: В комплектации «Комфорт» - 608 619,26 ₽ · в комплектации «Делюкс» - 703 455,02 ₽\nВикинг: В комплектации «Комфорт» - 718 619,26 ₽ · в комплектации «Делюкс» - 813 455,02 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_13_0064",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p13_i4814",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p13_i4814",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p13_i4814",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_13_0064",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_13_0064",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "top_14_0046",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.2286,
+          "translateX": 48,
+          "translateY": 830,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "top_14_0046",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "top_14_0046",
+        "insertionIndex": 0,
+        "text": "Парус: В комплектации «Комфорт» - 479 748,04 ₽ · в комплектации «Делюкс» - 566 499,44 ₽\nВикинг: В комплектации «Комфорт» - 509 748,04 ₽ · в комплектации «Делюкс» - 610 499,44 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "top_14_0046",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "p14_i5207",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "p14_i5207",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "p14_i5207",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "top_14_0046",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "top_14_0046",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "v4_p15_top_1_0040",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p15_top_1_0040",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p15_top_1_0040",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 461 082,12 ₽ · в комплектации «Делюкс» - 553 249,72 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p15_top_1_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p15_p1_i774",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p15_p1_i774",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p15_p1_i774",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "v4_p15_top_1_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "v4_p15_top_1_0040",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "v4_p16_top_2_0040",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p16_top_2_0040",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p16_top_2_0040",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 527 832,40 ₽ · в комплектации «Делюкс» - 623 000 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p16_top_2_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p16_p2_i1116",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p16_p2_i1116",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p16_p2_i1116",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "v4_p16_top_2_0040",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "v4_p16_top_2_0040",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "v4_p17_top_6_0057",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.1524,
+          "translateX": 48,
+          "translateY": 848,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p17_top_6_0057",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p17_top_6_0057",
+        "insertionIndex": 0,
+        "text": "В комплектации «Комфорт» - 854 409,60 ₽ · в комплектации «Делюкс» - 975 631 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p17_top_6_0057",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p17_p6_i1679",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p17_p6_i1679",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p17_p6_i1679",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "v4_p17_top_6_0057",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "v4_p17_top_6_0057",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "v4_p18_top_14_0046",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.2286,
+          "translateX": 48,
+          "translateY": 830,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p18_top_14_0046",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p18_top_14_0046",
+        "insertionIndex": 0,
+        "text": "Парус: В комплектации «Комфорт» - 499 748,04 ₽ · в комплектации «Делюкс» - 588 499,44 ₽\nВикинг: В комплектации «Комфорт» - 549 748,04 ₽ · в комплектации «Делюкс» - 652 499,44 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p18_top_14_0046",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p18_p14_i5207",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p18_p14_i5207",
+        "insertionIndex": 0,
+        "text": "Доставка, основание - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p18_p14_i5207",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "v4_p18_top_14_0046",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "v4_p18_top_14_0046",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    },
+    {
+      "updatePageElementTransform": {
+        "objectId": "v4_p19_top_12_0064",
+        "applyMode": "ABSOLUTE",
+        "transform": {
+          "scaleX": 4.910666666666667,
+          "scaleY": 0.2286,
+          "translateX": 48,
+          "translateY": 830,
+          "unit": "PT"
+        }
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p19_top_12_0064",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p19_top_12_0064",
+        "insertionIndex": 0,
+        "text": "Парус: В комплектации «Комфорт» - 597 536,02 ₽ · в комплектации «Делюкс» - 696 787,98 ₽\nВикинг: В комплектации «Комфорт» - 707 536,02 ₽ · в комплектации «Делюкс» - 806 787,98 ₽"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p19_top_12_0064",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 16,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "deleteText": {
+        "objectId": "v4_p19_p12_i4453",
+        "textRange": {
+          "type": "ALL"
+        }
+      }
+    },
+    {
+      "insertText": {
+        "objectId": "v4_p19_p12_i4453",
+        "insertionIndex": 0,
+        "text": "Доставка, основание, сантехника - отдельно"
+      }
+    },
+    {
+      "updateTextStyle": {
+        "objectId": "v4_p19_p12_i4453",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "fontFamily": "Verdana",
+          "fontSize": {
+            "magnitude": 10,
+            "unit": "PT"
+          },
+          "bold": false,
+          "foregroundColor": {
+            "opaqueColor": {
+              "rgbColor": {
+                "red": 0.14,
+                "green": 0.25,
+                "blue": 0.22
+              }
+            }
+          }
+        },
+        "fields": "fontFamily,fontSize,bold,foregroundColor"
+      }
+    },
+    {
+      "updateParagraphStyle": {
+        "objectId": "v4_p19_top_12_0064",
+        "textRange": {
+          "type": "ALL"
+        },
+        "style": {
+          "alignment": "START",
+          "lineSpacing": 110,
+          "spaceAbove": {
+            "magnitude": 0,
+            "unit": "PT"
+          },
+          "spaceBelow": {
+            "magnitude": 0,
+            "unit": "PT"
+          }
+        },
+        "fields": "alignment,lineSpacing,spaceAbove,spaceBelow"
+      }
+    },
+    {
+      "updateShapeProperties": {
+        "objectId": "v4_p19_top_12_0064",
+        "shapeProperties": {
+          "contentAlignment": "MIDDLE"
+        },
+        "fields": "contentAlignment"
+      }
+    }
+  ]
+}

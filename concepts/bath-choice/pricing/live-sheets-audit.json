@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "summaryRows": 24,
+  "calculatedPrices": 48,
+  "liveFormulaTotals": 48,
+  "detailRows": 956,
+  "errors": [],
+  "verifiedAt": "2026-11-04",
+  "source": "Google Sheets live cell values",
+  "sheets": [
+    "Планировки 3D · цены",
+    "Планировки 3D · состав"
+  ]
+}

@@ -14,9 +14,9 @@ export function quoteLayout(catalog,bill,packageId){
  function unresolved(code,detail){pending.push({code,detail});}
  function rate(sku){const value=catalog.items[sku]?.customerUnitCents?.[bill.model==='kvadro-house'?'house':'standard'];return amount(value)?value:null;}
  if(!Number.isInteger(base.roomCount))unresolved('ROOM_BASE_UNCONFIRMED',bill.model+' '+bill.size);
- else if(bill.roomCount<base.roomCount)unresolved('ROOM_BASE_EXCEEDS_DRAWING',base.roomCount+' > '+bill.roomCount);
+ else if(bill.roomCount<base.roomCount&&!catalog.unusedPackageAllowanceHasNoRefund)unresolved('ROOM_BASE_EXCEEDS_DRAWING',base.roomCount+' > '+bill.roomCount);
  else{
-  const quantity=bill.roomCount-base.roomCount;
+  const quantity=Math.max(0,bill.roomCount-base.roomCount);
   const unit=catalog.roomUnitCents[bill.model==='kvadro-house'?'house':'standard'];
   if(!amount(unit))unresolved('ROOM_RATE_MISSING','');
   else{known+=quantity*unit;lines.push({id:'rooms',quantity,unitCents:unit,totalCents:quantity*unit});}

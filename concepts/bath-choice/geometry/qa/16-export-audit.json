@@ -1,0 +1,20 @@
+{
+  "pass": true,
+  "plan": 16,
+  "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+  "assemblies": 20,
+  "movingParts": 11,
+  "stationaryParts": 449,
+  "collisionPairs": [],
+  "maximumBoundsErrorMm": 0.000508098159571091,
+  "worldSlideMm": [
+    -330.0,
+    0.0,
+    0.0
+  ],
+  "threeDifferentEmbeddedTextures": true,
+  "externalTextures": false,
+  "dimensionSha256": "7c7d4c23b278b7b813cc77bbe001a862acf34e5e05f02dddbc53b41a6da42003",
+  "glbSha256": "37fad9965ea424d4df695d9495b2a853c90294a347254e18eb3cdee740f61ac1",
+  "engineeringLoadApproval": false
+}

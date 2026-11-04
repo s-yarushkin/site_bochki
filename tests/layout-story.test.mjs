@@ -19,6 +19,16 @@ test('all 14 layouts describe their actual rooms without stove brands or applian
   assert.doesNotMatch(JSON.stringify(rooms),/ASTON|Термофор|2200|420\s*[×*]|687/,'human description '+n);
  }
 });
+
+test('all 19 final geometries have human room descriptions without assumed construction heights',()=>{
+ for(let n=1;n<=19;n++){
+  const source=JSON.parse(readFileSync(new URL('../concepts/bath-choice/geometry/specs/'+String(n).padStart(2,'0')+'.json',import.meta.url)));
+  const rooms=layoutOverview(source);
+  assert.equal(rooms.length,source.items.filter(i=>i.kind==='floor').length,'final rooms '+n);
+  assert.ok(rooms.every(r=>r.label&&r.description&&/м²$/.test(r.area)));
+  assert.doesNotMatch(JSON.stringify(rooms),/ASTON|Термофор|2200|высот[аы] стен|420\s*[×*]|687/,'final human copy '+n);
+ }
+});
 test('bedroom and sanitary layouts keep the relevant equipment in their descriptions',()=>{
  const rooms=layoutOverview(spec(9));
  assert.match(rooms.find(r=>r.kind==='bedroom').description,/спальное место/i);

@@ -1,0 +1,438 @@
+[
+  {
+    "number": 1,
+    "parent": 1,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300,
+      1810
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 2,
+    "parent": 2,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300.0,
+      2010.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 3,
+    "parent": 3,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС2",
+    "size_mm": [
+      400.0,
+      2010.0
+    ],
+    "offset_mm": [
+      -430.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 4,
+    "parent": 4,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300.0,
+      2010.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 5,
+    "parent": 5,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "shower",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300.0,
+      2010.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 6,
+    "parent": 6,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "СТ1",
+    "size_mm": [
+      300,
+      1355.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 7,
+    "parent": 7,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "wc",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      1800.0,
+      400.0
+    ],
+    "offset_mm": [
+      0,
+      430.0,
+      0
+    ]
+  },
+  {
+    "number": 8,
+    "parent": 8,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam",
+        "wash",
+        "wc"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      2200.0,
+      400.0
+    ],
+    "offset_mm": [
+      0,
+      430.0,
+      0
+    ]
+  },
+  {
+    "number": 9,
+    "parent": 9,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam",
+        "wash",
+        "wc",
+        "bedroom"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      1800.0,
+      400.0
+    ],
+    "offset_mm": [
+      0,
+      430.0,
+      0
+    ]
+  },
+  {
+    "number": 10,
+    "parent": 10,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      1800.0,
+      400.0
+    ],
+    "offset_mm": [
+      0,
+      430.0,
+      0
+    ]
+  },
+  {
+    "number": 11,
+    "parent": 11,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam",
+        "wash",
+        "wc",
+        "bedroom"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      1800.0,
+      400.0
+    ],
+    "offset_mm": [
+      0,
+      330.0,
+      0
+    ]
+  },
+  {
+    "number": 12,
+    "parent": 12,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "СТ1",
+    "size_mm": [
+      300,
+      1910
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 13,
+    "parent": 13,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300.0,
+      2310.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 14,
+    "parent": 14,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300,
+      2310
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 15,
+    "parent": 1,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300,
+      1810
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 16,
+    "parent": 2,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300.0,
+      2010.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 17,
+    "parent": 6,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "СТ1",
+    "size_mm": [
+      300,
+      1355.0
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 18,
+    "parent": 14,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "НС1",
+    "size_mm": [
+      300,
+      2310
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  },
+  {
+    "number": 19,
+    "parent": 12,
+    "route": {
+      "body_diameter_mm": 600,
+      "reachable_rooms": [
+        "lounge",
+        "wash",
+        "steam"
+      ],
+      "all_rooms_reachable": true
+    },
+    "sliding": "СТ1",
+    "size_mm": [
+      300,
+      1910
+    ],
+    "offset_mm": [
+      -330.0,
+      0,
+      0
+    ]
+  }
+]

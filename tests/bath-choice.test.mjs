@@ -5,6 +5,19 @@ import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} fro
 const captured=new URL('../.local/renewal-baseline/catalog-pricebook.json',import.meta.url);
 const book=JSON.parse(readFileSync(existsSync(captured)?captured:new URL('../web/data/catalog-pricebook.json',import.meta.url)));
 const plans=JSON.parse(readFileSync(new URL('../concepts/home-hero/layouts/index.json',import.meta.url))).plans.map(p=>[12,13].includes(p.number)?{...p,models:['parus','viking']}:p);
+const completePlans=JSON.parse(readFileSync(new URL('../concepts/bath-choice/geometry/index-draft.json',import.meta.url))).plans;
+
+test('the final 19 geometries cover every model and size without borrowing another size',()=>{
+ assert.equal(completePlans.length,19);
+ for(const [model,data] of Object.entries(book.r85.models))for(const size of Object.keys(data.sizes)){
+  const state=normalizeChoice(book,completePlans,{model,size});
+  const p=completePlans.find(p=>p.id===state.layout);
+  assert.ok(p,model+' '+size);assert.equal(p.size,size);assert.ok(p.models.includes(model));
+ }
+ assert.equal(normalizeChoice(book,completePlans,{model:'kvadro',size:'450'}).layout,'dp3d-15');
+ assert.equal(normalizeChoice(book,completePlans,{model:'kvadro-house',size:'5x4'}).layout,'dp3d-17');
+ assert.equal(normalizeChoice(book,completePlans,{model:'viking',size:'550'}).layout,'dp3d-19');
+});
 
 test('House width × length labels match its floor plans while preserving price keys',()=>{
  const state=normalizeChoice(book,plans,{model:'kvadro-house',size:'6x5'});

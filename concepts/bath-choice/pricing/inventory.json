@@ -1,0 +1,178 @@
+[
+  {
+    "id": "dp3d-01",
+    "number": 1,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 2,
+    "items": 14
+  },
+  {
+    "id": "dp3d-02",
+    "number": 2,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 2,
+    "items": 13
+  },
+  {
+    "id": "dp3d-03",
+    "number": 3,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 2,
+    "items": 14
+  },
+  {
+    "id": "dp3d-04",
+    "number": 4,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 3,
+    "items": 18
+  },
+  {
+    "id": "dp3d-05",
+    "number": 5,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 3,
+    "items": 15
+  },
+  {
+    "id": "dp3d-06",
+    "number": 6,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 3,
+    "items": 20
+  },
+  {
+    "id": "dp3d-07",
+    "number": 7,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 4,
+    "items": 24
+  },
+  {
+    "id": "dp3d-08",
+    "number": 8,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 4,
+    "items": 25
+  },
+  {
+    "id": "dp3d-09",
+    "number": 9,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 5,
+    "items": 26
+  },
+  {
+    "id": "dp3d-10",
+    "number": 10,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 3,
+    "items": 18
+  },
+  {
+    "id": "dp3d-11",
+    "number": 11,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 5,
+    "items": 26
+  },
+  {
+    "id": "dp3d-12",
+    "number": 12,
+    "models": [
+      "parus",
+      "viking"
+    ],
+    "roomCount": 3,
+    "items": 22
+  },
+  {
+    "id": "dp3d-13",
+    "number": 13,
+    "models": [
+      "parus",
+      "viking"
+    ],
+    "roomCount": 3,
+    "items": 21
+  },
+  {
+    "id": "dp3d-14",
+    "number": 14,
+    "models": [
+      "parus",
+      "viking"
+    ],
+    "roomCount": 2,
+    "items": 16
+  },
+  {
+    "id": "dp3d-15",
+    "number": 15,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 2,
+    "items": 14
+  },
+  {
+    "id": "dp3d-16",
+    "number": 16,
+    "models": [
+      "kvadro"
+    ],
+    "roomCount": 2,
+    "items": 13
+  },
+  {
+    "id": "dp3d-17",
+    "number": 17,
+    "models": [
+      "kvadro-house"
+    ],
+    "roomCount": 3,
+    "items": 20
+  },
+  {
+    "id": "dp3d-18",
+    "number": 18,
+    "models": [
+      "parus",
+      "viking"
+    ],
+    "roomCount": 2,
+    "items": 16
+  },
+  {
+    "id": "dp3d-19",
+    "number": 19,
+    "models": [
+      "parus",
+      "viking"
+    ],
+    "roomCount": 3,
+    "items": 22
+  }
+]

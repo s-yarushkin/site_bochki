@@ -2,7 +2,7 @@
 <html lang="ru"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#203c30"><title>Выберите свою баню · ДачаПар</title>
 <link rel="preload" href="/assets/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/r101/site.css"><link rel="stylesheet" href="/home-hero/hero.css"><link rel="stylesheet" href="/quiz.css"><link rel="stylesheet" href="/choice/choice.css"></head>
+<link rel="stylesheet" href="/r101/site.css"><link rel="stylesheet" href="/home-hero/hero.css"><link rel="stylesheet" href="/quiz.css"><link rel="stylesheet" href="/choice/choice.css"><link rel="stylesheet" href="/choice/ritual.css"></head>
 <body class="hh-page choice-page">
 <a class="skip" href="#bath-model">К выбору бани</a>
 <header class="site-header"><a class="wordmark" href="#main" aria-label="ДачаПар, на первый экран">дача пар</a><nav class="desktop-nav" aria-label="Основная навигация"><a href="#bath-model">Выбрать баню</a><a href="#packages">Комплектации</a><a href="#care">Как мы заботимся</a></nav><a class="phone" href="tel:+79517349999">+7 (951) 734-99-99</a><button class="menu-button" aria-expanded="false" aria-controls="choice-menu">Меню</button></header>
@@ -20,11 +20,10 @@
 <div class="choice-gallery" data-gallery aria-label="Фотографии выбранной модели"></div>
 </section>
 <section class="choice-section choice-config" id="packages" aria-labelledby="package-title">
-<div class="choice-heading"><div><p class="choice-eyebrow">Продумано для вашего отдыха</p><h2 id="package-title">Выберите размер и комплектацию</h2></div></div>
+<h2 id="package-title" class="visually-hidden">Выберите размер и комплектацию</h2>
 <fieldset class="choice-sizes"><legend>Размер бани</legend><div data-sizes></div></fieldset>
 <fieldset class="choice-packages"><legend class="visually-hidden">Выберите комплектацию</legend><div class="choice-package-grid" data-package-cards></div></fieldset>
-<div class="choice-price-actions"><button class="choice-text-button" data-compare>Развернуть сравнение комплектаций <span aria-hidden="true">↗</span></button><p>Доставку и основание рассчитаем для вашего участка.</p></div>
-<div class="choice-quiz-nudge"><p>Пока сложно определиться?</p><button class="choice-text-button" data-start-quiz>Поможем выбрать за три шага ↗</button></div>
+<div class="choice-price-actions"><button class="choice-text-button" data-compare>Развернуть сравнение комплектаций <span aria-hidden="true">↗</span></button><button class="choice-text-button" data-start-quiz>Помогите выбрать ↗</button><p>Доставку и основание рассчитаем для вашего участка.</p></div>
 </section>
 
 <section class="choice-section choice-plans" id="plans" aria-labelledby="plans-title">
@@ -33,11 +32,7 @@
 <div class="choice-plan-empty" data-plan-empty hidden><h3>Продумайте баню вместе с нами</h3><p>Расскажите, как вы хотите отдыхать. Подберём расположение парной, мебели и нужных помещений.</p></div>
 <div class="choice-request-bar"><div><strong data-selection-summary></strong><span data-request-description>Подготовим предложение по выбранной планировке и вашему участку.</span></div><button class="choice-primary" data-plan-request>Запросить цену этой планировки и комплектации <span aria-hidden="true">↗</span></button></div>
 </section>
-<section class="choice-ritual" aria-labelledby="ritual-title"><div class="choice-section"><p class="choice-eyebrow">Тепло, которое остаётся с вами</p><h2 id="ritual-title">У каждого вечера<br>свой ритуал</h2><div class="choice-ritual-grid">
-<figure><img src="/choice/assets/ritual-stones-960.webp" width="960" height="640" loading="lazy" alt="Камни банной печи"><figcaption>Тепло камней</figcaption></figure>
-<figure><img src="/choice/assets/ritual-oak-960.webp" width="960" height="640" loading="lazy" alt="Запаренный дубовый веник"><figcaption>Аромат веника</figcaption></figure>
-<figure><img src="/choice/assets/ritual-rest-960.webp" width="960" height="640" loading="lazy" alt="Отдых на полке с хвойными ветками"><figcaption>Минуты только для себя</figcaption></figure>
-</div></div></section>
+{{ritual}}
 <section class="choice-section choice-install" id="installation" aria-labelledby="installation-title"><div class="choice-heading"><div><p class="choice-eyebrow">Берём организацию на себя</p><h2 id="installation-title">От выбора — к первой растопке</h2></div></div>
 <div class="choice-steps"><article><span>1</span><h3>Поможем выбрать</h3><p>Обсудим модель, размер, комплектацию и цвет. Подготовим расчёт для вашего участка.</p></article><article><span>2</span><h3>Изготовим</h3><p>Средний срок изготовления — 25 календарных дней.</p></article><article><span>3</span><h3>Доставим и установим</h3><p data-delivery></p></article></div>
 <div class="choice-access"><div><h3>К месту установки не проехать?</h3><p>Привезём подготовленный комплект и соберём баню на участке. В среднем сборка занимает 2–3 дня — зависит от размера и конфигурации.</p></div><div><h3>Подскажем по основанию</h3><p>Бесплатно проконсультируем. Если нужна помощь с работами — подготовим расчёт и организуем их.</p><button class="choice-text-button" data-foundation>Обсудить мой участок ↗</button></div></div>
@@ -49,5 +44,5 @@
 <section class="choice-tea" aria-labelledby="tea-title"><img src="/choice/assets/tea-1600.webp" width="1600" height="1067" loading="lazy" alt="Чай у окна после банного вечера"><div class="choice-tea-copy"><p class="choice-eyebrow">Время для себя и близких</p><h2 id="tea-title">Пусть у дачи появится<br>свой банный вечер</h2><p>Расскажите, как вы любите отдыхать.<br>Поможем найти вашу баню.</p><button class="choice-primary" data-start-quiz>Подобрать баню для моей дачи ↗</button></div></section>
 </main><footer class="choice-footer"><a class="wordmark" href="#main">дача пар</a><p>Производство — Вологда. Доставка в Москву и Подмосковье и другие регионы.</p><a href="tel:+79517349999">+7 (951) 734-99-99</a><div><a href="/privacy.html">Политика обработки данных</a><a href="/consent.html">Согласие на обработку</a></div></footer>
 <p class="choice-feedback" data-quiz-feedback role="status" hidden></p>
-<script type="module" src="/quiz.mjs"></script><script type="module" src="/choice/app.mjs"></script>
+<script type="module" src="/quiz.mjs"></script><script type="module" src="/choice/app.mjs"></script><script type="module" src="/choice/ritual.mjs"></script>
 </body></html>

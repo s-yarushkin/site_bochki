@@ -12,3 +12,4 @@ api/server/r85-public-pricebook.mjs
 
 __pycache__/
 *.pyc
+*.blend1

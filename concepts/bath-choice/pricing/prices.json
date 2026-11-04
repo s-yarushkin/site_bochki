@@ -1,0 +1,271 @@
+{
+  "version": "layout-pricing-v4-2026-11-04",
+  "publicationApproved": false,
+  "scope": "Bath, selected planning and priced equipment; exclusions are in each quote",
+  "prices": [
+    {
+      "id": "dp3d-01-kvadro",
+      "geometryId": "dp3d-01",
+      "number": 1,
+      "model": "kvadro",
+      "size": "400",
+      "rooms": 2,
+      "dimensionSha256": "fd635634cd452db8368aca8cd74404c7a808d84cb874bc9719677c3da38d0c1c",
+      "comfortCents": 43108212,
+      "deluxeCents": 52224972
+    },
+    {
+      "id": "dp3d-02-kvadro",
+      "geometryId": "dp3d-02",
+      "number": 2,
+      "model": "kvadro",
+      "size": "500",
+      "rooms": 2,
+      "dimensionSha256": "71708517c652b35e9441b7a3296c8be00580817d32549a39ed117752d2505ae1",
+      "comfortCents": 50283240,
+      "deluxeCents": 59700000
+    },
+    {
+      "id": "dp3d-03-kvadro",
+      "geometryId": "dp3d-03",
+      "number": 3,
+      "model": "kvadro",
+      "size": "600",
+      "rooms": 2,
+      "dimensionSha256": "c4902df819f9a930565e65450efc4d9b6b9abad812a829b3b101281fd6252914",
+      "comfortCents": 55583128,
+      "deluxeCents": 64658268
+    },
+    {
+      "id": "dp3d-04-kvadro",
+      "geometryId": "dp3d-04",
+      "number": 4,
+      "model": "kvadro",
+      "size": "600",
+      "rooms": 3,
+      "dimensionSha256": "7b88f0a4d5412202e41e9f902161b37227d6ae2398576ba6c00c3305b9401c55",
+      "comfortCents": 58237066,
+      "deluxeCents": 67312206
+    },
+    {
+      "id": "dp3d-05-kvadro",
+      "geometryId": "dp3d-05",
+      "number": 5,
+      "model": "kvadro",
+      "size": "600",
+      "rooms": 3,
+      "dimensionSha256": "5549c1b19ce96aa33f908b81a184d19a1010bc3b75eb4ab4718fbe601c93f46e",
+      "comfortCents": 56395558,
+      "deluxeCents": 66012318
+    },
+    {
+      "id": "dp3d-06-kvadro-house",
+      "geometryId": "dp3d-06",
+      "number": 6,
+      "model": "kvadro-house",
+      "size": "4x4",
+      "rooms": 3,
+      "dimensionSha256": "21310f53c458c0143464178f112140e169cf967dc758f023307723c22ca88301",
+      "comfortCents": 74440960,
+      "deluxeCents": 85963100
+    },
+    {
+      "id": "dp3d-07-kvadro-house",
+      "geometryId": "dp3d-07",
+      "number": 7,
+      "model": "kvadro-house",
+      "size": "6x5",
+      "rooms": 4,
+      "dimensionSha256": "dd3320096287536d4360505ced8f47667aee86f22774847d556bce958f5ce4be",
+      "comfortCents": 98455868,
+      "deluxeCents": 112178008
+    },
+    {
+      "id": "dp3d-08-kvadro-house",
+      "geometryId": "dp3d-08",
+      "number": 8,
+      "model": "kvadro-house",
+      "size": "6x6",
+      "rooms": 4,
+      "dimensionSha256": "671c2ea72580ad1672354bfdf117e487f86cb2d2aa7ed4df98db8f19cd1b92d0",
+      "comfortCents": 108127344,
+      "deluxeCents": 123205056
+    },
+    {
+      "id": "dp3d-09-kvadro-house",
+      "geometryId": "dp3d-09",
+      "number": 9,
+      "model": "kvadro-house",
+      "size": "6x6",
+      "rooms": 5,
+      "dimensionSha256": "bd29f76067492ab10008389d72f1b216496521355c59b219578944afb310cdec",
+      "comfortCents": 106530038,
+      "deluxeCents": 121429964
+    },
+    {
+      "id": "dp3d-10-kvadro-house",
+      "geometryId": "dp3d-10",
+      "number": 10,
+      "model": "kvadro-house",
+      "size": "6x4",
+      "rooms": 3,
+      "dimensionSha256": "f412124e3ce826f17b2e10f269aba7b5845beff3c0f6c1ac6cbd4013b2b1966a",
+      "comfortCents": 89374244,
+      "deluxeCents": 102096384
+    },
+    {
+      "id": "dp3d-11-kvadro-house",
+      "geometryId": "dp3d-11",
+      "number": 11,
+      "model": "kvadro-house",
+      "size": "6x6",
+      "rooms": 5,
+      "dimensionSha256": "a2baa73311a8b1802faff40db2199d77d8533fd67a4a798823a772dcc74f0fe9",
+      "comfortCents": 106530038,
+      "deluxeCents": 121429964
+    },
+    {
+      "id": "dp3d-12-parus",
+      "geometryId": "dp3d-12",
+      "number": 12,
+      "model": "parus",
+      "size": "500",
+      "rooms": 3,
+      "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+      "comfortCents": 58253602,
+      "deluxeCents": 67978798
+    },
+    {
+      "id": "dp3d-12-viking",
+      "geometryId": "dp3d-12",
+      "number": 12,
+      "model": "viking",
+      "size": "500",
+      "rooms": 3,
+      "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+      "comfortCents": 69253602,
+      "deluxeCents": 78978798
+    },
+    {
+      "id": "dp3d-13-parus",
+      "geometryId": "dp3d-13",
+      "number": 13,
+      "model": "parus",
+      "size": "600",
+      "rooms": 3,
+      "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+      "comfortCents": 60861926,
+      "deluxeCents": 70345502
+    },
+    {
+      "id": "dp3d-13-viking",
+      "geometryId": "dp3d-13",
+      "number": 13,
+      "model": "viking",
+      "size": "600",
+      "rooms": 3,
+      "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+      "comfortCents": 71861926,
+      "deluxeCents": 81345502
+    },
+    {
+      "id": "dp3d-14-parus",
+      "geometryId": "dp3d-14",
+      "number": 14,
+      "model": "parus",
+      "size": "400",
+      "rooms": 2,
+      "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+      "comfortCents": 47974804,
+      "deluxeCents": 56649944
+    },
+    {
+      "id": "dp3d-14-viking",
+      "geometryId": "dp3d-14",
+      "number": 14,
+      "model": "viking",
+      "size": "400",
+      "rooms": 2,
+      "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+      "comfortCents": 50974804,
+      "deluxeCents": 61049944
+    },
+    {
+      "id": "dp3d-15-kvadro",
+      "geometryId": "dp3d-15",
+      "number": 15,
+      "model": "kvadro",
+      "size": "450",
+      "rooms": 2,
+      "dimensionSha256": "4251cfb7a8e634b6f284db4e0123c2c544ef0b8e6ada6033a309e6deacd3d727",
+      "comfortCents": 46108212,
+      "deluxeCents": 55324972
+    },
+    {
+      "id": "dp3d-16-kvadro",
+      "geometryId": "dp3d-16",
+      "number": 16,
+      "model": "kvadro",
+      "size": "550",
+      "rooms": 2,
+      "dimensionSha256": "7c7d4c23b278b7b813cc77bbe001a862acf34e5e05f02dddbc53b41a6da42003",
+      "comfortCents": 52783240,
+      "deluxeCents": 62300000
+    },
+    {
+      "id": "dp3d-17-kvadro-house",
+      "geometryId": "dp3d-17",
+      "number": 17,
+      "model": "kvadro-house",
+      "size": "5x4",
+      "rooms": 3,
+      "dimensionSha256": "ed4c261092dfc122f2936b336b58ef657b46bde5cef0aa95265b339550b9f22f",
+      "comfortCents": 85440960,
+      "deluxeCents": 97563100
+    },
+    {
+      "id": "dp3d-18-parus",
+      "geometryId": "dp3d-18",
+      "number": 18,
+      "model": "parus",
+      "size": "450",
+      "rooms": 2,
+      "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+      "comfortCents": 49974804,
+      "deluxeCents": 58849944
+    },
+    {
+      "id": "dp3d-18-viking",
+      "geometryId": "dp3d-18",
+      "number": 18,
+      "model": "viking",
+      "size": "450",
+      "rooms": 2,
+      "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+      "comfortCents": 54974804,
+      "deluxeCents": 65249944
+    },
+    {
+      "id": "dp3d-19-parus",
+      "geometryId": "dp3d-19",
+      "number": 19,
+      "model": "parus",
+      "size": "550",
+      "rooms": 3,
+      "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+      "comfortCents": 59753602,
+      "deluxeCents": 69678798
+    },
+    {
+      "id": "dp3d-19-viking",
+      "geometryId": "dp3d-19",
+      "number": 19,
+      "model": "viking",
+      "size": "550",
+      "rooms": 3,
+      "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+      "comfortCents": 70753602,
+      "deluxeCents": 80678798
+    }
+  ]
+}

@@ -1,0 +1,3518 @@
+{
+  "version": "layout-pricing-v4-2026-11-04",
+  "approval": "internal_calculation",
+  "sourceUrl": "https://docs.google.com/spreadsheets/d/1tDbbyKBW5opBRLWk_twPTryKYm9wgaezEcI5hTla06o/edit",
+  "unusedPackageAllowanceHasNoRefund": true,
+  "roomUnitCents": {
+    "standard": 1354050,
+    "house": 1481550
+  },
+  "items": {
+    "BASE_1": {
+      "row": 2,
+      "label": "Квадро 4 м",
+      "unit": "баня",
+      "rrcRub": 294000.0,
+      "customerUnitCents": {
+        "standard": 31847256,
+        "house": 34846056
+      },
+      "source": "РРЦ!E2"
+    },
+    "BASE_2": {
+      "row": 3,
+      "label": "Квадро 4,5 м",
+      "unit": "баня",
+      "rrcRub": 318000.0,
+      "customerUnitCents": {
+        "standard": 34447032,
+        "house": 37690632
+      },
+      "source": "РРЦ!E3"
+    },
+    "BASE_3": {
+      "row": 4,
+      "label": "Квадро 5 м",
+      "unit": "баня",
+      "rrcRub": 355000.0,
+      "customerUnitCents": {
+        "standard": 38455020,
+        "house": 42076020
+      },
+      "source": "РРЦ!E4"
+    },
+    "BASE_4": {
+      "row": 5,
+      "label": "Квадро 5,5 м",
+      "unit": "баня",
+      "rrcRub": 371000.0,
+      "customerUnitCents": {
+        "standard": 40188204,
+        "house": 43972404
+      },
+      "source": "РРЦ!E5"
+    },
+    "BASE_5": {
+      "row": 6,
+      "label": "Квадро 6 м",
+      "unit": "баня",
+      "rrcRub": 381000.0,
+      "customerUnitCents": {
+        "standard": 41271444,
+        "house": 45157644
+      },
+      "source": "РРЦ!E6"
+    },
+    "BASE_6": {
+      "row": 7,
+      "label": "Викинг 4 м",
+      "unit": "баня",
+      "rrcRub": 339000.0,
+      "customerUnitCents": {
+        "standard": 36721836,
+        "house": 40179636
+      },
+      "source": "РРЦ!E7"
+    },
+    "BASE_7": {
+      "row": 8,
+      "label": "Викинг 4,5 м",
+      "unit": "баня",
+      "rrcRub": 369000.0,
+      "customerUnitCents": {
+        "standard": 39971556,
+        "house": 43735356
+      },
+      "source": "РРЦ!E8"
+    },
+    "BASE_8": {
+      "row": 9,
+      "label": "Викинг 5 м",
+      "unit": "баня",
+      "rrcRub": 455000.0,
+      "customerUnitCents": {
+        "standard": 49287420,
+        "house": 53928420
+      },
+      "source": "РРЦ!E9"
+    },
+    "BASE_9": {
+      "row": 10,
+      "label": "Викинг 5,5 м",
+      "unit": "баня",
+      "rrcRub": 473000.0,
+      "customerUnitCents": {
+        "standard": 51237252,
+        "house": 56061852
+      },
+      "source": "РРЦ!E10"
+    },
+    "BASE_10": {
+      "row": 11,
+      "label": "Викинг 6 м",
+      "unit": "баня",
+      "rrcRub": 487000.0,
+      "customerUnitCents": {
+        "standard": 52753788,
+        "house": 57721188
+      },
+      "source": "РРЦ!E11"
+    },
+    "BASE_11": {
+      "row": 12,
+      "label": "Парус 4 м",
+      "unit": "баня",
+      "rrcRub": 339000.0,
+      "customerUnitCents": {
+        "standard": 36721836,
+        "house": 40179636
+      },
+      "source": "РРЦ!E12"
+    },
+    "BASE_12": {
+      "row": 13,
+      "label": "Парус 4,5 м",
+      "unit": "баня",
+      "rrcRub": 358000.0,
+      "customerUnitCents": {
+        "standard": 38779992,
+        "house": 42431592
+      },
+      "source": "РРЦ!E13"
+    },
+    "BASE_13": {
+      "row": 14,
+      "label": "Парус 5 м",
+      "unit": "баня",
+      "rrcRub": 390000.0,
+      "customerUnitCents": {
+        "standard": 42246360,
+        "house": 46224360
+      },
+      "source": "РРЦ!E14"
+    },
+    "BASE_14": {
+      "row": 15,
+      "label": "Парус 5,5 м",
+      "unit": "баня",
+      "rrcRub": 407000.0,
+      "customerUnitCents": {
+        "standard": 44087868,
+        "house": 48239268
+      },
+      "source": "РРЦ!E15"
+    },
+    "BASE_15": {
+      "row": 16,
+      "label": "Парус 6 м",
+      "unit": "баня",
+      "rrcRub": 417000.0,
+      "customerUnitCents": {
+        "standard": 45171108,
+        "house": 49424508
+      },
+      "source": "РРЦ!E16"
+    },
+    "BASE_16": {
+      "row": 17,
+      "label": "Квадро Хаус 4×4 м",
+      "unit": "баня",
+      "rrcRub": 511000.0,
+      "customerUnitCents": {
+        "standard": 55353564,
+        "house": 60565764
+      },
+      "source": "РРЦ!E17"
+    },
+    "BASE_17": {
+      "row": 18,
+      "label": "Квадро Хаус 5×4 м",
+      "unit": "баня",
+      "rrcRub": 599000.0,
+      "customerUnitCents": {
+        "standard": 64886076,
+        "house": 70995876
+      },
+      "source": "РРЦ!E18"
+    },
+    "BASE_18": {
+      "row": 19,
+      "label": "Квадро Хаус 6×4 м",
+      "unit": "баня",
+      "rrcRub": 637000.0,
+      "customerUnitCents": {
+        "standard": 69002388,
+        "house": 75499788
+      },
+      "source": "РРЦ!E19"
+    },
+    "BASE_19": {
+      "row": 20,
+      "label": "Квадро Хаус 6×5 м",
+      "unit": "баня",
+      "rrcRub": 692000.0,
+      "customerUnitCents": {
+        "standard": 74960208,
+        "house": 82018608
+      },
+      "source": "РРЦ!E20"
+    },
+    "BASE_20": {
+      "row": 21,
+      "label": "Квадро Хаус 6×6 м",
+      "unit": "баня",
+      "rrcRub": 748000.0,
+      "customerUnitCents": {
+        "standard": 81026352,
+        "house": 88655952
+      },
+      "source": "РРЦ!E21"
+    },
+    "OPT_14": {
+      "row": 22,
+      "label": "Стеклянная дверь 700×1700 мм, 3 петли",
+      "unit": "шт",
+      "rrcRub": 9000.0,
+      "customerUnitCents": {
+        "standard": 974916,
+        "house": 1066716
+      },
+      "source": "РРЦ!E22"
+    },
+    "OPT_15": {
+      "row": 23,
+      "label": "Железная входная дверь 700×1700",
+      "unit": "шт",
+      "rrcRub": 19000.0,
+      "customerUnitCents": {
+        "standard": 2058156,
+        "house": 2251956
+      },
+      "source": "РРЦ!E23"
+    },
+    "OPT_16": {
+      "row": 24,
+      "label": "Дверь ПВХ 700×1800 / 800×1700",
+      "unit": "шт",
+      "rrcRub": 19500.0,
+      "customerUnitCents": {
+        "standard": 2112318,
+        "house": 2311218
+      },
+      "source": "РРЦ!E24"
+    },
+    "OPT_17": {
+      "row": 25,
+      "label": "Дверь ПВХ 800×1800",
+      "unit": "шт",
+      "rrcRub": 20000.0,
+      "customerUnitCents": {
+        "standard": 2166480,
+        "house": 2370480
+      },
+      "source": "РРЦ!E25"
+    },
+    "OPT_18": {
+      "row": 26,
+      "label": "Дверь ПВХ 800×1900",
+      "unit": "шт",
+      "rrcRub": 20500.0,
+      "customerUnitCents": {
+        "standard": 2220642,
+        "house": 2429742
+      },
+      "source": "РРЦ!E26"
+    },
+    "OPT_19": {
+      "row": 27,
+      "label": "Дверь ПВХ 900×1800",
+      "unit": "шт",
+      "rrcRub": 20500.0,
+      "customerUnitCents": {
+        "standard": 2220642,
+        "house": 2429742
+      },
+      "source": "РРЦ!E27"
+    },
+    "OPT_20": {
+      "row": 28,
+      "label": "Две двери ПВХ 1400×1700, белый пластик",
+      "unit": "компл.",
+      "rrcRub": 37500.0,
+      "customerUnitCents": {
+        "standard": 4062150,
+        "house": 4444650
+      },
+      "source": "РРЦ!E28"
+    },
+    "OPT_21": {
+      "row": 29,
+      "label": "Две двери ПВХ 1400×1800, белый пластик",
+      "unit": "компл.",
+      "rrcRub": 39000.0,
+      "customerUnitCents": {
+        "standard": 4224636,
+        "house": 4622436
+      },
+      "source": "РРЦ!E29"
+    },
+    "OPT_22": {
+      "row": 30,
+      "label": "Дверь ПВХ 700×1800 + окно 1800×1800",
+      "unit": "компл.",
+      "rrcRub": 41000.0,
+      "customerUnitCents": {
+        "standard": 4441284,
+        "house": 4859484
+      },
+      "source": "РРЦ!E30"
+    },
+    "OPT_23": {
+      "row": 31,
+      "label": "Тонировка зеркальная двери или окна (+30%)",
+      "unit": "%",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E31"
+    },
+    "OPT_24": {
+      "row": 32,
+      "label": "Ламинация окна или двери, одна сторона (+30%)",
+      "unit": "%",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E32"
+    },
+    "OPT_25": {
+      "row": 33,
+      "label": "Форточка 30×30 / 30×40 см",
+      "unit": "шт",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E33"
+    },
+    "OPT_26": {
+      "row": 34,
+      "label": "Окно в деревянной раме 60×60, открывающееся",
+      "unit": "шт",
+      "rrcRub": 4000.0,
+      "customerUnitCents": {
+        "standard": 433296,
+        "house": 474096
+      },
+      "source": "РРЦ!E34"
+    },
+    "OPT_27": {
+      "row": 35,
+      "label": "Окно в деревянной раме 60×80, открывающееся",
+      "unit": "шт",
+      "rrcRub": 4500.0,
+      "customerUnitCents": {
+        "standard": 487458,
+        "house": 533358
+      },
+      "source": "РРЦ!E35"
+    },
+    "OPT_28": {
+      "row": 36,
+      "label": "ПВХ 600×800 П/О",
+      "unit": "шт",
+      "rrcRub": 11000.0,
+      "customerUnitCents": {
+        "standard": 1191564,
+        "house": 1303764
+      },
+      "source": "РРЦ!E36"
+    },
+    "OPT_29": {
+      "row": 37,
+      "label": "ПВХ 800×400, фрамуга",
+      "unit": "шт",
+      "rrcRub": 8000.0,
+      "customerUnitCents": {
+        "standard": 866592,
+        "house": 948192
+      },
+      "source": "РРЦ!E37"
+    },
+    "OPT_30": {
+      "row": 38,
+      "label": "ПВХ 900×500, фрамуга",
+      "unit": "шт",
+      "rrcRub": 9000.0,
+      "customerUnitCents": {
+        "standard": 974916,
+        "house": 1066716
+      },
+      "source": "РРЦ!E38"
+    },
+    "OPT_31": {
+      "row": 39,
+      "label": "ПВХ 900×900 П/О",
+      "unit": "шт",
+      "rrcRub": 12500.0,
+      "customerUnitCents": {
+        "standard": 1354050,
+        "house": 1481550
+      },
+      "source": "РРЦ!E39"
+    },
+    "OPT_32": {
+      "row": 40,
+      "label": "ПВХ 1000×700, фрамуга",
+      "unit": "шт",
+      "rrcRub": 11000.0,
+      "customerUnitCents": {
+        "standard": 1191564,
+        "house": 1303764
+      },
+      "source": "РРЦ!E40"
+    },
+    "OPT_33": {
+      "row": 41,
+      "label": "ПВХ 1200×700, фрамуга",
+      "unit": "шт",
+      "rrcRub": 12500.0,
+      "customerUnitCents": {
+        "standard": 1354050,
+        "house": 1481550
+      },
+      "source": "РРЦ!E41"
+    },
+    "OPT_34": {
+      "row": 42,
+      "label": "ПВХ 1200×700, створка 450 мм П/О",
+      "unit": "шт",
+      "rrcRub": 13000.0,
+      "customerUnitCents": {
+        "standard": 1408212,
+        "house": 1540812
+      },
+      "source": "РРЦ!E42"
+    },
+    "OPT_35": {
+      "row": 43,
+      "label": "ПВХ 1200×900, створка 600 мм, 2 створки П/О",
+      "unit": "шт",
+      "rrcRub": 18500.0,
+      "customerUnitCents": {
+        "standard": 2003994,
+        "house": 2192694
+      },
+      "source": "РРЦ!E43"
+    },
+    "OPT_36": {
+      "row": 44,
+      "label": "ПВХ 1400×700, откидное",
+      "unit": "шт",
+      "rrcRub": 13000.0,
+      "customerUnitCents": {
+        "standard": 1408212,
+        "house": 1540812
+      },
+      "source": "РРЦ!E44"
+    },
+    "OPT_37": {
+      "row": 45,
+      "label": "ПВХ 1400×800, откидное",
+      "unit": "шт",
+      "rrcRub": 14500.0,
+      "customerUnitCents": {
+        "standard": 1570698,
+        "house": 1718598
+      },
+      "source": "РРЦ!E45"
+    },
+    "OPT_38": {
+      "row": 46,
+      "label": "ПВХ 1400×1000, створка 700 мм П/О",
+      "unit": "шт",
+      "rrcRub": 15500.0,
+      "customerUnitCents": {
+        "standard": 1679022,
+        "house": 1837122
+      },
+      "source": "РРЦ!E46"
+    },
+    "OPT_39": {
+      "row": 47,
+      "label": "ПВХ 1500×900, фрамуга",
+      "unit": "шт",
+      "rrcRub": 15800.0,
+      "customerUnitCents": {
+        "standard": 1711519,
+        "house": 1872679
+      },
+      "source": "РРЦ!E47"
+    },
+    "OPT_40": {
+      "row": 48,
+      "label": "ПВХ 1600×900, фрамуга",
+      "unit": "шт",
+      "rrcRub": 20000.0,
+      "customerUnitCents": {
+        "standard": 2166480,
+        "house": 2370480
+      },
+      "source": "РРЦ!E48"
+    },
+    "OPT_41": {
+      "row": 49,
+      "label": "ПВХ 1800×1000, фрамуга",
+      "unit": "шт",
+      "rrcRub": 22500.0,
+      "customerUnitCents": {
+        "standard": 2437290,
+        "house": 2666790
+      },
+      "source": "РРЦ!E49"
+    },
+    "OPT_42": {
+      "row": 50,
+      "label": "ПВХ 1800×1800, глухое",
+      "unit": "шт",
+      "rrcRub": 24500.0,
+      "customerUnitCents": {
+        "standard": 2653938,
+        "house": 2903838
+      },
+      "source": "РРЦ!E50"
+    },
+    "OPT_43": {
+      "row": 51,
+      "label": "ПВХ 2000×1000, глухое",
+      "unit": "шт",
+      "rrcRub": 18000.0,
+      "customerUnitCents": {
+        "standard": 1949832,
+        "house": 2133432
+      },
+      "source": "РРЦ!E51"
+    },
+    "OPT_44": {
+      "row": 52,
+      "label": "ПВХ 2000×1800, верхняя створка 450 мм",
+      "unit": "шт",
+      "rrcRub": 39000.0,
+      "customerUnitCents": {
+        "standard": 4224636,
+        "house": 4622436
+      },
+      "source": "РРЦ!E52"
+    },
+    "OPT_45": {
+      "row": 53,
+      "label": "Дополнительный полок из осины, ширина 50 см",
+      "unit": "шт",
+      "rrcRub": 5000.0,
+      "customerUnitCents": {
+        "standard": 541620,
+        "house": 592620
+      },
+      "source": "РРЦ!E53"
+    },
+    "OPT_46": {
+      "row": 54,
+      "label": "Выдвижной нижний полок",
+      "unit": "шт",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E54"
+    },
+    "OPT_47": {
+      "row": 55,
+      "label": "Расширение полка из осины на 10 см",
+      "unit": "шт",
+      "rrcRub": 1500.0,
+      "customerUnitCents": {
+        "standard": 162486,
+        "house": 177786
+      },
+      "source": "РРЦ!E55"
+    },
+    "OPT_48": {
+      "row": 56,
+      "label": "Подшивка между полками",
+      "unit": "шт",
+      "rrcRub": 3500.0,
+      "customerUnitCents": {
+        "standard": 379134,
+        "house": 414834
+      },
+      "source": "РРЦ!E56"
+    },
+    "OPT_49": {
+      "row": 57,
+      "label": "Ограждение печи",
+      "unit": "шт",
+      "rrcRub": 5000.0,
+      "customerUnitCents": {
+        "standard": 541620,
+        "house": 592620
+      },
+      "source": "РРЦ!E57"
+    },
+    "OPT_50": {
+      "row": 58,
+      "label": "«Второе дыхание»",
+      "unit": "шт",
+      "rrcRub": 18000.0,
+      "customerUnitCents": {
+        "standard": 1949832,
+        "house": 2133432
+      },
+      "source": "РРЦ!E58"
+    },
+    "OPT_51": {
+      "row": 59,
+      "label": "Обливное устройство «Обливаста» с подключением",
+      "unit": "шт",
+      "rrcRub": 24000.0,
+      "customerUnitCents": {
+        "standard": 2599776,
+        "house": 2844576
+      },
+      "source": "РРЦ!E59"
+    },
+    "OPT_52": {
+      "row": 60,
+      "label": "Вывод крана печи в моечную",
+      "unit": "шт",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E60"
+    },
+    "OPT_53": {
+      "row": 61,
+      "label": "Габро-Диабаз (20 кг)",
+      "unit": "упак.",
+      "rrcRub": 500.0,
+      "customerUnitCents": {
+        "standard": 54162,
+        "house": 59262
+      },
+      "source": "РРЦ!E61"
+    },
+    "OPT_54": {
+      "row": 62,
+      "label": "Замена Габро на Жадеит (20 кг)",
+      "unit": "упак.",
+      "rrcRub": 2350.0,
+      "customerUnitCents": {
+        "standard": 254561,
+        "house": 278531
+      },
+      "source": "РРЦ!E62"
+    },
+    "OPT_55": {
+      "row": 63,
+      "label": "Замена печи по согласованию",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E63"
+    },
+    "OPT_56": {
+      "row": 64,
+      "label": "ПНД поддон парной",
+      "unit": "м²",
+      "rrcRub": 6000.0,
+      "customerUnitCents": {
+        "standard": 649944,
+        "house": 711144
+      },
+      "source": "РРЦ!E64"
+    },
+    "OPT_57": {
+      "row": 65,
+      "label": "Вынос топки в смежное помещение / на улицу",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E65"
+    },
+    "OPT_58": {
+      "row": 66,
+      "label": "Кубаста — приточка под печь",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E66"
+    },
+    "OPT_59": {
+      "row": 67,
+      "label": "Угловая проходная моечная",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E67"
+    },
+    "OPT_60": {
+      "row": 68,
+      "label": "Душевая до 1×1 м",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E68"
+    },
+    "OPT_61": {
+      "row": 69,
+      "label": "ПНД поддон моечной",
+      "unit": "м²",
+      "rrcRub": 6000.0,
+      "customerUnitCents": {
+        "standard": 649944,
+        "house": 711144
+      },
+      "source": "РРЦ!E69"
+    },
+    "OPT_62": {
+      "row": 70,
+      "label": "Можжевеловое панно",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E70"
+    },
+    "OPT_63": {
+      "row": 71,
+      "label": "LED-подсветка можжевелового панно",
+      "unit": "компл.",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E71"
+    },
+    "OPT_64": {
+      "row": 72,
+      "label": "Подспинники из осины, комплект",
+      "unit": "компл.",
+      "rrcRub": 2500.0,
+      "customerUnitCents": {
+        "standard": 270810,
+        "house": 296310
+      },
+      "source": "РРЦ!E72"
+    },
+    "OPT_65": {
+      "row": 73,
+      "label": "Поленница «Соты», одна секция",
+      "unit": "секция",
+      "rrcRub": 1500.0,
+      "customerUnitCents": {
+        "standard": 162486,
+        "house": 177786
+      },
+      "source": "РРЦ!E73"
+    },
+    "OPT_66": {
+      "row": 74,
+      "label": "Тонировка мебели и элементов, баня до 2,4 м шириной",
+      "unit": "баня",
+      "rrcRub": 15000.0,
+      "customerUnitCents": {
+        "standard": 1624860,
+        "house": 1777860
+      },
+      "source": "РРЦ!E74"
+    },
+    "OPT_67": {
+      "row": 75,
+      "label": "Обработка полов по всей бане до 2,4 м шириной",
+      "unit": "баня",
+      "rrcRub": 5000.0,
+      "customerUnitCents": {
+        "standard": 541620,
+        "house": 592620
+      },
+      "source": "РРЦ!E75"
+    },
+    "OPT_68": {
+      "row": 76,
+      "label": "Доплата за обработку полов до 3 м",
+      "unit": "баня",
+      "rrcRub": 1500.0,
+      "customerUnitCents": {
+        "standard": 162486,
+        "house": 177786
+      },
+      "source": "РРЦ!E76"
+    },
+    "OPT_69": {
+      "row": 77,
+      "label": "Доплата за обработку полов до 4 м",
+      "unit": "баня",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E77"
+    },
+    "OPT_70": {
+      "row": 78,
+      "label": "Доплата за обработку полов до 5 м",
+      "unit": "баня",
+      "rrcRub": 4500.0,
+      "customerUnitCents": {
+        "standard": 487458,
+        "house": 533358
+      },
+      "source": "РРЦ!E78"
+    },
+    "OPT_71": {
+      "row": 79,
+      "label": "Доплата за обработку полов до 6 м",
+      "unit": "баня",
+      "rrcRub": 6000.0,
+      "customerUnitCents": {
+        "standard": 649944,
+        "house": 711144
+      },
+      "source": "РРЦ!E79"
+    },
+    "OPT_72": {
+      "row": 80,
+      "label": "Обработка стен полностью или частично",
+      "unit": "баня",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E80"
+    },
+    "OPT_73": {
+      "row": 81,
+      "label": "Дополнительная двойная розетка с установкой",
+      "unit": "шт",
+      "rrcRub": 2500.0,
+      "customerUnitCents": {
+        "standard": 270810,
+        "house": 296310
+      },
+      "source": "РРЦ!E81"
+    },
+    "OPT_74": {
+      "row": 82,
+      "label": "Дополнительный двухклавишный выключатель",
+      "unit": "шт",
+      "rrcRub": 2500.0,
+      "customerUnitCents": {
+        "standard": 270810,
+        "house": 296310
+      },
+      "source": "РРЦ!E82"
+    },
+    "OPT_75": {
+      "row": 83,
+      "label": "Дополнительный автомат",
+      "unit": "шт",
+      "rrcRub": 1500.0,
+      "customerUnitCents": {
+        "standard": 162486,
+        "house": 177786
+      },
+      "source": "РРЦ!E83"
+    },
+    "OPT_76": {
+      "row": 84,
+      "label": "Абажур с плафоном",
+      "unit": "шт",
+      "rrcRub": 2500.0,
+      "customerUnitCents": {
+        "standard": 270810,
+        "house": 296310
+      },
+      "source": "РРЦ!E84"
+    },
+    "OPT_77": {
+      "row": 85,
+      "label": "Плафон",
+      "unit": "шт",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E85"
+    },
+    "OPT_78": {
+      "row": 86,
+      "label": "Вывод двух проводов и выключатель для уличного освещения",
+      "unit": "компл.",
+      "rrcRub": 2500.0,
+      "customerUnitCents": {
+        "standard": 270810,
+        "house": 296310
+      },
+      "source": "РРЦ!E86"
+    },
+    "OPT_79": {
+      "row": 87,
+      "label": "Уличное освещение, 2 фонаря",
+      "unit": "компл.",
+      "rrcRub": 8000.0,
+      "customerUnitCents": {
+        "standard": 866592,
+        "house": 948192
+      },
+      "source": "РРЦ!E87"
+    },
+    "OPT_80": {
+      "row": 88,
+      "label": "LED-подсветка до 5 м с блоком и пультом",
+      "unit": "компл.",
+      "rrcRub": 9500.0,
+      "customerUnitCents": {
+        "standard": 1029078,
+        "house": 1125978
+      },
+      "source": "РРЦ!E88"
+    },
+    "OPT_81": {
+      "row": 89,
+      "label": "LED-подсветка до 10 м",
+      "unit": "компл.",
+      "rrcRub": 16000.0,
+      "customerUnitCents": {
+        "standard": 1733184,
+        "house": 1896384
+      },
+      "source": "РРЦ!E89"
+    },
+    "OPT_82": {
+      "row": 90,
+      "label": "LED-подсветка до 15 м",
+      "unit": "компл.",
+      "rrcRub": 22000.0,
+      "customerUnitCents": {
+        "standard": 2383128,
+        "house": 2607528
+      },
+      "source": "РРЦ!E90"
+    },
+    "OPT_83": {
+      "row": 91,
+      "label": "Ретро-проводка",
+      "unit": "компл.",
+      "rrcRub": 25000.0,
+      "customerUnitCents": {
+        "standard": 2708100,
+        "house": 2963100
+      },
+      "source": "РРЦ!E91"
+    },
+    "OPT_84": {
+      "row": 92,
+      "label": "Терраса открытая",
+      "unit": "м²",
+      "rrcRub": 13000.0,
+      "customerUnitCents": {
+        "standard": 1408212,
+        "house": 1540812
+      },
+      "source": "РРЦ!E92"
+    },
+    "OPT_85": {
+      "row": 93,
+      "label": "Терраса закрытая с крышей",
+      "unit": "м²",
+      "rrcRub": 20000.0,
+      "customerUnitCents": {
+        "standard": 2166480,
+        "house": 2370480
+      },
+      "source": "РРЦ!E93"
+    },
+    "OPT_86": {
+      "row": 94,
+      "label": "Каркасный съёмный пол в каждом отделении",
+      "unit": "отд.",
+      "rrcRub": 1500.0,
+      "customerUnitCents": {
+        "standard": 162486,
+        "house": 177786
+      },
+      "source": "РРЦ!E94"
+    },
+    "OPT_87": {
+      "row": 95,
+      "label": "Утепление пола пеноплекс 50 мм",
+      "unit": "м²",
+      "rrcRub": 1200.0,
+      "customerUnitCents": {
+        "standard": 129989,
+        "house": 142229
+      },
+      "source": "РРЦ!E95"
+    },
+    "OPT_88": {
+      "row": 96,
+      "label": "Утепление пола пеноплекс 100 мм",
+      "unit": "м²",
+      "rrcRub": 2300.0,
+      "customerUnitCents": {
+        "standard": 249145,
+        "house": 272605
+      },
+      "source": "РРЦ!E96"
+    },
+    "OPT_89": {
+      "row": 97,
+      "label": "ПНД поддон",
+      "unit": "м²",
+      "rrcRub": 6000.0,
+      "customerUnitCents": {
+        "standard": 649944,
+        "house": 711144
+      },
+      "source": "РРЦ!E97"
+    },
+    "OPT_90": {
+      "row": 98,
+      "label": "Кварцвинил",
+      "unit": "м²",
+      "rrcRub": 3500.0,
+      "customerUnitCents": {
+        "standard": 379134,
+        "house": 414834
+      },
+      "source": "РРЦ!E98"
+    },
+    "OPT_91": {
+      "row": 99,
+      "label": "Ламинат",
+      "unit": "м²",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E99"
+    },
+    "OPT_92": {
+      "row": 100,
+      "label": "Тёплый пол с регулятором",
+      "unit": "м²",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E100"
+    },
+    "OPT_93": {
+      "row": 101,
+      "label": "Проливной пол в парилке",
+      "unit": "шт",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E101"
+    },
+    "OPT_94": {
+      "row": 102,
+      "label": "Лавка-рундук из ели",
+      "unit": "пог. м",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E102"
+    },
+    "OPT_95": {
+      "row": 103,
+      "label": "Откидной стол",
+      "unit": "шт",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E103"
+    },
+    "OPT_96": {
+      "row": 104,
+      "label": "Спальное место",
+      "unit": "шт",
+      "rrcRub": 8000.0,
+      "customerUnitCents": {
+        "standard": 866592,
+        "house": 948192
+      },
+      "source": "РРЦ!E104"
+    },
+    "OPT_97": {
+      "row": 105,
+      "label": "Кухня: столешница 60 см, раковина, смеситель и 2 шкафа",
+      "unit": "компл.",
+      "rrcRub": 35000.0,
+      "customerUnitCents": {
+        "standard": 3790000,
+        "house": 3790000
+      },
+      "source": "РРЦ!E105"
+    },
+    "OPT_98": {
+      "row": 106,
+      "label": "Барная стойка из ели с двумя шкафчиками",
+      "unit": "компл.",
+      "rrcRub": 12000.0,
+      "customerUnitCents": {
+        "standard": 1299888,
+        "house": 1422288
+      },
+      "source": "РРЦ!E106"
+    },
+    "OPT_99": {
+      "row": 107,
+      "label": "Шкаф одностворчатый 50×50",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E107"
+    },
+    "OPT_100": {
+      "row": 108,
+      "label": "Шкаф двухстворчатый 100×100",
+      "unit": "шт",
+      "rrcRub": 14000.0,
+      "customerUnitCents": {
+        "standard": 1516536,
+        "house": 1659336
+      },
+      "source": "РРЦ!E108"
+    },
+    "OPT_101": {
+      "row": 109,
+      "label": "Полка в шкаф",
+      "unit": "шт",
+      "rrcRub": 1000.0,
+      "customerUnitCents": {
+        "standard": 108324,
+        "house": 118524
+      },
+      "source": "РРЦ!E109"
+    },
+    "OPT_102": {
+      "row": 110,
+      "label": "Стол передвижной 150×80 / 200×80",
+      "unit": "шт",
+      "rrcRub": 8000.0,
+      "customerUnitCents": {
+        "standard": 866592,
+        "house": 948192
+      },
+      "source": "РРЦ!E110"
+    },
+    "OPT_103": {
+      "row": 111,
+      "label": "Установка свай",
+      "unit": "компл.",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E111"
+    },
+    "OPT_104": {
+      "row": 112,
+      "label": "Дополнительный блок",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E112"
+    },
+    "OPT_105": {
+      "row": 113,
+      "label": "Комплект розеток",
+      "unit": "компл.",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E113"
+    },
+    "OPT_106": {
+      "row": 114,
+      "label": "Разводка электрики",
+      "unit": "компл.",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E114"
+    },
+    "OPT_108": {
+      "row": 115,
+      "label": "Арка",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E115"
+    },
+    "OPT_109": {
+      "row": 116,
+      "label": "Выносная топка с самодельным экраном / топка с ушами на улицу",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E116"
+    },
+    "OPT_110": {
+      "row": 117,
+      "label": "Козырек",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E117"
+    },
+    "OPT_111": {
+      "row": 118,
+      "label": "Ящик под бойлер, обшитый с двух сторон, 60×60",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E118"
+    },
+    "OPT_112": {
+      "row": 119,
+      "label": "Ящик под бойлер, обшитый с двух сторон, 120×70",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E119"
+    },
+    "OPT_113": {
+      "row": 120,
+      "label": "Душевой поддон акриловый 120х80/70 или 110 х 80",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E120"
+    },
+    "OPT_114": {
+      "row": 121,
+      "label": "Душевой поддон металлический 70х70 / 80х80",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E121"
+    },
+    "OPT_115": {
+      "row": 122,
+      "label": "Ящик под потолком закрывающийся 1шт 40 см глубина.",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E122"
+    },
+    "OPT_116": {
+      "row": 123,
+      "label": "Полка",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E123"
+    },
+    "OPT_117": {
+      "row": 124,
+      "label": "Ящик для вещей под пологом",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E124"
+    },
+    "OPT_118": {
+      "row": 125,
+      "label": "Рундук более 250 см",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E125"
+    },
+    "OPT_119": {
+      "row": 126,
+      "label": "Бойлер / насосная станция/система кранов и труб/ смеситель с лейкой С ПЛАСТИКОВЫМИ ТРУБАМИ И ПОЛНОЙ РАЗВОДКОЙ",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E126"
+    },
+    "OPT_120": {
+      "row": 127,
+      "label": "Черный дымоход",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E127"
+    },
+    "OPT_121": {
+      "row": 128,
+      "label": "Вывод крана от бака через стену",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E128"
+    },
+    "OPT_122": {
+      "row": 129,
+      "label": "Входная дверь Металлическая",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E129"
+    },
+    "OPT_123": {
+      "row": 130,
+      "label": "Стеклянная дверь 170×70",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E130"
+    },
+    "OPT_124": {
+      "row": 131,
+      "label": "Стеклянная дверь 180×70",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E131"
+    },
+    "OPT_125": {
+      "row": 132,
+      "label": "Стеклянная дверь 190×70",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E132"
+    },
+    "OPT_126": {
+      "row": 133,
+      "label": "Форточка 30х40",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E133"
+    },
+    "OPT_127": {
+      "row": 134,
+      "label": "Окно 60х80",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E134"
+    },
+    "OPT_128": {
+      "row": 135,
+      "label": "Дополнительная лента",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E135"
+    },
+    "OPT_129": {
+      "row": 136,
+      "label": "Увеличение диаметра / ширины и высоты на 20 см",
+      "unit": "%",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E136"
+    },
+    "OPT_130": {
+      "row": 137,
+      "label": "Обшивка парной осиновой вагонкой",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E137"
+    },
+    "OPT_131": {
+      "row": 138,
+      "label": "Крыльцо",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E138"
+    },
+    "OPT_132": {
+      "row": 139,
+      "label": "Боковой вход Баня Бочка/Квадробочка",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E139"
+    },
+    "OPT_133": {
+      "row": 140,
+      "label": "Боковой вход Парус",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E140"
+    },
+    "OPT_134": {
+      "row": 141,
+      "label": "Боковой вход викинг",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E141"
+    },
+    "OPT_135": {
+      "row": 142,
+      "label": "Боковой вход Викинг с козырьком",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E142"
+    },
+    "OPT_136": {
+      "row": 143,
+      "label": "Боковой вход с тамбуром 1.5 м",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E143"
+    },
+    "OPT_137": {
+      "row": 144,
+      "label": "Подголовник (1 шт.)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E144"
+    },
+    "OPT_138": {
+      "row": 145,
+      "label": "Камни (20 кг)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E145"
+    },
+    "OPT_139": {
+      "row": 146,
+      "label": "Ограждение печи (ЗАБОР)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E146"
+    },
+    "OPT_140": {
+      "row": 147,
+      "label": "Кухня: 60х120 (два ящика сверх / два ящика снизу / столешница с раковиной и краном / подсветка /выключатель с розеткой",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E147"
+    },
+    "OPT_141": {
+      "row": 148,
+      "label": "Спальное место раскладное",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E148"
+    },
+    "OPT_142": {
+      "row": 149,
+      "label": "Небольшая помывочная, угловая / П-образная, ПНД обшивка",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E149"
+    },
+    "OPT_143": {
+      "row": 150,
+      "label": "Полноценное отделение до 250 см и изогнутая помывочная",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E150"
+    },
+    "OPT_144": {
+      "row": 151,
+      "label": "Не стандарт Г-образные и размер свыше 260х260",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E151"
+    },
+    "OPT_145": {
+      "row": 152,
+      "label": "Летний душ Бак на 50-60 л + лейка + крепление.",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E152"
+    },
+    "OPT_146": {
+      "row": 153,
+      "label": "Бак с подогревом на крыше 110 литров (автомат, розетка, пластиковый подвод)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E153"
+    },
+    "OPT_147": {
+      "row": 154,
+      "label": "Перенос окна с торца на боковую часть",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E154"
+    },
+    "OPT_148": {
+      "row": 155,
+      "label": "Выдвижной полок в парной",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E155"
+    },
+    "OPT_149": {
+      "row": 156,
+      "label": "Скамейка под воду",
+      "unit": "шт",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E156"
+    },
+    "OPT_150": {
+      "row": 157,
+      "label": "Крыльцо к бане 120х200",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E157"
+    },
+    "OPT_151": {
+      "row": 158,
+      "label": "Унитаз с установкой",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E158"
+    },
+    "OPT_152": {
+      "row": 159,
+      "label": "Обшивка пластиковыми панелями всей душевой кабинки",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E159"
+    },
+    "OPT_153": {
+      "row": 160,
+      "label": "Обшивка душевой с двух сторон как на фото",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E160"
+    },
+    "OPT_154": {
+      "row": 161,
+      "label": "Душевой поддон 90х90 из дерева с трапиком и внутри обработанный резиновой краской",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E161"
+    },
+    "OPT_155": {
+      "row": 162,
+      "label": "Приставной стол",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E162"
+    },
+    "OPT_156": {
+      "row": 163,
+      "label": "Подсветка под полоком (два плафона на отдельный выключатель)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E163"
+    },
+    "OPT_157": {
+      "row": 164,
+      "label": "Светодиодная подсветка в парной",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E164"
+    },
+    "OPT_158": {
+      "row": 165,
+      "label": "Обработка Тикурила",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E165"
+    },
+    "OPT_159": {
+      "row": 166,
+      "label": "Люстра в КО",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E166"
+    },
+    "OPT_160": {
+      "row": 167,
+      "label": "Подсветка парус вместо лент 1 метр погонный",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E167"
+    },
+    "OPT_161": {
+      "row": 168,
+      "label": "Кварцвинил с утеплением пола",
+      "unit": "м²",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E168"
+    },
+    "OPT_162": {
+      "row": 169,
+      "label": "Кварцвинил без утепления пола",
+      "unit": "м²",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E169"
+    },
+    "OPT_163": {
+      "row": 170,
+      "label": "Дровник соты 60х40 за 1 штуку (соту)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E170"
+    },
+    "OPT_164": {
+      "row": 171,
+      "label": "Абажур на имеющуюся лампу",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E171"
+    },
+    "OPT_165": {
+      "row": 172,
+      "label": "Абажур с лампой",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E172"
+    },
+    "OPT_166": {
+      "row": 173,
+      "label": "Длинная светодиодная лампа",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E173"
+    },
+    "OPT_167": {
+      "row": 174,
+      "label": "Спинка над лавкой",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E174"
+    },
+    "OPT_168": {
+      "row": 175,
+      "label": "Притопочный лист",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E175"
+    },
+    "OPT_169": {
+      "row": 176,
+      "label": "Душевая шторка прямая",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E176"
+    },
+    "OPT_170": {
+      "row": 177,
+      "label": "Душевая шторка угловая",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E177"
+    },
+    "OPT_171": {
+      "row": 178,
+      "label": "Бак для хол. воды",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E178"
+    },
+    "OPT_172": {
+      "row": 179,
+      "label": "Тройная ступенька в высоту",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E179"
+    },
+    "OPT_173": {
+      "row": 180,
+      "label": "Ступень двойная в ширину",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E180"
+    },
+    "OPT_174": {
+      "row": 181,
+      "label": "Замена пропитки на колеруемый «Пинотекс»",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E181"
+    },
+    "OPT_175": {
+      "row": 182,
+      "label": "Вентиляционная решётка, 1 стена с двух сторон",
+      "unit": "компл.",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E182"
+    },
+    "OPT_176": {
+      "row": 183,
+      "label": "Вентиляционные решётки, 3 стены с двух сторон",
+      "unit": "компл.",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E183"
+    },
+    "OPT_177": {
+      "row": 184,
+      "label": "Вентиляционные решётки, 4 стены с двух сторон",
+      "unit": "компл.",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E184"
+    },
+    "OPT_178": {
+      "row": 185,
+      "label": "Вывод кабеля под светильник на улицу (2 шт.)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E185"
+    },
+    "OPT_179": {
+      "row": 186,
+      "label": "Два светильника у входной двери (стоимость без учета вывода кабеля под светильники)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E186"
+    },
+    "OPT_180": {
+      "row": 187,
+      "label": "Окно для Овала 4.20х180 Без ламинации",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E187"
+    },
+    "OPT_181": {
+      "row": 188,
+      "label": "Обработка бани в 3 слоя",
+      "unit": "баня",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E188"
+    },
+    "OPT_182": {
+      "row": 189,
+      "label": "Обработка квадроовалов в 3 слоя",
+      "unit": "баня",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E189"
+    },
+    "OPT_183": {
+      "row": 190,
+      "label": "Поддоконник",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E190"
+    },
+    "OPT_184": {
+      "row": 191,
+      "label": "ящики",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E191"
+    },
+    "OPT_185": {
+      "row": 192,
+      "label": "Угловая помывочная 100х100 (БЕЗ ДВЕРИ)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E192"
+    },
+    "OPT_186": {
+      "row": 193,
+      "label": "П-образная помывочная 100х100 (БЕЗ ДВЕРИ)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E193"
+    },
+    "OPT_187": {
+      "row": 194,
+      "label": "Большая изогнутая помывочная (БЕЗ ДВЕРИ)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E194"
+    },
+    "OPT_188": {
+      "row": 195,
+      "label": "Скрытая электрика в пэшке бани парус и бкб",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E195"
+    },
+    "OPT_189": {
+      "row": 196,
+      "label": "Замена бруса 150×100",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E196"
+    },
+    "OPT_190": {
+      "row": 197,
+      "label": "Замена бруса 150×150",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E197"
+    },
+    "OPT_191": {
+      "row": 198,
+      "label": "Замена бруса 200×200",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E198"
+    },
+    "OPT_192": {
+      "row": 199,
+      "label": "Кран имени трушина",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E199"
+    },
+    "OPT_193": {
+      "row": 200,
+      "label": "Удлинение дымохода",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E200"
+    },
+    "OPT_194": {
+      "row": 201,
+      "label": "Басту",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E201"
+    },
+    "OPT_195": {
+      "row": 202,
+      "label": "Сетка каменка стандарт и арабеска",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E202"
+    },
+    "OPT_196": {
+      "row": 203,
+      "label": "Сетка каменка грилд",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E203"
+    },
+    "OPT_197": {
+      "row": 204,
+      "label": "Диф автомат",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E204"
+    },
+    "OPT_198": {
+      "row": 205,
+      "label": "Автомат 16А",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E205"
+    },
+    "OPT_199": {
+      "row": 206,
+      "label": "Ргкм проводка в парной",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E206"
+    },
+    "OPT_200": {
+      "row": 207,
+      "label": "Минеритная плита «Фаспан», под кирпич (обычно 3 листа)",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E207"
+    },
+    "OPT_201": {
+      "row": 208,
+      "label": "Вынос бака через теплообменник в моечную",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E208"
+    },
+    "OPT_202": {
+      "row": 209,
+      "label": "Козырёк над выносной топкой",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E209"
+    },
+    "OPT_203": {
+      "row": 210,
+      "label": "Козырек над боковым входом",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E210"
+    },
+    "OPT_204": {
+      "row": 211,
+      "label": "Внутренняя обработка бани защитным составом",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E211"
+    },
+    "OPT_205": {
+      "row": 212,
+      "label": "Внутренняя обработка крупных Квадроовалов, Викингов, Парус Ш300",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E212"
+    },
+    "OPT_206": {
+      "row": 213,
+      "label": "Стеллаж на 3 полки",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E213"
+    },
+    "OPT_207": {
+      "row": 214,
+      "label": "Стеллаж на 5 полок",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E214"
+    },
+    "OPT_208": {
+      "row": 215,
+      "label": "Ровный пол в квадроовалах",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E215"
+    },
+    "OPT_209": {
+      "row": 216,
+      "label": "Ровный пол в парусах и квадробочках",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E216"
+    },
+    "OPT_210": {
+      "row": 217,
+      "label": "Черепица до пола в квадроовалах",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E217"
+    },
+    "OPT_211": {
+      "row": 218,
+      "label": "Черепица до пола в квадробочках и парусах",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E218"
+    },
+    "OPT_212": {
+      "row": 219,
+      "label": "Деревянная дверь 170×70, глухая — доплата",
+      "unit": "шт",
+      "rrcRub": 0.0,
+      "customerUnitCents": {
+        "standard": 0,
+        "house": 0
+      },
+      "source": "РРЦ!E219"
+    },
+    "OPT_213": {
+      "row": 220,
+      "label": "Деревянная дверь 170×70, со стеклом — доплата",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E220"
+    },
+    "OPT_214": {
+      "row": 221,
+      "label": "Деревянная дверь 180×70, глухая — доплата",
+      "unit": "шт",
+      "rrcRub": 0.0,
+      "customerUnitCents": {
+        "standard": 0,
+        "house": 0
+      },
+      "source": "РРЦ!E221"
+    },
+    "OPT_215": {
+      "row": 222,
+      "label": "Деревянная дверь 180×70, со стеклом — доплата",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E222"
+    },
+    "OPT_216": {
+      "row": 223,
+      "label": "Деревянная дверь 180×80, глухая — доплата",
+      "unit": "шт",
+      "rrcRub": 0.0,
+      "customerUnitCents": {
+        "standard": 0,
+        "house": 0
+      },
+      "source": "РРЦ!E223"
+    },
+    "OPT_217": {
+      "row": 224,
+      "label": "Деревянная дверь 180×80, со стеклом — доплата",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E224"
+    },
+    "OPT_218": {
+      "row": 225,
+      "label": "Деревянная дверь 190×80, глухая — доплата",
+      "unit": "шт",
+      "rrcRub": 0.0,
+      "customerUnitCents": {
+        "standard": 0,
+        "house": 0
+      },
+      "source": "РРЦ!E225"
+    },
+    "OPT_219": {
+      "row": 226,
+      "label": "Деревянная дверь 190×80, со стеклом — доплата",
+      "unit": "шт",
+      "rrcRub": null,
+      "customerUnitCents": {
+        "standard": null,
+        "house": null
+      },
+      "source": "РРЦ!E226"
+    },
+    "OPT_220": {
+      "row": 227,
+      "label": "Терраса из ДПК — полная стоимость",
+      "unit": "м²",
+      "rrcRub": 16000.0,
+      "customerUnitCents": {
+        "standard": 1733184,
+        "house": 1896384
+      },
+      "source": "РРЦ!E227"
+    },
+    "ENTRY_KV": {
+      "row": 228,
+      "label": "Вынесенный центральный Квадро",
+      "unit": "шт",
+      "rrcRub": 10000.0,
+      "customerUnitCents": {
+        "standard": 1083240,
+        "house": 1185240
+      },
+      "source": "РРЦ!E228"
+    },
+    "ENTRY_V": {
+      "row": 229,
+      "label": "Арочный центр Викинг",
+      "unit": "шт",
+      "rrcRub": 30000.0,
+      "customerUnitCents": {
+        "standard": 3249720,
+        "house": 3555720
+      },
+      "source": "РРЦ!E229"
+    },
+    "ENTRY_P": {
+      "row": 230,
+      "label": "Центральный вход Парус",
+      "unit": "шт",
+      "rrcRub": 0.0,
+      "customerUnitCents": {
+        "standard": 0,
+        "house": 0
+      },
+      "source": "РРЦ!E230"
+    },
+    "FLOOR_Q": {
+      "row": 231,
+      "label": "Ровный каркасный пол Квадро",
+      "unit": "м²",
+      "rrcRub": 1650.0,
+      "customerUnitCents": {
+        "standard": 178735,
+        "house": 195565
+      },
+      "source": "РРЦ!E231"
+    },
+    "ASTON_12_GLASS": {
+      "row": 232,
+      "label": "ASTON 12 — открытая и закрытая каменки, стеклянная дверца",
+      "unit": "шт",
+      "rrcRub": 22680.0,
+      "customerUnitCents": {
+        "standard": 2456788,
+        "house": 2688124
+      },
+      "source": "РРЦ!E232"
+    },
+    "ASTON_16_GLASS": {
+      "row": 233,
+      "label": "ASTON 16 — открытая и закрытая каменки, стеклянная дверца",
+      "unit": "шт",
+      "rrcRub": 26680.0,
+      "customerUnitCents": {
+        "standard": 2890084,
+        "house": 3162220
+      },
+      "source": "РРЦ!E233"
+    },
+    "LAYOUT_BENCH": {
+      "row": 234,
+      "label": "Лавка обычная — дополнительная",
+      "unit": "шт",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E234"
+    },
+    "LAYOUT_HANGER": {
+      "row": 235,
+      "label": "Вешалка с крючками",
+      "unit": "шт",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E235"
+    },
+    "LAYOUT_SHOE": {
+      "row": 236,
+      "label": "Полка для обуви",
+      "unit": "шт",
+      "rrcRub": 2000.0,
+      "customerUnitCents": {
+        "standard": 216648,
+        "house": 237048
+      },
+      "source": "РРЦ!E236"
+    },
+    "LAYOUT_STEP": {
+      "row": 237,
+      "label": "Простая одноуровневая ступень / дополнительный нижний полок",
+      "unit": "шт",
+      "rrcRub": 3000.0,
+      "customerUnitCents": {
+        "standard": 324972,
+        "house": 355572
+      },
+      "source": "РРЦ!E237"
+    },
+    "ASTON_12_SWAP": {
+      "label": "Доплата за замену печи ASTON 12",
+      "unit": "шт",
+      "rrcRub": null,
+      "row": null,
+      "customerUnitCents": {
+        "standard": 700000,
+        "house": 700000
+      },
+      "source": "Квиз!B8"
+    },
+    "ASTON_16_SWAP": {
+      "label": "Доплата за замену печи ASTON 16",
+      "unit": "шт",
+      "rrcRub": null,
+      "row": null,
+      "customerUnitCents": {
+        "standard": 1200000,
+        "house": 1200000
+      },
+      "source": "Квиз!B9"
+    }
+  },
+  "models": {
+    "kvadro": {
+      "name": "Квадро",
+      "sizes": {
+        "400": {
+          "label": "4 м",
+          "sourceRow": 4,
+          "comfort": {
+            "priceCents": 41000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 51900000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "450": {
+          "label": "4,5 м",
+          "sourceRow": 5,
+          "comfort": {
+            "priceCents": 44000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 55000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "500": {
+          "label": "5 м",
+          "sourceRow": 6,
+          "comfort": {
+            "priceCents": 48500000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 59700000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "550": {
+          "label": "5,5 м",
+          "sourceRow": 7,
+          "comfort": {
+            "priceCents": 51000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 62300000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "600": {
+          "label": "6 м",
+          "sourceRow": 8,
+          "comfort": {
+            "priceCents": 52500000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 63900000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        }
+      }
+    },
+    "viking": {
+      "name": "Викинг",
+      "sizes": {
+        "400": {
+          "label": "4 м",
+          "sourceRow": 9,
+          "comfort": {
+            "priceCents": 48000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 60400000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "450": {
+          "label": "4,5 м",
+          "sourceRow": 10,
+          "comfort": {
+            "priceCents": 52000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 64600000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "500": {
+          "label": "5 м",
+          "sourceRow": 11,
+          "comfort": {
+            "priceCents": 62000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 74700000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "550": {
+          "label": "5,5 м",
+          "sourceRow": 12,
+          "comfort": {
+            "priceCents": 63500000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 76400000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "600": {
+          "label": "6 м",
+          "sourceRow": 13,
+          "comfort": {
+            "priceCents": 64500000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 77500000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        }
+      }
+    },
+    "parus": {
+      "name": "Парус",
+      "sizes": {
+        "400": {
+          "label": "4 м",
+          "sourceRow": 14,
+          "comfort": {
+            "priceCents": 45000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 56000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "450": {
+          "label": "4,5 м",
+          "sourceRow": 15,
+          "comfort": {
+            "priceCents": 47000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 58200000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "500": {
+          "label": "5 м",
+          "sourceRow": 16,
+          "comfort": {
+            "priceCents": 51000000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 63700000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "550": {
+          "label": "5,5 м",
+          "sourceRow": 17,
+          "comfort": {
+            "priceCents": 52500000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 65400000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "600": {
+          "label": "6 м",
+          "sourceRow": 18,
+          "comfort": {
+            "priceCents": 53500000,
+            "roomCount": 2,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 66500000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        }
+      }
+    },
+    "kvadro-house": {
+      "name": "Квадро Хаус",
+      "sizes": {
+        "4x4": {
+          "label": "4×4 м",
+          "sourceRow": 19,
+          "comfort": {
+            "priceCents": 68500000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 83000000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "5x4": {
+          "label": "5×4 м",
+          "sourceRow": 20,
+          "comfort": {
+            "priceCents": 79500000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 94600000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "6x4": {
+          "label": "6×4 м",
+          "sourceRow": 21,
+          "comfort": {
+            "priceCents": 84500000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 100200000,
+            "roomCount": 3,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "6x5": {
+          "label": "6×5 м",
+          "sourceRow": 22,
+          "comfort": {
+            "priceCents": 90500000,
+            "roomCount": 4,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 107200000,
+            "roomCount": 4,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        },
+        "6x6": {
+          "label": "6×6 м",
+          "sourceRow": 23,
+          "comfort": {
+            "priceCents": 96500000,
+            "roomCount": 4,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1
+            }
+          },
+          "deluxe": {
+            "priceCents": 114200000,
+            "roomCount": 4,
+            "included": {
+              "bench_lounge": 2,
+              "table": 1,
+              "upper": 1,
+              "lower": 1,
+              "entry": 1,
+              "steam_door": 1,
+              "main_window": 1,
+              "steam_window": 1,
+              "stove": 1,
+              "structure": 1,
+              "OPT_99": 1,
+              "OPT_45": 1,
+              "OPT_57": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "rules": {
+    "version": "2026-11-04",
+    "houseRoomBasis": "quiz",
+    "houseIncludedRooms": {
+      "4x4": 3,
+      "5x4": 3,
+      "6x4": 3,
+      "6x5": 4,
+      "6x6": 4
+    },
+    "appliesToPackages": [
+      "comfort",
+      "deluxe"
+    ],
+    "approvedBy": "owner_in_chat",
+    "instruction": "3/4 помещения, как в квизе; доплата только сверх базы",
+    "kitchen": {
+      "sku": "OPT_97",
+      "rrcRub": 35000,
+      "customerRub": 37900,
+      "source": "РРЦ!A105:G105",
+      "includes": [
+        "kitchen_sink",
+        "kitchen_faucet"
+      ],
+      "approvedBy": "owner_in_chat"
+    },
+    "separateAgreement": {
+      "kinds": [
+        "sofa",
+        "bed",
+        "shower",
+        "sink",
+        "toilet",
+        "bucket"
+      ],
+      "instruction": "Диван, кровать и сантехника не входят в расчёт бани; согласуются отдельно под предпочтения клиента. Раковина и смеситель из OPT_97 уже входят в кухонный комплект.",
+      "approvedBy": "owner_in_chat"
+    },
+    "furniture": {
+      "ordinaryBenchRrcRub": 3000,
+      "washBenchRrcRub": 3000,
+      "simpleStepRrcRub": 3000,
+      "openStorageLikeSku": "OPT_99",
+      "hangerRrcRub": 3000,
+      "shoeShelfRrcRub": 2000,
+      "woodDoorStandardSurchargeRub": 0,
+      "wideCabinetSku": "OPT_100",
+      "includedCabinetCreditSku": "OPT_99",
+      "wideCabinetThresholdMm": 500,
+      "approvedBy": "Сергей, 04.11.2026, ответы в чате"
+    },
+    "additionalWindows": {
+      "comfortSku": "OPT_28",
+      "deluxeSku": "OPT_33",
+      "ventSku": "OPT_25",
+      "firstLoungeWindowAndFirstSteamVentIncluded": true,
+      "approvedBy": "Сергей, 04.11.2026, ответ в чате"
+    },
+    "unusedIncludedItems": {
+      "refund": false,
+      "instruction": "Если второго полка нет, стоимость не вычитаем; новые позиции сверх комплектации прибавляем.",
+      "approvedBy": "Сергей, 04.11.2026, ответ в чате"
+    },
+    "finalLayoutPricesApproved": false
+  }
+}

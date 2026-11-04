@@ -1,0 +1,386 @@
+{
+  "pass": true,
+  "models": 19,
+  "reports": [
+    {
+      "pass": true,
+      "plan": 1,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 21,
+      "movingParts": 11,
+      "stationaryParts": 478,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005275084070035518,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "fd635634cd452db8368aca8cd74404c7a808d84cb874bc9719677c3da38d0c1c",
+      "glbSha256": "3e6db09c5b736ce3a91f6e7441c854469fafcc2af4f2ce3c6d8e914e31c6d4b2",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 2,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 20,
+      "movingParts": 11,
+      "stationaryParts": 475,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.000508098159571091,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "71708517c652b35e9441b7a3296c8be00580817d32549a39ed117752d2505ae1",
+      "glbSha256": "ae8567dd234becad34ac1eb00a657650d68bf4e7af4b37718be41ec186973f7d",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 3,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 21,
+      "movingParts": 12,
+      "stationaryParts": 507,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0004552673406124086,
+      "worldSlideMm": [
+        -430.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "c4902df819f9a930565e65450efc4d9b6b9abad812a829b3b101281fd6252914",
+      "glbSha256": "ee4636589400374bdbca2f34ee95e689861b7e2e81aee3b6f96192707f6500aa",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 4,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 27,
+      "movingParts": 11,
+      "stationaryParts": 570,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005142402528690582,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "7b88f0a4d5412202e41e9f902161b37227d6ae2398576ba6c00c3305b9401c55",
+      "glbSha256": "ae869beb3a564b3d6ce73ad26e7525d2847c5bc6456ff6382e140698089890e4",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 5,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 26,
+      "movingParts": 11,
+      "stationaryParts": 515,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005098008490449502,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "5549c1b19ce96aa33f908b81a184d19a1010bc3b75eb4ab4718fbe601c93f46e",
+      "glbSha256": "5c4f3151407759375e5a82f2e892be47fba836252eb68d406139481c8724c508",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 6,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 29,
+      "movingParts": 11,
+      "stationaryParts": 642,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0006040683138053282,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "21310f53c458c0143464178f112140e169cf967dc758f023307723c22ca88301",
+      "glbSha256": "4dcf5ea79815d88f7e07eadeb369b0e4db89a711c477017d5fb345b677ad36ac",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 7,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 36,
+      "movingParts": 12,
+      "stationaryParts": 691,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.00045344924910750706,
+      "worldSlideMm": [
+        0.0,
+        0.0,
+        -430.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "dd3320096287536d4360505ced8f47667aee86f22774847d556bce958f5ce4be",
+      "glbSha256": "b01178519880e391c53f00f4834e64371cb4c9f5a5d92436f2340c92a6acd01b",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 8,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 36,
+      "movingParts": 12,
+      "stationaryParts": 712,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005843135634222563,
+      "worldSlideMm": [
+        0.0,
+        0.0,
+        -430.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "671c2ea72580ad1672354bfdf117e487f86cb2d2aa7ed4df98db8f19cd1b92d0",
+      "glbSha256": "125671ce4b3b3267aca0aedd4be91420471acb73972eab6828c35bc7815d7bf3",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 9,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 39,
+      "movingParts": 12,
+      "stationaryParts": 745,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005669719497518599,
+      "worldSlideMm": [
+        0.0,
+        0.0,
+        -430.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "bd29f76067492ab10008389d72f1b216496521355c59b219578944afb310cdec",
+      "glbSha256": "2c6a2598d3bcb6c4800ae8bab345dcf913e253d4bfb022ddce20468cf7c03729",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 10,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 27,
+      "movingParts": 12,
+      "stationaryParts": 611,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.000507583200942463,
+      "worldSlideMm": [
+        0.0,
+        0.0,
+        -430.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "f412124e3ce826f17b2e10f269aba7b5845beff3c0f6c1ac6cbd4013b2b1966a",
+      "glbSha256": "698fbe79832ccecb60ca0d1b8471a80ebe1dda0cfc1aa202bb0be455044b7fca",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 11,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 39,
+      "movingParts": 12,
+      "stationaryParts": 797,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005414911506704811,
+      "worldSlideMm": [
+        0.0,
+        0.0,
+        -330.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "a2baa73311a8b1802faff40db2199d77d8533fd67a4a798823a772dcc74f0fe9",
+      "glbSha256": "8a37d2db5be386b99107a25730d67959f99bc3344870f5bf00ad54dcc1d64489",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 12,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 33,
+      "movingParts": 11,
+      "stationaryParts": 599,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005424792843768955,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+      "glbSha256": "3fba524ab70ce2942fa62670193b69a9980b5521dd5fa94e36455e718c783102",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 13,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 32,
+      "movingParts": 11,
+      "stationaryParts": 605,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005132450462497218,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+      "glbSha256": "aeea22a1151a09d6795677ad0722e7bb7a4e960654fbb6efe5700c424be74fde",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 14,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 23,
+      "movingParts": 11,
+      "stationaryParts": 494,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0004984848501408123,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+      "glbSha256": "106bbc490a3e10dca750f447f7505dd0217ae96f9fb4a52fac8dd5f6ce82d431",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 15,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 21,
+      "movingParts": 11,
+      "stationaryParts": 455,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005275084070035518,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "4251cfb7a8e634b6f284db4e0123c2c544ef0b8e6ada6033a309e6deacd3d727",
+      "glbSha256": "52721bb0f34250f8f6482d739a67485a5e0dffd398ac11c01606c0cf5c0e2401",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 16,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 20,
+      "movingParts": 11,
+      "stationaryParts": 449,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.000508098159571091,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "7c7d4c23b278b7b813cc77bbe001a862acf34e5e05f02dddbc53b41a6da42003",
+      "glbSha256": "37fad9965ea424d4df695d9495b2a853c90294a347254e18eb3cdee740f61ac1",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 17,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 29,
+      "movingParts": 11,
+      "stationaryParts": 618,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0006015926005602523,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "ed4c261092dfc122f2936b336b58ef657b46bde5cef0aa95265b339550b9f22f",
+      "glbSha256": "98d9cc545c9a5e2c0915aa2e4fab204a967bd8319ee6aaaca5a281e83bc57593",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 18,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 23,
+      "movingParts": 11,
+      "stationaryParts": 472,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0004984848501408123,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+      "glbSha256": "056b388a3935ac02894e8e65da209a28e916d70c29b097a99cc4309588899327",
+      "engineeringLoadApproval": false
+    },
+    {
+      "pass": true,
+      "plan": 19,
+      "scope": "Independent exported GLB vertices, transforms, embedded textures, full swept bounds",
+      "assemblies": 33,
+      "movingParts": 11,
+      "stationaryParts": 575,
+      "collisionPairs": [],
+      "maximumBoundsErrorMm": 0.0005424792843768955,
+      "worldSlideMm": [
+        -330.0,
+        0.0,
+        0.0
+      ],
+      "threeDifferentEmbeddedTextures": true,
+      "externalTextures": false,
+      "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+      "glbSha256": "8f45d19a6945df0f85f94f1b3f7069887bd94dd95548f01f2e78a702866e88e1",
+      "engineeringLoadApproval": false
+    }
+  ]
+}

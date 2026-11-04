@@ -13,8 +13,27 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--pricebook',type=Path,default=captured_book if captured_book.is_file() else ROOT/'web/data/catalog-pricebook.json');args=parser.parse_args()
     if not args.pricebook.is_file():raise RuntimeError('Capture the current public pricebook first')
     (OUT/'choice/assets').mkdir(parents=True,exist_ok=True);(OUT/'data').mkdir(exist_ok=True)
-    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css']:shutil.copy2(HERE/name,OUT/'choice'/name)
+    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','ritual.css']:shutil.copy2(HERE/name,OUT/'choice'/name)
     page=(HERE/'index.html').read_text('utf8')
+    original=(LEGACY/'baseline/index.html').read_text('utf8')
+    ritual=re.search(r'<section class="ritual"[^>]*>.*?</section>',original,re.S)[0]
+    page=page.replace('{{ritual}}',ritual)
+    # Reuse the original ritual without the unrelated catalogue and form code.
+    script=(ROOT/'r101/site.mjs').read_text('utf8')
+    start=script.index('function ritual(');end=script.index(' const re=new IntersectionObserver',start)
+    (OUT/'choice/ritual.mjs').write_text("const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],reduce=matchMedia('(prefers-reduced-motion:reduce)');\n"+script[start:end]+"}\n",'utf8')
+    for src in re.findall(r'(?:src|srcset)="([^"]+)"',ritual):
+        for part in src.split(','):
+            path=Path(part.strip().split()[0].lstrip('/'));source=ROOT/'web'/path
+            if not source.is_file():source=ROOT/path
+            target=OUT/path;target.parent.mkdir(parents=True,exist_ok=True)
+            if source.is_file():shutil.copy2(source,target)
+            else:
+                stem=re.sub(r'-(640|960)$','',path.stem);png=ROOT/'r101/assets'/f'{stem}.png'
+                if not png.is_file():raise RuntimeError('Missing original ritual asset: '+str(path))
+                # Same source photograph and encoding recipe as r101/build.py.
+                width_match=re.search(r'-(640|960)$',path.stem);width=int(width_match[1]) if width_match else 1536
+                picture=Image.open(png);picture.thumbnail((width,width));picture.save(target,quality=80 if width_match else 86)
     roof=re.search(r"kvadro: '([^']+)'",(LEGACY/'roof-points.mjs').read_text('utf8'))[1]
     (OUT/'index.html').write_text(page.replace('{{roof}}',roof),encoding='utf8',newline='\n')
     for name in ['kvadro','parus','viking','house']:
@@ -22,26 +41,40 @@ def main():
         for width in [640,1280,1920]:
             target=OUT/'choice/assets'/f'{name}-{width}.webp'
             if not target.exists():image.resize((width,round(image.height*width/image.width)),Image.Resampling.LANCZOS).save(target,quality=85,method=5)
-    shutil.copy2(args.pricebook,OUT/'data/catalog-pricebook.json')
     book=json.loads(args.pricebook.read_text('utf8'))
-    spec=importlib.util.spec_from_file_location('legacy_builder',LEGACY/'build.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
-    mod.copy_layouts(OUT/'home-hero/layouts',book)
+    # Refresh only this isolated prototype from the verified public retail bases.
+    # The production pricebook and the original R117 files are never rewritten.
+    bases=json.loads((HERE/'pricing/public-package-base.json').read_text('utf8'))['models']
+    assert sum(len(row) for row in bases.values())==20
+    for model,sizes in bases.items():
+        for size,prices in sizes.items():
+            row=book['r85']['models'][model]['sizes'][size]
+            row['priceRub']=prices['comfortCents']/100
+            row['deluxe']['priceRub']=prices['deluxeCents']/100
+    (OUT/'data/catalog-pricebook.json').write_text(json.dumps(book,ensure_ascii=False,indent=2)+'\n','utf8')
+    geometry=HERE/'geometry';layout_root=OUT/'home-hero/layouts'
+    assert json.loads((geometry/'qa/export-audit.json').read_text('utf8'))['models']==19
+    assert json.loads((geometry/'qa/native-album-audit.json').read_text('utf8'))['pass']
+    shutil.copytree(LEGACY/'layouts/vendor',layout_root/'vendor',dirs_exist_ok=True)
     for name in ['catalog.mjs','roof-points.mjs','layout-panel.mjs','layout-story.mjs','layout-viewer.mjs','model-request.mjs','hero.css']:shutil.copy2(LEGACY/name,OUT/'home-hero'/name)
-    registry=json.loads((LEGACY/'layouts/index.json').read_text('utf8'))
+    registry=json.loads((geometry/'index-draft.json').read_text('utf8'))
     for plan in registry['plans']:
-        if plan['number'] in [12,13]:plan['models']=['parus','viking']
-    pilot=HERE/'pilot'
-    if (pilot/'01.glb').is_file():
-        destination=OUT/'home-hero/layouts/pilot';destination.mkdir(parents=True,exist_ok=True)
-        for name in ['01.glb','01.json','01.webp']:shutil.copy2(pilot/name,destination/name)
-        for name in ['01-dimension-source.json','01-geometry-check.json','01-export-audit.json']:
-            (destination/name).unlink(missing_ok=True)
-        first=registry['plans'][0];first['model']='pilot/01.glb';first['spec']='pilot/01.json';first['preview']='pilot/01.webp'
-        first['sha256']=hashlib.sha256((pilot/'01.glb').read_bytes()).hexdigest()
-        first['dimension_sha256']=json.loads((pilot/'01.json').read_text('utf8'))['dimension_sha256']
-        first['revision']='choice-v2-pilot-01'
+        number=f"{plan['number']:02}"
+        for key,folder,extension in [('model','models','glb'),('spec','specs','json'),('preview','previews','webp')]:
+            relative=f'{folder}/{number}.{extension}';target=layout_root/relative;target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(geometry/relative,target);plan[key]=relative
+        checked=json.loads((geometry/plan['spec']).read_text('utf8'))
+        plan['sha256']=hashlib.sha256((geometry/plan['model']).read_bytes()).hexdigest();plan['dimension_sha256']=checked['dimension_sha256']
+        for model in plan['models']:
+            expected=([int(x)*1000 for x in plan['size'].split('x')] if 'x' in plan['size'] else [int(plan['size'])*10,round(book['models'][model]['widthM']*1000)])
+            assert plan['size'] in book['prices'][model] and sorted(checked['outer_mm'][:2])==sorted(expected)
+    # Remove only obsolete generated prototype files. Historical sources stay in Git.
+    old=json.loads((LEGACY/'layouts/index.json').read_text('utf8'))
+    stale=[p['drawing'] for p in old['plans']]+['pilot/01.glb','pilot/01.json','pilot/01.webp']
+    for relative in stale:
+        target=(layout_root/relative).resolve();target.relative_to(layout_root.resolve());target.unlink(missing_ok=True)
     album=json.loads((HERE/'album/manifest.json').read_text('utf8'))
-    assert len(album['plans'])==14
+    assert len(album['plans'])==len(registry['plans'])==19
     canonical=OUT/'home-hero/layouts/album';canonical.mkdir(parents=True,exist_ok=True)
     for plan in registry['plans']:
         page=next(p for p in album['plans'] if p['number']==plan['number'])
@@ -50,7 +83,7 @@ def main():
         shutil.copy2(original,canonical/page['drawing'])
         plan['drawing']='album/'+page['drawing']
         plan['drawing_source']={'presentationId':album['presentationId'],'revisionId':album['revisionId'],'slideId':page['slideId'],'sha256':page['sha256']}
-    registry['version']='bath-choice-v3-native-album-2026-11-04'
+    registry['version']='bath-choice-v4-native-album-19-2026-11-04'
     for plan in registry['plans']:
         folder=OUT/'home-hero/layouts'
         for key in ['model','spec','drawing','preview']:
@@ -89,10 +122,13 @@ def main():
             dst=OUT/entry['path'];dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
     captured=baseline/'quiz.mjs'
     covered={(model,p['size']) for p in registry['plans'] for model in p['models']}
-    manifest={'published':False,'prototype':True,'deploymentReady':False,'deploymentBlocks':['incomplete_geometry_coverage','visual_review_pending','layout_prices_unapproved'],
-              'pricebookSha256':hashlib.sha256(args.pricebook.read_bytes()).hexdigest(),'quizSourceUnchanged':True,
+    assert len(covered)==20
+    manifest={'published':False,'prototype':True,'deploymentReady':False,'deploymentBlocks':['release_review_pending'],
+              'sourcePublicPricebookSha256':hashlib.sha256(args.pricebook.read_bytes()).hexdigest(),
+              'pricebookSha256':hashlib.sha256((OUT/'data/catalog-pricebook.json').read_bytes()).hexdigest(),
+              'prototypePackageBasesSource':'pricing/public-package-base.json','layoutPricesOnPublicPage':False,'quizSourceUnchanged':True,
               'quizSha256':hashlib.sha256(captured.read_bytes()).hexdigest(),'modelSizePairs':sum(len(m['sizes']) for m in book['r85']['models'].values()),
-              'coveredModelSizePairs':len(covered),'newGeometryCoverageComplete':False,'files':[]}
+              'coveredModelSizePairs':len(covered),'newGeometryCoverageComplete':True,'geometryCount':19,'nativeAlbumRevision':album['revisionId'],'files':[]}
     for p in sorted(OUT.rglob('*')):
         if p.is_file():manifest['files'].append({'path':p.relative_to(OUT).as_posix(),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size})
     (ROOT/'output/bath-choice-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),'utf8')

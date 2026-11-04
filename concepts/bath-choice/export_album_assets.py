@@ -48,7 +48,7 @@ def main():
     output = HERE/'album'
     output.mkdir(parents=True, exist_ok=True)
     document = pdfium.PdfDocument(args.pdf)
-    assert len(source['slides']) == len(document) == 14
+    assert len(source['slides']) == len(document) and len(document) in [14,19]
     shutil.copy2(args.pdf, output/'native-album.pdf')
     # Deterministic snapshots keep native shapes and text editable/recoverable.
     with gzip.GzipFile(filename=str(output/'native-presentation.json.gz'), mode='wb', mtime=0) as stream:

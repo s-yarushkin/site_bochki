@@ -1,0 +1,8196 @@
+[
+  {
+    "billId": "dp3d-01-kvadro",
+    "number": 1,
+    "geometryId": "dp3d-01",
+    "dimensionSha256": "fd635634cd452db8368aca8cd74404c7a808d84cb874bc9719677c3da38d0c1c",
+    "model": "kvadro",
+    "size": "400",
+    "package": "comfort",
+    "baseCents": 41000000,
+    "knownSubtotalCents": 43108212,
+    "calculatedTotalCents": 43108212,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP01-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O06",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP01-O07",
+        "sku": "LAYOUT_BENCH",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP01-O08",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP01-O08-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP01-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-01-kvadro",
+    "number": 1,
+    "geometryId": "dp3d-01",
+    "dimensionSha256": "fd635634cd452db8368aca8cd74404c7a808d84cb874bc9719677c3da38d0c1c",
+    "model": "kvadro",
+    "size": "400",
+    "package": "deluxe",
+    "baseCents": 51900000,
+    "knownSubtotalCents": 52224972,
+    "calculatedTotalCents": 52224972,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP01-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O06",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP01-O07",
+        "sku": "LAYOUT_BENCH",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP01-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-O08-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP01-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP01-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-02-kvadro",
+    "number": 2,
+    "geometryId": "dp3d-02",
+    "dimensionSha256": "71708517c652b35e9441b7a3296c8be00580817d32549a39ed117752d2505ae1",
+    "model": "kvadro",
+    "size": "500",
+    "package": "comfort",
+    "baseCents": 48500000,
+    "knownSubtotalCents": 50283240,
+    "calculatedTotalCents": 50283240,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP02-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O06",
+        "sku": "OPT_99",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP02-O07",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP02-O07-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP02-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-02-kvadro",
+    "number": 2,
+    "geometryId": "dp3d-02",
+    "dimensionSha256": "71708517c652b35e9441b7a3296c8be00580817d32549a39ed117752d2505ae1",
+    "model": "kvadro",
+    "size": "500",
+    "package": "deluxe",
+    "baseCents": 59700000,
+    "knownSubtotalCents": 59700000,
+    "calculatedTotalCents": 59700000,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP02-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O06",
+        "sku": "OPT_99",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP02-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-O07-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP02-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP02-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-03-kvadro",
+    "number": 3,
+    "geometryId": "dp3d-03",
+    "dimensionSha256": "c4902df819f9a930565e65450efc4d9b6b9abad812a829b3b101281fd6252914",
+    "model": "kvadro",
+    "size": "600",
+    "package": "comfort",
+    "baseCents": 52500000,
+    "knownSubtotalCents": 55583128,
+    "calculatedTotalCents": 55583128,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP03-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP03-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O04",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP03-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O08",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP03-O09",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP03-O09-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP03-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-03-kvadro",
+    "number": 3,
+    "geometryId": "dp3d-03",
+    "dimensionSha256": "c4902df819f9a930565e65450efc4d9b6b9abad812a829b3b101281fd6252914",
+    "model": "kvadro",
+    "size": "600",
+    "package": "deluxe",
+    "baseCents": 63900000,
+    "knownSubtotalCents": 64658268,
+    "calculatedTotalCents": 64658268,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP03-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP03-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O04",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP03-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O08",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP03-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-O09-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP03-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP03-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-04-kvadro",
+    "number": 4,
+    "geometryId": "dp3d-04",
+    "dimensionSha256": "7b88f0a4d5412202e41e9f902161b37227d6ae2398576ba6c00c3305b9401c55",
+    "model": "kvadro",
+    "size": "600",
+    "package": "comfort",
+    "baseCents": 52500000,
+    "knownSubtotalCents": 58237066,
+    "calculatedTotalCents": 58237066,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP04-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP04-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O06",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP04-O07",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP04-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O09",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP04-O10",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP04-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP04-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP04-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP04-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-04-kvadro",
+    "number": 4,
+    "geometryId": "dp3d-04",
+    "dimensionSha256": "7b88f0a4d5412202e41e9f902161b37227d6ae2398576ba6c00c3305b9401c55",
+    "model": "kvadro",
+    "size": "600",
+    "package": "deluxe",
+    "baseCents": 63900000,
+    "knownSubtotalCents": 67312206,
+    "calculatedTotalCents": 67312206,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP04-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP04-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O06",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP04-O07",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP04-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O09",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP04-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP04-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP04-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP04-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP04-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-05-kvadro",
+    "number": 5,
+    "geometryId": "dp3d-05",
+    "dimensionSha256": "5549c1b19ce96aa33f908b81a184d19a1010bc3b75eb4ab4718fbe601c93f46e",
+    "model": "kvadro",
+    "size": "600",
+    "package": "comfort",
+    "baseCents": 52500000,
+    "knownSubtotalCents": 56395558,
+    "calculatedTotalCents": 56395558,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP05-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O03",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP05-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O07",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP05-O08",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP05-O09",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP05-O09-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP05-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP05-O08",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-05-kvadro",
+    "number": 5,
+    "geometryId": "dp3d-05",
+    "dimensionSha256": "5549c1b19ce96aa33f908b81a184d19a1010bc3b75eb4ab4718fbe601c93f46e",
+    "model": "kvadro",
+    "size": "600",
+    "package": "deluxe",
+    "baseCents": 63900000,
+    "knownSubtotalCents": 66012318,
+    "calculatedTotalCents": 66012318,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP05-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O03",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP05-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O07",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP05-O08",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP05-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-O09-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP05-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP05-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP05-O08",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-06-kvadro-house",
+    "number": 6,
+    "geometryId": "dp3d-06",
+    "dimensionSha256": "21310f53c458c0143464178f112140e169cf967dc758f023307723c22ca88301",
+    "model": "kvadro-house",
+    "size": "4x4",
+    "package": "comfort",
+    "baseCents": 68500000,
+    "knownSubtotalCents": 74440960,
+    "calculatedTotalCents": 74440960,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP06-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O03",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O05",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP06-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP06-O12",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP06-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP06-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP06-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP06-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-06-kvadro-house",
+    "number": 6,
+    "geometryId": "dp3d-06",
+    "dimensionSha256": "21310f53c458c0143464178f112140e169cf967dc758f023307723c22ca88301",
+    "model": "kvadro-house",
+    "size": "4x4",
+    "package": "deluxe",
+    "baseCents": 83000000,
+    "knownSubtotalCents": 85963100,
+    "calculatedTotalCents": 85963100,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP06-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O03",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O05",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP06-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP06-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP06-O12",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP06-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP06-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP06-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP06-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-07-kvadro-house",
+    "number": 7,
+    "geometryId": "dp3d-07",
+    "dimensionSha256": "dd3320096287536d4360505ced8f47667aee86f22774847d556bce958f5ce4be",
+    "model": "kvadro-house",
+    "size": "6x5",
+    "package": "comfort",
+    "baseCents": 90500000,
+    "knownSubtotalCents": 98455868,
+    "calculatedTotalCents": 98455868,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP07-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP07-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP07-O06",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 1185240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O10",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 0,
+        "totalCents": 1659336
+      },
+      {
+        "id": "DP07-O11",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP07-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O15",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP07-O15-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP07-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP07-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-D04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-N02",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP07-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP07-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-07-kvadro-house",
+    "number": 7,
+    "geometryId": "dp3d-07",
+    "dimensionSha256": "dd3320096287536d4360505ced8f47667aee86f22774847d556bce958f5ce4be",
+    "model": "kvadro-house",
+    "size": "6x5",
+    "package": "deluxe",
+    "baseCents": 107200000,
+    "knownSubtotalCents": 112178008,
+    "calculatedTotalCents": 112178008,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP07-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP07-O06",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 1185240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O10",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 0,
+        "totalCents": 1659336
+      },
+      {
+        "id": "DP07-O11",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP07-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O15",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-O15-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP07-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP07-D04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-N02",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP07-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP07-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP07-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP07-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-08-kvadro-house",
+    "number": 8,
+    "geometryId": "dp3d-08",
+    "dimensionSha256": "671c2ea72580ad1672354bfdf117e487f86cb2d2aa7ed4df98db8f19cd1b92d0",
+    "model": "kvadro-house",
+    "size": "6x6",
+    "package": "comfort",
+    "baseCents": 96500000,
+    "knownSubtotalCents": 108127344,
+    "calculatedTotalCents": 108127344,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP08-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP08-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP08-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O05",
+        "sku": "OPT_97",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 3790000,
+        "creditCents": 0,
+        "totalCents": 3790000
+      },
+      {
+        "id": "DP08-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O09",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP08-O10",
+        "label": "Мойка кухни",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true,
+        "bundledWith": "DP08-O05"
+      },
+      {
+        "id": "DP08-O11",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O12",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O13",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O14",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP08-O14-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP08-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP08-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP08-D04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1303764,
+        "creditCents": 0,
+        "totalCents": 1303764
+      },
+      {
+        "id": "DP08-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-N03",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP08-N04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-N05",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1303764,
+        "creditCents": 0,
+        "totalCents": 1303764
+      },
+      {
+        "id": "DP08-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP08-O11",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O12",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O13",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-08-kvadro-house",
+    "number": 8,
+    "geometryId": "dp3d-08",
+    "dimensionSha256": "671c2ea72580ad1672354bfdf117e487f86cb2d2aa7ed4df98db8f19cd1b92d0",
+    "model": "kvadro-house",
+    "size": "6x6",
+    "package": "deluxe",
+    "baseCents": 114200000,
+    "knownSubtotalCents": 123205056,
+    "calculatedTotalCents": 123205056,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP08-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP08-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP08-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O05",
+        "sku": "OPT_97",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 3790000,
+        "creditCents": 0,
+        "totalCents": 3790000
+      },
+      {
+        "id": "DP08-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O09",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP08-O10",
+        "label": "Мойка кухни",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true,
+        "bundledWith": "DP08-O05"
+      },
+      {
+        "id": "DP08-O11",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O12",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O13",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O14",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-O14-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP08-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP08-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP08-D04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1481550,
+        "creditCents": 0,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP08-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-N03",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP08-N04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP08-N05",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1481550,
+        "creditCents": 0,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP08-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP08-O11",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O12",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP08-O13",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-09-kvadro-house",
+    "number": 9,
+    "geometryId": "dp3d-09",
+    "dimensionSha256": "bd29f76067492ab10008389d72f1b216496521355c59b219578944afb310cdec",
+    "model": "kvadro-house",
+    "size": "6x6",
+    "package": "comfort",
+    "baseCents": 96500000,
+    "knownSubtotalCents": 106530038,
+    "calculatedTotalCents": 106530038,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1481550,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP09-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP09-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP09-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP09-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O10",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP09-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 0,
+        "totalCents": 1659336
+      },
+      {
+        "id": "DP09-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O15",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP09-O15-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP09-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP09-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP09-D04",
+        "sku": "OPT_216",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP09-D05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-N02",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP09-N03",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1303764,
+        "creditCents": 0,
+        "totalCents": 1303764
+      },
+      {
+        "id": "DP09-N04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP09-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-09-kvadro-house",
+    "number": 9,
+    "geometryId": "dp3d-09",
+    "dimensionSha256": "bd29f76067492ab10008389d72f1b216496521355c59b219578944afb310cdec",
+    "model": "kvadro-house",
+    "size": "6x6",
+    "package": "deluxe",
+    "baseCents": 114200000,
+    "knownSubtotalCents": 121429964,
+    "calculatedTotalCents": 121429964,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1481550,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP09-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP09-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP09-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP09-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O10",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP09-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 0,
+        "totalCents": 1659336
+      },
+      {
+        "id": "DP09-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O15",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-O15-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP09-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP09-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP09-D04",
+        "sku": "OPT_216",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP09-D05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-N02",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP09-N03",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1481550,
+        "creditCents": 0,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP09-N04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP09-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP09-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP09-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-10-kvadro-house",
+    "number": 10,
+    "geometryId": "dp3d-10",
+    "dimensionSha256": "f412124e3ce826f17b2e10f269aba7b5845beff3c0f6c1ac6cbd4013b2b1966a",
+    "model": "kvadro-house",
+    "size": "6x4",
+    "package": "comfort",
+    "baseCents": 84500000,
+    "knownSubtotalCents": 89374244,
+    "calculatedTotalCents": 89374244,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP10-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP10-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP10-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O05",
+        "label": "Диван",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP10-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O09",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP10-O10",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP10-O11",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP10-O11-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP10-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP10-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP10-O05",
+        "label": "Диван",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP10-O10",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-10-kvadro-house",
+    "number": 10,
+    "geometryId": "dp3d-10",
+    "dimensionSha256": "f412124e3ce826f17b2e10f269aba7b5845beff3c0f6c1ac6cbd4013b2b1966a",
+    "model": "kvadro-house",
+    "size": "6x4",
+    "package": "deluxe",
+    "baseCents": 100200000,
+    "knownSubtotalCents": 102096384,
+    "calculatedTotalCents": 102096384,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP10-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP10-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP10-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O05",
+        "label": "Диван",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP10-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O09",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP10-O10",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP10-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-O11-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP10-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP10-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP10-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP10-O05",
+        "label": "Диван",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP10-O10",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-11-kvadro-house",
+    "number": 11,
+    "geometryId": "dp3d-11",
+    "dimensionSha256": "a2baa73311a8b1802faff40db2199d77d8533fd67a4a798823a772dcc74f0fe9",
+    "model": "kvadro-house",
+    "size": "6x6",
+    "package": "comfort",
+    "baseCents": 96500000,
+    "knownSubtotalCents": 106530038,
+    "calculatedTotalCents": 106530038,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1481550,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP11-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP11-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP11-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP11-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O10",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP11-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 0,
+        "totalCents": 1659336
+      },
+      {
+        "id": "DP11-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O15",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP11-O15-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP11-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP11-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP11-D04",
+        "sku": "OPT_216",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP11-D05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-N02",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP11-N03",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1303764,
+        "creditCents": 0,
+        "totalCents": 1303764
+      },
+      {
+        "id": "DP11-N04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP11-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-11-kvadro-house",
+    "number": 11,
+    "geometryId": "dp3d-11",
+    "dimensionSha256": "a2baa73311a8b1802faff40db2199d77d8533fd67a4a798823a772dcc74f0fe9",
+    "model": "kvadro-house",
+    "size": "6x6",
+    "package": "deluxe",
+    "baseCents": 114200000,
+    "knownSubtotalCents": 121429964,
+    "calculatedTotalCents": 121429964,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1481550,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP11-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP11-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP11-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP11-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O09",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O10",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP11-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 0,
+        "totalCents": 1659336
+      },
+      {
+        "id": "DP11-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O15",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-O15-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP11-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP11-D03",
+        "sku": "OPT_214",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP11-D04",
+        "sku": "OPT_216",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 0,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP11-D05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-N02",
+        "sku": "OPT_25",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP11-N03",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1481550,
+        "creditCents": 0,
+        "totalCents": 1481550
+      },
+      {
+        "id": "DP11-N04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP11-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP11-O06",
+        "label": "Кровать",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O12",
+        "label": "Душ",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O13",
+        "label": "Раковина",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP11-O14",
+        "label": "Унитаз",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-12-parus",
+    "number": 12,
+    "geometryId": "dp3d-12",
+    "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+    "model": "parus",
+    "size": "500",
+    "package": "comfort",
+    "baseCents": 51000000,
+    "knownSubtotalCents": 58253602,
+    "calculatedTotalCents": 58253602,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP12-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP12-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP12-O13",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP12-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP12-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP12-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1191564,
+        "creditCents": 0,
+        "totalCents": 1191564
+      },
+      {
+        "id": "DP12-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-12-parus",
+    "number": 12,
+    "geometryId": "dp3d-12",
+    "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+    "model": "parus",
+    "size": "500",
+    "package": "deluxe",
+    "baseCents": 63700000,
+    "knownSubtotalCents": 67978798,
+    "calculatedTotalCents": 67978798,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP12-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP12-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP12-O13",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP12-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP12-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1354050,
+        "creditCents": 0,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP12-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-12-viking",
+    "number": 12,
+    "geometryId": "dp3d-12",
+    "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+    "model": "viking",
+    "size": "500",
+    "package": "comfort",
+    "baseCents": 62000000,
+    "knownSubtotalCents": 69253602,
+    "calculatedTotalCents": 69253602,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP12-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP12-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP12-O13",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP12-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP12-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP12-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1191564,
+        "creditCents": 0,
+        "totalCents": 1191564
+      },
+      {
+        "id": "DP12-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-12-viking",
+    "number": 12,
+    "geometryId": "dp3d-12",
+    "dimensionSha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+    "model": "viking",
+    "size": "500",
+    "package": "deluxe",
+    "baseCents": 74700000,
+    "knownSubtotalCents": 78978798,
+    "calculatedTotalCents": 78978798,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP12-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP12-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP12-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP12-O13",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP12-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP12-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1354050,
+        "creditCents": 0,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP12-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP12-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP12-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-13-parus",
+    "number": 13,
+    "geometryId": "dp3d-13",
+    "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+    "model": "parus",
+    "size": "600",
+    "package": "comfort",
+    "baseCents": 53500000,
+    "knownSubtotalCents": 60861926,
+    "calculatedTotalCents": 60861926,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP13-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O04",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP13-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP13-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O12",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP13-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP13-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP13-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1191564,
+        "creditCents": 0,
+        "totalCents": 1191564
+      },
+      {
+        "id": "DP13-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-13-parus",
+    "number": 13,
+    "geometryId": "dp3d-13",
+    "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+    "model": "parus",
+    "size": "600",
+    "package": "deluxe",
+    "baseCents": 66500000,
+    "knownSubtotalCents": 70345502,
+    "calculatedTotalCents": 70345502,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP13-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O04",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP13-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP13-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O12",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP13-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP13-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1354050,
+        "creditCents": 0,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP13-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-13-viking",
+    "number": 13,
+    "geometryId": "dp3d-13",
+    "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+    "model": "viking",
+    "size": "600",
+    "package": "comfort",
+    "baseCents": 64500000,
+    "knownSubtotalCents": 71861926,
+    "calculatedTotalCents": 71861926,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP13-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O04",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP13-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP13-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O12",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP13-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP13-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP13-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1191564,
+        "creditCents": 0,
+        "totalCents": 1191564
+      },
+      {
+        "id": "DP13-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-13-viking",
+    "number": 13,
+    "geometryId": "dp3d-13",
+    "dimensionSha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+    "model": "viking",
+    "size": "600",
+    "package": "deluxe",
+    "baseCents": 77500000,
+    "knownSubtotalCents": 81345502,
+    "calculatedTotalCents": 81345502,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP13-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O04",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP13-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP13-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP13-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O12",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP13-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP13-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1354050,
+        "creditCents": 0,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP13-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP13-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-14-parus",
+    "number": 14,
+    "geometryId": "dp3d-14",
+    "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+    "model": "parus",
+    "size": "400",
+    "package": "comfort",
+    "baseCents": 45000000,
+    "knownSubtotalCents": 47974804,
+    "calculatedTotalCents": 47974804,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP14-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O10",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP14-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP14-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-14-parus",
+    "number": 14,
+    "geometryId": "dp3d-14",
+    "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+    "model": "parus",
+    "size": "400",
+    "package": "deluxe",
+    "baseCents": 56000000,
+    "knownSubtotalCents": 56649944,
+    "calculatedTotalCents": 56649944,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-14-viking",
+    "number": 14,
+    "geometryId": "dp3d-14",
+    "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+    "model": "viking",
+    "size": "400",
+    "package": "comfort",
+    "baseCents": 48000000,
+    "knownSubtotalCents": 50974804,
+    "calculatedTotalCents": 50974804,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP14-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O10",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP14-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP14-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-14-viking",
+    "number": 14,
+    "geometryId": "dp3d-14",
+    "dimensionSha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+    "model": "viking",
+    "size": "400",
+    "package": "deluxe",
+    "baseCents": 60400000,
+    "knownSubtotalCents": 61049944,
+    "calculatedTotalCents": 61049944,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP14-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP14-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP14-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-15-kvadro",
+    "number": 15,
+    "geometryId": "dp3d-15",
+    "dimensionSha256": "4251cfb7a8e634b6f284db4e0123c2c544ef0b8e6ada6033a309e6deacd3d727",
+    "model": "kvadro",
+    "size": "450",
+    "package": "comfort",
+    "baseCents": 44000000,
+    "knownSubtotalCents": 46108212,
+    "calculatedTotalCents": 46108212,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP15-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O06",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP15-O07",
+        "sku": "LAYOUT_BENCH",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP15-O08",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP15-O08-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP15-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-15-kvadro",
+    "number": 15,
+    "geometryId": "dp3d-15",
+    "dimensionSha256": "4251cfb7a8e634b6f284db4e0123c2c544ef0b8e6ada6033a309e6deacd3d727",
+    "model": "kvadro",
+    "size": "450",
+    "package": "deluxe",
+    "baseCents": 55000000,
+    "knownSubtotalCents": 55324972,
+    "calculatedTotalCents": 55324972,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP15-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O06",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP15-O07",
+        "sku": "LAYOUT_BENCH",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP15-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-O08-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP15-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP15-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-16-kvadro",
+    "number": 16,
+    "geometryId": "dp3d-16",
+    "dimensionSha256": "7c7d4c23b278b7b813cc77bbe001a862acf34e5e05f02dddbc53b41a6da42003",
+    "model": "kvadro",
+    "size": "550",
+    "package": "comfort",
+    "baseCents": 51000000,
+    "knownSubtotalCents": 52783240,
+    "calculatedTotalCents": 52783240,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP16-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O06",
+        "sku": "OPT_99",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP16-O07",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP16-O07-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP16-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-16-kvadro",
+    "number": 16,
+    "geometryId": "dp3d-16",
+    "dimensionSha256": "7c7d4c23b278b7b813cc77bbe001a862acf34e5e05f02dddbc53b41a6da42003",
+    "model": "kvadro",
+    "size": "550",
+    "package": "deluxe",
+    "baseCents": 62300000,
+    "knownSubtotalCents": 62300000,
+    "calculatedTotalCents": 62300000,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP16-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O05",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O06",
+        "sku": "OPT_99",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP16-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-O07-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP16-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP16-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-17-kvadro-house",
+    "number": 17,
+    "geometryId": "dp3d-17",
+    "dimensionSha256": "ed4c261092dfc122f2936b336b58ef657b46bde5cef0aa95265b339550b9f22f",
+    "model": "kvadro-house",
+    "size": "5x4",
+    "package": "comfort",
+    "baseCents": 79500000,
+    "knownSubtotalCents": 85440960,
+    "calculatedTotalCents": 85440960,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP17-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O03",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O05",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 592620
+      },
+      {
+        "id": "DP17-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP17-O12",
+        "sku": "ASTON_16_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1200000,
+        "creditCents": 0,
+        "totalCents": 1200000
+      },
+      {
+        "id": "DP17-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 1185240
+      },
+      {
+        "id": "DP17-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP17-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP17-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-17-kvadro-house",
+    "number": 17,
+    "geometryId": "dp3d-17",
+    "dimensionSha256": "ed4c261092dfc122f2936b336b58ef657b46bde5cef0aa95265b339550b9f22f",
+    "model": "kvadro-house",
+    "size": "5x4",
+    "package": "deluxe",
+    "baseCents": 94600000,
+    "knownSubtotalCents": 97563100,
+    "calculatedTotalCents": 97563100,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1481550,
+        "totalCents": 0
+      },
+      {
+        "id": "DP17-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O03",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O05",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 592620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP17-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 355572,
+        "creditCents": 0,
+        "totalCents": 355572
+      },
+      {
+        "id": "DP17-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O11",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1659336,
+        "creditCents": 1185240,
+        "totalCents": 474096
+      },
+      {
+        "id": "DP17-O12",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-O12-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1185240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP17-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-D02",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1066716,
+        "creditCents": 0,
+        "totalCents": 1066716
+      },
+      {
+        "id": "DP17-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP17-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP17-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-18-parus",
+    "number": 18,
+    "geometryId": "dp3d-18",
+    "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+    "model": "parus",
+    "size": "450",
+    "package": "comfort",
+    "baseCents": 47000000,
+    "knownSubtotalCents": 49974804,
+    "calculatedTotalCents": 49974804,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP18-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O10",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP18-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP18-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-18-parus",
+    "number": 18,
+    "geometryId": "dp3d-18",
+    "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+    "model": "parus",
+    "size": "450",
+    "package": "deluxe",
+    "baseCents": 58200000,
+    "knownSubtotalCents": 58849944,
+    "calculatedTotalCents": 58849944,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-18-viking",
+    "number": 18,
+    "geometryId": "dp3d-18",
+    "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+    "model": "viking",
+    "size": "450",
+    "package": "comfort",
+    "baseCents": 52000000,
+    "knownSubtotalCents": 54974804,
+    "calculatedTotalCents": 54974804,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 541620
+      },
+      {
+        "id": "DP18-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O10",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP18-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP18-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-18-viking",
+    "number": 18,
+    "geometryId": "dp3d-18",
+    "dimensionSha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+    "model": "viking",
+    "size": "450",
+    "package": "deluxe",
+    "baseCents": 64600000,
+    "knownSubtotalCents": 65249944,
+    "calculatedTotalCents": 65249944,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O02",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O03",
+        "sku": "OPT_45",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 541620,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP18-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O08",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O09",
+        "sku": "OPT_206",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 1083240,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-O10",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-O10-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP18-D01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP18-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": []
+  },
+  {
+    "billId": "dp3d-19-parus",
+    "number": 19,
+    "geometryId": "dp3d-19",
+    "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+    "model": "parus",
+    "size": "550",
+    "package": "comfort",
+    "baseCents": 52500000,
+    "knownSubtotalCents": 59753602,
+    "calculatedTotalCents": 59753602,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP19-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP19-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP19-O13",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP19-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP19-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP19-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1191564,
+        "creditCents": 0,
+        "totalCents": 1191564
+      },
+      {
+        "id": "DP19-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-19-parus",
+    "number": 19,
+    "geometryId": "dp3d-19",
+    "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+    "model": "parus",
+    "size": "550",
+    "package": "deluxe",
+    "baseCents": 65400000,
+    "knownSubtotalCents": 69678798,
+    "calculatedTotalCents": 69678798,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP19-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP19-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP19-O13",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP19-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP19-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1354050,
+        "creditCents": 0,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP19-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-19-viking",
+    "number": 19,
+    "geometryId": "dp3d-19",
+    "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+    "model": "viking",
+    "size": "550",
+    "package": "comfort",
+    "baseCents": 63500000,
+    "knownSubtotalCents": 70753602,
+    "calculatedTotalCents": 70753602,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 1,
+        "unitCents": 1354050,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP19-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP19-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP19-O13",
+        "sku": "ASTON_12_SWAP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 700000,
+        "creditCents": 0,
+        "totalCents": 700000
+      },
+      {
+        "id": "DP19-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 1083240
+      },
+      {
+        "id": "DP19-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP19-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N01",
+        "sku": "OPT_28",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1191564,
+        "creditCents": 0,
+        "totalCents": 1191564
+      },
+      {
+        "id": "DP19-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  },
+  {
+    "billId": "dp3d-19-viking",
+    "number": 19,
+    "geometryId": "dp3d-19",
+    "dimensionSha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+    "model": "viking",
+    "size": "550",
+    "package": "deluxe",
+    "baseCents": 76400000,
+    "knownSubtotalCents": 80678798,
+    "calculatedTotalCents": 80678798,
+    "publicTotalCents": null,
+    "status": "needs_approval",
+    "lines": [
+      {
+        "id": "rooms",
+        "quantity": 0,
+        "unitCents": 1354050,
+        "totalCents": 0
+      },
+      {
+        "id": "DP19-O01",
+        "sku": "LAYOUT_STEP",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O04",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O05",
+        "sku": "LAYOUT_HANGER",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O06",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O07",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O08",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O09",
+        "sku": "OPT_149",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 324972,
+        "creditCents": 0,
+        "totalCents": 324972
+      },
+      {
+        "id": "DP19-O10",
+        "sku": "LAYOUT_SHOE",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 216648,
+        "creditCents": 0,
+        "totalCents": 216648
+      },
+      {
+        "id": "DP19-O11",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O12",
+        "sku": "OPT_100",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1516536,
+        "creditCents": 1083240,
+        "totalCents": 433296
+      },
+      {
+        "id": "DP19-O13",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-O13-firebox",
+        "sku": "OPT_57",
+        "quantity": 1,
+        "coveredQuantity": 1,
+        "unitCents": 1083240,
+        "creditCents": 0,
+        "totalCents": 0
+      },
+      {
+        "id": "DP19-D01",
+        "sku": "OPT_14",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 974916,
+        "creditCents": 0,
+        "totalCents": 974916
+      },
+      {
+        "id": "DP19-D02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-D03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N01",
+        "sku": "OPT_33",
+        "quantity": 1,
+        "coveredQuantity": 0,
+        "unitCents": 1354050,
+        "creditCents": 0,
+        "totalCents": 1354050
+      },
+      {
+        "id": "DP19-N02",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-N03",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A01",
+        "quantity": 1,
+        "totalCents": 0,
+        "included": true
+      },
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ],
+    "pending": [],
+    "priceScope": "bath_and_included_goods",
+    "separateAgreementItems": [
+      {
+        "id": "DP19-A02",
+        "label": "Кран и таз помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      },
+      {
+        "id": "DP19-A04",
+        "label": "Бак и полка помывочной",
+        "quantity": 1,
+        "totalCents": null,
+        "separateAgreement": true
+      }
+    ]
+  }
+]

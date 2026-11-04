@@ -70,3 +70,31 @@ test('the owner-approved House baseline does not charge its existing three or fo
  const extra=quoteLayout(c,{...bill,model:'kvadro-house',size:'6x6',roomCount:5},'comfort');
  assert.equal(extra.publicTotalCents,42481550);
 });
+
+test('unused included rooms and an absent prepaid upper shelf do not reduce the package base',()=>{
+ const c=structuredClone(catalog);c.unusedPackageAllowanceHasNoRefund=true;
+ c.models.kvadro.sizes[400].deluxe={...base,roomCount:3,included:{...base.included,OPT_45:1}};
+ const q=quoteLayout(c,bill,'deluxe');
+ assert.equal(q.calculatedTotalCents,base.priceCents);assert.equal(q.lines[0].quantity,0);
+});
+
+test('a wider wardrobe credits the included cabinet once and cannot reuse the credit',()=>{
+ const c=structuredClone(catalog);c.models.kvadro.sizes[400].comfort.included.OPT_99=1;
+ c.items.OPT_99={customerUnitCents:{standard:1000000}};c.items.OPT_100={customerUnitCents:{standard:1400000}};
+ const line={id:'wide',status:'resolved',operation:'replace',sku:'OPT_100',creditSku:'OPT_99',creditApproved:true};
+ assert.equal(quoteLayout(c,{...bill,lines:[line]},'comfort').calculatedTotalCents,41400000);
+ const duplicate=quoteLayout(c,{...bill,lines:[line,{...line,id:'wide2'}]},'comfort');
+ assert.equal(duplicate.calculatedTotalCents,null);assert.ok(duplicate.pending.some(p=>p.code==='CREDIT_QUANTITY_EXCEEDED'));
+});
+
+test('all 48 geometry-bound calculations agree with the live calculator and remain internal',()=>{
+ const read=name=>JSON.parse(readFileSync(new URL('../concepts/bath-choice/pricing/'+name,import.meta.url)));
+ const c=read('catalog.json'),bills=read('bills.json'),totals=read('prices.json').prices;
+ assert.equal(bills.length,24);assert.equal(new Set(bills.map(b=>b.geometryId)).size,19);
+ assert.equal(new Set(bills.map(b=>b.model+'|'+b.size)).size,20);
+ for(const b of bills)for(const pack of ['comfort','deluxe']){
+  const q=quoteLayout(c,b,pack),expected=totals.find(t=>t.id===b.id);
+  assert.equal(q.calculatedTotalCents,expected[pack+'Cents']);assert.equal(q.publicTotalCents,null);assert.deepEqual(q.pending,[]);
+ }
+ const audit=read('live-sheets-audit.json');assert.equal(audit.pass,true);assert.equal(audit.liveFormulaTotals,48);assert.equal(audit.detailRows,956);
+});

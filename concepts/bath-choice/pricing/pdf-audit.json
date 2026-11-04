@@ -1,0 +1,9 @@
+{
+  "pass": true,
+  "pages": 19,
+  "prices": 48,
+  "diagramPixelsUnchanged": true,
+  "nativePdfSha256": "f098e7ea2bc31d5e51e0952fc8f68afb4f9b0b014bd1d0a42befda8378531f68",
+  "pricedPdfSha256": "33b3da1c4add08f8da10cc6ffb470a5356d8722dc84a22f6a918446ec55edaa1",
+  "method": "Overlay prices and scope outside original native PDF diagrams"
+}

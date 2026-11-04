@@ -1,0 +1,66 @@
+{
+  "version": "2026-11-04",
+  "houseRoomBasis": "quiz",
+  "houseIncludedRooms": {
+    "4x4": 3,
+    "5x4": 3,
+    "6x4": 3,
+    "6x5": 4,
+    "6x6": 4
+  },
+  "appliesToPackages": [
+    "comfort",
+    "deluxe"
+  ],
+  "approvedBy": "owner_in_chat",
+  "instruction": "3/4 помещения, как в квизе; доплата только сверх базы",
+  "kitchen": {
+    "sku": "OPT_97",
+    "rrcRub": 35000,
+    "customerRub": 37900,
+    "source": "РРЦ!A105:G105",
+    "includes": [
+      "kitchen_sink",
+      "kitchen_faucet"
+    ],
+    "approvedBy": "owner_in_chat"
+  },
+  "separateAgreement": {
+    "kinds": [
+      "sofa",
+      "bed",
+      "shower",
+      "sink",
+      "toilet",
+      "bucket"
+    ],
+    "instruction": "Диван, кровать и сантехника не входят в расчёт бани; согласуются отдельно под предпочтения клиента. Раковина и смеситель из OPT_97 уже входят в кухонный комплект.",
+    "approvedBy": "owner_in_chat"
+  },
+  "furniture": {
+    "ordinaryBenchRrcRub": 3000,
+    "washBenchRrcRub": 3000,
+    "simpleStepRrcRub": 3000,
+    "openStorageLikeSku": "OPT_99",
+    "hangerRrcRub": 3000,
+    "shoeShelfRrcRub": 2000,
+    "woodDoorStandardSurchargeRub": 0,
+    "wideCabinetSku": "OPT_100",
+    "includedCabinetCreditSku": "OPT_99",
+    "wideCabinetThresholdMm": 500,
+    "approvedBy": "Сергей, 04.11.2026, ответы в чате"
+  },
+  "additionalWindows": {
+    "comfortSku": "OPT_28",
+    "deluxeSku": "OPT_33",
+    "ventSku": "OPT_25",
+    "firstLoungeWindowAndFirstSteamVentIncluded": true,
+    "approvedBy": "Сергей, 04.11.2026, ответ в чате"
+  },
+  "unusedIncludedItems": {
+    "refund": false,
+    "instruction": "Если второго полка нет, стоимость не вычитаем; новые позиции сверх комплектации прибавляем.",
+    "approvedBy": "Сергей, 04.11.2026, ответ в чате"
+  },
+  "finalLayoutPricesApproved": false
+}

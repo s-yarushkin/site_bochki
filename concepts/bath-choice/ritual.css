@@ -1,0 +1,62 @@
+/* Existing R101 ritual styles, extracted without unrelated page rules. */
+.ritual{background:#1b2620;color:var(--paper);padding-block:90px;--sc-ink:#fafaf7;--sc-ink-soft:#c0c8bc}
+.ritual .section-heading p,.ritual small{color:#c0c8bc}
+.ritual-layout{display:grid;grid-template-columns:58% 42%;gap:0;align-items:start}
+.ritual-stage{position:sticky;top:110px;overflow:hidden;aspect-ratio:1/1;isolation:isolate}
+.ritual-picture{width:100%;height:100%;object-fit:cover;transition:opacity .3s ease-out;position:absolute;inset:0;opacity:0}
+.ritual-picture.active{opacity:1}
+.ritual-stage .caption{position:absolute;z-index:2;left:16px;right:16px;bottom:14px;background:#1b2620ed;padding:10px 14px;color:#eef1ea;font-size:12px}
+.ritual-notes{padding-left:clamp(24px,5vw,80px)}
+.ritual-note{min-height:330px;padding:35px 0 55px;border-bottom:1px solid #526052;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.ritual-note:last-child{border-bottom:0}
+.ritual-note button{padding:0;border:0;background:transparent;color:inherit;text-align:left;font-size:clamp(28px,3vw,45px);letter-spacing:-.04em;line-height:1.2;margin-bottom:20px}
+.ritual-note p{color:#c0c8bc;font-size:16px}
+.ritual-end{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:48px;padding-top:28px;border-top:1px solid #526052}
+.ritual-end p{font-size:18px}
+@media(max-width:1080px){.ritual-note{min-height:300px}}
+@media(max-width:760px){.ritual{padding-block:64px}
+.ritual-layout{display:block}
+.ritual-stage{position:relative;top:auto;aspect-ratio:1.15}
+.ritual-notes{padding:0;display:flex;overflow:auto;scroll-snap-type:x mandatory;gap:20px}
+.ritual-note{flex:0 0 90%;scroll-snap-align:start;min-height:280px;padding:28px 0;border:0}
+.ritual-note button{font-size:30px}
+.ritual-note p{font-size:14px}
+.ritual-end{display:block;margin-top:20px}
+.ritual-end .btn{margin-top:20px}}
+@media(prefers-reduced-motion:reduce){.ritual-stage{position:relative;top:auto}}
+.ritual-stage{aspect-ratio:auto;overflow:visible}
+.ritual-images{position:relative;aspect-ratio:1.04;overflow:hidden;background:#26352b}
+.ritual-picture{transform:none;transition:opacity .6s ease}
+.ritual-picture.active{transform:none}
+.ritual-stage .caption{position:static;background:none;padding:16px 0 0;color:#b7c2b1;min-height:58px;font-size:11px;max-width:62ch}
+.ritual-notes{counter-reset:ritual}
+.ritual-note{counter-increment:ritual}
+.ritual-note button:before{content:'0' counter(ritual);display:block;font-size:12px;letter-spacing:.1em;color:#b2c7a2;margin-bottom:17px}
+.ritual-note button[aria-pressed="false"]{color:#c1cbbd}
+.ritual-note button[aria-pressed="true"]{color:#fff}
+.ritual-note button{transition:color .3s ease}
+.ritual-tabs{display:none}
+@media(max-width:760px){.ritual-images{aspect-ratio:1.16}
+.ritual-stage .caption{padding-top:12px;min-height:53px;font-size:10px}
+.ritual-tabs{display:flex;gap:8px;margin-top:14px}
+.ritual-tabs button{flex:1;background:transparent;border:1px solid #61715a;color:#c1cbbd;min-height:44px;font-size:12px}
+.ritual-tabs button[aria-pressed="true"]{background:#e9eddf;color:#253e32;border-color:#e9eddf}
+.ritual-notes{gap:24px;padding:0 0 10px;scrollbar-color:#879a79 #334738;scrollbar-width:thin}
+.ritual-note{padding-top:22px;min-height:315px}
+.ritual-note button{font-size:31px}
+.ritual-note button:before{margin-bottom:12px}}
+@media(prefers-reduced-motion:reduce){.ritual-picture{transform:none!important}
+.ritual-stage{position:relative;top:auto}
+.ritual-picture{transition:none!important}
+.ritual-note button{transition:none!important}}
+.ritual-note{min-height:290px;padding-block:32px}
+.ritual-note p{font-size:17px;max-width:34ch}
+.ritual-images{max-height:calc(100svh - 170px)}
+@media(min-width:761px){.ritual-stage{top:100px}
+.ritual-note{min-height:max(640px,90svh);padding-block:100px}}
+@media(max-width:760px){.ritual-note{min-height:235px;padding-block:24px}
+.ritual-note p{font-size:15px}
+.ritual-tabs{margin-top:18px}
+.ritual-images{max-height:none}}
+@media(max-width:760px){.ritual-tabs button{min-width:44px;min-height:48px;font-size:14px}}
+@media(max-width:760px){.ritual-note button{min-height:44px}}

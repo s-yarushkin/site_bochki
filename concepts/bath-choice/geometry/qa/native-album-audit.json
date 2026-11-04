@@ -1,0 +1,27 @@
+{
+  "pass": true,
+  "slides": 19,
+  "revisionId": "_zykrPIMQZUlfQ",
+  "nativeElementsChecked": 3739,
+  "maximumNativeBoundsErrorPt": 0.040809543629052314,
+  "furnitureAndEquipmentFootprintsMatched": 208,
+  "nativeTextMatchesReviewedChanges": true,
+  "existingObjectIdsPreservedExceptRetiredStep": true,
+  "retiredStepAndLegendIds": [
+    "p12_i4487",
+    "p12_i4616",
+    "pt2_12_0014",
+    "pt2_12_0015",
+    "pt2_g_12_2",
+    "top_12_0024",
+    "top_12_0025"
+  ],
+  "newSlidesDerivedFromParents": {
+    "15": 1,
+    "16": 2,
+    "17": 6,
+    "18": 14,
+    "19": 12
+  },
+  "sourceAndGlbUseSameDimensionHashes": true
+}

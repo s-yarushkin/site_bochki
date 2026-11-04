@@ -1,0 +1,94 @@
+{
+  "version": "layout-pricing-v4-2026-11-04",
+  "source": "Google calculator · Цены и прибыль · 04.11.2026",
+  "models": {
+    "kvadro": {
+      "400": {
+        "comfortCents": 41000000,
+        "deluxeCents": 51900000
+      },
+      "450": {
+        "comfortCents": 44000000,
+        "deluxeCents": 55000000
+      },
+      "500": {
+        "comfortCents": 48500000,
+        "deluxeCents": 59700000
+      },
+      "550": {
+        "comfortCents": 51000000,
+        "deluxeCents": 62300000
+      },
+      "600": {
+        "comfortCents": 52500000,
+        "deluxeCents": 63900000
+      }
+    },
+    "viking": {
+      "400": {
+        "comfortCents": 48000000,
+        "deluxeCents": 60400000
+      },
+      "450": {
+        "comfortCents": 52000000,
+        "deluxeCents": 64600000
+      },
+      "500": {
+        "comfortCents": 62000000,
+        "deluxeCents": 74700000
+      },
+      "550": {
+        "comfortCents": 63500000,
+        "deluxeCents": 76400000
+      },
+      "600": {
+        "comfortCents": 64500000,
+        "deluxeCents": 77500000
+      }
+    },
+    "parus": {
+      "400": {
+        "comfortCents": 45000000,
+        "deluxeCents": 56000000
+      },
+      "450": {
+        "comfortCents": 47000000,
+        "deluxeCents": 58200000
+      },
+      "500": {
+        "comfortCents": 51000000,
+        "deluxeCents": 63700000
+      },
+      "550": {
+        "comfortCents": 52500000,
+        "deluxeCents": 65400000
+      },
+      "600": {
+        "comfortCents": 53500000,
+        "deluxeCents": 66500000
+      }
+    },
+    "kvadro-house": {
+      "4x4": {
+        "comfortCents": 68500000,
+        "deluxeCents": 83000000
+      },
+      "5x4": {
+        "comfortCents": 79500000,
+        "deluxeCents": 94600000
+      },
+      "6x4": {
+        "comfortCents": 84500000,
+        "deluxeCents": 100200000
+      },
+      "6x5": {
+        "comfortCents": 90500000,
+        "deluxeCents": 107200000
+      },
+      "6x6": {
+        "comfortCents": 96500000,
+        "deluxeCents": 114200000
+      }
+    }
+  }
+}
