@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "revision": "choice-v2-pilot-01",
+  "moving_assembly": "DP01-O01",
+  "slide_offset_mm": [
+    -330,
+    0,
+    0
+  ],
+  "deployed_bounds_mm": [
+    645.0,
+    145.0,
+    0.0,
+    945.0,
+    1955.0,
+    450.0
+  ],
+  "full_swept_aabb_clear": true,
+  "collision_pairs": [],
+  "moving_parts": 12,
+  "stationary_parts": 450,
+  "engineering_load_approval": false
+}

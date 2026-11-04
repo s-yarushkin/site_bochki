@@ -52,6 +52,7 @@ function specification(spec){
 
 function openSpecification(plan,opener){
   const dialog = element('dialog');
+  dialog.dataset.layoutId = plan.id;
   dialog.className = 'hh-layout-dialog';
   dialog.setAttribute('aria-labelledby','hh-layout-spec-title');
   const header = element('header');
@@ -67,10 +68,8 @@ function openSpecification(plan,opener){
   const body = element('div');
   body.className = 'hh-layout-spec';
   body.append(element('p','Загружаем спецификацию…'));
-  const code = element('p',plan.id.toUpperCase());
-  code.className = 'hh-layout-code';
   body.setAttribute('aria-live','polite');
-  dialog.append(header,drawing,code,body);
+  dialog.append(header,drawing,body);
   const controller = new AbortController();
   dialog.addEventListener('close',()=>{
     controller.abort();
@@ -86,6 +85,7 @@ function openSpecification(plan,opener){
 
 function openViewer(plan, opener){
   const dialog = element('dialog');
+  dialog.dataset.layoutId = plan.id;
   dialog.className = 'hh-layout-dialog hh-layout-3d-dialog';
   dialog.setAttribute('aria-label','3D-планировка '+plan.label);
   dialog.innerHTML = `
@@ -98,6 +98,7 @@ function openViewer(plan, opener){
         <button type="button" data-layout-zoom-out aria-label="Отдалить">−</button>
         <button type="button" data-layout-zoom-in aria-label="Приблизить">+</button>
         <button type="button" data-layout-reset>Исходный вид</button>
+        <button type="button" data-layout-slide hidden>Задвинуть полок</button>
       </div>
     </div>`;
   dialog.querySelector('h2').textContent = '3D · '+plan.label;
@@ -144,7 +145,6 @@ export function createLayoutPanel(container){
   drawing.addEventListener('click',()=>openSpecification(plan,drawing));
   preview.addEventListener('click',()=>openViewer(plan,preview));
   return next=>{
-    if(next?.id === plan?.id && next) return;
     plan = next;
     container.hidden = !plan;
     if(!plan) return;

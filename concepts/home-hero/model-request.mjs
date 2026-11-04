@@ -2,7 +2,7 @@ import {buildCallback, submitLead} from '/lead-client.mjs?v=r100-20261027';
 import {attachPhoneMask} from '/phone-mask.mjs';
 import {analytics} from '/analytics-core.mjs?v=r117-quiz-goals';
 
-export function openModelRequest({name,size,layout,opener}){
+export function openModelRequest({name,size,layout,packageName,reason,opener}){
   const dialog = document.createElement('dialog');
   dialog.className = 'hh-bath-dialog';
   dialog.setAttribute('aria-labelledby','hh-request-title');
@@ -10,7 +10,7 @@ export function openModelRequest({name,size,layout,opener}){
     <button class="hh-request-close" type="button" aria-label="Закрыть форму">×</button>
     <p class="hh-request-model"></p>
     <h2 id="hh-request-title">Куда прислать планировки и цены?</h2>
-    <p>Пришлём варианты планировок и комплектаций с ценами. Скидка 20 000 ₽ действует при выборе «Делюкса».</p>
+    <p>Пришлём варианты планировок и комплектаций с ценами. В комплектации «Делюкс» действует скидка 20 000 ₽.</p>
     <form>
       <label>Номер телефона <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (999) 123-45-67" required></label>
       <label>Мессенджер <select name="channel" required><option value="max">MAX</option><option value="whatsapp">WhatsApp</option><option value="telegram">Telegram</option></select></label>
@@ -22,9 +22,20 @@ export function openModelRequest({name,size,layout,opener}){
   const close = dialog.querySelector('.hh-request-close');
   const submit = form.querySelector('button');
   const error = form.querySelector('[role=alert]');
-  const selection = [name,size].filter(Boolean).join(' · ');
+  const selection = [name,size,packageName?'в комплектации «'+packageName+'»':null].filter(Boolean).join(' · ');
+  const actions={
+    quote:{title:'Куда прислать расчёт?',intro:'Подготовим предложение с выбранной комплектацией, доставкой и установкой на вашем участке.',button:'Получить расчёт',success:'Подготовим расчёт и свяжемся с вами в выбранном мессенджере.'},
+    production:{title:'Покажем производство онлайн',intro:'Подберём удобное время для видеозвонка, покажем бани в работе и ответим на ваши вопросы.',button:'Договориться о показе',success:'Свяжемся с вами в выбранном мессенджере и договоримся о времени показа.'},
+    foundation:{title:'Поможем с вашим участком',intro:'Бесплатно проконсультируем по основанию, обсудим проезд и способ установки вашей бани.',button:'Получить консультацию',success:'Свяжемся с вами в выбранном мессенджере и обсудим ваш участок.'}
+  };
+  const action=actions[reason];
   let requestId;
   dialog.querySelector('.hh-request-model').textContent = selection;
+  if(action){
+    dialog.querySelector('h2').textContent=action.title;
+    dialog.querySelector('h2 + p').textContent=action.intro;
+    submit.textContent=action.button;
+  }
   attachPhoneMask(form.elements.phone);
   form.addEventListener('input',()=>{requestId=undefined;});
   close.addEventListener('click',()=>dialog.close());
@@ -43,6 +54,9 @@ export function openModelRequest({name,size,layout,opener}){
       payload.purpose = 'quiz_catalog';
       payload.contactChannel = form.elements.channel.value;
       payload.comment = 'Источник: карточка модели. Размер для расчёта: '+selection+'. '+(layout ? 'Пример планировки: '+layout.toUpperCase()+'. ' : '')+'Прислать расширенные планировки, комплектации и цены. Скидка 20 000 ₽ при выборе «Делюкса».';
+      if(reason==='production')payload.comment+=' Пожелание: онлайн-показ производства.';
+      if(reason==='foundation')payload.comment+=' Пожелание: консультация по основанию и установке.';
+      if(reason==='quote')payload.comment+=' Пожелание: расчёт доставки и установки.';
       payload.journeyContext = {purpose:'selection_help',pagePath:location.pathname};
       const attribution = analytics?.attribution?.();
       if(attribution) payload.attribution = attribution;
@@ -51,7 +65,7 @@ export function openModelRequest({name,size,layout,opener}){
       const sent = await submitLead(payload,await response.json(),location.origin);
       analytics?.confirmed?.(sent.receipt,{flow:'callback',requestId,purpose:'selection_help',placement:'catalog'});
       dialog.querySelector('h2').textContent = 'Заявка получена';
-      dialog.querySelector('h2 + p').textContent = 'Пришлём подборку в выбранный мессенджер. Если написать не получится, позвоним.';
+      dialog.querySelector('h2 + p').textContent = action?.success || 'Пришлём подборку в выбранный мессенджер. Если написать не получится, позвоним.';
       form.replaceChildren(submit);
       submit.type='button';
       submit.textContent='Вернуться к модели';
@@ -62,7 +76,7 @@ export function openModelRequest({name,size,layout,opener}){
       error.textContent = cause.message === 'PHONE_INVALID' ? 'Проверьте номер мобильного телефона.' :
         'Заявка пока не подтверждена. Попробуйте отправить ещё раз.';
       error.hidden=false;
-      submit.textContent='Получить планировки и цены';
+      submit.textContent=action?.button || 'Получить планировки и цены';
       submit.disabled=false;
     }
   });

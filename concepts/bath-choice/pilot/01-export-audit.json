@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "scope": "exported GLB vertices and transforms; continuous swept bounds",
+  "movingParts": 12,
+  "stationaryParts": 478,
+  "collisionPairs": [],
+  "deployedBoundsPlanMm": [
+    645.0,
+    145.0,
+    0.0,
+    945.0,
+    1955.0,
+    450.0
+  ],
+  "worldSlideMm": [
+    -330.0,
+    0.0,
+    0.0
+  ],
+  "dimensionSha256": "0dfd44bb3f831c29cc74da1d646f2363ca3cac8d6c6c829c7d6169954df617bd",
+  "glbSha256": "662ef3aa6c4bce91a15d51a87fdc3696c2ae77db99f8a1e9f6a378fc94709778",
+  "engineeringLoadApproval": false
+}

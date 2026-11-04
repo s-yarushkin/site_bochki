@@ -1,0 +1,58 @@
+{
+  "origin": "https://xn--80aaan1dh9b.xn--p1ai",
+  "capturedDate": "2026-11-04",
+  "purpose": "Immutable public runtime snapshot for the isolated prototype; no private settings.",
+  "files": [
+    {
+      "path": "quiz.mjs",
+      "sha256": "f9688a42298712cbd3dead341f7008b52a30ea2cb6795f0d4fe1e41f3d37b678",
+      "bytes": 29523
+    },
+    {
+      "path": "quiz.css",
+      "sha256": "2ee7ef37128a501a1f0ae26d7795f6b2e062a90cbbea43eb16b55e2b731ea253",
+      "bytes": 32446
+    },
+    {
+      "path": "quiz-engine.mjs",
+      "sha256": "04729f41425bc7ceac4e089f987cd26dd35f27c3c492c21abb3481911f1ec885",
+      "bytes": 8617
+    },
+    {
+      "path": "analytics-core.mjs",
+      "sha256": "b691184ca827ad8633b973dd04e9cd4aa5aa0276a6962dbc5a750a693b6fc38c",
+      "bytes": 7868
+    },
+    {
+      "path": "data/quiz-v1.json",
+      "sha256": "84e5ec1bf56b73fbf6722385955c9b9042291aa0de1c1583129a1750755d690e",
+      "bytes": 16722
+    }
+  ],
+  "sharedFiles": [
+    {
+      "path": "lead-client.mjs",
+      "sha256": "0954afafe573b1cc87e664b26be6aca7c35eedfbfff5fa8929224b306b02faae"
+    },
+    {
+      "path": "phone-mask.mjs",
+      "sha256": "52b84e61a3c595c093cdbb452210a58a7ed0d4fb9c2701401fe6e707c5db905f"
+    },
+    {
+      "path": "quote.mjs",
+      "sha256": "6809505d763777b756a9384f1c440591f742258c0c3f2f3477ef2d9ead151e5f"
+    },
+    {
+      "path": "lead-consent.mjs",
+      "sha256": "ca70c9fb88ec309843ae1e809ae1e9c368c16ac39cb68455f9858734ea331cb9"
+    },
+    {
+      "path": "r85-pricing.mjs",
+      "sha256": "8e31ad5e6da2d5e37a2bdf4728f0b38db04d01853eaf88dba3587049d9ebf879"
+    },
+    {
+      "path": "data/catalog-pricebook.json",
+      "sha256": "bf03c6da29c2cd7d102431d4dd208f818b81be19c69957fb9d4a73a3cd5fa28e"
+    }
+  ]
+}

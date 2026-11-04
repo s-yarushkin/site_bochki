@@ -28,9 +28,10 @@ export async function mountLayoutViewer(stage, url, signal){
   const data = await response.arrayBuffer();
   signal.throwIfAborted();
   const {scene:model} = await new GLTFLoader().parseAsync(data,'');
-  let renderer, controls, observer, environment;
+  let renderer, controls, observer, environment, slideFrame=0;
   const canvas = stage.querySelector('canvas');
   function dispose(){
+    if(slideFrame)cancelAnimationFrame(slideFrame);
     observer?.disconnect();
     controls?.dispose();
     environment?.dispose();
@@ -44,6 +45,7 @@ export async function mountLayoutViewer(stage, url, signal){
     renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
     renderer.localClippingEnabled = true;
     renderer.toneMapping = Three.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = .8;
     const scene = new Three.Scene();
     scene.background = new Three.Color('#eeece2');
     scene.add(model);
@@ -52,13 +54,13 @@ export async function mountLayoutViewer(stage, url, signal){
     try{
       environment = pmrem.fromScene(room,.03);
       scene.environment = environment.texture;
-      scene.environmentIntensity = .65;
+      scene.environmentIntensity = .5;
     }finally{
       room.dispose();
       pmrem.dispose();
     }
-    scene.add(new Three.HemisphereLight('#fff5df','#9ba48b',1.5));
-    const key = new Three.DirectionalLight('#fff1da',2);
+    scene.add(new Three.HemisphereLight('#fff5df','#9ba48b',1.1));
+    const key = new Three.DirectionalLight('#fff1da',1.5);
     key.position.set(-3,8,5);
     scene.add(key);
     const camera = new Three.PerspectiveCamera(37,1,.015,150);
@@ -67,11 +69,18 @@ export async function mountLayoutViewer(stage, url, signal){
     controls.maxPolarAngle = Math.PI*.49;
     const bounds = new Three.Box3().setFromObject(model);
     const sphere = bounds.getBoundingSphere(new Three.Sphere());
+    const visibleCenter=sphere.center.clone();visibleCenter.y=bounds.min.y+.48;
+    const planSize=bounds.getSize(new Three.Vector3());
+    const viewRadius=Math.sqrt(planSize.x**2+planSize.z**2+.95**2)/2;
     controls.minDistance = sphere.radius*.65;
     controls.maxDistance = sphere.radius*9;
     const cutWalls = [];
+    const sliding = [];
     const normals = {front:[0,0,1],rear:[0,0,-1],left:[-1,0,0],right:[1,0,0]};
     model.traverse(object=>{
+      if(object.userData.sliding && Array.isArray(object.userData.slide_offset)){
+        sliding.push({object,origin:object.position.clone(),offset:new Three.Vector3(...object.userData.slide_offset)});
+      }
       if(object.userData.kind !== 'wall' || !object.userData.wall_id) return;
       const normal = normals[object.userData.wall_id];
       const plane = new Three.Plane(new Three.Vector3(0,-1,0),normal ? .75 : .95);
@@ -93,9 +102,9 @@ export async function mountLayoutViewer(stage, url, signal){
     }
     function reset(){
       const angle = Three.MathUtils.degToRad(camera.fov)/2;
-      const distance = sphere.radius/Math.sin(Math.atan(Math.tan(angle)*Math.min(1,camera.aspect)));
-      controls.target.copy(sphere.center);
-      camera.position.copy(sphere.center).addScaledVector(new Three.Vector3(.75,1.55,1.15).normalize(),distance);
+      const distance = 1.10*viewRadius/Math.sin(Math.atan(Math.tan(angle)*Math.min(1,camera.aspect)));
+      controls.target.copy(visibleCenter);
+      camera.position.copy(visibleCenter).addScaledVector(new Three.Vector3(.75,1.55,1.15).normalize(),distance);
       controls.update();
       render();
     }
@@ -105,6 +114,28 @@ export async function mountLayoutViewer(stage, url, signal){
       camera.position.copy(controls.target).add(offset);
       controls.update();
       render();
+    }
+    const slideButton=stage.querySelector('[data-layout-slide]');
+    if(slideButton && sliding.length){
+      slideButton.hidden=false;
+      let progress=0,target=0;
+      stage.dataset.shelfPosition='deployed';
+      slideButton.addEventListener('click',()=>{
+        if(slideFrame)cancelAnimationFrame(slideFrame);
+        target=target?0:1;
+        const from=progress,start=performance.now(),duration=matchMedia('(prefers-reduced-motion:reduce)').matches?0:360;
+        slideButton.textContent=target?'Выдвинуть полок':'Задвинуть полок';
+        function animate(now){
+          if(signal.aborted)return;
+          const t=duration?Math.min(1,(now-start)/duration):1;
+          progress=from+(target-from)*(1-(1-t)**3);
+          for(const {object,origin,offset} of sliding)object.position.copy(origin).addScaledVector(offset,progress);
+          render();
+          if(t<1)slideFrame=requestAnimationFrame(animate);
+          else{slideFrame=0;stage.dataset.shelfPosition=target?'retracted':'deployed';}
+        }
+        slideFrame=requestAnimationFrame(animate);
+      },{signal});
     }
     function resize(){
       const {width,height} = canvas.getBoundingClientRect();
