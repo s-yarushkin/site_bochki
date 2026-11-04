@@ -1,11 +1,21 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} from '../concepts/bath-choice/state.mjs';
 const captured=new URL('../.local/renewal-baseline/catalog-pricebook.json',import.meta.url);
 const book=JSON.parse(readFileSync(existsSync(captured)?captured:new URL('../web/data/catalog-pricebook.json',import.meta.url)));
 const plans=JSON.parse(readFileSync(new URL('../concepts/home-hero/layouts/index.json',import.meta.url))).plans.map(p=>[12,13].includes(p.number)?{...p,models:['parus','viking']}:p);
-const completePlans=JSON.parse(readFileSync(new URL('../concepts/bath-choice/geometry/index-draft.json',import.meta.url))).plans;
+const completePlans=JSON.parse(readFileSync(new URL('../concepts/bath-choice/geometry/index.json',import.meta.url))).plans;
+
+test('the final registry links the real native drawings, specifications and exact GLB bytes',()=>{
+ const root=new URL('../concepts/bath-choice/geometry/',import.meta.url);
+ for(const p of completePlans){
+  for(const field of ['drawing','model','spec','preview'])assert.ok(existsSync(new URL(p[field],root)),p.id+' '+field);
+  assert.equal(createHash('sha256').update(readFileSync(new URL(p.model,root))).digest('hex'),p.sha256);
+  assert.equal(JSON.parse(readFileSync(new URL(p.spec,root))).dimension_sha256,p.dimension_sha256);
+ }
+});
 
 test('the final 19 geometries cover every model and size without borrowing another size',()=>{
  assert.equal(completePlans.length,19);

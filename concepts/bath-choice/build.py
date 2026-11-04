@@ -1,6 +1,6 @@
 """Build the isolated choice prototype. No deployment or changes to live data."""
 from pathlib import Path
-import argparse,hashlib,importlib.util,json,re,shutil
+import argparse,copy,hashlib,importlib.util,json,re,shutil
 from PIL import Image
 
 HERE=Path(__file__).resolve().parent
@@ -84,6 +84,11 @@ def main():
         plan['drawing']='album/'+page['drawing']
         plan['drawing_source']={'presentationId':album['presentationId'],'revisionId':album['revisionId'],'slideId':page['slideId'],'sha256':page['sha256']}
     registry['version']='bath-choice-v4-native-album-19-2026-11-04'
+    # Keep a complete source registry with current GLB hashes, independently of
+    # the preparation draft inherited from the original fourteen models.
+    source_registry=copy.deepcopy(registry)
+    for row in source_registry['plans']:row['drawing']='../album/'+Path(row['drawing']).name
+    (geometry/'index.json').write_text(json.dumps(source_registry,ensure_ascii=False,indent=2)+'\n','utf8')
     for plan in registry['plans']:
         folder=OUT/'home-hero/layouts'
         for key in ['model','spec','drawing','preview']:

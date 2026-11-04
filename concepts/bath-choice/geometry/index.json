@@ -1,0 +1,447 @@
+{
+  "version": "bath-choice-v4-native-album-19-2026-11-04",
+  "plans": [
+    {
+      "id": "dp3d-01",
+      "number": 1,
+      "models": [
+        "kvadro"
+      ],
+      "size": "400",
+      "drawing": "../album/01.webp",
+      "model": "models/01.glb",
+      "spec": "specs/01.json",
+      "sha256": "3e6db09c5b736ce3a91f6e7441c854469fafcc2af4f2ce3c6d8e914e31c6d4b2",
+      "dimension_sha256": "fd635634cd452db8368aca8cd74404c7a808d84cb874bc9719677c3da38d0c1c",
+      "label": "01 · 4 × 2,1 м",
+      "preview": "previews/01.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 1,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p1",
+        "sha256": "1299dd45382416c7518049acca00dbc13fda5aa0d25912ee890374e5dbacac56"
+      }
+    },
+    {
+      "id": "dp3d-02",
+      "number": 2,
+      "models": [
+        "kvadro"
+      ],
+      "size": "500",
+      "drawing": "../album/02.webp",
+      "model": "models/02.glb",
+      "spec": "specs/02.json",
+      "sha256": "ae8567dd234becad34ac1eb00a657650d68bf4e7af4b37718be41ec186973f7d",
+      "dimension_sha256": "71708517c652b35e9441b7a3296c8be00580817d32549a39ed117752d2505ae1",
+      "label": "02 · 5 × 2,1 м",
+      "preview": "previews/02.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 2,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p2",
+        "sha256": "3766fd32822c4313665b155d75db4bde3a58187fd4dd469a4f8225bd11aa20b9"
+      }
+    },
+    {
+      "id": "dp3d-03",
+      "number": 3,
+      "models": [
+        "kvadro"
+      ],
+      "size": "600",
+      "drawing": "../album/03.webp",
+      "model": "models/03.glb",
+      "spec": "specs/03.json",
+      "sha256": "ee4636589400374bdbca2f34ee95e689861b7e2e81aee3b6f96192707f6500aa",
+      "dimension_sha256": "c4902df819f9a930565e65450efc4d9b6b9abad812a829b3b101281fd6252914",
+      "label": "03 · 6 × 2,1 м",
+      "preview": "previews/03.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 3,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p3",
+        "sha256": "190ab9faa9b3ba1861a59189bccfda9bd5d67d2b82913a725d7519d5ad8747a7"
+      }
+    },
+    {
+      "id": "dp3d-04",
+      "number": 4,
+      "models": [
+        "kvadro"
+      ],
+      "size": "600",
+      "drawing": "../album/04.webp",
+      "model": "models/04.glb",
+      "spec": "specs/04.json",
+      "sha256": "ae869beb3a564b3d6ce73ad26e7525d2847c5bc6456ff6382e140698089890e4",
+      "dimension_sha256": "7b88f0a4d5412202e41e9f902161b37227d6ae2398576ba6c00c3305b9401c55",
+      "label": "04 · 6 × 2,1 м",
+      "preview": "previews/04.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 4,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p4",
+        "sha256": "5c236d30196c5c08d3e2197c2aeb8d9d5c0d49c45da47ce635e65b2381b2ca8d"
+      }
+    },
+    {
+      "id": "dp3d-05",
+      "number": 5,
+      "models": [
+        "kvadro"
+      ],
+      "size": "600",
+      "drawing": "../album/05.webp",
+      "model": "models/05.glb",
+      "spec": "specs/05.json",
+      "sha256": "5c4f3151407759375e5a82f2e892be47fba836252eb68d406139481c8724c508",
+      "dimension_sha256": "5549c1b19ce96aa33f908b81a184d19a1010bc3b75eb4ab4718fbe601c93f46e",
+      "label": "05 · 6 × 2,1 м",
+      "preview": "previews/05.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 5,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p5",
+        "sha256": "f6201a05e17f6831625a02321bfcbcf26096614e4e899c9be53a09676be5f3bf"
+      }
+    },
+    {
+      "id": "dp3d-06",
+      "number": 6,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "4x4",
+      "drawing": "../album/06.webp",
+      "model": "models/06.glb",
+      "spec": "specs/06.json",
+      "sha256": "4dcf5ea79815d88f7e07eadeb369b0e4db89a711c477017d5fb345b677ad36ac",
+      "dimension_sha256": "21310f53c458c0143464178f112140e169cf967dc758f023307723c22ca88301",
+      "label": "06 · 4 × 4 м",
+      "preview": "previews/06.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 6,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p6",
+        "sha256": "18bd80633904d6432ef743502ba92b61ecc17cfb6cdc8e351e4956bfc8d1bd7d"
+      }
+    },
+    {
+      "id": "dp3d-07",
+      "number": 7,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x5",
+      "drawing": "../album/07.webp",
+      "model": "models/07.glb",
+      "spec": "specs/07.json",
+      "sha256": "b01178519880e391c53f00f4834e64371cb4c9f5a5d92436f2340c92a6acd01b",
+      "dimension_sha256": "dd3320096287536d4360505ced8f47667aee86f22774847d556bce958f5ce4be",
+      "label": "07 · 5 × 6 м",
+      "preview": "previews/07.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 7,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p7",
+        "sha256": "f2b0107d3327f7a4d52f78cbf068fad0b75aa4f6a4951b4be5427fc7f0cf50de"
+      }
+    },
+    {
+      "id": "dp3d-08",
+      "number": 8,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "../album/08.webp",
+      "model": "models/08.glb",
+      "spec": "specs/08.json",
+      "sha256": "125671ce4b3b3267aca0aedd4be91420471acb73972eab6828c35bc7815d7bf3",
+      "dimension_sha256": "671c2ea72580ad1672354bfdf117e487f86cb2d2aa7ed4df98db8f19cd1b92d0",
+      "label": "08 · 6 × 6 м",
+      "preview": "previews/08.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 8,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p8",
+        "sha256": "cfff5f38baf02c7ec7df84b4f13af3ad21b6121c786eb8b0705518adce4438f0"
+      }
+    },
+    {
+      "id": "dp3d-09",
+      "number": 9,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "../album/09.webp",
+      "model": "models/09.glb",
+      "spec": "specs/09.json",
+      "sha256": "2c6a2598d3bcb6c4800ae8bab345dcf913e253d4bfb022ddce20468cf7c03729",
+      "dimension_sha256": "bd29f76067492ab10008389d72f1b216496521355c59b219578944afb310cdec",
+      "label": "09 · 6 × 6 м",
+      "preview": "previews/09.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 9,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p9",
+        "sha256": "e94cf1c3882e84545123563a273c913a96653504460ae3215224b6102b16e176"
+      }
+    },
+    {
+      "id": "dp3d-10",
+      "number": 10,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x4",
+      "drawing": "../album/10.webp",
+      "model": "models/10.glb",
+      "spec": "specs/10.json",
+      "sha256": "698fbe79832ccecb60ca0d1b8471a80ebe1dda0cfc1aa202bb0be455044b7fca",
+      "dimension_sha256": "f412124e3ce826f17b2e10f269aba7b5845beff3c0f6c1ac6cbd4013b2b1966a",
+      "label": "10 · 4 × 6 м",
+      "preview": "previews/10.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 10,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p10",
+        "sha256": "a0b08b8be35246acd5153e18d4ba3bdf64e9fe0be430d2c69cf6001a2df86c7d"
+      }
+    },
+    {
+      "id": "dp3d-11",
+      "number": 11,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "../album/11.webp",
+      "model": "models/11.glb",
+      "spec": "specs/11.json",
+      "sha256": "8a37d2db5be386b99107a25730d67959f99bc3344870f5bf00ad54dcc1d64489",
+      "dimension_sha256": "a2baa73311a8b1802faff40db2199d77d8533fd67a4a798823a772dcc74f0fe9",
+      "label": "11 · 6 × 6 м",
+      "preview": "previews/11.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 11,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p11",
+        "sha256": "ef0885bc01f44f103607fa2694d657265cfc15dede200dddbc1430c9c499066f"
+      }
+    },
+    {
+      "id": "dp3d-12",
+      "number": 12,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "500",
+      "drawing": "../album/12.webp",
+      "model": "models/12.glb",
+      "spec": "specs/12.json",
+      "sha256": "3fba524ab70ce2942fa62670193b69a9980b5521dd5fa94e36455e718c783102",
+      "dimension_sha256": "859539c60a7f76e0f679328c01a801e83ccd924c5297618ea7cf5249fa3472e9",
+      "label": "12 · 5 × 2,4 м",
+      "preview": "previews/12.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 12,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p12",
+        "sha256": "51d44af51b920b62f793878d2c23207a995d0e3894c4e58684cd0c27c010b114"
+      }
+    },
+    {
+      "id": "dp3d-13",
+      "number": 13,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "600",
+      "drawing": "../album/13.webp",
+      "model": "models/13.glb",
+      "spec": "specs/13.json",
+      "sha256": "aeea22a1151a09d6795677ad0722e7bb7a4e960654fbb6efe5700c424be74fde",
+      "dimension_sha256": "46b8567579ab1a118ff1e7e8275f10153b84af3843697f212bc78991018bd266",
+      "label": "13 · 6 × 2,4 м",
+      "preview": "previews/13.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 13,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p13",
+        "sha256": "27dc0d6ec6aab1796cc367dfe7bd16fb480af1e9fbf6a1395318d367fb68278c"
+      }
+    },
+    {
+      "id": "dp3d-14",
+      "number": 14,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "400",
+      "drawing": "../album/14.webp",
+      "model": "models/14.glb",
+      "spec": "specs/14.json",
+      "sha256": "106bbc490a3e10dca750f447f7505dd0217ae96f9fb4a52fac8dd5f6ce82d431",
+      "dimension_sha256": "953fbe43b59489844c57a6e61416c180f953c7d137509e9843d2c2c5d236f1da",
+      "label": "14 · 4 × 2,4 м",
+      "preview": "previews/14.webp",
+      "revision": "bath-choice-v4-2026-11-04",
+      "parent": 14,
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "p14",
+        "sha256": "42173371415c6d89e4838c48f1cbbf55fa0d25ad367af88e9e5d3a4c4bbe9249"
+      }
+    },
+    {
+      "id": "dp3d-15",
+      "number": 15,
+      "models": [
+        "kvadro"
+      ],
+      "size": "450",
+      "label": "Квадро 4,5 м",
+      "revision": "bath-choice-v4-2026-11-04",
+      "dimension_sha256": "4251cfb7a8e634b6f284db4e0123c2c544ef0b8e6ada6033a309e6deacd3d727",
+      "parent": 1,
+      "model": "models/15.glb",
+      "spec": "specs/15.json",
+      "preview": "previews/15.webp",
+      "sha256": "52721bb0f34250f8f6482d739a67485a5e0dffd398ac11c01606c0cf5c0e2401",
+      "drawing": "../album/15.webp",
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "dp_p15",
+        "sha256": "07109a1256c0ef828278a82f4b6bb49e9ceb5de156a91e949c0a37c7e1816367"
+      }
+    },
+    {
+      "id": "dp3d-16",
+      "number": 16,
+      "models": [
+        "kvadro"
+      ],
+      "size": "550",
+      "label": "Квадро 5,5 м",
+      "revision": "bath-choice-v4-2026-11-04",
+      "dimension_sha256": "7c7d4c23b278b7b813cc77bbe001a862acf34e5e05f02dddbc53b41a6da42003",
+      "parent": 2,
+      "model": "models/16.glb",
+      "spec": "specs/16.json",
+      "preview": "previews/16.webp",
+      "sha256": "37fad9965ea424d4df695d9495b2a853c90294a347254e18eb3cdee740f61ac1",
+      "drawing": "../album/16.webp",
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "dp_p16",
+        "sha256": "f4277ed75f34049c08f2d1585a86e8c5d3f3c275991207ad5ffb06ee6ebc6288"
+      }
+    },
+    {
+      "id": "dp3d-17",
+      "number": 17,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "5x4",
+      "label": "Квадро Хаус 4×5 м",
+      "revision": "bath-choice-v4-2026-11-04",
+      "dimension_sha256": "ed4c261092dfc122f2936b336b58ef657b46bde5cef0aa95265b339550b9f22f",
+      "parent": 6,
+      "model": "models/17.glb",
+      "spec": "specs/17.json",
+      "preview": "previews/17.webp",
+      "sha256": "98d9cc545c9a5e2c0915aa2e4fab204a967bd8319ee6aaaca5a281e83bc57593",
+      "drawing": "../album/17.webp",
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "dp_p17",
+        "sha256": "c793ab2508e8f5ef419320ce7dca8f0ac25663ddbffb075363113bad1fa87e1f"
+      }
+    },
+    {
+      "id": "dp3d-18",
+      "number": 18,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "450",
+      "label": "Парус / Викинг 4,5 м",
+      "revision": "bath-choice-v4-2026-11-04",
+      "dimension_sha256": "cb004ba6cf89107c60e8af98d99f4c9071c5d3dc8a66c35a5a2fd503acda97aa",
+      "parent": 14,
+      "model": "models/18.glb",
+      "spec": "specs/18.json",
+      "preview": "previews/18.webp",
+      "sha256": "056b388a3935ac02894e8e65da209a28e916d70c29b097a99cc4309588899327",
+      "drawing": "../album/18.webp",
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "dp_p18",
+        "sha256": "6a00e75de50a1eb6ab0a77f608001538f92c9ab2211b32313378da63a84bc8a4"
+      }
+    },
+    {
+      "id": "dp3d-19",
+      "number": 19,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "550",
+      "label": "Парус / Викинг 5,5 м",
+      "revision": "bath-choice-v4-2026-11-04",
+      "dimension_sha256": "9020fcb05cd2192538e6fc166b1b41f66b788e7475ac2bd5da00fe33ae867d79",
+      "parent": 12,
+      "model": "models/19.glb",
+      "spec": "specs/19.json",
+      "preview": "previews/19.webp",
+      "sha256": "8f45d19a6945df0f85f94f1b3f7069887bd94dd95548f01f2e78a702866e88e1",
+      "drawing": "../album/19.webp",
+      "drawing_source": {
+        "presentationId": "1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8",
+        "revisionId": "_zykrPIMQZUlfQ",
+        "slideId": "dp_p19",
+        "sha256": "7ed62d5a1ddd2d326f079ab55e8c2b69930e5d82417388940c62a705b28793d2"
+      }
+    }
+  ]
+}
