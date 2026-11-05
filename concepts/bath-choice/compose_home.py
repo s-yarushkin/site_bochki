@@ -24,7 +24,12 @@ def compose(page,out):
  footer=source[source.index('</main>')+len('</main>'):source.index('<dialog')]
  extras=source[source.index('<dialog'):source.index('<script defer')]
  extras=extras.replace('Тестовый просмотр · Заявка останется на этом компьютере','')
+ intro='<p class="eyebrow">Ваша будущая баня</p>'
+ assert extras.count(intro)==1
+ extras=extras.replace(intro,(HERE/'inquiry-success.html').read_text('utf8')+'<div data-inquiry-entry>'+intro)
+ extras=extras.replace('</div></dialog>','</div></div></dialog>',1)
  page=page.replace('{{home-continuation}}',lower).replace('{{home-footer}}',footer+extras)
+ page=page.replace('</head>','<link rel="stylesheet" href="/choice/inquiry-success.css?v=20261105"></head>')
  # Copy the public motion fragment literally, preserving ritual, depth and reveal behaviour.
  script=(baseline/'r101/site.mjs').read_text('utf8');motion=script[script.index('// A native scrolling page:'):script.index('try{\n [book,settings,photos,plans]')]
  (out/'choice/continuation-motion.mjs').write_text("const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\n"+motion,'utf8')
