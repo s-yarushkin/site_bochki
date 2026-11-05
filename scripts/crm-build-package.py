@@ -1,5 +1,5 @@
 """Build explicit source overlays and a fixture-only HTTPS staging bundle. No credentials."""
-import hashlib,json,tarfile,io,subprocess,secrets
+import hashlib,json,tarfile,io,subprocess,secrets,sys,re
 from pathlib import Path
 root=Path(__file__).resolve().parents[1];out=root/'.local/crm-release';out.mkdir(parents=True,exist_ok=True)
 web={n:'web/'+n for n in ['manager.html','privacy.html','assets/js/manager.js','crm/manager-extension.mjs','crm/manager-extension.css','journey-tracker.mjs','journey-tracker.css','analytics-core.mjs','lead-client.mjs']}
@@ -25,7 +25,9 @@ with tarfile.open(out/'stage.tar.gz','w:gz') as tar:
  for name,p in stage.items():add(tar,name,p.read_bytes())
  # Isolated fixture test uses only baseline public source. No credential paths are included.
  add(tar,'package.json',b'{"type":"module"}')
-config={'version':1,'id':secrets.token_hex(6),'expected_web':'/srv/sites/dachapar-preview/releases/ALBUM-2184569675bafffe','expected_api':'/srv/services/garant-bani-relay/releases/DPQUIZ-bd4ef314ab5f','overlay':overlay,'payload_sha256':digest((out/'payload.tar.gz').read_bytes()),'stage_sha256':digest((out/'stage.tar.gz').read_bytes()),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()}
+identity=json.loads((out/'deployment.json').read_text())['id'] if '--reuse-id' in sys.argv else secrets.token_hex(6)
+assert re.fullmatch('[a-f0-9]{12}',identity)
+config={'version':1,'id':identity,'expected_web':'/srv/sites/dachapar-preview/releases/ALBUM-2184569675bafffe','expected_api':'/srv/services/garant-bani-relay/releases/DPQUIZ-bd4ef314ab5f','overlay':overlay,'payload_sha256':digest((out/'payload.tar.gz').read_bytes()),'stage_sha256':digest((out/'stage.tar.gz').read_bytes()),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()}
 config['api_baseline']={p.relative_to(root/'.local/api-baseline').as_posix():digest(p.read_bytes()) for p in (root/'.local/api-baseline').rglob('*') if p.is_file() and p.suffix in ['.mjs','.js','.json']}
 (out/'deployment.json').write_text(json.dumps(config,indent=2)+'\n',encoding='utf-8')
 print(json.dumps({'files':len(overlay),'stage_bytes':(out/'stage.tar.gz').stat().st_size,'payload_bytes':(out/'payload.tar.gz').stat().st_size,'id':config['id']}))

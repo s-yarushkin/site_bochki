@@ -22,7 +22,7 @@ document.querySelector('[data-plan-request]').onclick=()=>{const d=document.crea
 </script></body></html>`;
 const server=http.createServer(async(req,res)=>{
  const write=res.writeHead.bind(res);res.writeHead=(status,headers={})=>{
-  const key=Object.keys(headers).find(k=>k.toLowerCase()==='set-cookie');if(key){let cookies=[headers[key]].flat().map(c=>prefix?c.replace(/^(gb_manager_session|dp_visitor|dp_consent|dp_staff)=/,'crmstage_$1=').replace(/Path=[^;]+/,'Path='+prefix+'/'):c);if(!prefix)cookies=cookies.map(c=>c.replace(/; Secure/g,''));headers[key]=cookies;}
+  const key=Object.keys(headers).find(k=>k.toLowerCase()==='set-cookie');if(key){let cookies=[headers[key]].flat().map(c=>prefix?c.replace(/^(gb_manager_session|dp_visitor|dp_consent|dp_staff)=/,'crmstage_$1=').replace(/Path=[^;]+/,value=>value.startsWith('Path='+prefix+'/')?value:'Path='+prefix+'/'):c);if(!prefix)cookies=cookies.map(c=>c.replace(/; Secure/g,''));headers[key]=cookies;}
   if(prefix&&headers.Location){const dest=new URL(headers.Location,origin);if(dest.origin!==origin)throw Error('Stage redirect outside origin');if(!dest.pathname.startsWith(prefix+'/'))dest.pathname=prefix+dest.pathname;headers.Location=dest.href;}
   return write(status,headers);
  };

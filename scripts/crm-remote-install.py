@@ -55,6 +55,10 @@ def main():
    target=(candidateweb if parts[0]=='web' else candidateapi).joinpath(*parts[1:]);target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data);target.chmod(0o644)
    (expectedweb if parts[0]=='web' else expectedapi)['/'.join(parts[1:])]=sha(data)
  if tree(candidateweb)!=expectedweb or tree(candidateapi)!=expectedapi:raise RuntimeError('Protected files changed')
+ # Preserve validation, formatting, MAX delivery and secret loading byte-for-byte.
+ def max_contract(base):
+  source=(base/'server/garant-bani-relay.mjs').read_text();return source[source.index('export function validateBaniLead'):source.index('function json(res')]
+ if max_contract(oldapi)!=max_contract(candidateapi):raise RuntimeError('Existing MAX contract changed')
  for name in config['overlay']:
   if name.endswith(('.js','.mjs')):run(['/usr/bin/node','--check',str((candidateweb if name.startswith('web/') else candidateapi)/name.split('/',1)[1])])
  run(['/usr/bin/node','--input-type=module','-e',"await import('file://'+process.argv[2])",'/usr/bin/node',str(candidateapi/'server/garant-bani-relay.mjs')])

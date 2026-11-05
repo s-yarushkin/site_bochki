@@ -56,7 +56,7 @@
 ## Проверки и откат
 
 Локальные тесты: `node --test tests/crm-access.test.mjs tests/crm-insights.test.mjs
-tests/crm-bootstrap.test.mjs tests/api.test.mjs tests/analytics.test.mjs`.
+tests/crm-bootstrap.test.mjs tests/crm-stage.test.mjs tests/api.test.mjs tests/analytics.test.mjs`.
 Для API-тестов нужен точный исходный API в `.local/api-baseline`, без credentials.
 Сборка: `scripts/crm-build-package.py`; явный manifest 22 web/API файла.
 HTTPS staging — отдельная вымышленная БД и заглушка MAX, отдельные cookies

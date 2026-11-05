@@ -3,7 +3,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 import {resolve} from 'node:path';
 export const root=fileURLToPath(new URL('../',import.meta.url));
 export async function loadTestAPI(){
- const original=resolve(root,'.local/api-baseline'),target=resolve(root,'.local/api-test');
+ const original=resolve(root,'.local/api-baseline'),target=resolve(root,'.local/api-test',String(process.pid));
  if(!existsSync(original))throw Error('Private owner API baseline is required in .local/api-baseline. Never use production credentials for tests.');
  mkdirSync(target,{recursive:true});cpSync(original,target,{recursive:true});cpSync(resolve(root,'api'),target,{recursive:true});writeFileSync(resolve(target,'package.json'),'{"type":"module"}');
  // The historical deploy renamed the R85 export. Reproduce that local-only alias.
