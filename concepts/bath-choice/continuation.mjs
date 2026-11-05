@@ -1,4 +1,4 @@
-import {homeSelectionText,homeInquiryPayload} from './continuation-state.mjs';
+import {homeSelectionText,homeInquiryPayload} from './continuation-state.mjs?v=phone-callback-20261105';
 import {callbackAvailable,submitLead} from '/lead-client.mjs';
 import {attachPhoneMask} from '/phone-mask.mjs';
 import {analytics} from '/analytics-core.mjs?v=r117-quiz-goals';

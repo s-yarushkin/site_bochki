@@ -1,0 +1,23 @@
+{
+  "virtual": true,
+  "realRequestsSent": false,
+  "results": [
+    {
+      "channel": "phone",
+      "result": "rejected",
+      "reason": "INVALID_QUIZ_REQUEST"
+    },
+    {
+      "channel": "max",
+      "result": "accepted"
+    },
+    {
+      "channel": "telegram",
+      "result": "accepted"
+    },
+    {
+      "channel": "whatsapp",
+      "result": "accepted"
+    }
+  ]
+}

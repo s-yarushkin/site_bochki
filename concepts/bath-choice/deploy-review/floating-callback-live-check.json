@@ -1,0 +1,8 @@
+{
+  "channel": "phone",
+  "dialogOpen": true,
+  "script": "/choice/app.mjs?v=phone-callback-20261105",
+  "selection": "Квадро · 4 м · 410 000 ₽ · в комплектации «Комфорт»",
+  "submitDisabled": false,
+  "realRequestSent": false
+}

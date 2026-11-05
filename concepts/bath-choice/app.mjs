@@ -6,7 +6,7 @@ import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} fro
 import {PACKAGE_NAMES} from './packages.mjs';
 import {createPhotoGallery} from './gallery.mjs';
 import {openPackageComparison} from './comparison.mjs';
-import {connectHomeContinuation} from './continuation.mjs';
+import {connectHomeContinuation} from './continuation.mjs?v=phone-callback-20261105';
 
 const $=selector=>document.querySelector(selector);
 const money=new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0});

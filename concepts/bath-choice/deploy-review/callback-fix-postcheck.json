@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "active": "/srv/sites/dachapar-preview/releases/BC-45bb11dcf8b51b79",
+  "fullRollback": "/srv/sites/dachapar-preview/releases/SPEC-CLEAN-be544b9fb6464bd4",
+  "changedFiles": [
+    "choice/app.mjs",
+    "choice/continuation-state.mjs",
+    "choice/continuation.mjs",
+    "index.html"
+  ],
+  "publicChangedFilesHashes": "PASS",
+  "all124HashesVerifiedByInstaller": true,
+  "protectedFilesUnchanged": [
+    "data/site-settings.json",
+    "data/catalog-pricebook.json",
+    "quiz.mjs",
+    "analytics-core.mjs",
+    "lead-client.mjs",
+    "novyy-god/index.html"
+  ],
+  "relayHealth": "PASS",
+  "publicLeadRoute": "PASS:405 Allow POST",
+  "realRequestsSent": false,
+  "rollbackCommand": "sudo python3 /tmp/dachapar-callback-fix-45bb11dcf8b51b79/install.py --rollback"
+}

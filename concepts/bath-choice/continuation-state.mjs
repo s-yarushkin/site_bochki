@@ -13,7 +13,8 @@ export function homeInquiryPayload(book,plans,state,values,requestId){
  if(['model','size','package','layout'].some(key=>selected[key]!==state[key]))throw Error('SELECTION_MISMATCH');
  if(!['phone','max','telegram','whatsapp'].includes(values.channel))throw Error('INVALID_CHANNEL');
  const payload=buildCallback(values,requestId);
- payload.purpose='quiz_catalog';payload.contactChannel=values.channel;
+ payload.contactChannel=values.channel;
+ if(values.channel!=='phone')payload.purpose='quiz_catalog';
  const selection=HERO_MODELS[state.model].name+' · '+choiceSizeLabel(book,state.model,state.size)+' · в комплектации «'+PACKAGE_NAMES[state.package]+'»';
  const parts=['Источник: главная страница. Выбор: '+selection+'.',state.layout?'Планировка: '+state.layout.toUpperCase()+'.':'',values.settlement?'Участок: '+String(values.settlement).trim().slice(0,140)+'.':'',String(values.comment||'').trim().slice(0,250)];
  payload.comment=parts.filter(Boolean).join(' ').replace(/[\u0000-\u001f\u007f]/g,' ').slice(0,500);

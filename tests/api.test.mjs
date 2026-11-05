@@ -1,5 +1,6 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {createServer} from 'node:http';import {randomUUID} from 'node:crypto';
 import {loadTestAPI} from '../scripts/test-api.mjs';import {buildLead,buildCallback,submitLead} from '../web/lead-client.mjs';import {selectPlan} from '../web/journey-state.mjs';
+import {homeInquiryPayload} from '../concepts/bath-choice/continuation-state.mjs';
 const {validateBaniLead,formatBaniLead,createRelayHandler,openLeadStore}=await loadTestAPI();const book=JSON.parse(readFileSync(new URL('../web/data/catalog-pricebook.json',import.meta.url)));
 const fields={phone:'+79990000001',channel:'telegram',name:'Local test',settlement:'Test'};
 const selection=selectPlan(book,book.r85.plans[0],true);const quote=()=>buildLead(book,selection,fields,randomUUID());const callback=()=>buildCallback(fields,randomUUID());
@@ -28,4 +29,30 @@ test('quiz catalog request accepts chosen MAX, WhatsApp or Telegram; other callb
  assert.throws(()=>validateBaniLead(invalid),/INVALID_QUIZ_REQUEST/);
  const bogus=callback();bogus.purpose='quiz_catalog';bogus.contactChannel='max';bogus.configuration=quote().configuration;
  assert.throws(()=>validateBaniLead(bogus),/INVALID_QUIZ_REQUEST/);
+});
+
+test('the lower home form confirms all four contact channels through the real handler',async()=>{
+ const store=openLeadStore(':memory:'),delivered=[];
+ const config={allowedOrigin:'',siteBasePath:'/'};
+ const server=createServer(createRelayHandler({config,store,deliver:async lead=>delivered.push(lead),log:()=>{}}));
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+ const origin='http://127.0.0.1:'+server.address().port;config.allowedOrigin=origin;
+ const settings={lead:{enabled:true,endpoint:'/api/lead',allowedOrigins:[origin]}};
+ const transport=(url,options)=>fetch(new URL(url,origin),{...options,headers:{...options.headers,Origin:origin}});
+ const plans=JSON.parse(readFileSync(new URL('../concepts/bath-choice/geometry/index.json',import.meta.url))).plans;
+ const state={model:'kvadro',size:'400',package:'comfort',layout:'dp3d-01'};
+ try{
+  for(const channel of ['phone','max','telegram','whatsapp']){
+   const payload=homeInquiryPayload(book,plans,state,{...fields,channel,comment:'Пожелание из нижней формы'},randomUUID());
+   assert.equal(payload.purpose,channel==='phone'?undefined:'quiz_catalog');
+   const result=await submitLead(payload,settings,origin,transport);
+   assert.equal(result.confirmed,true);assert.equal(result.receipt.ok,true);
+   assert.equal(result.receipt.delivered,true);assert.equal(result.receipt.analytics.persisted,true);
+   const saved=store.byRequest(payload.requestId);
+   assert.equal(saved.notificationStatus,'delivered');assert.equal(saved.detail.contactChannel,channel);
+   assert.match(saved.detail.comment,/Квадро · 4 м/);assert.match(saved.detail.comment,/DP3D-01/);
+   assert.match(saved.detail.comment,/Пожелание из нижней формы/);
+  }
+  assert.equal(delivered.length,4);assert.equal(store.list().total,4);
+ }finally{await new Promise(resolve=>server.close(resolve));}
 });

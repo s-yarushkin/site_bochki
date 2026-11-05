@@ -9,12 +9,12 @@ const {createRelayHandler,openLeadStore}=await loadTestAPI();
 const store=openLeadStore(':memory:'),deliveries=[];
 const api=createRelayHandler({config:{allowedOrigin:origin,siteBasePath:'/'},store,log:()=>{},deliver:async lead=>{
  deliveries.push({flow:lead.flow,purpose:lead.purpose,channel:lead.contactChannel,comment:lead.comment});
- await fs.writeFile(path.join(root,'output/bath-choice-deploy/virtual-leads.json'),JSON.stringify({virtual:true,realMessagesSent:false,deliveries},null,2));
+ await fs.writeFile(path.join(root,process.env.BATH_CHOICE_TEST_REPORT||'output/bath-choice-deploy/virtual-leads.json'),JSON.stringify({virtual:true,realMessagesSent:false,deliveries},null,2));
 }});
 const book=JSON.parse(await fs.readFile(path.join(root,'output/bath-choice-deploy/baseline/catalog-pricebook.json')));
 const settings={origin,productionOrigin:origin,lead:{enabled:true,endpoint:'/api/lead',allowedOrigins:[origin],requiredPricebookVersion:book.version},analytics:{enabled:false}};
 const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.webp':'image/webp','.png':'image/png','.svg':'image/svg+xml','.woff2':'font/woff2','.glb':'model/gltf-binary','.ico':'image/x-icon'};
-const sources=['output/bath-choice-deploy/package/site','output/bath-choice-prototype','.local/bath-choice-cache','web'];
+const sources=[process.env.BATH_CHOICE_TEST_PACKAGE||'output/bath-choice-deploy/package/site','output/bath-choice-prototype','.local/bath-choice-cache','web'];
 http.createServer(async(req,res)=>{
  try{
   if(req.url==='/api/lead')return api(req,res);

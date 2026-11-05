@@ -1,0 +1,26 @@
+{
+  "virtual": true,
+  "realRequestsSent": false,
+  "results": [
+    {
+      "channel": "phone",
+      "message": "Заявка принята. Передали ваш выбор и пожелания менеджеру.",
+      "success": true
+    },
+    {
+      "channel": "max",
+      "message": "Заявка принята. Передали ваш выбор и пожелания менеджеру.",
+      "success": true
+    },
+    {
+      "channel": "telegram",
+      "message": "Заявка принята. Передали ваш выбор и пожелания менеджеру.",
+      "success": true
+    },
+    {
+      "channel": "whatsapp",
+      "message": "Заявка принята. Передали ваш выбор и пожелания менеджеру.",
+      "success": true
+    }
+  ]
+}
