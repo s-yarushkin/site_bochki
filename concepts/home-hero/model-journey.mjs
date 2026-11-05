@@ -1,5 +1,5 @@
 import {HERO_MODELS} from './catalog.mjs';
-import {openModelRequest} from './model-request.mjs';
+import {openModelRequest} from './model-request.mjs?v=all-forms-20261105';
 import {createLayoutGallery,layoutJson} from './layout-panel.mjs';
 
 const rubles = new Intl.NumberFormat('ru-RU', {style:'currency', currency:'RUB', maximumFractionDigits:0});
