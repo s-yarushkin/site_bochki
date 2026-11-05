@@ -15,7 +15,7 @@ export function connectHomeContinuation({getState,getBook,plans}){
  function open(button){
   opener=button;selection={...getState()};
   if(sent){form.reset();sent=false;requestId=null;}
-  entry.hidden=false;success.hidden=true;dialog.setAttribute('aria-labelledby','inquiry-title');dialog.querySelector('.dialog-close').setAttribute('aria-label','Закрыть заявку');
+  entry.hidden=false;success.hidden=true;dialog.setAttribute('aria-labelledby','inquiry-title');dialog.querySelector('.dialog-close').hidden=false;
   $('#inquiry-summary').textContent=homeSelectionText(getBook(),selection);
   status.textContent='';status.className='form-status';fields.hidden=false;fields.disabled=!callbackAvailable(settings,location.origin);
   if(fields.disabled)status.textContent='Сейчас заявку можно оставить по телефону: +7 (951) 734-99-99.';
@@ -26,7 +26,8 @@ export function connectHomeContinuation({getState,getBook,plans}){
  const close=()=>{dialog.close();opener?.focus({preventScroll:true});};
  dialog.querySelector('.dialog-close').addEventListener('click',close);dialog.addEventListener('close',()=>opener?.focus({preventScroll:true}));
  dialog.querySelector('[data-inquiry-success-close]').addEventListener('click',close);
- dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}});
+ dialog.addEventListener('cancel',event=>{if(sent)event.preventDefault();});
+ dialog.addEventListener('click',event=>{if(!sent&&event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}});
  form.addEventListener('input',()=>{requestId=null;});
  form.addEventListener('submit',async event=>{
   event.preventDefault();if(sending||sent||fields.disabled||!form.reportValidity())return;
@@ -39,7 +40,7 @@ export function connectHomeContinuation({getState,getBook,plans}){
   analytics?.track('dp_form_submit_attempt',{flow:'callback',purpose:'selection_help',model:selection.model,placement:placement(opener)});
   try{
    const result=await submitLead(payload,settings,location.origin);sent=true;fields.hidden=true;status.textContent='';entry.hidden=true;success.hidden=false;
-   dialog.setAttribute('aria-labelledby','inquiry-success-title');dialog.querySelector('.dialog-close').setAttribute('aria-label','Закрыть сообщение');dialog.scrollTop=0;successTitle.focus({preventScroll:true});
+   dialog.setAttribute('aria-labelledby','inquiry-success-title');dialog.querySelector('.dialog-close').hidden=true;dialog.scrollTop=0;successTitle.focus({preventScroll:true});
    analytics?.confirmed(result.receipt,{flow:'callback',requestId,purpose:'selection_help',model:selection.model,placement:placement(opener)});
   }catch{status.className='form-status error';status.textContent='Пока не получили подтверждение заявки. Ваши данные остались в форме. Попробуйте ещё раз или позвоните нам.';}
   finally{sending=false;fields.disabled=false;}
