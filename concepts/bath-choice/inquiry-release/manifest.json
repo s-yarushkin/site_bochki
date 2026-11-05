@@ -1,0 +1,15 @@
+{
+  "baseline": "/srv/sites/dachapar-preview/releases/CLEAN-NOTE-2f54bf691a29eedd",
+  "before": {
+    "choice/app.mjs": "eca86bfd5cf2277e9bbae3a25664824a807360a039e8225ae5d9e4f05dcc523f",
+    "choice/continuation.mjs": "c692a9931aab9d2ba0e91a01247659860c2601d5d094bbe875ce2c805c62983c",
+    "choice/inquiry-success.css": null,
+    "index.html": "dfdbf8fe8726d534ef212dda404f4742a83ac857236c25a838be2e458b936fd2"
+  },
+  "files": {
+    "choice/app.mjs": "f6c324f30f72d1c9168bec8c8cbc223b245d0cf05c6cc8ef184d0b0cc720289a",
+    "choice/continuation.mjs": "7606f8b7678c41688be4a6b15f0f495a7520e5b337deb30d73401f7c5e2cf95f",
+    "choice/inquiry-success.css": "425884087b233ec3c1bec8b446849cc4a9c5efff500989ebb257fbff2b89460b",
+    "index.html": "18d98290faf71b0273b90e0b933b71b6ea4c8a18dce22612c58a6f4176c01f34"
+  }
+}
