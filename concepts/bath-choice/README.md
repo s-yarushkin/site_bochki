@@ -1,4 +1,10 @@
-# ДачаПар: главная v5, планировки и цены
+# ДачаПар: компактный каталог v6, планировки и цены
+
+Обновление v6 от 05.11.2026: фотографии и полная планировка рядом,
+комплектации в компактной боковой колонке. Одна полоса моделей помещается
+под первым экраном и закрепляется только внутри каталога. Проверка:
+[QA-V6.md](QA-V6.md). Пакет: `output/ДачаПар-компактный-каталог-2026-11-05-v6.zip`.
+Исследование вариантов: [компоновка каталога](../../docs/renewal-2026-11-04/CATALOG-REFLOW-2026-11-05.md).
 
 Обновление v5 от 05.11.2026: нижняя часть существующей главной сохранена,
 описание состава улучшено, блок заботы с видео расположен перед чайным финалом.
@@ -77,15 +83,15 @@ node concepts/bath-choice/preview.mjs
 Квиз, сравнение комплектаций, существующие нижние блоки и сопровождение сохранены.
 
 ```powershell
-node --test tests/home-hero.test.mjs tests/bath-choice.test.mjs tests/layout-story.test.mjs tests/layout-pricing.test.mjs tests/quiz.test.mjs tests/pricing-parity.test.mjs
+node --test tests/home-continuation.test.mjs tests/home-hero.test.mjs tests/bath-choice.test.mjs tests/layout-story.test.mjs tests/layout-pricing.test.mjs tests/quiz.test.mjs tests/pricing-parity.test.mjs
 python concepts/bath-choice/package_review.py
 node concepts/bath-choice/verify-preview.mjs
 ```
 
-Пакет `output/ДачаПар-главная-и-забота-2026-11-05-v5.zip` содержит локальный
+Пакет `output/ДачаПар-компактный-каталог-2026-11-05-v6.zip` содержит локальный
 просмотр, все 19 редактируемых сцен, нативный альбом, расчёты и доказательства.
 Папка `sources` предназначена для внутренней работы. Установщика и деплоя нет.
 POST/API заблокированы, аналитика отключена. Реальные заявки не отправлялись.
 
-Результаты текущего этапа: [QA-V4.md](QA-V4.md). `QA-V3.md`, `QA.md` и старый
+Геометрия и цены проверены в [QA-V4.md](QA-V4.md); текущая компоновка — в [QA-V6.md](QA-V6.md). `QA-V3.md`, `QA.md` и старый
 `PRICING-REVIEW.md` являются историей предыдущих этапов.

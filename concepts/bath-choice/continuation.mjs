@@ -42,7 +42,7 @@ export function connectHomeContinuation({getState,getBook,plans}){
  });
  const resume=$('#resume');let dismissed=false,ticking=false;
  function visibility(){
-  ticking=false;const anchor=$('#plans');
+  ticking=false;const anchor=$('#bath-model');
   resume.hidden=dismissed||Boolean(document.querySelector('dialog[open]'))||(anchor?.getBoundingClientRect().bottom??Infinity)>110;
  }
  function schedule(){if(!ticking){ticking=true;requestAnimationFrame(visibility);}}

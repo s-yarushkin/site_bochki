@@ -1,0 +1,33 @@
+{
+  "buttons": [
+    {
+      "bottom": 843,
+      "name": "kvadro",
+      "top": 788
+    },
+    {
+      "bottom": 843,
+      "name": "parus",
+      "top": 788
+    },
+    {
+      "bottom": 843,
+      "name": "viking",
+      "top": 788
+    },
+    {
+      "bottom": 843,
+      "name": "kvadro-house",
+      "top": 788
+    }
+  ],
+  "city": false,
+  "navBottom": 844,
+  "scrollY": 0,
+  "viewport": [
+    390,
+    844
+  ],
+  "modelSwitchScrollY": 0,
+  "switchMethod": "native coordinate click on visible model button"
+}

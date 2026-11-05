@@ -1,0 +1,1442 @@
+[
+  {
+    "drawing": {
+      "bottom": 480,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 232,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-01",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 85,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 13,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 535.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 103,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 581,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 191,
+      "width": 539.84375
+    },
+    "size": "400",
+    "sizes": {
+      "bottom": 174.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 105,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 138.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 103,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 231,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-15",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "450",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 102,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 231,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-02",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "500",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 102,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 231,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-16",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "550",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 102,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 204,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 275,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-03",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "600",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 102,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 204,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 275,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-04",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "600",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 102,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 204,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 275,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-05",
+    "loaded": true,
+    "model": "kvadro",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "600",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 416.1875,
+      "top": 102,
+      "width": 382.046875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-14",
+    "loaded": true,
+    "model": "viking",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "400",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-18",
+    "loaded": true,
+    "model": "viking",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "450",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-12",
+    "loaded": true,
+    "model": "viking",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "500",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-19",
+    "loaded": true,
+    "model": "viking",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "550",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-13",
+    "loaded": true,
+    "model": "viking",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "600",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-14",
+    "loaded": true,
+    "model": "parus",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "400",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-18",
+    "loaded": true,
+    "model": "parus",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "450",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-12",
+    "loaded": true,
+    "model": "parus",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "500",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-19",
+    "loaded": true,
+    "model": "parus",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "550",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 237.1875,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-13",
+    "loaded": true,
+    "model": "parus",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "size": "600",
+    "sizes": {
+      "bottom": 177.078125,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 107.09375,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 466.015625,
+      "top": 102,
+      "width": 431.875
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 481,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 233,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-06",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 86,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 14,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 536.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 104,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 582,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 192,
+      "width": 539.84375
+    },
+    "size": "4x4",
+    "sizes": {
+      "bottom": 175.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 106,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 139.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 104,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 231,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-17",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "5x4",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 102,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 231,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-10",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "6x4",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 102,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 248,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 231,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-07",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "6x5",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 102,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 204,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 275,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-08",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "6x6",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 102,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 204,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 275,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-09",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "6x6",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 102,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 204,
+      "left": 485.015625,
+      "right": 1022.859375,
+      "top": 275,
+      "width": 537.84375
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-11",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "left": 0,
+      "right": 1356,
+      "top": 12,
+      "width": 1356
+    },
+    "offer": {
+      "bottom": 534.078125,
+      "height": 432.078125,
+      "left": 1041.859375,
+      "right": 1321.859375,
+      "top": 102,
+      "width": 280
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 190,
+      "width": 539.84375
+    },
+    "size": "6x6",
+    "sizes": {
+      "bottom": 173.984375,
+      "height": 69.984375,
+      "left": 484.015625,
+      "right": 1023.859375,
+      "top": 104,
+      "width": 539.84375
+    },
+    "title": {
+      "bottom": 137.1875,
+      "height": 35.1875,
+      "left": 34.140625,
+      "right": 422.53125,
+      "top": 102,
+      "width": 388.390625
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  }
+]

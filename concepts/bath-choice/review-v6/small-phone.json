@@ -1,0 +1,170 @@
+{
+  "smallHero": {
+    "buttons": [
+      {
+        "bottom": 739,
+        "top": 684
+      },
+      {
+        "bottom": 739,
+        "top": 684
+      },
+      {
+        "bottom": 739,
+        "top": 684
+      },
+      {
+        "bottom": 739,
+        "top": 684
+      }
+    ],
+    "navBottom": 740,
+    "overflow": false,
+    "scrollY": 0,
+    "viewport": [
+      320,
+      740
+    ]
+  },
+  "smallCatalogCases": [
+    {
+      "drawing": {
+        "bottom": 480.59375,
+        "height": 148,
+        "left": 15,
+        "right": 295,
+        "top": 332.59375,
+        "width": 280
+      },
+      "imageFit": "contain",
+      "layout": "dp3d-11",
+      "loaded": true,
+      "model": "kvadro-house",
+      "nav": {
+        "bottom": 56,
+        "height": 56,
+        "left": 0,
+        "right": 310,
+        "top": 0,
+        "width": 310
+      },
+      "offer": {
+        "bottom": 982.125,
+        "height": 382.53125,
+        "left": 14,
+        "right": 296,
+        "top": 599.59375,
+        "width": 282
+      },
+      "overflow": false,
+      "plan": {
+        "bottom": 581.59375,
+        "height": 390,
+        "left": 14,
+        "right": 296,
+        "top": 191.59375,
+        "width": 282
+      },
+      "size": "6x6",
+      "sizes": {
+        "bottom": 173.59375,
+        "height": 70.59375,
+        "left": 14,
+        "right": 296,
+        "top": 103,
+        "width": 282
+      },
+      "title": {
+        "bottom": -265,
+        "height": 33,
+        "left": 14,
+        "right": 296,
+        "top": -298,
+        "width": 282
+      },
+      "viewport": [
+        320,
+        740
+      ]
+    },
+    {
+      "drawing": {
+        "bottom": 445.59375,
+        "height": 250,
+        "left": 15,
+        "right": 295,
+        "top": 195.59375,
+        "width": 280
+      },
+      "imageFit": "contain",
+      "layout": "dp3d-13",
+      "loaded": true,
+      "model": "parus",
+      "nav": {
+        "bottom": 56,
+        "height": 56,
+        "left": 0,
+        "right": 310,
+        "top": 0,
+        "width": 310
+      },
+      "offer": {
+        "bottom": 947.125,
+        "height": 382.53125,
+        "left": 14,
+        "right": 296,
+        "top": 564.59375,
+        "width": 282
+      },
+      "overflow": false,
+      "plan": {
+        "bottom": 546.59375,
+        "height": 390,
+        "left": 14,
+        "right": 296,
+        "top": 156.59375,
+        "width": 282
+      },
+      "size": "600",
+      "sizes": {
+        "bottom": 138.59375,
+        "height": 70.59375,
+        "left": 14,
+        "right": 296,
+        "top": 68,
+        "width": 282
+      },
+      "title": {
+        "bottom": -300,
+        "height": 33,
+        "left": 14,
+        "right": 296,
+        "top": -333,
+        "width": 282
+      },
+      "viewport": [
+        320,
+        740
+      ]
+    }
+  ],
+  "phoneComparison": {
+    "dialog": {
+      "bottom": 728.9375,
+      "height": 717.890625,
+      "left": 8,
+      "right": 312,
+      "top": 11.046875,
+      "width": 304,
+      "x": 8,
+      "y": 11.046875
+    },
+    "headers": [
+      "Оснащение",
+      "Комфорт",
+      "Делюкс"
+    ],
+    "overflow": false,
+    "selection": "comfort"
+  }
+}

@@ -4,14 +4,14 @@ import hashlib,json,shutil,zipfile
 
 HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
 site=ROOT/'output/bath-choice-prototype';cache=ROOT/'.local/bath-choice-cache'
-bundle=ROOT/'output/bath-choice-review-v5';bundle.mkdir(parents=True,exist_ok=True)
+bundle=ROOT/'output/bath-choice-review-v6';bundle.mkdir(parents=True,exist_ok=True)
 shutil.copytree(site,bundle/'site',dirs_exist_ok=True)
 shutil.copytree(cache,bundle/'cache',dirs_exist_ok=True)
 shutil.copy2(HERE/'preview.mjs',bundle/'preview.mjs')
 shutil.copy2(ROOT/'output/bath-choice-manifest.json',bundle/'site-manifest.json')
 shutil.copytree(HERE,bundle/'sources/bath-choice',dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','*.pyc','*.blend1','pilot'))
-shutil.copytree(HERE/'review-v5',bundle/'verification-v5',dirs_exist_ok=True)
-note='''# ДачаПар: рабочая главная v5
+shutil.copytree(HERE/'review-v6',bundle/'verification-v6',dirs_exist_ok=True)
+note='''# ДачаПар: компактный каталог v6
 
 Основной сайт не менялся. Для просмотра: `node preview.mjs`, затем
 http://127.0.0.1:4192/. Нужен Node.js 24+. Завершение: Ctrl+C.
@@ -37,6 +37,13 @@ http://127.0.0.1:4192/. Нужен Node.js 24+. Завершение: Ctrl+C.
 чайным финалом. Первый экран не упоминает Вологду. Финальное предложение
 и исходная форма сохраняют выбранную модель, размер и комплектацию.
 
+Каталог использует три зоны: фотографии, размер с полной планировкой,
+компактные комплектации сбоку. Единственная полоса моделей целиком видна
+под первым экраном и закрепляется только в пределах каталога. Сравнение
+открывается внутри блока «Делюкс», сохраняя выбранную комплектацию.
+На телефоне при смене размера в видимую область подводится полная схема.
+Геометрия, цены, квиз и нижняя часть страницы при этой доработке не менялись.
+
 Каталог sources содержит внутренние тарифы и рабочие документы.
 На публичный хостинг его копировать нельзя. Для сайта предназначена папка site.
 Это пакет разработки: установщика, команд публикации и доступа к серверу нет.
@@ -49,7 +56,7 @@ for file in sorted(bundle.rglob('*')):
         files.append({'path':file.relative_to(bundle).as_posix(),'sha256':hashlib.sha256(file.read_bytes()).hexdigest(),'bytes':file.stat().st_size})
 manifest={'published':False,'deploymentReady':False,'geometryCount':19,'modelSizePairs':20,'layoutPrices':48,'files':files}
 (bundle/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n','utf8')
-archive=ROOT/'output/ДачаПар-главная-и-забота-2026-11-05-v5.zip'
+archive=ROOT/'output/ДачаПар-компактный-каталог-2026-11-05-v6.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as target:
     for file in sorted(bundle.rglob('*')):
         if file.is_file():target.write(file,file.relative_to(bundle).as_posix())

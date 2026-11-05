@@ -1,0 +1,32 @@
+{
+  "comparisonKeepsComfort": true,
+  "thumbnailSelectsPhoto": true,
+  "galleryOpensAndPages": true,
+  "realGLB": true,
+  "shelfMoves": true,
+  "quizOpens": true,
+  "phoneGLB": true,
+  "phoneShelf": true,
+  "requestSelection": true,
+  "phonePlanModal": {
+    "dialog": {
+      "bottom": 728,
+      "height": 716,
+      "left": 12,
+      "right": 308,
+      "top": 12,
+      "width": 296,
+      "x": 12,
+      "y": 12
+    },
+    "loaded": true,
+    "overflow": false,
+    "zoom": "150%"
+  },
+  "careNav": {
+    "careFollowedByClosing": true,
+    "careVisible": true,
+    "navBottom": -6324.671875,
+    "overflow": false
+  }
+}

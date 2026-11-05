@@ -1,0 +1,90 @@
+{
+  "result": "PASS",
+  "viewportCases": 100,
+  "viewports": [
+    {
+      "viewport": [
+        1280,
+        720
+      ],
+      "cases": 24,
+      "result": "PASS"
+    },
+    {
+      "viewport": [
+        1366,
+        660
+      ],
+      "cases": 24,
+      "result": "PASS"
+    },
+    {
+      "viewport": [
+        1920,
+        920
+      ],
+      "cases": 24,
+      "result": "PASS"
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "cases": 24,
+      "result": "PASS"
+    },
+    {
+      "viewport": [
+        768,
+        1024
+      ],
+      "cases": 2,
+      "result": "PASS"
+    },
+    {
+      "viewport": [
+        320,
+        740
+      ],
+      "cases": 2,
+      "result": "PASS"
+    }
+  ],
+  "uniqueModelSizes": 20,
+  "uniqueLayouts": 19,
+  "features": {
+    "comparisonKeepsComfort": true,
+    "thumbnailSelectsPhoto": true,
+    "galleryOpensAndPages": true,
+    "realGLB": true,
+    "shelfMoves": true,
+    "quizOpens": true,
+    "phoneGLB": true,
+    "phoneShelf": true,
+    "requestSelection": true,
+    "phonePlanModal": {
+      "dialog": {
+        "bottom": 728,
+        "height": 716,
+        "left": 12,
+        "right": 308,
+        "top": 12,
+        "width": 296,
+        "x": 12,
+        "y": 12
+      },
+      "loaded": true,
+      "overflow": false,
+      "zoom": "150%"
+    },
+    "careNav": {
+      "careFollowedByClosing": true,
+      "careVisible": true,
+      "navBottom": -6324.671875,
+      "overflow": false
+    }
+  },
+  "physicalPhoneTested": false,
+  "realLeadsSent": false
+}

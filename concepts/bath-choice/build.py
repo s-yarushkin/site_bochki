@@ -14,7 +14,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--pricebook',type=Path,default=captured_book if captured_book.is_file() else ROOT/'web/data/catalog-pricebook.json');args=parser.parse_args()
     if not args.pricebook.is_file():raise RuntimeError('Capture the current public pricebook first')
     (OUT/'choice/assets').mkdir(parents=True,exist_ok=True);(OUT/'data').mkdir(exist_ok=True)
-    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','ritual.css','continuation.mjs','continuation-state.mjs']:shutil.copy2(HERE/name,OUT/'choice'/name)
+    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','catalog.css','ritual.css','continuation.mjs','continuation-state.mjs']:shutil.copy2(HERE/name,OUT/'choice'/name)
     helper=OUT/'choice/continuation-state.mjs'
     helper.write_text(helper.read_text('utf8').replace("from '../../web/lead-client.mjs'","from '/lead-client.mjs'"),'utf8')
     for name in ['mobile-dialog.mjs']:
@@ -135,7 +135,7 @@ def main():
               'sourcePublicPricebookSha256':hashlib.sha256(args.pricebook.read_bytes()).hexdigest(),
               'pricebookSha256':hashlib.sha256((OUT/'data/catalog-pricebook.json').read_bytes()).hexdigest(),
               'prototypePackageBasesSource':'pricing/public-package-base.json','layoutPricesOnPublicPage':False,'quizSourceUnchanged':True,
-              'homeRevision':'v5-2026-11-05','protectedLowerSource':'baseline-v5/index.html','carePosition':'before final closing',
+              'homeRevision':'v6-2026-11-05','protectedLowerSource':'baseline-v5/index.html','carePosition':'before final closing',
               'quizSha256':hashlib.sha256(captured.read_bytes()).hexdigest(),'modelSizePairs':sum(len(m['sizes']) for m in book['r85']['models'].values()),
               'coveredModelSizePairs':len(covered),'newGeometryCoverageComplete':True,'geometryCount':19,'nativeAlbumRevision':album['revisionId'],'files':[]}
     for p in sorted(OUT.rglob('*')):

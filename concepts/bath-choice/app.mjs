@@ -3,7 +3,7 @@ import {roofPoints} from '../home-hero/roof-points.mjs';
 import {createLayoutPanel} from '../home-hero/layout-panel.mjs';
 import {openModelRequest} from '../home-hero/model-request.mjs';
 import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} from './state.mjs';
-import {PACKAGE_NAMES,PACKAGE_COPY} from './packages.mjs';
+import {PACKAGE_NAMES} from './packages.mjs';
 import {createPhotoGallery} from './gallery.mjs';
 import {openPackageComparison} from './comparison.mjs';
 import {connectHomeContinuation} from './continuation.mjs';
@@ -42,11 +42,14 @@ function syncDepth(){const image=$('#hh-world'),depth=$('#hh-depth-image');if(ma
 $('#hh-world').addEventListener('load',syncDepth);matchMedia('(min-width:1101px)').addEventListener('change',syncDepth);
 
 for(const [key,label] of Object.entries(PACKAGE_NAMES)){
- const card=node('label',null,'choice-package-card');card.dataset.packageCard=key;
+ const card=node('div',null,'choice-package-card');card.dataset.packageCard=key;
+ const selection=node('label',null,'choice-package-select');
  const radio=document.createElement('input');radio.type='radio';radio.name='package';radio.value=key;
  const heading=node('h3','Комплектация «'+label+'»');
  const price=node('strong',null,'choice-package-price');price.dataset.packagePrice=key;
- card.append(radio,heading,price,node('p',PACKAGE_COPY[key].lead,'choice-package-lead'),node('p',PACKAGE_COPY[key].text,'choice-package-description'));
+ selection.append(radio,heading,price,node('p',key==='comfort'?'Печь, полки, мебель, свет и вентиляция.':'Печь с двумя каменками, подсветка и утеплённый пол.','choice-package-description'));
+ card.append(selection);
+ if(key==='deluxe')card.append($('[data-compare]'));
  $('[data-package-cards]').append(card);radio.addEventListener('change',()=>choose({package:key}));
 }
 $('[data-compare]').addEventListener('click',event=>openPackageComparison({
@@ -58,7 +61,7 @@ function render(previous){
  if(!previous||previous.model!==state.model){
   setHero(state.model);$('#choice-title').textContent=info.name;$('[data-description]').textContent=descriptions[state.model];
   for(const button of document.querySelectorAll('[data-model-card]'))button.setAttribute('aria-pressed',String(button.dataset.modelCard===state.model));
-  $('[data-sizes]').replaceChildren(...Object.keys(book.r85.models[state.model].sizes).map(key=>{const b=node('button',choiceSizeLabel(book,state.model,key));b.type='button';b.dataset.sizePicker=key;b.addEventListener('click',()=>{choose({size:key});b.focus({preventScroll:true});});return b;}));
+  $('[data-sizes]').replaceChildren(...Object.keys(book.r85.models[state.model].sizes).map(key=>{const b=node('button',choiceSizeLabel(book,state.model,key));b.type='button';b.dataset.sizePicker=key;b.addEventListener('click',()=>{choose({size:key});b.focus({preventScroll:true});revealPlanning();});return b;}));
   setPhotos(photos[state.model]);
  }
  for(const button of document.querySelectorAll('[data-size-picker]'))button.setAttribute('aria-pressed',String(button.dataset.sizePicker===state.size));
@@ -69,11 +72,12 @@ function render(previous){
  }
  $('[data-selection-summary]').textContent=info.name+' · '+label+' · в комплектации «'+PACKAGE_NAMES[state.package]+'»';
  $('[data-plan-size]').textContent=info.name+' · '+label;
- $('[data-plan-request]').textContent=state.layout?'Запросить цену этой планировки и комплектации ↗':'Получить планировку и расчёт ↗';
- $('[data-request-description]').textContent=state.layout?'Подготовим предложение по выбранной планировке и вашему участку.':'Подготовим планировку для выбранного размера и предложение для вашего участка.';
+ $('[data-plan-request]').textContent='Получить предложение ↗';
+ $('[data-plan-request]').setAttribute('aria-label','Получить предложение по выбранной бане и планировке');
+ $('[data-request-description]').textContent='Доставку и основание рассчитаем для вашего участка.';
  if(!previous||['model','size','layout'].some(key=>previous[key]!==state[key])){
   const available=plans.filter(p=>p.models.includes(state.model)&&p.size===state.size);
-  $('[data-plan-options]').replaceChildren(...available.map(plan=>{const button=node('button',names[plan.number]||'Вариант планировки');button.type='button';button.setAttribute('aria-pressed',String(plan.id===state.layout));button.addEventListener('click',()=>{choose({layout:plan.id});$('[data-plan-options] button[aria-pressed="true"]')?.focus({preventScroll:true});});return button;}));
+  $('[data-plan-options]').replaceChildren(...available.map(plan=>{const button=node('button',names[plan.number]||'Вариант планировки');button.type='button';button.setAttribute('aria-pressed',String(plan.id===state.layout));button.addEventListener('click',()=>{choose({layout:plan.id});$('[data-plan-options] button[aria-pressed="true"]')?.focus({preventScroll:true});revealPlanning();});return button;}));
   $('[data-plan-options]').hidden=available.length<2;$('[data-plan-empty]').hidden=available.length>0;
   const plan=available.find(p=>p.id===state.layout);setPlan(plan?{...plan,label:info.name+' · '+label}:null);
  }
@@ -81,7 +85,18 @@ function render(previous){
  syncHome();
 }
 function choose(patch){const previous=state;state=normalizeChoice(book,plans,{...state,...patch});const url=choiceUrl(location.href,state);if(url.href!==location.href)history.pushState(null,'',url);render(previous);}
-document.querySelectorAll('[data-model-card]').forEach(button=>button.addEventListener('click',()=>{choose({model:button.dataset.modelCard});$('#bath-model').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});}));
+function revealPlanning(){
+ requestAnimationFrame(()=>{
+  const plan=$('#plans').getBoundingClientRect(),bar=$('#models').getBoundingClientRect();
+  if(plan.bottom>innerHeight-12||plan.top<Math.max(0,bar.bottom)){
+   const target=matchMedia('(max-width:760px)').matches?$('.choice-sizes'):$('#bath-model');
+   // Offset only this product block; the legacy page has its own anchor padding.
+   const top=Math.max(0,scrollY+target.getBoundingClientRect().top-bar.height-12);
+   window.scrollTo({top,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'});
+  }
+ });
+}
+document.querySelectorAll('[data-model-card]').forEach(button=>button.addEventListener('click',()=>{choose({model:button.dataset.modelCard});}));
 window.addEventListener('popstate',()=>{const previous=state;state=choiceFromUrl(book,plans,location.href);render(previous);});
 function request(opener,reason='quote'){openModelRequest({name:HERO_MODELS[state.model].name,size:choiceSizeLabel(book,state.model,state.size),packageName:PACKAGE_NAMES[state.package],layout:state.layout||undefined,reason,opener});}
 $('[data-plan-request]').addEventListener('click',event=>request(event.currentTarget,state.layout?'layout_quote':'quote'));

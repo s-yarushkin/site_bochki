@@ -1,0 +1,122 @@
+[
+  {
+    "drawing": {
+      "bottom": 614.59375,
+      "height": 328,
+      "left": 391,
+      "right": 737,
+      "top": 286.59375,
+      "width": 346
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-13",
+    "loaded": true,
+    "model": "parus",
+    "nav": {
+      "bottom": 114,
+      "height": 64,
+      "left": 0,
+      "right": 758,
+      "top": 50,
+      "width": 758
+    },
+    "offer": {
+      "bottom": 946.328125,
+      "height": 212.734375,
+      "left": 20,
+      "right": 738,
+      "top": 733.59375,
+      "width": 718
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 715.59375,
+      "height": 470,
+      "left": 390,
+      "right": 738,
+      "top": 245.59375,
+      "width": 348
+    },
+    "size": "600",
+    "sizes": {
+      "bottom": 217.78125,
+      "height": 69.984375,
+      "left": 390,
+      "right": 738,
+      "top": 147.796875,
+      "width": 348
+    },
+    "title": {
+      "bottom": 177.59375,
+      "height": 39.59375,
+      "left": 20,
+      "right": 368,
+      "top": 138,
+      "width": 348
+    },
+    "viewport": [
+      768,
+      1024
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 576.59375,
+      "height": 244,
+      "left": 391,
+      "right": 737,
+      "top": 332.59375,
+      "width": 346
+    },
+    "imageFit": "contain",
+    "layout": "dp3d-08",
+    "loaded": true,
+    "model": "kvadro-house",
+    "nav": {
+      "bottom": 76,
+      "height": 64,
+      "left": 0,
+      "right": 758,
+      "top": 12,
+      "width": 758
+    },
+    "offer": {
+      "bottom": 908.328125,
+      "height": 212.734375,
+      "left": 20,
+      "right": 738,
+      "top": 695.59375,
+      "width": 718
+    },
+    "overflow": false,
+    "plan": {
+      "bottom": 677.59375,
+      "height": 470,
+      "left": 390,
+      "right": 738,
+      "top": 207.59375,
+      "width": 348
+    },
+    "size": "6x6",
+    "sizes": {
+      "bottom": 179.78125,
+      "height": 69.984375,
+      "left": 390,
+      "right": 738,
+      "top": 109.796875,
+      "width": 348
+    },
+    "title": {
+      "bottom": 139.59375,
+      "height": 39.59375,
+      "left": 20,
+      "right": 368,
+      "top": 100,
+      "width": 348
+    },
+    "viewport": [
+      768,
+      1024
+    ]
+  }
+]
