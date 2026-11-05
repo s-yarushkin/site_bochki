@@ -1,4 +1,4 @@
-import hashlib,json,struct,unittest
+import hashlib,json,math,struct,unittest
 from pathlib import Path
 from PIL import Image
 
@@ -75,4 +75,22 @@ class AlbumLayoutsTest(unittest.TestCase):
             self.assertNotIn('price',spec)
             self.assertEqual(len(spec['public_specification']['rooms']),len(spec['rooms']))
             self.assertTrue(spec['public_specification']['items'])
+
+    def test_every_door_retains_its_own_hinge_and_motion(self):
+        for p in REGISTRY['plans']:
+            model,_=glb(ASSETS/p['model'])
+            nodes=model['nodes']
+            parents={child:i for i,n in enumerate(nodes) for child in n.get('children',[])}
+            pivots=[(i,n['extras']) for i,n in enumerate(nodes) if n.get('extras',{}).get('door_pivot')]
+            doors={i['code'] for i in SPECS[p['number']]['items'] if i['kind']=='door'}
+            self.assertEqual(len(pivots),len(doors),p['id'])
+            owners=set()
+            for idx,e in pivots:
+                self.assertEqual(set(e),{'door_pivot','closed_radians','open_sign','max_angle_radians'})
+                self.assertTrue(math.isfinite(e['closed_radians']))
+                self.assertIn(e['open_sign'],[-1,1])
+                self.assertTrue(0<e['max_angle_radians']<=math.pi)
+                while nodes[idx].get('extras',{}).get('kind')!='door':idx=parents[idx]
+                owners.add(nodes[idx]['extras']['code'])
+            self.assertEqual(owners,doors,p['id'])
 if __name__=='__main__':unittest.main()

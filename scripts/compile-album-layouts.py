@@ -73,7 +73,10 @@ class Bundle:
         elif kind=='nodes':
             if 'mesh'in v:v['mesh']=self.import_ref(no,'meshes',v['mesh'])
             if 'children'in v:v['children']=[self.import_ref(no,'nodes',j) for j in v['children']]
-            v.pop('extras',None)
+            # Keep hinge mechanics, but never carry old specification IDs into a new plan.
+            source_extra=v.pop('extras',{})
+            if source_extra.get('door_pivot') is True:
+                v['extras']={key:source_extra[key] for key in ['door_pivot','closed_radians','open_sign','max_angle_radians']}
         self.extensions.update(src.get('extensionsUsed',[]));return new
     def node(self,obj):
         i=len(self.g['nodes']);self.g['nodes'].append(obj);return i

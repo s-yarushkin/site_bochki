@@ -102,6 +102,10 @@ function openViewer(plan, opener){
         <button type="button" data-layout-zoom-out aria-label="Отдалить">−</button>
         <button type="button" data-layout-zoom-in aria-label="Приблизить">+</button>
         <button type="button" data-layout-bench aria-pressed="false" hidden>Задвинуть нижний полок</button>
+        <label class="hh-layout-doors" data-layout-door-control hidden>Двери
+          <input type="range" min="0" max="100" step="1" value="100" data-layout-doors aria-label="Открытие дверей">
+          <output data-layout-doors-state>открыты</output>
+        </label>
         <button type="button" data-layout-reset>Исходный вид</button>
       </div>
     </div>`;

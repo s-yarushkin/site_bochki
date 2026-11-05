@@ -12,7 +12,7 @@
       "model": "models/01.glb",
       "spec": "specs/01.json",
       "preview": "previews/01.webp",
-      "sha256": "2895a364667890ad66ffd933ba8c550a126024b36f3b36b1426648820de9dccc",
+      "sha256": "a7cf586f36aa224f855ed881de70752c11ea7ad9ef7749c8cb63756ab74b02ef",
       "dimension_sha256": "956b5784215ecad4cb0bcbce612152c840c1f7a51c917d9f45b8c91ea8f90d60",
       "label": "01 · 4 × 2,1 м",
       "source_slide": "p1"
@@ -28,7 +28,7 @@
       "model": "models/02.glb",
       "spec": "specs/02.json",
       "preview": "previews/02.webp",
-      "sha256": "fae2e59f4988dbcee4503c85cd94453e3cd04566936edeb428e5c7b2044547db",
+      "sha256": "8bfea134c1ad7d79e7d0f74d6c5b4620ad3ac6489399d11ba565d892aebdc721",
       "dimension_sha256": "492acb6e899d273c4b894bec46a903ab27eb5d810f3348b5746fb3bf5b540b9f",
       "label": "02 · 5 × 2,1 м",
       "source_slide": "p2"
@@ -44,7 +44,7 @@
       "model": "models/03.glb",
       "spec": "specs/03.json",
       "preview": "previews/03.webp",
-      "sha256": "e71a692a15cfb7b7393f3b425fd300f354bca60300f7e50fbe3ba5bf5f644067",
+      "sha256": "40805cfe723ce86305926f4f4cd085d425374023986f92e0270e561616ba3900",
       "dimension_sha256": "372f269e79bc979e078f63251fe9ff06bd847b92b518e016989e7876398c6fb3",
       "label": "03 · 6 × 2,1 м",
       "source_slide": "p3"
@@ -60,7 +60,7 @@
       "model": "models/04.glb",
       "spec": "specs/04.json",
       "preview": "previews/04.webp",
-      "sha256": "bb5f41b9c229357549af7474f0949471855787ea52f55699badfd294507db4c7",
+      "sha256": "d94e1d5262b30b4d7ad5ad12c8ef90548acec449b3d125c6a54a44000e22de8b",
       "dimension_sha256": "a9f2a6f583acebadbb43f2bd01602bab6f9202955b82485bf82466c820385989",
       "label": "04 · 6 × 2,1 м",
       "source_slide": "p4"
@@ -76,7 +76,7 @@
       "model": "models/05.glb",
       "spec": "specs/05.json",
       "preview": "previews/05.webp",
-      "sha256": "5e49290b46bc31ad5ec814c3015a71d91d6e6c083ec872564997baee53eb03b9",
+      "sha256": "522c8191c9e864f795599beadaa8b881b508b6b8db1cc41076603777c632adf3",
       "dimension_sha256": "d4cf1fa26c227c4dabc4e2b5fd371e29b82f6a31afe9e9b625ff34f0e54eab5a",
       "label": "05 · 6 × 2,1 м",
       "source_slide": "p5"
@@ -92,7 +92,7 @@
       "model": "models/06.glb",
       "spec": "specs/06.json",
       "preview": "previews/06.webp",
-      "sha256": "8e982c07a0cf0cf0fb59234739e861928d1501ece14e40da39dd28b5b888da79",
+      "sha256": "2f3a9d6c3a1c5f1a0f34f4c1e4394d74fe660cd62c6246f492bf896c3c6aa793",
       "dimension_sha256": "83f0e69e17ead93b7072cc58a7e5a93fc339ba8d084db847fb3ec399122f6f6d",
       "label": "06 · 4 × 4 м",
       "source_slide": "p6"
@@ -108,7 +108,7 @@
       "model": "models/07.glb",
       "spec": "specs/07.json",
       "preview": "previews/07.webp",
-      "sha256": "741080b98b24c03f9ebe4ea6ec107ff1f19d949d00bb38e20ed88d263d303eb4",
+      "sha256": "5c759ea85dcf767230782160194848a7255cfbd9129eb391337bd5da7afe6631",
       "dimension_sha256": "aeb5b868e1b6e8d1a0936b9706df1c2c32b54c8a604a16c728053e8829479eb8",
       "label": "07 · 5 × 6 м",
       "source_slide": "p7"
@@ -124,7 +124,7 @@
       "model": "models/08.glb",
       "spec": "specs/08.json",
       "preview": "previews/08.webp",
-      "sha256": "c64f8b7e0ca98973ea799cf686faeba1ccb708d633022f85e0299b5e5340bf23",
+      "sha256": "c47d29f865dcaa483842cc444f58b1b2da398c0e6001bfeca7c3e3f46109c3a5",
       "dimension_sha256": "612974d41616222da00ccb79a8729ff4ea6043d2f450d94f063c4a4dd801ce0a",
       "label": "08 · 6 × 6 м",
       "source_slide": "p8"
@@ -140,7 +140,7 @@
       "model": "models/09.glb",
       "spec": "specs/09.json",
       "preview": "previews/09.webp",
-      "sha256": "f27f431d1e0e6679f507c3ab69567d5356c28d35c4b69c034ecc7da21ce5dcaf",
+      "sha256": "63dc5cca375c31967412016d19c4c2f2f0827e0dfcaa96850e0b2e5616909313",
       "dimension_sha256": "ffcbc5cc7fa582c43317828e7a2f8998550683d7e516875544ed04a86d6d2e6c",
       "label": "09 · 6 × 6 м",
       "source_slide": "p9"
@@ -156,7 +156,7 @@
       "model": "models/10.glb",
       "spec": "specs/10.json",
       "preview": "previews/10.webp",
-      "sha256": "83b589e0ef90c3835985cc964b15a2fe32eed63b86a7ec0a7ed9a76b904e6a8d",
+      "sha256": "cb4b17a00f62da28a98d9f632ab939c1d807f0ec6ac5f44569ff87ac6ceaa325",
       "dimension_sha256": "b9dad5a6539ea133456374c42895e2dba42b33f6725832faeb00965d0d192b6b",
       "label": "10 · 4 × 6 м",
       "source_slide": "p10"
@@ -172,7 +172,7 @@
       "model": "models/11.glb",
       "spec": "specs/11.json",
       "preview": "previews/11.webp",
-      "sha256": "302ca50f15860922b212ceb3b942d09c3c94539d5f4c14a3fa3529368dde9d54",
+      "sha256": "99fbf7ba44aaf0074276b132bccc85334e244af58901136b9d4ee246595378d0",
       "dimension_sha256": "85bf07f3fed0b9fe1973826fb8f1a44158fe164eb4d96cddb675ca133b66b69d",
       "label": "11 · 6 × 6 м",
       "source_slide": "p11"
@@ -189,7 +189,7 @@
       "model": "models/12.glb",
       "spec": "specs/12.json",
       "preview": "previews/12.webp",
-      "sha256": "8979a1282992100e7acb704762aff622dc40e73a4c829b1fdf096d4337369ac7",
+      "sha256": "1c4b56b3cf85f0c7de92f5a794cbb261fdcfc48a48807ec41ff339db60262474",
       "dimension_sha256": "a7c8a2f8ba8a98f08ce174a37cc7e818c9a047eab02afe6c8d2f57a29fb8dcfc",
       "label": "12 · 5 × 2,4 м",
       "source_slide": "p12"
@@ -206,7 +206,7 @@
       "model": "models/13.glb",
       "spec": "specs/13.json",
       "preview": "previews/13.webp",
-      "sha256": "22775810fd24e6424487543104b33229bde3ee4a70f2d354f96b9f208df71ca8",
+      "sha256": "982ffd6232b4bcee55a40ef72ef61a27d08fb9569e272bd49042f7ac32388d9f",
       "dimension_sha256": "a5b8427be99865acc0f453bcdc51f11921e7ec9dc603c5ef58952f0da10a0e8b",
       "label": "13 · 6 × 2,4 м",
       "source_slide": "p13"
@@ -223,7 +223,7 @@
       "model": "models/14.glb",
       "spec": "specs/14.json",
       "preview": "previews/14.webp",
-      "sha256": "b6b2ead1847badb2dde98b98675bd4bd72f07c4ac0beda580699548125085302",
+      "sha256": "143291bac068bbb8f4d552c7552f8468ac5ebf02953d31af9dd780aa0017cc87",
       "dimension_sha256": "bafbd176f2252d38356264c41ed91de475f2870004ffd6c947657792c00c29ff",
       "label": "14 · 4 × 2,4 м",
       "source_slide": "p14"
@@ -239,7 +239,7 @@
       "model": "models/15.glb",
       "spec": "specs/15.json",
       "preview": "previews/15.webp",
-      "sha256": "4bc58441a5d69c60cbd138f6965923b465eea6f1d72bef9002d61c16b730fad5",
+      "sha256": "c82b41a8e978d06934bb5206662a12ee50fe3c68192ae23d09cac6e6687f611c",
       "dimension_sha256": "0e322da2334e8b4f3d9391aec8118b14f00a69437a8dc30d489259a93307a98e",
       "label": "15 · 4,5 × 2,1 м",
       "source_slide": "dp_p15"
@@ -255,7 +255,7 @@
       "model": "models/16.glb",
       "spec": "specs/16.json",
       "preview": "previews/16.webp",
-      "sha256": "82ebd07808b6fe0e6dc6cef78f59ec085e2ecbe6a93821719238d789eb929f9b",
+      "sha256": "a0c56c9887520598518b9ab27b4826a455909ac6c5a60c2ced94178ec58380ba",
       "dimension_sha256": "64b1414176f7264a564e193ae7fabcc79e7121222b4c8cfaefe6c8c4d07fc48c",
       "label": "16 · 5,5 × 2,1 м",
       "source_slide": "dp_p16"
@@ -271,7 +271,7 @@
       "model": "models/17.glb",
       "spec": "specs/17.json",
       "preview": "previews/17.webp",
-      "sha256": "1f4aa5a606c706892698f197d8e1782de198120cd1f8745564591077ee475b4d",
+      "sha256": "7acf4b1b6df5070ced2129fafa8050d168d792fed84e178158b2cb1242e8091f",
       "dimension_sha256": "165d70ee4b6c46437d20cfe946aacf65e33ff8f2e0842fd104134f36b0f51051",
       "label": "17 · 4 × 5 м",
       "source_slide": "dp_p17"
@@ -288,7 +288,7 @@
       "model": "models/18.glb",
       "spec": "specs/18.json",
       "preview": "previews/18.webp",
-      "sha256": "188c441c4ba2854b72fe854a76a69e0bd51dafa3b0fd9d68c28f44efa38c40b9",
+      "sha256": "5f8a81afce00021f348512f37d2bfa05822e800f9970c95a0fa6fd83a896c221",
       "dimension_sha256": "28aae94d92199b843d9c28d5e8566f1f3f4ef0305650b30aba2f822c0d377d1c",
       "label": "18 · 4,5 × 2,4 м",
       "source_slide": "dp_p18"
@@ -305,7 +305,7 @@
       "model": "models/19.glb",
       "spec": "specs/19.json",
       "preview": "previews/19.webp",
-      "sha256": "3e52c95a12639fb156f23134d09f52d4d8e42f763e5695651668c33c209c1d2a",
+      "sha256": "591803b7513f25e9b6281de8beae54384824dc9feca2a397414172aac6a6a3e4",
       "dimension_sha256": "af7efdd912e4179818c9e26b2f551f0130c06cad9ad73a467716331051dde1c9",
       "label": "19 · 5,5 × 2,4 м",
       "source_slide": "dp_p19"
@@ -321,7 +321,7 @@
       "model": "models/20.glb",
       "spec": "specs/20.json",
       "preview": "previews/20.webp",
-      "sha256": "e71c794730dae688856c68c56c37f7e686f4ba6ff183a2462fe4e4f73bfc3e57",
+      "sha256": "e530108a36ec437712d08fe6d0b765dd1c3dffd8e2da1a61a7fce796b53926cd",
       "dimension_sha256": "5b41edff30d40c95c7ff87ad8ade783f4ca3b90f5e9480abe6a7efb768f2c83d",
       "label": "20 · 4 × 2,1 м · парная 1,7 м",
       "source_slide": "dp_p20"
@@ -337,7 +337,7 @@
       "model": "models/21.glb",
       "spec": "specs/21.json",
       "preview": "previews/21.webp",
-      "sha256": "058ce7b2eb26506f1e7e308b4a35d7b1549361167cb57d36b9fbf97a044ad91d",
+      "sha256": "cc9f5f636f8d6c568b67672f6711f61a22a63deb6d1abebb025fe5d5d16becbf",
       "dimension_sha256": "b22b47df2a93a79e9c6aadfa773217e6045d3c981fa56516fc341fbbe994d5e6",
       "label": "21 · 4,5 × 2,1 м · парная 1,7 м",
       "source_slide": "dp_p21"
@@ -353,7 +353,7 @@
       "model": "models/22.glb",
       "spec": "specs/22.json",
       "preview": "previews/22.webp",
-      "sha256": "06ca1392c33b0580cf1b5cbed08e4df54baa5215cdbae17519976629eb95c1ae",
+      "sha256": "f13e1abfecf673769d1e0450dd804f249aa4e564360305e1c2a7ec52aefe1a39",
       "dimension_sha256": "a7f77f785c494858ff1305593da5b13dbfbb1df853acf26b2542c709a81123f6",
       "label": "22 · 6 × 6 м · с диваном",
       "source_slide": "dp_p22"
