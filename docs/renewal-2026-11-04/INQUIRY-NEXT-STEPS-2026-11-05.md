@@ -24,9 +24,19 @@ phone и MAX, закрытие и повторное открытие через
 Скриншоты: output/inquiry-success-desktop.png, output/inquiry-success-mobile.png.
 Виртуальная доставка: output/inquiry-next-steps-virtual.json (без телефонов).
 
-Пока не опубликовано. На сервере остаётся CLEAN-NOTE-2f54bf691a29eedd.
-Для публикации нужен небольшой overlay на активный выпуск: добавить разметку
-только в inquiry-dialog главной, подключить inquiry-success.css, обновить
-choice/continuation.mjs и его cache key через текущий choice/app.mjs. Сохранить
-опубликованные SEO-метаданные, версионный импорт comparison.mjs, цены и остальные
-страницы. Полный локальный index.html поверх production не копировать.
+Опубликовано 05.11.2026 по прямому поручению пользователя.
+Активный выпуск: /srv/sites/dachapar-preview/releases/INQUIRY-dc3aed17860cbbf4.
+Overlay изменил четыре файла. Разметка главной изменена только внутри dialog,
+добавлены ссылка CSS и cache key. SEO-метаданные, версионный импорт comparison,
+цены, R117, API, аналитика и остальные файлы сохранены.
+
+44 теста форм/API/квиза/аналитики — PASS; серверный preflight — PASS;
+независимые публичные хеши четырёх файлов — PASS; API health — PASS;
+полная инвентаризация остальных файлов — UNCHANGED. Для тестов R101 потребовалось
+подготовить копии неизменённых исходных модулей: полная старая сборка не запускалась
+из-за отсутствия bs4. Виртуальные тесты выполнены с SQLite в памяти и заглушкой;
+реальные сообщения агент не отправлял.
+
+Полный откат: sudo python3 /tmp/dachapar-inquiry-dc3aed17860cbbf4/install.py --rollback
+Предыдущий выпуск: /srv/sites/dachapar-preview/releases/CLEAN-NOTE-2f54bf691a29eedd.
+Точный пакет и manifest сохранены в concepts/bath-choice/inquiry-release/.
