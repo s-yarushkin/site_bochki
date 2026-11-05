@@ -77,6 +77,7 @@ function render(previous){
  $('[data-request-description]').textContent='Доставку и основание рассчитаем для вашего участка.';
  if(!previous||['model','size','layout'].some(key=>previous[key]!==state[key])){
   const available=plans.filter(p=>p.models.includes(state.model)&&p.size===state.size);
+  $('#plans-title').textContent=available.length>1?'Примеры планировок':'Пример планировки';
   $('[data-plan-options]').replaceChildren(...available.map(plan=>{const button=node('button',names[plan.number]||'Вариант планировки');button.type='button';button.setAttribute('aria-pressed',String(plan.id===state.layout));button.addEventListener('click',()=>{choose({layout:plan.id});$('[data-plan-options] button[aria-pressed="true"]')?.focus({preventScroll:true});revealPlanning();});return button;}));
   $('[data-plan-options]').hidden=available.length<2;$('[data-plan-empty]').hidden=available.length>0;
   const plan=available.find(p=>p.id===state.layout);setPlan(plan?{...plan,label:info.name+' · '+label}:null);

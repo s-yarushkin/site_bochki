@@ -1,0 +1,219 @@
+[
+  {
+    "drawing": {
+      "bottom": 601.59375,
+      "height": 307.015625,
+      "top": 294.578125,
+      "width": 746.875
+    },
+    "heading": "Пример планировки",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 101,
+      "height": 72,
+      "top": 29,
+      "width": 1910
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 1,
+    "overflow": false,
+    "plan": {
+      "bottom": 702.59375,
+      "height": 470,
+      "top": 232.59375,
+      "width": 748.875
+    },
+    "viewport": [
+      1920,
+      920
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 569,
+      "height": 263.015625,
+      "top": 305.984375,
+      "width": 746.875
+    },
+    "heading": "Примеры планировок",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "top": 12,
+      "width": 1910
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 3,
+    "overflow": false,
+    "plan": {
+      "bottom": 670,
+      "height": 470,
+      "top": 200,
+      "width": 748.875
+    },
+    "viewport": [
+      1920,
+      920
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 485.1875,
+      "height": 227.015625,
+      "top": 258.171875,
+      "width": 537.84375
+    },
+    "heading": "Пример планировки",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "top": 12,
+      "width": 1356
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 1,
+    "overflow": false,
+    "plan": {
+      "bottom": 586.1875,
+      "height": 390,
+      "top": 196.1875,
+      "width": 539.84375
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 479,
+      "height": 183.015625,
+      "top": 295.984375,
+      "width": 537.84375
+    },
+    "heading": "Примеры планировок",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 84,
+      "height": 72,
+      "top": 12,
+      "width": 1356
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 3,
+    "overflow": false,
+    "plan": {
+      "bottom": 580,
+      "height": 390,
+      "top": 190,
+      "width": 539.84375
+    },
+    "viewport": [
+      1366,
+      660
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 445.59375,
+      "height": 229.015625,
+      "top": 216.578125,
+      "width": 338
+    },
+    "heading": "Пример планировки",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 56,
+      "height": 56,
+      "top": 0,
+      "width": 380
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 1,
+    "overflow": false,
+    "plan": {
+      "bottom": 546.59375,
+      "height": 390,
+      "top": 156.59375,
+      "width": 340
+    },
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 445.59375,
+      "height": 127.015625,
+      "top": 318.578125,
+      "width": 338
+    },
+    "heading": "Примеры планировок",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 56,
+      "height": 56,
+      "top": 0,
+      "width": 380
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 3,
+    "overflow": false,
+    "plan": {
+      "bottom": 546.59375,
+      "height": 390,
+      "top": 156.59375,
+      "width": 340
+    },
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  {
+    "drawing": {
+      "bottom": 469.59375,
+      "height": 109.625,
+      "top": 359.96875,
+      "width": 280
+    },
+    "heading": "Примеры планировок",
+    "imageFit": "contain",
+    "loaded": true,
+    "nav": {
+      "bottom": 56,
+      "height": 56,
+      "top": 0,
+      "width": 310
+    },
+    "note": "Бесплатно сделаем планировку под ваши пожелания.",
+    "noteFont": "12px",
+    "options": 3,
+    "overflow": false,
+    "plan": {
+      "bottom": 570.59375,
+      "height": 390,
+      "top": 180.59375,
+      "width": 282
+    },
+    "viewport": [
+      320,
+      740
+    ]
+  }
+]

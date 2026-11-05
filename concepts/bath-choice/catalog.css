@@ -32,6 +32,7 @@
 .choice-workspace .choice-plans{grid-area:plan;height:var(--catalog-area-height);padding:0;display:flex;flex-direction:column;gap:10px;scroll-margin-top:calc(var(--modelbar-height) + 12px)}
 .choice-workspace .choice-plans>.choice-heading{display:flex;align-items:center;margin:0;min-height:20px}
 .choice-workspace .choice-plans h3{font-size:14px;font-weight:650;letter-spacing:0;line-height:1.4;margin:0}
+.choice-workspace .choice-plans .choice-plan-note{margin:4px 0 0;font-size:12px;line-height:1.45;color:var(--muted)}
 .choice-workspace .choice-plan-options{gap:6px;margin:0;flex-wrap:wrap}
 .choice-workspace .choice-plan-options button{min-height:34px;padding:6px 10px;font-size:12px;line-height:1.4}
 .choice-workspace .hh-layout-panel{flex:1;min-height:0;display:grid;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) 58px;gap:10px}
