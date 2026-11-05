@@ -9,12 +9,14 @@ import {hashManagerPassword} from '../api/server/manager-auth.mjs';
 import {createCrmAuth} from '../api/server/crm-session.mjs';
 import {createCrmManagerApi} from '../api/server/crm-manager-api.mjs';
 import {createServer} from 'node:http';
+import {openCrmInsights} from '../api/server/crm-insights.mjs';
+import {createCrmPublicApi} from '../api/server/crm-public-api.mjs';
 
 const password='Local-fixture-password-2026';
 const accounts=[{phone:'+79990000001',hash:hashManagerPassword(password)},{phone:'+79990000002',hash:hashManagerPassword(password)}];
 async function fixture(action){
  const folder=mkdtempSync(join(tmpdir(),'dachapar-crm-')),file=join(folder,'leads.sqlite');const leads=openLeadStore(file),crm=openCrmAccess(file);crm.migrate();const [owner,manager]=crm.seedLegacy({accounts,ownerPhone:accounts[0].phone});
- try{return await action({crm,leads,owner,manager});}finally{crm.close();leads.close();assert.equal(dirname(resolve(folder)),resolve(tmpdir()));assert.ok(basename(folder).startsWith('dachapar-crm-'));rmSync(folder,{recursive:true,force:true});}
+ try{return await action({crm,leads,owner,manager,file});}finally{crm.close();leads.close();assert.equal(dirname(resolve(folder)),resolve(tmpdir()));assert.ok(basename(folder).startsWith('dachapar-crm-'));rmSync(folder,{recursive:true,force:true});}
 }
 test('migration preserves existing password hashes and assigns stable non-phone IDs',()=>fixture(({crm,owner,manager})=>{
  assert.match(owner.id,/^[a-f\d-]{36}$/);assert.equal(crm.authenticate(accounts[0].phone,password).id,owner.id);
@@ -92,4 +94,18 @@ test('temporary password restricts API until changed; password changes revoke al
  const {token}=crm.createSession(user.id);assert.equal(crm.session(token).must_change_password,true);
  assert.throws(()=>crm.changePassword(user.id,'wrong-password',password),/INVALID_CREDENTIALS/);
  crm.changePassword(user.id,initialPassword,password);assert.equal(crm.session(token),null);assert.equal(crm.authenticate(user.phone_e164,password).must_change_password,false);
+}));
+test('public endpoints enforce Origin and batch limits; global reports and visitor IDs remain forbidden to managers',()=>fixture(async({crm,leads,file})=>{
+ let route;const server=createServer((req,res)=>route(req,res));await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin='http://127.0.0.1:'+server.address().port,insights=openCrmInsights(file,{secret:'1'.repeat(64),origin});insights.migrate();
+ const publicApi=createCrmPublicApi({insights,origin}),managerApi=createCrmManagerApi({crm,store:leads,auth:createCrmAuth({crm,sessionSecret:'1'.repeat(64)}),origin,insights});route=async(req,res)=>{if(await publicApi(req,res))return;if(await managerApi(req,res))return;res.writeHead(404);res.end();};
+ const post=(path,data,extra={})=>fetch(origin+path,{method:'POST',headers:{Origin:origin,'Content-Type':'application/json',...extra},body:JSON.stringify(data)});
+ try{
+  assert.equal((await post('/api/analytics/consent',{choice:'all'},{Origin:'https://evil.invalid'})).status,403);
+  const consent=await post('/api/analytics/consent',{choice:'all'});assert.equal(consent.status,200);const cookie=consent.headers.getSetCookie()[0].split(';')[0];
+  assert.equal((await post('/api/analytics/events/batch',{events:Array(31).fill({})},{Cookie:cookie})).status,400);
+  const staff=await (await post('/api/analytics/events/batch',{events:[]},{Cookie:cookie+'; dp_staff=1'})).json();assert.equal(staff.staffExcluded,true);
+  const login=await post('/api/manager/login',{phone:accounts[1].phone,password});const managerCookie=login.headers.getSetCookie()[0].split(';')[0];
+  for(const path of ['users','roles','tracking-links','source-reports?from=2026-11-05&to=2026-11-05','action-reports?from=2026-11-05&to=2026-11-05','visitors','visitors/11111111-1111-1111-1111-111111111111'])assert.equal((await fetch(origin+'/api/manager/'+path,{headers:{Cookie:managerCookie}})).status,403,path);
+  const denied=await (await post('/api/analytics/events/batch',{events:[],visitor_id:'11111111-1111-1111-1111-111111111111'})).json();assert.equal(denied.consentRequired,true);
+ }finally{await new Promise(resolve=>server.close(resolve));insights.close();}
 }));

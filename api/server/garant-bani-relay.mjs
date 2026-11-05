@@ -11,6 +11,11 @@ import {createHash,randomUUID} from 'node:crypto';
 import {openLeadStore} from './lead-store.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
+import {openCrmAccess} from './crm-access.mjs';
+import {createCrmAuth} from './crm-session.mjs';
+import {createCrmManagerApi} from './crm-manager-api.mjs';
+import {openCrmInsights} from './crm-insights.mjs';
+import {createCrmPublicApi} from './crm-public-api.mjs';
 import {calculateQuote,formatMoney} from '../assets/js/quote-engine.js';
 import {CATALOG,PRICEBOOK} from '../data/pricebook.js';
 import {PRICEBOOK as LEGACY_V73_PRICEBOOK} from '../data/legacy-v73-pricebook.js';
@@ -253,8 +258,9 @@ export function resolveRelaySite(config,req){
   return config.sites.find(site=>new URL(site.origin).host===req.headers.host)??null;
 }
 
-export function createSiteManagerApi({config,store,managerConfig,log=()=>{}}){
-  const routes=new Map(config.sites.map(site=>[site.origin,createManagerApi({store,
+export function createSiteManagerApi({config,store,managerConfig,log=()=>{},crm=null,insights=null}){
+  const routes=new Map(config.sites.map(site=>[site.origin,crm?createCrmManagerApi({store,crm,insights,
+    auth:createCrmAuth({crm,sessionSecret:managerConfig.sessionSecret,cookiePath:site.basePath+'api/manager/'}),origin:site.origin}):createManagerApi({store,
     auth:createManagerAuth({...managerConfig,cookiePath:site.basePath+'api/manager/'}),
     origin:site.origin,log})]));
   return async(req,res)=>{
@@ -264,13 +270,14 @@ export function createSiteManagerApi({config,store,managerConfig,log=()=>{}}){
   };
 }
 
-export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Date.now(),log=console.error,store=null,managerApi=null}={}) {
+export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Date.now(),log=console.error,store=null,managerApi=null,publicApi=null,insights=null}={}) {
   const quotas=new Map();
   const recent=new Map();
   let active=0;
   const sending=new Set();
   return async (req,res)=>{
     if(req.method==='GET' && req.url==='/health')return json(res,200,{ok:true});
+    if(publicApi&&await publicApi(req,res))return;
     if(req.url?.startsWith('/api/manager/')){
       if(!managerApi)return json(res,404,{ok:false,code:'NOT_FOUND'});
       await managerApi(req,res);
@@ -318,16 +325,19 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
           return json(res,503,{ok:false,code:'STORAGE_UNAVAILABLE'});
         }
         if(record.notificationStatus==='delivered'){
+          if(insights)try{insights.confirmed(record.id);}catch{log(JSON.stringify({event:'crm_confirmation_unavailable'}));}
           recent.set(fingerprint,now+120000);
           return json(res,200,{ok:true,delivered:true,duplicate:true,leadId:record.id,analytics:{persisted:true,...classifyConfirmedLead(record.detail)}});
         }
         if(sending.has(record.id))return json(res,409,{ok:false,code:'DELIVERY_IN_PROGRESS'});
       }
       if(record)sending.add(record.id);
+      if(record&&insights)try{insights.bindLead(req,record.id,payload.crmContext);}catch{log(JSON.stringify({event:'crm_attribution_unavailable'}));}
       active++;
       try {
         await deliver(lead,config,fetch,{id:record?.id,createdAt:record?.createdAt});
         if(record)store.delivery(record.id,'delivered');
+        if(record&&insights)try{insights.confirmed(record.id);}catch{log(JSON.stringify({event:'crm_confirmation_unavailable'}));}
         recent.set(fingerprint,now+120000);
         log(JSON.stringify({event:'bani_lead_delivered',flow:lead.flow,leadId:record?.id||null}));
         return json(res,200,{ok:true,delivered:true,...(record?{leadId:record.id,analytics:{persisted:true,...classifyConfirmedLead(record.detail)}}:{})});
@@ -356,8 +366,14 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   if(!databasePath||!databasePath.startsWith('/var/lib/garant-bani-relay/'))throw new Error('UNSAFE_DATABASE_PATH');
   const store=openLeadStore(databasePath);
   const managerConfig=loadManagerConfig();
-  const managerApi=createSiteManagerApi({config,store,managerConfig,log:console.error});
-  const server=createServer(createRelayHandler({config,store,managerApi}));
+  const crm=process.env.CRM_ENABLED==='1'?openCrmAccess(databasePath):null;
+  if(crm&&!crm.initialized())throw new Error('CRM_MIGRATION_REQUIRED');
+  const origin='https://xn--80aaan1dh9b.xn--p1ai';
+  const insights=crm?openCrmInsights(databasePath,{secret:managerConfig.sessionSecret,origin,enabled:process.env.CRM_TRACKING_ENABLED==='1'}):null;
+  const publicApi=insights?createCrmPublicApi({insights,origin}):null;
+  const managerApi=createSiteManagerApi({config,store,managerConfig,crm,insights,log:console.error});
+  const server=createServer(createRelayHandler({config,store,managerApi,publicApi,insights}));
+  if(insights){try{insights.purge();}catch{console.error(JSON.stringify({event:'crm_retention_failed'}));}const cleanup=setInterval(()=>{try{insights.purge();}catch{console.error(JSON.stringify({event:'crm_retention_failed'}));}},3600000);cleanup.unref();}
   server.requestTimeout=15000;
   server.headersTimeout=12000;
   server.listen(config.port,config.host,()=>console.log(JSON.stringify({event:'bani_relay_listening',port:config.port})));

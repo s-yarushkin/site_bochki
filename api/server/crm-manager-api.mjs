@@ -56,10 +56,10 @@ export function createCrmManagerApi({crm,store,auth,origin,insights=null}){
    const lead=/^\/api\/manager\/leads\/(GB-\d{8}-[A-F0-9]{8})(?:\/(classification|timeline))?$/.exec(path);
    if(lead){
     crm.requirePermission(user.id,'view_all_leads');const id=lead[1];if(!store.get(id))throw Error('NOT_FOUND');
-    if(req.method==='GET'&&!lead[2]){crmAnswer(res,200,{ok:true,lead:{...store.detail(id),...crm.classification(id),...(insights?{attribution:insights.leadAttribution(id)}:{})}});return true;}
+    if(req.method==='GET'&&!lead[2]){crmAnswer(res,200,{ok:true,lead:{...store.detail(id),...crm.classification(id),classification_history:crm.classificationHistory(id),...(insights?{attribution:insights.leadAttribution(id)}:{})}});return true;}
     if(req.method==='PATCH'&&!lead[2]){
      crm.requirePermission(user.id,'edit_leads');if(crm.classification(id).classification==='test')throw Error('TEST_LEAD_READ_ONLY');
-     const data=await crmJson(req);crmAnswer(res,200,{ok:true,lead:store.update(id,{status:data.status,assignee:data.assignee,managerNote:data.managerNote},user.id)});return true;
+     const data=await crmJson(req),updated=store.update(id,{status:data.status,assignee:data.assignee,managerNote:data.managerNote},user.id);crmAnswer(res,200,{ok:true,lead:{...updated,...crm.classification(id),...(insights?{attribution:insights.leadAttribution(id)}:{})}});return true;
     }
     if(req.method==='POST'&&lead[2]==='classification'){crmAnswer(res,200,{ok:true,...crm.classify(user.id,id,await crmJson(req))});return true;}
     if(req.method==='GET'&&lead[2]==='timeline'){crm.requirePermission(user.id,'view_visitor_timeline');crmAnswer(res,200,{ok:true,timeline:insights?insights.leadTimeline(id):[],limited:!insights});return true;}
@@ -68,7 +68,7 @@ export function createCrmManagerApi({crm,store,auth,origin,insights=null}){
    crmAnswer(res,404,{ok:false,code:'NOT_FOUND'});return true;
   }catch(error){
    const code=error.message,invalid=['INVALID_TEXT','INVALID_PHONE','INVALID_ROLES','INVALID_ACTIVE','INVALID_ROLE_KEY','INVALID_PERMISSIONS','INVALID_CLASSIFICATION','INVALID_STATUS','INVALID_PAGINATION','WEAK_MANAGER_PASSWORD','INVALID_JSON','BODY_TOO_LARGE','JSON_REQUIRED','TEXT_TOO_LONG','SYSTEM_ROLE_IMMUTABLE','LAST_OWNER_PROTECTED','TEST_LEAD_READ_ONLY','INVALID_CREDENTIALS'];
-   const status=code==='FORBIDDEN'?403:code==='NOT_FOUND'?404:invalid.includes(code)?400:String(error.code).startsWith('ERR_SQLITE')&&String(error.message).includes('UNIQUE')?409:500;
+   const status=code==='FORBIDDEN'?403:code==='NOT_FOUND'?404:invalid.includes(code)||['INVALID_SOURCE','INVALID_REPORT','INVALID_EVENTS','INVALID_DESTINATION'].includes(code)?400:String(error.code).startsWith('ERR_SQLITE')&&String(error.message).includes('UNIQUE')?409:500;
    crmAnswer(res,status,{ok:false,code:status===500?'REQUEST_FAILED':status===409?'ALREADY_EXISTS':code});return true;
   }
  };

@@ -1,4 +1,5 @@
-export const GOALS=Object.freeze(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_form_submit_attempt','dp_builder_start','dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click','dp_plan_view','dp_plan_select','dp_plan_mirror','dp_plan_compare','dp_package_select','dp_reference_select','dp_quote_view','dp_quote_save','dp_quote_share','dp_quote_restore','dp_delivery_start','dp_compare_view','dp_faq_open', 'dp_quiz_invite_view','dp_quiz_invite_close','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_quiz_plan_open','dp_quiz_catalog_cta','dp_quiz_catalog_sent']);
+export const GOALS=Object.freeze(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_form_submit_attempt','dp_builder_start','dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click','dp_plan_view','dp_plan_select','dp_plan_mirror','dp_plan_compare','dp_package_select','dp_reference_select','dp_quote_view','dp_quote_save','dp_quote_share','dp_quote_restore','dp_delivery_start','dp_compare_view','dp_faq_open', 'dp_quiz_invite_view','dp_quiz_invite_close','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_quiz_plan_open','dp_quiz_catalog_cta','dp_quiz_catalog_sent','dp_quiz_completed','dp_quiz_submit_attempt','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_quiz_lead_confirmed','dp_quiz_lead_pereslavl_confirmed']);
+import {cookieChoice} from './journey-tracker.mjs?v=crm-20261105';
 const goals=new Set(GOALS),receipts=new Set(GOALS.filter(x=>x.includes('_confirmed')));
 const placements=new Set(['header','hero','catalog','base','bundle','personal','delivery','builder','faq','final','footer','mobile','seo','model','plans','gallery','packages','result','compare','unknown']);
 const models=new Set(['kvadro','viking','parus','kvadro-house']);
@@ -24,7 +25,8 @@ export function safeParams(params={}){
  return result;
 }
 export function createAnalytics(env){
- let active=false,counterId=null;const counted=new Set();
+ let active=false,counterId=null,lastSettings;const counted=new Set();
+ env.document.addEventListener?.('dachapar:consent',event=>{if(event.detail?.choice==='all'&&lastSettings)start(lastSettings);});
  const store=type=>{try{return env[type]}catch{return null}};
  function touch(){
   const q=new URLSearchParams(env.location.search),value={landing:safePath(env.location.pathname)};
@@ -47,6 +49,7 @@ export function createAnalytics(env){
  }
  function track(name,params={}){if(receipts.has(name))return false;return emit(name,params)}
  function start(settings){
+  lastSettings=settings;if(cookieChoice(env)!=='all'||String(env.document.cookie??'').split(';').some(c=>c.trim()==='dp_staff=1'))return false;
   const c=settings?.analytics;if(active)return true;
   if(c?.enabled!==true||c.counterId!==113675581||env.location.origin!==settings.productionOrigin||!c.allowedOrigins?.includes(env.location.origin))return false;
   active=true;counterId=c.counterId;remember();
@@ -62,7 +65,8 @@ export function createAnalytics(env){
   if(!active||typeof env.ym!=='function')return Promise.resolve(null);
   return new Promise(resolve=>{let done=false;const finish=value=>{if(done)return;done=true;resolve(typeof value==='string'&&/^\d{1,24}$/.test(value)?value:null)};setTimeout(()=>finish(null),350);try{env.ym(counterId,'getClientID',finish)}catch{finish(null)}});
  }
- function confirmed(receipt,{flow,requestId,...params}={}){
+ function confirmed(receipt,{flow,requestId,quiz,pereslavl,...params}={}){
+  if(!active)return false;
   if(!['quote','callback'].includes(flow)||receipt?.ok!==true||receipt?.delivered!==true||receipt?.analytics?.persisted!==true||receipt?.duplicate===true||typeof requestId!=='string')return false;
   let saved=[];try{saved=JSON.parse(store('sessionStorage')?.getItem(seenKey)||'[]')}catch{}
   if(counted.has(requestId)||(Array.isArray(saved)&&saved.includes(requestId)))return false;
@@ -70,6 +74,12 @@ export function createAnalytics(env){
   emit('dp_lead_confirmed',{...params,flow});emit(flow==='quote'?'dp_quote_lead_confirmed':'dp_callback_lead_confirmed',{...params,flow});
   if(flow==='quote'&&receipt.analytics.premiumQualified===true)emit('dp_premium_quote_confirmed',{flow});
   if(flow==='quote'&&receipt.analytics.detailedQualified===true)emit('dp_detailed_quote_confirmed',{flow});
+  // Only a persisted, delivered, non-duplicate receipt may generate quiz conversions.
+  // Settlement itself stays in the lead payload; never send a city or phone to Metrika.
+  if(flow==='callback'&&quiz===true){
+    emit('dp_quiz_lead_confirmed',{flow,placement:'catalog'});
+    if(pereslavl===true)emit('dp_quiz_lead_pereslavl_confirmed',{flow,placement:'catalog'});
+  }
   return true;
  }
  return {start,track,confirmed,attribution,clientID,isActive:()=>active};

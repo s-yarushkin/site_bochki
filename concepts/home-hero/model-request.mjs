@@ -1,8 +1,10 @@
-import {buildCallback, submitLead} from '/lead-client.mjs?v=r100-20261027';
+import {journeyFormOpened} from '/journey-tracker.mjs?v=crm-20261105';
+import {buildCallback, submitLead} from '/lead-client.mjs?v=all-forms-20261105';
 import {attachPhoneMask} from '/phone-mask.mjs';
 import {analytics} from '/analytics-core.mjs?v=r117-quiz-goals';
 
 export function openModelRequest({name,size,layout,opener}){
+  journeyFormOpened(opener,'quote');
   const dialog = document.createElement('dialog');
   dialog.className = 'hh-bath-dialog';
   dialog.setAttribute('aria-labelledby','hh-request-title');

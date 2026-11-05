@@ -129,10 +129,12 @@ export function openCrmAccess(path,{now=()=>new Date().toISOString()}={}){
   return {changed:true,classification};
  });}
  return {migrate,seedLegacy,user,requirePermission,createRole,editRole,createUser,editUser,authenticate,createSession,session,classify,changePassword,resetPassword,
+  initialized(){return Boolean(db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='staff_users'").get())&&db.prepare("SELECT count(*) n FROM staff_users u JOIN user_roles ur ON ur.user_id=u.id JOIN roles r ON r.id=ur.role_id WHERE u.active=1 AND r.key='owner_admin'").get().n>0;},
   authAudit(id,success){audit(id??'anonymous',success?'login_success':'login_failure','auth','session',null,{success:Boolean(success)});},
   logout(token){if(typeof token==='string')db.prepare('UPDATE staff_sessions SET revoked_at=? WHERE token_hash=?').run(now(),digest(token));},
   revokeSessions(actor,id){return transaction(()=>{const current=requirePermission(actor,'manage_users'),target=user(id);if(!target)throw Error('NOT_FOUND');if(target.roles.includes('owner_admin')&&!current.roles.includes('owner_admin'))throw Error('FORBIDDEN');revoke(id);audit(actor,'sessions_revoke','user',id,null,null);});},
-  classification(id){return db.prepare('SELECT classification,reason,classified_at,classified_by FROM lead_classification WHERE lead_id=?').get(id)??{classification:'real'};},
+  classification(id){return db.prepare('SELECT c.classification,c.reason,c.classified_at,c.classified_by,u.name classified_by_name FROM lead_classification c JOIN staff_users u ON u.id=c.classified_by WHERE c.lead_id=?').get(id)??{classification:'real'};},
+  classificationHistory(id){return db.prepare("SELECT a.at,u.name actor_name,a.after_json FROM audit_log a LEFT JOIN staff_users u ON u.id=a.actor_id WHERE a.object_type='lead' AND a.object_id=? AND a.action='lead_classify' ORDER BY a.seq DESC LIMIT 100").all(id).map(r=>({at:r.at,actor_name:r.actor_name,...JSON.parse(r.after_json)}));},
   users(actor){requirePermission(actor,'manage_users');return db.prepare('SELECT id FROM staff_users ORDER BY created_at,id').all().map(r=>user(r.id));},
   roles(actor){requirePermission(actor,'manage_roles');return db.prepare('SELECT * FROM roles ORDER BY system DESC,key').all().map(r=>({...r,permissions:db.prepare('SELECT permission FROM role_permissions WHERE role_id=?').all(r.id).map(p=>p.permission)}));},
   audit(actor){requirePermission(actor,'view_audit');return db.prepare('SELECT * FROM audit_log ORDER BY seq DESC LIMIT 200').all();},
