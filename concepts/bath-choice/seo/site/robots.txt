@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&callback&request&bath&bathSize&package&layout /
+Disallow: /api/
+Disallow: /server/
+Disallow: /ops/
+Disallow: /tests/
+Disallow: /.git/
+
+User-agent: GPTBot
+Disallow: /
+
+Sitemap: https://xn--80aaan1dh9b.xn--p1ai/sitemap.xml

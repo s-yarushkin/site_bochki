@@ -45,6 +45,12 @@ def main():
             target=OUT/'choice/assets'/f'{name}-{width}.webp'
             if not target.exists():image.resize((width,round(image.height*width/image.width)),Image.Resampling.LANCZOS).save(target,quality=85,method=5)
     book=json.loads(args.pricebook.read_text('utf8'))
+    # Historical pre-final prices are not current public offers.
+    def current_public_data(value):
+        if isinstance(value,dict):return {k:current_public_data(v) for k,v in value.items() if k!='preFinalComfortPriceRub'}
+        if isinstance(value,list):return [current_public_data(v) for v in value]
+        return value
+    book=current_public_data(book)
     # Refresh only this isolated prototype from the verified public retail bases.
     # The production pricebook and the original R117 files are never rewritten.
     bases=json.loads((HERE/'pricing/public-package-base.json').read_text('utf8'))['models']

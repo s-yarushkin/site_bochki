@@ -1,0 +1,24 @@
+{
+  "auditedRelease": "/srv/sites/dachapar-preview/releases/BC-45bb11dcf8b51b79",
+  "publicHtmlDocuments": 41,
+  "price390000InHtml": false,
+  "historicalPriceLocations": [
+    {
+      "path": "choice/catalog-pricebook.json",
+      "occurrences": 2
+    },
+    {
+      "path": "data/catalog-pricebook.json",
+      "occurrences": 2
+    },
+    {
+      "path": "data/r85-public-pricebook.json",
+      "occurrences": 2
+    }
+  ],
+  "explanation": "preFinalComfortPriceRub is historical reference metadata, not the current offer; current minimum Comfort price is 410000 RUB. The exact source used by the earlier GPT answer is unknown.",
+  "searchConsoleConnected": false,
+  "yandexSubmissionConfirmed": false,
+  "additionalJsCsvMarkdownPriceHits": [],
+  "publicPdfFiles": []
+}

@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "active": "/srv/sites/dachapar-preview/releases/SEO-293e53cd0a31ce5a",
+  "rollback": "/srv/sites/dachapar-preview/releases/BC-45bb11dcf8b51b79",
+  "publicFiles": 10,
+  "sitemapUrls": 31,
+  "allSitemapUrls200Canonical": true,
+  "foldingTableCondition": "PASS",
+  "priceMetadata": {
+    "data/catalog-pricebook.json": "PASS: active prices unchanged; historical field removed",
+    "data/r85-public-pricebook.json": "PASS: active prices unchanged; historical field removed",
+    "choice/catalog-pricebook.json": "PASS: active prices unchanged; historical field removed"
+  },
+  "phoneFixPreserved": true,
+  "protectedFilesUnchanged": [
+    "data/site-settings.json",
+    "quiz.mjs",
+    "analytics-core.mjs",
+    "lead-client.mjs",
+    "novyy-god/index.html",
+    "choice/continuation.mjs",
+    "choice/continuation-state.mjs"
+  ],
+  "apiHealth": "PASS",
+  "realLeadsSent": false,
+  "searchEngineSubmission": "not yet confirmed",
+  "rollbackCommand": "sudo python3 /tmp/dachapar-seo-293e53cd0a31ce5a/install.py --rollback"
+}
