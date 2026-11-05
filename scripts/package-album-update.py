@@ -12,10 +12,13 @@ def main():
         assert spec['dimension_sha256']==plan['dimension_sha256']
         assert hashlib.sha256((base/'layouts'/plan['model']).read_bytes()).hexdigest()==plan['sha256']
         files += [base/'layouts'/plan[key] for key in ['drawing','model','spec','preview']]
-    assert len(files)==len(set(files))==93
+    bridge=ROOT/'concepts/choice-album'
+    bridge_files=[bridge/name for name in ['choice/app.mjs','choice/home-hero/layout-panel.mjs','choice/home-hero/hero.css']]
+    files+=bridge_files
+    assert len(files)==len(set(files))==96
     records=[]
     for f in files:
-        target='home-hero/'+f.relative_to(base).as_posix()
+        target=f.relative_to(bridge).as_posix() if f in bridge_files else 'home-hero/'+f.relative_to(base).as_posix()
         records.append({'path':target,'bytes':f.stat().st_size,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()})
     manifest={'version':'album-review-2026-11-05','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'file_count':len(files),'plans':22,'files':records}
     out=ROOT/'output';out.mkdir(exist_ok=True);target=out/'album-layouts-update-20261105.zip'

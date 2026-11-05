@@ -37,7 +37,7 @@ function table(title, headings, rows){
   return node;
 }
 
-function specification(spec){
+export function specification(spec){
   const fragment = document.createDocumentFragment();
   const text = spec.public_specification;
   if(!text) throw Error('VERIFIED_SPECIFICATION_UNAVAILABLE');

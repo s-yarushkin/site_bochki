@@ -1,4 +1,4 @@
-"""Apply the reviewed 93-file album overlay to an inventoried current web release.
+"""Apply the reviewed 96-file album overlay to an inventoried current web release.
 
 Run --check as deploy, then --apply with sudo. Never modifies the lead service.
 deployment.json and payload.zip must be placed beside this script.
@@ -49,21 +49,22 @@ def archive_check(config,archive):
     if not re.fullmatch(r'ALBUM-[a-f0-9]{16}',config['release']):fail('invalid release name')
     if digest((HERE/'payload.zip').read_bytes())!=config['payload_sha256']:fail('payload checksum mismatch')
     manifest=json.loads(archive.read('manifest.json'))
-    if manifest['source_commit']!=config['source_commit'] or manifest['plans']!=22 or manifest['file_count']!=93:fail('unexpected package version')
+    if manifest['source_commit']!=config['source_commit'] or manifest['plans']!=22 or manifest['file_count']!=96:fail('unexpected package version')
     index=json.loads(archive.read('site/home-hero/layouts/index.json'))
     if len(index['plans'])!=22 or len({p['number'] for p in index['plans']})!=22:fail('incomplete registry')
     allowed={'home-hero/'+n for n in ['layout-panel.mjs','layout-viewer.mjs','model-journey.mjs','hero.css','layouts/index.json']}
+    allowed.update(['choice/app.mjs','choice/home-hero/layout-panel.mjs','choice/home-hero/hero.css'])
     for p in index['plans']:
         for key in ['drawing','model','spec','preview']:
             name='home-hero/layouts/'+p[key]
             checked(Path('/tmp/album-path-check'),name)
             allowed.add(name)
     names=[r['path'] for r in manifest['files']]
-    if len(names)!=93 or set(names)!=allowed:fail('unexpected overlay file set')
+    if len(names)!=96 or set(names)!=allowed:fail('unexpected overlay file set')
     expected={'manifest.json','DEPLOY.md'}|{'site/'+n for n in names}
     if len(archive.namelist())!=len(expected) or set(archive.namelist())!=expected:fail('unexpected archive members')
     for row in manifest['files']:
-        if not row['path'].startswith('home-hero/'):fail('overlay outside home-hero')
+        if not row['path'].startswith(('home-hero/','choice/')):fail('overlay outside reviewed folders')
         data=archive.read('site/'+row['path'])
         if len(data)!=row['bytes'] or digest(data)!=row['sha256']:fail('asset checksum mismatch: '+row['path'])
     return manifest
@@ -83,6 +84,8 @@ def candidate_check(candidate,config,manifest):
     if tree(candidate)!=final_files(config,manifest):fail('candidate inventory mismatch')
     for name in ['layout-panel.mjs','layout-viewer.mjs','model-journey.mjs']:
         subprocess.run(['node','--check',str(candidate/'home-hero'/name)],check=True,capture_output=True,timeout=20)
+    for name in ['choice/app.mjs','choice/home-hero/layout-panel.mjs']:
+        subprocess.run(['node','--check',str(candidate/name)],check=True,capture_output=True,timeout=20)
     base=candidate/'home-hero/layouts';index=json.loads((base/'index.json').read_text())
     for p in index['plans']:
         data=(base/p['model']).read_bytes()
@@ -97,9 +100,12 @@ def candidate_check(candidate,config,manifest):
             if e['open_sign'] not in [-1,1] or not 0<e['max_angle_radians']<=3.142:fail('invalid hinge')
         if spec['dimension_sha256']!=p['dimension_sha256']:fail('dimension mismatch')
     if 'model-request.mjs?v=all-forms-20261105' not in (candidate/'home-hero/model-journey.mjs').read_text():fail('current forms import version lost')
+    app=(candidate/'choice/app.mjs').read_text()
+    if '/home-hero/layouts/index.json?album=22-20261105' not in app:fail('active choice registry is outdated')
+    if "model-request.mjs?v=all-forms-20261105" not in app:fail('active choice form import lost')
 def public_check(config,manifest):
     expected=final_files(config,manifest)
-    protected=['index.html','home-hero/model-request.mjs','lead-client.mjs','phone-mask.mjs','data/site-settings.json','data/catalog-pricebook.json','quote.mjs','quiz-v1/quiz.mjs']
+    protected=['index.html','home-hero/model-request.mjs','choice/home-hero/model-request.mjs','choice/catalog-pricebook.json','lead-client.mjs','phone-mask.mjs','data/site-settings.json','data/catalog-pricebook.json','quote.mjs','quiz-v1/quiz.mjs']
     names=sorted({r['path'] for r in manifest['files']}|{n for n in protected if n in expected})
     def check(name):
         request=urllib.request.Request(ORIGIN+'/'+name+'?album_check='+config['source_commit'],headers={'Cache-Control':'no-cache','User-Agent':'DachaPar-album-deployment'})
@@ -131,7 +137,7 @@ def main():
             with tempfile.TemporaryDirectory(prefix='dachapar-album-check-') as temp:
                 candidate=Path(temp)/'web';shutil.copytree(old,candidate);overlay(candidate,manifest,archive)
                 candidate_check(candidate,config,manifest)
-            print('PREFLIGHT=PASS; 93 assets; 22 GLB; forms and API unchanged',flush=True);return
+            print('PREFLIGHT=PASS; 96 assets; 22 GLB; active choice wired; forms and API unchanged',flush=True);return
         if os.geteuid()!=0:fail('sudo required')
         with open('/run/lock/dachapar-album-deploy.lock','w') as lock:
             fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -149,7 +155,7 @@ def main():
                 if tree(new)!=final_files(config,manifest):fail('published release inventory changed')
             except Exception:
                 swap(old);health();print('AUTOMATIC_ROLLBACK=PASS',flush=True);raise
-            result={**state,'release':config['release'],'verified_public_files':len(verified),'overlay_files':93,'plans':22,'api_unchanged':True,'all_other_web_files_unchanged':True}
+            result={**state,'release':config['release'],'verified_public_files':len(verified),'overlay_files':96,'plans':22,'api_unchanged':True,'all_other_web_files_unchanged':True}
             (HERE/'deployment-result.json').write_text(json.dumps(result,indent=2)+'\n')
             print(json.dumps(result),flush=True)
             print('ROLLBACK: sudo python3 '+str(Path(__file__).resolve())+' --rollback',flush=True)
