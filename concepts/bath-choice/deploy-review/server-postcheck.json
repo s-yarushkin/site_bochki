@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "active": "/srv/sites/dachapar-preview/releases/BC-250ed3a209ba1254",
+  "rollback": "/srv/sites/dachapar-preview/releases/SPEC-CLEAN-be544b9fb6464bd4",
+  "installerPhase": "active",
+  "publicHashesVerifiedByInstaller": 124,
+  "protectedFilesUnchanged": [
+    "data/site-settings.json",
+    "data/catalog-pricebook.json",
+    "quiz.mjs",
+    "analytics-core.mjs",
+    "lead-client.mjs",
+    "novyy-god/index.html"
+  ],
+  "unchangedOriginalFiles": 742,
+  "onlyIndexAndChoiceChanged": true,
+  "relayHealth": "PASS",
+  "publicLeadRoute": "PASS:405 Allow POST",
+  "realLeadsSent": false,
+  "rollbackCommand": "sudo python3 /tmp/dachapar-bath-choice-250ed3a209ba1254/install.py --rollback"
+}

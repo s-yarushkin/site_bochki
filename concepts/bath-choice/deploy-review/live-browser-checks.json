@@ -1,0 +1,10 @@
+{
+  "catalogForm": true,
+  "catalogSelection": true,
+  "submitEnabled": true,
+  "quizOpens": true,
+  "interactive3D": true,
+  "movingShelf": true,
+  "consoleErrors": [],
+  "realLeadsSent": false
+}
