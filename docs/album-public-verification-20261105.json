@@ -1,15 +1,15 @@
 {
-  "release": "ALBUM-3b0eeed32164c614",
-  "source_commit": "3b0eeed32164c614247d5b3fb20046c06e3e21f3",
-  "active_web": "/srv/sites/dachapar-preview/releases/ALBUM-3b0eeed32164c614",
-  "previous_web": "/srv/sites/dachapar-preview/releases/ALLFORMS-e18efe09eed20abe",
+  "release": "ALBUM-2184569675bafffe",
+  "source_commit": "2184569675bafffe9ffcec9709116b20847ede46",
+  "active_web": "/srv/sites/dachapar-preview/releases/ALBUM-2184569675bafffe",
+  "previous_web": "/srv/sites/dachapar-preview/releases/ALBUM-3b0eeed32164c614",
   "api": "/srv/services/garant-bani-relay/releases/DPQUIZ-bd4ef314ab5f",
   "api_healthy": true,
   "api_unchanged": true,
   "previous_release_unchanged": true,
   "complete_inventory_match": true,
   "published_files": 900,
-  "protected_web_files_unchanged": 807,
-  "public_hashes_verified": 98,
+  "protected_web_files_unchanged": 804,
+  "public_hashes_verified": 103,
   "real_lead_submissions": 0
 }
