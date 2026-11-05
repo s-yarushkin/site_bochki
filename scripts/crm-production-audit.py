@@ -9,11 +9,14 @@ def main():
     api=Path('/srv/services/garant-bani-relay/current').resolve(strict=True)
     if web.parent!=Path('/srv/sites/dachapar-preview/releases') or api.parent!=Path('/srv/services/garant-bani-relay/releases'):raise RuntimeError('Unexpected active release')
     env_path=Path('/etc/garant-bani-preview/relay.env')
-    env={}
-    for line in env_path.read_text().splitlines():
-        key,sep,value=line.partition('=')
-        if sep and key.strip()=='LEADS_DB_PATH':env[key.strip()]=value.strip().strip('\"\'')
-    database=Path(env['LEADS_DB_PATH'])
+    # The service may set this variable directly in the unit rather than its env file.
+    # Read only the required value from the running service; never print its environment.
+    pid=subprocess.check_output(['systemctl','show','garant-bani-relay.service','--property=MainPID','--value'],text=True).strip()
+    if not pid.isdigit() or int(pid)<=1:raise RuntimeError('Service PID unavailable')
+    runtime=Path('/proc')/pid/'environ'
+    value=next((entry.partition(b'=')[2] for entry in runtime.read_bytes().split(b'\0') if entry.startswith(b'LEADS_DB_PATH=')),None)
+    if not value:raise RuntimeError('Running service does not expose LEADS_DB_PATH')
+    database=Path(os.fsdecode(value))
     if not str(database).startswith('/var/lib/garant-bani-relay/'):raise RuntimeError('Unexpected database location')
     stamp=time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())
     backup=Path('/var/backups/dachapar')/('CRM-AUDIT-'+stamp)
@@ -45,7 +48,7 @@ def main():
     accounts_path=Path('/etc/garant-bani-preview/manager-accounts.json')
     accounts=json.loads(accounts_path.read_text())
     report['accounts']={'count':len(accounts),'have_internal_user_ids':all(bool(a.get('id')) for a in accounts),'storage':'systemd credential file','hash_algorithms':sorted({str(a.get('hash','')).split('$')[0] for a in accounts})}
-    for source in [env_path,accounts_path,Path('/etc/garant-bani-preview/manager-session-secret')]:
+    for source in [env_path,accounts_path,Path('/etc/garant-bani-preview/manager-session-secret'),Path('/etc/systemd/system/garant-bani-relay.service')]:
         target=backup/source.name;shutil.copy2(source,target);target.chmod(0o600)
     for kind,source in [('web',web),('api',api)]:
         archive=backup/(kind+'.tar.gz')
@@ -65,4 +68,11 @@ def main():
     target=Path(__file__).resolve().parent/'audit-sanitized.json'
     target.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');target.chmod(0o644)
     print(json.dumps({'backup':str(backup),'database_integrity':report['backup_integrity'],'restore':report['isolated_restore'],'tables':list(report['schema']),'accounts':report['accounts'],'report':str(target),'gate':report['gate']},ensure_ascii=False),flush=True)
-if __name__=='__main__':main()
+if __name__=='__main__':
+    try:main()
+    except Exception as error:
+        import sys
+        result={'status':'failed','error_type':type(error).__name__,'message':str(error)[:500],'live_database_changed':False}
+        target=Path(__file__).resolve().parent/'audit-error.json'
+        target.write_text(json.dumps(result,indent=2)+'\n');target.chmod(0o644)
+        print(json.dumps(result),flush=True);sys.exit(1)

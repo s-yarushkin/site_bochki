@@ -7,6 +7,6 @@ export async function loadTestAPI(){
  if(!existsSync(original))throw Error('Private owner API baseline is required in .local/api-baseline. Never use production credentials for tests.');
  mkdirSync(target,{recursive:true});cpSync(original,target,{recursive:true});cpSync(resolve(root,'api'),target,{recursive:true});writeFileSync(resolve(target,'package.json'),'{"type":"module"}');
  // The historical deploy renamed the R85 export. Reproduce that local-only alias.
- const historic=resolve(target,'server/r85-public-pricebook-previous.mjs');let source=readFileSync(historic,'utf8');if(!source.includes('as PREVIOUS_R85_BOOK'))writeFileSync(historic,source+'\nexport {PUBLIC_R85_BOOK as PREVIOUS_R85_BOOK};\n');
+ const historic=resolve(target,'server/r85-public-pricebook-previous.mjs');let source=readFileSync(historic,'utf8');if(!/export\s+(?:const|let|var)\s+PREVIOUS_R85_BOOK\b|\bas\s+PREVIOUS_R85_BOOK\b/.test(source))writeFileSync(historic,source+'\nexport {PUBLIC_R85_BOOK as PREVIOUS_R85_BOOK};\n');
  return {...await import(pathToFileURL(resolve(target,'server/garant-bani-relay.mjs'))),...await import(pathToFileURL(resolve(target,'server/lead-store.mjs')))};
 }
