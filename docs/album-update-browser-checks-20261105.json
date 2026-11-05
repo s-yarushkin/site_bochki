@@ -1,0 +1,157 @@
+{
+  "journeyChecks": [
+    {
+      "model": "Квадро",
+      "size": "400",
+      "count": 2,
+      "pass": true
+    },
+    {
+      "model": "Квадро",
+      "size": "450",
+      "count": 2,
+      "pass": true
+    },
+    {
+      "model": "Квадро",
+      "size": "500",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро",
+      "size": "550",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро",
+      "size": "600",
+      "count": 3,
+      "pass": true
+    },
+    {
+      "model": "Парус",
+      "size": "400",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Парус",
+      "size": "450",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Парус",
+      "size": "500",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Парус",
+      "size": "550",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Парус",
+      "size": "600",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Викинг",
+      "size": "400",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Викинг",
+      "size": "450",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Викинг",
+      "size": "500",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Викинг",
+      "size": "550",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Викинг",
+      "size": "600",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро Хаус",
+      "size": "4x4",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро Хаус",
+      "size": "5x4",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро Хаус",
+      "size": "6x4",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро Хаус",
+      "size": "6x5",
+      "count": 1,
+      "pass": true
+    },
+    {
+      "model": "Квадро Хаус",
+      "size": "6x6",
+      "count": 4,
+      "pass": true
+    }
+  ],
+  "standaloneChecks": [
+    {
+      "slug": "kvadro",
+      "count": 9,
+      "pass": true
+    },
+    {
+      "slug": "parus",
+      "count": 5,
+      "pass": true
+    },
+    {
+      "slug": "viking",
+      "count": 5,
+      "pass": true
+    },
+    {
+      "slug": "kvadro-haus",
+      "count": 8,
+      "pass": true
+    }
+  ],
+  "wheelChanged": true,
+  "benchChanged": true,
+  "mobileWidth": 390,
+  "mobileNoHorizontalOverflow": true,
+  "rotationChanged": true,
+  "returnToModels": true,
+  "returnToHero": true,
+  "all22GlbLoaded": true,
+  "highResolutionPreviews": 22,
+  "assetVersionQueriesVerified": true,
+  "mobileCloseNoWrap": true
+}

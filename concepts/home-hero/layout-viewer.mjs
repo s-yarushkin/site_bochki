@@ -64,11 +64,61 @@ export async function mountLayoutViewer(stage, url, signal){
     const camera = new Three.PerspectiveCamera(37,1,.015,150);
     controls = new OrbitControls(camera,canvas);
     controls.enablePan = false;
+    controls.enableZoom = true;
     controls.maxPolarAngle = Math.PI*.49;
     const bounds = new Three.Box3().setFromObject(model);
     const sphere = bounds.getBoundingSphere(new Three.Sphere());
     controls.minDistance = sphere.radius*.65;
     controls.maxDistance = sphere.radius*9;
+    const benchButton = stage.querySelector('[data-layout-bench]');
+    const movingBenches = [];
+    const doorPivots = [];
+    model.traverse(object=>{
+      const vector = object.userData.retract_vector;
+      if(Array.isArray(vector) && vector.length === 3 && vector.every(Number.isFinite)){
+        movingBenches.push({object,origin:object.position.clone(),offset:new Three.Vector3(...vector)});
+      }
+      const {door_pivot,closed_radians,open_sign,max_angle_radians} = object.userData;
+      if(door_pivot === true && Number.isFinite(closed_radians) &&
+        [-1,1].includes(open_sign) && Number.isFinite(max_angle_radians) && max_angle_radians > 0){
+        let owner = object.parent;
+        while(owner && owner.userData.kind !== 'door') owner = owner.parent;
+        doorPivots.push({object,code:owner?.userData.code,closed:closed_radians,travel:open_sign*max_angle_radians});
+      }
+    });
+    const doorControl = stage.querySelector('[data-layout-door-control]');
+    const doorRange = stage.querySelector('[data-layout-doors]');
+    const doorState = stage.querySelector('[data-layout-doors-state]');
+    function setDoorOpening(value){
+      const fraction = Three.MathUtils.clamp(value,0,1);
+      for(const {object,closed,travel} of doorPivots) object.rotation.y = closed+travel*fraction;
+      const label = fraction === 0 ? 'закрыты' : fraction === 1 ? 'открыты' : `${Math.round(fraction*100)}%`;
+      if(doorRange){
+        doorRange.value = String(Math.round(fraction*100));
+        doorRange.setAttribute('aria-valuetext',label);
+      }
+      if(doorState) doorState.textContent = label;
+      render();
+    }
+    if(doorControl) doorControl.hidden = doorPivots.length === 0;
+    doorRange?.addEventListener('input',()=>setDoorOpening(Number(doorRange.value)/100),{signal});
+    let retracted = false;
+    function setBenchRetracted(value){
+      retracted = value;
+      for(const {object,origin,offset} of movingBenches){
+        object.position.copy(origin);
+        if(retracted) object.position.add(offset);
+      }
+      if(benchButton){
+        benchButton.setAttribute('aria-pressed',String(retracted));
+        benchButton.textContent = retracted ? 'Выдвинуть нижний полок' : 'Задвинуть нижний полок';
+      }
+      render();
+    }
+    if(benchButton){
+      benchButton.hidden = movingBenches.length === 0;
+      benchButton.addEventListener('click',()=>setBenchRetracted(!retracted),{signal});
+    }
     const cutWalls = [];
     const normals = {front:[0,0,1],rear:[0,0,-1],left:[-1,0,0],right:[1,0,0]};
     model.traverse(object=>{
@@ -92,6 +142,11 @@ export async function mountLayoutViewer(stage, url, signal){
       renderer.render(scene,camera);
     }
     function reset(){
+      setBenchRetracted(false);
+      setDoorOpening(1);
+      frameModel();
+    }
+    function frameModel(){
       const angle = Three.MathUtils.degToRad(camera.fov)/2;
       const distance = sphere.radius/Math.sin(Math.atan(Math.tan(angle)*Math.min(1,camera.aspect)));
       controls.target.copy(sphere.center);
@@ -112,12 +167,15 @@ export async function mountLayoutViewer(stage, url, signal){
       renderer.setSize(width,height,false);
       camera.aspect = width/height;
       camera.updateProjectionMatrix();
-      if(camera.position.lengthSq()) render();
-      else reset();
+      frameModel();
     }
     controls.addEventListener('change',render);
-    canvas.addEventListener('wheel',event=>event.stopImmediatePropagation(),{capture:true,passive:true,signal});
     canvas.addEventListener('keydown',event=>{
+      if(['+','=','-','_'].includes(event.key)){
+        event.preventDefault();
+        zoom(['+','='].includes(event.key) ? .8 : 1.25);
+        return;
+      }
       const rotation = {ArrowLeft:[0,-.13],ArrowRight:[0,.13],ArrowUp:[-.13,0],ArrowDown:[.13,0]}[event.key];
       if(!rotation) return;
       event.preventDefault();
@@ -133,7 +191,11 @@ export async function mountLayoutViewer(stage, url, signal){
     observer = new ResizeObserver(resize);
     observer.observe(canvas);
     resize();
+    reset();
     signal.addEventListener('abort',dispose,{once:true});
+    return Object.freeze({
+      doorStates:()=>doorPivots.map(({object,code,closed,travel})=>({code,angle:object.rotation.y,closed,open:closed+travel})),
+    });
   }catch(error){
     dispose();
     throw error;

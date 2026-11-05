@@ -108,6 +108,10 @@ html:has(body.hh-page){scroll-padding-top:0}
 .hh-layout-status:empty{display:none}
 .hh-layout-tools{display:flex;flex-wrap:wrap;gap:5px;padding:0 8px 8px}
 .hh-layout-tools button{min-width:44px}
+.hh-layout-doors{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 10px;border:1px solid #bdcbbd;border-radius:8px;font-size:13px}
+.hh-layout-doors[hidden]{display:none}
+.hh-layout-doors input{width:84px;min-height:32px;margin:0;accent-color:#263f32;cursor:pointer}
+.hh-layout-doors output{min-width:50px}
 .hh-layout-dialog{width:min(900px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:0;border:0;border-radius:14px;background:#fafbf7;color:#263f32;overflow:auto}
 .hh-layout-dialog::backdrop{background:#14261fc2}
 .hh-layout-dialog header{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 16px;background:#fafbf7;border-bottom:1px solid #d1d8cb}
@@ -123,6 +127,7 @@ html:has(body.hh-page){scroll-padding-top:0}
 .hh-layout-3d-dialog .hh-layout-stage{border:0;border-radius:0}
 .hh-layout-3d-dialog canvas{height:clamp(240px,57dvh,540px)}
 .hh-layout-dialog [hidden]{display:none!important}
+.hh-layout-dialog header button{flex-shrink:0;white-space:nowrap}
 .hh-layout-stage>img{display:block;width:100%;max-height:57dvh;object-fit:contain}
 
 .hh-bath-panel>.hh-bath-plan{margin-top:44px;padding-top:32px}

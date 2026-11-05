@@ -5,9 +5,13 @@ const roomNames = {steam:'Парная',lounge:'Комната отдыха',was
   shower:'Душевая',wc:'Санузел',bedroom:'Спальня'};
 
 export async function layoutJson(path, signal = AbortSignal.timeout(10000)){
-  const response = await fetch(base+path,{signal});
+  const response = await fetch(base+path,{signal,cache:'no-cache'});
   if(!response.ok) throw Error('LAYOUT_UNAVAILABLE');
   return response.json();
+}
+
+function assetPath(plan,key){
+  return plan[key]+'?v='+encodeURIComponent((plan.sha256 ?? '').slice(0,16));
 }
 
 function element(tag,text){
@@ -33,7 +37,7 @@ function table(title, headings, rows){
   return node;
 }
 
-function specification(spec){
+export function specification(spec){
   const fragment = document.createDocumentFragment();
   const text = spec.public_specification;
   if(!text) throw Error('VERIFIED_SPECIFICATION_UNAVAILABLE');
@@ -63,7 +67,7 @@ function openSpecification(plan,opener){
   header.append(title,close);
   const drawing = element('img');
   drawing.alt = 'Размерный чертёж · '+plan.label;
-  drawing.src = base+plan.drawing;
+  drawing.src = base+assetPath(plan,'drawing');
   const body = element('div');
   body.className = 'hh-layout-spec';
   body.append(element('p','Загружаем спецификацию…'));
@@ -79,7 +83,7 @@ function openSpecification(plan,opener){
   },{once:true});
   document.body.append(dialog);
   dialog.showModal();
-  layoutJson(plan.spec,AbortSignal.any([controller.signal,AbortSignal.timeout(10000)]))
+  layoutJson(assetPath(plan,'spec'),AbortSignal.any([controller.signal,AbortSignal.timeout(10000)]))
     .then(spec=>{if(dialog.open) body.replaceChildren(specification(spec));})
     .catch(()=>{if(dialog.open) body.replaceChildren(element('p','Спецификация временно недоступна. Чертёж можно посмотреть выше.'));});
 }
@@ -93,10 +97,15 @@ function openViewer(plan, opener){
     <div class="hh-layout-stage">
       <canvas tabindex="0" aria-label="3D-планировка. Вращайте стрелками или перетаскиванием"></canvas>
       <p class="hh-layout-status" role="status">Загружаем 3D…</p>
-      <p class="hh-layout-hint">Потяните, чтобы повернуть. Приближайте кнопками или двумя пальцами.</p>
+      <p class="hh-layout-hint">Потяните, чтобы повернуть. Приближайте колёсиком, кнопками или двумя пальцами.</p>
       <div class="hh-layout-tools" hidden>
         <button type="button" data-layout-zoom-out aria-label="Отдалить">−</button>
         <button type="button" data-layout-zoom-in aria-label="Приблизить">+</button>
+        <button type="button" data-layout-bench aria-pressed="false" hidden>Задвинуть нижний полок</button>
+        <label class="hh-layout-doors" data-layout-door-control hidden>Двери
+          <input type="range" min="0" max="100" step="1" value="100" data-layout-doors aria-label="Открытие дверей">
+          <output data-layout-doors-state>открыты</output>
+        </label>
         <button type="button" data-layout-reset>Исходный вид</button>
       </div>
     </div>`;
@@ -113,7 +122,7 @@ function openViewer(plan, opener){
   document.body.append(dialog);
   dialog.showModal();
   import('./layout-viewer.mjs').then(({mountLayoutViewer})=>
-    mountLayoutViewer(stage,base+plan.model,controller.signal)
+    mountLayoutViewer(stage,base+assetPath(plan,'model'),controller.signal)
   ).then(()=>{
     if(!dialog.open) return;
     stage.querySelector('.hh-layout-tools').hidden = false;
@@ -123,7 +132,7 @@ function openViewer(plan, opener){
     stage.querySelector('canvas').hidden = true;
     stage.querySelector('.hh-layout-hint').hidden = true;
     const image = element('img');
-    image.src = base+plan.preview;
+    image.src = base+assetPath(plan,'preview');
     image.alt = '3D-ракурс · '+plan.label;
     stage.prepend(image);
     status.textContent = 'Интерактивный просмотр сейчас недоступен.';
@@ -148,7 +157,7 @@ export function createLayoutPanel(container){
     plan = next;
     container.hidden = !plan;
     if(!plan) return;
-    for(const [button,path,label] of [[drawing,plan.drawing,'Чертёж'],[preview,plan.preview,'3D-ракурс']]){
+    for(const [button,path,label] of [[drawing,assetPath(plan,'drawing'),'Чертёж'],[preview,assetPath(plan,'preview'),'3D-ракурс']]){
       const image = button.querySelector('img');
       image.alt = label+' · '+plan.label;
       image.src = base+path;

@@ -1,0 +1,217 @@
+{
+  "modelsAndSizes": [
+    {
+      "model": "kvadro",
+      "size": "400",
+      "drawing": "/home-hero/layouts/drawings/20.svg?v=e530108a36ec4377",
+      "heading": "Квадро",
+      "options": [
+        "DP3D-01",
+        "DP3D-20"
+      ],
+      "selected": "DP3D-20"
+    },
+    {
+      "model": "kvadro",
+      "size": "450",
+      "drawing": "/home-hero/layouts/drawings/15.svg?v=c82b41a8e978d069",
+      "heading": "Квадро",
+      "options": [
+        "DP3D-15",
+        "DP3D-21"
+      ],
+      "selected": "DP3D-15"
+    },
+    {
+      "model": "kvadro",
+      "size": "500",
+      "drawing": "/home-hero/layouts/drawings/02.svg?v=8bfea134c1ad7d79",
+      "heading": "Квадро",
+      "options": [
+        "DP3D-02"
+      ],
+      "selected": "DP3D-02"
+    },
+    {
+      "model": "kvadro",
+      "size": "550",
+      "drawing": "/home-hero/layouts/drawings/16.svg?v=a0c56c9887520598",
+      "heading": "Квадро",
+      "options": [
+        "DP3D-16"
+      ],
+      "selected": "DP3D-16"
+    },
+    {
+      "model": "kvadro",
+      "size": "600",
+      "drawing": "/home-hero/layouts/drawings/03.svg?v=40805cfe723ce863",
+      "heading": "Квадро",
+      "options": [
+        "DP3D-03",
+        "DP3D-04",
+        "DP3D-05"
+      ],
+      "selected": "DP3D-03"
+    },
+    {
+      "model": "parus",
+      "size": "400",
+      "drawing": "/home-hero/layouts/drawings/14.svg?v=143291bac068bbb8",
+      "heading": "Парус",
+      "options": [
+        "DP3D-14"
+      ],
+      "selected": "DP3D-14"
+    },
+    {
+      "model": "parus",
+      "size": "450",
+      "drawing": "/home-hero/layouts/drawings/18.svg?v=5f8a81afce00021f",
+      "heading": "Парус",
+      "options": [
+        "DP3D-18"
+      ],
+      "selected": "DP3D-18"
+    },
+    {
+      "model": "parus",
+      "size": "500",
+      "drawing": "/home-hero/layouts/drawings/12.svg?v=1c4b56b3cf85f0c7",
+      "heading": "Парус",
+      "options": [
+        "DP3D-12"
+      ],
+      "selected": "DP3D-12"
+    },
+    {
+      "model": "parus",
+      "size": "550",
+      "drawing": "/home-hero/layouts/drawings/19.svg?v=591803b7513f25e9",
+      "heading": "Парус",
+      "options": [
+        "DP3D-19"
+      ],
+      "selected": "DP3D-19"
+    },
+    {
+      "model": "parus",
+      "size": "600",
+      "drawing": "/home-hero/layouts/drawings/13.svg?v=982ffd6232b4bcee",
+      "heading": "Парус",
+      "options": [
+        "DP3D-13"
+      ],
+      "selected": "DP3D-13"
+    },
+    {
+      "model": "viking",
+      "size": "400",
+      "drawing": "/home-hero/layouts/drawings/14.svg?v=143291bac068bbb8",
+      "heading": "Викинг",
+      "options": [
+        "DP3D-14"
+      ],
+      "selected": "DP3D-14"
+    },
+    {
+      "model": "viking",
+      "size": "450",
+      "drawing": "/home-hero/layouts/drawings/18.svg?v=5f8a81afce00021f",
+      "heading": "Викинг",
+      "options": [
+        "DP3D-18"
+      ],
+      "selected": "DP3D-18"
+    },
+    {
+      "model": "viking",
+      "size": "500",
+      "drawing": "/home-hero/layouts/drawings/12.svg?v=1c4b56b3cf85f0c7",
+      "heading": "Викинг",
+      "options": [
+        "DP3D-12"
+      ],
+      "selected": "DP3D-12"
+    },
+    {
+      "model": "viking",
+      "size": "550",
+      "drawing": "/home-hero/layouts/drawings/19.svg?v=591803b7513f25e9",
+      "heading": "Викинг",
+      "options": [
+        "DP3D-19"
+      ],
+      "selected": "DP3D-19"
+    },
+    {
+      "model": "viking",
+      "size": "600",
+      "drawing": "/home-hero/layouts/drawings/13.svg?v=982ffd6232b4bcee",
+      "heading": "Викинг",
+      "options": [
+        "DP3D-13"
+      ],
+      "selected": "DP3D-13"
+    },
+    {
+      "model": "kvadro-house",
+      "size": "4x4",
+      "drawing": "/home-hero/layouts/drawings/06.svg?v=2f3a9d6c3a1c5f1a",
+      "heading": "Квадро Хаус",
+      "options": [
+        "DP3D-06"
+      ],
+      "selected": "DP3D-06"
+    },
+    {
+      "model": "kvadro-house",
+      "size": "5x4",
+      "drawing": "/home-hero/layouts/drawings/17.svg?v=7acf4b1b6df5070c",
+      "heading": "Квадро Хаус",
+      "options": [
+        "DP3D-17"
+      ],
+      "selected": "DP3D-17"
+    },
+    {
+      "model": "kvadro-house",
+      "size": "6x4",
+      "drawing": "/home-hero/layouts/drawings/10.svg?v=cb4b17a00f62da28",
+      "heading": "Квадро Хаус",
+      "options": [
+        "DP3D-10"
+      ],
+      "selected": "DP3D-10"
+    },
+    {
+      "model": "kvadro-house",
+      "size": "6x5",
+      "drawing": "/home-hero/layouts/drawings/07.svg?v=5c759ea85dcf7672",
+      "heading": "Квадро Хаус",
+      "options": [
+        "DP3D-07"
+      ],
+      "selected": "DP3D-07"
+    },
+    {
+      "model": "kvadro-house",
+      "size": "6x6",
+      "drawing": "/home-hero/layouts/drawings/08.svg?v=c47d29f865dcaa48",
+      "heading": "Квадро Хаус",
+      "options": [
+        "DP3D-08",
+        "DP3D-09",
+        "DP3D-11",
+        "DP3D-22"
+      ],
+      "selected": "DP3D-08"
+    }
+  ],
+  "formOpenedFor": "DP3D-22",
+  "formChannel": "MAX",
+  "realSubmissions": 0,
+  "mobileWidth": 390,
+  "mobileDoorsAndBenchAndReset": true,
+  "fullSpecificationFor": "DP3D-20"
+}

@@ -1,0 +1,975 @@
+{
+  "plan": 17,
+  "title": "Квадро Хаус 4 × 5 м",
+  "revision": "album-review-2026-11-05",
+  "units": "mm",
+  "coordinates": "origin front-left exterior; X right; Y rear; Z up; floor Z0",
+  "outer_mm": [
+    4000,
+    5000,
+    2200
+  ],
+  "native_source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.dp_p17",
+  "native_slide": "dp_p17",
+  "items": [
+    {
+      "id": "DP17-I01",
+      "code": "НС1",
+      "label": "Нижний полок / ступень",
+      "category": "objects",
+      "kind": "lower",
+      "xy_mm": [
+        945,
+        2900
+      ],
+      "size_mm": [
+        855,
+        400
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "v4_p17_top_6_0005",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I02",
+      "code": "СТ1",
+      "label": "Нижний полок / ступень",
+      "category": "objects",
+      "kind": "lower",
+      "xy_mm": [
+        645,
+        2900
+      ],
+      "size_mm": [
+        300,
+        1355
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1697",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I03",
+      "code": "СТ2",
+      "label": "Нижний полок / ступень",
+      "category": "objects",
+      "kind": "lower",
+      "xy_mm": [
+        945,
+        3955
+      ],
+      "size_mm": [
+        300,
+        300
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "v4_p17_top_6_0006",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I04",
+      "code": "ВП2",
+      "label": "Верхний полок",
+      "category": "objects",
+      "kind": "upper",
+      "xy_mm": [
+        45,
+        2900
+      ],
+      "size_mm": [
+        600,
+        1355
+      ],
+      "z_mm": 0,
+      "height_mm": 900,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1739",
+      "surface_z_mm": 900,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I05",
+      "code": "ВП1",
+      "label": "Верхний полок",
+      "category": "objects",
+      "kind": "upper",
+      "xy_mm": [
+        45,
+        4255
+      ],
+      "size_mm": [
+        1200,
+        700
+      ],
+      "z_mm": 0,
+      "height_mm": 900,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1731",
+      "surface_z_mm": 900,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I06",
+      "code": "Л1",
+      "label": "Лавка отдыха",
+      "category": "objects",
+      "kind": "bench",
+      "xy_mm": [
+        200,
+        2000
+      ],
+      "size_mm": [
+        1800,
+        450
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "rev26_9569bb41bab3bc89768c85",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I07",
+      "code": "Л2",
+      "label": "Лавка отдыха",
+      "category": "objects",
+      "kind": "bench",
+      "xy_mm": [
+        200,
+        350
+      ],
+      "size_mm": [
+        1800,
+        450
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "rev26_852d42233cfebb1cdba5ca",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I08",
+      "code": "М1",
+      "label": "Лавка помывочной",
+      "category": "objects",
+      "kind": "wash_bench",
+      "xy_mm": [
+        2800,
+        4605
+      ],
+      "size_mm": [
+        900,
+        350
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1700",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I09",
+      "code": "М2",
+      "label": "Лавка помывочной",
+      "category": "objects",
+      "kind": "wash_bench",
+      "xy_mm": [
+        3605,
+        3350
+      ],
+      "size_mm": [
+        350,
+        1000
+      ],
+      "z_mm": 0,
+      "height_mm": 450,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1704",
+      "surface_z_mm": 450,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I10",
+      "code": "С1",
+      "label": "Стол",
+      "category": "objects",
+      "kind": "table",
+      "xy_mm": [
+        200,
+        900
+      ],
+      "size_mm": [
+        1800,
+        1000
+      ],
+      "z_mm": 0,
+      "height_mm": 750,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1712",
+      "surface_z_mm": 750,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I11",
+      "code": "Ш1",
+      "label": "Шкаф",
+      "category": "objects",
+      "kind": "storage",
+      "xy_mm": [
+        3000,
+        45
+      ],
+      "size_mm": [
+        900,
+        600
+      ],
+      "z_mm": 0,
+      "height_mm": 950,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1724",
+      "surface_z_mm": 950,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked"
+    },
+    {
+      "id": "DP17-I12",
+      "code": "П1",
+      "label": "ASTON 16",
+      "category": "objects",
+      "kind": "stove",
+      "xy_mm": [
+        1990,
+        4430
+      ],
+      "size_mm": [
+        420,
+        365
+      ],
+      "z_mm": 60,
+      "height_mm": 750,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1748",
+      "surface_z_mm": 810,
+      "height_status": "visualization_assumption",
+      "plan_status": "native_vector_checked",
+      "notes": "Корпус в парной; топка на улицу. Высота дверцы и адаптация ASTON 16 — допущения.",
+      "service_direction": [
+        0,
+        1.0
+      ],
+      "tunnel_bbox_mm": [
+        2070.0,
+        3795.0,
+        2330.0,
+        4000.0
+      ]
+    },
+    {
+      "id": "DP17-I13",
+      "code": "Д1",
+      "label": "Дверь парной · стекло",
+      "category": "openings",
+      "kind": "door",
+      "xy_mm": [
+        2499.9,
+        3200.0
+      ],
+      "size_mm": [
+        45,
+        700
+      ],
+      "z_mm": 0,
+      "height_mm": 2000,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1694",
+      "center_mm": [
+        2522.4,
+        3550.0
+      ],
+      "u": [
+        0.0,
+        1.0
+      ],
+      "opening_width_mm": 700,
+      "outward": [
+        1.0,
+        -0.0
+      ],
+      "notes": "Проём по чертежу; высота 2000 мм принята. Полотно вращается на оси петель.",
+      "source_record": {
+        "wall": "v4_p17_top_6_0003"
+      }
+    },
+    {
+      "id": "DP17-I14",
+      "code": "Д2",
+      "label": "Дверь помывочной · стекло",
+      "category": "openings",
+      "kind": "door",
+      "xy_mm": [
+        3099.9,
+        2855.1
+      ],
+      "size_mm": [
+        700,
+        45
+      ],
+      "z_mm": 0,
+      "height_mm": 2000,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1695",
+      "center_mm": [
+        3449.9,
+        2877.6
+      ],
+      "u": [
+        0.9999999999999999,
+        0.0
+      ],
+      "opening_width_mm": 700,
+      "outward": [
+        0.0,
+        -0.9999999999999999
+      ],
+      "notes": "Проём по чертежу; высота 2000 мм принята. Полотно вращается на оси петель.",
+      "source_record": {
+        "wall": "v4_p17_top_6_0004"
+      }
+    },
+    {
+      "id": "DP17-I15",
+      "code": "Д3",
+      "label": "Входная дверь · ПВХ",
+      "category": "openings",
+      "kind": "door",
+      "xy_mm": [
+        2099.9,
+        0.2
+      ],
+      "size_mm": [
+        800,
+        45
+      ],
+      "z_mm": 0,
+      "height_mm": 2000,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1696",
+      "center_mm": [
+        2499.9,
+        22.7
+      ],
+      "u": [
+        1.0,
+        0.0
+      ],
+      "opening_width_mm": 800,
+      "outward": [
+        0.0,
+        -1.0
+      ],
+      "notes": "Проём по чертежу; высота 2000 мм принята. Полотно вращается на оси петель.",
+      "source_record": {
+        "wall": "front"
+      }
+    },
+    {
+      "id": "DP17-I16",
+      "code": "О1",
+      "label": "Окно",
+      "category": "openings",
+      "kind": "window",
+      "xy_mm": [
+        0.0,
+        3549.9
+      ],
+      "size_mm": [
+        45,
+        600
+      ],
+      "z_mm": 1100,
+      "height_mm": 600,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1746",
+      "center_mm": [
+        22.5,
+        3849.9
+      ],
+      "u": [
+        0.0,
+        0.9999999999999999
+      ],
+      "opening_width_mm": 600,
+      "notes": "Ширина и положение по чертежу; вертикальные отметки приняты.",
+      "source_record": {
+        "wall": "left"
+      }
+    },
+    {
+      "id": "DP17-I17",
+      "code": "О2",
+      "label": "Окно",
+      "category": "openings",
+      "kind": "window",
+      "xy_mm": [
+        0.0,
+        899.9
+      ],
+      "size_mm": [
+        45,
+        1000
+      ],
+      "z_mm": 800,
+      "height_mm": 600,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1747",
+      "center_mm": [
+        22.5,
+        1399.9
+      ],
+      "u": [
+        0.0,
+        0.9999999999999999
+      ],
+      "opening_width_mm": 1000,
+      "notes": "Ширина и положение по чертежу; вертикальные отметки приняты.",
+      "source_record": {
+        "wall": "left"
+      }
+    },
+    {
+      "id": "DP17-I18",
+      "code": "ПГ1",
+      "label": "Наружная стена",
+      "category": "construction",
+      "kind": "wall",
+      "xy_mm": [
+        -22.5,
+        0.0
+      ],
+      "size_mm": [
+        4045,
+        45.0
+      ],
+      "z_mm": 0,
+      "height_mm": 2200,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1682",
+      "wall_id": "front",
+      "a_mm": [
+        0,
+        22.5
+      ],
+      "b_mm": [
+        4000,
+        22.5
+      ],
+      "length_mm": 4000.0,
+      "thickness_mm": 45,
+      "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
+      "axis_angle_deg": 0.0
+    },
+    {
+      "id": "DP17-I19",
+      "code": "ПГ2",
+      "label": "Наружная стена",
+      "category": "construction",
+      "kind": "wall",
+      "xy_mm": [
+        -22.5,
+        4955.0
+      ],
+      "size_mm": [
+        4045,
+        45.0
+      ],
+      "z_mm": 0,
+      "height_mm": 2200,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1682",
+      "wall_id": "rear",
+      "a_mm": [
+        0,
+        4977.5
+      ],
+      "b_mm": [
+        4000,
+        4977.5
+      ],
+      "length_mm": 4000.0,
+      "thickness_mm": 45,
+      "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
+      "axis_angle_deg": 0.0
+    },
+    {
+      "id": "DP17-I20",
+      "code": "ПГ3",
+      "label": "Наружная стена",
+      "category": "construction",
+      "kind": "wall",
+      "xy_mm": [
+        0.0,
+        22.5
+      ],
+      "size_mm": [
+        45.0,
+        4955
+      ],
+      "z_mm": 0,
+      "height_mm": 2200,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1682",
+      "wall_id": "left",
+      "a_mm": [
+        22.5,
+        45
+      ],
+      "b_mm": [
+        22.5,
+        4955
+      ],
+      "length_mm": 4910.0,
+      "thickness_mm": 45,
+      "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
+      "axis_angle_deg": 90.0
+    },
+    {
+      "id": "DP17-I21",
+      "code": "ПГ4",
+      "label": "Наружная стена",
+      "category": "construction",
+      "kind": "wall",
+      "xy_mm": [
+        3955.0,
+        22.5
+      ],
+      "size_mm": [
+        45.0,
+        4955
+      ],
+      "z_mm": 0,
+      "height_mm": 2200,
+      "angle_deg": 0,
+      "source_object": "v4_p17_p6_i1682",
+      "wall_id": "right",
+      "a_mm": [
+        3977.5,
+        45
+      ],
+      "b_mm": [
+        3977.5,
+        4955
+      ],
+      "length_mm": 4910.0,
+      "thickness_mm": 45,
+      "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
+      "axis_angle_deg": 90.0
+    },
+    {
+      "id": "DP17-I22",
+      "code": "ПГ5",
+      "label": "Перегородка",
+      "category": "construction",
+      "kind": "wall",
+      "xy_mm": [
+        2499.881008621708,
+        2877.345754104169
+      ],
+      "size_mm": [
+        45.0,
+        2100.0372032597143
+      ],
+      "z_mm": 0,
+      "height_mm": 2200,
+      "angle_deg": 0,
+      "source_object": "v4_p17_top_6_0003",
+      "wall_id": "v4_p17_top_6_0003",
+      "a_mm": [
+        2522.381008621708,
+        2899.845754104169
+      ],
+      "b_mm": [
+        2522.381008621708,
+        4954.882957363883
+      ],
+      "length_mm": 2055.0372032597143,
+      "thickness_mm": 45,
+      "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
+      "axis_angle_deg": 90.0
+    },
+    {
+      "id": "DP17-I23",
+      "code": "ПГ6",
+      "label": "Перегородка",
+      "category": "construction",
+      "kind": "wall",
+      "xy_mm": [
+        22.498937049722116,
+        2854.991437344986
+      ],
+      "size_mm": [
+        3955.003543167593,
+        45.0
+      ],
+      "z_mm": 0,
+      "height_mm": 2200,
+      "angle_deg": 0,
+      "source_object": "v4_p17_top_6_0004",
+      "wall_id": "v4_p17_top_6_0004",
+      "a_mm": [
+        44.998937049722116,
+        2877.491437344986
+      ],
+      "b_mm": [
+        3955.0024802173148,
+        2877.491437344986
+      ],
+      "length_mm": 3910.003543167593,
+      "thickness_mm": 45,
+      "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
+      "axis_angle_deg": 0.0
+    },
+    {
+      "id": "DP17-I24",
+      "code": "П3",
+      "label": "Комната отдыха",
+      "category": "construction",
+      "kind": "floor",
+      "xy_mm": [
+        45.0,
+        45.0
+      ],
+      "size_mm": [
+        3910.0,
+        2810.0
+      ],
+      "z_mm": 0,
+      "height_mm": 0,
+      "angle_deg": 0,
+      "source_object": null,
+      "room_kind": "lounge",
+      "area_m2": 10.9871,
+      "notes": "Чистые размеры помещения между внутренними гранями стен.",
+      "polygon_mm": [
+        [
+          3955.0,
+          45.0
+        ],
+        [
+          45.0,
+          45.0
+        ],
+        [
+          45.0,
+          2855.0
+        ],
+        [
+          3955.0,
+          2855.0
+        ]
+      ]
+    },
+    {
+      "id": "DP17-I25",
+      "code": "П2",
+      "label": "Помывочная",
+      "category": "construction",
+      "kind": "floor",
+      "xy_mm": [
+        2545.0,
+        2900.0
+      ],
+      "size_mm": [
+        1410.0,
+        2055.0
+      ],
+      "z_mm": 0,
+      "height_mm": 0,
+      "angle_deg": 0,
+      "source_object": null,
+      "room_kind": "wash",
+      "area_m2": 2.89755,
+      "notes": "Чистые размеры помещения между внутренними гранями стен.",
+      "polygon_mm": [
+        [
+          3955.0,
+          2900.0
+        ],
+        [
+          2545.0,
+          2900.0
+        ],
+        [
+          2545.0,
+          4955.0
+        ],
+        [
+          3955.0,
+          4955.0
+        ]
+      ]
+    },
+    {
+      "id": "DP17-I26",
+      "code": "П1",
+      "label": "Парная",
+      "category": "construction",
+      "kind": "floor",
+      "xy_mm": [
+        45.0,
+        2900.0
+      ],
+      "size_mm": [
+        2455.0,
+        2055.0
+      ],
+      "z_mm": 0,
+      "height_mm": 0,
+      "angle_deg": 0,
+      "source_object": null,
+      "room_kind": "steam",
+      "area_m2": 5.045025,
+      "notes": "Чистые размеры помещения между внутренними гранями стен.",
+      "polygon_mm": [
+        [
+          2500.0,
+          4955.0
+        ],
+        [
+          2500.0,
+          2900.0
+        ],
+        [
+          45.0,
+          2900.0
+        ],
+        [
+          45.0,
+          4955.0
+        ]
+      ]
+    },
+    {
+      "code": "Ш2",
+      "label": "Открытые полки",
+      "category": "objects",
+      "kind": "open_storage",
+      "xy_mm": [
+        200,
+        2545
+      ],
+      "size_mm": [
+        1800,
+        250
+      ],
+      "z_mm": 0,
+      "height_mm": 950,
+      "source_object": "rev26_40b9c8b7f1600725cfa8f3",
+      "height_status": "visualization_assumption",
+      "id": "DP17-I27"
+    }
+  ],
+  "rooms": [
+    {
+      "number": 3,
+      "kind": "lounge",
+      "area_m2": 10.9871,
+      "polygon": [
+        [
+          3955.0,
+          45.0
+        ],
+        [
+          45.0,
+          45.0
+        ],
+        [
+          45.0,
+          2855.0
+        ],
+        [
+          3955.0,
+          2855.0
+        ]
+      ]
+    },
+    {
+      "number": 2,
+      "kind": "wash",
+      "area_m2": 2.89755,
+      "polygon": [
+        [
+          3955.0,
+          2900.0
+        ],
+        [
+          2545.0,
+          2900.0
+        ],
+        [
+          2545.0,
+          4955.0
+        ],
+        [
+          3955.0,
+          4955.0
+        ]
+      ]
+    },
+    {
+      "number": 1,
+      "kind": "steam",
+      "area_m2": 5.045025,
+      "polygon": [
+        [
+          2500.0,
+          4955.0
+        ],
+        [
+          2500.0,
+          2900.0
+        ],
+        [
+          45.0,
+          2900.0
+        ],
+        [
+          45.0,
+          4955.0
+        ]
+      ]
+    }
+  ],
+  "assumptions": [
+    "Высота 2200 мм, двери 2000 мм и высотные отметки окон приняты для визуализации.",
+    "Кровля, потолок и наружный дизайн не заданы источником. Модель открыта сверху.",
+    "Конструкция мебели обобщена; для производства нужны рабочие узлы.",
+    "ASTON 16: вынос от ASTON 12 по разрешённому допущению. Монтажный противопожарный узел не разработан."
+  ],
+  "dimension_sha256": "165d70ee4b6c46437d20cfe946aacf65e33ff8f2e0842fd104134f36b0f51051",
+  "family": "Квадро Хаус",
+  "initial_camera_direction": [
+    0.75,
+    1.35,
+    1.15
+  ],
+  "public_specification": {
+    "source": "https://docs.google.com/presentation/d/1GuLDnKUWfHckXYGTN2Ux5ItNFVd8GAPmY6Qklr7E7b8/edit#slide=id.dp_p17",
+    "rooms": [
+      {
+        "number": 1,
+        "label": "Парная",
+        "area": "5,05 м²",
+        "dimensions": "2455 × 2055 мм"
+      },
+      {
+        "number": 2,
+        "label": "Помывочная",
+        "area": "2,90 м²",
+        "dimensions": "1410 × 2055 мм"
+      },
+      {
+        "number": 3,
+        "label": "Комната отдыха",
+        "area": "10,99 м²",
+        "dimensions": "3910 × 2810 мм"
+      }
+    ],
+    "items": [
+      {
+        "code": "ВП1",
+        "label": "Верхний полок",
+        "dimensions": "1200 × 700 мм"
+      },
+      {
+        "code": "ВП2",
+        "label": "Верхний полок",
+        "dimensions": "1355 × 600 мм"
+      },
+      {
+        "code": "НС1",
+        "label": "Нижний полок",
+        "dimensions": "855 × 400 мм"
+      },
+      {
+        "code": "СТ1",
+        "label": "Ступень",
+        "dimensions": "1355 × 300 мм"
+      },
+      {
+        "code": "СТ2",
+        "label": "Ступень",
+        "dimensions": "300 × 300 мм"
+      },
+      {
+        "code": "Л1",
+        "label": "Лавка",
+        "dimensions": "1800 × 450 мм"
+      },
+      {
+        "code": "Л2",
+        "label": "Лавка",
+        "dimensions": "1800 × 450 мм"
+      },
+      {
+        "code": "М1",
+        "label": "Лавка в помывочной",
+        "dimensions": "900 × 350 мм"
+      },
+      {
+        "code": "М2",
+        "label": "Лавка в помывочной",
+        "dimensions": "1000 × 350 мм"
+      },
+      {
+        "code": "С1",
+        "label": "Стол",
+        "dimensions": "1800 × 1000 мм"
+      },
+      {
+        "code": "Ш1",
+        "label": "Шкаф",
+        "dimensions": "900 × 600 мм"
+      },
+      {
+        "code": "Ш2",
+        "label": "Открытые полки",
+        "dimensions": "1800 × 250 мм"
+      },
+      {
+        "code": "П1",
+        "label": "Печь ASTON 16",
+        "dimensions": "420 × 670 мм"
+      }
+    ]
+  },
+  "source_slide_index": 19,
+  "drawing_crop_pt": [
+    202.80078740157478,
+    145,
+    678.1870866141732,
+    812.9858267716535
+  ]
+}
