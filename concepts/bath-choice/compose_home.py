@@ -23,6 +23,7 @@ def compose(page,out):
  lower=lower.replace(closing,care+'\n'+closing)
  footer=source[source.index('</main>')+len('</main>'):source.index('<dialog')]
  extras=source[source.index('<dialog'):source.index('<script defer')]
+ extras=extras.replace('Тестовый просмотр · Заявка останется на этом компьютере','')
  page=page.replace('{{home-continuation}}',lower).replace('{{home-footer}}',footer+extras)
  # Copy the public motion fragment literally, preserving ritual, depth and reveal behaviour.
  script=(baseline/'r101/site.mjs').read_text('utf8');motion=script[script.index('// A native scrolling page:'):script.index('try{\n [book,settings,photos,plans]')]
