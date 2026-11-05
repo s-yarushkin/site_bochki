@@ -3,7 +3,7 @@ import {spawn} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 
-const bundle=new URL('../../output/bath-choice-review-v4/',import.meta.url);
+const bundle=new URL('../../output/bath-choice-review-v5/',import.meta.url);
 const server=spawn(process.execPath,[fileURLToPath(new URL('preview.mjs',bundle))],{env:{...process.env,BATH_CHOICE_PREVIEW_PORT:'4193'},windowsHide:true,stdio:['ignore','pipe','pipe']});
 try{
  await new Promise((resolve,reject)=>{

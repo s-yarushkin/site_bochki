@@ -8,3 +8,4 @@ r101/vendor/** -text whitespace=cr-at-eol
 *.glb binary
 *.blend binary
 concepts/bath-choice/baseline/** -text
+concepts/bath-choice/baseline-v5/** -text whitespace=cr-at-eol

@@ -1,7 +1,7 @@
-@font-face{font-family:Manrope;src:url('/assets/manrope-cyrillic.woff2') format('woff2');font-display:swap;font-weight:200 800}
-:root{--ink:#243d2e;--muted:#53694e;--paper:#fafbf7;--sand:#eeeee3;--line:#cdd7c3;--green:#264b35;--sage:#e8efda}
+@font-face{font-family:ChoiceManrope;src:url('/assets/manrope-cyrillic.woff2') format('woff2');font-display:swap;font-weight:200 800}
+.choice-page,.choice-compare-dialog,.choice-photo-dialog,.hh-layout-dialog{--ink:#243d2e;--muted:#53694e;--paper:#fafbf7;--sand:#eeeee3;--line:#cdd7c3;--green:#264b35;--sage:#e8efda}
 html{scroll-behavior:smooth}*{box-sizing:border-box}[hidden]{display:none!important}
-body.choice-page{margin:0;background:var(--paper);color:var(--ink);font-family:Manrope,Arial,sans-serif}
+.choice-page{color:var(--ink);font-family:ChoiceManrope,Manrope,Arial,sans-serif}.choice-ui{background:var(--paper)}body:has(dialog[open]){overflow:hidden}
 .choice-page button,.choice-page input{font:inherit}.choice-page button{cursor:pointer}.choice-page button:disabled{cursor:default;opacity:.5}
 .choice-page button:focus-visible,.choice-page a:focus-visible,.choice-page input:focus-visible{outline:3px solid #a98941;outline-offset:4px}
 .visually-hidden{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}

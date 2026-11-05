@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse,copy,hashlib,importlib.util,json,re,shutil
 from PIL import Image
+from compose_home import compose
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -13,15 +14,17 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--pricebook',type=Path,default=captured_book if captured_book.is_file() else ROOT/'web/data/catalog-pricebook.json');args=parser.parse_args()
     if not args.pricebook.is_file():raise RuntimeError('Capture the current public pricebook first')
     (OUT/'choice/assets').mkdir(parents=True,exist_ok=True);(OUT/'data').mkdir(exist_ok=True)
-    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','ritual.css']:shutil.copy2(HERE/name,OUT/'choice'/name)
+    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','ritual.css','continuation.mjs','continuation-state.mjs']:shutil.copy2(HERE/name,OUT/'choice'/name)
+    helper=OUT/'choice/continuation-state.mjs'
+    helper.write_text(helper.read_text('utf8').replace("from '../../web/lead-client.mjs'","from '/lead-client.mjs'"),'utf8')
+    for name in ['mobile-dialog.mjs']:
+        target=OUT/'r101'/name;target.parent.mkdir(exist_ok=True);shutil.copy2(ROOT/'r101'/name,target)
     page=(HERE/'index.html').read_text('utf8')
-    original=(LEGACY/'baseline/index.html').read_text('utf8')
-    ritual=re.search(r'<section class="ritual"[^>]*>.*?</section>',original,re.S)[0]
-    page=page.replace('{{ritual}}',ritual)
+    page=compose(page,OUT)
+    ritual=re.search(r'<section class="ritual"[^>]*>.*?</section>',page,re.S)[0]
     # Reuse the original ritual without the unrelated catalogue and form code.
-    script=(ROOT/'r101/site.mjs').read_text('utf8')
-    start=script.index('function ritual(');end=script.index(' const re=new IntersectionObserver',start)
-    (OUT/'choice/ritual.mjs').write_text("const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],reduce=matchMedia('(prefers-reduced-motion:reduce)');\n"+script[start:end]+"}\n",'utf8')
+    # The complete current motion excerpt is emitted by compose(), without
+    # loading the old catalogue or creating a second source of selection state.
     for src in re.findall(r'(?:src|srcset)="([^"]+)"',ritual):
         for part in src.split(','):
             path=Path(part.strip().split()[0].lstrip('/'));source=ROOT/'web'/path
@@ -132,6 +135,7 @@ def main():
               'sourcePublicPricebookSha256':hashlib.sha256(args.pricebook.read_bytes()).hexdigest(),
               'pricebookSha256':hashlib.sha256((OUT/'data/catalog-pricebook.json').read_bytes()).hexdigest(),
               'prototypePackageBasesSource':'pricing/public-package-base.json','layoutPricesOnPublicPage':False,'quizSourceUnchanged':True,
+              'homeRevision':'v5-2026-11-05','protectedLowerSource':'baseline-v5/index.html','carePosition':'before final closing',
               'quizSha256':hashlib.sha256(captured.read_bytes()).hexdigest(),'modelSizePairs':sum(len(m['sizes']) for m in book['r85']['models'].values()),
               'coveredModelSizePairs':len(covered),'newGeometryCoverageComplete':True,'geometryCount':19,'nativeAlbumRevision':album['revisionId'],'files':[]}
     for p in sorted(OUT.rglob('*')):

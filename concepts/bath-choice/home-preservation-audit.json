@@ -1,0 +1,52 @@
+{
+  "pass": true,
+  "sourceDate": "2026-11-05",
+  "sourceHomeSha256": "5a259b7e4a6827b75853fe22063b396e62f9e429c43a8f765d9f70cfefc86fab",
+  "sections": [
+    {
+      "section": "ritual",
+      "unchanged": true,
+      "sourceSha256": "04241434c081651b3505f8eb4820aa61f6a67710e9c10eba5d7aed345b799406",
+      "resultSha256": "04241434c081651b3505f8eb4820aa61f6a67710e9c10eba5d7aed345b799406"
+    },
+    {
+      "section": "comfort",
+      "unchanged": false,
+      "sourceSha256": "57d206c2bcfdf4389ee994dc46f9fd2ed17a9bdbd2c54de0d1b9bf285c3deb9d",
+      "resultSha256": "1542e03376d56aad0dda51699de6102794197458214d2671230484cdfd0263ba"
+    },
+    {
+      "section": "individual",
+      "unchanged": true,
+      "sourceSha256": "cf49b96bccc7276a296405af5db08d998c1db8f0e8e499ac44c902bcef7a7e9b",
+      "resultSha256": "cf49b96bccc7276a296405af5db08d998c1db8f0e8e499ac44c902bcef7a7e9b"
+    },
+    {
+      "section": "breath",
+      "unchanged": true,
+      "sourceSha256": "27f6dcfd95896556d98417772fecece6573d9023d2a15d6f963d541f7c158db3",
+      "resultSha256": "27f6dcfd95896556d98417772fecece6573d9023d2a15d6f963d541f7c158db3"
+    },
+    {
+      "section": "delivery",
+      "unchanged": true,
+      "sourceSha256": "6aff0c6a51e549e9f3b01d3958cda6d19be858c1646fff1d559a0297d5086771",
+      "resultSha256": "6aff0c6a51e549e9f3b01d3958cda6d19be858c1646fff1d559a0297d5086771"
+    },
+    {
+      "section": "faq",
+      "unchanged": true,
+      "sourceSha256": "37c98a00cbf866eaca5c98459022a57b33e7a29cd99ae97f20129918ec41ce6f",
+      "resultSha256": "37c98a00cbf866eaca5c98459022a57b33e7a29cd99ae97f20129918ec41ce6f"
+    },
+    {
+      "section": "contact",
+      "unchanged": true,
+      "sourceSha256": "28ceb096a57ffd20cb6d11f7ada078d33f9cf742a7c614afe733652e8b572fe0",
+      "resultSha256": "28ceb096a57ffd20cb6d11f7ada078d33f9cf742a7c614afe733652e8b572fe0"
+    }
+  ],
+  "carePosition": "after FAQ, immediately before closing",
+  "originalMotionSha256": "985f91a75043a002376575eab62dd13b354aa888ee49b9a7f0789c44af3d2e27",
+  "heroHasVologda": false
+}

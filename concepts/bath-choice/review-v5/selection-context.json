@@ -1,0 +1,482 @@
+[
+  {
+    "model": "kvadro",
+    "size": "400",
+    "pack": "comfort",
+    "expected": 41000000,
+    "closing": "Ваш выбор: Квадро · 4 м · 410 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "410 000 ₽",
+      "519 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "400",
+    "pack": "deluxe",
+    "expected": 51900000,
+    "closing": "Ваш выбор: Квадро · 4 м · 519 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "410 000 ₽",
+      "519 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "450",
+    "pack": "comfort",
+    "expected": 44000000,
+    "closing": "Ваш выбор: Квадро · 4,5 м · 440 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "440 000 ₽",
+      "550 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "450",
+    "pack": "deluxe",
+    "expected": 55000000,
+    "closing": "Ваш выбор: Квадро · 4,5 м · 550 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "440 000 ₽",
+      "550 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "500",
+    "pack": "comfort",
+    "expected": 48500000,
+    "closing": "Ваш выбор: Квадро · 5 м · 485 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "485 000 ₽",
+      "597 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "500",
+    "pack": "deluxe",
+    "expected": 59700000,
+    "closing": "Ваш выбор: Квадро · 5 м · 597 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "485 000 ₽",
+      "597 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "550",
+    "pack": "comfort",
+    "expected": 51000000,
+    "closing": "Ваш выбор: Квадро · 5,5 м · 510 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "510 000 ₽",
+      "623 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "550",
+    "pack": "deluxe",
+    "expected": 62300000,
+    "closing": "Ваш выбор: Квадро · 5,5 м · 623 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "510 000 ₽",
+      "623 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "600",
+    "pack": "comfort",
+    "expected": 52500000,
+    "closing": "Ваш выбор: Квадро · 6 м · 525 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "525 000 ₽",
+      "639 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro",
+    "size": "600",
+    "pack": "deluxe",
+    "expected": 63900000,
+    "closing": "Ваш выбор: Квадро · 6 м · 639 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "525 000 ₽",
+      "639 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "400",
+    "pack": "comfort",
+    "expected": 48000000,
+    "closing": "Ваш выбор: Викинг · 4 м · 480 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "480 000 ₽",
+      "604 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "400",
+    "pack": "deluxe",
+    "expected": 60400000,
+    "closing": "Ваш выбор: Викинг · 4 м · 604 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "480 000 ₽",
+      "604 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "450",
+    "pack": "comfort",
+    "expected": 52000000,
+    "closing": "Ваш выбор: Викинг · 4,5 м · 520 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "520 000 ₽",
+      "646 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "450",
+    "pack": "deluxe",
+    "expected": 64600000,
+    "closing": "Ваш выбор: Викинг · 4,5 м · 646 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "520 000 ₽",
+      "646 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "500",
+    "pack": "comfort",
+    "expected": 62000000,
+    "closing": "Ваш выбор: Викинг · 5 м · 620 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "620 000 ₽",
+      "747 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "500",
+    "pack": "deluxe",
+    "expected": 74700000,
+    "closing": "Ваш выбор: Викинг · 5 м · 747 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "620 000 ₽",
+      "747 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "550",
+    "pack": "comfort",
+    "expected": 63500000,
+    "closing": "Ваш выбор: Викинг · 5,5 м · 635 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "635 000 ₽",
+      "764 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "550",
+    "pack": "deluxe",
+    "expected": 76400000,
+    "closing": "Ваш выбор: Викинг · 5,5 м · 764 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "635 000 ₽",
+      "764 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "600",
+    "pack": "comfort",
+    "expected": 64500000,
+    "closing": "Ваш выбор: Викинг · 6 м · 645 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "645 000 ₽",
+      "775 000 ₽"
+    ]
+  },
+  {
+    "model": "viking",
+    "size": "600",
+    "pack": "deluxe",
+    "expected": 77500000,
+    "closing": "Ваш выбор: Викинг · 6 м · 775 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "645 000 ₽",
+      "775 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "400",
+    "pack": "comfort",
+    "expected": 45000000,
+    "closing": "Ваш выбор: Парус · 4 м · 450 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "450 000 ₽",
+      "560 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "400",
+    "pack": "deluxe",
+    "expected": 56000000,
+    "closing": "Ваш выбор: Парус · 4 м · 560 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "450 000 ₽",
+      "560 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "450",
+    "pack": "comfort",
+    "expected": 47000000,
+    "closing": "Ваш выбор: Парус · 4,5 м · 470 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "470 000 ₽",
+      "582 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "450",
+    "pack": "deluxe",
+    "expected": 58200000,
+    "closing": "Ваш выбор: Парус · 4,5 м · 582 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "470 000 ₽",
+      "582 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "500",
+    "pack": "comfort",
+    "expected": 51000000,
+    "closing": "Ваш выбор: Парус · 5 м · 510 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "510 000 ₽",
+      "637 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "500",
+    "pack": "deluxe",
+    "expected": 63700000,
+    "closing": "Ваш выбор: Парус · 5 м · 637 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "510 000 ₽",
+      "637 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "550",
+    "pack": "comfort",
+    "expected": 52500000,
+    "closing": "Ваш выбор: Парус · 5,5 м · 525 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "525 000 ₽",
+      "654 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "550",
+    "pack": "deluxe",
+    "expected": 65400000,
+    "closing": "Ваш выбор: Парус · 5,5 м · 654 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "525 000 ₽",
+      "654 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "600",
+    "pack": "comfort",
+    "expected": 53500000,
+    "closing": "Ваш выбор: Парус · 6 м · 535 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "535 000 ₽",
+      "665 000 ₽"
+    ]
+  },
+  {
+    "model": "parus",
+    "size": "600",
+    "pack": "deluxe",
+    "expected": 66500000,
+    "closing": "Ваш выбор: Парус · 6 м · 665 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "535 000 ₽",
+      "665 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "4x4",
+    "pack": "comfort",
+    "expected": 68500000,
+    "closing": "Ваш выбор: Квадро Хаус · 4×4 м · 685 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "685 000 ₽",
+      "830 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "4x4",
+    "pack": "deluxe",
+    "expected": 83000000,
+    "closing": "Ваш выбор: Квадро Хаус · 4×4 м · 830 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "685 000 ₽",
+      "830 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "5x4",
+    "pack": "comfort",
+    "expected": 79500000,
+    "closing": "Ваш выбор: Квадро Хаус · 4×5 м · 795 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "795 000 ₽",
+      "946 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "5x4",
+    "pack": "deluxe",
+    "expected": 94600000,
+    "closing": "Ваш выбор: Квадро Хаус · 4×5 м · 946 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "795 000 ₽",
+      "946 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "6x4",
+    "pack": "comfort",
+    "expected": 84500000,
+    "closing": "Ваш выбор: Квадро Хаус · 4×6 м · 845 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "845 000 ₽",
+      "1 002 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "6x4",
+    "pack": "deluxe",
+    "expected": 100200000,
+    "closing": "Ваш выбор: Квадро Хаус · 4×6 м · 1 002 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "845 000 ₽",
+      "1 002 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "6x5",
+    "pack": "comfort",
+    "expected": 90500000,
+    "closing": "Ваш выбор: Квадро Хаус · 5×6 м · 905 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "905 000 ₽",
+      "1 072 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "6x5",
+    "pack": "deluxe",
+    "expected": 107200000,
+    "closing": "Ваш выбор: Квадро Хаус · 5×6 м · 1 072 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "905 000 ₽",
+      "1 072 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "6x6",
+    "pack": "comfort",
+    "expected": 96500000,
+    "closing": "Ваш выбор: Квадро Хаус · 6×6 м · 965 000 ₽ · в комплектации «Комфорт»",
+    "package": "comfort",
+    "price": [
+      "965 000 ₽",
+      "1 142 000 ₽"
+    ]
+  },
+  {
+    "model": "kvadro-house",
+    "size": "6x6",
+    "pack": "deluxe",
+    "expected": 114200000,
+    "closing": "Ваш выбор: Квадро Хаус · 6×6 м · 1 142 000 ₽ · в комплектации «Делюкс»",
+    "package": "deluxe",
+    "price": [
+      "965 000 ₽",
+      "1 142 000 ₽"
+    ]
+  }
+]

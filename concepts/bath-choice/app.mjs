@@ -6,6 +6,7 @@ import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} fro
 import {PACKAGE_NAMES,PACKAGE_COPY} from './packages.mjs';
 import {createPhotoGallery} from './gallery.mjs';
 import {openPackageComparison} from './comparison.mjs';
+import {connectHomeContinuation} from './continuation.mjs';
 
 const $=selector=>document.querySelector(selector);
 const money=new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0});
@@ -19,6 +20,7 @@ const plans=registry.plans;
 let state=choiceFromUrl(book,plans,location.href),imageTicket=0;
 const setPlan=createLayoutPanel($('[data-plan-panel]'),{onRequest:opener=>request(opener,'layout_quote')});
 const setPhotos=createPhotoGallery($('[data-gallery]'));
+const syncHome=connectHomeContinuation({getState:()=>state,getBook:()=>book,plans});
 
 function setHero(model){
  const info=HERO_MODELS[model],ticket=++imageTicket,world=$('#hh-world'),depth=$('#hh-depth-image');
@@ -58,7 +60,6 @@ function render(previous){
   for(const button of document.querySelectorAll('[data-model-card]'))button.setAttribute('aria-pressed',String(button.dataset.modelCard===state.model));
   $('[data-sizes]').replaceChildren(...Object.keys(book.r85.models[state.model].sizes).map(key=>{const b=node('button',choiceSizeLabel(book,state.model,key));b.type='button';b.dataset.sizePicker=key;b.addEventListener('click',()=>{choose({size:key});b.focus({preventScroll:true});});return b;}));
   setPhotos(photos[state.model]);
-  $('[data-delivery]').textContent=state.model==='kvadro-house'?'«Квадро Хаус» соберём на подготовленном основании. Сборка уже учтена в цене бани.':'Привезём готовую баню и поставим на подготовленное основание. Заранее проверим условия подъезда и установки.';
  }
  for(const button of document.querySelectorAll('[data-size-picker]'))button.setAttribute('aria-pressed',String(button.dataset.sizePicker===state.size));
  for(const key of ['comfort','deluxe']){
@@ -77,6 +78,7 @@ function render(previous){
   const plan=available.find(p=>p.id===state.layout);setPlan(plan?{...plan,label:info.name+' · '+label}:null);
  }
  document.title=info.name+' '+label+' · ДачаПар';
+ syncHome();
 }
 function choose(patch){const previous=state;state=normalizeChoice(book,plans,{...state,...patch});const url=choiceUrl(location.href,state);if(url.href!==location.href)history.pushState(null,'',url);render(previous);}
 document.querySelectorAll('[data-model-card]').forEach(button=>button.addEventListener('click',()=>{choose({model:button.dataset.modelCard});$('#bath-model').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth',block:'start'});}));
@@ -84,7 +86,7 @@ window.addEventListener('popstate',()=>{const previous=state;state=choiceFromUrl
 function request(opener,reason='quote'){openModelRequest({name:HERO_MODELS[state.model].name,size:choiceSizeLabel(book,state.model,state.size),packageName:PACKAGE_NAMES[state.package],layout:state.layout||undefined,reason,opener});}
 $('[data-plan-request]').addEventListener('click',event=>request(event.currentTarget,state.layout?'layout_quote':'quote'));
 $('[data-production]').addEventListener('click',event=>request(event.currentTarget,'production'));
-$('[data-foundation]').addEventListener('click',event=>request(event.currentTarget,'foundation'));
+$('[data-foundation]')?.addEventListener('click',event=>request(event.currentTarget,'foundation'));
 function quizReady(){
  const entry=$('#dp-quiz-open');if(entry)return Promise.resolve(entry);
  return new Promise((resolve,reject)=>{

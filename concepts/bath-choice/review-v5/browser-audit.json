@@ -1,0 +1,22 @@
+{
+  "pass": true,
+  "selectionCases": 40,
+  "uniqueChoices": 40,
+  "basePriceAndClosingContextMatched": 40,
+  "carePosition": "after FAQ, before closing",
+  "desktop": true,
+  "mobileViewport": 390,
+  "horizontalOverflow": false,
+  "ritualStatesChecked": [
+    "steam",
+    "rest"
+  ],
+  "faqOpens": true,
+  "r117FirstStepOpens": true,
+  "glbCase": "viking 550 dp3d-19 with moving shelf",
+  "inquiryOpensWithSelection": true,
+  "maxSelectedWithoutSending": true,
+  "actualLeadsSent": 0,
+  "browserConsoleErrors": 0,
+  "physicalPhoneTested": false
+}

@@ -1,0 +1,117 @@
+{
+  "origin": "https://xn--80aaan1dh9b.xn--p1ai",
+  "capturedDate": "2026-11-05",
+  "purpose": "Exact public home and runtime snapshot for protected lower sections. No server writes.",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "5a259b7e4a6827b75853fe22063b396e62f9e429c43a8f765d9f70cfefc86fab",
+      "bytes": 33154
+    },
+    {
+      "path": "r101/site.mjs",
+      "sha256": "c9e8b3dd8076778665b28d808304383ff691c9b554532f76470af09417c80d4c",
+      "bytes": 19238
+    },
+    {
+      "path": "r101/site.css",
+      "sha256": "5d44dcbdf4ccbad1a8fd0008e04be685a24929d90de63b8e9c2ec1883eab1e51",
+      "bytes": 18453
+    },
+    {
+      "path": "r101/visual.css",
+      "sha256": "0e8eff77b7cb8501e1e5a2b1714d893b311bfc8cdda184bdee30c354523b8bd9",
+      "bytes": 15504
+    },
+    {
+      "path": "r101/vendor/scrollcraft.js",
+      "sha256": "91a8e57cec07b7b977584885741f07d93fd1cd08fdbea623d5432fcede66fd38",
+      "bytes": 63459
+    },
+    {
+      "path": "r101/vendor/scrollcraft.css",
+      "sha256": "519e254c1877a50eb724153d483ccff5b3b434fbaf3baf9c5bc1179ec28b075a",
+      "bytes": 20201
+    },
+    {
+      "path": "quiz.mjs",
+      "sha256": "f9688a42298712cbd3dead341f7008b52a30ea2cb6795f0d4fe1e41f3d37b678",
+      "bytes": 29523
+    },
+    {
+      "path": "quiz.css",
+      "sha256": "2ee7ef37128a501a1f0ae26d7795f6b2e062a90cbbea43eb16b55e2b731ea253",
+      "bytes": 32446
+    },
+    {
+      "path": "assets/detail-led-p2-960.webp",
+      "sha256": "0e17ea6b30f99e8010394337ed6e730f010ea85d60427ed155c8ea1b8bbbcb95",
+      "bytes": 52876
+    },
+    {
+      "path": "assets/detail-stove-p2-960.webp",
+      "sha256": "efac49c8ec83285406eb035f902a507e0d051c0e5601029f2b93eec81759aa17",
+      "bytes": 83948
+    },
+    {
+      "path": "r101/assets/conifer-rest-640.webp",
+      "sha256": "ffcab334934418e68f19b797bb5085807307499af0893d8468dfa03919c8429a",
+      "bytes": 42108
+    },
+    {
+      "path": "r101/assets/conifer-rest-960.webp",
+      "sha256": "9b05d2cfb01bed2437a1b0fed6a825c222cb47c166a7c9e1302d6f61a42c2d05",
+      "bytes": 78196
+    },
+    {
+      "path": "r101/assets/conifer-rest.webp",
+      "sha256": "51d42a5e91e20f18d13a45c14822ab12700b8b850444e45a7f2314242273cb88",
+      "bytes": 203582
+    },
+    {
+      "path": "r101/assets/oak-basin-layer-640.webp",
+      "sha256": "e81d2436684448dc4149f9163cd6d8b0020ef3618fed7eab4db36830bff81132",
+      "bytes": 67690
+    },
+    {
+      "path": "r101/assets/oak-basin-layer-960.webp",
+      "sha256": "a0031d2403f39f1b9a63f46e4fac5e06d81739b0baa8f254f8c13fd8cffbb078",
+      "bytes": 152170
+    },
+    {
+      "path": "r101/assets/oak-basin-layer.webp",
+      "sha256": "53a30168dd522bf541e1bd6a28807c8d1baac465ab1483face9db4cecea2790d",
+      "bytes": 376970
+    },
+    {
+      "path": "r101/assets/oak-steam-640.webp",
+      "sha256": "84b311d60407c582f81b43e770d4daa07fd3a66c53d82a81f261bea534e5fc83",
+      "bytes": 52380
+    },
+    {
+      "path": "r101/assets/oak-steam-960.webp",
+      "sha256": "59e6c8f13f382b305e7ac4d52cbbaf48859b342593ba186127209708d608889a",
+      "bytes": 97110
+    },
+    {
+      "path": "r101/assets/oak-steam.webp",
+      "sha256": "7d927f67635f7daa130144b6bdd1671d27c15489a21f8cf0eb991b13939165b0",
+      "bytes": 258970
+    },
+    {
+      "path": "r101/assets/tea-editorial-640.webp",
+      "sha256": "8d0e3496dd636cca6c9804d88f39cbe3b80f10878fd1e2b395956a37bb5cb39b",
+      "bytes": 37514
+    },
+    {
+      "path": "r101/assets/tea-editorial-960.webp",
+      "sha256": "b43f05b225fc8fe5ed69f9ec954dd6b589e8f7f02bb81cefdbc0033f83caa86e",
+      "bytes": 64944
+    },
+    {
+      "path": "r101/assets/tea-editorial.webp",
+      "sha256": "ec928941bbb36bac49e7dcfdbb9bc4c05e655b3f1da6e611f7500af909926061",
+      "bytes": 163152
+    }
+  ]
+}
