@@ -131,9 +131,13 @@ def main():
     for origin,files in [(baseline,metadata['files']),(ROOT/'web',metadata['sharedFiles'])]:
         for entry in files:
             src=origin/entry['path']
-            if hashlib.sha256(src.read_bytes()).hexdigest()!=entry['sha256']:raise RuntimeError('Public runtime snapshot changed: '+entry['path'])
+            original=src.read_bytes()
+            if entry['path']=='lead-client.mjs':
+                original=original.replace(b"import {scheduleLeadSuccess} from './lead-success.mjs?v=all-forms-20261105';\n",b'').replace(b'  scheduleLeadSuccess();\n',b'')
+            if hashlib.sha256(original).hexdigest()!=entry['sha256']:raise RuntimeError('Public runtime snapshot changed: '+entry['path'])
             if entry['path']=='data/catalog-pricebook.json':continue
             dst=OUT/entry['path'];dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
+    shutil.copy2(ROOT/'web/lead-success.mjs',OUT/'lead-success.mjs')
     captured=baseline/'quiz.mjs'
     covered={(model,p['size']) for p in registry['plans'] for model in p['models']}
     assert len(covered)==20

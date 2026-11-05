@@ -1,3 +1,4 @@
+import {scheduleLeadSuccess} from './lead-success.mjs?v=all-forms-20261105';
 import { normalizeState } from './quote.mjs?v=r93-20261026';
 import { CONSENT_VERSION, CONSENT_METHOD } from './lead-consent.mjs?v=r100-20261027';
 
@@ -44,6 +45,7 @@ export async function submitLead(payload, settings, pageOrigin, fetchImpl = fetc
     const error = new Error(response.status === 429 ? 'RATE_LIMITED' : response.status === 409 ? 'IN_PROGRESS' : 'DELIVERY_NOT_CONFIRMED');
     error.status = response.status; throw error;
   }
+  scheduleLeadSuccess();
   return { confirmed: true, duplicate: result.duplicate === true,
     premiumQualified: result.analytics.premiumQualified === true, detailedQualified: result.analytics.detailedQualified === true, receipt: result };
 }
