@@ -123,6 +123,7 @@ html:has(body.hh-page){scroll-padding-top:0}
 .hh-layout-3d-dialog .hh-layout-stage{border:0;border-radius:0}
 .hh-layout-3d-dialog canvas{height:clamp(240px,57dvh,540px)}
 .hh-layout-dialog [hidden]{display:none!important}
+.hh-layout-dialog header button{flex-shrink:0;white-space:nowrap}
 .hh-layout-stage>img{display:block;width:100%;max-height:57dvh;object-fit:contain}
 
 .hh-bath-panel>.hh-bath-plan{margin-top:44px;padding-top:32px}

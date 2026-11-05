@@ -1,7 +1,7 @@
 {
   "plan": 9,
-  "title": "Квадро Хаус 6 × 6 · спальня",
-  "revision": "catalog-14-1-2026-11-03",
+  "title": "Квадро Хаус 6 × 6 м · со спальней",
+  "revision": "album-review-2026-11-05",
   "units": "mm",
   "coordinates": "origin front-left exterior; X right; Y rear; Z up; floor Z0",
   "outer_mm": [
@@ -13,18 +13,18 @@
   "native_slide": "p9",
   "items": [
     {
-      "id": "DP09-O01",
+      "id": "DP09-I01",
       "code": "НС1",
       "label": "Нижний полок / ступень",
       "category": "objects",
       "kind": "lower",
       "xy_mm": [
-        3400.0,
-        4855.0
+        3400,
+        4855
       ],
       "size_mm": [
-        1800.0,
-        400.0
+        1800,
+        400
       ],
       "z_mm": 0,
       "height_mm": 450,
@@ -32,48 +32,21 @@
       "source_object": "p9_i2813",
       "surface_z_mm": 450,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "НС1",
-        "kind": "lower",
-        "xy": [
-          3400.0,
-          4855.0
-        ],
-        "size": [
-          1800.0,
-          400.0
-        ],
-        "z": 400,
-        "height": 50,
-        "angle_deg": 0,
-        "source_object": "p9_i2813"
-      },
-      "source_platform_z_mm": 400,
-      "source_platform_height_mm": 50,
-      "model_bounds_mm": [
-        3400.0,
-        4855.0,
-        0.0,
-        5200.0,
-        5255.0,
-        450.3
-      ],
-      "mesh_count": 5
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O02",
+      "id": "DP09-I02",
       "code": "НС2",
       "label": "Нижний полок / ступень",
       "category": "objects",
       "kind": "lower",
       "xy_mm": [
-        4800.0,
-        4255.0
+        4800,
+        4255
       ],
       "size_mm": [
-        400.0,
-        600.0
+        400,
+        600
       ],
       "z_mm": 0,
       "height_mm": 450,
@@ -81,48 +54,21 @@
       "source_object": "p9_i2818",
       "surface_z_mm": 450,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "НС2",
-        "kind": "lower",
-        "xy": [
-          4800.0,
-          4255.0
-        ],
-        "size": [
-          400.0,
-          600.0
-        ],
-        "z": 400,
-        "height": 50,
-        "angle_deg": 0,
-        "source_object": "p9_i2818"
-      },
-      "source_platform_z_mm": 400,
-      "source_platform_height_mm": 50,
-      "model_bounds_mm": [
-        4800.0,
-        4255.0,
-        0.0,
-        5200.0,
-        4855.0,
-        450.3
-      ],
-      "mesh_count": 4
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O03",
+      "id": "DP09-I03",
       "code": "ВП2",
       "label": "Верхний полок",
       "category": "objects",
       "kind": "upper",
       "xy_mm": [
-        5200.0,
-        4255.0
+        5200,
+        4255
       ],
       "size_mm": [
-        700.0,
-        1000.0
+        700,
+        1000
       ],
       "z_mm": 0,
       "height_mm": 900,
@@ -130,48 +76,21 @@
       "source_object": "p9_i2868",
       "surface_z_mm": 900,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "ВП2",
-        "kind": "upper",
-        "xy": [
-          5200.0,
-          4255.0
-        ],
-        "size": [
-          700.0,
-          1000.0
-        ],
-        "z": 850,
-        "height": 50,
-        "angle_deg": 0,
-        "source_object": "p9_i2868"
-      },
-      "source_platform_z_mm": 850,
-      "source_platform_height_mm": 50,
-      "model_bounds_mm": [
-        5200.0,
-        4255.0,
-        0.0,
-        5900.0,
-        5255.0,
-        900.3
-      ],
-      "mesh_count": 4
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O04",
+      "id": "DP09-I04",
       "code": "ВП1",
       "label": "Верхний полок",
       "category": "objects",
       "kind": "upper",
       "xy_mm": [
-        3400.0,
-        5255.0
+        3400,
+        5255
       ],
       "size_mm": [
-        2500.0,
-        700.0
+        2500,
+        700
       ],
       "z_mm": 0,
       "height_mm": 900,
@@ -179,48 +98,21 @@
       "source_object": "p9_i2860",
       "surface_z_mm": 900,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "ВП1",
-        "kind": "upper",
-        "xy": [
-          3400.0,
-          5255.0
-        ],
-        "size": [
-          2500.0,
-          700.0
-        ],
-        "z": 850,
-        "height": 50,
-        "angle_deg": 0,
-        "source_object": "p9_i2860"
-      },
-      "source_platform_z_mm": 850,
-      "source_platform_height_mm": 50,
-      "model_bounds_mm": [
-        3400.0,
-        5255.0,
-        0.0,
-        5900.0,
-        5955.0,
-        900.3
-      ],
-      "mesh_count": 5
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O05",
+      "id": "DP09-I05",
       "code": "В1",
       "label": "Вешалка с крючками",
       "category": "objects",
       "kind": "hanger",
       "xy_mm": [
-        3900.0,
-        100.0
+        3900,
+        100
       ],
       "size_mm": [
-        850.0,
-        350.0
+        850,
+        350
       ],
       "z_mm": 0.0,
       "height_mm": 1492.0,
@@ -229,47 +121,22 @@
       "surface_z_mm": 1520,
       "height_status": "measured_visualization_geometry",
       "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "В1",
-        "kind": "hanger",
-        "xy": [
-          3900.0,
-          100.0
-        ],
-        "size": [
-          850.0,
-          350.0
-        ],
-        "z": 1300,
-        "height": 220,
-        "angle_deg": 0,
-        "source_object": "p9_i2859"
-      },
       "source_mounting_z_mm": 1300,
-      "notes": "Планка, крючки и опоры находятся внутри исходного контура. Высота и конструкция приняты для визуализации.",
-      "model_bounds_mm": [
-        3900.0,
-        100.0,
-        0.0,
-        4750.0,
-        409.5,
-        1492.0
-      ],
-      "mesh_count": 5
+      "notes": "Планка, крючки и опоры находятся внутри исходного контура. Высота и конструкция приняты для визуализации."
     },
     {
-      "id": "DP09-O06",
+      "id": "DP09-I06",
       "code": "К1",
       "label": "Кровать",
       "category": "objects",
       "kind": "bed",
       "xy_mm": [
-        100.0,
-        200.0
+        100,
+        200
       ],
       "size_mm": [
-        1400.0,
-        2000.0
+        1400,
+        2000
       ],
       "z_mm": 0,
       "height_mm": 480,
@@ -277,46 +144,21 @@
       "source_object": "p9_i2831",
       "surface_z_mm": 480,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "К1",
-        "kind": "bed",
-        "xy": [
-          100.0,
-          200.0
-        ],
-        "size": [
-          1400.0,
-          2000.0
-        ],
-        "z": 0,
-        "height": 480,
-        "angle_deg": 0,
-        "source_object": "p9_i2831"
-      },
-      "model_bounds_mm": [
-        100.0,
-        200.0,
-        0.0,
-        1500.0,
-        2200.0,
-        610.0
-      ],
-      "mesh_count": 3
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O07",
+      "id": "DP09-I07",
       "code": "Л1",
       "label": "Лавка отдыха",
       "category": "objects",
       "kind": "bench",
       "xy_mm": [
-        4100.0,
-        950.0
+        4100,
+        950
       ],
       "size_mm": [
-        450.0,
-        2000.0
+        450,
+        2000
       ],
       "z_mm": 0,
       "height_mm": 450,
@@ -324,46 +166,21 @@
       "source_object": "p9_i2842",
       "surface_z_mm": 450,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "Л1",
-        "kind": "bench",
-        "xy": [
-          4100.0,
-          950.0
-        ],
-        "size": [
-          450.0,
-          2000.0
-        ],
-        "z": 0,
-        "height": 450,
-        "angle_deg": 0,
-        "source_object": "p9_i2842"
-      },
-      "model_bounds_mm": [
-        4100.0,
-        950.0,
-        0.0,
-        4550.0,
-        2950.0,
-        580.0
-      ],
-      "mesh_count": 6
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O08",
+      "id": "DP09-I08",
       "code": "Л2",
       "label": "Лавка отдыха",
       "category": "objects",
       "kind": "bench",
       "xy_mm": [
-        5400.0,
-        950.0
+        5400,
+        950
       ],
       "size_mm": [
-        450.0,
-        2000.0
+        450,
+        2000
       ],
       "z_mm": 0,
       "height_mm": 450,
@@ -371,46 +188,21 @@
       "source_object": "p9_i2852",
       "surface_z_mm": 450,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "Л2",
-        "kind": "bench",
-        "xy": [
-          5400.0,
-          950.0
-        ],
-        "size": [
-          450.0,
-          2000.0
-        ],
-        "z": 0,
-        "height": 450,
-        "angle_deg": 0,
-        "source_object": "p9_i2852"
-      },
-      "model_bounds_mm": [
-        5400.0,
-        950.0,
-        0.0,
-        5850.0,
-        2950.0,
-        580.0
-      ],
-      "mesh_count": 6
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O09",
+      "id": "DP09-I09",
       "code": "С1",
       "label": "Стол",
       "category": "objects",
       "kind": "table",
       "xy_mm": [
-        4650.0,
-        1000.0
+        4650,
+        1000
       ],
       "size_mm": [
-        650.0,
-        1900.0
+        650,
+        1900
       ],
       "z_mm": 0,
       "height_mm": 750,
@@ -418,46 +210,21 @@
       "source_object": "p9_i2846",
       "surface_z_mm": 750,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "С1",
-        "kind": "table",
-        "xy": [
-          4650.0,
-          1000.0
-        ],
-        "size": [
-          650.0,
-          1900.0
-        ],
-        "z": 0,
-        "height": 750,
-        "angle_deg": 0,
-        "source_object": "p9_i2846"
-      },
-      "model_bounds_mm": [
-        4650.0,
-        1000.0,
-        0.0,
-        5300.0,
-        2900.0,
-        924.0
-      ],
-      "mesh_count": 7
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O10",
+      "id": "DP09-I10",
       "code": "Ш1",
       "label": "Шкаф",
       "category": "objects",
       "kind": "storage",
       "xy_mm": [
-        100.0,
-        2500.0
+        100,
+        2500
       ],
       "size_mm": [
-        600.0,
-        600.0
+        600,
+        600
       ],
       "z_mm": 0,
       "height_mm": 950,
@@ -465,46 +232,21 @@
       "source_object": "p9_i2835",
       "surface_z_mm": 950,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "Ш1",
-        "kind": "storage",
-        "xy": [
-          100.0,
-          2500.0
-        ],
-        "size": [
-          600.0,
-          600.0
-        ],
-        "z": 0,
-        "height": 950,
-        "angle_deg": 0,
-        "source_object": "p9_i2835"
-      },
-      "model_bounds_mm": [
-        100.0,
-        2500.0,
-        0.0,
-        722.0,
-        3100.0,
-        995.0
-      ],
-      "mesh_count": 5
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O11",
+      "id": "DP09-I11",
       "code": "Ш2",
       "label": "Шкаф",
       "category": "objects",
       "kind": "storage",
       "xy_mm": [
-        4900.0,
-        100.0
+        4900,
+        100
       ],
       "size_mm": [
-        1000.0,
-        350.0
+        1000,
+        350
       ],
       "z_mm": 0,
       "height_mm": 950,
@@ -512,46 +254,21 @@
       "source_object": "p9_i2856",
       "surface_z_mm": 950,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "Ш2",
-        "kind": "storage",
-        "xy": [
-          4900.0,
-          100.0
-        ],
-        "size": [
-          1000.0,
-          350.0
-        ],
-        "z": 0,
-        "height": 950,
-        "angle_deg": 0,
-        "source_object": "p9_i2856"
-      },
-      "model_bounds_mm": [
-        4900.0,
-        100.0,
-        0.0,
-        5900.0,
-        472.0,
-        995.0
-      ],
-      "mesh_count": 5
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O12",
+      "id": "DP09-I12",
       "code": "Д1",
       "label": "Душ",
       "category": "objects",
       "kind": "shower",
       "xy_mm": [
-        1550.0,
-        5000.0
+        1550,
+        5000
       ],
       "size_mm": [
-        900.0,
-        900.0
+        900,
+        900
       ],
       "z_mm": 0,
       "height_mm": 2000,
@@ -559,35 +276,10 @@
       "source_object": "p9_i2822",
       "surface_z_mm": 2000,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "Д1",
-        "kind": "shower",
-        "xy": [
-          1550.0,
-          5000.0
-        ],
-        "size": [
-          900.0,
-          900.0
-        ],
-        "z": 0,
-        "height": 2000,
-        "angle_deg": 0,
-        "source_object": "p9_i2822"
-      },
-      "model_bounds_mm": [
-        1550.0,
-        5000.0,
-        0.0,
-        2451.0,
-        5900.0,
-        2000.0
-      ],
-      "mesh_count": 4
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O13",
+      "id": "DP09-I13",
       "code": "Р1",
       "label": "Раковина",
       "category": "objects",
@@ -606,35 +298,10 @@
       "source_object": "top_9_0009",
       "surface_z_mm": 860,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "Р1",
-        "kind": "sink",
-        "xy": [
-          1045.0,
-          4550.0
-        ],
-        "size": [
-          300.0,
-          350.0
-        ],
-        "z": 760,
-        "height": 100,
-        "angle_deg": 0,
-        "source_object": "top_9_0009"
-      },
-      "model_bounds_mm": [
-        1045.0,
-        4550.0,
-        584.0,
-        1400.0,
-        4900.0,
-        1008.0
-      ],
-      "mesh_count": 3
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O14",
+      "id": "DP09-I14",
       "code": "У1",
       "label": "Унитаз",
       "category": "objects",
@@ -653,46 +320,21 @@
       "source_object": "top_9_0008+top_9_0007",
       "surface_z_mm": 750,
       "height_status": "visualization_assumption",
-      "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "У1",
-        "kind": "toilet",
-        "xy": [
-          450.0,
-          5100.0
-        ],
-        "size": [
-          450.0,
-          700.0
-        ],
-        "z": 0,
-        "height": 750,
-        "angle_deg": 0,
-        "source_object": "top_9_0008+top_9_0007"
-      },
-      "model_bounds_mm": [
-        450.0,
-        5116.85,
-        0.0,
-        900.0,
-        5800.0,
-        750.0
-      ],
-      "mesh_count": 2
+      "plan_status": "native_vector_checked"
     },
     {
-      "id": "DP09-O15",
+      "id": "DP09-I15",
       "code": "П1",
       "label": "ASTON 16",
       "category": "objects",
       "kind": "stove",
       "xy_mm": [
-        3490.0,
-        3460.0
+        3490,
+        3460
       ],
       "size_mm": [
-        420.0,
-        364.0
+        420,
+        365
       ],
       "z_mm": 60,
       "height_mm": 750,
@@ -701,44 +343,6 @@
       "surface_z_mm": 810,
       "height_status": "visualization_assumption",
       "plan_status": "native_vector_checked",
-      "source_record": {
-        "code": "П1",
-        "kind": "stove",
-        "xy": [
-          3490.0,
-          3460.0
-        ],
-        "size": [
-          420.0,
-          364.0
-        ],
-        "z": 60,
-        "height": 750,
-        "angle_deg": 0,
-        "source_object": "p9_i2879",
-        "model": "ASTON 16",
-        "service_direction": [
-          0,
-          -1.0
-        ],
-        "tunnel_bbox": [
-          3570.0,
-          3255.0,
-          3830.0,
-          3460.0
-        ],
-        "tunnel_source": "p9_i2880",
-        "firebox_bottom": 120,
-        "firebox_top": 435,
-        "base_z": 0,
-        "base_thickness": 60,
-        "door_size": [
-          285,
-          315
-        ],
-        "geometry_status": "ASTON12 factory drawing casing381, width420, tunnel205; ASTON16 casing length364 is authorized adaptation; hatch vertical pose is a visualization assumption",
-        "factory_drawing": "../sources/aston12-factory.jpg"
-      },
       "notes": "Корпус в парной; топка в комнату отдыха. Высота дверцы принята для визуализации.",
       "service_direction": [
         0,
@@ -749,686 +353,95 @@
         3255.0,
         3830.0,
         3460.0
-      ],
-      "model_bounds_mm": [
-        3465.0,
-        3045.0,
-        0.0,
-        4250.0,
-        3849.0,
-        2201.0
-      ],
-      "mesh_count": 11
+      ]
     },
     {
-      "id": "DP09-D01",
+      "id": "DP09-I16",
       "code": "Д1",
       "label": "Дверь парной · стекло",
       "category": "openings",
       "kind": "door",
       "xy_mm": [
-        3300.0,
-        4100.055
+        3299.9,
+        4100.1
       ],
       "size_mm": [
-        45.0,
-        800.0
+        45,
+        800
       ],
       "z_mm": 0,
       "height_mm": 2000,
       "angle_deg": 0,
       "source_object": "p9_i2808",
       "center_mm": [
-        3322.5,
-        4500.055
+        3322.4,
+        4500.1
       ],
       "u": [
         0.0,
         1.0
       ],
-      "opening_width_mm": 800.0,
-      "hinge_xy_mm": [
-        3294.0,
-        4876.055
-      ],
+      "opening_width_mm": 800,
       "outward": [
         -1.0,
         0.0
       ],
       "max_open_angle_deg": 90,
-      "leaf_size_mm": [
-        748.0,
-        6,
-        1964
-      ],
-      "leaf_polygon_open": [
-        [
-          2546.0,
-          4873.055
-        ],
-        [
-          2546.0,
-          4879.055
-        ],
-        [
-          3294.0,
-          4879.055
-        ],
-        [
-          3294.0,
-          4873.055
-        ]
-      ],
       "notes": "Проём по чертежу; высота 2000 мм принята. Рабочее раскрытие 90°. Полотно вращается на оси петель.",
       "source_record": {
-        "id": "p9_i2808",
-        "wall": "top_9_0004",
-        "s0": 800.0550000000003,
-        "s1": 1600.0550000000003,
-        "width": 800.0,
-        "center": [
-          3322.5,
-          4500.055
-        ],
-        "u": [
-          0.0,
-          1.0
-        ],
-        "type": "door",
-        "source_object": "p9_i2808",
-        "kind": "steam",
-        "adjacent_rooms": [
-          "wash",
-          "steam"
-        ],
-        "frame_mm": 24,
-        "height": 2000,
-        "hinge_xy": [
-          3294.0,
-          4876.055
-        ],
-        "hinge_z": [
-          0,
-          2000
-        ],
-        "closed_u": [
-          -0.0,
-          -1.0
-        ],
-        "outward": [
-          -1.0,
-          0.0
-        ],
-        "leaf_width": 748.0,
-        "leaf_height": 1964,
-        "leaf_bottom": 8,
-        "open_angle_deg": 90,
-        "material": "glass",
-        "hinge_end": "s1",
-        "sweep_polygon": [
-          [
-            3294.0,
-            4876.055
-          ],
-          [
-            3294.0,
-            4128.055
-          ],
-          [
-            3267.8952,
-            4128.5107
-          ],
-          [
-            3241.8222,
-            4129.8771
-          ],
-          [
-            3215.8127,
-            4132.1526
-          ],
-          [
-            3189.8985,
-            4135.3345
-          ],
-          [
-            3164.1112,
-            4139.4188
-          ],
-          [
-            3138.4821,
-            4144.4006
-          ],
-          [
-            3113.0424,
-            4150.2738
-          ],
-          [
-            3087.8233,
-            4157.0313
-          ],
-          [
-            3062.8553,
-            4164.6647
-          ],
-          [
-            3038.1689,
-            4173.1649
-          ],
-          [
-            3013.7943,
-            4182.5215
-          ],
-          [
-            2989.761,
-            4192.723
-          ],
-          [
-            2966.0984,
-            4203.7571
-          ],
-          [
-            2942.8353,
-            4215.6102
-          ],
-          [
-            2920.0,
-            4228.268
-          ],
-          [
-            2897.6204,
-            4241.715
-          ],
-          [
-            2875.7237,
-            4255.9349
-          ],
-          [
-            2854.3366,
-            4270.9103
-          ],
-          [
-            2833.4852,
-            4286.623
-          ],
-          [
-            2813.1949,
-            4303.0538
-          ],
-          [
-            2793.4903,
-            4320.1827
-          ],
-          [
-            2774.3955,
-            4337.9888
-          ],
-          [
-            2755.9338,
-            4356.4505
-          ],
-          [
-            2738.1277,
-            4375.5453
-          ],
-          [
-            2720.9988,
-            4395.2499
-          ],
-          [
-            2704.568,
-            4415.5402
-          ],
-          [
-            2688.8553,
-            4436.3916
-          ],
-          [
-            2673.8799,
-            4457.7787
-          ],
-          [
-            2659.66,
-            4479.6754
-          ],
-          [
-            2646.213,
-            4502.055
-          ],
-          [
-            2633.5552,
-            4524.8903
-          ],
-          [
-            2621.7021,
-            4548.1534
-          ],
-          [
-            2610.668,
-            4571.816
-          ],
-          [
-            2600.4665,
-            4595.8493
-          ],
-          [
-            2591.1099,
-            4620.2239
-          ],
-          [
-            2582.6097,
-            4644.9103
-          ],
-          [
-            2574.9763,
-            4669.8783
-          ],
-          [
-            2568.2188,
-            4695.0974
-          ],
-          [
-            2562.3456,
-            4720.5371
-          ],
-          [
-            2557.3638,
-            4746.1662
-          ],
-          [
-            2553.2795,
-            4771.9535
-          ],
-          [
-            2550.0976,
-            4797.8677
-          ],
-          [
-            2547.8221,
-            4823.8772
-          ],
-          [
-            2546.4557,
-            4849.9502
-          ],
-          [
-            2546.0,
-            4876.055
-          ],
-          [
-            2546.0,
-            4876.055
-          ]
-        ],
-        "leaf_polygon_open": [
-          [
-            2546.0,
-            4873.055
-          ],
-          [
-            2546.0,
-            4879.055
-          ],
-          [
-            3294.0,
-            4879.055
-          ],
-          [
-            3294.0,
-            4873.055
-          ]
-        ]
-      },
-      "model_bounds_mm": [
-        2546.0,
-        4100.055,
-        0.0,
-        3352.5,
-        4926.054,
-        2000.0
-      ],
-      "mesh_count": 5
+        "wall": "top_9_0004"
+      }
     },
     {
-      "id": "DP09-D02",
+      "id": "DP09-I17",
       "code": "Д2",
       "label": "Дверь помывочной · стекло",
       "category": "openings",
       "kind": "door",
       "xy_mm": [
-        2499.9225,
+        2500.0,
         3255.0
       ],
       "size_mm": [
-        800.0,
-        45.0
+        800,
+        45
       ],
       "z_mm": 0,
       "height_mm": 2000,
       "angle_deg": 0,
       "source_object": "p9_i2809",
       "center_mm": [
-        2899.9225,
+        2900.0,
         3277.5
       ],
       "u": [
         1.0,
         0.0
       ],
-      "opening_width_mm": 800.0,
-      "hinge_xy_mm": [
-        3275.9225,
-        3249.0
-      ],
+      "opening_width_mm": 800,
       "outward": [
         0.0,
         -1.0
       ],
       "max_open_angle_deg": 90,
-      "leaf_size_mm": [
-        748.0,
-        6,
-        1964
-      ],
-      "leaf_polygon_open": [
-        [
-          3278.9225,
-          2501.0
-        ],
-        [
-          3272.9225,
-          2501.0
-        ],
-        [
-          3272.9225,
-          3249.0
-        ],
-        [
-          3278.9225,
-          3249.0
-        ]
-      ],
       "notes": "Проём по чертежу; высота 2000 мм принята. Рабочее раскрытие 90°. Полотно вращается на оси петель.",
       "source_record": {
-        "id": "p9_i2809",
-        "wall": "top_9_0005",
-        "s0": 2454.9225,
-        "s1": 3254.9225,
-        "width": 800.0,
-        "center": [
-          2899.9225,
-          3277.5
-        ],
-        "u": [
-          1.0,
-          0.0
-        ],
-        "type": "door",
-        "source_object": "p9_i2809",
-        "kind": "wash",
-        "adjacent_rooms": [
-          "wash",
-          "lounge"
-        ],
-        "frame_mm": 24,
-        "height": 2000,
-        "hinge_xy": [
-          3275.9225,
-          3249.0
-        ],
-        "hinge_z": [
-          0,
-          2000
-        ],
-        "closed_u": [
-          -1.0,
-          -0.0
-        ],
-        "outward": [
-          0.0,
-          -1.0
-        ],
-        "leaf_width": 748.0,
-        "leaf_height": 1964,
-        "leaf_bottom": 8,
-        "open_angle_deg": 90,
-        "material": "glass",
-        "hinge_end": "s1",
-        "sweep_polygon": [
-          [
-            3275.9225,
-            3249.0
-          ],
-          [
-            2527.9225,
-            3249.0
-          ],
-          [
-            2528.3782,
-            3222.8952
-          ],
-          [
-            2529.7446,
-            3196.8222
-          ],
-          [
-            2532.0201,
-            3170.8127
-          ],
-          [
-            2535.202,
-            3144.8985
-          ],
-          [
-            2539.2863,
-            3119.1112
-          ],
-          [
-            2544.2681,
-            3093.4821
-          ],
-          [
-            2550.1413,
-            3068.0424
-          ],
-          [
-            2556.8988,
-            3042.8233
-          ],
-          [
-            2564.5322,
-            3017.8553
-          ],
-          [
-            2573.0324,
-            2993.1689
-          ],
-          [
-            2582.389,
-            2968.7943
-          ],
-          [
-            2592.5905,
-            2944.761
-          ],
-          [
-            2603.6246,
-            2921.0984
-          ],
-          [
-            2615.4777,
-            2897.8353
-          ],
-          [
-            2628.1355,
-            2875.0
-          ],
-          [
-            2641.5825,
-            2852.6204
-          ],
-          [
-            2655.8024,
-            2830.7237
-          ],
-          [
-            2670.7778,
-            2809.3366
-          ],
-          [
-            2686.4905,
-            2788.4852
-          ],
-          [
-            2702.9213,
-            2768.1949
-          ],
-          [
-            2720.0502,
-            2748.4903
-          ],
-          [
-            2737.8563,
-            2729.3955
-          ],
-          [
-            2756.318,
-            2710.9338
-          ],
-          [
-            2775.4128,
-            2693.1277
-          ],
-          [
-            2795.1174,
-            2675.9988
-          ],
-          [
-            2815.4077,
-            2659.568
-          ],
-          [
-            2836.2591,
-            2643.8553
-          ],
-          [
-            2857.6462,
-            2628.8799
-          ],
-          [
-            2879.5429,
-            2614.66
-          ],
-          [
-            2901.9225,
-            2601.213
-          ],
-          [
-            2924.7578,
-            2588.5552
-          ],
-          [
-            2948.0209,
-            2576.7021
-          ],
-          [
-            2971.6835,
-            2565.668
-          ],
-          [
-            2995.7168,
-            2555.4665
-          ],
-          [
-            3020.0914,
-            2546.1099
-          ],
-          [
-            3044.7778,
-            2537.6097
-          ],
-          [
-            3069.7458,
-            2529.9763
-          ],
-          [
-            3094.9649,
-            2523.2188
-          ],
-          [
-            3120.4046,
-            2517.3456
-          ],
-          [
-            3146.0337,
-            2512.3638
-          ],
-          [
-            3171.821,
-            2508.2795
-          ],
-          [
-            3197.7352,
-            2505.0976
-          ],
-          [
-            3223.7447,
-            2502.8221
-          ],
-          [
-            3249.8177,
-            2501.4557
-          ],
-          [
-            3275.9225,
-            2501.0
-          ],
-          [
-            3275.9225,
-            2501.0
-          ]
-        ],
-        "leaf_polygon_open": [
-          [
-            3278.9225,
-            2501.0
-          ],
-          [
-            3272.9225,
-            2501.0
-          ],
-          [
-            3272.9225,
-            3249.0
-          ],
-          [
-            3278.9225,
-            3249.0
-          ]
-        ]
-      },
-      "model_bounds_mm": [
-        2499.923,
-        2501.0,
-        0.0,
-        3325.923,
-        3307.5,
-        2000.0
-      ],
-      "mesh_count": 5
+        "wall": "top_9_0005"
+      }
     },
     {
-      "id": "DP09-D03",
+      "id": "DP09-I18",
       "code": "Д3",
       "label": "Дверь санузла · дерево",
       "category": "openings",
       "kind": "door",
       "xy_mm": [
         1400.0,
-        3700.0945
+        3700.2
       ],
       "size_mm": [
-        45.0,
-        700.0
+        45,
+        700
       ],
       "z_mm": 0,
       "height_mm": 2000,
@@ -1436,327 +449,36 @@
       "source_object": "p9_i2810",
       "center_mm": [
         1422.5,
-        4050.0945
+        4050.2
       ],
       "u": [
         0.0,
         1.0
       ],
-      "opening_width_mm": 700.0,
-      "hinge_xy_mm": [
-        1451.0,
-        3724.0945
-      ],
+      "opening_width_mm": 700,
       "outward": [
         1.0,
         -0.0
       ],
       "max_open_angle_deg": 90,
-      "leaf_size_mm": [
-        648.0,
-        58,
-        1964
-      ],
-      "leaf_polygon_open": [
-        [
-          2099.0,
-          3742.0945
-        ],
-        [
-          2099.0,
-          3706.0945
-        ],
-        [
-          1451.0,
-          3706.0945
-        ],
-        [
-          1451.0,
-          3742.0945
-        ]
-      ],
       "notes": "Проём по чертежу; высота 2000 мм принята. Рабочее раскрытие 90°. Полотно вращается на оси петель.",
       "source_record": {
-        "id": "p9_i2810",
-        "wall": "top_9_0003",
-        "s0": 400.09450000000015,
-        "s1": 1100.0945000000002,
-        "width": 700.0,
-        "center": [
-          1422.5,
-          4050.0945
-        ],
-        "u": [
-          0.0,
-          1.0
-        ],
-        "type": "door",
-        "source_object": "p9_i2810",
-        "kind": "wc",
-        "adjacent_rooms": [
-          "wc",
-          "wash"
-        ],
-        "frame_mm": 24,
-        "height": 2000,
-        "hinge_xy": [
-          1451.0,
-          3724.0945
-        ],
-        "hinge_z": [
-          0,
-          2000
-        ],
-        "closed_u": [
-          0.0,
-          1.0
-        ],
-        "outward": [
-          1.0,
-          -0.0
-        ],
-        "leaf_width": 648.0,
-        "leaf_height": 1964,
-        "leaf_bottom": 8,
-        "open_angle_deg": 90,
-        "material": "timber",
-        "hinge_end": "s0",
-        "sweep_polygon": [
-          [
-            1451.0,
-            3724.0945
-          ],
-          [
-            1451.0,
-            4372.0945
-          ],
-          [
-            1473.6149,
-            4371.6998
-          ],
-          [
-            1496.2022,
-            4370.516
-          ],
-          [
-            1518.7344,
-            4368.5447
-          ],
-          [
-            1541.1842,
-            4365.7882
-          ],
-          [
-            1563.524,
-            4362.2499
-          ],
-          [
-            1585.7268,
-            4357.9341
-          ],
-          [
-            1607.7654,
-            4352.8461
-          ],
-          [
-            1629.613,
-            4346.9921
-          ],
-          [
-            1651.243,
-            4340.3791
-          ],
-          [
-            1672.6291,
-            4333.0153
-          ],
-          [
-            1693.7451,
-            4324.9096
-          ],
-          [
-            1714.5653,
-            4316.072
-          ],
-          [
-            1735.0645,
-            4306.513
-          ],
-          [
-            1755.2176,
-            4296.2445
-          ],
-          [
-            1775.0,
-            4285.279
-          ],
-          [
-            1794.3877,
-            4273.6297
-          ],
-          [
-            1813.357,
-            4261.3108
-          ],
-          [
-            1831.8848,
-            4248.3375
-          ],
-          [
-            1849.9486,
-            4234.7255
-          ],
-          [
-            1867.5264,
-            4220.4913
-          ],
-          [
-            1884.5966,
-            4205.6523
-          ],
-          [
-            1901.1386,
-            4190.2267
-          ],
-          [
-            1917.1322,
-            4174.2331
-          ],
-          [
-            1932.5578,
-            4157.6911
-          ],
-          [
-            1947.3968,
-            4140.6209
-          ],
-          [
-            1961.631,
-            4123.0431
-          ],
-          [
-            1975.243,
-            4104.9793
-          ],
-          [
-            1988.2163,
-            4086.4515
-          ],
-          [
-            2000.5352,
-            4067.4822
-          ],
-          [
-            2012.1845,
-            4048.0945
-          ],
-          [
-            2023.15,
-            4028.3121
-          ],
-          [
-            2033.4185,
-            4008.159
-          ],
-          [
-            2042.9775,
-            3987.6598
-          ],
-          [
-            2051.8151,
-            3966.8396
-          ],
-          [
-            2059.9208,
-            3945.7236
-          ],
-          [
-            2067.2846,
-            3924.3375
-          ],
-          [
-            2073.8976,
-            3902.7075
-          ],
-          [
-            2079.7516,
-            3880.8599
-          ],
-          [
-            2084.8396,
-            3858.8213
-          ],
-          [
-            2089.1554,
-            3836.6185
-          ],
-          [
-            2092.6937,
-            3814.2787
-          ],
-          [
-            2095.4502,
-            3791.8289
-          ],
-          [
-            2097.4215,
-            3769.2967
-          ],
-          [
-            2098.6053,
-            3746.7094
-          ],
-          [
-            2099.0,
-            3724.0945
-          ],
-          [
-            2099.0,
-            3724.0945
-          ]
-        ],
-        "leaf_polygon_open": [
-          [
-            2099.0,
-            3742.0945
-          ],
-          [
-            2099.0,
-            3706.0945
-          ],
-          [
-            1451.0,
-            3706.0945
-          ],
-          [
-            1451.0,
-            3742.0945
-          ]
-        ]
-      },
-      "model_bounds_mm": [
-        1392.5,
-        3674.094,
-        0.0,
-        2099.0,
-        4400.095,
-        2000.0
-      ],
-      "mesh_count": 5
+        "wall": "top_9_0003"
+      }
     },
     {
-      "id": "DP09-D04",
+      "id": "DP09-I19",
       "code": "Д4",
       "label": "Дверь спальни · дерево",
       "category": "openings",
       "kind": "door",
       "xy_mm": [
         2400.0,
-        2200.085
+        2200.1
       ],
       "size_mm": [
-        45.0,
-        800.0
+        45,
+        800
       ],
       "z_mm": 0,
       "height_mm": 2000,
@@ -1764,826 +486,169 @@
       "source_object": "p9_i2811",
       "center_mm": [
         2422.5,
-        2600.085
+        2600.1
       ],
       "u": [
         0.0,
         1.0
       ],
-      "opening_width_mm": 800.0,
-      "hinge_xy_mm": [
-        2394.0,
-        2976.085
-      ],
+      "opening_width_mm": 800,
       "outward": [
         -1.0,
         0.0
       ],
       "max_open_angle_deg": 90,
-      "leaf_size_mm": [
-        748.0,
-        58,
-        1964
-      ],
-      "leaf_polygon_open": [
-        [
-          1646.0,
-          2958.085
-        ],
-        [
-          1646.0,
-          2994.085
-        ],
-        [
-          2394.0,
-          2994.085
-        ],
-        [
-          2394.0,
-          2958.085
-        ]
-      ],
       "notes": "Проём по чертежу; высота 2000 мм принята. Рабочее раскрытие 90°. Полотно вращается на оси петель.",
       "source_record": {
-        "id": "p9_i2811",
-        "wall": "top_9_0006",
-        "s0": 2155.085,
-        "s1": 2955.085,
-        "width": 800.0,
-        "center": [
-          2422.5,
-          2600.085
-        ],
-        "u": [
-          0.0,
-          1.0
-        ],
-        "type": "door",
-        "source_object": "p9_i2811",
-        "kind": "bedroom",
-        "adjacent_rooms": [
-          "bedroom",
-          "lounge"
-        ],
-        "frame_mm": 24,
-        "height": 2000,
-        "hinge_xy": [
-          2394.0,
-          2976.085
-        ],
-        "hinge_z": [
-          0,
-          2000
-        ],
-        "closed_u": [
-          -0.0,
-          -1.0
-        ],
-        "outward": [
-          -1.0,
-          0.0
-        ],
-        "leaf_width": 748.0,
-        "leaf_height": 1964,
-        "leaf_bottom": 8,
-        "open_angle_deg": 90,
-        "material": "timber",
-        "hinge_end": "s1",
-        "sweep_polygon": [
-          [
-            2394.0,
-            2976.085
-          ],
-          [
-            2394.0,
-            2228.085
-          ],
-          [
-            2367.8952,
-            2228.5407
-          ],
-          [
-            2341.8222,
-            2229.9071
-          ],
-          [
-            2315.8127,
-            2232.1826
-          ],
-          [
-            2289.8985,
-            2235.3645
-          ],
-          [
-            2264.1112,
-            2239.4488
-          ],
-          [
-            2238.4821,
-            2244.4306
-          ],
-          [
-            2213.0424,
-            2250.3038
-          ],
-          [
-            2187.8233,
-            2257.0613
-          ],
-          [
-            2162.8553,
-            2264.6947
-          ],
-          [
-            2138.1689,
-            2273.1949
-          ],
-          [
-            2113.7943,
-            2282.5515
-          ],
-          [
-            2089.761,
-            2292.753
-          ],
-          [
-            2066.0984,
-            2303.7871
-          ],
-          [
-            2042.8353,
-            2315.6402
-          ],
-          [
-            2020.0,
-            2328.298
-          ],
-          [
-            1997.6204,
-            2341.745
-          ],
-          [
-            1975.7237,
-            2355.9649
-          ],
-          [
-            1954.3366,
-            2370.9403
-          ],
-          [
-            1933.4852,
-            2386.653
-          ],
-          [
-            1913.1949,
-            2403.0838
-          ],
-          [
-            1893.4903,
-            2420.2127
-          ],
-          [
-            1874.3955,
-            2438.0188
-          ],
-          [
-            1855.9338,
-            2456.4805
-          ],
-          [
-            1838.1277,
-            2475.5753
-          ],
-          [
-            1820.9988,
-            2495.2799
-          ],
-          [
-            1804.568,
-            2515.5702
-          ],
-          [
-            1788.8553,
-            2536.4216
-          ],
-          [
-            1773.8799,
-            2557.8087
-          ],
-          [
-            1759.66,
-            2579.7054
-          ],
-          [
-            1746.213,
-            2602.085
-          ],
-          [
-            1733.5552,
-            2624.9203
-          ],
-          [
-            1721.7021,
-            2648.1834
-          ],
-          [
-            1710.668,
-            2671.846
-          ],
-          [
-            1700.4665,
-            2695.8793
-          ],
-          [
-            1691.1099,
-            2720.2539
-          ],
-          [
-            1682.6097,
-            2744.9403
-          ],
-          [
-            1674.9763,
-            2769.9083
-          ],
-          [
-            1668.2188,
-            2795.1274
-          ],
-          [
-            1662.3456,
-            2820.5671
-          ],
-          [
-            1657.3638,
-            2846.1962
-          ],
-          [
-            1653.2795,
-            2871.9835
-          ],
-          [
-            1650.0976,
-            2897.8977
-          ],
-          [
-            1647.8221,
-            2923.9072
-          ],
-          [
-            1646.4557,
-            2949.9802
-          ],
-          [
-            1646.0,
-            2976.085
-          ],
-          [
-            1646.0,
-            2976.085
-          ]
-        ],
-        "leaf_polygon_open": [
-          [
-            1646.0,
-            2958.085
-          ],
-          [
-            1646.0,
-            2994.085
-          ],
-          [
-            2394.0,
-            2994.085
-          ],
-          [
-            2394.0,
-            2958.085
-          ]
-        ]
-      },
-      "model_bounds_mm": [
-        1646.0,
-        2200.085,
-        0.0,
-        2452.5,
-        3026.085,
-        2000.0
-      ],
-      "mesh_count": 5
+        "wall": "top_9_0006"
+      }
     },
     {
-      "id": "DP09-D05",
+      "id": "DP09-I20",
       "code": "Д5",
       "label": "Входная дверь · ПВХ",
       "category": "openings",
       "kind": "door",
       "xy_mm": [
-        2699.95,
+        2700.0,
         0.0
       ],
       "size_mm": [
-        900.0,
-        45.0
+        900,
+        45
       ],
       "z_mm": 0,
       "height_mm": 2000,
       "angle_deg": 0,
       "source_object": "p9_i2812",
       "center_mm": [
-        3149.95,
+        3150.0,
         22.5
       ],
       "u": [
         1.0,
         0.0
       ],
-      "opening_width_mm": 900.0,
-      "hinge_xy_mm": [
-        2739.95,
-        -6.0
-      ],
+      "opening_width_mm": 900,
       "outward": [
         0.0,
         -1.0
       ],
       "max_open_angle_deg": 90,
-      "leaf_size_mm": [
-        816.0,
-        58,
-        1948
-      ],
-      "leaf_polygon_open": [
-        [
-          2768.95,
-          -822.0
-        ],
-        [
-          2710.95,
-          -822.0
-        ],
-        [
-          2710.95,
-          -6.0
-        ],
-        [
-          2768.95,
-          -6.0
-        ]
-      ],
       "notes": "Проём по чертежу; высота 2000 мм принята. Рабочее раскрытие 90°. Полотно вращается на оси петель.",
       "source_record": {
-        "id": "p9_i2812",
-        "wall": "front",
-        "s0": 2699.95,
-        "s1": 3599.95,
-        "width": 900.0,
-        "center": [
-          3149.95,
-          22.5
-        ],
-        "u": [
-          1.0,
-          0.0
-        ],
-        "type": "door",
-        "source_object": "p9_i2812",
-        "kind": "entry",
-        "adjacent_rooms": [
-          "lounge",
-          "outside"
-        ],
-        "frame_mm": 40,
-        "height": 2000,
-        "hinge_xy": [
-          2739.95,
-          -6.0
-        ],
-        "hinge_z": [
-          0,
-          2000
-        ],
-        "closed_u": [
-          1.0,
-          0.0
-        ],
-        "outward": [
-          0.0,
-          -1.0
-        ],
-        "leaf_width": 816.0,
-        "leaf_height": 1948,
-        "leaf_bottom": 8,
-        "open_angle_deg": 90,
-        "material": "PVC_glass",
-        "hinge_end": "s0",
-        "sweep_polygon": [
-          [
-            2739.95,
-            -6.0
-          ],
-          [
-            3555.95,
-            -6.0
-          ],
-          [
-            3555.4529,
-            -34.478
-          ],
-          [
-            3553.9623,
-            -62.9213
-          ],
-          [
-            3551.4799,
-            -91.2952
-          ],
-          [
-            3548.0087,
-            -119.5653
-          ],
-          [
-            3543.5531,
-            -147.6969
-          ],
-          [
-            3538.1184,
-            -175.6559
-          ],
-          [
-            3531.7113,
-            -203.4083
-          ],
-          [
-            3524.3395,
-            -230.9201
-          ],
-          [
-            3516.0121,
-            -258.1579
-          ],
-          [
-            3506.7392,
-            -285.0884
-          ],
-          [
-            3496.532,
-            -311.679
-          ],
-          [
-            3485.4031,
-            -337.8971
-          ],
-          [
-            3473.3659,
-            -363.7109
-          ],
-          [
-            3460.4352,
-            -389.0888
-          ],
-          [
-            3446.6267,
-            -414.0
-          ],
-          [
-            3431.9572,
-            -438.4141
-          ],
-          [
-            3416.4447,
-            -462.3014
-          ],
-          [
-            3400.1079,
-            -485.6328
-          ],
-          [
-            3382.9668,
-            -508.3798
-          ],
-          [
-            3365.0423,
-            -530.5147
-          ],
-          [
-            3346.3562,
-            -552.0106
-          ],
-          [
-            3326.9313,
-            -572.8412
-          ],
-          [
-            3306.7912,
-            -592.9813
-          ],
-          [
-            3285.9606,
-            -612.4062
-          ],
-          [
-            3264.4647,
-            -631.0923
-          ],
-          [
-            3242.3298,
-            -649.0168
-          ],
-          [
-            3219.5828,
-            -666.1579
-          ],
-          [
-            3196.2514,
-            -682.4947
-          ],
-          [
-            3172.3641,
-            -698.0072
-          ],
-          [
-            3147.95,
-            -712.6767
-          ],
-          [
-            3123.0388,
-            -726.4852
-          ],
-          [
-            3097.6609,
-            -739.4159
-          ],
-          [
-            3071.8471,
-            -751.4531
-          ],
-          [
-            3045.629,
-            -762.582
-          ],
-          [
-            3019.0384,
-            -772.7892
-          ],
-          [
-            2992.1079,
-            -782.0621
-          ],
-          [
-            2964.8701,
-            -790.3895
-          ],
-          [
-            2937.3583,
-            -797.7613
-          ],
-          [
-            2909.6059,
-            -804.1684
-          ],
-          [
-            2881.6469,
-            -809.6031
-          ],
-          [
-            2853.5153,
-            -814.0587
-          ],
-          [
-            2825.2452,
-            -817.5299
-          ],
-          [
-            2796.8713,
-            -820.0123
-          ],
-          [
-            2768.428,
-            -821.5029
-          ],
-          [
-            2739.95,
-            -822.0
-          ],
-          [
-            2739.95,
-            -822.0
-          ]
-        ],
-        "leaf_polygon_open": [
-          [
-            2768.95,
-            -822.0
-          ],
-          [
-            2710.95,
-            -822.0
-          ],
-          [
-            2710.95,
-            -6.0
-          ],
-          [
-            2768.95,
-            -6.0
-          ]
-        ]
-      },
-      "model_bounds_mm": [
-        2699.95,
-        -844.5,
-        0.0,
-        3599.95,
-        57.5,
-        2000.0
-      ],
-      "mesh_count": 8
+        "wall": "front"
+      }
     },
     {
-      "id": "DP09-N01",
+      "id": "DP09-I21",
       "code": "О1",
       "label": "Окно",
       "category": "openings",
       "kind": "window",
       "xy_mm": [
-        3999.8685000000005,
-        5955.0
+        3999.9,
+        5954.9
       ],
       "size_mm": [
-        700.0,
-        45.0
+        700,
+        45
       ],
       "z_mm": 1100,
       "height_mm": 600,
       "angle_deg": 0,
       "source_object": "p9_i2875",
       "center_mm": [
-        4349.8685000000005,
-        5977.5
+        4349.9,
+        5977.4
       ],
       "u": [
         1.0,
         0.0
       ],
-      "opening_width_mm": 700.0,
+      "opening_width_mm": 700,
       "notes": "Ширина и положение по чертежу; вертикальные отметки приняты.",
       "source_record": {
-        "id": "p9_i2875",
-        "wall": "rear",
-        "s0": 3999.8685000000005,
-        "s1": 4699.8685000000005,
-        "width": 700.0,
-        "center": [
-          4349.8685000000005,
-          5977.5
-        ],
-        "u": [
-          1.0,
-          0.0
-        ],
-        "type": "window",
-        "source_object": "p9_i2875",
-        "sill_z": 1100,
-        "top_z": 1700
-      },
-      "model_bounds_mm": [
-        3999.868,
-        5945.0,
-        1100.0,
-        4699.868,
-        6010.0,
-        1700.0
-      ],
-      "mesh_count": 2
+        "wall": "rear"
+      }
     },
     {
-      "id": "DP09-N02",
+      "id": "DP09-I22",
       "code": "О2",
       "label": "Окно",
       "category": "openings",
       "kind": "window",
       "xy_mm": [
-        499.97299999999996,
-        5955.0
+        500.0,
+        5954.9
       ],
       "size_mm": [
-        400.0,
-        45.0
+        400,
+        45
       ],
       "z_mm": 800,
       "height_mm": 600,
       "angle_deg": 0,
       "source_object": "p9_i2876",
       "center_mm": [
-        699.973,
-        5977.5
+        700.0,
+        5977.4
       ],
       "u": [
         1.0,
         0.0
       ],
-      "opening_width_mm": 400.0,
+      "opening_width_mm": 400,
       "notes": "Ширина и положение по чертежу; вертикальные отметки приняты.",
       "source_record": {
-        "id": "p9_i2876",
-        "wall": "rear",
-        "s0": 499.97299999999996,
-        "s1": 899.973,
-        "width": 400.0,
-        "center": [
-          699.973,
-          5977.5
-        ],
-        "u": [
-          1.0,
-          0.0
-        ],
-        "type": "window",
-        "source_object": "p9_i2876",
-        "sill_z": 800,
-        "top_z": 1400
-      },
-      "model_bounds_mm": [
-        499.973,
-        5945.0,
-        800.0,
-        899.973,
-        6010.0,
-        1400.0
-      ],
-      "mesh_count": 2
+        "wall": "rear"
+      }
     },
     {
-      "id": "DP09-N03",
+      "id": "DP09-I23",
       "code": "О3",
       "label": "Окно",
       "category": "openings",
       "kind": "window",
       "xy_mm": [
-        700.0125,
-        0.0
+        700.0,
+        -0.1
       ],
       "size_mm": [
-        1000.0,
-        45.0
+        1000,
+        45
       ],
       "z_mm": 800,
       "height_mm": 600,
       "angle_deg": 0,
       "source_object": "p9_i2877",
       "center_mm": [
-        1200.0125,
-        22.5
+        1200.0,
+        22.4
       ],
       "u": [
         1.0,
         0.0
       ],
-      "opening_width_mm": 1000.0,
+      "opening_width_mm": 1000,
       "notes": "Ширина и положение по чертежу; вертикальные отметки приняты.",
       "source_record": {
-        "id": "p9_i2877",
-        "wall": "front",
-        "s0": 700.0125,
-        "s1": 1700.0125,
-        "width": 1000.0,
-        "center": [
-          1200.0125,
-          22.5
-        ],
-        "u": [
-          1.0,
-          0.0
-        ],
-        "type": "window",
-        "source_object": "p9_i2877",
-        "sill_z": 800,
-        "top_z": 1400
-      },
-      "model_bounds_mm": [
-        700.012,
-        -10.0,
-        800.0,
-        1700.013,
-        55.0,
-        1400.0
-      ],
-      "mesh_count": 2
+        "wall": "front"
+      }
     },
     {
-      "id": "DP09-N04",
+      "id": "DP09-I24",
       "code": "О4",
       "label": "Окно",
       "category": "openings",
       "kind": "window",
       "xy_mm": [
         5955.0,
-        850.1185
+        850.2
       ],
       "size_mm": [
-        45.0,
-        1200.0
+        45,
+        1200
       ],
       "z_mm": 800,
       "height_mm": 600,
@@ -2591,55 +656,30 @@
       "source_object": "p9_i2878",
       "center_mm": [
         5977.5,
-        1450.1185
+        1450.2
       ],
       "u": [
         0.0,
         1.0
       ],
-      "opening_width_mm": 1200.0,
+      "opening_width_mm": 1200,
       "notes": "Ширина и положение по чертежу; вертикальные отметки приняты.",
       "source_record": {
-        "id": "p9_i2878",
-        "wall": "right",
-        "s0": 805.1185,
-        "s1": 2005.1185,
-        "width": 1200.0,
-        "center": [
-          5977.5,
-          1450.1185
-        ],
-        "u": [
-          0.0,
-          1.0
-        ],
-        "type": "window",
-        "source_object": "p9_i2878",
-        "sill_z": 800,
-        "top_z": 1400
-      },
-      "model_bounds_mm": [
-        5945.0,
-        850.119,
-        800.0,
-        6010.0,
-        2050.119,
-        1400.0
-      ],
-      "mesh_count": 2
+        "wall": "right"
+      }
     },
     {
-      "id": "DP09-W01",
+      "id": "DP09-I25",
       "code": "ПГ1",
       "label": "Наружная стена",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
-        0.0,
+        -22.5,
         0.0
       ],
       "size_mm": [
-        6000.0,
+        6045,
         45.0
       ],
       "z_mm": 0,
@@ -2658,50 +698,20 @@
       "length_mm": 6000.0,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "front",
-        "a": [
-          0,
-          22.5
-        ],
-        "b": [
-          6000,
-          22.5
-        ],
-        "thickness": 45,
-        "external": true,
-        "source_object": "p9_i2788",
-        "length": 6000.0,
-        "u": [
-          1.0,
-          0.0
-        ],
-        "angle_deg": 0.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        0.0,
-        0.0,
-        0.0,
-        6000.0,
-        45.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 0.0
     },
     {
-      "id": "DP09-W02",
+      "id": "DP09-I26",
       "code": "ПГ2",
       "label": "Наружная стена",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
-        0.0,
+        -22.5,
         5955.0
       ],
       "size_mm": [
-        6000.0,
+        6045,
         45.0
       ],
       "z_mm": 0,
@@ -2720,51 +730,21 @@
       "length_mm": 6000.0,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "rear",
-        "a": [
-          0,
-          5977.5
-        ],
-        "b": [
-          6000,
-          5977.5
-        ],
-        "thickness": 45,
-        "external": true,
-        "source_object": "p9_i2788",
-        "length": 6000.0,
-        "u": [
-          1.0,
-          0.0
-        ],
-        "angle_deg": 0.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        0.0,
-        5955.0,
-        0.0,
-        6000.0,
-        6000.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 0.0
     },
     {
-      "id": "DP09-W03",
+      "id": "DP09-I27",
       "code": "ПГ3",
       "label": "Наружная стена",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
         0.0,
-        45.0
+        22.5
       ],
       "size_mm": [
         45.0,
-        5910.0
+        5955
       ],
       "z_mm": 0,
       "height_mm": 2200,
@@ -2782,51 +762,21 @@
       "length_mm": 5910.0,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "left",
-        "a": [
-          22.5,
-          45
-        ],
-        "b": [
-          22.5,
-          5955
-        ],
-        "thickness": 45,
-        "external": true,
-        "source_object": "p9_i2788",
-        "length": 5910.0,
-        "u": [
-          0.0,
-          1.0
-        ],
-        "angle_deg": 90.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        0.0,
-        45.0,
-        0.0,
-        45.0,
-        5955.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 90.0
     },
     {
-      "id": "DP09-W04",
+      "id": "DP09-I28",
       "code": "ПГ4",
       "label": "Наружная стена",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
         5955.0,
-        45.0
+        22.5
       ],
       "size_mm": [
         45.0,
-        5910.0
+        5955
       ],
       "z_mm": 0,
       "height_mm": 2200,
@@ -2844,51 +794,21 @@
       "length_mm": 5910.0,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "right",
-        "a": [
-          5977.5,
-          45
-        ],
-        "b": [
-          5977.5,
-          5955
-        ],
-        "thickness": 45,
-        "external": true,
-        "source_object": "p9_i2788",
-        "length": 5910.0,
-        "u": [
-          0.0,
-          1.0
-        ],
-        "angle_deg": 90.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        5955.0,
-        45.0,
-        0.0,
-        6000.0,
-        5955.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 90.0
     },
     {
-      "id": "DP09-W05",
+      "id": "DP09-I29",
       "code": "ПГ5",
       "label": "Перегородка",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
-        1400.0,
-        3300.0
+        1400.0350781877457,
+        3277.612675390939
       ],
       "size_mm": [
         45.0,
-        2655.0
+        2699.887324609062
       ],
       "z_mm": 0,
       "height_mm": 2200,
@@ -2896,61 +816,31 @@
       "source_object": "top_9_0003",
       "wall_id": "top_9_0003",
       "a_mm": [
-        1422.5,
-        3300.0
+        1422.5350781877457,
+        3300.112675390939
       ],
       "b_mm": [
-        1422.5,
-        5955.0
+        1422.5350781877457,
+        5955.000000000001
       ],
-      "length_mm": 2655.0,
+      "length_mm": 2654.887324609062,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "top_9_0003",
-        "a": [
-          1422.5,
-          3300.0
-        ],
-        "b": [
-          1422.5,
-          5955.0
-        ],
-        "thickness": 45,
-        "external": false,
-        "source_object": "top_9_0003",
-        "length": 2655.0,
-        "u": [
-          0.0,
-          1.0
-        ],
-        "angle_deg": 90.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        1400.0,
-        3300.0,
-        0.0,
-        1445.0,
-        5955.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 90.0
     },
     {
-      "id": "DP09-W06",
+      "id": "DP09-I30",
       "code": "ПГ6",
       "label": "Перегородка",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
-        3300.0,
-        3300.0
+        3300.035078187746,
+        3277.612675390939
       ],
       "size_mm": [
         45.0,
-        2655.0
+        2699.887324609062
       ],
       "z_mm": 0,
       "height_mm": 2200,
@@ -2958,60 +848,30 @@
       "source_object": "top_9_0004",
       "wall_id": "top_9_0004",
       "a_mm": [
-        3322.5,
-        3300.0
+        3322.535078187746,
+        3300.112675390939
       ],
       "b_mm": [
-        3322.5,
-        5955.0
+        3322.535078187746,
+        5955.000000000001
       ],
-      "length_mm": 2655.0,
+      "length_mm": 2654.887324609062,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "top_9_0004",
-        "a": [
-          3322.5,
-          3300.0
-        ],
-        "b": [
-          3322.5,
-          5955.0
-        ],
-        "thickness": 45,
-        "external": false,
-        "source_object": "top_9_0004",
-        "length": 2655.0,
-        "u": [
-          0.0,
-          1.0
-        ],
-        "angle_deg": 90.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        3300.0,
-        3300.0,
-        0.0,
-        3345.0,
-        5955.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 90.0
     },
     {
-      "id": "DP09-W07",
+      "id": "DP09-I31",
       "code": "ПГ7",
       "label": "Перегородка",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
-        45.0,
-        3255.0
+        22.499999999999893,
+        3254.964921812254
       ],
       "size_mm": [
-        5910.0,
+        5954.859687249021,
         45.0
       ],
       "z_mm": 0,
@@ -3020,61 +880,31 @@
       "source_object": "top_9_0005",
       "wall_id": "top_9_0005",
       "a_mm": [
-        45.0,
-        3277.5
+        44.99999999999989,
+        3277.464921812254
       ],
       "b_mm": [
-        5955.0,
-        3277.5
+        5954.859687249021,
+        3277.464921812254
       ],
-      "length_mm": 5910.0,
+      "length_mm": 5909.859687249021,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "top_9_0005",
-        "a": [
-          45.0,
-          3277.5
-        ],
-        "b": [
-          5955.0,
-          3277.5
-        ],
-        "thickness": 45,
-        "external": false,
-        "source_object": "top_9_0005",
-        "length": 5910.0,
-        "u": [
-          1.0,
-          0.0
-        ],
-        "angle_deg": 0.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        45.0,
-        3255.0,
-        0.0,
-        5955.0,
-        3300.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 0.0
     },
     {
-      "id": "DP09-W08",
+      "id": "DP09-I32",
       "code": "ПГ8",
       "label": "Перегородка",
       "category": "construction",
       "kind": "wall",
       "xy_mm": [
-        2400.0,
-        45.0
+        2400.035078187746,
+        22.597793735530942
       ],
       "size_mm": [
         45.0,
-        3210.0
+        3254.902206264469
       ],
       "z_mm": 0,
       "height_mm": 2200,
@@ -3082,50 +912,20 @@
       "source_object": "top_9_0006",
       "wall_id": "top_9_0006",
       "a_mm": [
-        2422.5,
-        45.0
+        2422.535078187746,
+        45.09779373553094
       ],
       "b_mm": [
-        2422.5,
+        2422.535078187746,
         3255.0
       ],
-      "length_mm": 3210.0,
+      "length_mm": 3209.902206264469,
       "thickness_mm": 45,
       "notes": "Толщина 45 мм; полная высота 2200 мм принята.",
-      "source_record": {
-        "id": "top_9_0006",
-        "a": [
-          2422.5,
-          45.0
-        ],
-        "b": [
-          2422.5,
-          3255.0
-        ],
-        "thickness": 45,
-        "external": false,
-        "source_object": "top_9_0006",
-        "length": 3210.0,
-        "u": [
-          0.0,
-          1.0
-        ],
-        "angle_deg": 90.0,
-        "height": 2200
-      },
-      "model_bounds_mm": [
-        2400.0,
-        45.0,
-        0.0,
-        2445.0,
-        3255.0,
-        2200.0
-      ],
-      "mesh_count": 1,
       "axis_angle_deg": 90.0
     },
     {
-      "id": "DP09-R05",
+      "id": "DP09-I33",
       "code": "П5",
       "label": "Комната отдыха",
       "category": "construction",
@@ -3162,19 +962,10 @@
           5955.0,
           3255.0
         ]
-      ],
-      "model_bounds_mm": [
-        2445.0,
-        45.0,
-        -6.0,
-        5955.0,
-        3255.0,
-        0.0
-      ],
-      "mesh_count": 2
+      ]
     },
     {
-      "id": "DP09-R01",
+      "id": "DP09-I34",
       "code": "П1",
       "label": "Парная",
       "category": "construction",
@@ -3211,19 +1002,10 @@
           5955.0,
           5955.0
         ]
-      ],
-      "model_bounds_mm": [
-        3345.0,
-        3300.0,
-        -6.0,
-        5955.0,
-        5955.0,
-        0.0
-      ],
-      "mesh_count": 2
+      ]
     },
     {
-      "id": "DP09-R02",
+      "id": "DP09-I35",
       "code": "П2",
       "label": "Помывочная",
       "category": "construction",
@@ -3241,7 +1023,7 @@
       "angle_deg": 0,
       "source_object": null,
       "room_kind": "wash",
-      "area_m2": 4.92502,
+      "area_m2": 4.925025,
       "notes": "Чистые размеры помещения между внутренними гранями стен.",
       "polygon_mm": [
         [
@@ -3260,19 +1042,10 @@
           1445.0,
           5955.0
         ]
-      ],
-      "model_bounds_mm": [
-        1445.0,
-        3300.0,
-        0.0,
-        3300.0,
-        5955.0,
-        0.0
-      ],
-      "mesh_count": 1
+      ]
     },
     {
-      "id": "DP09-R03",
+      "id": "DP09-I36",
       "code": "П3",
       "label": "Санузел",
       "category": "construction",
@@ -3290,7 +1063,7 @@
       "angle_deg": 0,
       "source_object": null,
       "room_kind": "wc",
-      "area_m2": 3.59753,
+      "area_m2": 3.597525,
       "notes": "Чистые размеры помещения между внутренними гранями стен.",
       "polygon_mm": [
         [
@@ -3309,19 +1082,10 @@
           45.0,
           5955.0
         ]
-      ],
-      "model_bounds_mm": [
-        45.0,
-        3300.0,
-        0.0,
-        1400.0,
-        5955.0,
-        0.0
-      ],
-      "mesh_count": 1
+      ]
     },
     {
-      "id": "DP09-R04",
+      "id": "DP09-I37",
       "code": "П4",
       "label": "Спальня",
       "category": "construction",
@@ -3358,102 +1122,9 @@
           45.0,
           45.0
         ]
-      ],
-      "model_bounds_mm": [
-        45.0,
-        45.0,
-        -6.0,
-        2400.0,
-        3255.0,
-        0.0
-      ],
-      "mesh_count": 2
-    },
-    {
-      "id": "DP09-A01",
-      "code": "ОСН",
-      "label": "Основание и настилы",
-      "category": "construction",
-      "kind": "accessory",
-      "xy_mm": [
-        0.0,
-        -1.0
-      ],
-      "size_mm": [
-        6000.0,
-        6001.0
-      ],
-      "z_mm": -158.0,
-      "height_mm": 188.0,
-      "angle_deg": 0,
-      "source_object": null,
-      "notes": "Детализация для визуализации; габарит измерен по 3D-геометрии.",
-      "model_bounds_mm": [
-        0.0,
-        -1.0,
-        -158.0,
-        6000.0,
-        6000.0,
-        30.0
-      ],
-      "mesh_count": 3
-    },
-    {
-      "id": "DP09-A03",
-      "code": "БН2",
-      "label": "Банные принадлежности",
-      "category": "construction",
-      "kind": "accessory",
-      "xy_mm": [
-        4534.0,
-        5643.0
-      ],
-      "size_mm": [
-        290.23,
-        232.0
-      ],
-      "z_mm": 900.0,
-      "height_mm": 314.88,
-      "angle_deg": 0,
-      "source_object": null,
-      "notes": "Детализация для визуализации; габарит измерен по 3D-геометрии.",
-      "model_bounds_mm": [
-        4534.0,
-        5643.0,
-        900.0,
-        4824.234,
-        5875.0,
-        1214.883
-      ],
-      "mesh_count": 6
+      ]
     }
   ],
-  "mapping": {
-    "p9_i2813": "DP09-O01",
-    "p9_i2818": "DP09-O02",
-    "p9_i2868": "DP09-O03",
-    "p9_i2860": "DP09-O04",
-    "p9_i2859": "DP09-O05",
-    "p9_i2831": "DP09-O06",
-    "p9_i2842": "DP09-O07",
-    "p9_i2852": "DP09-O08",
-    "p9_i2846": "DP09-O09",
-    "p9_i2835": "DP09-O10",
-    "p9_i2856": "DP09-O11",
-    "p9_i2822": "DP09-O12",
-    "top_9_0009": "DP09-O13",
-    "top_9_0008+top_9_0007": "DP09-O14",
-    "p9_i2879": "DP09-O15",
-    "p9_i2808": "DP09-D01",
-    "p9_i2809": "DP09-D02",
-    "p9_i2810": "DP09-D03",
-    "p9_i2811": "DP09-D04",
-    "p9_i2812": "DP09-D05",
-    "p9_i2875": "DP09-N01",
-    "p9_i2876": "DP09-N02",
-    "p9_i2877": "DP09-N03",
-    "p9_i2878": "DP09-N04"
-  },
   "rooms": [
     {
       "number": 5,
@@ -3504,7 +1175,7 @@
     {
       "number": 2,
       "kind": "wash",
-      "area_m2": 4.92502,
+      "area_m2": 4.925025,
       "polygon": [
         [
           3300.0,
@@ -3527,7 +1198,7 @@
     {
       "number": 3,
       "kind": "wc",
-      "area_m2": 3.59753,
+      "area_m2": 3.597525,
       "polygon": [
         [
           1400.0,
@@ -3577,7 +1248,7 @@
     "Конструкция мебели обобщена; для производства нужны рабочие узлы.",
     "ASTON 16: вынос от ASTON 12 по разрешённому допущению. Монтажный противопожарный узел не разработан."
   ],
-  "dimension_sha256": "2f0972b3c847160c56a792caa025cb83a0df3a2e84b166c70d80d43acfc64076",
+  "dimension_sha256": "ffcbc5cc7fa582c43317828e7a2f8998550683d7e516875544ed04a86d6d2e6c",
   "family": "Квадро Хаус",
   "initial_camera_direction": [
     0.75,
@@ -3665,19 +1336,14 @@
         "dimensions": "1000 × 350 мм"
       },
       {
-        "code": "В1",
-        "label": "Вешалка с полкой",
-        "dimensions": "850 × 350 мм"
-      },
-      {
         "code": "К1",
         "label": "Кровать",
         "dimensions": "2000 × 1400 мм"
       },
       {
-        "code": "П1",
-        "label": "Печь ASTON 16",
-        "dimensions": "420 × 670 мм"
+        "code": "В1",
+        "label": "Вешалка с полкой",
+        "dimensions": "850 × 350 мм"
       },
       {
         "code": "Д1",
@@ -3685,15 +1351,27 @@
         "dimensions": "900 × 900 мм"
       },
       {
+        "code": "Р1",
+        "label": "Раковина",
+        "dimensions": "350 × 300 мм"
+      },
+      {
         "code": "У1",
         "label": "Унитаз",
         "dimensions": "700 × 450 мм"
       },
       {
-        "code": "Р1",
-        "label": "Раковина",
-        "dimensions": "350 × 300 мм"
+        "code": "П1",
+        "label": "Печь ASTON 16",
+        "dimensions": "420 × 670 мм"
       }
     ]
-  }
+  },
+  "source_slide_index": 23,
+  "drawing_crop_pt": [
+    138.0,
+    145,
+    772.992125984252,
+    808.0
+  ]
 }

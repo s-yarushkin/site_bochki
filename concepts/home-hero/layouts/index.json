@@ -1,5 +1,5 @@
 {
-  "version": "catalog-14-1-2026-11-03",
+  "version": "album-review-2026-11-05",
   "plans": [
     {
       "id": "dp3d-01",
@@ -11,10 +11,11 @@
       "drawing": "drawings/01.svg",
       "model": "models/01.glb",
       "spec": "specs/01.json",
-      "sha256": "147b914929777b30fef9f7838fc6db1816b413781f5565e672fa63f8597b91b5",
-      "dimension_sha256": "37adc98d0757e5efee299eb99f28a4b94e9f83d11dcdadba01a64c4a5abefcc3",
+      "preview": "previews/01.webp",
+      "sha256": "2895a364667890ad66ffd933ba8c550a126024b36f3b36b1426648820de9dccc",
+      "dimension_sha256": "956b5784215ecad4cb0bcbce612152c840c1f7a51c917d9f45b8c91ea8f90d60",
       "label": "01 · 4 × 2,1 м",
-      "preview": "previews/01.webp"
+      "source_slide": "p1"
     },
     {
       "id": "dp3d-02",
@@ -26,10 +27,11 @@
       "drawing": "drawings/02.svg",
       "model": "models/02.glb",
       "spec": "specs/02.json",
-      "sha256": "3032eea51bbf2dad343a5eb5f09a40afa7c7129df6f653ac62cce7abe176bb16",
-      "dimension_sha256": "f9c512a67a3c1b0dc37b77f92cf1bb05781d5380976300c5a4ff94d473bd9d0f",
+      "preview": "previews/02.webp",
+      "sha256": "fae2e59f4988dbcee4503c85cd94453e3cd04566936edeb428e5c7b2044547db",
+      "dimension_sha256": "492acb6e899d273c4b894bec46a903ab27eb5d810f3348b5746fb3bf5b540b9f",
       "label": "02 · 5 × 2,1 м",
-      "preview": "previews/02.webp"
+      "source_slide": "p2"
     },
     {
       "id": "dp3d-03",
@@ -41,10 +43,11 @@
       "drawing": "drawings/03.svg",
       "model": "models/03.glb",
       "spec": "specs/03.json",
-      "sha256": "bf27ae2f80d33fcc502d276f189ff4bf8646f9fe64b5b8d351a13f3cc4191a97",
-      "dimension_sha256": "229ced90d0bf27bf95cc9a492a3dce7a9393f99d21f54a0e1568ac0e2c7fcfdc",
+      "preview": "previews/03.webp",
+      "sha256": "e71a692a15cfb7b7393f3b425fd300f354bca60300f7e50fbe3ba5bf5f644067",
+      "dimension_sha256": "372f269e79bc979e078f63251fe9ff06bd847b92b518e016989e7876398c6fb3",
       "label": "03 · 6 × 2,1 м",
-      "preview": "previews/03.webp"
+      "source_slide": "p3"
     },
     {
       "id": "dp3d-04",
@@ -56,10 +59,11 @@
       "drawing": "drawings/04.svg",
       "model": "models/04.glb",
       "spec": "specs/04.json",
-      "sha256": "043d39e5ad62df2dfc27fd052f0765e10d8c5228a2cde654c3810d3836d99a27",
-      "dimension_sha256": "6f6fd89d3ac9d97377e81dc920623b0e9f7688b1bf09c78d10b1aa0475d2ecaf",
+      "preview": "previews/04.webp",
+      "sha256": "bb5f41b9c229357549af7474f0949471855787ea52f55699badfd294507db4c7",
+      "dimension_sha256": "a9f2a6f583acebadbb43f2bd01602bab6f9202955b82485bf82466c820385989",
       "label": "04 · 6 × 2,1 м",
-      "preview": "previews/04.webp"
+      "source_slide": "p4"
     },
     {
       "id": "dp3d-05",
@@ -71,10 +75,11 @@
       "drawing": "drawings/05.svg",
       "model": "models/05.glb",
       "spec": "specs/05.json",
-      "sha256": "5e51b7bf0b8e71bfe9428f7005e028885d9f15e7e494a70cba36da786818f7e2",
-      "dimension_sha256": "313d8897cb908d4872d82796b66f31c0a486c99d06ddf9e45d169678dcb0d5d4",
+      "preview": "previews/05.webp",
+      "sha256": "5e49290b46bc31ad5ec814c3015a71d91d6e6c083ec872564997baee53eb03b9",
+      "dimension_sha256": "d4cf1fa26c227c4dabc4e2b5fd371e29b82f6a31afe9e9b625ff34f0e54eab5a",
       "label": "05 · 6 × 2,1 м",
-      "preview": "previews/05.webp"
+      "source_slide": "p5"
     },
     {
       "id": "dp3d-06",
@@ -86,10 +91,11 @@
       "drawing": "drawings/06.svg",
       "model": "models/06.glb",
       "spec": "specs/06.json",
-      "sha256": "789623961e7119980d7df665f6e90d9fcdfdc7e32d7e30abe727683c381dc55c",
-      "dimension_sha256": "52f66a81081bff0623dafbf0614a8820e8192e040e2343e05d8f7a6cddb32eba",
+      "preview": "previews/06.webp",
+      "sha256": "8e982c07a0cf0cf0fb59234739e861928d1501ece14e40da39dd28b5b888da79",
+      "dimension_sha256": "83f0e69e17ead93b7072cc58a7e5a93fc339ba8d084db847fb3ec399122f6f6d",
       "label": "06 · 4 × 4 м",
-      "preview": "previews/06.webp"
+      "source_slide": "p6"
     },
     {
       "id": "dp3d-07",
@@ -101,10 +107,11 @@
       "drawing": "drawings/07.svg",
       "model": "models/07.glb",
       "spec": "specs/07.json",
-      "sha256": "14e266add5f330b55d55eedf7a6fb8d5f38933528e9db177a45f22fa6432378b",
-      "dimension_sha256": "08d9655cb39265a0e3380271a6f61981020178747c6e4abef5559b7d612b97db",
+      "preview": "previews/07.webp",
+      "sha256": "741080b98b24c03f9ebe4ea6ec107ff1f19d949d00bb38e20ed88d263d303eb4",
+      "dimension_sha256": "aeb5b868e1b6e8d1a0936b9706df1c2c32b54c8a604a16c728053e8829479eb8",
       "label": "07 · 5 × 6 м",
-      "preview": "previews/07.webp"
+      "source_slide": "p7"
     },
     {
       "id": "dp3d-08",
@@ -116,10 +123,11 @@
       "drawing": "drawings/08.svg",
       "model": "models/08.glb",
       "spec": "specs/08.json",
-      "sha256": "99d5f7f6c5be42a358da4e63dfdf32247c3f18e69ea837e3719d82aa9f8ff1e2",
-      "dimension_sha256": "2b44422768dba079e5fe0560986e2491fafc6502cc9a07b7604c6331f24258ab",
+      "preview": "previews/08.webp",
+      "sha256": "c64f8b7e0ca98973ea799cf686faeba1ccb708d633022f85e0299b5e5340bf23",
+      "dimension_sha256": "612974d41616222da00ccb79a8729ff4ea6043d2f450d94f063c4a4dd801ce0a",
       "label": "08 · 6 × 6 м",
-      "preview": "previews/08.webp"
+      "source_slide": "p8"
     },
     {
       "id": "dp3d-09",
@@ -131,10 +139,11 @@
       "drawing": "drawings/09.svg",
       "model": "models/09.glb",
       "spec": "specs/09.json",
-      "sha256": "a256787efde09127bb3095719720eea00275e87f8e742267c572b37c90f1ed07",
-      "dimension_sha256": "2f0972b3c847160c56a792caa025cb83a0df3a2e84b166c70d80d43acfc64076",
+      "preview": "previews/09.webp",
+      "sha256": "f27f431d1e0e6679f507c3ab69567d5356c28d35c4b69c034ecc7da21ce5dcaf",
+      "dimension_sha256": "ffcbc5cc7fa582c43317828e7a2f8998550683d7e516875544ed04a86d6d2e6c",
       "label": "09 · 6 × 6 м",
-      "preview": "previews/09.webp"
+      "source_slide": "p9"
     },
     {
       "id": "dp3d-10",
@@ -146,10 +155,11 @@
       "drawing": "drawings/10.svg",
       "model": "models/10.glb",
       "spec": "specs/10.json",
-      "sha256": "ab1cb8dc783162a116dacf8fb77a44ce1d6ccd6e2ef65d64ecc28dd1e6129ae3",
-      "dimension_sha256": "933b7ddb85515efb8bfa4a50eb6c922d9cc176ec9aebf45d62558d7f4c4dab2a",
+      "preview": "previews/10.webp",
+      "sha256": "83b589e0ef90c3835985cc964b15a2fe32eed63b86a7ec0a7ed9a76b904e6a8d",
+      "dimension_sha256": "b9dad5a6539ea133456374c42895e2dba42b33f6725832faeb00965d0d192b6b",
       "label": "10 · 4 × 6 м",
-      "preview": "previews/10.webp"
+      "source_slide": "p10"
     },
     {
       "id": "dp3d-11",
@@ -161,40 +171,45 @@
       "drawing": "drawings/11.svg",
       "model": "models/11.glb",
       "spec": "specs/11.json",
-      "sha256": "e224ec420bc9e5ca4eef1f92eb3ae3b2f43fcac4b35ae2efcd29c8673fea3139",
-      "dimension_sha256": "2f636b4f0917196e82cf342cd1417a7a4ab60e7bdd552af978a25a49af8f0dea",
+      "preview": "previews/11.webp",
+      "sha256": "302ca50f15860922b212ceb3b942d09c3c94539d5f4c14a3fa3529368dde9d54",
+      "dimension_sha256": "85bf07f3fed0b9fe1973826fb8f1a44158fe164eb4d96cddb675ca133b66b69d",
       "label": "11 · 6 × 6 м",
-      "preview": "previews/11.webp"
+      "source_slide": "p11"
     },
     {
       "id": "dp3d-12",
       "number": 12,
       "models": [
-        "parus"
+        "parus",
+        "viking"
       ],
       "size": "500",
       "drawing": "drawings/12.svg",
       "model": "models/12.glb",
       "spec": "specs/12.json",
-      "sha256": "8652d3dc894dee4f5f85dcea0a8d6ef77abe0e8d1d199bf7ef62b6d9d456022d",
-      "dimension_sha256": "8e7b1d427c2a73f68068d47b81d205a831fcd66308deb386ef860bbdc15cb2a3",
+      "preview": "previews/12.webp",
+      "sha256": "8979a1282992100e7acb704762aff622dc40e73a4c829b1fdf096d4337369ac7",
+      "dimension_sha256": "a7c8a2f8ba8a98f08ce174a37cc7e818c9a047eab02afe6c8d2f57a29fb8dcfc",
       "label": "12 · 5 × 2,4 м",
-      "preview": "previews/12.webp"
+      "source_slide": "p12"
     },
     {
       "id": "dp3d-13",
       "number": 13,
       "models": [
+        "parus",
         "viking"
       ],
       "size": "600",
       "drawing": "drawings/13.svg",
       "model": "models/13.glb",
       "spec": "specs/13.json",
-      "sha256": "90c0c9627a912599d4e3614f5708b68c0b19e8bdcca60c624f9a70565b385d4b",
-      "dimension_sha256": "0302a7b4170ab090dcae36df546ef8ee2812a533c9f102d28106a75c90dfc024",
+      "preview": "previews/13.webp",
+      "sha256": "22775810fd24e6424487543104b33229bde3ee4a70f2d354f96b9f208df71ca8",
+      "dimension_sha256": "a5b8427be99865acc0f453bcdc51f11921e7ec9dc603c5ef58952f0da10a0e8b",
       "label": "13 · 6 × 2,4 м",
-      "preview": "previews/13.webp"
+      "source_slide": "p13"
     },
     {
       "id": "dp3d-14",
@@ -207,10 +222,141 @@
       "drawing": "drawings/14.svg",
       "model": "models/14.glb",
       "spec": "specs/14.json",
-      "sha256": "5c6bd998f15e493c4e97e6f4b3bb560ee02fd2e5191eba3b1d91b7f0e3f6bb1c",
-      "dimension_sha256": "8b7b62633f35e93ee673ec2a9e1d6206f7d2aee6bde45d355b0f25e763fc82d2",
+      "preview": "previews/14.webp",
+      "sha256": "b6b2ead1847badb2dde98b98675bd4bd72f07c4ac0beda580699548125085302",
+      "dimension_sha256": "bafbd176f2252d38356264c41ed91de475f2870004ffd6c947657792c00c29ff",
       "label": "14 · 4 × 2,4 м",
-      "preview": "previews/14.webp"
+      "source_slide": "p14"
+    },
+    {
+      "id": "dp3d-15",
+      "number": 15,
+      "models": [
+        "kvadro"
+      ],
+      "size": "450",
+      "drawing": "drawings/15.svg",
+      "model": "models/15.glb",
+      "spec": "specs/15.json",
+      "preview": "previews/15.webp",
+      "sha256": "4bc58441a5d69c60cbd138f6965923b465eea6f1d72bef9002d61c16b730fad5",
+      "dimension_sha256": "0e322da2334e8b4f3d9391aec8118b14f00a69437a8dc30d489259a93307a98e",
+      "label": "15 · 4,5 × 2,1 м",
+      "source_slide": "dp_p15"
+    },
+    {
+      "id": "dp3d-16",
+      "number": 16,
+      "models": [
+        "kvadro"
+      ],
+      "size": "550",
+      "drawing": "drawings/16.svg",
+      "model": "models/16.glb",
+      "spec": "specs/16.json",
+      "preview": "previews/16.webp",
+      "sha256": "82ebd07808b6fe0e6dc6cef78f59ec085e2ecbe6a93821719238d789eb929f9b",
+      "dimension_sha256": "64b1414176f7264a564e193ae7fabcc79e7121222b4c8cfaefe6c8c4d07fc48c",
+      "label": "16 · 5,5 × 2,1 м",
+      "source_slide": "dp_p16"
+    },
+    {
+      "id": "dp3d-17",
+      "number": 17,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "5x4",
+      "drawing": "drawings/17.svg",
+      "model": "models/17.glb",
+      "spec": "specs/17.json",
+      "preview": "previews/17.webp",
+      "sha256": "1f4aa5a606c706892698f197d8e1782de198120cd1f8745564591077ee475b4d",
+      "dimension_sha256": "165d70ee4b6c46437d20cfe946aacf65e33ff8f2e0842fd104134f36b0f51051",
+      "label": "17 · 4 × 5 м",
+      "source_slide": "dp_p17"
+    },
+    {
+      "id": "dp3d-18",
+      "number": 18,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "450",
+      "drawing": "drawings/18.svg",
+      "model": "models/18.glb",
+      "spec": "specs/18.json",
+      "preview": "previews/18.webp",
+      "sha256": "188c441c4ba2854b72fe854a76a69e0bd51dafa3b0fd9d68c28f44efa38c40b9",
+      "dimension_sha256": "28aae94d92199b843d9c28d5e8566f1f3f4ef0305650b30aba2f822c0d377d1c",
+      "label": "18 · 4,5 × 2,4 м",
+      "source_slide": "dp_p18"
+    },
+    {
+      "id": "dp3d-19",
+      "number": 19,
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "550",
+      "drawing": "drawings/19.svg",
+      "model": "models/19.glb",
+      "spec": "specs/19.json",
+      "preview": "previews/19.webp",
+      "sha256": "3e52c95a12639fb156f23134d09f52d4d8e42f763e5695651668c33c209c1d2a",
+      "dimension_sha256": "af7efdd912e4179818c9e26b2f551f0130c06cad9ad73a467716331051dde1c9",
+      "label": "19 · 5,5 × 2,4 м",
+      "source_slide": "dp_p19"
+    },
+    {
+      "id": "dp3d-20",
+      "number": 20,
+      "models": [
+        "kvadro"
+      ],
+      "size": "400",
+      "drawing": "drawings/20.svg",
+      "model": "models/20.glb",
+      "spec": "specs/20.json",
+      "preview": "previews/20.webp",
+      "sha256": "e71c794730dae688856c68c56c37f7e686f4ba6ff183a2462fe4e4f73bfc3e57",
+      "dimension_sha256": "5b41edff30d40c95c7ff87ad8ade783f4ca3b90f5e9480abe6a7efb768f2c83d",
+      "label": "20 · 4 × 2,1 м · парная 1,7 м",
+      "source_slide": "dp_p20"
+    },
+    {
+      "id": "dp3d-21",
+      "number": 21,
+      "models": [
+        "kvadro"
+      ],
+      "size": "450",
+      "drawing": "drawings/21.svg",
+      "model": "models/21.glb",
+      "spec": "specs/21.json",
+      "preview": "previews/21.webp",
+      "sha256": "058ce7b2eb26506f1e7e308b4a35d7b1549361167cb57d36b9fbf97a044ad91d",
+      "dimension_sha256": "b22b47df2a93a79e9c6aadfa773217e6045d3c981fa56516fc341fbbe994d5e6",
+      "label": "21 · 4,5 × 2,1 м · парная 1,7 м",
+      "source_slide": "dp_p21"
+    },
+    {
+      "id": "dp3d-22",
+      "number": 22,
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6",
+      "drawing": "drawings/22.svg",
+      "model": "models/22.glb",
+      "spec": "specs/22.json",
+      "preview": "previews/22.webp",
+      "sha256": "06ca1392c33b0580cf1b5cbed08e4df54baa5215cdbae17519976629eb95c1ae",
+      "dimension_sha256": "a7f77f785c494858ff1305593da5b13dbfbb1df853acf26b2542c709a81123f6",
+      "label": "22 · 6 × 6 м · с диваном",
+      "source_slide": "dp_p22"
     }
   ]
 }

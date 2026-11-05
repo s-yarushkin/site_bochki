@@ -87,8 +87,8 @@ export function mountModelJourney(pricebook){
       </div>
     </div>
     <section class="hh-bath-plan" aria-labelledby="hh-examples-title">
-      <h3 id="hh-examples-title">Примеры планировок для этой бани</h3>
-      <p class="hh-examples-note">Посмотрите разные варианты размещения помещений и мебели. У каждого примера свои габариты, указанные на чертеже. Размер для расчёта стоимости выбирается выше.</p>
+      <h3 id="hh-examples-title">Планировки выбранного размера</h3>
+      <p class="hh-examples-note">Откройте чертёж для подробной спецификации или посмотрите расстановку в 3D.</p>
       <div class="hh-layout-gallery"></div>
       <p class="hh-bath-plan-status" role="status"></p>
     </section>`;
@@ -107,7 +107,7 @@ export function mountModelJourney(pricebook){
   let book, pricesUnavailable, layouts, planLoad, planError, shownPlans = [], current, size, lastCard;
 
   function drawExamples(){
-    shownPlans = (layouts ?? []).filter(plan=>plan.models.includes(current));
+    shownPlans = (layouts ?? []).filter(plan=>plan.models.includes(current) && plan.size === size);
     createLayoutGallery(find('.hh-layout-gallery'),shownPlans);
     planStatus.textContent = shownPlans.length ? '' : planError ?
       'Примеры сейчас недоступны. Попробуйте обновить страницу.' : layouts ?
@@ -195,6 +195,7 @@ export function mountModelJourney(pricebook){
     size=sizePicker.value;
     history.replaceState(history.state,'',route('bath-model',current,size));
     drawSize();
+    drawExamples();
   }
   sizePicker.addEventListener('change',changeSize);
   find('.hh-bath-offer button').addEventListener('click',event=>openModelRequest({

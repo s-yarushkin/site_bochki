@@ -64,11 +64,37 @@ export async function mountLayoutViewer(stage, url, signal){
     const camera = new Three.PerspectiveCamera(37,1,.015,150);
     controls = new OrbitControls(camera,canvas);
     controls.enablePan = false;
+    controls.enableZoom = true;
     controls.maxPolarAngle = Math.PI*.49;
     const bounds = new Three.Box3().setFromObject(model);
     const sphere = bounds.getBoundingSphere(new Three.Sphere());
     controls.minDistance = sphere.radius*.65;
     controls.maxDistance = sphere.radius*9;
+    const benchButton = stage.querySelector('[data-layout-bench]');
+    const movingBenches = [];
+    model.traverse(object=>{
+      const vector = object.userData.retract_vector;
+      if(Array.isArray(vector) && vector.length === 3 && vector.every(Number.isFinite)){
+        movingBenches.push({object,origin:object.position.clone(),offset:new Three.Vector3(...vector)});
+      }
+    });
+    let retracted = false;
+    function setBenchRetracted(value){
+      retracted = value;
+      for(const {object,origin,offset} of movingBenches){
+        object.position.copy(origin);
+        if(retracted) object.position.add(offset);
+      }
+      if(benchButton){
+        benchButton.setAttribute('aria-pressed',String(retracted));
+        benchButton.textContent = retracted ? 'Выдвинуть нижний полок' : 'Задвинуть нижний полок';
+      }
+      render();
+    }
+    if(benchButton){
+      benchButton.hidden = movingBenches.length === 0;
+      benchButton.addEventListener('click',()=>setBenchRetracted(!retracted),{signal});
+    }
     const cutWalls = [];
     const normals = {front:[0,0,1],rear:[0,0,-1],left:[-1,0,0],right:[1,0,0]};
     model.traverse(object=>{
@@ -92,6 +118,7 @@ export async function mountLayoutViewer(stage, url, signal){
       renderer.render(scene,camera);
     }
     function reset(){
+      setBenchRetracted(false);
       const angle = Three.MathUtils.degToRad(camera.fov)/2;
       const distance = sphere.radius/Math.sin(Math.atan(Math.tan(angle)*Math.min(1,camera.aspect)));
       controls.target.copy(sphere.center);
@@ -116,8 +143,12 @@ export async function mountLayoutViewer(stage, url, signal){
       else reset();
     }
     controls.addEventListener('change',render);
-    canvas.addEventListener('wheel',event=>event.stopImmediatePropagation(),{capture:true,passive:true,signal});
     canvas.addEventListener('keydown',event=>{
+      if(['+','=','-','_'].includes(event.key)){
+        event.preventDefault();
+        zoom(['+','='].includes(event.key) ? .8 : 1.25);
+        return;
+      }
       const rotation = {ArrowLeft:[0,-.13],ArrowRight:[0,.13],ArrowUp:[-.13,0],ArrowDown:[.13,0]}[event.key];
       if(!rotation) return;
       event.preventDefault();
