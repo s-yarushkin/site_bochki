@@ -13,13 +13,13 @@
       "section": "comfort",
       "unchanged": false,
       "sourceSha256": "57d206c2bcfdf4389ee994dc46f9fd2ed17a9bdbd2c54de0d1b9bf285c3deb9d",
-      "resultSha256": "1542e03376d56aad0dda51699de6102794197458214d2671230484cdfd0263ba"
+      "resultSha256": "9d620bb078cbca90c833ada499d3f702cb4fdc5831af8fee0a76991874f9df97"
     },
     {
       "section": "individual",
       "unchanged": false,
       "sourceSha256": "cf49b96bccc7276a296405af5db08d998c1db8f0e8e499ac44c902bcef7a7e9b",
-      "resultSha256": "640705bca85d13119385ab0782a82a636511915da8444e90d68493fc2561783c"
+      "resultSha256": "c989b9b1b8d85809158600d83f03a751b04bf63c322df43f1cc74ffbf45b116e"
     },
     {
       "section": "breath",

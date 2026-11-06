@@ -12,6 +12,12 @@ COMFORT_COPY={
  'Вентиляция для проветривания и просушки бани. Входная дверь ПВХ.':'Вентиляция и форточка в парной для проветривания и просушки. Входная дверь ПВХ.'
 }
 
+PACKAGE_PATH_COPY={
+ '<a class="textlink" href="/komplektaciya/">Вся комплектация →</a>': '<p class="muted">В «Делюкс» дополнительно предусмотрены печь с двумя каменками, подсветка полков, утепление пола и уличный свет.</p><button type="button" class="choice-text-button" data-compare-details aria-haspopup="dialog">Сравнить «Комфорт» и «Делюкс» <span aria-hidden="true">↗</span></button>',
+ 'В дополнение к комплектации «Комфорт»': 'Дополнения к любой комплектации',
+ 'У каждой семьи свой банный вечер. Подстроим пространство под ваши привычки.': 'Если нужно больше возможностей, дополним комплектацию и подстроим баню под ваши привычки.',
+}
+
 def compose(page,out):
  baseline=HERE/'baseline-v5';meta=json.loads((baseline/'metadata.json').read_text('utf8'))
  for row in meta['files']:
@@ -21,6 +27,7 @@ def compose(page,out):
  source=(baseline/'index.html').read_text('utf8');start=source.index('<section class="ritual"');end=source.index('</main>')
  lower=source[start:end]
  for old,new in COMFORT_COPY.items():assert lower.count(old)==1;lower=lower.replace(old,new)
+ for old,new in PACKAGE_PATH_COPY.items():assert lower.count(old)==1;lower=lower.replace(old,new)
  assert lower.count(INDIVIDUAL_LINK)==1
  lower=lower.replace(INDIVIDUAL_LINK,'')
  care=(HERE/'care.html').read_text('utf8').strip();closing='<section class="closing section" id="contact">';assert lower.count(closing)==1
@@ -44,6 +51,7 @@ def compose(page,out):
   if key=='comfort':
    for old,new in COMFORT_COPY.items():expected=expected.replace(old,new)
   if key=='individual':expected=expected.replace(INDIVIDUAL_LINK,'')
+  for old,new in PACKAGE_PATH_COPY.items():expected=expected.replace(old,new)
   assert expected in page,('Protected section changed',key)
   protected.append({'section':key,'unchanged':expected==original,'sourceSha256':hashlib.sha256(original.encode()).hexdigest(),'resultSha256':hashlib.sha256(expected.encode()).hexdigest()})
  report={'pass':True,'sourceDate':meta['capturedDate'],'sourceHomeSha256':meta['files'][0]['sha256'],'sections':protected,'carePosition':'after FAQ, immediately before closing','originalMotionSha256':hashlib.sha256(motion.encode()).hexdigest(),'heroHasVologda':False}

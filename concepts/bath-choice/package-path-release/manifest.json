@@ -1,0 +1,11 @@
+{
+  "baseline": "/srv/sites/dachapar-preview/releases/HOME-TRUST-8aee8919ae163e70",
+  "before": {
+    "choice/app.mjs": "f3eb77c65e2e0daf37ca0ef0573554c0b7928b46081b9a28300a0f3b624340a6",
+    "index.html": "9bef8e5d1d7ff589109d5f42f4c476c3403ea72cb2f60be34560d9f88b23f79e"
+  },
+  "files": {
+    "choice/app.mjs": "414c26ff08c3db3044066fa803bd0770c8c712a7a2ee2c85b78a9cc4559c0e3c",
+    "index.html": "49720b265c804f51af0d42523387559c8f8d1dc801efcf474d11577c66062aa0"
+  }
+}

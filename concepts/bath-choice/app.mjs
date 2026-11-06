@@ -52,7 +52,7 @@ for(const [key,label] of Object.entries(PACKAGE_NAMES)){
  if(key==='deluxe')card.append($('[data-compare]'));
  $('[data-package-cards]').append(card);radio.addEventListener('change',()=>choose({package:key}));
 }
-$('[data-compare]').addEventListener('click',event=>openPackageComparison({
+for(const trigger of document.querySelectorAll('[data-compare],[data-compare-details]'))trigger.addEventListener('click',event=>openPackageComparison({
  selection:HERO_MODELS[state.model].name+' · '+choiceSizeLabel(book,state.model,state.size),opener:event.currentTarget
 }));
 

@@ -17,6 +17,8 @@ test('every protected lower section keeps its markup except approved edits and c
   if(section[0].includes('id="comfort"'))continue;
   const expected=section[0].includes('id="individual"')
    ? section[0].replace('<a class="textlink" href="/planirovki/">Посмотреть примеры планировок →</a>','')
+    .replace('В дополнение к комплектации «Комфорт»','Дополнения к любой комплектации')
+    .replace('У каждой семьи свой банный вечер. Подстроим пространство под ваши привычки.','Если нужно больше возможностей, дополним комплектацию и подстроим баню под ваши привычки.')
    : section[0];
   assert.ok(page.includes(expected),section[0].slice(0,100));
  }
@@ -37,7 +39,8 @@ test('the included equipment is described plainly, with the package named correc
  const text=page.match(/<section class="quiet section" id="comfort">.*?<\/section>/s)[0];
  assert.match(text,/В комплектации «Комфорт»/);assert.match(text,/Печь с камнями и дымоходом/);
  assert.doesNotMatch(text,/в Комфорте|ASTON|2200|687|Увеличенное окно/);
- assert.ok(text.includes('href="/komplektaciya/"'));
+ assert.match(text,/data-compare-details aria-haspopup="dialog">Сравнить «Комфорт» и «Делюкс»/);
+ assert.doesNotMatch(text,/href="\/komplektaciya\/"/);
 });
 
 test('closing text and inquiry preserve size, package, layout and the chosen contact channel',()=>{
