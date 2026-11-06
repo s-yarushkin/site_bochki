@@ -141,3 +141,7 @@ test('R5 literally retains original questions, options, answer keys, engine and 
  assert.ok(!js.includes('Гарантируем к Новому году'));
 });
 
+test('holiday page loads the module that connects model and length controls',()=>{
+ const html=readFileSync(new URL('../concepts/new-year-2027/index.html',import.meta.url),'utf8');
+ assert.match(html,/<script type="module" src="models\.mjs\?v=[^"]+"><\/script>/);
+});
