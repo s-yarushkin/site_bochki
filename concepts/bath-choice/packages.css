@@ -1,0 +1,11 @@
+#comfort .package-included{max-width:36em;margin:14px 0 18px;color:#435748;font-size:16px;line-height:1.6}
+#comfort .choice-text-button{font-size:16px;font-weight:600}
+.package-overview{display:grid;gap:14px;align-self:center;min-width:0}
+.package-overview article{padding:clamp(16px,2.2vw,28px);border:1px solid #cbd6c5;border-radius:12px;background:#f8faf5;color:#23392d}
+.package-overview article+article{background:#e5eddc}
+.package-overview h3{margin:0 0 8px;font-size:clamp(18px,2vw,24px);line-height:1.25;letter-spacing:-.015em}
+.package-overview p{margin:0;font-size:16px;line-height:1.6}
+.package-overview strong{font-weight:650}
+.choice-workspace .choice-package-description{color:#435748;font-size:14px}
+.choice-comparison-scroll td{color:#263e30;font-size:16px}
+.choice-comparison-scroll tbody th[scope=row]{font-size:16px}

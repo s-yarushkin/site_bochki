@@ -39,18 +39,18 @@ test('the lower home form confirms all four contact channels through the real ha
  const origin='http://127.0.0.1:'+server.address().port;config.allowedOrigin=origin;
  const settings={lead:{enabled:true,endpoint:'/api/lead',allowedOrigins:[origin]}};
  const transport=(url,options)=>fetch(new URL(url,origin),{...options,headers:{...options.headers,Origin:origin}});
- const plans=JSON.parse(readFileSync(new URL('../concepts/bath-choice/geometry/index.json',import.meta.url))).plans;
- const state={model:'kvadro',size:'400',package:'comfort',layout:'dp3d-01'};
  try{
   for(const channel of ['phone','max','telegram','whatsapp']){
-   const payload=homeInquiryPayload(book,plans,state,{...fields,channel,comment:'Пожелание из нижней формы'},randomUUID());
+   const payload=homeInquiryPayload({...fields,channel,comment:'Пожелание из нижней формы'},randomUUID());
    assert.equal(payload.purpose,channel==='phone'?undefined:'quiz_catalog');
    const result=await submitLead(payload,settings,origin,transport);
    assert.equal(result.confirmed,true);assert.equal(result.receipt.ok,true);
    assert.equal(result.receipt.delivered,true);assert.equal(result.receipt.analytics.persisted,true);
    const saved=store.byRequest(payload.requestId);
    assert.equal(saved.notificationStatus,'delivered');assert.equal(saved.detail.contactChannel,channel);
-   assert.match(saved.detail.comment,/Квадро · 4 м/);assert.match(saved.detail.comment,/DP3D-01/);
+   assert.doesNotMatch(saved.detail.comment,/Квадро|DP3D-|Выбор:/);
+   assert.equal(saved.detail.journeyContext.variant,undefined);
+   assert.doesNotMatch(formatBaniLead(delivered.at(-1)),/Квадро|DP3D-/);
    assert.match(saved.detail.comment,/Пожелание из нижней формы/);
   }
   assert.equal(delivered.length,4);assert.equal(store.list().total,4);

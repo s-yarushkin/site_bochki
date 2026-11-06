@@ -3,7 +3,7 @@ import {roofPoints} from '../home-hero/roof-points.mjs';
 import {createLayoutPanel} from '../home-hero/layout-panel.mjs';
 import {openModelRequest} from '../home-hero/model-request.mjs';
 import {normalizeChoice,choiceFromUrl,choiceUrl,choicePrice,choiceSizeLabel} from './state.mjs';
-import {PACKAGE_NAMES} from './packages.mjs';
+import {PACKAGE_NAMES,PACKAGE_COPY} from './packages.mjs';
 import {createPhotoGallery} from './gallery.mjs';
 import {openPackageComparison} from './comparison.mjs';
 import {connectHomeContinuation} from './continuation.mjs?v=inquiry-next-steps-button-20261105';
@@ -20,7 +20,7 @@ const plans=registry.plans;
 let state=choiceFromUrl(book,plans,location.href),imageTicket=0;
 const setPlan=createLayoutPanel($('[data-plan-panel]'),{onRequest:opener=>request(opener,'layout_quote')});
 const setPhotos=createPhotoGallery($('[data-gallery]'));
-const syncHome=connectHomeContinuation({getState:()=>state,getBook:()=>book,plans});
+connectHomeContinuation();
 
 function setHero(model){
  const info=HERO_MODELS[model],ticket=++imageTicket,world=$('#hh-world'),depth=$('#hh-depth-image');
@@ -47,7 +47,7 @@ for(const [key,label] of Object.entries(PACKAGE_NAMES)){
  const radio=document.createElement('input');radio.type='radio';radio.name='package';radio.value=key;
  const heading=node('h3','Комплектация «'+label+'»');
  const price=node('strong',null,'choice-package-price');price.dataset.packagePrice=key;
- selection.append(radio,heading,price,node('p',key==='comfort'?'Печь, полки, мебель, свет и вентиляция.':'Печь с двумя каменками, подсветка и утеплённый пол.','choice-package-description'));
+ selection.append(radio,heading,price,node('p',PACKAGE_COPY[key],'choice-package-description'));
  card.append(selection);
  if(key==='deluxe')card.append($('[data-compare]'));
  $('[data-package-cards]').append(card);radio.addEventListener('change',()=>choose({package:key}));
@@ -83,7 +83,6 @@ function render(previous){
   const plan=available.find(p=>p.id===state.layout);setPlan(plan?{...plan,label:info.name+' · '+label}:null);
  }
  document.title=info.name+' '+label+' · ДачаПар';
- syncHome();
 }
 function choose(patch){const previous=state;state=normalizeChoice(book,plans,{...state,...patch});const url=choiceUrl(location.href,state);if(url.href!==location.href)history.pushState(null,'',url);render(previous);}
 function revealPlanning(){

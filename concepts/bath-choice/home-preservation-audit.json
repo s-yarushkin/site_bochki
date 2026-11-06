@@ -13,7 +13,7 @@
       "section": "comfort",
       "unchanged": false,
       "sourceSha256": "57d206c2bcfdf4389ee994dc46f9fd2ed17a9bdbd2c54de0d1b9bf285c3deb9d",
-      "resultSha256": "9d620bb078cbca90c833ada499d3f702cb4fdc5831af8fee0a76991874f9df97"
+      "resultSha256": "48ec98ca88cbaba6ab2ca8a602499190dee39d4be441073c0e978eae776a423c"
     },
     {
       "section": "individual",
@@ -41,9 +41,9 @@
     },
     {
       "section": "contact",
-      "unchanged": true,
+      "unchanged": false,
       "sourceSha256": "28ceb096a57ffd20cb6d11f7ada078d33f9cf742a7c614afe733652e8b572fe0",
-      "resultSha256": "28ceb096a57ffd20cb6d11f7ada078d33f9cf742a7c614afe733652e8b572fe0"
+      "resultSha256": "52f4ac944d5edf2ca411eb10b6d8ed640241d719e7ae46426c89cea501bf18e8"
     }
   ],
   "carePosition": "after FAQ, immediately before closing",
