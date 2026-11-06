@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "version": "dachapar-20261106-v2",
+  "assets": 574,
+  "rasters_verified": 537,
+  "vectors_verified": 37,
+  "alpha_channels_exact": 7,
+  "counts": {
+    "photo": 398,
+    "drawing": 154,
+    "3d_preview": 22
+  },
+  "models_rendered": 22,
+  "doors_and_benches": "PASS",
+  "excluded": [
+    {
+      "path": "assets/favicon.svg",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "assets/images/dachapar-favicon.svg",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "assets/images/garant-bani-favicon.svg",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "assets/images/placeholder.svg",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "assets/plans/r85/p13_mirror.webp",
+      "reason": "preexisting_empty_file"
+    },
+    {
+      "path": "assets/plans/r85/p5_mirror.webp",
+      "reason": "preexisting_empty_file"
+    },
+    {
+      "path": "assets/plans/r85/parus_4500_2400_dry_mirror.webp",
+      "reason": "preexisting_empty_file"
+    },
+    {
+      "path": "favicon-120.png",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "favicon-180.png",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "favicon-192.png",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "favicon-32.png",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "favicon-48.png",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "favicon.svg",
+      "reason": "interface_icon_or_placeholder"
+    },
+    {
+      "path": "novyy-god/assets/favicon.svg",
+      "reason": "interface_icon_or_placeholder"
+    }
+  ],
+  "original_geometry_and_specs": "Unchanged; candidate is media and viewer only"
+}

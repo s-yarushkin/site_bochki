@@ -5,3 +5,4 @@ api/** -text
 r101/vendor/** -text whitespace=cr-at-eol
 *.webp binary
 *.woff2 binary
+*.svg -text whitespace=cr-at-eol

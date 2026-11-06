@@ -2,6 +2,7 @@ import * as Three from './layouts/vendor/three.module.js';
 import {OrbitControls} from './layouts/vendor/OrbitControls.js';
 import {GLTFLoader} from './layouts/vendor/GLTFLoader.js';
 import {RoomEnvironment} from './layouts/vendor/RoomEnvironment.js';
+import {applyLayoutPalette} from './layout-materials.mjs?v=colors-20261106';
 
 function disposeModel(model){
   const geometries = new Set(), materials = new Set(), textures = new Set(), images = new Set();
@@ -28,9 +29,10 @@ export async function mountLayoutViewer(stage, url, signal){
   const data = await response.arrayBuffer();
   signal.throwIfAborted();
   const {scene:model} = await new GLTFLoader().parseAsync(data,'');
-  let renderer, controls, observer, environment;
+  let renderer, controls, observer, environment, watermark;
   const canvas = stage.querySelector('canvas');
   function dispose(){
+    watermark?.remove();
     observer?.disconnect();
     controls?.dispose();
     environment?.dispose();
@@ -44,21 +46,25 @@ export async function mountLayoutViewer(stage, url, signal){
     renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
     renderer.localClippingEnabled = true;
     renderer.toneMapping = Three.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = .9;
+    renderer.outputColorSpace = Three.SRGBColorSpace;
+    watermark=document.createElement('span');watermark.className='hh-layout-watermark';
+    watermark.textContent='дачапар.рф';watermark.setAttribute('aria-hidden','true');stage.append(watermark);
     const scene = new Three.Scene();
-    scene.background = new Three.Color('#eeece2');
+    scene.background = new Three.Color('#e7ece9');
     scene.add(model);
     const room = new RoomEnvironment();
     const pmrem = new Three.PMREMGenerator(renderer);
     try{
       environment = pmrem.fromScene(room,.03);
       scene.environment = environment.texture;
-      scene.environmentIntensity = .65;
+      scene.environmentIntensity = .45;
     }finally{
       room.dispose();
       pmrem.dispose();
     }
-    scene.add(new Three.HemisphereLight('#fff5df','#9ba48b',1.5));
-    const key = new Three.DirectionalLight('#fff1da',2);
+    scene.add(new Three.HemisphereLight('#ffffff','#748178',.8));
+    const key = new Three.DirectionalLight('#ffffff',1.6);
     key.position.set(-3,8,5);
     scene.add(key);
     const camera = new Three.PerspectiveCamera(37,1,.015,150);
@@ -119,6 +125,7 @@ export async function mountLayoutViewer(stage, url, signal){
       benchButton.hidden = movingBenches.length === 0;
       benchButton.addEventListener('click',()=>setBenchRetracted(!retracted),{signal});
     }
+    const disposeDetachedMaterials=applyLayoutPalette(model);
     const cutWalls = [];
     const normals = {front:[0,0,1],rear:[0,0,-1],left:[-1,0,0],right:[1,0,0]};
     model.traverse(object=>{
@@ -131,6 +138,7 @@ export async function mountLayoutViewer(stage, url, signal){
         for(const material of [mesh.material].flat()) cutWalls.push({material,normal,plane});
       });
     });
+    disposeDetachedMaterials();
     function render(){
       const direction = camera.position.clone().sub(controls.target).normalize();
       for(const {material,normal,plane} of cutWalls){

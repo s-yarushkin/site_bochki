@@ -124,7 +124,7 @@ function openViewer(plan, opener){
   },{once:true});
   document.body.append(dialog);
   dialog.showModal();
-  import('./layout-viewer.mjs').then(({mountLayoutViewer})=>
+  import('./layout-viewer.mjs?v=colors-20261106').then(({mountLayoutViewer})=>
     mountLayoutViewer(stage,base+assetPath(plan,'model'),controller.signal)
   ).then(()=>{
     if(!dialog.open) return;
