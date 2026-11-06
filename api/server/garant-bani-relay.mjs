@@ -12,6 +12,7 @@ import {openLeadStore} from './lead-store.mjs';
 import {createManagerAuth,loadManagerConfig} from './manager-auth.mjs';
 import {createManagerApi} from './manager-api.mjs';
 import {openCrmAccess} from './crm-access.mjs';
+import {openCrmMfa} from './crm-mfa.mjs';
 import {createCrmAuth} from './crm-session.mjs';
 import {createCrmManagerApi} from './crm-manager-api.mjs';
 import {openCrmInsights} from './crm-insights.mjs';
@@ -258,9 +259,9 @@ export function resolveRelaySite(config,req){
   return config.sites.find(site=>new URL(site.origin).host===req.headers.host)??null;
 }
 
-export function createSiteManagerApi({config,store,managerConfig,log=()=>{},crm=null,insights=null}){
-  const routes=new Map(config.sites.map(site=>[site.origin,crm?createCrmManagerApi({store,crm,insights,
-    auth:createCrmAuth({crm,sessionSecret:managerConfig.sessionSecret,cookiePath:site.basePath+'api/manager/'}),origin:site.origin}):createManagerApi({store,
+export function createSiteManagerApi({config,store,managerConfig,log=()=>{},crm=null,insights=null,mfa=null}){
+  const routes=new Map(config.sites.map(site=>[site.origin,crm?createCrmManagerApi({store,crm,insights,mfa,
+    auth:createCrmAuth({crm,mfa,sessionSecret:managerConfig.sessionSecret,cookiePath:site.basePath+'api/manager/'}),origin:site.origin}):createManagerApi({store,
     auth:createManagerAuth({...managerConfig,cookiePath:site.basePath+'api/manager/'}),
     origin:site.origin,log})]));
   return async(req,res)=>{
@@ -368,10 +369,13 @@ if(process.argv[1] && realpathSync(process.argv[1])===fileURLToPath(import.meta.
   const managerConfig=loadManagerConfig();
   const crm=process.env.CRM_ENABLED==='1'?openCrmAccess(databasePath):null;
   if(crm&&!crm.initialized())throw new Error('CRM_MIGRATION_REQUIRED');
+  if(process.env.CRM_MFA_REQUIRED==='1'&&!crm)throw new Error('CRM_REQUIRED_FOR_MFA');
+  const mfa=process.env.CRM_MFA_REQUIRED==='1'?openCrmMfa(databasePath,{secret:managerConfig.sessionSecret}):null;
+  if(mfa&&!mfa.ready())throw new Error('MFA_MIGRATION_REQUIRED');
   const origin='https://xn--80aaan1dh9b.xn--p1ai';
   const insights=crm?openCrmInsights(databasePath,{secret:managerConfig.sessionSecret,origin,enabled:process.env.CRM_TRACKING_ENABLED==='1'}):null;
   const publicApi=insights?createCrmPublicApi({insights,origin}):null;
-  const managerApi=createSiteManagerApi({config,store,managerConfig,crm,insights,log:console.error});
+  const managerApi=createSiteManagerApi({config,store,managerConfig,crm,insights,mfa,log:console.error});
   const server=createServer(createRelayHandler({config,store,managerApi,publicApi,insights}));
   if(insights){try{insights.purge();}catch{console.error(JSON.stringify({event:'crm_retention_failed'}));}const cleanup=setInterval(()=>{try{insights.purge();}catch{console.error(JSON.stringify({event:'crm_retention_failed'}));}},3600000);cleanup.unref();}
   server.requestTimeout=15000;

@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' blob:; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
 <title>Заявки — Дача Пар · Менеджер</title>
 <link rel="stylesheet" href="assets/css/manager.css">
 <link rel="stylesheet" href="crm/manager-extension.css?v=20261105">
-<script type="module" src="assets/js/manager.js?v=crm-20261105"></script>
+<link rel="stylesheet" href="crm/manager-mfa.css?v=20261106">
+<script type="module" src="assets/js/manager.js?v=mfa-20261106"></script>
 </head>
 <body>
 <header class="topbar">
@@ -26,11 +27,13 @@
       <h1>Кабинет заявок</h1>
       <p class="muted">Вход для сотрудников. Доступ к разделам определяется назначенной ролью.</p>
       <form id="loginForm" autocomplete="on">
-        <label>Телефон — логин <input id="managerPhone" type="tel" inputmode="tel" autocomplete="username" maxlength="45" placeholder="+7 (999) 123-45-67" required></label>
+        <label>Логин <input id="managerPhone" type="text" autocomplete="username" maxlength="45" required></label>
         <label>Пароль <input id="managerPassword" type="password" autocomplete="current-password" minlength="14" required></label>
+        <label class="mfa-remember"><input id="rememberDevice" type="checkbox" checked>Запомнить это устройство на 30 дней</label>
         <button class="btn primary" type="submit" id="loginButton">Войти</button>
         <p id="loginError" class="error" role="alert" aria-live="polite"></p>
       </form>
+      <div id="mfaView" hidden></div>
       <p class="muted fine">Вводите логин и пароль своей учётной записи. Пароль от предпросмотра сайта сюда не подходит.</p>
     </div>
   </section>

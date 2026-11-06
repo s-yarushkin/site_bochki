@@ -1,4 +1,5 @@
 import {mountManagerExtensions} from '../../crm/manager-extension.mjs';
+import {mountManagerMfa} from '../../crm/manager-mfa.mjs';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
 const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,detailTicket:0,csrf:null,user:null};
@@ -32,7 +33,7 @@ async function api(path='',options={}){
   const response=await fetch(API+path,{...options,credentials:'same-origin',cache:'no-store',
     headers:{...(options.body?{'Content-Type':'application/json'}:{}),...(state.csrf?{'X-CSRF-Token':state.csrf}:{}),...(options.headers||{})}});
   const body=await response.json().catch(()=>null);
-  if(response.status===401){if(path!=='login'&&requestEpoch===state.sessionEpoch)showLogin('Сеанс завершён. Войдите снова.');throw new Error('LOGIN_REQUIRED');}
+  if(response.status===401){if(path.startsWith('mfa/'))throw new Error(body?.code||'CHALLENGE_EXPIRED');if(path!=='login'&&requestEpoch===state.sessionEpoch)showLogin('Сеанс завершён. Войдите снова.');throw new Error('LOGIN_REQUIRED');}
   if(!response.ok||!body?.ok)throw new Error(body?.code||'REQUEST_FAILED');
   return body;
 }
@@ -49,6 +50,7 @@ function clearLeadView(){
   $('#leadSearch').value='';$('#classificationFilter').value='real';
 }
 function showLogin(message=''){
+  mfa.clear();$('#loginForm').hidden=false;
   state.csrf=null;state.user=null;extensions.clear();
   state.sessionEpoch++;
   clearLeadView();
@@ -221,8 +223,9 @@ async function login(event){
   const button=$('#loginButton');button.disabled=true;
   $('#loginError').textContent='';
   try{
-    const session=await api('login',{method:'POST',body:JSON.stringify({phone:$('#managerPhone').value,password:$('#managerPassword').value})});
+    const session=await api('login',{method:'POST',body:JSON.stringify({phone:$('#managerPhone').value,password:$('#managerPassword').value,remember:$('#rememberDevice').checked})});
     $('#managerPassword').value='';
+    if(session.pending){state.csrf=session.csrf;mfa.start(session);return;}
     showDashboard(session.phone,session);
     if(!extensions.needsPasswordChange())await loadList();
   }catch(error){if(error.message==='LOGIN_REQUIRED')showLogin('Пароль неверный или доступ ограничен.');else fail(error,$('#loginError'));}
@@ -246,6 +249,7 @@ async function save(event){
   finally{button.disabled=false;}
 }
 const extensions=mountManagerExtensions({api,refresh:loadList,openLead:loadDetail});
+const mfa=mountManagerMfa({request:api,back:()=>showLogin(),complete:async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadList();}});
 $('#loginForm').addEventListener('submit',login);
 $('#leadEditForm').addEventListener('submit',save);
 $('#filterForm').addEventListener('submit',event=>{event.preventDefault();state.offset=0;loadList();});
