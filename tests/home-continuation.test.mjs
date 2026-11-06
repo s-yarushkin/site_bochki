@@ -9,16 +9,21 @@ const baseline=read('concepts/bath-choice/baseline-v5/index.html');
 const book=JSON.parse(read('output/bath-choice-prototype/data/catalog-pricebook.json'));
 const plans=JSON.parse(read('concepts/bath-choice/geometry/index.json')).plans;
 
-test('every protected lower section keeps its original markup and care directly precedes the closing',()=>{
+test('every protected lower section keeps its markup except approved edits and care directly precedes the closing',()=>{
  const report=JSON.parse(read('concepts/bath-choice/home-preservation-audit.json'));
  assert.equal(report.pass,true);assert.equal(report.sections.length,7);
- assert.equal(report.sections.filter(s=>s.unchanged).length,6);
+ assert.equal(report.sections.filter(s=>s.unchanged).length,5);
  for(const section of baseline.slice(baseline.indexOf('<section class="ritual"'),baseline.indexOf('</main>')).matchAll(/<section\b.*?<\/section>/gs)){
   if(section[0].includes('id="comfort"'))continue;
-  assert.ok(page.includes(section[0]),section[0].slice(0,100));
+  const expected=section[0].includes('id="individual"')
+   ? section[0].replace('<a class="textlink" href="/planirovki/">Посмотреть примеры планировок →</a>','')
+   : section[0];
+  assert.ok(page.includes(expected),section[0].slice(0,100));
  }
  assert.match(page,/<\/section>\s*<section class="choice-page choice-care"[^]*?<\/section>\s*<section class="closing section"/);
  assert.equal((page.match(/id="care"/g)||[]).length,1);
+ assert.match(page, /Почему нам можно доверять/);
+ assert.doesNotMatch(page, /data-production[ >]/);
  assert.equal((page.match(/id="ritual"/g)||[]).length,1);
 });
 

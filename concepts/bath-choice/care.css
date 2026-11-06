@@ -1,0 +1,16 @@
+#care .choice-trust {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.03fr);
+  gap: clamp(28px, 5vw, 76px);
+  align-items: center;
+}
+.choice-trust-points { margin-top: 20px; }
+.choice-trust-points article { border-top: 1px solid #aebda1; padding: 14px 0; }
+.choice-trust-points h3 { margin: 0 0 4px; font-size: 19px; font-weight: 650; }
+.choice-trust-points p { margin: 0; color: #425b40; font-size: 15px; }
+.choice-trust-photo { margin: 0; }
+.choice-trust-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 58%; }
+.choice-trust-photo figcaption { margin-top: 8px; color: #425b40; font-size: 13px; }
+@media (max-width: 760px) {
+  #care .choice-trust { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}

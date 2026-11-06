@@ -14,7 +14,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--pricebook',type=Path,default=captured_book if captured_book.is_file() else ROOT/'web/data/catalog-pricebook.json');args=parser.parse_args()
     if not args.pricebook.is_file():raise RuntimeError('Capture the current public pricebook first')
     (OUT/'choice/assets').mkdir(parents=True,exist_ok=True);(OUT/'data').mkdir(exist_ok=True)
-    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','catalog.css','ritual.css','continuation.mjs','continuation-state.mjs','inquiry-success.css']:shutil.copy2(HERE/name,OUT/'choice'/name)
+    for name in ['app.mjs','state.mjs','packages.mjs','gallery.mjs','comparison.mjs','choice.css','catalog.css','care.css','ritual.css','continuation.mjs','continuation-state.mjs','inquiry-success.css']:shutil.copy2(HERE/name,OUT/'choice'/name)
     helper=OUT/'choice/continuation-state.mjs'
     helper.write_text(helper.read_text('utf8').replace("from '../../web/lead-client.mjs'","from '/lead-client.mjs'"),'utf8')
     for name in ['mobile-dialog.mjs']:

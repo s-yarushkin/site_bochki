@@ -1,0 +1,13 @@
+{
+  "baseline": "/srv/sites/dachapar-preview/releases/HOME-SCROLL-31427328684a61fc",
+  "before": {
+    "choice/app.mjs": "9a768e99cf58bd2f2f86380105a6ed079b46df8b1222b2bec5b31b7bde9fa2cd",
+    "choice/care.css": null,
+    "index.html": "0842f558311c7d47240c0c77ee62fc5ed5c8c6f34359af0d0881a927e3e0cd9d"
+  },
+  "files": {
+    "choice/app.mjs": "f3eb77c65e2e0daf37ca0ef0573554c0b7928b46081b9a28300a0f3b624340a6",
+    "choice/care.css": "52542e0d56f8879596df544351d41684f3a934aae46439ec6a1b335f0430fced",
+    "index.html": "9bef8e5d1d7ff589109d5f42f4c476c3403ea72cb2f60be34560d9f88b23f79e"
+  }
+}
