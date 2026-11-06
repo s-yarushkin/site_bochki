@@ -106,7 +106,7 @@ function newAnswer(value){
   const q=question[state.step];if(!q.options.some(o=>o[0]===value))return;
   state.answers[q.key]=value;save();state.selectedCode=null;state.expanded=false;
   trace('dp_quiz_answer',{step:state.step+1,variant:value});
-  if(state.step<2){state.step++;state.view='question';}else{state.view='results';trace('dp_quiz_result');}
+  if(state.step<2){state.step++;state.view='question';}else{state.view='results';trace('dp_quiz_result',{variant:[state.answers.party,state.answers.wash,state.answers.bedroom].join('__')});}
   render();
 }
 async function submitForm(form){

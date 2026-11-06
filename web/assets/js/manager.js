@@ -1,4 +1,4 @@
-import {mountManagerExtensions} from '../../crm/manager-extension.mjs';
+import {mountManagerExtensions} from '../../crm/manager-extension.mjs?v=quiz-overview-20261106';
 import {mountManagerMfa} from '../../crm/manager-mfa.mjs';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();

@@ -1,5 +1,5 @@
 const origin=typeof location==='undefined'?'':location.origin;
-const codes=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping']);
+const codes=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_invite_view','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping']);
 let enabled=false,queue=[],sending=false,pendingFlush=null,visitContext=null,timer,trigger=null,lastCtaName=null,lastInteraction=Date.now(),lastBeat=Date.now();
 const recentEvents=new Map();
 export const cookieChoice=(env=globalThis)=>{try{return String(env.document?.cookie??'').split(';').map(s=>s.trim()).find(s=>s.startsWith('dp_consent='))?.slice('dp_consent='.length)??null;}catch{return null;}};
@@ -16,7 +16,8 @@ export function journeyEvent(event_code,params={}){
  if(params.model_id&&params.model_id!==event.model_id){delete event.size_id;delete event.plan_id;}
  if(params.size_id&&params.size_id!==event.size_id)delete event.plan_id;
  for(const key of ['model_id','size_id','plan_id','cta_id','placement','purpose','step','active_seconds']){const value=params[key];if((typeof value==='string'&&value.length<=80)||(typeof value==='number'&&Number.isFinite(value)&&value>=0&&value<=15))event[key]=value;}
- const key=event_code==='dp_model_select'?event_code+'|'+event.model_id:event_code==='dp_size_select'?event_code+'|'+event.model_id+'|'+event.size_id:event_code==='dp_cta_click'?event_code+'|'+event.cta_id:event_code+'|'+event.model_id+'|'+event.size_id+'|'+event.plan_id+'|'+event.step;
+ if(event_code==='dp_quiz_result'&&typeof params.variant==='string'&&/^(?:p2|p4|p6|p8)__(?:w_yes|w_no|w_compare)__(?:b_yes|b_no)$/.test(params.variant))event.variant=params.variant;
+ const key=event_code==='dp_model_select'?event_code+'|'+event.model_id:event_code==='dp_size_select'?event_code+'|'+event.model_id+'|'+event.size_id:event_code==='dp_cta_click'?event_code+'|'+event.cta_id:event_code+'|'+event.model_id+'|'+event.size_id+'|'+event.plan_id+'|'+event.step+'|'+(event.variant??'');
  const old=recentEvents.get(key),now=Date.now();if(old&&now-old.at<150)return old.id;recentEvents.set(key,{at:now,id:event.event_id});if(recentEvents.size>100)for(const [k,v]of recentEvents)if(now-v.at>1000)recentEvents.delete(k);
  if(queue.length>=30)queue.shift();queue.push(event);if(event_code==='dp_cta_click'){trigger=event.event_id;lastCtaName=event.cta_id??'unknown';}
  clearTimeout(timer);timer=setTimeout(()=>{timer=null;flushJourney();},1500);return event.event_id;

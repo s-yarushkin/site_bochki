@@ -79,3 +79,15 @@ test('event payload strips private content, caps active time and rejects forged 
  leads.delivery(id,'delivered');insights.confirmed(id);assert.equal(insights.actions({from:'2026-11-05',to:'2026-11-05'}).stages.at(-1).visits,1);crm.classify(manager.id,id,{classification:'test',reason:'Fixture'});assert.equal(insights.actions({from:'2026-11-05',to:'2026-11-05'}).stages.at(-1).visits,0);
  assert.ok(insights.visitorDetail(insights.visitor(b)).visits[0].active_seconds<=5);assert.throws(()=>insights.events(b,{events:Array.from({length:31},()=>event())}),/INVALID_EVENTS/);
 }));
+test('quiz overview counts invitations and completed combinations for consented browsers',()=>fixture(({insights,browser,event})=>{
+ const a=browser(),b=browser();
+ const variant='p4__w_yes__b_no';
+ const completion=event('dp_quiz_result',{variant});
+ insights.events(a,{events:[event('dp_quiz_invite_view'),completion,event('dp_quiz_result')]});
+ insights.events(b,{events:[event('dp_quiz_invite_view'),event('dp_quiz_result',{variant}),event('dp_quiz_result',{variant:'invalid'})]});
+ assert.equal(insights.events(a,{events:[completion]}).accepted,0);
+ assert.equal(insights.events({headers:{}},{events:[event('dp_quiz_invite_view')]}).accepted,0);
+ const report=insights.actions({from:'2026-11-05',to:'2026-11-05'});
+ assert.equal(report.unique_browsers,2);
+ assert.deepEqual(report.quiz,{invite_views:2,completions:4,known_combinations:2,combinations:[{variant,count:2}]});
+}));
