@@ -1,0 +1,10 @@
+/* Keep the transparent hero header legible without dimming the picture below it. */
+.hh-page > .site-header:not(:has(+ #mobile-menu:not([hidden]))) {
+  background: linear-gradient(
+    to bottom,
+    rgb(12 27 22 / 68%) 0%,
+    rgb(12 27 22 / 58%) 56%,
+    rgb(12 27 22 / 22%) 86%,
+    transparent 100%
+  );
+}

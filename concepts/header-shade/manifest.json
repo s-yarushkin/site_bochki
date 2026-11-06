@@ -1,0 +1,11 @@
+{
+  "baseline": "/srv/sites/dachapar-preview/releases/CONTACT-MAX-2363d4536a570e5a",
+  "before": {
+    "home-header-shade.css": null,
+    "index.html": "ebb8373aaf1a20e15306fc84b02039a4884905011032047f1beb9ab07a62c444"
+  },
+  "files": {
+    "home-header-shade.css": "a465def96ac49ad46d7cd313bdde6c5edb12d45095ff54d2f0eb72aa898979ac",
+    "index.html": "e7b97212f8cc299a8d6b8b6d2452c197945afb1a64b92cfb43642c7a83bccbba"
+  }
+}
