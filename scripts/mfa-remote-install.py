@@ -56,11 +56,16 @@ def main():
  if contract(newapi)!=contract(oldapi):raise RuntimeError('MAX/lead contract changed')
  for name in config['overlay']:
   if name.endswith(('.mjs','.js','.cjs')):run(['/usr/bin/node','--check',str((newweb if name.startswith('web/') else newapi)/name.split('/',1)[1])])
- run(['/usr/bin/node','--input-type=module','-e',"await import('file://'+process.argv[1])",str(newapi/'server/garant-bani-relay.mjs')])
+ run(['/usr/bin/node','--input-type=module','-e',"await import('file://'+process.argv[2])",'/usr/bin/node',str(newapi/'server/garant-bani-relay.mjs')])
  stage=None;switched=False;before_caddy=CADDY.read_text();previous_drop=DROP.read_bytes() if DROP.exists() else None;backup=None
  try:
   stage_module=SourceFileLoader('mfa_stage',str(HERE/'crm-remote-stage.py')).load_module();stage_module.main();stage=json.loads((HERE/'stage-ready.json').read_text())
-  messages=run(['journalctl','-u',stage['unit'],'-o','cat','--no-pager']).stdout.splitlines();meta=next(json.loads(line) for line in reversed(messages) if line.startswith('{"url":'))
+  meta=None
+  for _ in range(20):
+   messages=run(['journalctl','-u',stage['unit'],'-o','cat','--no-pager']).stdout.splitlines();meta=next((json.loads(line) for line in reversed(messages) if line.startswith('{"url":')),None)
+   if meta:break
+   time.sleep(.2)
+  if not meta:raise RuntimeError('Fixture startup receipt missing')
   result=run(['/usr/bin/node',stage['folder']+'/scripts/mfa-stage-check.mjs',stage['prefix']],input=json.dumps(meta));accept=json.loads(result.stdout.strip().splitlines()[-1]);assert accept['ok'] and accept['https_pass'] and accept['real_max_messages']==0
   (HERE/'stage-accepted.json').write_text(json.dumps(accept));
   run([sys.executable,str(HERE/'crm-production-audit.py')]);audit=json.loads((HERE/'audit-sanitized.json').read_text());backup=Path(audit['backup_path']);database=audit['database_path']
