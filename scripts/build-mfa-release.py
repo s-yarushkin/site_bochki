@@ -1,11 +1,11 @@
 """Build a small overlay and a disposable test fixture. No production secrets/data."""
-import hashlib,io,json,subprocess,tarfile
+import gzip,hashlib,io,json,subprocess,tarfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/mfa';OUT.mkdir(parents=True,exist_ok=True)
 FILES=['api/server/'+n for n in ['crm-access.mjs','crm-session.mjs','crm-manager-api.mjs','crm-mfa.mjs','crm-totp.mjs','garant-bani-relay.mjs','vendor/qrcode.cjs','vendor/qrcode-LICENSE.txt']]+['web/'+n for n in ['manager.html','assets/js/manager.js','crm/manager-extension.mjs','crm/manager-mfa.mjs','crm/manager-mfa.css']]
 def sha(data):return hashlib.sha256(data).hexdigest()
 def archive(file,entries):
- with tarfile.open(file,'w:gz',compresslevel=6) as tar:
+ with file.open('wb') as raw,gzip.GzipFile(filename='',mode='wb',fileobj=raw,compresslevel=6,mtime=0) as compressed,tarfile.open(fileobj=compressed,mode='w') as tar:
   for name,data in sorted(entries.items()):
    info=tarfile.TarInfo(name);info.size=len(data);info.mode=0o644;info.mtime=0;tar.addfile(info,io.BytesIO(data))
 source={name:(ROOT/name).read_bytes() for name in FILES};identity=sha(json.dumps({n:sha(d) for n,d in source.items()},sort_keys=True).encode())[:12]
