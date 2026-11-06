@@ -1,0 +1,30 @@
+.choice-page #models.choice-models {
+  gap: clamp(4px, 1vw, 12px);
+  padding-block: 5px;
+  padding-inline: max(6px, calc((100% - 1760px) / 2));
+}
+.choice-page #models.choice-models button {
+  border: 1px solid #a3b79a;
+  border-radius: 9px;
+  background: #fffdf5;
+  box-shadow: 0 2px 4px #253e321a;
+  cursor: pointer;
+}
+.choice-page #models.choice-models button:hover { border-color: #4d6a45; background: #eaf1db; }
+.choice-page #models.choice-models button[aria-pressed=true] {
+  border-color: #31533a;
+  background: #31533a;
+  color: #fff;
+  box-shadow: 0 2px 5px #253e3238;
+}
+.choice-page #models.choice-models button[aria-pressed=true] small { color: #e5efdd; }
+.choice-page #models.choice-models button:focus-visible { outline: 2px solid #29482f; outline-offset: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .choice-page #models.choice-models button { animation: model-button-glow 1.45s ease-in-out 2; }
+  .choice-page #models.choice-models button:nth-child(2) { animation-delay: 120ms; }
+  .choice-page #models.choice-models button:nth-child(3) { animation-delay: 240ms; }
+  .choice-page #models.choice-models button:nth-child(4) { animation-delay: 360ms; }
+}
+@keyframes model-button-glow {
+  50% { box-shadow: 0 0 0 3px #85a77864, 0 2px 5px #253e3226; }
+}
