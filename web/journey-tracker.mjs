@@ -2,7 +2,7 @@ const origin=typeof location==='undefined'?'':location.origin;
 const codes=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping']);
 let enabled=false,queue=[],sending=false,pendingFlush=null,visitContext=null,timer,trigger=null,lastCtaName=null,lastInteraction=Date.now(),lastBeat=Date.now();
 const recentEvents=new Map();
-export const cookieChoice=(env=globalThis)=>{try{return String(env.document?.cookie??'').split(';').map(s=>s.trim()).find(s=>s.startsWith('dp_consent='))?.slice(11)??null;}catch{return null;}};
+export const cookieChoice=(env=globalThis)=>{try{return String(env.document?.cookie??'').split(';').map(s=>s.trim()).find(s=>s.startsWith('dp_consent='))?.slice('dp_consent='.length)??null;}catch{return null;}};
 function context(){
  if(typeof location==='undefined')return {};
  const q=new URL(location.href).searchParams;let referrer_host='';try{const u=new URL(document.referrer);if(u.origin!==origin)referrer_host=u.hostname;}catch{}

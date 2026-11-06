@@ -15,6 +15,8 @@ test('fixture stage isolates cookies, links and form endpoints from the producti
   const redirect=await fetch(link.short_url+'?yclid=fixture123',{redirect:'manual'});assert.equal(redirect.status,302);assert.ok(redirect.headers.get('location').startsWith(origin+prefix+'/'));assert.equal(new URL(redirect.headers.get('location')).searchParams.get('yclid'),'fixture123');
   const consent=await post('/api/analytics/consent',{choice:'all'});assert.ok(consent.headers.getSetCookie().every(c=>c.startsWith('crmstage_')&&c.includes('Path='+prefix+'/')));
   const source=await (await call('/journey-tracker.mjs')).text();assert.ok(source.includes("fetch('"+prefix+"/api/analytics/config'"));assert.ok(source.includes('crmstage_dp_consent='));
+  // Execute only the pure cookie reader, with no browser globals or auto-install side effects.
+  const reader=source.match(/export const cookieChoice=([^\n]+);/)[1];const readChoice=Function('return ('+reader+')')();assert.equal(readChoice({document:{cookie:'crmstage_dp_consent=all'}}),'all');assert.equal(readChoice({document:{cookie:'crmstage_dp_consent=necessary'}}),'necessary');
   assert.equal((await call('/api/manager/users',{headers:{Cookie:'gb_manager_session=fake'}})).status,401);
  }finally{child.kill();await new Promise(resolve=>proxy.close(resolve));}
 });
