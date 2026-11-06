@@ -1,0 +1,66 @@
+.dp-cookie-banner {
+  position: fixed;
+  inset: auto auto max(12px, env(safe-area-inset-bottom)) 12px;
+  z-index: 10000;
+  width: min(390px, calc(100% - 24px));
+  box-sizing: border-box;
+  padding: 14px 16px 12px;
+  border: 1px solid #d0dac9;
+  border-radius: 16px;
+  background: #f8faf3;
+  color: #223e2d;
+  box-shadow: 0 6px 24px #10251f26;
+  font: 14px/1.4 Manrope, Arial, sans-serif;
+  text-align: left;
+}
+body:has(.choice-page) .dp-cookie-banner {
+  bottom: calc(var(--modelbar-height, 64px) + 10px + env(safe-area-inset-bottom));
+}
+.dp-cookie-banner h2 { margin: 0 0 4px; font: 700 16px/1.3 Manrope, Arial, sans-serif; }
+.dp-cookie-banner p { margin: 0; }
+.dp-cookie-banner a { display: inline-block; margin-top: 8px; color: inherit; font-size: 12px; text-decoration: underline; }
+.dp-cookie-banner > div { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.dp-cookie-banner button, .dp-cookie-settings {
+  font: inherit;
+  cursor: pointer;
+  min-height: 44px;
+  border: 1px solid #73886c;
+  border-radius: 10px;
+  padding: 6px 9px;
+  background: #fff;
+  color: #223e2d;
+}
+.dp-cookie-banner button { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; }
+.dp-cookie-banner button:hover { background: #e9f0e0; }
+.dp-cookie-banner button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; flex: none; }
+.dp-cookie-banner [role=status]:empty { display: none; }
+.dp-cookie-banner [role=status] { margin-top: 6px; font-size: 12px; }
+.dp-cookie-settings { margin: 10px 0; font-size: 13px; background: transparent; color: inherit; border-color: currentColor; }
+
+
+.dp-cookie-banner { padding: 10px 12px 8px; width: min(390px, calc(100% - 24px)); }
+.dp-cookie-banner > p:first-of-type { padding-right: 30px; }
+.dp-cookie-banner > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 6px; }
+.dp-cookie-banner > div button {
+  min-width: 0;
+  min-height: 36px;
+  justify-content: center;
+  padding: 4px 6px;
+  line-height: 1.25;
+  font-size: 12px;
+}
+.dp-cookie-banner > div button svg { width: 15px; height: 15px; }
+.dp-cookie-banner .dp-cookie-dismiss {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  width: 34px;
+  min-height: 34px;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 23px;
+}
+.dp-cookie-banner .dp-cookie-dismiss:hover { background: #e9f0e0; }
+.dp-cookie-banner a { margin-top: 5px; }
