@@ -22,7 +22,12 @@ export function openCrmAccess(path,{now=()=>new Date().toISOString()}={}){
   CREATE TRIGGER IF NOT EXISTS audit_no_update BEFORE UPDATE ON audit_log BEGIN SELECT RAISE(ABORT,'APPEND_ONLY_AUDIT'); END;
   CREATE TRIGGER IF NOT EXISTS audit_no_delete BEFORE DELETE ON audit_log BEGIN SELECT RAISE(ABORT,'APPEND_ONLY_AUDIT'); END;
   CREATE TABLE IF NOT EXISTS lead_classification(lead_id TEXT PRIMARY KEY REFERENCES leads(id),classification TEXT NOT NULL CHECK(classification IN('real','test')),classified_at TEXT NOT NULL,classified_by TEXT NOT NULL REFERENCES staff_users(id),reason TEXT NOT NULL,previous_status TEXT NOT NULL);
- `);}
+ `);
+  const columns=new Set(db.prepare('PRAGMA table_info(staff_sessions)').all().map(r=>r.name));
+  for(const [name,type]of [['id','TEXT'],['remember','INTEGER NOT NULL DEFAULT 0'],['mfa_generation','INTEGER NOT NULL DEFAULT 0'],['mfa_verified_at','TEXT'],['last_seen_at','TEXT'],['absolute_expires_at','TEXT'],['browser_label',"TEXT NOT NULL DEFAULT 'Браузер'"]])if(!columns.has(name))db.exec('ALTER TABLE staff_sessions ADD COLUMN '+name+' '+type);
+  for(const row of db.prepare('SELECT token_hash FROM staff_sessions WHERE id IS NULL').all())db.prepare('UPDATE staff_sessions SET id=? WHERE token_hash=?').run(randomUUID(),row.token_hash);
+  db.exec('CREATE UNIQUE INDEX IF NOT EXISTS staff_session_id ON staff_sessions(id)');
+ }
  function audit(actor,action,type,id,before,after){db.prepare('INSERT INTO audit_log(actor_id,action,object_type,object_id,before_json,after_json,at) VALUES(?,?,?,?,?,?,?)').run(actor,action,type,id,asJson(before),asJson(after),now());}
  function user(id){
   const row=db.prepare('SELECT id,name,phone_e164,active,must_change_password,created_at,last_login_at FROM staff_users WHERE id=?').get(id);if(!row)return null;
@@ -31,7 +36,7 @@ export function openCrmAccess(path,{now=()=>new Date().toISOString()}={}){
   return {...row,active:Boolean(row.active),must_change_password:Boolean(row.must_change_password),roles,permissions};
  }
  function requirePermission(actor,permission){const current=user(actor);if(!current?.active||!current.permissions.includes(permission))throw Error('FORBIDDEN');return current;}
- function revoke(id){db.prepare('UPDATE staff_sessions SET revoked_at=? WHERE user_id=? AND revoked_at IS NULL').run(now(),id);}
+ function revoke(id){db.prepare('UPDATE staff_sessions SET revoked_at=? WHERE user_id=? AND revoked_at IS NULL').run(now(),id);if(db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='staff_mfa_challenges'").get())db.prepare('DELETE FROM staff_mfa_challenges WHERE user_id=?').run(id);}
  function roleIds(keys,actor){
   if(!Array.isArray(keys)||!keys.length||keys.length>10||new Set(keys).size!==keys.length)throw Error('INVALID_ROLES');
   return keys.map(key=>{const role=db.prepare('SELECT * FROM roles WHERE key=?').get(key);if(!role)throw Error('INVALID_ROLES');if(key==='owner_admin'&&!actor.roles.includes('owner_admin'))throw Error('FORBIDDEN');
@@ -92,19 +97,20 @@ export function openCrmAccess(path,{now=()=>new Date().toISOString()}={}){
   for(const role of ids)db.prepare('INSERT INTO user_roles VALUES(?,?)').run(id,role);revoke(id);
   audit(actorId,'user_update','user',id,{roles:before.roles,active:before.active},{roles,active});return user(id);
  });}
- function authenticate(phone,password){
+ function authenticate(phone,password,{markLogin=true}={}){
   const normalized=normalizeManagerPhone(phone),row=db.prepare('SELECT * FROM staff_users WHERE phone_e164=?').get(normalized??'');
   const fallback='scrypt$00000000000000000000000000000000$'+'0'.repeat(128);
   const valid=verifyManagerPassword(password,row?.password_hash??fallback);if(!row?.active||!valid)return null;
-  db.prepare('UPDATE staff_users SET last_login_at=? WHERE id=?').run(now(),row.id);return user(row.id);
+  if(markLogin)db.prepare('UPDATE staff_users SET last_login_at=? WHERE id=?').run(now(),row.id);return user(row.id);
  }
- function createSession(id){
-  if(!user(id)?.active)throw Error('FORBIDDEN');const token=randomBytes(32).toString('base64url'),time=now(),expires=new Date(Date.parse(time)+8*3600000).toISOString();
-  db.prepare('INSERT INTO staff_sessions(token_hash,user_id,created_at,expires_at) VALUES(?,?,?,?)').run(digest(token),id,time,expires);return {token,expires};
+ function createSession(id,{remember=false,mfaGeneration=0,verifiedAt=null,browserLabel='Браузер'}={}){
+  if(!user(id)?.active)throw Error('FORBIDDEN');const token=randomBytes(32).toString('base64url'),time=now(),expires=new Date(Date.parse(time)+(remember?30*86400000:8*3600000)).toISOString(),absolute=new Date(Date.parse(time)+(remember?90*86400000:8*3600000)).toISOString(),sessionId=randomUUID();
+  db.prepare('INSERT INTO staff_sessions(token_hash,user_id,created_at,expires_at,id,remember,mfa_generation,mfa_verified_at,last_seen_at,absolute_expires_at,browser_label) VALUES(?,?,?,?,?,?,?,?,?,?,?)').run(digest(token),id,time,expires,sessionId,remember?1:0,mfaGeneration,verifiedAt,time,absolute,clean(browserLabel,60));return {token,expires,remember,id:sessionId};
  }
- function session(token){if(typeof token!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(token))return null;
-  const row=db.prepare('SELECT user_id FROM staff_sessions WHERE token_hash=? AND revoked_at IS NULL AND expires_at>?').get(digest(token),now());const found=row?user(row.user_id):null;return found?.active?found:null;
+ function sessionInfo(token){if(typeof token!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(token))return null;
+  const row=db.prepare('SELECT * FROM staff_sessions WHERE token_hash=? AND revoked_at IS NULL AND expires_at>?').get(digest(token),now());const found=row?user(row.user_id):null;return found?.active?{user:found,...row}:null;
  }
+ function session(token){return sessionInfo(token)?.user??null;}
  function changePassword(id,currentPassword,password){return transaction(()=>{
   const row=db.prepare('SELECT password_hash FROM staff_users WHERE id=? AND active=1').get(id);
   if(!row||!verifyManagerPassword(currentPassword,row.password_hash))throw Error('INVALID_CREDENTIALS');
@@ -128,7 +134,13 @@ export function openCrmAccess(path,{now=()=>new Date().toISOString()}={}){
   audit(actorId,'lead_classify','lead',leadId,{classification:before?.classification??'real',status:lead.status},{classification,status:classification==='test'?'lost':previous,reason});
   return {changed:true,classification};
  });}
- return {migrate,seedLegacy,user,requirePermission,createRole,editRole,createUser,editUser,authenticate,createSession,session,classify,changePassword,resetPassword,
+ return {migrate,seedLegacy,user,requirePermission,createRole,editRole,createUser,editUser,authenticate,createSession,session,sessionInfo,classify,changePassword,resetPassword,
+  verifyPassword(id,password){const row=db.prepare('SELECT password_hash FROM staff_users WHERE id=? AND active=1').get(id);return Boolean(row&&verifyManagerPassword(password,row.password_hash));},
+  markLogin(id){db.prepare('UPDATE staff_users SET last_login_at=? WHERE id=?').run(now(),id);},
+  refreshSession(token){const row=sessionInfo(token);if(!row)return null;const current=Date.parse(now());let renewed=false;if(row.remember&&Date.parse(row.expires_at)-current<=29*86400000&&Date.parse(row.expires_at)<Date.parse(row.absolute_expires_at)){const expires=new Date(Math.min(current+30*86400000,Date.parse(row.absolute_expires_at))).toISOString();db.prepare('UPDATE staff_sessions SET expires_at=?,last_seen_at=? WHERE token_hash=? AND revoked_at IS NULL').run(expires,now(),digest(token));row.expires_at=expires;renewed=true;}else if(current-Date.parse(row.last_seen_at??row.created_at)>=3600000)db.prepare('UPDATE staff_sessions SET last_seen_at=? WHERE token_hash=?').run(now(),digest(token));return {...row,renewed};},
+  ownSessions(id,token){return db.prepare('SELECT id,browser_label,created_at,last_seen_at,expires_at,absolute_expires_at,remember,mfa_verified_at,token_hash FROM staff_sessions WHERE user_id=? AND revoked_at IS NULL AND expires_at>? ORDER BY last_seen_at DESC').all(id,now()).map(({token_hash,...row})=>({...row,remember:Boolean(row.remember),current:token_hash===digest(token)}));},
+  revokeOwnSession(id,sessionId){const changed=db.prepare('UPDATE staff_sessions SET revoked_at=? WHERE id=? AND user_id=? AND revoked_at IS NULL').run(now(),sessionId,id);if(!changed.changes)throw Error('NOT_FOUND');audit(id,'device_revoke','session',sessionId,null,null);},
+  revokeOtherSessions(id,token){db.prepare('UPDATE staff_sessions SET revoked_at=? WHERE user_id=? AND token_hash!=? AND revoked_at IS NULL').run(now(),id,digest(token));audit(id,'other_devices_revoke','user',id,null,null);},
   initialized(){return Boolean(db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='staff_users'").get())&&db.prepare("SELECT count(*) n FROM staff_users u JOIN user_roles ur ON ur.user_id=u.id JOIN roles r ON r.id=ur.role_id WHERE u.active=1 AND r.key='owner_admin'").get().n>0;},
   authAudit(id,success){audit(id??'anonymous',success?'login_success':'login_failure','auth','session',null,{success:Boolean(success)});},
   logout(token){if(typeof token==='string')db.prepare('UPDATE staff_sessions SET revoked_at=? WHERE token_hash=?').run(now(),digest(token));},

@@ -31,7 +31,7 @@ def main():
  backup=HERE/'caddy-before-stage.txt';backup.write_text(before);os.chmod(backup,0o600)
  candidate=HERE/'caddy-stage.conf';candidate.write_text(after)
  run(['caddy','validate','--config',str(candidate),'--adapter','caddyfile'])
- run(['systemd-run','--unit='+unit,'--property=User=deploy','--property=NoNewPrivileges=yes','--property=ProtectSystem=strict','--property=ReadWritePaths='+str(folder),'--property=RuntimeMaxSec=7200','--working-directory='+str(folder),'--setenv=CRM_PREVIEW_PORT=3302','--setenv=CRM_PREVIEW_ORIGIN=https://'+HOST,'--setenv=CRM_PREVIEW_PREFIX='+prefix,'/usr/bin/node',str(folder/'scripts/crm-preview.mjs')])
+ run(['systemd-run','--unit='+unit,'--property=User=deploy','--property=NoNewPrivileges=yes','--property=ProtectSystem=strict','--property=ReadWritePaths='+str(folder),'--property=RuntimeMaxSec=7200','--working-directory='+str(folder),'--setenv=CRM_PREVIEW_PORT=3302','--setenv=CRM_PREVIEW_ORIGIN=https://'+HOST,'--setenv=CRM_PREVIEW_PREFIX='+prefix,*(['--setenv=CRM_PREVIEW_MFA=1'] if config.get('mfa') else []),'/usr/bin/node',str(folder/'scripts/crm-preview.mjs')])
  try:
   import urllib.request
   for attempt in range(20):

@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "release": "MFA-81c68cd72bf6",
+  "web": "/srv/sites/dachapar-preview/releases/MFA-81c68cd72bf6",
+  "api": "/srv/services/garant-bani-relay/releases/MFA-81c68cd72bf6",
+  "previous_web": "/srv/sites/dachapar-preview/releases/ASSETS-e942f2373069",
+  "previous_api": "/srv/services/garant-bani-relay/releases/CRM-03d9b7b7c53c",
+  "backup": "/var/backups/dachapar/CRM-AUDIT-20261106T072453Z",
+  "source_commit": "4010b1b2699b1b30207914949f759ab301a32fb1",
+  "https_fixture": {
+    "ok": true,
+    "https_pass": true,
+    "fixture_only": true,
+    "real_max_messages": 0,
+    "checks": [
+      "pending",
+      "origin",
+      "local_qr",
+      "totp",
+      "backup_codes",
+      "remembered_cookie",
+      "devices",
+      "owner",
+      "logout"
+    ]
+  },
+  "public_files_verified": [
+    "manager.html",
+    "assets/js/manager.js",
+    "crm/manager-extension.mjs",
+    "crm/manager-mfa.mjs",
+    "crm/manager-mfa.css"
+  ],
+  "protected_web_files": 902,
+  "staff_credentials_preserved": true,
+  "roles_preserved": true,
+  "existing_leads_preserved": 29,
+  "max_contract_unchanged": true,
+  "mfa_required": true,
+  "post_publish_verification": {
+    "public_login_ui": true,
+    "anonymous_protected": true,
+    "mfa_flag_enabled": true,
+    "all_release_hashes_match": true,
+    "stage_route_removed": true,
+    "service_active": true
+  },
+  "automated_tests_passed": 39,
+  "personal_authenticator_enrollment": "User action required, per account; not performed by automation."
+}
