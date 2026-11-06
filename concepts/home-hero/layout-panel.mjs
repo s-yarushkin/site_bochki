@@ -55,6 +55,7 @@ export function specification(spec){
 }
 
 function openSpecification(plan,opener){
+  document.dispatchEvent(new CustomEvent('dachapar:event',{detail:{name:'dp_plan_view',params:{plan_id:plan.id}}}));
   const dialog = element('dialog');
   dialog.className = 'hh-layout-dialog';
   dialog.setAttribute('aria-labelledby','hh-layout-spec-title');
@@ -89,6 +90,7 @@ function openSpecification(plan,opener){
 }
 
 function openViewer(plan, opener){
+  document.dispatchEvent(new CustomEvent('dachapar:event',{detail:{name:'dp_3d_open',params:{plan_id:plan.id}}}));
   const dialog = element('dialog');
   dialog.className = 'hh-layout-dialog hh-layout-3d-dialog';
   dialog.setAttribute('aria-label','3D-планировка '+plan.label);
@@ -115,6 +117,7 @@ function openViewer(plan, opener){
   const controller = new AbortController();
   dialog.querySelector('[data-close]').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{
+    document.dispatchEvent(new CustomEvent('dachapar:event',{detail:{name:'dp_3d_close',params:{plan_id:plan.id}}}));
     controller.abort();
     dialog.remove();
     if(opener.getClientRects().length) opener.focus({preventScroll:true});

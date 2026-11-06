@@ -170,6 +170,10 @@ export async function mountLayoutViewer(stage, url, signal){
       frameModel();
     }
     controls.addEventListener('change',render);
+    let pointerStart,rotationReported=false;
+    const reportRotation=()=>{if(rotationReported)return;rotationReported=true;const id=new URL(url,location.href).pathname.match(/\/(\d{2})\.glb$/)?.[1];document.dispatchEvent(new CustomEvent('dachapar:event',{detail:{name:'dp_3d_rotate',params:id?{plan_id:'dp3d-'+id}:{}}}));};
+    canvas.addEventListener('pointerdown',event=>{pointerStart=[event.clientX,event.clientY];},{signal});
+    canvas.addEventListener('pointerup',event=>{if(pointerStart&&Math.hypot(event.clientX-pointerStart[0],event.clientY-pointerStart[1])>6)reportRotation();pointerStart=null;},{signal});
     canvas.addEventListener('keydown',event=>{
       if(['+','=','-','_'].includes(event.key)){
         event.preventDefault();
@@ -178,6 +182,7 @@ export async function mountLayoutViewer(stage, url, signal){
       }
       const rotation = {ArrowLeft:[0,-.13],ArrowRight:[0,.13],ArrowUp:[-.13,0],ArrowDown:[.13,0]}[event.key];
       if(!rotation) return;
+      reportRotation();
       event.preventDefault();
       const offset = new Three.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
       offset.phi = Three.MathUtils.clamp(offset.phi+rotation[0],.06,controls.maxPolarAngle);

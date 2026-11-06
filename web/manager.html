@@ -8,13 +8,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
 <title>Заявки — Дача Пар · Менеджер</title>
 <link rel="stylesheet" href="assets/css/manager.css">
-<script defer src="assets/js/manager.js?v=r93-20261026"></script>
+<link rel="stylesheet" href="crm/manager-extension.css?v=20261105">
+<script type="module" src="assets/js/manager.js?v=crm-20261105"></script>
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="./">ДАЧА ПАР</a>
-    <span class="top-label">Кабинет главного менеджера · Заявки</span><span id="activeManager" class="active-manager" hidden></span>
+    <span class="top-label">Кабинет команды · Дача Пар</span><span id="activeManager" class="active-manager" hidden></span>
     <button id="logoutButton" class="btn subtle" hidden type="button">Выйти</button>
   </div>
 </header>
@@ -23,7 +24,7 @@
     <div class="login-panel">
       <p class="eyebrow">ДОСТУП СОТРУДНИКА</p>
       <h1>Кабинет заявок</h1>
-      <p class="muted">Доступ к полной базе заявок имеют две технические учётные записи главных менеджеров.</p>
+      <p class="muted">Вход для сотрудников. Доступ к разделам определяется назначенной ролью.</p>
       <form id="loginForm" autocomplete="on">
         <label>Телефон — логин <input id="managerPhone" type="tel" inputmode="tel" autocomplete="username" maxlength="45" placeholder="+7 (999) 123-45-67" required></label>
         <label>Пароль <input id="managerPassword" type="password" autocomplete="current-password" minlength="14" required></label>
@@ -40,7 +41,7 @@
       <button class="btn outline" id="refreshButton" type="button">Обновить</button>
     </div>
     <section class="stats" aria-label="Показатели заявок">
-      <div class="stat"><span>Всего</span><strong id="countTotal">—</strong></div>
+      <div class="stat"><span>Реальные заявки</span><strong id="countTotal">—</strong></div>
       <div class="stat"><span>Новые</span><strong id="countNew">—</strong></div>
       <div class="stat"><span>В работе</span><strong id="countProgress">—</strong></div>
       <div class="stat"><span>КП отправлено</span><strong id="countQuoted">—</strong></div>
@@ -62,6 +63,7 @@
               <option value="lost">Закрыто без продажи</option>
             </select>
           </label>
+          <label hidden>Тип заявки<select id="classificationFilter"><option value="real">Реальные</option><option value="test">Тестовые</option><option value="all">Все</option></select></label>
           <button class="btn outline" type="submit">Найти</button>
         </form>
         <p class="muted fine" id="listSummary" role="status"></p>
@@ -107,7 +109,7 @@
         </div>
       </section>
     </div>
-    <p class="page-footnote">Предварительные цены из демонстрационного прайса не являются офертой. Не копируйте клиентские данные в общедоступные чаты.</p>
+    <p class="page-footnote">Предварительный расчёт не является офертой. Не копируйте клиентские данные в общедоступные чаты.</p>
   </section>
 </main>
 <footer class="footer"><div class="container">Закрытый кабинет · <a href="./">Сайт «Дача Пар»</a></div></footer>

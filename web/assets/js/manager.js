@@ -1,7 +1,7 @@
-'use strict';
+import {mountManagerExtensions} from '../../crm/manager-extension.mjs';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
-const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0};
+const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,detailTicket:0,csrf:null,user:null};
 const statuses={
   new:'Новая',in_progress:'В работе',awaiting_customer:'Ждём клиента',
   quote_sent:'КП отправлено',won:'Продано',lost:'Закрыто без продажи'
@@ -28,10 +28,11 @@ function statusPill(value){
   return pill;
 }
 async function api(path='',options={}){
-  const response=await fetch(API+path,{credentials:'same-origin',cache:'no-store',
-    headers:{...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})},...options});
+  const requestEpoch=state.sessionEpoch;
+  const response=await fetch(API+path,{...options,credentials:'same-origin',cache:'no-store',
+    headers:{...(options.body?{'Content-Type':'application/json'}:{}),...(state.csrf?{'X-CSRF-Token':state.csrf}:{}),...(options.headers||{})}});
   const body=await response.json().catch(()=>null);
-  if(response.status===401)throw new Error('LOGIN_REQUIRED');
+  if(response.status===401){if(path!=='login'&&requestEpoch===state.sessionEpoch)showLogin('Сеанс завершён. Войдите снова.');throw new Error('LOGIN_REQUIRED');}
   if(!response.ok||!body?.ok)throw new Error(body?.code||'REQUEST_FAILED');
   return body;
 }
@@ -45,8 +46,10 @@ function clearLeadView(){
   for(const id of ['contactInfo','configurationInfo','selectedOptions','quoteLines','propertyInfo','eventsList','leadsList'])$('#'+id).replaceChildren();
   $('#editAssignee').value='';
   $('#editNote').value='';
+  $('#leadSearch').value='';$('#classificationFilter').value='real';
 }
 function showLogin(message=''){
+  state.csrf=null;state.user=null;extensions.clear();
   state.sessionEpoch++;
   clearLeadView();
   $('#loginView').hidden=false;$('#dashboard').hidden=true;$('#logoutButton').hidden=true;
@@ -55,12 +58,14 @@ function showLogin(message=''){
   $('#activeManager').hidden=true;
   $('#activeManager').textContent='';
 }
-function showDashboard(phone){
+function showDashboard(phone,session){
+  state.csrf=session?.csrf??null;state.user=session?.user??null;
   state.sessionEpoch++;
   clearLeadView();
   $('#loginView').hidden=true;$('#dashboard').hidden=false;$('#logoutButton').hidden=false;
   $('#activeManager').textContent=phone||'';
   $('#activeManager').hidden=!phone;
+  extensions.session(session);
 }
 function fail(error,target){
   if(error.message==='LOGIN_REQUIRED'){showLogin('Сеанс завершён. Войдите снова.');return;}
@@ -94,6 +99,7 @@ function renderList(data){
         'Заказ обратного звонка'),
       el('div','lead-sub',date(lead.createdAt)+' · '+(lead.assignee||'Менеджер не назначен')));
     if(lead.notificationStatus==='failed')b.append(el('div','error','MAX не получил уведомление'));
+    if(lead.classification==='test')b.append(el('div','muted','Тестовая · не входит в коммерческие показатели'));
     b.addEventListener('click',()=>loadDetail(lead.id));
     list.append(b);
   }
@@ -109,7 +115,7 @@ async function loadList(){
   try{
     const query=new URLSearchParams({
       limit:String(state.limit),offset:String(state.offset),
-      status:$('#statusFilter').value,q:$('#leadSearch').value.trim()
+      status:$('#statusFilter').value,q:$('#leadSearch').value.trim(),classification:$('#classificationFilter').value
     });
     const data=await api('leads?'+query);
     if(epoch===state.sessionEpoch)renderList(data);
@@ -195,15 +201,17 @@ function renderDetail(record){
     history.append(item);
   }
   for(const row of document.querySelectorAll('.lead-item'))row.setAttribute('aria-current',String(row.dataset.id===record.id));
+  extensions.lead(record);
   if(window.matchMedia('(max-width:690px)').matches){
     $('.detail-pane').scrollIntoView({behavior:'smooth',block:'start'});
   }
 }
 async function loadDetail(id){
   const epoch=state.sessionEpoch;
+  const ticket=++state.detailTicket;
   try{
     const data=await api('leads/'+encodeURIComponent(id));
-    if(epoch!==state.sessionEpoch||$('#dashboard').hidden)return;
+    if(epoch!==state.sessionEpoch||ticket!==state.detailTicket||$('#dashboard').hidden)return;
     state.selected=id;
     renderDetail(data.lead);
   }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#listSummary'));}
@@ -215,8 +223,8 @@ async function login(event){
   try{
     const session=await api('login',{method:'POST',body:JSON.stringify({phone:$('#managerPhone').value,password:$('#managerPassword').value})});
     $('#managerPassword').value='';
-    showDashboard(session.phone);
-    await loadList();
+    showDashboard(session.phone,session);
+    if(!extensions.needsPasswordChange())await loadList();
   }catch(error){if(error.message==='LOGIN_REQUIRED')showLogin('Пароль неверный или доступ ограничен.');else fail(error,$('#loginError'));}
   finally{button.disabled=false;}
 }
@@ -237,6 +245,7 @@ async function save(event){
   }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#saveStatus'));}
   finally{button.disabled=false;}
 }
+const extensions=mountManagerExtensions({api,refresh:loadList,openLead:loadDetail});
 $('#loginForm').addEventListener('submit',login);
 $('#leadEditForm').addEventListener('submit',save);
 $('#filterForm').addEventListener('submit',event=>{event.preventDefault();state.offset=0;loadList();});
@@ -247,5 +256,5 @@ $('#logoutButton').addEventListener('click',async()=>{
   try{await api('logout',{method:'POST'});}catch{}
   showLogin('');
 });
-api('session').then(async session=>{showDashboard(session.phone);await loadList();})
+api('session').then(async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadList();})
   .catch(()=>showLogin());
