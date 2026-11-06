@@ -139,3 +139,7 @@ html:has(body.hh-page){scroll-padding-top:0}
 .hh-layout-example .hh-layout-panel{margin-top:0;gap:18px}
 .hh-layout-example .hh-layout-tile img{aspect-ratio:1.6}
 @media(max-width:540px){.hh-bath-panel>.hh-bath-plan{margin-top:32px;padding-top:24px}.hh-layout-example{padding:12px}.hh-layout-example h4{font-size:18px;margin-bottom:12px}.hh-layout-example .hh-layout-panel{gap:12px}}
+
+/* Shared ownership mark for the interactive 3D view. */
+.hh-layout-stage{position:relative;background:#e7ece9}
+.hh-layout-watermark{position:absolute;top:12px;right:14px;z-index:1;pointer-events:none;color:#294b3c;opacity:.55;font:700 14px/1.2 Arial,sans-serif;letter-spacing:.01em}

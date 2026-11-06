@@ -1,0 +1,134 @@
+[
+  {
+    "id": "dp3d-01",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-02",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-03",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-04",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-05",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-06",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-07",
+    "doors": 4,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-08",
+    "doors": 4,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-09",
+    "doors": 5,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-10",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-11",
+    "doors": 5,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-12",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-13",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-14",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-15",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-16",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-17",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-18",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-19",
+    "doors": 3,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-20",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-21",
+    "doors": 2,
+    "bench": true,
+    "rendered": true
+  },
+  {
+    "id": "dp3d-22",
+    "doors": 4,
+    "bench": true,
+    "rendered": true
+  }
+]
