@@ -1,0 +1,11 @@
+{
+  "baseline": "/srv/sites/dachapar-preview/releases/HEADER-SHADE-fd3c261ec5550f6e",
+  "before": {
+    "home-section-scroll.mjs": null,
+    "index.html": "e7b97212f8cc299a8d6b8b6d2452c197945afb1a64b92cfb43642c7a83bccbba"
+  },
+  "files": {
+    "home-section-scroll.mjs": "62b3e1c01cd5f2d83bc36be52d4d7b716147d1376859fe5cf1bfe58b50038c49",
+    "index.html": "0842f558311c7d47240c0c77ee62fc5ed5c8c6f34359af0d0881a927e3e0cd9d"
+  }
+}
