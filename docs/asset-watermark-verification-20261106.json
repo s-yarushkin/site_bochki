@@ -70,5 +70,6 @@
       "reason": "interface_icon_or_placeholder"
     }
   ],
-  "original_geometry_and_specs": "Unchanged; candidate is media and viewer only"
+  "original_geometry_and_specs": "Unchanged; candidate is media and viewer only",
+  "git_source_bytes_verified": 580
 }
