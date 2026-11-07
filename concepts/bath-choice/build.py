@@ -21,6 +21,7 @@ def main():
         target=OUT/'r101'/name;target.parent.mkdir(exist_ok=True);shutil.copy2(ROOT/'r101'/name,target)
     page=(HERE/'index.html').read_text('utf8')
     page=compose(page,OUT)
+    shutil.copy2(ROOT/'web/site-entries.mjs',OUT/'site-entries.mjs')
     ritual=re.search(r'<section class="ritual"[^>]*>.*?</section>',page,re.S)[0]
     # Reuse the original ritual without the unrelated catalogue and form code.
     # The complete current motion excerpt is emitted by compose(), without

@@ -45,7 +45,7 @@ def compose(page,out):
  extras=extras.replace('</div></dialog>','</div></div></dialog>',1)
  page=page.replace('{{home-continuation}}',lower).replace('{{home-footer}}',footer+extras)
  for old,new in INQUIRY_COPY.items():assert page.count(old)==1;page=page.replace(old,new)
- page=page.replace('</head>','<link rel="stylesheet" href="/choice/inquiry-success.css?v=20261105"><link rel="stylesheet" href="/choice/care.css?v=20261106">'+PACKAGE_CSS+'</head>')
+ page=page.replace('</head>','<script type="module" src="/site-entries.mjs?v=entries-20261107"></script><link rel="stylesheet" href="/choice/inquiry-success.css?v=20261105"><link rel="stylesheet" href="/choice/care.css?v=20261106">'+PACKAGE_CSS+'</head>')
  # Copy the public motion fragment literally, preserving ritual, depth and reveal behaviour.
  script=(baseline/'r101/site.mjs').read_text('utf8');motion=script[script.index('// A native scrolling page:'):script.index('try{\n [book,settings,photos,plans]')]
  (out/'choice/continuation-motion.mjs').write_text("const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];\n"+motion,'utf8')
