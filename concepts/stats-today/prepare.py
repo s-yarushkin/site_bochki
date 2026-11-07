@@ -35,9 +35,14 @@ def main():
             page, count = re.subn(r'(/crm/manager-extension\.css|crm/manager-extension\.css|\.\/crm/manager-extension\.css)(?:\?[^"\s]*)?', lambda m: m[1] + '?v=' + TAG, page)
             assert count == 1
         elif relative not in {'404.html', 'yandex_b6454ce0d283ef63.html'}:
-            anchor = '</head>' if '</head>' in page else '</html>'
-            assert page.count(anchor) == 1, relative
-            page = page.replace(anchor, '<script type="module" src="/site-entries.mjs?v=' + TAG + '"></script>' + anchor)
+            script = '<script type="module" src="/site-entries.mjs?v=' + TAG + '"></script>'
+            first_script = page.find('<script')
+            if first_script >= 0:
+                page = page[:first_script] + script + page[first_script:]
+            else:
+                anchor = '</head>' if '</head>' in page else '</html>'
+                assert page.count(anchor) == 1, relative
+                page = page.replace(anchor, script + anchor)
         else:
             continue
         files['web/' + relative] = page.encode()
