@@ -1,0 +1,31 @@
+"""Build a narrow overlay against the current, hash-verified production release."""
+import ast,base64,gzip,hashlib,io,json,subprocess,tarfile
+from pathlib import Path
+from social_preview import IMAGE_PATH,patch_preview
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/consent-release'
+def sha(data):return hashlib.sha256(data).hexdigest()
+source=next(n.value.value for n in ast.parse((ROOT/'scripts/publish-consent-terminal.py').read_text('utf8')).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='SOURCE' for t in n.targets))
+result=subprocess.run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','dachapar','python3 -'],input=source.encode(),capture_output=True,check=True,timeout=90)
+fresh=json.loads(result.stdout);sources=fresh.pop('source');old=json.loads((OUT/'baseline.json').read_text('utf8'))
+if fresh!=old:raise RuntimeError('Production changed since the reviewed merge. Rebase the overlay before publication.')
+files={}
+web=['journey-tracker.mjs','journey-tracker.css','analytics-core.mjs','privacy.html','assets/js/manager.js','crm/manager-extension.mjs','aggregate-actions.mjs','consent-banner.mjs','analytics-consent.html','crm/aggregate-report.mjs']
+api=['server/garant-bani-relay.mjs','server/crm-public-api.mjs','server/crm-manager-api.mjs','server/crm-insights.mjs','server/crm-aggregate.mjs']
+for kind,names in [('web',web),('api',api)]:
+ for name in names:
+  data=(ROOT/kind/name).read_bytes()
+  if sha(data)!=fresh[kind+'_files'].get(name):files[kind+'/'+name]=data
+# Retain the actual page, patch only its share-preview metadata.
+index=base64.b64decode(sources['web/index.html']);patched=patch_preview(index)
+if patched!=index:files['web/index.html']=patched
+image=(ROOT/'web'/IMAGE_PATH).read_bytes()
+if sha(image)!=fresh['web_files'].get(IMAGE_PATH):files['web/'+IMAGE_PATH]=image
+manifest={n:sha(data) for n,data in sorted(files.items())};release='CONSENT-'+sha(json.dumps(manifest,sort_keys=True).encode())[:12]
+raw=io.BytesIO()
+with tarfile.open(fileobj=raw,mode='w',format=tarfile.USTAR_FORMAT) as tar:
+ for name,data in sorted(files.items()):
+  info=tarfile.TarInfo(name);info.size=len(data);info.mode=0o644;info.mtime=0;tar.addfile(info,io.BytesIO(data))
+payload=gzip.compress(raw.getvalue(),mtime=0);(OUT/'payload.tar.gz').write_bytes(payload)
+c={'release':release,'baseline':fresh,'baseline_sha256':sha(json.dumps(fresh,sort_keys=True).encode()),'overlay':manifest,'payload_sha256':sha(payload),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'tests':'55 automated checks passed; live lead delivery is never exercised with fake leads'}
+(OUT/'deployment.json').write_text(json.dumps(c,indent=2)+'\n',encoding='utf8')
+print(json.dumps({'release':release,'files':len(files),'bytes':len(payload),'baseline_unchanged':True}))

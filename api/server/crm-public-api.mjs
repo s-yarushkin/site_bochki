@@ -1,5 +1,5 @@
 import {crmAnswer,crmJson} from './crm-manager-api.mjs';
-export function createCrmPublicApi({insights,origin,clock=()=>Date.now()}){
+export function createCrmPublicApi({insights,origin,clock=()=>Date.now(),aggregate=null}){
  const buckets=new Map();
  return async(req,res)=>{
   const url=new URL(req.url,'http://localhost');
@@ -15,7 +15,7 @@ export function createCrmPublicApi({insights,origin,clock=()=>Date.now()}){
   }
   if(!url.pathname.startsWith('/api/analytics/'))return false;
   if(url.pathname==='/api/analytics/config'&&req.method==='GET'){
-   crmAnswer(res,200,{ok:true,enabled:insights.enabled,consent_version:'crm-cookies-20261105',retention_days:180});return true;
+   crmAnswer(res,200,{ok:true,enabled:insights.enabled,aggregate_enabled:aggregate?.enabled===true,consent_version:'crm-cookies-20261107',retention_days:180});return true;
   }
   if(req.method!=='POST'||req.headers.origin!==origin){crmAnswer(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});return true;}
   const key=String(req.headers['x-forwarded-for']??'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown',now=clock();
@@ -25,13 +25,19 @@ export function createCrmPublicApi({insights,origin,clock=()=>Date.now()}){
    const data=await crmJson(req,24000);
    if(url.pathname==='/api/analytics/consent'){
     if(!['all','necessary'].includes(data.choice))throw Error('INVALID_CONSENT');
-    crmAnswer(res,200,{ok:true,choice:data.choice},{'Set-Cookie':insights.consent(req,data.choice==='all')});return true;
+    const version=['crm-cookies-20261105','crm-cookies-20261107'].includes(data.version)?data.version:'crm-cookies-20261107';
+    crmAnswer(res,200,{ok:true,choice:data.choice},{'Set-Cookie':insights.consent(req,data.choice==='all',version)});return true;
    }
+   if(url.pathname==='/api/analytics/counters'){crmAnswer(res,200,{ok:true,...(aggregate?.enabled?aggregate.count(data):{accepted:0,disabled:true})});return true;}
    if(!insights.enabled&&url.pathname!=='/api/analytics/source-context'){crmAnswer(res,200,{ok:true,accepted:0,disabled:true});return true;}
    const staff=String(req.headers.cookie??'').split(';').some(s=>s.trim()==='dp_staff=1');
+   if(url.pathname==='/api/analytics/entry'){
+    const bot=/bot|crawler|spider|preview|facebookexternalhit|telegrambot/i.test(String(req.headers['user-agent']??''));
+    crmAnswer(res,200,{ok:true,...(staff?{accepted:0,staffExcluded:true}:bot?{accepted:0,botExcluded:true}:insights.countEntry(data))});return true;
+   }
    if(url.pathname==='/api/analytics/events/batch'){crmAnswer(res,200,{ok:true,...(staff?{accepted:0,staffExcluded:true}:insights.events(req,data))});return true;}
    if(url.pathname==='/api/analytics/source-context'){crmAnswer(res,200,{ok:true,context:insights.signedSource(data)});return true;}
    crmAnswer(res,404,{ok:false,code:'NOT_FOUND'});return true;
-  }catch(error){const code=error.message;crmAnswer(res,['INVALID_CONSENT','INVALID_EVENTS','INVALID_JSON','BODY_TOO_LARGE','JSON_REQUIRED'].includes(code)?400:503,{ok:false,code:['INVALID_CONSENT','INVALID_EVENTS','INVALID_JSON','BODY_TOO_LARGE','JSON_REQUIRED'].includes(code)?code:'ANALYTICS_UNAVAILABLE'});return true;}
+  }catch(error){const code=error.message;crmAnswer(res,['INVALID_AGGREGATE','INVALID_CONSENT','INVALID_EVENTS','INVALID_JSON','BODY_TOO_LARGE','JSON_REQUIRED'].includes(code)?400:503,{ok:false,code:['INVALID_AGGREGATE','INVALID_CONSENT','INVALID_EVENTS','INVALID_JSON','BODY_TOO_LARGE','JSON_REQUIRED'].includes(code)?code:'ANALYTICS_UNAVAILABLE'});return true;}
  };
 }

@@ -1,5 +1,6 @@
-import {mountManagerExtensions} from '../../crm/manager-extension.mjs';
+import {mountManagerExtensions} from '../../crm/manager-extension.mjs?v=entries-20261107';
 import {mountManagerMfa} from '../../crm/manager-mfa.mjs';
+import {mountAggregateReport} from '../../crm/aggregate-report.mjs';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
 const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,detailTicket:0,csrf:null,user:null};
@@ -260,5 +261,6 @@ $('#logoutButton').addEventListener('click',async()=>{
   try{await api('logout',{method:'POST'});}catch{}
   showLogin('');
 });
+mountAggregateReport({api});
 api('session').then(async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadList();})
   .catch(()=>showLogin());

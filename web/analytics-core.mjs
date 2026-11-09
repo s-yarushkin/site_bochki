@@ -1,5 +1,5 @@
 export const GOALS=Object.freeze(['dp_lead_confirmed','dp_quote_lead_confirmed','dp_callback_lead_confirmed','dp_premium_quote_confirmed','dp_detailed_quote_confirmed','dp_phone_click','dp_form_open','dp_form_close','dp_form_error','dp_form_submit_attempt','dp_builder_start','dp_builder_complete','dp_builder_interaction','dp_model_view','dp_model_select','dp_size_select','dp_base_kit_open','dp_gallery_open','dp_cta_click','dp_plan_view','dp_plan_select','dp_plan_mirror','dp_plan_compare','dp_package_select','dp_reference_select','dp_quote_view','dp_quote_save','dp_quote_share','dp_quote_restore','dp_delivery_start','dp_compare_view','dp_faq_open', 'dp_quiz_invite_view','dp_quiz_invite_close','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_quiz_plan_open','dp_quiz_catalog_cta','dp_quiz_catalog_sent','dp_quiz_completed','dp_quiz_submit_attempt','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_quiz_lead_confirmed','dp_quiz_lead_pereslavl_confirmed']);
-import {cookieChoice} from './journey-tracker.mjs?v=crm-20261105';
+import {cookieChoice} from './journey-tracker.mjs?v=quiz-overview-20261106';
 const goals=new Set(GOALS),receipts=new Set(GOALS.filter(x=>x.includes('_confirmed')));
 const placements=new Set(['header','hero','catalog','base','bundle','personal','delivery','builder','faq','final','footer','mobile','seo','model','plans','gallery','packages','result','compare','unknown']);
 const models=new Set(['kvadro','viking','parus','kvadro-house']);
@@ -26,7 +26,7 @@ export function safeParams(params={}){
 }
 export function createAnalytics(env){
  let active=false,counterId=null,lastSettings;const counted=new Set();
- env.document.addEventListener?.('dachapar:consent',event=>{if(event.detail?.choice==='all'&&lastSettings)start(lastSettings);});
+ env.document.addEventListener?.('dachapar:consent',event=>{if(event.detail?.choice==='all'&&lastSettings)start(lastSettings);else if(event.detail?.choice==='necessary')stop();});
  const store=type=>{try{return env[type]}catch{return null}};
  function touch(){
   const q=new URLSearchParams(env.location.search),value={landing:safePath(env.location.pathname)};
@@ -60,6 +60,11 @@ export function createAnalytics(env){
   if(!env.document.querySelector('script[data-dp-metrika]')){const s=env.document.createElement('script');s.async=true;s.src='https://mc.yandex.ru/metrika/tag.js?id='+counterId;s.dataset.dpMetrika='1';env.document.head.append(s)}
   return true;
  }
+ function stop(){
+  if(!active)return;active=false;
+  try{if(Array.isArray(env.ym?.a)){env.ym.a=env.ym.a.filter(args=>Number(args[0])!==counterId);env.document.querySelector('script[data-dp-metrika]')?.remove();}else if(typeof env.ym==='function')env.ym(counterId,'destruct');}catch{env.location.reload?.();}
+  counted.clear();try{store('localStorage')?.removeItem(touchKey);store('sessionStorage')?.removeItem(seenKey);}catch{}
+ }
  function attribution(){if(!active)return null;remember();try{const value=JSON.parse(store('localStorage')?.getItem(touchKey)||'null');return value?{first:value.first,last:value.last}:null}catch{return null}}
  function clientID(){
   if(!active||typeof env.ym!=='function')return Promise.resolve(null);
@@ -82,6 +87,6 @@ export function createAnalytics(env){
   }
   return true;
  }
- return {start,track,confirmed,attribution,clientID,isActive:()=>active};
+ return {start,stop,track,confirmed,attribution,clientID,isActive:()=>active};
 }
 export const analytics=typeof window==='undefined'?null:createAnalytics(window);

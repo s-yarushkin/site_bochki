@@ -4,7 +4,8 @@ import {crmAnswer,crmJson} from './crm-manager-api.mjs';
 
 export const CHANNELS=['search_organic','social_organic','messenger','partner_referral','paid','direct','other_referral','unknown'];
 export const SOURCES=['yandex','google','vk','youtube','telegram','max','partner','offline','other'];
-export const EVENT_CODES=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping','dp_lead_confirmed']);
+export const EVENT_CODES=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_invite_view','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping','dp_lead_confirmed']);
+const QUIZ_VARIANT=/^(?:p2|p4|p6|p8)__(?:w_yes|w_no|w_compare)__(?:b_yes|b_no)$/;
 const CTAS=new Set(['header_quote','hero_help','catalog_quote','layout_quote','footer_quote','quiz_catalog','production','foundation','contact','unknown']);
 const PLACEMENTS=new Set(['header','hero','catalog','model','plans','gallery','quiz','footer','final','unknown']);
 const UUID=/^[a-f\d]{8}-(?:[a-f\d]{4}-){3}[a-f\d]{12}$/i;
@@ -51,6 +52,8 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
  const visitorToken=req=>String(req.headers.cookie??'').split(';').map(s=>s.trim()).find(s=>s.startsWith('dp_visitor='))?.slice(11);
  const visitor=req=>{const data=unpack(visitorToken(req));return data?.kind==='visitor'&&UUID.test(data.id??'')&&db.prepare('SELECT 1 FROM visitors WHERE visitor_id=? AND consent_until>?').get(data.id,now())?data.id:null;};
  function migrate(){db.exec(`
+  CREATE TABLE IF NOT EXISTS site_entries(day TEXT NOT NULL,page_path TEXT NOT NULL,source TEXT NOT NULL,channel TEXT NOT NULL,link_id TEXT NOT NULL DEFAULT '',entries INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(day,page_path,source,channel,link_id));
+  CREATE TABLE IF NOT EXISTS analytics_totals_meta(key TEXT PRIMARY KEY,value TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS tracking_sources(key TEXT PRIMARY KEY,label TEXT NOT NULL,system INTEGER NOT NULL DEFAULT 0);
   CREATE TABLE IF NOT EXISTS tracking_links(id TEXT PRIMARY KEY,slug TEXT UNIQUE NOT NULL,label TEXT NOT NULL,source TEXT NOT NULL,channel TEXT NOT NULL,campaign TEXT,content TEXT,destination TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'active',created_by TEXT NOT NULL,created_at TEXT NOT NULL);
   CREATE TABLE IF NOT EXISTS link_requests(day TEXT NOT NULL,link_id TEXT NOT NULL REFERENCES tracking_links(id),suspected_bot INTEGER NOT NULL,requests INTEGER NOT NULL DEFAULT 0,PRIMARY KEY(day,link_id,suspected_bot));
@@ -62,7 +65,7 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   CREATE INDEX IF NOT EXISTS events_visit_time ON visitor_events(visit_id,at);
   CREATE INDEX IF NOT EXISTS events_retention ON visitor_events(at);
   CREATE TABLE IF NOT EXISTS lead_attribution(lead_id TEXT PRIMARY KEY REFERENCES leads(id),visitor_id TEXT REFERENCES visitors(visitor_id) ON DELETE SET NULL,visit_id TEXT REFERENCES visits(visit_id) ON DELETE SET NULL,trigger_event_id TEXT,first_touch TEXT NOT NULL,last_non_direct_touch TEXT NOT NULL,conversion_touch TEXT NOT NULL,confidence TEXT NOT NULL,confirmed INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL);
- `);for(const key of SOURCES)db.prepare('INSERT OR IGNORE INTO tracking_sources VALUES(?,?,1)').run(key,key);}
+ `);db.prepare('INSERT OR IGNORE INTO analytics_totals_meta VALUES(?,?)').run('entries_started_at',now());for(const key of SOURCES)db.prepare('INSERT OR IGNORE INTO tracking_sources VALUES(?,?,1)').run(key,key);}
  function log(actor,action,id,before,after){db.prepare('INSERT INTO audit_log(actor_id,action,object_type,object_id,before_json,after_json,at) VALUES(?,?,?,?,?,?,?)').run(actor,action,'tracking_link',id,JSON.stringify(before),JSON.stringify(after),now());}
  function createLink(actor,data){
   const source=data.source,channel=data.channel;if(!db.prepare('SELECT 1 FROM tracking_sources WHERE key=?').get(source??'')||!CHANNELS.includes(channel)||['direct','unknown','other_referral'].includes(channel))throw Error('INVALID_SOURCE');
@@ -92,9 +95,21 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   const visit_id=randomUUID(),touch={...source(data),at:time};db.prepare('INSERT INTO visits(visit_id,visitor_id,started_at,last_active_at,landing_path,touch_json) VALUES(?,?,?,?,?,?)').run(visit_id,id,time,time,pathOnly(data?.page_path),JSON.stringify(touch));
   return db.prepare('SELECT * FROM visits WHERE visit_id=?').get(visit_id);
  }
- function consent(req,all){
+ function countEntry(data){
+  const page=typeof data?.page_path==='string'?data.page_path.replace(/index\.html$/,''):null;
+  const publicPath=typeof page==='string'&&page.length<=160&&(/^\/(?:[a-z0-9_-]+\/)*$/.test(page)||['/privacy.html','/consent.html','/requisites.html'].includes(page));
+  if(!publicPath||/^\/(?:api|crm|assets|r101|choice|manager)(?:\/|$)/.test(page))return {accepted:0};
+  const touch=source({...data,utm_source:data.utm_source||(data.yclid?'yandex':data.gclid?'google':undefined)}),day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now()));
+  db.prepare('INSERT INTO site_entries VALUES(?,?,?,?,?,1) ON CONFLICT(day,page_path,source,channel,link_id) DO UPDATE SET entries=entries+1').run(day,page,touch.source,touch.channel,touch.link_id??'');
+  return {accepted:1};
+ }
+ function entryReport({from,to,page,source:filterSource,link}){
+  const rows=db.prepare("SELECT day,page_path,source,channel,link_id,entries FROM site_entries WHERE day BETWEEN ? AND ? AND (?='' OR page_path=?) AND (?='' OR source=?) AND (?='' OR link_id=?)").all(from,to,page??'',page??'',filterSource??'',filterSource??'',link??'',link??'');
+  return {total:rows.reduce((n,row)=>n+row.entries,0),linked:rows.reduce((n,row)=>n+(row.link_id?row.entries:0),0),started_at:db.prepare("SELECT value FROM analytics_totals_meta WHERE key='entries_started_at'").get()?.value,rows};
+ }
+ function consent(req,all,version='crm-cookies-20261105'){
   const current=visitor(req),time=now();if(all!==true){if(current)db.prepare('DELETE FROM visitors WHERE visitor_id=?').run(current);return ['dp_visitor=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax','dp_consent=necessary; Max-Age=15552000; Path=/; Secure; SameSite=Lax'];}
-  const id=current??randomUUID(),until=new Date(Date.parse(time)+180*86400000).toISOString();db.prepare('INSERT INTO visitors VALUES(?,?,?,?,?,?) ON CONFLICT(visitor_id) DO UPDATE SET consent_at=excluded.consent_at,consent_until=excluded.consent_until,consent_version=excluded.consent_version').run(id,time,until,'crm-cookies-20261105',time,time);
+  const id=current??randomUUID(),until=new Date(Date.parse(time)+180*86400000).toISOString();db.prepare('INSERT INTO visitors VALUES(?,?,?,?,?,?) ON CONFLICT(visitor_id) DO UPDATE SET consent_at=excluded.consent_at,consent_until=excluded.consent_until,consent_version=excluded.consent_version').run(id,time,until,version,time,time);
   return [`dp_visitor=${signed({kind:'visitor',id,exp:Date.parse(until)})}; Max-Age=15552000; Path=/; Secure; HttpOnly; SameSite=Lax`,'dp_consent=all; Max-Age=15552000; Path=/; Secure; SameSite=Lax'];
  }
  function events(req,data){
@@ -110,6 +125,7 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
     if(valid)metadata[key]=value;
    }
    if(Number.isInteger(event.step)&&event.step>=1&&event.step<=7)metadata.step=event.step;
+   if(event.event_code==='dp_quiz_result'&&typeof event.variant==='string'&&QUIZ_VARIANT.test(event.variant))metadata.variant=event.variant;
    let active=event.event_code==='active_time_ping'?Math.max(0,Math.min(15,activeBudget,Number(event.active_seconds)||0)):0;
    const changed=db.prepare('INSERT OR IGNORE INTO visitor_events VALUES(?,?,?,?,?,?)').run(event.event_id,current.visit_id,time,event.event_code,pathOnly(event.page_path),JSON.stringify(metadata)).changes;
    accepted+=Number(changed);if(changed&&active){db.prepare('UPDATE visits SET active_seconds=active_seconds+? WHERE visit_id=?').run(active,current.visit_id);activeBudget-=active;}
@@ -142,7 +158,7 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   for(const day of [from,to])if(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(day+'T12:00:00Z'))!==day)throw Error('INVALID_REPORT');
   const cohort=new Map(),daily=new Map(),dayOf=t=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(t));
   const dayGroup=at=>{const key=dayOf(at);if(!daily.has(key))daily.set(key,{day:key,verified_visits:0,real_leads:0,won:0,browsers:new Set()});return daily.get(key);};
-  const groups=new Map();const group=t=>{const key=t?.link_id??`${t?.channel??'unknown'}:${t?.source??'unknown'}`;if(!groups.has(key))groups.set(key,{key,link_id:t?.link_id??null,channel:t?.channel??'unknown',source:t?.source??'unknown',technical_requests:0,suspected_bot_requests:0,verified_visits:0,unique_browsers:0,real_leads:0,confirmed_leads:0,won:0,active_seconds:0,browsers:new Set(),convertingVisits:new Set()});return groups.get(key);};
+  const groups=new Map();const group=t=>{const key=t?.link_id??`${t?.channel??'unknown'}:${t?.source??'unknown'}`;if(!groups.has(key))groups.set(key,{key,link_id:t?.link_id??null,channel:t?.channel??'unknown',source:t?.source??'unknown',technical_requests:0,suspected_bot_requests:0,verified_visits:0,unique_browsers:0,real_leads:0,confirmed_leads:0,won:0,active_seconds:0,site_entries:0,linked_entries:0,browsers:new Set(),convertingVisits:new Set()});return groups.get(key);};
   for(const row of db.prepare('SELECT * FROM visits WHERE started_at BETWEEN ? AND ?').all(lo,hi)){const target=group(JSON.parse(row.touch_json));target.verified_visits++;target.active_seconds+=row.active_seconds;target.browsers.add(row.visitor_id);cohort.set(row.visit_id,target.key);const day=dayGroup(row.started_at);day.verified_visits++;day.browsers.add(row.visitor_id);}
   for(const row of db.prepare("SELECT a.*,l.id crm_lead_id,l.status,l.notification_status,l.created_at lead_created FROM leads l LEFT JOIN lead_attribution a ON a.lead_id=l.id LEFT JOIN lead_classification c ON c.lead_id=l.id WHERE COALESCE(c.classification,'real')='real' AND l.created_at BETWEEN ? AND ?").all(lo,hi)){
    let first=JSON.parse(row.first_touch??'null'),last=JSON.parse(row.last_non_direct_touch??'null');const conversion=JSON.parse(row.conversion_touch??'null');
@@ -155,9 +171,11 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
    const target=group(touch);target.real_leads++;(target.lead_ids??=[]).push(row.crm_lead_id);if(row.notification_status==='delivered')target.confirmed_leads++;if(row.status==='won')target.won++;if(cohort.get(row.visit_id)===target.key)target.convertingVisits.add(row.visit_id);const day=dayGroup(row.lead_created);day.real_leads++;if(row.status==='won')day.won++;
   }
   for(const row of db.prepare('SELECT r.*,l.source,l.channel FROM link_requests r JOIN tracking_links l ON l.id=r.link_id WHERE day BETWEEN ? AND ?').all(from,to)){const target=group(row);if(row.suspected_bot)target.suspected_bot_requests+=row.requests;else target.technical_requests+=row.requests;}
+  const traffic=entryReport({from,to});
+  for(const row of traffic.rows){const target=group({...row,link_id:row.link_id||null});target.site_entries+=row.entries;if(row.link_id)target.linked_entries+=row.entries;}
   const rows=[...groups.values()].map(({browsers,convertingVisits,...r})=>({...r,label:r.link_id?link(r.link_id)?.label:null,lead_ids:(r.lead_ids??[]).filter(Boolean).slice(0,500),unique_browsers:browsers.size,converting_visits:convertingVisits.size,avg_active_seconds:r.verified_visits?Math.round(r.active_seconds/r.verified_visits):null,lead_conversion:r.verified_visits?convertingVisits.size/r.verified_visits:null}));
-  const totals={unique_browsers:new Set([...groups.values()].flatMap(r=>[...r.browsers])).size};for(const key of ['technical_requests','suspected_bot_requests','verified_visits','real_leads','confirmed_leads','won'])totals[key]=rows.reduce((n,r)=>n+r[key],0);
-  const result={from,to,time_zone:'Europe/Moscow',model,window_days:Number(window),source:'CRM',partial:true,updated_at:now(),totals,limitations:'Без согласия доступны технические переходы и доказанная связь публикации с заявкой; уникальные браузеры и история — только по согласившимся. Браузер не равен человеку. Конверсия: доля визитов периода с реальной заявкой и совпадающим источником. Продажи — заявки со статусом «Продано»; выручка не рассчитывается.',rows};
+  const totals={unique_browsers:new Set([...groups.values()].flatMap(r=>[...r.browsers])).size};for(const key of ['site_entries','linked_entries','technical_requests','suspected_bot_requests','verified_visits','real_leads','confirmed_leads','won'])totals[key]=rows.reduce((n,r)=>n+r[key],0);
+  const result={from,to,time_zone:'Europe/Moscow',model,window_days:Number(window),source:'CRM',partial:true,updated_at:now(),traffic:{total:traffic.total,linked:traffic.linked,started_at:traffic.started_at},totals,limitations:'Входы на сайт считаются по внешним переходам и прямым открытиям. По вашим ссылкам — часть общего числа, не дополнительный трафик. Сотрудники с отметкой исключения не учитываются. Подробные действия и уникальные браузеры доступны по согласившимся посетителям. Браузер не равен человеку. Конверсия: доля визитов периода с реальной заявкой и совпадающим источником. Продажи — заявки со статусом «Продано»; выручка не рассчитывается.',rows};
   if(details){const count=Math.round((Date.parse(to+'T12:00:00Z')-Date.parse(from+'T12:00:00Z'))/86400000)+1;result.daily=Array.from({length:count},(_,i)=>{const day=new Date(Date.parse(from+'T12:00:00Z')+i*86400000).toISOString().slice(0,10),r=daily.get(day)??{day,verified_visits:0,real_leads:0,won:0,browsers:new Set()};const {browsers,...values}=r;return {...values,unique_browsers:browsers.size};});const previousTo=new Date(Date.parse(from+'T12:00:00Z')-86400000).toISOString().slice(0,10),previousFrom=new Date(Date.parse(from+'T12:00:00Z')-count*86400000).toISOString().slice(0,10);result.previous={from:previousFrom,to:previousTo,totals:report({from:previousFrom,to:previousTo,model,window,details:false}).totals};}
   return result;
  }
@@ -168,12 +186,23 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
  function actions(query){
   const base=report({...query,details:false}),lo=new Date(base.from+'T00:00:00+03:00').toISOString(),hi=new Date(base.to+'T23:59:59.999+03:00').toISOString();const selected=new Set(),browsers=new Set();
   for(const v of db.prepare('SELECT * FROM visits WHERE started_at BETWEEN ? AND ?').all(lo,hi)){const t=JSON.parse(v.touch_json);if(query.link&&query.link!==t.link_id||query.source&&query.source!==t.source||query.page&&query.page!==v.landing_path)continue;selected.add(v.visit_id);browsers.add(v.visitor_id);}
+  const quiz={invite_views:0,completions:0,known_combinations:0,combinations:[]};
+  const combinations=new Map();
   const groups=new Map(),reached=new Map();for(const e of db.prepare('SELECT e.* FROM visitor_events e WHERE e.at BETWEEN ? AND ? ORDER BY e.at').all(lo,hi)){
    if(!selected.has(e.visit_id)||e.event_code==='active_time_ping')continue;const metadata=JSON.parse(e.metadata_json);if(query.bath&&metadata.model_id!==query.bath)continue;
    if(e.event_code==='dp_lead_confirmed'&&db.prepare("SELECT 1 FROM lead_classification WHERE lead_id=? AND classification='test'").get(metadata.lead_id??''))continue;
+   if(e.event_code==='dp_quiz_invite_view')quiz.invite_views++;
+   if(e.event_code==='dp_quiz_result'){
+    quiz.completions++;
+    if(typeof metadata.variant==='string'&&QUIZ_VARIANT.test(metadata.variant)){
+     quiz.known_combinations++;
+     combinations.set(metadata.variant,(combinations.get(metadata.variant)??0)+1);
+    }
+   }
    const key=[e.event_code,metadata.cta_id??'',metadata.model_id??'',metadata.plan_id??''].join('|');if(!groups.has(key))groups.set(key,{event_code:e.event_code,...metadata,count:0,visits:new Set()});const g=groups.get(key);g.count++;g.visits.add(e.visit_id);if(!reached.has(e.event_code))reached.set(e.event_code,new Set());reached.get(e.event_code).add(e.visit_id);
   }
-  return {from:base.from,to:base.to,verified_visits:selected.size,unique_browsers:browsers.size,rows:[...groups.values()].map(({visits,...g})=>({...g,unique_visits:visits.size})),stages:['page_view','dp_model_select','dp_plan_view','dp_cta_click','dp_form_open','dp_form_submit_attempt','dp_lead_confirmed'].map(event_code=>({event_code,visits:reached.get(event_code)?.size??0})),limitations:'Охват событий в визитах с согласием; этапы могут проходить в разном порядке. Тестовые заявки исключены из подтверждений. События до внедрения не восстанавливаются.'};
+  quiz.combinations=[...combinations].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).map(([variant,count])=>({variant,count}));
+  return {quiz,traffic:entryReport({from:base.from,to:base.to,page:query.page,source:query.source,link:query.link}),from:base.from,to:base.to,verified_visits:selected.size,unique_browsers:browsers.size,rows:[...groups.values()].map(({visits,...g})=>({...g,unique_visits:visits.size})),stages:['page_view','dp_model_select','dp_plan_view','dp_cta_click','dp_form_open','dp_form_submit_attempt','dp_lead_confirmed'].map(event_code=>({event_code,visits:reached.get(event_code)?.size??0})),limitations:'Охват событий в визитах с согласием; этапы могут проходить в разном порядке. Тестовые заявки исключены из подтверждений. События до внедрения не восстанавливаются.'};
  }
  async function managerApi(req,res,{user,crm,url}){
   if(url.pathname==='/api/manager/tracking-links'){
@@ -198,7 +227,7 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   return false;
  }
  function purge(){const cutoff=new Date(Date.parse(now())-180*86400000).toISOString();db.prepare('DELETE FROM visitor_events WHERE at<?').run(cutoff);db.prepare('DELETE FROM visits WHERE last_active_at<?').run(cutoff);db.prepare('DELETE FROM visitors WHERE consent_until<=? OR last_seen<?').run(now(),cutoff);}
- return {migrate,createLink,link,source,consent,events,bindLead,confirmed,leadAttribution,leadTimeline,report,actions,visitorDetail,managerApi,purge,visitor,
+ return {migrate,countEntry,createLink,link,source,consent,events,bindLead,confirmed,leadAttribution,leadTimeline,report,actions,visitorDetail,managerApi,purge,visitor,
   signedSource(data){return signed({kind:'source',touch:source(data),exp:Math.floor(Date.parse(now())/1800000)*1800000+7200000});},
   redirect(slug,userAgent='',{staff=false}={}){const row=link(slug);if(!row)return null;if(staff)return row.full_url;const bot=/bot|crawler|spider|preview|facebookexternalhit|telegrambot/i.test(userAgent);const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now()));db.prepare('INSERT INTO link_requests VALUES(?,?,?,1) ON CONFLICT(day,link_id,suspected_bot) DO UPDATE SET requests=requests+1').run(day,row.id,bot?1:0);return row.full_url;},
   close(){db.close();},enabled

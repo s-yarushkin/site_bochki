@@ -8,7 +8,7 @@ export async function crmJson(req,limit=12000){
  let data;try{data=JSON.parse(Buffer.concat(chunks).toString('utf8'));}catch{throw Error('INVALID_JSON');}
  if(!data||typeof data!=='object'||Array.isArray(data))throw Error('INVALID_JSON');return data;
 }
-export function createCrmManagerApi({crm,store,auth,origin,insights=null,mfa=null}){
+export function createCrmManagerApi({crm,store,auth,origin,insights=null,mfa=null,aggregate=null}){
  const full=found=>({ok:true,phone:found.user.phone_e164,role:found.user.roles.includes('owner_admin')?'owner_admin':'manager',user:found.user,csrf:found.csrf,...(mfa?{security:found.security,mfa:true}:{}),...(found.recoveryCodes?{recoveryCodes:found.recoveryCodes}:{})});
  const ip=req=>String(req.headers['x-forwarded-for']??'').split(',').at(-1)?.trim()||req.socket.remoteAddress;
  const factorResult=(res,found)=>{if(found.ok)return true;crmAnswer(res,found.limited?429:found.expired?401:400,{ok:false,code:found.limited?'RATE_LIMITED':found.expired?'CHALLENGE_EXPIRED':'INVALID_SECOND_FACTOR'});return false;};
@@ -82,6 +82,7 @@ export function createCrmManagerApi({crm,store,auth,origin,insights=null,mfa=nul
     if(req.method==='POST'&&lead[2]==='classification'){crmAnswer(res,200,{ok:true,...crm.classify(user.id,id,await crmJson(req))});return true;}
     if(req.method==='GET'&&lead[2]==='timeline'){crm.requirePermission(user.id,'view_visitor_timeline');crmAnswer(res,200,{ok:true,timeline:insights?insights.leadTimeline(id):[],limited:!insights});return true;}
    }
+   if(path==='/api/manager/aggregate-actions'&&req.method==='GET'){crm.requirePermission(user.id,'view_analytics');crmAnswer(res,200,{ok:true,report:aggregate?.enabled?aggregate.report(Object.fromEntries(url.searchParams)):{enabled:false,rows:[],consent:{shown:0,accepted:0,declined:0,choices:0,acceptance_among_choices:null}}});return true;}
    if(insights&&await insights.managerApi(req,res,{user,crm,url}))return true;
    crmAnswer(res,404,{ok:false,code:'NOT_FOUND'});return true;
   }catch(error){
