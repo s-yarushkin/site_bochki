@@ -26,3 +26,9 @@ The manager Actions tab adds aggregate counts separately from consent-based repo
 5. Health, authentication, lead rejection, rejection of private aggregate fields, public checksums and the existing short-link preview are checked. Failure restores old symlinks and the previous drop-in; it never overwrites new leads with a stale database.
 
 Receipts are in `.local/consent-release/` (ignored), with root-only backups and rollback pointers under `/var/backups/dachapar/CONSENT-…/`. No claim of publication is valid without a successful receipt and independent health/config verification.
+
+## Published receipt
+
+Published November 9, 2026 as `CONSENT-67512f6c1e0b`, source commit `f098436b6a272a4147e522b1278450d9f0a4ee7c`. Both web and API use this release. Backup integrity and isolated restoration passed; backup remains server-only at `/var/backups/dachapar/CRM-AUDIT-20261109T052612Z`. The rollback state is `/var/backups/dachapar/CONSENT-67512f6c1e0b/state.json`.
+
+Independent checks confirmed the live release pointers, public module checksums, enabled aggregates and unchanged MFA/lead-store modules. Deployment checks verified public share-preview checksums, the existing short-link route, required manager authentication, invalid-lead rejection and rejection of private fields in the aggregate endpoint. No fake production lead or real MAX message was sent. Fifty-five automated tests and three share-preview tests passed.
