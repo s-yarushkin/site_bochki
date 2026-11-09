@@ -15,7 +15,7 @@ export function createCrmPublicApi({insights,origin,clock=()=>Date.now(),aggrega
   }
   if(!url.pathname.startsWith('/api/analytics/'))return false;
   if(url.pathname==='/api/analytics/config'&&req.method==='GET'){
-   crmAnswer(res,200,{ok:true,enabled:insights.enabled,aggregate_enabled:aggregate?.enabled===true,consent_version:'crm-cookies-20261107',retention_days:180});return true;
+   crmAnswer(res,200,{ok:true,enabled:insights.enabled,aggregate_enabled:aggregate?.enabled===true,consent_version:'crm-cookies-20261109',retention_days:180});return true;
   }
   if(req.method!=='POST'||req.headers.origin!==origin){crmAnswer(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});return true;}
   const key=String(req.headers['x-forwarded-for']??'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown',now=clock();
@@ -25,7 +25,8 @@ export function createCrmPublicApi({insights,origin,clock=()=>Date.now(),aggrega
    const data=await crmJson(req,24000);
    if(url.pathname==='/api/analytics/consent'){
     if(!['all','necessary'].includes(data.choice))throw Error('INVALID_CONSENT');
-    const version=['crm-cookies-20261105','crm-cookies-20261107'].includes(data.version)?data.version:'crm-cookies-20261107';
+    const version=['crm-cookies-20261105','crm-cookies-20261107',...['banner','settings','form-submit','quiz-start'].map(method=>'crm-cookies-20261109-'+method)].includes(data.version)?data.version:'crm-cookies-20261107';
+    if(data.choice==='all'&&/-(?:form-submit|quiz-start)$/.test(version)&&String(req.headers.cookie??'').split(';').some(c=>c.trim()==='dp_consent=necessary')){crmAnswer(res,400,{ok:false,code:'CONSENT_CHOICE_REQUIRED'});return true;}
     crmAnswer(res,200,{ok:true,choice:data.choice},{'Set-Cookie':insights.consent(req,data.choice==='all',version)});return true;
    }
    if(url.pathname==='/api/analytics/counters'){crmAnswer(res,200,{ok:true,...(aggregate?.enabled?aggregate.count(data):{accepted:0,disabled:true})});return true;}

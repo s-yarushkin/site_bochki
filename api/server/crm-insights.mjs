@@ -4,7 +4,7 @@ import {crmAnswer,crmJson} from './crm-manager-api.mjs';
 
 export const CHANNELS=['search_organic','social_organic','messenger','partner_referral','paid','direct','other_referral','unknown'];
 export const SOURCES=['yandex','google','vk','youtube','telegram','max','partner','offline','other'];
-export const EVENT_CODES=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_invite_view','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping','dp_lead_confirmed']);
+export const EVENT_CODES=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_quiz_invite_view','dp_quiz_invite_close','dp_quiz_completed','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping','dp_lead_confirmed']);
 const QUIZ_VARIANT=/^(?:p2|p4|p6|p8)__(?:w_yes|w_no|w_compare)__(?:b_yes|b_no)$/;
 const CTAS=new Set(['header_quote','hero_help','catalog_quote','layout_quote','footer_quote','quiz_catalog','production','foundation','contact','unknown']);
 const PLACEMENTS=new Set(['header','hero','catalog','model','plans','gallery','quiz','footer','final','unknown']);

@@ -1,7 +1,7 @@
 """Upload and validate candidate with deploy privileges, without sudo or live changes."""
-import json,subprocess
+import os,json,subprocess
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/consent-release'
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_CONSENT_PACKAGE','consent-release')
 c=json.loads((OUT/'deployment.json').read_text());folder='/tmp/dachapar-consent-'+c['release'].removeprefix('CONSENT-')
 def run(args):return subprocess.run(args,cwd=ROOT,capture_output=True,check=True,timeout=240)
 run(['ssh','-T','-o','BatchMode=yes','dachapar','mkdir -p -m 700 '+folder])

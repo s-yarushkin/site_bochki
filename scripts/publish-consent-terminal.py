@@ -1,7 +1,7 @@
 """Interactive publication coordinator. No password, visitor data or credentials saved."""
-import base64,getpass,hashlib,json,subprocess,time
+import os,base64,getpass,hashlib,json,subprocess,time
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/consent-release';OUT.mkdir(parents=True,exist_ok=True)
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_CONSENT_PACKAGE','consent-release');OUT.mkdir(parents=True,exist_ok=True)
 def state(status,**fields):(OUT/'terminal-state.json').write_text(json.dumps({'status':status,**fields},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 def run(args,**kw):return subprocess.run(args,cwd=ROOT,capture_output=True,check=True,timeout=60,**kw)
 SOURCE="""import pathlib,json,hashlib,base64

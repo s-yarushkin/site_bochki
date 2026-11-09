@@ -7,7 +7,7 @@ DROP=Path('/etc/systemd/system/garant-bani-relay.service.d/92-aggregate.conf')
 ORIGIN='https://xn--80aaan1dh9b.xn--p1ai';SERVICE='garant-bani-relay.service'
 ALLOWED={
  'api/server/garant-bani-relay.mjs','api/server/crm-manager-api.mjs','api/server/crm-public-api.mjs','api/server/crm-insights.mjs','api/server/crm-aggregate.mjs',
- 'web/journey-tracker.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png'}
+ 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png'}
 def sha(data):return hashlib.sha256(data).hexdigest()
 def tree(root):
  result={}
@@ -77,7 +77,7 @@ def verify(expected):
  if status!=400:raise RuntimeError('Lead validation failed')
  status,_,_=request('/api/analytics/counters','POST',b'{"events":[],"visitor_id":"forbidden"}')
  if status!=400:raise RuntimeError('Counter privacy validation failed')
- for name in ['index.html','manager.html','journey-tracker.mjs','consent-banner.mjs','aggregate-actions.mjs','analytics-consent.html','assets/js/manager.js','crm/manager-extension.mjs','crm/aggregate-report.mjs','assets/social/dachapar-parus-winter-20261106-v1.png']:
+ for name in ['index.html','manager.html','journey-tracker.mjs','consent-banner.mjs','consent-actions.mjs','aggregate-actions.mjs','analytics-consent.html','assets/js/manager.js','crm/manager-extension.mjs','crm/aggregate-report.mjs','assets/social/dachapar-parus-winter-20261106-v1.png']:
   status,data,headers=request('/' if name=='index.html' else '/'+name)
   if status!=200 or sha(data)!=expected['web'][name]:raise RuntimeError('Public checksum failed: '+name)
   if name.endswith('.png') and headers.get_content_type()!='image/png':raise RuntimeError('Image MIME mismatch')

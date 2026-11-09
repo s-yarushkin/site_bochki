@@ -2,6 +2,7 @@ import {scheduleLeadSuccess} from './lead-success.mjs?v=all-forms-20261105';
 import {leadJourneyContext,journeyEvent} from './journey-tracker.mjs?v=crm-20261105';
 import { normalizeState } from './quote.mjs?v=r93-20261026';
 import { CONSENT_VERSION, CONSENT_METHOD } from './lead-consent.mjs?v=r100-20261027';
+import {consentActions} from './consent-actions.mjs';
 
 export const CONTACT_CHANNELS = ['phone', 'max', 'telegram', 'whatsapp'];
 export function normalizeSettlement(value) {
@@ -39,6 +40,7 @@ export function buildLead(catalog, input, fields, requestId) {
 export async function submitLead(payload, settings, pageOrigin, fetchImpl = fetch) {
   const ready=payload.flow==='callback'?callbackAvailable(settings,pageOrigin):payload.flow==='quote'&&leadAvailable(settings,pageOrigin,payload.configuration?.pricebookVersion);
   if (!ready) throw new Error('LEAD_NOT_CONNECTED');
+  const consentPending=consentActions?.pending();if(consentPending){let timer;try{await Promise.race([consentPending,new Promise(resolve=>{timer=setTimeout(resolve,1400);})]);}finally{clearTimeout(timer);}}
   journeyEvent('dp_form_submit_attempt');
   let crmContext;try{crmContext=await leadJourneyContext();}catch{}
   const response = await fetchImpl(settings.lead.endpoint, { method:'POST', credentials:'same-origin',
