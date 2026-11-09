@@ -14,6 +14,7 @@ class ReleaseChecks(unittest.TestCase):
   self.assertIn('method GET HEAD',result);self.assertIn('not path /api/* /go/* /crm/* /manager.html',result)
   self.assertIn('>Cache-Control "public, max-age=0, must-revalidate"',result)
   self.assertNotIn('immutable',result)
+  self.assertIn('encode gzip',patch_config(text.replace('  header Cache-Control','  encode gzip\n  header Cache-Control',1)))
   for bad in ['',text+text,result]:
    with self.assertRaises(RuntimeError):patch_config(bad)
  def test_audit_is_read_only_and_exports_counts_only(self):
