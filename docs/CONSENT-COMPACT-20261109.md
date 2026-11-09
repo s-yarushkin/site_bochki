@@ -13,3 +13,9 @@ Aggregate counters now also include quiz invitation views/closures, completion a
 64 automated checks passed, including HTTP consent evidence, preservation of refusal, ordered choice changes, consent failure, goal timing and duplicate receipts, plus the existing API, CRM and MFA checks. Browser automation was unavailable earlier in this session; no completed visual QA is claimed. Deployment must verify the complete current inventory, test candidate imports and isolated counters, back up SQLite and validate restoration, and retain automatic symlink rollback.
 
 Legal design reference: [152-FZ Article 9](https://www.consultant.ru/document/Cons_doc_LAW_61801/6c94959bc017ac80140621762d2ac59f6006b08c/) permits a confirmable consent form while requiring informed, specific and unambiguous consent, separately documented. This implementation does not treat a generic historical processing consent as permission for unrestricted disclosure.
+
+## Published
+
+Published as `CONSENT-099fe32abfa5` on November 9, 2026, source commit `b47cd51b8fc0ad534990d090e0c432dc59549b23`. Thirteen files were overlaid; the actual quiz, model imagery, layouts and application fields were retained. The runtime notice reuses the existing form paragraph.
+
+The successful server receipt confirms health, enabled counters, required manager authentication, rejection of invalid leads/private counter fields, public module checksums and the preserved share preview. Credentials and MFA modules remain protected by the complete inventory guard. No test production lead or real MAX message was sent. Backup integrity and isolated restore passed; server-only backup: `/var/backups/dachapar/CRM-AUDIT-20261109T104725Z`. Rollback pointers: `/var/backups/dachapar/CONSENT-099fe32abfa5/state.json`.
