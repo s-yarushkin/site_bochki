@@ -12,6 +12,6 @@ def run(args):
   raise SystemExit(result.returncode)
  return result
 run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','mkdir -p -m 700 '+folder])
-run(['scp','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2',str(OUT/'deployment.json'),str(OUT/'payload.tar.gz'),str(ROOT/'scripts/deploy-consent-remote.py'),str(ROOT/'scripts/crm-production-audit.py'),'dachapar:'+folder+'/'])
+run(['scp','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2',str(OUT/'deployment.json'),str(OUT/'payload.tar.gz'),*[str(ROOT/'scripts'/n) for n in c.get('support_files',{'deploy-consent-remote.py':'','crm-production-audit.py':''})],'dachapar:'+folder+'/'])
 r=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','python3 '+folder+'/deploy-consent-remote.py --check'])
 print(r.stdout.decode('utf8'))

@@ -4,7 +4,7 @@ import {crmAnswer,crmJson} from './crm-manager-api.mjs';
 
 export const CHANNELS=['search_organic','social_organic','messenger','partner_referral','paid','direct','other_referral','unknown'];
 export const SOURCES=['yandex','google','vk','youtube','telegram','max','partner','offline','other'];
-export const EVENT_CODES=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_quiz_invite_view','dp_quiz_invite_close','dp_quiz_completed','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping','dp_lead_confirmed']);
+export const EVENT_CODES=new Set(['page_view','dp_model_view','dp_model_select','dp_size_select','dp_plan_view','dp_plan_select','dp_cta_click','dp_form_open','dp_form_close','dp_form_submit_attempt','dp_package_select','dp_quiz_start','dp_quiz_answer','dp_quiz_result','dp_quiz_invite_view','dp_quiz_invite_close','dp_quiz_completed','dp_quiz_close_before_completed','dp_quiz_close_after_completed','dp_3d_open','dp_3d_rotate','dp_3d_close','active_time_ping','dp_lead_confirmed']);
 const QUIZ_VARIANT=/^(?:p2|p4|p6|p8)__(?:w_yes|w_no|w_compare)__(?:b_yes|b_no)$/;
 const CTAS=new Set(['header_quote','hero_help','catalog_quote','layout_quote','footer_quote','quiz_catalog','production','foundation','contact','unknown']);
 const PLACEMENTS=new Set(['header','hero','catalog','model','plans','gallery','quiz','footer','final','unknown']);
@@ -107,8 +107,16 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   const rows=db.prepare("SELECT day,page_path,source,channel,link_id,entries FROM site_entries WHERE day BETWEEN ? AND ? AND (?='' OR page_path=?) AND (?='' OR source=?) AND (?='' OR link_id=?)").all(from,to,page??'',page??'',filterSource??'',filterSource??'',link??'',link??'');
   return {total:rows.reduce((n,row)=>n+row.entries,0),linked:rows.reduce((n,row)=>n+(row.link_id?row.entries:0),0),started_at:db.prepare("SELECT value FROM analytics_totals_meta WHERE key='entries_started_at'").get()?.value,rows};
  }
+ function clearRequestHistory(where,params){
+  // Request details stay in CRM; optional browsing history follows its own
+  // withdrawal/180-day retention rules even when copied into a lead context.
+  for(const row of db.prepare('SELECT l.id,l.snapshot_json FROM leads l LEFT JOIN lead_attribution a ON a.lead_id=l.id WHERE '+where).all(...params)){
+   const lead=JSON.parse(row.snapshot_json);if(!lead.intentContext?.recentActions?.length)continue;
+   lead.intentContext.recentActions=[];lead.intentContext.historyStatus='removed';db.prepare('UPDATE leads SET snapshot_json=? WHERE id=?').run(JSON.stringify(lead),row.id);
+  }
+ }
  function consent(req,all,version='crm-cookies-20261105'){
-  const current=visitor(req),time=now();if(all!==true){if(current)db.prepare('DELETE FROM visitors WHERE visitor_id=?').run(current);return ['dp_visitor=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax','dp_consent=necessary; Max-Age=15552000; Path=/; Secure; SameSite=Lax'];}
+  const current=visitor(req),time=now();if(all!==true){if(current){clearRequestHistory('a.visitor_id=?',[current]);db.prepare('DELETE FROM visitors WHERE visitor_id=?').run(current);}return ['dp_visitor=; Max-Age=0; Path=/; Secure; HttpOnly; SameSite=Lax','dp_consent=necessary; Max-Age=15552000; Path=/; Secure; SameSite=Lax'];}
   const id=current??randomUUID(),until=new Date(Date.parse(time)+180*86400000).toISOString();db.prepare('INSERT INTO visitors VALUES(?,?,?,?,?,?) ON CONFLICT(visitor_id) DO UPDATE SET consent_at=excluded.consent_at,consent_until=excluded.consent_until,consent_version=excluded.consent_version').run(id,time,until,version,time,time);
   return [`dp_visitor=${signed({kind:'visitor',id,exp:Date.parse(until)})}; Max-Age=15552000; Path=/; Secure; HttpOnly; SameSite=Lax`,'dp_consent=all; Max-Age=15552000; Path=/; Secure; SameSite=Lax'];
  }
@@ -120,8 +128,8 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   const current=visit(id,{...data,landing:pending.some(e=>e.event_code==='page_view')}),time=now();let accepted=0,activeBudget=Math.max(0,(Date.parse(time)-Date.parse(current.last_active_at))/1000);
   for(const event of pending){
    if(!event||!UUID.test(event.event_id??'')||!EVENT_CODES.has(event.event_code)||event.event_code==='dp_lead_confirmed')continue;
-   const metadata={};for(const key of ['model_id','size_id','plan_id','cta_id','placement','purpose']){
-    const value=event[key];const valid=key==='size_id'?/^(?:[456][05]0|[456]x[456])$/.test(value??''):key==='model_id'?['kvadro','parus','viking','kvadro-house'].includes(value):key==='cta_id'?CTAS.has(value):key==='placement'?PLACEMENTS.has(value):key==='plan_id'?/^(?:dp3d-\d{2}|DP-PL-\d{3}|p\d{1,2})$/.test(value??''):['quote','callback','plan','plan_info','photo','delivery','selection_help','production','foundation','layout_quote'].includes(value);
+   const metadata={};for(const key of ['model_id','size_id','plan_id','package','cta_id','placement','purpose']){
+    const value=event[key];const valid=key==='size_id'?/^(?:[456][05]0|[456]x[456])$/.test(value??''):key==='model_id'?['kvadro','parus','viking','kvadro-house'].includes(value):key==='package'?['comfort','deluxe'].includes(value):key==='cta_id'?CTAS.has(value):key==='placement'?PLACEMENTS.has(value):key==='plan_id'?/^(?:dp3d-\d{2}|DP-PL-\d{3}|p\d{1,2})$/.test(value??''):['quote','callback','plan','plan_info','photo','delivery','selection_help','production','foundation','layout_quote'].includes(value);
     if(valid)metadata[key]=value;
    }
    if(Number.isInteger(event.step)&&event.step>=1&&event.step<=7)metadata.step=event.step;
@@ -226,7 +234,7 @@ export function openCrmInsights(path,{secret,origin,now=()=>new Date().toISOStri
   const visitorMatch=/^\/api\/manager\/visitors\/([a-f\d-]{36})$/.exec(url.pathname);if(visitorMatch&&req.method==='GET'){crm.requirePermission(user.id,'view_analytics');crm.requirePermission(user.id,'view_visitor_timeline');crmAnswer(res,200,{ok:true,visitor:visitorDetail(visitorMatch[1])});return true;}
   return false;
  }
- function purge(){const cutoff=new Date(Date.parse(now())-180*86400000).toISOString();db.prepare('DELETE FROM visitor_events WHERE at<?').run(cutoff);db.prepare('DELETE FROM visits WHERE last_active_at<?').run(cutoff);db.prepare('DELETE FROM visitors WHERE consent_until<=? OR last_seen<?').run(now(),cutoff);}
+ function purge(){const cutoff=new Date(Date.parse(now())-180*86400000).toISOString();clearRequestHistory('l.created_at<? OR a.visitor_id IN (SELECT visitor_id FROM visitors WHERE consent_until<=? OR last_seen<?)',[cutoff,now(),cutoff]);db.prepare('DELETE FROM visitor_events WHERE at<?').run(cutoff);db.prepare('DELETE FROM visits WHERE last_active_at<?').run(cutoff);db.prepare('DELETE FROM visitors WHERE consent_until<=? OR last_seen<?').run(now(),cutoff);}
  return {migrate,countEntry,createLink,link,source,consent,events,bindLead,confirmed,leadAttribution,leadTimeline,report,actions,visitorDetail,managerApi,purge,visitor,
   signedSource(data){return signed({kind:'source',touch:source(data),exp:Math.floor(Date.parse(now())/1800000)*1800000+7200000});},
   redirect(slug,userAgent='',{staff=false}={}){const row=link(slug);if(!row)return null;if(staff)return row.full_url;const bot=/bot|crawler|spider|preview|facebookexternalhit|telegrambot/i.test(userAgent);const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now()));db.prepare('INSERT INTO link_requests VALUES(?,?,?,1) ON CONFLICT(day,link_id,suspected_bot) DO UPDATE SET requests=requests+1').run(day,row.id,bot?1:0);return row.full_url;},

@@ -1,3 +1,4 @@
+import {normalizeRequestIntent,normalizeRecentActions,decorateMaxLead,genericWithoutChoice} from './request-intent.mjs';
 import {validQuizCatalogRequest} from './quiz-channel-policy.mjs';
 import {validateJourneyContext,journeyText} from './journey-context.mjs';
 import {R85_VERSION,R85_PREVIOUS_VERSION,R85_SUPPORTED_VERSIONS,resolveR85Configuration,formatR85Lead} from './r85-quote.mjs';
@@ -47,7 +48,7 @@ function field(value,max) {
   return clean;
 }
 
-export function validateBaniLead(value) {
+function validateBaniLeadBase(value) {
   if(!value || typeof value!=='object' || Array.isArray(value)) throw new Error('INVALID_PAYLOAD');
   if(value.website) throw new Error('SPAM_REJECTED');
   if(value.flow!=='callback' && value.flow!=='quote') throw new Error('INVALID_FLOW');
@@ -155,13 +156,15 @@ export function validateBaniLead(value) {
   return lead;
 }
 
-export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
+export function validateBaniLead(value){const lead=validateBaniLeadBase(value);const intent=normalizeRequestIntent(value.intentContext,lead,{modelBook:PUBLIC_R85_BOOK.models,planBook:PUBLIC_R85_BOOK.plans,finishLabels,roofLabels});if(intent)lead.intentContext=intent;return lead;}
+
+function formatBaniLeadBase(lead,{id=null,createdAt=null}={}) {
   if(R85_SUPPORTED_VERSIONS.includes(lead.estimate?.pricebookVersion))return formatR85Lead(lead,{id,createdAt})+journeyText(lead);
   const text=[
     ['2026-10-14','2026-10-16',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'НОВАЯ ЗАЯВКА — ДАЧА ПАР':'НОВАЯ ЗАЯВКА — ГАРАНТ БАНИ',
     ...(id?['Номер: '+id]:[]),
     ...(createdAt?['Создана: '+createdAt]:[]),
-    'Тип: '+(lead.purpose==='plan_info'?'Подробности о планировке':lead.purpose==='quiz_catalog'?'Подбор бань: планировки и комплектации':lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
+    'Тип: '+(genericWithoutChoice(lead)?'Обращение с сайта':lead.purpose==='plan_info'?'Подробности о планировке':lead.purpose==='quiz_catalog'?'Подбор бань: планировки и комплектации':lead.flow==='quote'?'Расчёт бани':'Обратный звонок'),
     'Имя: '+(lead.name||'Не указано'),
     'Телефон: '+lead.phone,
     'Связаться: '+channelNames[lead.contactChannel||'phone']+' по номеру телефона'
@@ -197,6 +200,8 @@ export function formatBaniLead(lead,{id=null,createdAt=null}={}) {
   text.push(['2026-10-14','2026-10-16',CONSENT_VERSION].includes(lead.consentEvidence?.version)?'Источник: сайт Дача Пар':'Источник: сайт Гарант Бани');
   return text.join('\n')+journeyText(lead);
 }
+
+export function formatBaniLead(lead,meta={}){let display=lead;if(genericWithoutChoice(lead)){display={...lead,flow:'callback',journeyContext:lead.journeyContext?{...lead.journeyContext}:undefined};delete display.estimate;delete display.configuration;if(display.journeyContext)delete display.journeyContext.variant;}return decorateMaxLead(formatBaniLeadBase(display,meta),lead,meta);}
 
 export function loadRelayConfig(env=process.env,readSecret=readFileSync) {
   const host=env.HOST||'127.0.0.1';
@@ -311,6 +316,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       let payload;
       try{payload=JSON.parse(raw);}catch{throw new Error('INVALID_JSON');}
       const lead=validateBaniLead(payload);
+      if(lead.intentContext){const permitted=insights?.enabled===true&&Boolean(insights.visitor(req))&&!String(req.headers.cookie??'').split(';').some(c=>c.trim()==='dp_staff=1');lead.intentContext.recentActions=permitted?normalizeRecentActions(payload.intentContext?.recentActions):[];lead.intentContext.historyStatus=permitted?'permitted':'unavailable';}
       const fingerprint=createHash('sha256').update(JSON.stringify(lead)).digest('hex');
       if(!store && recent.has(fingerprint))return json(res,200,{ok:true,delivered:true,duplicate:true});
       let record=null;
@@ -319,7 +325,11 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
         if(typeof requestId!=='string'||!/^[a-f0-9-]{16,80}$/i.test(requestId))throw new Error('INVALID_REQUEST_ID');
         try{
           record=store.create(lead,requestId).lead;
-          if(JSON.stringify(record.detail)!==JSON.stringify(lead))
+          // A retry may have a newer consent/history snapshot. Business fields
+          // must match, and delivery always uses the first immutable snapshot.
+          const {intentContext:savedIntent,...savedBusiness}=record.detail;
+          const {intentContext:postedIntent,...postedBusiness}=lead;
+          if(JSON.stringify(savedBusiness)!==JSON.stringify(postedBusiness))
             return json(res,409,{ok:false,code:'REQUEST_ID_CONFLICT'});
         }
         catch{
@@ -337,7 +347,7 @@ export function createRelayHandler({config,deliver=deliverBaniLead,clock=()=>Dat
       if(record&&insights)try{insights.bindLead(req,record.id,payload.crmContext);}catch{log(JSON.stringify({event:'crm_attribution_unavailable'}));}
       active++;
       try {
-        await deliver(lead,config,fetch,{id:record?.id,createdAt:record?.createdAt});
+        await deliver(record?.detail??lead,config,fetch,{id:record?.id,createdAt:record?.createdAt});
         if(record)store.delivery(record.id,'delivered');
         if(record&&insights)try{insights.confirmed(record.id);}catch{log(JSON.stringify({event:'crm_confirmation_unavailable'}));}
         recent.set(fingerprint,now+120000);

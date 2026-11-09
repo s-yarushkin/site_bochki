@@ -13,10 +13,10 @@ else:
  fresh=json.loads(result.stdout);sources=fresh.pop('source')
 if fresh!=old:raise RuntimeError('Production changed since the reviewed merge. Rebase the overlay before publication.')
 files={}
-web=['journey-tracker.mjs','journey-tracker.css','analytics-core.mjs','privacy.html','assets/js/manager.js','crm/manager-extension.mjs','aggregate-actions.mjs','consent-banner.mjs','analytics-consent.html','crm/aggregate-report.mjs','consent-actions.mjs','lead-client.mjs']
+web=['journey-tracker.mjs','journey-runtime.mjs','request-intent.mjs','choice/home-hero/model-request.mjs','journey-tracker.css','analytics-core.mjs','privacy.html','assets/js/manager.js','crm/manager-extension.mjs','aggregate-actions.mjs','consent-banner.mjs','analytics-consent.html','crm/aggregate-report.mjs','consent-actions.mjs','lead-client.mjs']
 content_build=json.loads((OUT/'content-build.json').read_text('utf8')) if (OUT/'content-build.json').exists() else None
 if content_build:web+=['choice/packages.mjs','choice/packages.css','choice/comparison.mjs','choice/app.mjs',content_build['bundle']]
-api=['server/garant-bani-relay.mjs','server/crm-public-api.mjs','server/crm-manager-api.mjs','server/crm-insights.mjs','server/crm-aggregate.mjs']
+api=['server/garant-bani-relay.mjs','server/request-intent.mjs','data/request-layouts.json','server/crm-public-api.mjs','server/crm-manager-api.mjs','server/crm-insights.mjs','server/crm-aggregate.mjs']
 for kind,names in [('web',web),('api',api)]:
  for name in names:
   data=(ROOT/kind/name).read_bytes()
@@ -35,6 +35,8 @@ with tarfile.open(fileobj=raw,mode='w',format=tarfile.USTAR_FORMAT) as tar:
  for name,data in sorted(files.items()):
   info=tarfile.TarInfo(name);info.size=len(data);info.mode=0o644;info.mtime=0;tar.addfile(info,io.BytesIO(data))
 payload=gzip.compress(raw.getvalue(),mtime=0);(OUT/'payload.tar.gz').write_bytes(payload)
-c={'release':release,'baseline':fresh,'baseline_sha256':sha(json.dumps(fresh,sort_keys=True).encode()),'overlay':manifest,'payload_sha256':sha(payload),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'tests':'69 automated checks passed; live lead delivery is never exercised with fake leads'}
+c={'release':release,'baseline':fresh,'baseline_sha256':sha(json.dumps(fresh,sort_keys=True).encode()),'overlay':manifest,'payload_sha256':sha(payload),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'tests':'See committed validation report; live lead delivery is never exercised with fake leads'}
+c['support_files']={n:sha((ROOT/'scripts'/n).read_bytes()) for n in ['deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py']}
+if (OUT/'cache-config.json').exists():c['public_media_cache']={'config_sha256':json.loads((OUT/'cache-config.json').read_text('utf8'))['config_sha256']}
 (OUT/'deployment.json').write_text(json.dumps(c,indent=2)+'\n',encoding='utf8')
 print(json.dumps({'release':release,'files':len(files),'bytes':len(payload),'baseline':'captured; remote hash guard required' if '--prepared' in sys.argv else 'freshly verified'}))

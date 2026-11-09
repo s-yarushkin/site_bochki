@@ -1,5 +1,6 @@
 import {scheduleLeadSuccess} from './lead-success.mjs?v=all-forms-20261105';
-import {leadJourneyContext,journeyEvent} from './journey-tracker.mjs?v=crm-20261105';
+import {leadJourneyContext,journeyEvent,leadRecentActions} from './journey-tracker.mjs?v=crm-20261105';
+import {requestIntent} from './request-intent.mjs';
 import { normalizeState } from './quote.mjs?v=r93-20261026';
 import { CONSENT_VERSION, CONSENT_METHOD } from './lead-consent.mjs?v=r100-20261027';
 import {consentActions} from './consent-actions.mjs';
@@ -40,11 +41,12 @@ export function buildLead(catalog, input, fields, requestId) {
 export async function submitLead(payload, settings, pageOrigin, fetchImpl = fetch) {
   const ready=payload.flow==='callback'?callbackAvailable(settings,pageOrigin):payload.flow==='quote'&&leadAvailable(settings,pageOrigin,payload.configuration?.pricebookVersion);
   if (!ready) throw new Error('LEAD_NOT_CONNECTED');
+  const intentContext=requestIntent?.snapshot(payload);
   const consentPending=consentActions?.pending();if(consentPending){let timer;try{await Promise.race([consentPending,new Promise(resolve=>{timer=setTimeout(resolve,1400);})]);}finally{clearTimeout(timer);}}
   journeyEvent('dp_form_submit_attempt');
   let crmContext;try{crmContext=await leadJourneyContext();}catch{}
   const response = await fetchImpl(settings.lead.endpoint, { method:'POST', credentials:'same-origin',
-    headers:{'Content-Type':'application/json'}, body:JSON.stringify({...payload,...(crmContext?{crmContext}:{})}), signal:AbortSignal.timeout(12000) });
+    headers:{'Content-Type':'application/json'}, body:JSON.stringify({...payload,...(intentContext?{intentContext:{...intentContext,recentActions:leadRecentActions()}}:{}),...(crmContext?{crmContext}:{})}), signal:AbortSignal.timeout(12000) });
   const result = await response.json().catch(()=>({}));
   if (!response.ok || result.ok !== true || result.delivered !== true || result.analytics?.persisted !== true) {
     const error = new Error(response.status === 429 ? 'RATE_LIMITED' : response.status === 409 ? 'IN_PROGRESS' : 'DELIVERY_NOT_CONFIRMED');

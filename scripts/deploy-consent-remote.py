@@ -6,8 +6,8 @@ WEB=Path('/srv/sites/dachapar-preview/current');API=Path('/srv/services/garant-b
 DROP=Path('/etc/systemd/system/garant-bani-relay.service.d/92-aggregate.conf')
 ORIGIN='https://xn--80aaan1dh9b.xn--p1ai';SERVICE='garant-bani-relay.service'
 ALLOWED={
- 'api/server/garant-bani-relay.mjs','api/server/crm-manager-api.mjs','api/server/crm-public-api.mjs','api/server/crm-insights.mjs','api/server/crm-aggregate.mjs',
- 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png','web/choice/packages.mjs','web/choice/packages.css','web/choice/comparison.mjs','web/choice/app.mjs'}
+ 'api/server/garant-bani-relay.mjs','api/server/crm-manager-api.mjs','api/server/crm-public-api.mjs','api/server/crm-insights.mjs','api/server/crm-aggregate.mjs','api/server/request-intent.mjs','api/data/request-layouts.json',
+ 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-runtime.mjs','web/request-intent.mjs','web/choice/home-hero/model-request.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png','web/choice/packages.mjs','web/choice/packages.css','web/choice/comparison.mjs','web/choice/app.mjs'}
 def sha(data):return hashlib.sha256(data).hexdigest()
 def tree(root):
  result={}
@@ -39,6 +39,8 @@ def stage(dest,c):
    kind,rel=name.split('/',1);p=dest[kind]/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data);p.chmod(0o644);expected[kind][rel]=digest
  for kind in ['web','api']:
   if tree(dest[kind])!=expected[kind]:raise RuntimeError('Protected inventory changed: '+kind)
+ registry=dest['api']/'data/request-layouts.json'
+ if registry.exists() and json.loads(registry.read_text())['source_sha256']!=expected['web']['home-hero/layouts/index.json']:raise RuntimeError('Request layout registry does not match public album')
  # Import the complete candidate API, including the live pricebook and conversion modules.
  run(['/usr/bin/node','--input-type=module','-e',"await import(process.argv[2]);",'/usr/bin/node',(dest['api']/'server/garant-bani-relay.mjs').as_uri()])
  for name in c['overlay']:
@@ -56,8 +58,8 @@ def switch(link,target):
  pending=link.with_name('current.consent-switch')
  if pending.exists() or pending.is_symlink():raise RuntimeError('Pending switch exists')
  pending.symlink_to(target);os.replace(pending,link)
-def request(path,method='GET',data=None,origin=ORIGIN):
- req=urllib.request.Request(origin+path,data=data,method=method,headers={'Origin':ORIGIN,'Content-Type':'application/json','User-Agent':'DachaPar-Release-Check/1.0'})
+def request(path,method='GET',data=None,origin=ORIGIN,headers=None):
+ req=urllib.request.Request(origin+path,data=data,method=method,headers={'Origin':ORIGIN,'Content-Type':'application/json','User-Agent':'DachaPar-Release-Check/1.0',**(headers or {})})
  try:
   with urllib.request.urlopen(req,timeout=20) as r:return r.status,r.read(),r.headers
  except urllib.error.HTTPError as r:return r.code,r.read(),r.headers
@@ -88,10 +90,61 @@ def verify(expected,c):
  status,data,_=request('/go/youtube-9df13f105a08')
  if status!=200 or sha(data)!=expected['web']['index.html']:raise RuntimeError('Short-link preview failed')
  return {'health':True,'aggregate_enabled':True,'manager_auth_required':True,'invalid_lead_rejected':True,'private_counter_fields_rejected':True,'privacy_route':True,'public_hashes':True,'share_preview':True,'test_leads_sent':0,'max_messages_sent':0}
+
+def prepare_cache(c,backup):
+ from caddy_public_cache import patch_config
+ path=Path('/etc/caddy/Caddyfile');plan=c.get('public_media_cache')
+ if not plan:return {'status':'not_requested'}
+ if path.is_symlink() or not path.is_file() or sha(path.read_bytes())!=plan['config_sha256']:return {'status':'skipped_configuration_changed'}
+ old=path.read_bytes();new=patch_config(old.decode()).encode();candidate=path.with_name('Caddyfile.dachapar-candidate')
+ if candidate.exists():raise RuntimeError('Pending Caddy candidate exists')
+ candidate.write_bytes(new);shutil.copystat(path,candidate);stat=path.stat();os.chown(candidate,stat.st_uid,stat.st_gid)
+ try:run(['caddy','validate','--config',str(candidate),'--adapter','caddyfile'])
+ finally:candidate.unlink(missing_ok=True)
+ saved=backup/'Caddyfile.before';saved.write_bytes(old);saved.chmod(0o600)
+ return {'status':'prepared','path':path,'old':old,'new':new,'stat':stat,'backup':str(saved)}
+
+def check_cache(c):
+ from caddy_public_cache import patch_config
+ path=Path('/etc/caddy/Caddyfile');plan=c.get('public_media_cache')
+ if not plan:return 'not_requested'
+ if path.is_symlink() or sha(path.read_bytes())!=plan['config_sha256']:return 'skipped_configuration_changed'
+ with tempfile.TemporaryDirectory(prefix='dachapar-caddy-check-') as folder:
+  candidate=Path(folder)/'Caddyfile';candidate.write_text(patch_config(path.read_text()));candidate.chmod(0o600)
+  # Adaptation catches syntax errors without printing configuration/auth hashes.
+  run(['caddy','adapt','--config',str(candidate),'--adapter','caddyfile'])
+ return 'syntax_PASS'
+
+def install_cache(cache,data):
+ path=cache['path'];pending=path.with_name('Caddyfile.dachapar-switch')
+ if pending.exists():raise RuntimeError('Pending Caddy switch exists')
+ try:
+  pending.write_bytes(data);os.chmod(pending,cache['stat'].st_mode & 0o777);os.chown(pending,cache['stat'].st_uid,cache['stat'].st_gid);os.replace(pending,path)
+ finally:pending.unlink(missing_ok=True)
+ run(['systemctl','reload','caddy'])
+
+def verify_cache(cache,expected):
+ if cache['status']!='prepared':return {'status':cache['status']}
+ checked=[]
+ for name in ['choice/assets/kvadro-1920.webp','assets/manrope-cyrillic.woff2']:
+  if name not in expected['web']:raise RuntimeError('Cache verification asset missing')
+  status,data,headers=request('/'+name)
+  policy=headers.get('Cache-Control','')
+  if status!=200 or sha(data)!=expected['web'][name] or 'max-age=0' not in policy or 'must-revalidate' not in policy:raise RuntimeError('Public media cache validation failed')
+  etag=headers.get('ETag')
+  if not etag:raise RuntimeError('Media ETag missing')
+  status,data,_=request('/'+name,headers={'If-None-Match':etag})
+  if status!=304 or data:raise RuntimeError('Conditional media request failed')
+  checked.append(name)
+ for name in ['/manager.html','/api/analytics/config']:
+  if 'no-store' not in request(name)[2].get('Cache-Control',''):raise RuntimeError('Private/dynamic cache policy changed')
+ return {'status':'applied','conditional_304':checked,'content_unchanged':True,'dynamic_no_store':True,'backup':cache['backup']}
 def main():
  p=argparse.ArgumentParser();p.add_argument('--check',action='store_true');p.add_argument('--apply',action='store_true');args=p.parse_args()
  if args.check==args.apply:raise RuntimeError('Choose one operation')
  c=json.loads((HERE/'deployment.json').read_text());release=c['release']
+ for name,digest in c.get('support_files',{}).items():
+  if name not in ['deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py'] or sha((HERE/name).read_bytes())!=digest:raise RuntimeError('Deployment helper checksum mismatch')
  if not re.fullmatch('CONSENT-[a-f0-9]{12}',release):raise RuntimeError('Invalid release')
  oldweb,oldapi=baseline(c)
  # Both preflight and publication test an isolated copy before switching either link.
@@ -99,7 +152,7 @@ def main():
   dest={k:Path(temp)/k for k in ['web','api']}
   for kind,old in [('web',oldweb),('api',oldapi)]:shutil.copytree(old,dest[kind])
   stage(dest,c)
- if args.check:print(json.dumps({'ok':True,'preflight':'PASS','files':len(c['overlay']),'database_touched':False}));return
+ if args.check:print(json.dumps({'ok':True,'preflight':'PASS','files':len(c['overlay']),'cache':check_cache(c),'database_touched':False}));return
  if os.geteuid()!=0:raise RuntimeError('sudo required')
  with open('/run/lock/dachapar-crm-deploy.lock','w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);baseline(c)
@@ -108,6 +161,9 @@ def main():
   audit=json.loads((HERE/'audit-sanitized.json').read_text())
   if audit['backup_integrity']!='ok' or audit['isolated_restore']!='PASS':raise RuntimeError('Backup validation failed')
   backup=Path('/var/backups/dachapar')/release;backup.mkdir(parents=True,mode=0o700,exist_ok=False)
+  audited=run(['python3',str(HERE/'audit-lead-intent.py'),'--database',str(Path(audit['backup_path'])/'leads.sqlite')])
+  lead_audit=json.loads(audited.stdout);(backup/'lead-intent-audit.json').write_text(json.dumps(lead_audit,indent=2));(backup/'lead-intent-audit.json').chmod(0o600)
+  cache=prepare_cache(c,backup)
   dest={'web':WEB.parent/'releases'/release,'api':API.parent/'releases'/release}
   for kind,old in [('web',oldweb),('api',oldapi)]:shutil.copytree(old,dest[kind])
   expected=stage(dest,c)
@@ -115,23 +171,30 @@ def main():
   # This migration only creates two aggregate tables. No existing table is rewritten.
   run(['/usr/bin/node','--input-type=module','-e',"const {openAggregateCounters}=await import(process.argv[1]);const s=openAggregateCounters(process.argv[2],{enabled:true});s.migrate();if(!s.ready())throw Error('MIGRATION_FAILED');s.close();",(dest['api']/'server/crm-aggregate.mjs').as_uri(),str(database)])
   previous=DROP.read_bytes() if DROP.exists() else None
-  state={'release':release,'previous_web':str(oldweb),'previous_api':str(oldapi),'web':str(dest['web']),'api':str(dest['api']),'database_backup':audit['backup_path'],'previous_dropin':previous.decode() if previous else None}
+  state={'release':release,'previous_web':str(oldweb),'previous_api':str(oldapi),'web':str(dest['web']),'api':str(dest['api']),'database_backup':audit['backup_path'],'previous_dropin':previous.decode() if previous else None,'caddy_backup':cache.get('backup')}
   (backup/'state.json').write_text(json.dumps(state,indent=2));(backup/'state.json').chmod(0o600)
-  switched=False
+  switched=False;cache_changed=False
   try:
    DROP.parent.mkdir(parents=True,exist_ok=True);DROP.write_text('[Service]\nEnvironment=CRM_AGGREGATE_ENABLED=1\n');DROP.chmod(0o644)
    switched=True;switch(WEB,dest['web']);switch(API,dest['api']);run(['systemctl','daemon-reload']);run(['systemctl','restart',SERVICE]);checks=verify(expected,c)
+   if cache['status']=='prepared':cache_changed=True;install_cache(cache,cache['new'])
+   cache_result=verify_cache(cache,expected)
    for kind in ['web','api']:
     if tree(dest[kind])!=expected[kind]:raise RuntimeError('Candidate changed during verification')
   except Exception:
+   cache_rollback_error=None
+   if cache_changed:
+    try:install_cache(cache,cache['old'])
+    except Exception as e:cache_rollback_error=e
    if switched:
     switch(WEB,oldweb);switch(API,oldapi)
     if previous is None:DROP.unlink(missing_ok=True)
     else:DROP.write_bytes(previous)
     run(['systemctl','daemon-reload']);run(['systemctl','restart',SERVICE])
    # Never restore an old DB over leads received during publication.
+   if cache_rollback_error:raise RuntimeError('Web/API rolled back; Caddy rollback requires inspection') from cache_rollback_error
    raise
-  receipt={'ok':True,**state,'checks':checks,'files':len(c['overlay']),'source_commit':c['source_commit'],'existing_credentials_preserved':True,'mfa_preserved':True,'database_migration':'additive aggregate tables only','rollback_file':str(backup/'state.json')}
+  receipt={'ok':True,**state,'checks':checks,'public_media_cache':cache_result,'lead_audit':lead_audit,'files':len(c['overlay']),'source_commit':c['source_commit'],'existing_credentials_preserved':True,'mfa_preserved':True,'database_migration':'additive aggregate tables only','rollback_file':str(backup/'state.json')}
   (backup/'receipt.json').write_text(json.dumps(receipt,indent=2));(backup/'receipt.json').chmod(0o600);print(json.dumps(receipt))
 if __name__=='__main__':
  try:main()

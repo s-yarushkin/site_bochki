@@ -140,6 +140,16 @@ function renderDetail(record){
   pair(dl,'Тип заявки',record.flow==='quote'?'Получить расчёт':'Перезвоните мне');
   pair(dl,'Сообщение в MAX',record.notificationStatus==='delivered'?'Доставлено':record.notificationStatus==='failed'?'Не доставлено; заявка сохранена':'Ожидается отправка');
   pair(dl,'Комментарий',lead.comment);
+  const intent=lead.intentContext;
+  const originNames={model_offer:'Карточка модели',plan_request:'Конкретная планировка',site_capture:'Общая форма',header_callback:'Кнопка в шапке',footer_capture:'Низ сайта',capture_bar:'Закреплённая форма',quiz:'Квиз',calculator:'Расчёт',production:'Производство',foundation:'Основание',delivery:'Доставка',unknown:'Не подтверждено'};
+  const sourceNames={explicit:'выбрал на странице',request:'запрос из этой планировки',link:'из адреса страницы',default:'по умолчанию',restored:'сохранённый вариант',unknown:'источник не подтверждён'};
+  pair(dl,'Источник формы',intent?(originNames[intent.entry]||'Не подтверждено')+(intent.pagePath?' · '+intent.pagePath:''):'Старая форма — источник параметров не зафиксирован');
+  if(intent){const valueName=(key,value)=>key==='model'?({kvadro:'Квадро',parus:'Парус',viking:'Викинг','kvadro-house':'Квадро Хаус'}[value]||value):key==='package'?({comfort:'Комфорт',deluxe:'Делюкс'}[value]||value):key==='size'?displaySize(value):key==='plan'?value.toUpperCase():intent.labels?.[key]||value;
+   for(const [key,label]of [['model','Модель в контексте'],['size','Размер в контексте'],['package','Комплектация в контексте'],['plan','Планировка в контексте'],['finish','Цвет корпуса в контексте'],['roof','Кровля в контексте']])if(intent.selection?.[key])pair(dl,label,valueName(key,intent.selection[key])+' · '+(sourceNames[intent.sources?.[key]]||sourceNames.unknown));
+   const names={dp_model_select:'Выбрал модель',dp_size_select:'Выбрал размер',dp_package_select:'Выбрал комплектацию',dp_plan_select:'Выбрал планировку',dp_plan_view:'Открыл планировку',dp_3d_open:'Открыл 3D',dp_gallery_open:'Открыл фотографии',dp_quiz_start:'Начал квиз',dp_quiz_result:'Результат квиза',dp_quiz_completed:'Завершил квиз',dp_form_open:'Открыл заявку'};
+   pair(dl,'Последние действия',(intent.recentActions||[]).map(e=>(names[e.event_code]||'Действие')+' '+[e.model_id,e.size_id,e.plan_id,e.package].filter(Boolean).join(' · ')).join(' → ')||'Подтверждённой истории нет');
+  }
+
   const conf=$('#configurationBlock');
   const property=$('#propertyBlock');
   conf.hidden=!lead.estimate;property.hidden=!lead.estimate;
@@ -228,7 +238,7 @@ async function login(event){
     $('#managerPassword').value='';
     if(session.pending){state.csrf=session.csrf;mfa.start(session);return;}
     showDashboard(session.phone,session);
-    if(!extensions.needsPasswordChange())await loadList();
+    if(!extensions.needsPasswordChange())await loadInitial();
   }catch(error){if(error.message==='LOGIN_REQUIRED')showLogin('Пароль неверный или доступ ограничен.');else fail(error,$('#loginError'));}
   finally{button.disabled=false;}
 }
@@ -249,8 +259,10 @@ async function save(event){
   }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#saveStatus'));}
   finally{button.disabled=false;}
 }
-const extensions=mountManagerExtensions({api,refresh:loadList,openLead:loadDetail});
-const mfa=mountManagerMfa({request:api,back:()=>showLogin(),complete:async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadList();}});
+let sharedLeadOpened=false;
+async function loadInitial(){await loadList();const id=new URL(location.href).searchParams.get('lead');if(!sharedLeadOpened&&/^GB-\d{8}-[A-F0-9]{8}$/.test(id||'')){sharedLeadOpened=true;await loadDetail(id);}}
+const extensions=mountManagerExtensions({api,refresh:loadInitial,openLead:loadDetail});
+const mfa=mountManagerMfa({request:api,back:()=>showLogin(),complete:async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadInitial();}});
 $('#loginForm').addEventListener('submit',login);
 $('#leadEditForm').addEventListener('submit',save);
 $('#filterForm').addEventListener('submit',event=>{event.preventDefault();state.offset=0;loadList();});
@@ -262,5 +274,5 @@ $('#logoutButton').addEventListener('click',async()=>{
   showLogin('');
 });
 mountAggregateReport({api});
-api('session').then(async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadList();})
+api('session').then(async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadInitial();})
   .catch(()=>showLogin());

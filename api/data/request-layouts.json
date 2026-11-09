@@ -1,0 +1,164 @@
+{
+  "source_sha256": "45fe5f6d8026c569e9e42907a2252583870bc8c1fbb46c9c169c502ffda8f422",
+  "plans": [
+    {
+      "id": "dp3d-01",
+      "models": [
+        "kvadro"
+      ],
+      "size": "400"
+    },
+    {
+      "id": "dp3d-02",
+      "models": [
+        "kvadro"
+      ],
+      "size": "500"
+    },
+    {
+      "id": "dp3d-03",
+      "models": [
+        "kvadro"
+      ],
+      "size": "600"
+    },
+    {
+      "id": "dp3d-04",
+      "models": [
+        "kvadro"
+      ],
+      "size": "600"
+    },
+    {
+      "id": "dp3d-05",
+      "models": [
+        "kvadro"
+      ],
+      "size": "600"
+    },
+    {
+      "id": "dp3d-06",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "4x4"
+    },
+    {
+      "id": "dp3d-07",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x5"
+    },
+    {
+      "id": "dp3d-08",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6"
+    },
+    {
+      "id": "dp3d-09",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6"
+    },
+    {
+      "id": "dp3d-10",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x4"
+    },
+    {
+      "id": "dp3d-11",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6"
+    },
+    {
+      "id": "dp3d-12",
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "500"
+    },
+    {
+      "id": "dp3d-13",
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "600"
+    },
+    {
+      "id": "dp3d-14",
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "400"
+    },
+    {
+      "id": "dp3d-15",
+      "models": [
+        "kvadro"
+      ],
+      "size": "450"
+    },
+    {
+      "id": "dp3d-16",
+      "models": [
+        "kvadro"
+      ],
+      "size": "550"
+    },
+    {
+      "id": "dp3d-17",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "5x4"
+    },
+    {
+      "id": "dp3d-18",
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "450"
+    },
+    {
+      "id": "dp3d-19",
+      "models": [
+        "parus",
+        "viking"
+      ],
+      "size": "550"
+    },
+    {
+      "id": "dp3d-20",
+      "models": [
+        "kvadro"
+      ],
+      "size": "400"
+    },
+    {
+      "id": "dp3d-21",
+      "models": [
+        "kvadro"
+      ],
+      "size": "450"
+    },
+    {
+      "id": "dp3d-22",
+      "models": [
+        "kvadro-house"
+      ],
+      "size": "6x6"
+    }
+  ]
+}

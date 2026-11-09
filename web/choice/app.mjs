@@ -98,7 +98,7 @@ function revealPlanning(){
 document.querySelectorAll('[data-model-card]').forEach(button=>button.addEventListener('click',()=>{choose({model:button.dataset.modelCard});}));
 window.addEventListener('popstate',()=>{const previous=state;state=choiceFromUrl(book,plans,location.href);render(previous);});
 function request(opener,reason='quote'){openModelRequest({name:HERO_MODELS[state.model].name,size:choiceSizeLabel(book,state.model,state.size),packageName:PACKAGE_NAMES[state.package],layout:state.layout||undefined,reason,opener});}
-$('[data-plan-request]').addEventListener('click',event=>request(event.currentTarget,state.layout?'layout_quote':'quote'));
+$('[data-plan-request]').addEventListener('click',event=>request(event.currentTarget,'quote'));
 $('[data-production]')?.addEventListener('click',event=>request(event.currentTarget,'production'));
 $('[data-foundation]')?.addEventListener('click',event=>request(event.currentTarget,'foundation'));
 function quizReady(){
