@@ -3,7 +3,8 @@ export function createCrmPublicApi({insights,origin,clock=()=>Date.now(),aggrega
  const buckets=new Map();
  return async(req,res)=>{
   const url=new URL(req.url,'http://localhost');
-  if(!url.pathname.startsWith('/go/')&&!url.pathname.startsWith('/api/analytics/'))return false;
+  const consentRequest=['/api/privacy/choice','/api/analytics/consent'].includes(url.pathname);
+  if(!url.pathname.startsWith('/go/')&&!url.pathname.startsWith('/api/analytics/')&&!consentRequest)return false;
   if(req.headers.host!==new URL(origin).host){crmAnswer(res,403,{ok:false,code:'HOST_FORBIDDEN'});return true;}
   if(url.pathname.startsWith('/go/')){
    if(req.method!=='GET'){crmAnswer(res,405,{ok:false,code:'METHOD_NOT_ALLOWED'});return true;}
@@ -13,17 +14,17 @@ export function createCrmPublicApi({insights,origin,clock=()=>Date.now(),aggrega
    const target=new URL(destination);for(const key of ['yclid','gclid']){const value=url.searchParams.get(key);if(value&&/^[A-Za-z0-9_-]{1,150}$/.test(value))target.searchParams.set(key,value);}destination=target.href;
    res.writeHead(302,{'Location':destination,'Cache-Control':'no-store','Referrer-Policy':'same-origin','X-Robots-Tag':'noindex'});res.end();return true;
   }
-  if(!url.pathname.startsWith('/api/analytics/'))return false;
+  if(!url.pathname.startsWith('/api/analytics/')&&!consentRequest)return false;
   if(url.pathname==='/api/analytics/config'&&req.method==='GET'){
    crmAnswer(res,200,{ok:true,enabled:insights.enabled,aggregate_enabled:aggregate?.enabled===true,consent_version:'crm-cookies-20261109',retention_days:180});return true;
   }
   if(req.method!=='POST'||req.headers.origin!==origin){crmAnswer(res,403,{ok:false,code:'ORIGIN_FORBIDDEN'});return true;}
-  const key=String(req.headers['x-forwarded-for']??'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown',now=clock();
+  const ip=String(req.headers['x-forwarded-for']??'').split(',').at(-1)?.trim()||req.socket.remoteAddress||'unknown',key=(consentRequest?'choice:':'events:')+ip,now=clock();
   for(const [k,b] of buckets)if(now-b.at>60000)buckets.delete(k);
-  const bucket=buckets.get(key)??{at:now,count:0};if(bucket.count>=40||buckets.size>5000){crmAnswer(res,429,{ok:false,code:'RATE_LIMITED'});return true;}bucket.count++;buckets.set(key,bucket);
+  const bucket=buckets.get(key)??{at:now,count:0},limit=consentRequest?30:40;if(bucket.count>=limit||buckets.size>5000){crmAnswer(res,429,{ok:false,code:'RATE_LIMITED'},{'Retry-After':String(Math.max(1,Math.ceil((60000-now+bucket.at)/1000)))});return true;}bucket.count++;buckets.set(key,bucket);
   try{
    const data=await crmJson(req,24000);
-   if(url.pathname==='/api/analytics/consent'){
+   if(consentRequest){
     if(!['all','necessary'].includes(data.choice))throw Error('INVALID_CONSENT');
     const version=['crm-cookies-20261105','crm-cookies-20261107',...['banner','settings','form-submit','quiz-start'].map(method=>'crm-cookies-20261109-'+method)].includes(data.version)?data.version:'crm-cookies-20261107';
     if(data.choice==='all'&&/-(?:form-submit|quiz-start)$/.test(version)&&String(req.headers.cookie??'').split(';').some(c=>c.trim()==='dp_consent=necessary')){crmAnswer(res,400,{ok:false,code:'CONSENT_CHOICE_REQUIRED'});return true;}

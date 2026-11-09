@@ -7,7 +7,7 @@ DROP=Path('/etc/systemd/system/garant-bani-relay.service.d/92-aggregate.conf')
 ORIGIN='https://xn--80aaan1dh9b.xn--p1ai';SERVICE='garant-bani-relay.service'
 ALLOWED={
  'api/server/garant-bani-relay.mjs','api/server/crm-manager-api.mjs','api/server/crm-public-api.mjs','api/server/crm-insights.mjs','api/server/crm-aggregate.mjs',
- 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png'}
+ 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png','web/choice/packages.mjs','web/choice/packages.css','web/choice/comparison.mjs','web/choice/app.mjs'}
 def sha(data):return hashlib.sha256(data).hexdigest()
 def tree(root):
  result={}
@@ -27,7 +27,7 @@ def baseline(c):
 def run(args,**kwargs):return subprocess.run(args,check=True,capture_output=True,timeout=180,**kwargs)
 def stage(dest,c):
  if sha((HERE/'payload.tar.gz').read_bytes())!=c['payload_sha256']:raise RuntimeError('Archive checksum mismatch')
- if not set(c['overlay']).issubset(ALLOWED):raise RuntimeError('Unapproved file in overlay')
+ if any(name not in ALLOWED and not re.fullmatch(r'web/assets/home-core-[a-f0-9]{12}\.css',name) for name in c['overlay']):raise RuntimeError('Unapproved file in overlay')
  expected={k:dict(c['baseline'][k+'_files']) for k in ['web','api']}
  with tarfile.open(HERE/'payload.tar.gz') as tar:
   if len(tar.getmembers())!=len(c['overlay']) or set(tar.getnames())!=set(c['overlay']):raise RuntimeError('Archive inventory mismatch')
@@ -61,7 +61,7 @@ def request(path,method='GET',data=None,origin=ORIGIN):
  try:
   with urllib.request.urlopen(req,timeout=20) as r:return r.status,r.read(),r.headers
  except urllib.error.HTTPError as r:return r.code,r.read(),r.headers
-def verify(expected):
+def verify(expected,c):
  for _ in range(30):
   try:
    if request('/health',origin='http://127.0.0.1:3301')[0]==200:break
@@ -77,14 +77,17 @@ def verify(expected):
  if status!=400:raise RuntimeError('Lead validation failed')
  status,_,_=request('/api/analytics/counters','POST',b'{"events":[],"visitor_id":"forbidden"}')
  if status!=400:raise RuntimeError('Counter privacy validation failed')
- for name in ['index.html','manager.html','journey-tracker.mjs','consent-banner.mjs','consent-actions.mjs','aggregate-actions.mjs','analytics-consent.html','assets/js/manager.js','crm/manager-extension.mjs','crm/aggregate-report.mjs','assets/social/dachapar-parus-winter-20261106-v1.png']:
+ status,_,_=request('/api/privacy/choice','POST',b'{}')
+ if status!=400:raise RuntimeError('Privacy preference route unavailable')
+ names=set(['index.html','manager.html','journey-tracker.mjs','consent-banner.mjs','consent-actions.mjs','aggregate-actions.mjs','analytics-consent.html','assets/js/manager.js','crm/manager-extension.mjs','crm/aggregate-report.mjs','assets/social/dachapar-parus-winter-20261106-v1.png'])|{n.removeprefix('web/') for n in c['overlay'] if n.startswith('web/')}
+ for name in sorted(names):
   status,data,headers=request('/' if name=='index.html' else '/'+name)
   if status!=200 or sha(data)!=expected['web'][name]:raise RuntimeError('Public checksum failed: '+name)
   if name.endswith('.png') and headers.get_content_type()!='image/png':raise RuntimeError('Image MIME mismatch')
  # Follow the existing public short-link path without sending a lead.
  status,data,_=request('/go/youtube-9df13f105a08')
  if status!=200 or sha(data)!=expected['web']['index.html']:raise RuntimeError('Short-link preview failed')
- return {'health':True,'aggregate_enabled':True,'manager_auth_required':True,'invalid_lead_rejected':True,'private_counter_fields_rejected':True,'public_hashes':True,'share_preview':True,'test_leads_sent':0,'max_messages_sent':0}
+ return {'health':True,'aggregate_enabled':True,'manager_auth_required':True,'invalid_lead_rejected':True,'private_counter_fields_rejected':True,'privacy_route':True,'public_hashes':True,'share_preview':True,'test_leads_sent':0,'max_messages_sent':0}
 def main():
  p=argparse.ArgumentParser();p.add_argument('--check',action='store_true');p.add_argument('--apply',action='store_true');args=p.parse_args()
  if args.check==args.apply:raise RuntimeError('Choose one operation')
@@ -117,7 +120,7 @@ def main():
   switched=False
   try:
    DROP.parent.mkdir(parents=True,exist_ok=True);DROP.write_text('[Service]\nEnvironment=CRM_AGGREGATE_ENABLED=1\n');DROP.chmod(0o644)
-   switched=True;switch(WEB,dest['web']);switch(API,dest['api']);run(['systemctl','daemon-reload']);run(['systemctl','restart',SERVICE]);checks=verify(expected)
+   switched=True;switch(WEB,dest['web']);switch(API,dest['api']);run(['systemctl','daemon-reload']);run(['systemctl','restart',SERVICE]);checks=verify(expected,c)
    for kind in ['web','api']:
     if tree(dest[kind])!=expected[kind]:raise RuntimeError('Candidate changed during verification')
   except Exception:

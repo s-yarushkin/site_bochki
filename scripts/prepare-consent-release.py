@@ -14,6 +14,8 @@ else:
 if fresh!=old:raise RuntimeError('Production changed since the reviewed merge. Rebase the overlay before publication.')
 files={}
 web=['journey-tracker.mjs','journey-tracker.css','analytics-core.mjs','privacy.html','assets/js/manager.js','crm/manager-extension.mjs','aggregate-actions.mjs','consent-banner.mjs','analytics-consent.html','crm/aggregate-report.mjs','consent-actions.mjs','lead-client.mjs']
+content_build=json.loads((OUT/'content-build.json').read_text('utf8')) if (OUT/'content-build.json').exists() else None
+if content_build:web+=['choice/packages.mjs','choice/packages.css','choice/comparison.mjs','choice/app.mjs',content_build['bundle']]
 api=['server/garant-bani-relay.mjs','server/crm-public-api.mjs','server/crm-manager-api.mjs','server/crm-insights.mjs','server/crm-aggregate.mjs']
 for kind,names in [('web',web),('api',api)]:
  for name in names:
@@ -21,6 +23,9 @@ for kind,names in [('web',web),('api',api)]:
   if sha(data)!=fresh[kind+'_files'].get(name):files[kind+'/'+name]=data
 # Retain the actual page, patch only its share-preview metadata.
 index=base64.b64decode(sources['web/index.html']);patched=patch_preview(index)
+if content_build:
+ patched=(ROOT/'web/index.html').read_bytes()
+ if sha(index)!=content_build['baseline_index_sha256'] or sha(patched)!=content_build['index_sha256']:raise RuntimeError('Content build does not match the reviewed home page')
 if patched!=index:files['web/index.html']=patched
 image=(ROOT/'web'/IMAGE_PATH).read_bytes()
 if sha(image)!=fresh['web_files'].get(IMAGE_PATH):files['web/'+IMAGE_PATH]=image
@@ -30,6 +35,6 @@ with tarfile.open(fileobj=raw,mode='w',format=tarfile.USTAR_FORMAT) as tar:
  for name,data in sorted(files.items()):
   info=tarfile.TarInfo(name);info.size=len(data);info.mode=0o644;info.mtime=0;tar.addfile(info,io.BytesIO(data))
 payload=gzip.compress(raw.getvalue(),mtime=0);(OUT/'payload.tar.gz').write_bytes(payload)
-c={'release':release,'baseline':fresh,'baseline_sha256':sha(json.dumps(fresh,sort_keys=True).encode()),'overlay':manifest,'payload_sha256':sha(payload),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'tests':'64 automated checks passed; live lead delivery is never exercised with fake leads'}
+c={'release':release,'baseline':fresh,'baseline_sha256':sha(json.dumps(fresh,sort_keys=True).encode()),'overlay':manifest,'payload_sha256':sha(payload),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'tests':'69 automated checks passed; live lead delivery is never exercised with fake leads'}
 (OUT/'deployment.json').write_text(json.dumps(c,indent=2)+'\n',encoding='utf8')
 print(json.dumps({'release':release,'files':len(files),'bytes':len(payload),'baseline':'captured; remote hash guard required' if '--prepared' in sys.argv else 'freshly verified'}))

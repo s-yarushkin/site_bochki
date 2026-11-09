@@ -3,21 +3,28 @@ export const CONSENT_ACTIONS=Symbol.for('dachapar.analytics-consent');
 export const readConsent=(env=globalThis)=>String(env.document?.cookie??'').split(';').map(s=>s.trim()).find(s=>s.startsWith('dp_consent='))?.slice(11)??null;
 const methods=new Set(['banner','settings','form-submit','quiz-start']);
 export function createConsentActions(env){
- let pending=null,pendingChoice=null;
+ let pending=null,pendingChoice=null,lastFailure=null;
  function save(choice,method='banner'){
   if(!['all','necessary'].includes(choice)||!methods.has(method))return Promise.resolve(false);
   if(pending)return pendingChoice===choice?pending:pending.then(()=>save(choice,method));
   // Submitting a request or starting a quiz never overrides explicit refusal.
   if(['form-submit','quiz-start'].includes(method)&&readConsent(env)==='necessary')return Promise.resolve(false);
   if(choice==='all'&&readConsent(env)==='all')return Promise.resolve(true);
-  pendingChoice=choice;
-  pending=(async()=>{try{
-   const r=await env.fetch('/api/analytics/consent',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice,version:CONSENT_VERSION+'-'+method}),signal:env.AbortSignal?.timeout?.(4000)});
-   if(!r.ok)return false;
-   env.document.dispatchEvent(new env.CustomEvent('dachapar:consent',{detail:{choice,method}}));return true;
-  }catch{return false;}finally{pending=null;pendingChoice=null;}})();return pending;
+  pendingChoice=choice;lastFailure=null;
+  pending=(async()=>{try{for(let attempt=0;attempt<2;attempt++){
+   try{
+    const r=await env.fetch('/api/privacy/choice',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice,version:CONSENT_VERSION+'-'+method}),signal:env.AbortSignal?.timeout?.(8000)});
+    if(!r.ok){lastFailure=r.status===429?'rate-limit':'server';if(r.status<500||attempt===1)return false;}
+    else{const data=await r.json().catch(()=>null);if(data?.ok!==true||data.choice!==choice){lastFailure='invalid-response';return false;}
+     // A failed analytics listener must not turn a saved preference into an error.
+     try{env.document.dispatchEvent(new env.CustomEvent('dachapar:consent',{detail:{choice,method}}));}catch{}
+     lastFailure=null;return true;
+    }
+   }catch{lastFailure='network';if(attempt===1)return false;}
+   await new Promise(resolve=>(env.setTimeout??setTimeout)(resolve,250));
+  }return false;}finally{pending=null;pendingChoice=null;}})();return pending;
  }
- return {save,pending:()=>pending};
+ return {save,pending:()=>pending,failure:()=>lastFailure};
 }
 export const consentActions=typeof window==='undefined'?null:(window[CONSENT_ACTIONS]??=createConsentActions(window));
 export function mountConsentActions({document=globalThis.document,actions=consentActions}={}){

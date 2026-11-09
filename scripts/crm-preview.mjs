@@ -35,6 +35,7 @@ const server=http.createServer(async(req,res)=>{
   if(prefix)req.headers.cookie=String(req.headers.cookie??'').split(';').map(s=>s.trim()).filter(s=>s.startsWith('crmstage_')).map(s=>s.replace(/^crmstage_/, '')).join('; ');
   const url=new URL(req.url,origin);if(url.pathname.startsWith('/api/')||url.pathname.startsWith('/go/')||url.pathname==='/health'){await relay(req,res);return;}
   if(req.method!=='GET'&&req.method!=='HEAD'){res.writeHead(405);res.end();return;}
+  if(url.pathname==='/package-review.html'&&process.env.CRM_PREVIEW_PACKAGE_REVIEW==='1'){const data=await fs.readFile(path.join(root,'.local/package-update-20261109/preview.html'),'utf8');res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow'});res.end(data);return;}
   if(url.pathname==='/__fixture/reset'){res.writeHead(303,{'Location':prefix+'/fixture.html','Set-Cookie':['dp_visitor','dp_consent','dp_staff'].map(n=>n+'=; Max-Age=0; Path=/; Secure; SameSite=Lax')});res.end();return;}
   if(url.pathname==='/'||url.pathname==='/fixture.html'){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});res.end(rewrite(fixture));return;}
   const file=path.resolve(web,'.'+decodeURIComponent(url.pathname));if(!file.startsWith(web+path.sep)||!types[path.extname(file)])throw Error('NOT_FOUND');const binary=types[path.extname(file)].startsWith('image/');let data=await fs.readFile(file,binary?undefined:'utf8');
