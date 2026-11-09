@@ -1,5 +1,5 @@
 """Interactive publication coordinator. No password, visitor data or credentials saved."""
-import os,sys,base64,getpass,hashlib,json,subprocess,time
+import os,sys,re,base64,getpass,hashlib,json,subprocess,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_CONSENT_PACKAGE','consent-release');OUT.mkdir(parents=True,exist_ok=True)
 def state(status,**fields):(OUT/'terminal-state.json').write_text(json.dumps({'status':status,**fields},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
@@ -39,9 +39,13 @@ try:
   if time.monotonic()>deadline:raise RuntimeError('Время подготовки истекло. Пароль не запрашивался, сайт не менялся.')
   time.sleep(.5)
  config=json.loads((OUT/'deployment.json').read_text());release=config['release'];folder='/tmp/dachapar-consent-'+release.removeprefix('CONSENT-')
+ if not re.fullmatch('CONSENT-[a-f0-9]{12}',release) or not re.fullmatch('[a-f0-9]{64}',config['payload_sha256']):raise RuntimeError('Неверный идентификатор пакета.')
  if proof.get('release')!=release or proof.get('payload_sha256')!=config['payload_sha256']:raise RuntimeError('Пакет изменился после проверки. Нужна повторная проверка.')
- state('uploading',release=release);run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','mkdir -p -m 700 '+folder]);run(['scp','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2',str(OUT/'deployment.json'),str(OUT/'payload.tar.gz'),str(ROOT/'scripts/deploy-consent-remote.py'),str(ROOT/'scripts/crm-production-audit.py'),'dachapar:'+folder+'/'])
- checked=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','python3 '+folder+'/deploy-consent-remote.py --check']);assert json.loads(checked.stdout.decode().strip().splitlines()[-1])['ok']
+ if '--uploaded' not in sys.argv:
+  state('uploading',release=release);run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','mkdir -p -m 700 '+folder]);run(['scp','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2',str(OUT/'deployment.json'),str(OUT/'payload.tar.gz'),str(ROOT/'scripts/deploy-consent-remote.py'),str(ROOT/'scripts/crm-production-audit.py'),'dachapar:'+folder+'/'])
+ state('checking',release=release)
+ guard='import pathlib,hashlib,json; p=pathlib.Path("'+folder+'"); c=json.loads((p/"deployment.json").read_text()); assert hashlib.sha256((p/"payload.tar.gz").read_bytes()).hexdigest()=="'+config['payload_sha256']+'"; assert hashlib.sha256(json.dumps(c["baseline"],sort_keys=True).encode()).hexdigest()=="'+digest+'"'
+ checked=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar',"python3 -c '"+guard+"' && python3 "+folder+'/deploy-consent-remote.py --check']);assert json.loads(checked.stdout.decode().strip().splitlines()[-1])['ok']
  print('Проверка пакета пройдена. Будут обновлены баннер, общие счётчики и отчёт. Заявки, пароли, роли и MAX сохраняются.\n')
  state('waiting_sudo',release=release);password=getpass.getpass('Введите пароль сервера (sudo): ');state('publishing',release=release)
  published=subprocess.run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','sudo -S -p "" python3 '+folder+'/deploy-consent-remote.py --apply'],input=(password+'\n').encode(),capture_output=True,timeout=900);password=None
