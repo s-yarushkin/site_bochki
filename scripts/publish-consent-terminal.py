@@ -1,5 +1,5 @@
 """Interactive publication coordinator. No password, visitor data or credentials saved."""
-import os,base64,getpass,hashlib,json,subprocess,time
+import os,sys,base64,getpass,hashlib,json,subprocess,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_CONSENT_PACKAGE','consent-release');OUT.mkdir(parents=True,exist_ok=True)
 def state(status,**fields):(OUT/'terminal-state.json').write_text(json.dumps({'status':status,**fields},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
@@ -21,7 +21,12 @@ print(json.dumps({'web':str(w),'api':str(a),'web_files':tree(w),'api_files':tree
 password=None
 try:
  print('Дача Пар: подготовка публикации аналитики.\nПароль потребуется только после проверки пакета.\n')
- state('reading_baseline');result=run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','dachapar','python3 -'],input=SOURCE.encode());baseline=json.loads(result.stdout);sources=baseline.pop('source')
+ state('reading_baseline')
+ if '--prepared' in sys.argv:
+  # Complete inventory is independently checked by --check before requesting sudo.
+  baseline=json.loads((OUT/'baseline.json').read_text('utf8'));sources={}
+ else:
+  result=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','dachapar','python3 -'],input=SOURCE.encode());baseline=json.loads(result.stdout);sources=baseline.pop('source')
  for name,encoded in sources.items():
   p=OUT/'baseline'/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(base64.b64decode(encoded))
  canonical=json.dumps(baseline,sort_keys=True).encode();digest=hashlib.sha256(canonical).hexdigest();(OUT/'baseline.json').write_text(json.dumps(baseline,indent=2)+'\n',encoding='utf8');state('baseline_ready',baseline_sha256=digest)
@@ -35,11 +40,11 @@ try:
   time.sleep(.5)
  config=json.loads((OUT/'deployment.json').read_text());release=config['release'];folder='/tmp/dachapar-consent-'+release.removeprefix('CONSENT-')
  if proof.get('release')!=release or proof.get('payload_sha256')!=config['payload_sha256']:raise RuntimeError('Пакет изменился после проверки. Нужна повторная проверка.')
- state('uploading',release=release);run(['ssh','-T','-o','BatchMode=yes','dachapar','mkdir -p -m 700 '+folder]);run(['scp',str(OUT/'deployment.json'),str(OUT/'payload.tar.gz'),str(ROOT/'scripts/deploy-consent-remote.py'),str(ROOT/'scripts/crm-production-audit.py'),'dachapar:'+folder+'/'])
- checked=run(['ssh','-T','-o','BatchMode=yes','dachapar','python3 '+folder+'/deploy-consent-remote.py --check']);assert json.loads(checked.stdout.decode().strip().splitlines()[-1])['ok']
+ state('uploading',release=release);run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','mkdir -p -m 700 '+folder]);run(['scp','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2',str(OUT/'deployment.json'),str(OUT/'payload.tar.gz'),str(ROOT/'scripts/deploy-consent-remote.py'),str(ROOT/'scripts/crm-production-audit.py'),'dachapar:'+folder+'/'])
+ checked=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','python3 '+folder+'/deploy-consent-remote.py --check']);assert json.loads(checked.stdout.decode().strip().splitlines()[-1])['ok']
  print('Проверка пакета пройдена. Будут обновлены баннер, общие счётчики и отчёт. Заявки, пароли, роли и MAX сохраняются.\n')
  state('waiting_sudo',release=release);password=getpass.getpass('Введите пароль сервера (sudo): ');state('publishing',release=release)
- published=subprocess.run(['ssh','-T','-o','BatchMode=yes','dachapar','sudo -S -p "" python3 '+folder+'/deploy-consent-remote.py --apply'],input=(password+'\n').encode(),capture_output=True,timeout=900);password=None
+ published=subprocess.run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','sudo -S -p "" python3 '+folder+'/deploy-consent-remote.py --apply'],input=(password+'\n').encode(),capture_output=True,timeout=900);password=None
  rows=published.stdout.decode('utf8',errors='replace').strip().splitlines();receipt=json.loads(rows[-1]) if rows else {'ok':False,'message':'Сервер не вернул отчёт.'}
  if published.returncode or not receipt.get('ok'):raise RuntimeError(receipt.get('message','Публикация остановлена.'))
  (OUT/'deployment-result.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf8');state('published',release=release);print('\nГОТОВО. Публикация завершена и проверена. Можно закрыть окно.')
