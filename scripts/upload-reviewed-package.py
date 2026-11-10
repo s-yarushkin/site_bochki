@@ -1,5 +1,5 @@
 """Upload only reviewed release artifacts over SSH, avoiding fragile SFTP transfers."""
-import gzip,hashlib,io,json,os,re,shlex,subprocess,tarfile,time
+import base64,gzip,hashlib,io,json,os,re,shlex,subprocess,tarfile,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'.local'/os.environ['DACHAPAR_CONSENT_PACKAGE']
@@ -17,11 +17,32 @@ with tarfile.open(fileobj=raw,mode='w') as tar:
  for name,data in files.items():
   item=tarfile.TarInfo(name);item.size=len(data);item.mode=0o600;tar.addfile(item,io.BytesIO(data))
 payload=gzip.compress(raw.getvalue(),mtime=0)
+archive=folder+'/.upload-'+hashlib.sha256(payload).hexdigest()+'.tgz'
+ssh=['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=10','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar']
+def call(code):
+ command='exec(__import__("base64").b64decode("'+base64.b64encode(code.encode()).decode()+'"))'
+ for attempt in range(3):
+  try:
+   result=subprocess.run(ssh+['python3 -c '+shlex.quote(command)],stdin=subprocess.DEVNULL,capture_output=True,timeout=35)
+   if result.returncode:raise RuntimeError('SSH transfer: '+result.stderr.decode('utf8',errors='replace')[-220:])
+   return json.loads(result.stdout)
+  except (OSError,subprocess.SubprocessError,ValueError,RuntimeError):
+   if attempt==2:raise
+   time.sleep(2)
+start="from pathlib import Path; import json,os; p=Path("+repr(folder)+"); p.mkdir(mode=0o700,exist_ok=True); assert not p.is_symlink() and p.stat().st_uid==os.getuid(); f=Path("+repr(archive)+"); assert not f.is_symlink(); print(json.dumps({'offset':f.stat().st_size if f.exists() else 0}))"
+offset=call(start)['offset']
+assert 0<=offset<=len(payload)
+print('Uploading reviewed archive with resumable SSH blocks: '+str(len(payload))+' bytes',flush=True)
+while offset<len(payload):
+ chunk=payload[offset:offset+8192];end=offset+len(chunk)
+ code="from pathlib import Path; import base64,json,os; p=Path("+repr(archive)+"); assert not p.is_symlink(); f=open(p,'r+b' if p.exists() else 'w+b'); assert os.fstat(f.fileno()).st_size>="+str(offset)+"; f.seek("+str(offset)+"); f.write(base64.b64decode("+repr(base64.b64encode(chunk).decode())+")); f.flush(); os.fsync(f.fileno()); f.close(); p.chmod(0o600); print(json.dumps({'offset':"+str(end)+"}))"
+ assert call(code)['offset']==end;offset=end
+ print('Uploaded '+str(offset)+' / '+str(len(payload)),flush=True)
 remote="""import hashlib,io,json,os,sys,tarfile
 from pathlib import Path
 folder=Path(FOLDER);folder.mkdir(mode=0o700,exist_ok=True)
 assert not folder.is_symlink() and folder.stat().st_uid==os.getuid()
-data=sys.stdin.buffer.read();assert hashlib.sha256(data).hexdigest()==DIGEST
+data=Path(ARCHIVE).read_bytes();assert hashlib.sha256(data).hexdigest()==DIGEST
 with tarfile.open(fileobj=io.BytesIO(data),mode='r:gz') as tar:
  assert set(tar.getnames())==set(NAMES)
  for member in tar.getmembers():
@@ -30,16 +51,5 @@ with tarfile.open(fileobj=io.BytesIO(data),mode='r:gz') as tar:
   pending=target.with_suffix(target.suffix+'.upload');assert not pending.is_symlink()
   pending.write_bytes(tar.extractfile(member).read());pending.chmod(0o600);os.replace(pending,target)
 print(json.dumps({'ok':True,'artifacts':len(NAMES),'archive_sha256_verified':True}))
-""".replace('FOLDER',repr(folder)).replace('DIGEST',repr(hashlib.sha256(payload).hexdigest())).replace('NAMES',repr(list(files)))
-args=['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar','python3 -c '+shlex.quote(remote)]
-print('Uploading reviewed artifacts in small SSH chunks',flush=True)
-process=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-try:
- for offset in range(0,len(payload),1024):
-  process.stdin.write(payload[offset:offset+1024]);process.stdin.flush();time.sleep(.025)
- process.stdin.close();process.stdin=None
- stdout,stderr=process.communicate(timeout=90)
- if process.returncode:raise RuntimeError('SSH upload failed: '+stderr.decode('utf8',errors='replace')[-250:])
- print(stdout.decode('utf8').strip())
-except Exception:
- process.kill();process.communicate();raise
+""".replace('FOLDER',repr(folder)).replace('ARCHIVE',repr(archive)).replace('DIGEST',repr(hashlib.sha256(payload).hexdigest())).replace('NAMES',repr(list(files)))
+print(json.dumps(call(remote)))
