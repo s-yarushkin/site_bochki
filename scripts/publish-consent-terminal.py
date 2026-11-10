@@ -20,7 +20,7 @@ print(json.dumps({'web':str(w),'api':str(a),'web_files':tree(w),'api_files':tree
 """
 password=None
 try:
- print('Дача Пар: подготовка публикации аналитики.\nПароль потребуется только после проверки пакета.\n')
+ print('Дача Пар: подготовка публикации сайта.\nПароль потребуется только после проверки пакета.\n')
  state('reading_baseline')
  if '--prepared' in sys.argv:
   # Complete inventory is independently checked by --check before requesting sudo.
