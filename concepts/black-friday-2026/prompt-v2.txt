@@ -1,0 +1,39 @@
+Use case: ui-mockup, precise-object-edit and compositing.
+Create ONE refined desktop first-screen landing page mockup for Russian sauna maker ДачаПар, landscape 16:9, realistic shipping-quality web design, full bleed without browser chrome or device frame. This is revision 2 of the attached prior mockup: the client says it is too loud. Make it calmer, brighter and easier to read.
+
+INPUT ROLES:
+Image 1 (the reference advertisement with a house): reference ONLY for large layered Black Friday typography behind architecture and a controlled warm orange accent. Do not copy its house, gift box, 250000 number, percentages, grass or layout.
+Image 2 (our prior Parus painter mockup): EDIT TARGET for the campaign idea and adult painter character. Preserve the concept of the painter repainting a sauna, but completely replace the dark-neon, brush-stroke-heavy design.
+Image 3 (original Parus product render): PRIMARY PRODUCT GEOMETRY REFERENCE. Keep this very specific sauna's geometry, scale, near-flat faceted roof, front square window, vertical dark strips, side glass entrance door, small staircase, black chimney cap. Do not turn it into a conventional house or round barrel.
+
+SCENE AND COMPOSITION:
+A continuous softly lit warm LIGHT GREY photographic studio, pale concrete wall and matte grey floor, background roughly #d8d5d0 with subtle texture and gentle gradient, NOT a black room. Clear tonal contrast makes the BLACK sauna extremely visible.
+Large sauna occupies the RIGHT 60 percent, lower-right, three-quarter angle matching image 3. Exterior matte graphite-black stained wood, grain still visible, warm amber light inside the real windows/door, a small remaining natural timber area to show the paint transition. Physically grounded, clean realistic stairs and proportions.
+One adult painter at the FAR RIGHT of the bath, secondary in size, wearing a muted burnt-orange hoodie, dark work trousers and protective painting respirator. He realistically applies black paint with a spray gun pointed at exterior boards; tiny controlled fine paint plume. No paint on glass. One or two restrained paint containers by his feet, no chaotic props.
+Across the UPPER MIDDLE / RIGHT background, BEHIND THE SAUNA, very large two-line upright bold Cyrillic headline:
+"ЧЁРНАЯ" in warm orange #f2831e
+"ПЯТНИЦА" in deep charcoal #262727.
+The sauna roof naturally occludes only a small lower portion of some headline letters. The full words remain legible. Headline is part of the background depth, NEVER printed across the front of the bath or over the left price information.
+The LEFT 35 percent is an orderly OPEN information column, dark text directly on the light background, with generous whitespace and strong aligned hierarchy. No panel or card behind this text. Keep it separate from the large background headline and visible sauna.
+
+EXACT HEADER/UI TEXT:
+Top left wordmark only "дачапар" in clean bold dark Cyrillic, no invented leaf/house logo.
+Header date "11–21 ноября 2026".
+Phone "+7 (951) 734-99-99" and a small conventional outlined button "Оставить заявку" top right.
+Under the header an understated model selector: "Квадро" / "Парус" / "Викинг" / "Квадро Хаус"; Парус selected with a small charcoal filled rectangle, other choices plain light outlined rectangles. No fluorescent pills.
+Left column, clearly readable:
+"Парус · 4 м · Комфорт"
+"Скидка Чёрной пятницы"
+"−30 000 ₽" as a substantial orange number, plain text without a brushstroke or angled badge.
+"Цена вне акции" in small grey text, followed by neatly struck-through "475 000 ₽".
+Primary price "от 445 000 ₽" in large bold CHARCOAL, not fluorescent.
+Separate readable benefit line "На Делюкс — ещё 20 000 ₽".
+A REAL OBVIOUS LARGE UI BUTTON below all prices: a solid warm-orange rounded RECTANGLE with normal straight edges, about 440×70 px, 10px corner radius, subtle dark drop shadow and a fine top highlight so it unmistakeably looks pressable. Centered white dark-enough high-contrast bold label "Хочу баню по акции" and a small arrow. It must look like a native website button, not an advertising banner, brush mark, paint stroke or decorative text.
+Small but readable grey condition directly near the CTA: "Скидки при заключении договора с 11.11 по 21.11.2026 включительно".
+Bottom trust row in dark grey with room around it: "С 2015 года · Производство в Вологде · Под ключ с гарантией".
+
+ART DIRECTION:
+Polished product-led architecture campaign, calm enough for middle-aged Russian country-house owners, still recognisably Black Friday. Palette ONLY warm light grey, graphite black, white and restrained warm orange. Upright clean Cyrillic grotesk (Manrope-like), tabular price figures, clear left alignment. Strong readability, one main CTA.
+ABSOLUTELY NO brushstroke backgrounds, graffiti tags, paint-swipe labels, neon lime, violet lighting, slanted discount ribbons, giant aggressive price stickers, exclamation marks, extra slogans, fake countdowns, percentage discounts or gift boxes.
+Preserve the additional 20000 ₽ on Deluxe; do not incorporate it into the displayed 445000 Comfort price.
+All dates and numbers exact. No repeated watermarks. This is a website first screen, not an ad collage.
