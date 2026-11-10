@@ -29,14 +29,16 @@ if content_build:
 if patched!=index:files['web/index.html']=patched
 image=(ROOT/'web'/IMAGE_PATH).read_bytes()
 if sha(image)!=fresh['web_files'].get(IMAGE_PATH):files['web/'+IMAGE_PATH]=image
-manifest={n:sha(data) for n,data in sorted(files.items())};release='CONSENT-'+sha(json.dumps(manifest,sort_keys=True).encode())[:12]
+manifest={n:sha(data) for n,data in sorted(files.items())}
+support={n:sha((ROOT/'scripts'/n).read_bytes()) for n in ['deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py','deploy-reviewed-job.py']}
+release='CONSENT-'+sha(json.dumps({'overlay':manifest,'support':support},sort_keys=True).encode())[:12]
 raw=io.BytesIO()
 with tarfile.open(fileobj=raw,mode='w',format=tarfile.USTAR_FORMAT) as tar:
  for name,data in sorted(files.items()):
   info=tarfile.TarInfo(name);info.size=len(data);info.mode=0o644;info.mtime=0;tar.addfile(info,io.BytesIO(data))
 payload=gzip.compress(raw.getvalue(),mtime=0);(OUT/'payload.tar.gz').write_bytes(payload)
 c={'release':release,'baseline':fresh,'baseline_sha256':sha(json.dumps(fresh,sort_keys=True).encode()),'overlay':manifest,'payload_sha256':sha(payload),'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'tests':'See committed validation report; live lead delivery is never exercised with fake leads'}
-c['support_files']={n:sha((ROOT/'scripts'/n).read_bytes()) for n in ['deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py']}
+c['support_files']=support
 if (OUT/'cache-config.json').exists():c['public_media_cache']={'config_sha256':json.loads((OUT/'cache-config.json').read_text('utf8'))['config_sha256']}
 (OUT/'deployment.json').write_text(json.dumps(c,indent=2)+'\n',encoding='utf8')
 print(json.dumps({'release':release,'files':len(files),'bytes':len(payload),'baseline':'captured; remote hash guard required' if '--prepared' in sys.argv else 'freshly verified'}))

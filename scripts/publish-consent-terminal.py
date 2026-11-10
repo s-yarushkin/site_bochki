@@ -1,5 +1,5 @@
 """Interactive publication coordinator. No password, visitor data or credentials saved."""
-import os,sys,re,base64,getpass,hashlib,json,subprocess,time
+import os,sys,re,base64,getpass,hashlib,json,subprocess,time,runpy
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_CONSENT_PACKAGE','consent-release');OUT.mkdir(parents=True,exist_ok=True)
 def state(status,**fields):(OUT/'terminal-state.json').write_text(json.dumps({'status':status,**fields},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
@@ -48,9 +48,30 @@ try:
  checked=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar',"python3 -c '"+guard+"' && python3 "+folder+'/deploy-consent-remote.py --check']);assert json.loads(checked.stdout.decode().strip().splitlines()[-1])['ok']
  print('Проверка пакета пройдена. Будут опубликованы подготовленные правки сайта. Заявки, интеграция с MAX, права и второй фактор сохраняются.\n')
  state('waiting_sudo',release=release);password=getpass.getpass('Введите пароль сервера (sudo): ');state('publishing',release=release)
- published=subprocess.run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','sudo -S -p "" python3 '+folder+'/deploy-consent-remote.py --apply'],input=(password+'\n').encode(),capture_output=True,timeout=900);password=None
- rows=published.stdout.decode('utf8',errors='replace').strip().splitlines();receipt=json.loads(rows[-1]) if rows else {'ok':False,'message':'Сервер не вернул отчёт.'}
- if published.returncode or not receipt.get('ok'):raise RuntimeError(receipt.get('message','Публикация остановлена.'))
+ if 'deploy-reviewed-job.py' in config.get('support_files',{}):
+  try:
+   launched=subprocess.run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar','sudo -S -p "" python3 '+folder+'/deploy-reviewed-job.py --start'],input=(password+'\n').encode(),capture_output=True,timeout=40)
+  except subprocess.TimeoutExpired:launched=None
+  finally:password=None
+  if launched is not None:
+   stderr=launched.stderr.decode('utf8',errors='replace').lower()
+   if launched.returncode and any(v in stderr for v in ['incorrect password','a password is required','sorry, try again','no password was provided']):raise RuntimeError('Сервер не принял sudo-пароль. Публикация не запущена.')
+   rows=launched.stdout.decode('utf8',errors='replace').strip().splitlines()
+   if rows:
+    result=json.loads(rows[-1])
+    if not result.get('ok'):raise RuntimeError(result.get('message','Сервер остановил запуск.'))
+  print('Ожидаем сохранённый отчёт сервера. Публикация не зависит от открытого SSH-соединения.\n',flush=True)
+  wait=runpy.run_path(str(ROOT/'scripts/watch-reviewed-publication.py'))['wait_publication'];phase=[None]
+  def progress(data):
+   status=data.get('status');state('publishing',release=release,remote_status=status)
+   if status!=phase[0]:
+    print('Соединение временно недоступно, переподключаемся к отчёту.' if status=='connection_lost' else 'Состояние сервера: '+str(status),flush=True);phase[0]=status
+  receipt=wait(folder,progress=progress)
+ else:
+  published=subprocess.run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','sudo -S -p "" python3 '+folder+'/deploy-consent-remote.py --apply'],input=(password+'\n').encode(),capture_output=True,timeout=900);password=None
+  rows=published.stdout.decode('utf8',errors='replace').strip().splitlines();receipt=json.loads(rows[-1]) if rows else {'ok':False,'message':'Сервер не вернул отчёт.'}
+  if published.returncode:receipt['ok']=False
+ if not receipt.get('ok'):raise RuntimeError(receipt.get('message','Публикация остановлена.'))
  (OUT/'deployment-result.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf8');state('published',release=release);print('\nГОТОВО. Публикация завершена и проверена. Можно закрыть окно.')
 except Exception as error:
  password=None;message='Не удалось подключиться к серверу или выполнить проверку.' if isinstance(error,subprocess.CalledProcessError) else str(error)[:300];state('stopped',error_type=type(error).__name__,message=message);print('\nОСТАНОВЛЕНО: '+message+'\nПароль не сохранён. Не отправляйте его в чат.')

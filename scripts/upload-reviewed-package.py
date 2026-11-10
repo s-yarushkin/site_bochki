@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'.local'/os.environ['DACHAPAR_CONSENT_PACKAGE']
 c=json.loads((OUT/'deployment.json').read_text('utf8'))
 assert re.fullmatch(r'CONSENT-[a-f0-9]{12}',c['release'])
-assert set(c['support_files'])<= {'deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py'}
+assert set(c['support_files'])<= {'deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py','deploy-reviewed-job.py'}
 folder='/tmp/dachapar-consent-'+c['release'].removeprefix('CONSENT-')
 files={'deployment.json':(OUT/'deployment.json').read_bytes(),'payload.tar.gz':(OUT/'payload.tar.gz').read_bytes()}
 for name,digest in c['support_files'].items():

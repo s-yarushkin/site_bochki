@@ -144,7 +144,8 @@ def main():
  if args.check==args.apply:raise RuntimeError('Choose one operation')
  c=json.loads((HERE/'deployment.json').read_text());release=c['release']
  for name,digest in c.get('support_files',{}).items():
-  if name not in ['deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py'] or sha((HERE/name).read_bytes())!=digest:raise RuntimeError('Deployment helper checksum mismatch')
+  if name not in ['deploy-consent-remote.py','crm-production-audit.py','audit-lead-intent.py','caddy_public_cache.py','deploy-reviewed-job.py'] or sha((HERE/name).read_bytes())!=digest:raise RuntimeError('Deployment helper checksum mismatch')
+  compile((HERE/name).read_text(),name,'exec')
  if not re.fullmatch('CONSENT-[a-f0-9]{12}',release):raise RuntimeError('Invalid release')
  oldweb,oldapi=baseline(c)
  # Both preflight and publication test an isolated copy before switching either link.
