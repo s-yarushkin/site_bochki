@@ -46,7 +46,7 @@ try:
  state('checking',release=release)
  guard='import pathlib,hashlib,json; p=pathlib.Path("'+folder+'"); c=json.loads((p/"deployment.json").read_text()); assert hashlib.sha256((p/"payload.tar.gz").read_bytes()).hexdigest()=="'+config['payload_sha256']+'"; assert hashlib.sha256(json.dumps(c["baseline"],sort_keys=True).encode()).hexdigest()=="'+digest+'"'
  checked=run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar',"python3 -c '"+guard+"' && python3 "+folder+'/deploy-consent-remote.py --check']);assert json.loads(checked.stdout.decode().strip().splitlines()[-1])['ok']
- print('Проверка пакета пройдена. Обновятся контекст заявок в MAX и загрузка сайта. Будет выполнен аудит сохранённых заявок без выгрузки контактов. Пароли, роли и второй фактор сохраняются.\n')
+ print('Проверка пакета пройдена. Будут опубликованы подготовленные правки сайта. Заявки, интеграция с MAX, права и второй фактор сохраняются.\n')
  state('waiting_sudo',release=release);password=getpass.getpass('Введите пароль сервера (sudo): ');state('publishing',release=release)
  published=subprocess.run(['ssh','-C','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','-T','-o','BatchMode=yes','dachapar','sudo -S -p "" python3 '+folder+'/deploy-consent-remote.py --apply'],input=(password+'\n').encode(),capture_output=True,timeout=900);password=None
  rows=published.stdout.decode('utf8',errors='replace').strip().splitlines();receipt=json.loads(rows[-1]) if rows else {'ok':False,'message':'Сервер не вернул отчёт.'}

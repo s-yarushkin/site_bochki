@@ -17,7 +17,7 @@ async function json(url){const r=await fetch(url,{signal:AbortSignal.timeout(120
 const [book,registry,photos]=await Promise.all([json('/choice/catalog-pricebook.json'),json('/home-hero/layouts/index.json?album=22-20261105'),json('/choice/photos.json')]);
 const plans=registry.plans;
 let state=choiceFromUrl(book,plans,location.href),imageTicket=0;
-const setPlan=createLayoutPanel($('[data-plan-panel]'),{onRequest:opener=>request(opener,'layout_quote')});
+const setPlan=createLayoutPanel($('[data-plan-panel]'),{onRequest:(opener,plan)=>request(opener,'layout_quote',plan)});
 const setPhotos=createPhotoGallery($('[data-gallery]'));
 connectHomeContinuation();
 
@@ -65,7 +65,7 @@ function render(previous){
  }
  for(const button of document.querySelectorAll('[data-size-picker]'))button.setAttribute('aria-pressed',String(button.dataset.sizePicker===state.size));
  for(const key of ['comfort','deluxe']){
-  $('[data-package-price="'+key+'"]').textContent=money.format(choicePrice(book,{...state,package:key}));
+  $('[data-package-price="'+key+'"]').textContent='от '+money.format(choicePrice(book,{...state,package:key}));
   $('input[name="package"][value="'+key+'"]').checked=state.package===key;
   $('[data-package-card="'+key+'"]').classList.toggle('is-selected',state.package===key);
  }
@@ -97,7 +97,7 @@ function revealPlanning(){
 }
 document.querySelectorAll('[data-model-card]').forEach(button=>button.addEventListener('click',()=>{choose({model:button.dataset.modelCard});}));
 window.addEventListener('popstate',()=>{const previous=state;state=choiceFromUrl(book,plans,location.href);render(previous);});
-function request(opener,reason='quote'){openModelRequest({name:HERO_MODELS[state.model].name,size:choiceSizeLabel(book,state.model,state.size),packageName:PACKAGE_NAMES[state.package],layout:state.layout||undefined,reason,opener});}
+function request(opener,reason='quote',plan){const selected=plan?{...state,model:plan.models.includes(state.model)?state.model:plan.models[0],size:plan.size,layout:plan.id}:state;openModelRequest({name:HERO_MODELS[selected.model].name,size:choiceSizeLabel(book,selected.model,selected.size),packageName:PACKAGE_NAMES[selected.package],layout:selected.layout||undefined,reason,opener});}
 $('[data-plan-request]').addEventListener('click',event=>request(event.currentTarget,'quote'));
 $('[data-production]')?.addEventListener('click',event=>request(event.currentTarget,'production'));
 $('[data-foundation]')?.addEventListener('click',event=>request(event.currentTarget,'foundation'));

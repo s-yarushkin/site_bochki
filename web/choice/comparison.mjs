@@ -8,7 +8,7 @@ export function openPackageComparison({selection,prices={},opener}){
  const scroll=node('div',null,'choice-comparison-scroll');scroll.tabIndex=0;scroll.setAttribute('aria-label','Оснащение Комфорт и Делюкс');
  const table=node('table');table.createCaption().textContent='Полный состав комплектаций выбранной бани';
  const columns=document.createElement('colgroup');for(const width of ['26%','37%','37%']){const col=document.createElement('col');col.style.width=width;columns.append(col);}table.append(columns);
- const top=table.createTHead().insertRow();for(const [key,label]of [['','Что входит'],['comfort',PACKAGE_NAMES.comfort],['deluxe',PACKAGE_NAMES.deluxe]]){const th=node('th',label);th.scope='col';if(key&&Number.isFinite(prices[key]))th.append(node('span',money(prices[key]),'choice-compare-price'));top.append(th);}
+ const top=table.createTHead().insertRow();for(const [key,label]of [['','Что входит'],['comfort',PACKAGE_NAMES.comfort],['deluxe',PACKAGE_NAMES.deluxe]]){const th=node('th',label);th.scope='col';if(key&&Number.isFinite(prices[key]))th.append(node('span','от '+money(prices[key]),'choice-compare-price'));top.append(th);}
  for(const group of [...new Set(COMPARISON.map(row=>row.group))]){
   const body=table.createTBody(),section=body.insertRow(),heading=node('th',group);heading.colSpan=3;heading.scope='rowgroup';section.className='choice-comparison-group';section.append(heading);
   for(const row of COMPARISON.filter(item=>item.group===group)){const entry=body.insertRow(),name=node('th',row.title);name.scope='row';entry.append(name,node('td',row.comfort),node('td',row.deluxe,row.upgrade?'is-upgrade':undefined));}

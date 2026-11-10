@@ -7,7 +7,7 @@ DROP=Path('/etc/systemd/system/garant-bani-relay.service.d/92-aggregate.conf')
 ORIGIN='https://xn--80aaan1dh9b.xn--p1ai';SERVICE='garant-bani-relay.service'
 ALLOWED={
  'api/server/garant-bani-relay.mjs','api/server/crm-manager-api.mjs','api/server/crm-public-api.mjs','api/server/crm-insights.mjs','api/server/crm-aggregate.mjs','api/server/request-intent.mjs','api/data/request-layouts.json',
- 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-runtime.mjs','web/request-intent.mjs','web/choice/home-hero/model-request.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png','web/choice/packages.mjs','web/choice/packages.css','web/choice/comparison.mjs','web/choice/app.mjs'}
+ 'web/consent-actions.mjs','web/lead-client.mjs','web/journey-tracker.mjs','web/journey-runtime.mjs','web/request-intent.mjs','web/choice/home-hero/model-request.mjs','web/choice/home-hero/layout-panel.mjs','web/journey-tracker.css','web/analytics-core.mjs','web/privacy.html','web/assets/js/manager.js','web/crm/manager-extension.mjs','web/aggregate-actions.mjs','web/consent-banner.mjs','web/analytics-consent.html','web/crm/aggregate-report.mjs','web/index.html','web/assets/social/dachapar-parus-winter-20261106-v1.png','web/choice/packages.mjs','web/choice/packages.css','web/choice/comparison.mjs','web/choice/app.mjs'}
 def sha(data):return hashlib.sha256(data).hexdigest()
 def tree(root):
  result={}

@@ -1,14 +1,16 @@
 """Build the public package copy and home CSS from a verified production snapshot."""
-import hashlib,json,re
+import hashlib,json,re,sys
 from html import escape
 from pathlib import Path
 from urllib.parse import urljoin
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/package-update-20261109';BASE=OUT/'baseline/web'
-data=json.loads((ROOT/'content/packages-20261109.json').read_text('utf8'));baseline=json.loads((OUT/'baseline.json').read_text('utf8'))
+data=json.loads((ROOT/'content/packages-20261109.json').read_text('utf8'))
 def write(rel,text):
  p=ROOT/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(text.encode('utf8'))
 exports={'PACKAGE_NAMES':data['names'],'PACKAGE_COPY':data['short'],'PACKAGE_STORIES':data['stories'],'COMPARISON':data['comparison'],'PACKAGE_NOTES':data['notes']}
 write('web/choice/packages.mjs','// Generated from content/packages-20261109.json. Prices are owned by the pricebook.\n'+''.join('export const '+k+'='+json.dumps(v,ensure_ascii=False,indent=2)+';\n' for k,v in exports.items()))
+if '--copy-only' in sys.argv:print('Package copy generated; pages, styles and prices unchanged');raise SystemExit(0)
+baseline=json.loads((OUT/'baseline.json').read_text('utf8'))
 cards=[]
 for key,s in data['stories'].items():
  bullets=''.join('<li><strong>'+escape(b['title'])+'</strong><span>'+escape(b['text'])+'</span></li>' for b in s['features'])

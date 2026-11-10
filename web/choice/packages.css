@@ -5,6 +5,35 @@
 #comfort .package-story ul{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:18px}#comfort .package-story li{padding-top:17px;border-top:1px solid #cdd7c4;display:grid;gap:5px;font-size:15px;line-height:1.6}#comfort .package-story li strong{font-size:16px;font-weight:650;color:#243d2e}#comfort .package-story li span{color:#43573e}
 #comfort .package-section-footer{margin-top:25px;max-width:85ch}#comfort .package-section-footer p{font-size:13px;line-height:1.6;color:#52634b;margin:9px 0}#comfort .choice-text-button{font-size:16px;font-weight:650;text-align:left}
 .choice-workspace .choice-package-description{color:#435748;font-size:14px;line-height:1.5}
+/* Layout and 3D keep the drawing/viewer and cost action inside the viewport. */
+html:has(.hh-layout-compact[open]){overflow:hidden;scrollbar-gutter:stable}
+.hh-layout-dialog.hh-layout-compact{width:min(1120px,calc(100vw - 24px));height:min(820px,calc(100dvh - 24px));max-height:calc(100dvh - 24px);padding:0;overflow:hidden}
+.hh-layout-compact[open]{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto}
+.hh-layout-compact.hh-layout-3d-dialog[open]{grid-template-rows:auto minmax(0,1fr) auto}
+.hh-layout-compact>header{position:static;padding:12px 18px;min-width:0}
+.hh-layout-compact>header h2{font-size:clamp(17px,2.1vw,24px);line-height:1.25;overflow-wrap:anywhere}
+.hh-layout-tabs{display:flex;gap:6px;padding:8px 18px;border-bottom:1px solid #d1d8cb}
+.hh-layout-tabs button{min-height:42px;padding:8px 16px;border:1px solid transparent;border-radius:8px;font:inherit;font-size:14px;color:#405841;background:transparent;cursor:pointer}
+.hh-layout-tabs button[aria-selected=true]{color:#fff;background:#264b35}
+.hh-layout-compact .hh-plan-view{min-height:0;min-width:0;padding:10px 18px;display:grid;grid-template-rows:auto minmax(0,1fr)}
+.hh-layout-compact .hh-plan-tools{margin:0 0 8px;gap:8px}
+.hh-layout-compact .hh-plan-viewport{height:100%;max-height:none;min-height:0;overflow:hidden}
+.hh-layout-compact .hh-plan-viewport.is-zoomed{overflow:auto}
+.hh-layout-compact .hh-plan-viewport img{display:block;max-height:none;max-width:none;object-fit:contain}
+.hh-layout-compact>.hh-layout-spec{min-height:0;overflow:auto;overscroll-behavior:contain;padding:14px 18px}
+.hh-layout-compact .hh-plan-overview{padding:0 0 12px}
+.hh-layout-cost{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0;padding:12px 18px;border-top:1px solid #d1d8cb;background:#fafbf7}
+.hh-layout-cost>span{font-size:13px;color:#53694e}
+.hh-layout-cost .choice-primary{margin:0;min-height:50px;padding:13px 22px;font-size:16px;line-height:1.25;text-align:center;white-space:normal}
+.hh-layout-compact .hh-layout-stage{min-height:0;position:relative;display:grid;grid-template-rows:minmax(0,1fr) auto auto;overflow:hidden}
+.hh-layout-compact .hh-layout-stage canvas,.hh-layout-compact .hh-layout-stage>img{grid-column:1;grid-row:1;min-height:0;width:100%;height:100%;max-height:none;object-fit:contain}
+.hh-layout-compact .hh-layout-status{position:absolute;top:10px;left:12px;right:12px;pointer-events:none}
+.hh-layout-compact .hh-layout-hint{grid-row:2;margin:8px 14px;font-size:13px;line-height:1.35}
+.hh-layout-compact .hh-layout-tools{grid-row:3;gap:6px;padding:0 12px 10px}
+.hh-layout-compact .hh-layout-tools button{font-size:13px}
+.site-price-disclaimer{max-width:100%;margin:18px 0 0;font-size:12px;line-height:1.6;opacity:.8}
+@media(max-width:600px){.hh-layout-dialog.hh-layout-compact{width:calc(100vw - 12px);height:calc(100dvh - 12px);max-height:calc(100dvh - 12px);border-radius:10px}.hh-layout-compact>header{padding:9px 12px}.hh-layout-compact>header button{font-size:12px;padding:6px 10px}.hh-layout-tabs{padding:6px 12px}.hh-layout-tabs button{min-height:38px;padding:6px 12px}.hh-layout-compact .hh-plan-view{padding:8px 10px}.hh-layout-compact .hh-plan-tools span{font-size:12px}.hh-layout-cost{display:grid;gap:7px;padding:9px 12px}.hh-layout-cost>span{font-size:12px}.hh-layout-cost .choice-primary{width:100%;min-height:48px;font-size:15px;padding:12px}.hh-layout-compact .hh-layout-hint{margin:6px 10px;font-size:12px}.hh-layout-compact .hh-layout-tools{padding:0 8px 8px;gap:5px}.hh-layout-compact .hh-layout-tools button{padding:6px 8px;font-size:12px}.hh-layout-compact .hh-layout-doors{width:100%;justify-content:space-between;min-height:38px}.hh-layout-compact .hh-layout-doors input{flex:1;min-width:0}.hh-layout-compact>.hh-layout-spec{padding:10px 12px}}
+@media(max-height:500px) and (min-width:601px){.hh-layout-compact>header{padding:5px 12px}.hh-layout-tabs{padding:4px 12px}.hh-layout-cost{padding:6px 12px}.hh-layout-cost .choice-primary{min-height:44px;padding:10px 16px}.hh-layout-compact .hh-plan-tools button{min-height:36px}.hh-layout-compact .hh-layout-hint{margin:4px 10px}}
 .choice-compare-dialog{width:min(1140px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:22px;overflow:hidden}.choice-compare-dialog[open]{display:flex;flex-direction:column}.choice-compare-dialog>header{position:static;padding:0 0 13px;flex-shrink:0}.choice-compare-dialog h2{font-size:clamp(23px,3vw,32px);line-height:1.2}.choice-compare-dialog .choice-compare-selection{margin:0 0 7px;font-size:15px}.choice-compare-intro,.choice-compare-note{font-size:14px;line-height:1.55;color:#4d6146}.choice-compare-intro{margin:0 0 16px}.choice-compare-note{margin:13px 0 0;flex-shrink:0}
 .choice-compare-dialog .choice-comparison-scroll{min-height:0;max-height:none;flex:1;overflow:auto;overscroll-behavior:contain;border:1px solid #cbd5c2;border-radius:12px;scrollbar-gutter:stable}.choice-compare-dialog .choice-comparison-scroll table{table-layout:fixed;width:100%;border-collapse:separate;border-spacing:0}.choice-compare-dialog .choice-comparison-scroll th,.choice-compare-dialog .choice-comparison-scroll td{padding:15px 18px;font-size:15px;line-height:1.55;text-align:left;vertical-align:top;border-bottom:1px solid #d8e0d0;color:#263e30;overflow-wrap:anywhere}
 .choice-compare-dialog .choice-comparison-scroll thead th{position:sticky;top:0;background:#f5f7ed;z-index:2;font-size:18px;font-weight:650}.choice-comparison-scroll thead th:last-child{background:#e5edd9}.choice-compare-price{display:block;margin-top:6px;font-size:clamp(20px,2.4vw,28px);line-height:1.2;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}.choice-compare-dialog .choice-comparison-scroll tbody th[scope=row]{font-size:15px;font-weight:600;background:#fafbf7}.choice-compare-dialog .choice-comparison-group th{background:#edf1e4;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:13px 18px}.choice-compare-dialog .choice-comparison-scroll td.is-upgrade{background:#edf3e5}.choice-compare-dialog .choice-comparison-scroll tr:last-child>*{border-bottom-color:#c3cfb8}
