@@ -1,10 +1,11 @@
 """Reconnect to a detached publication without credentials or relaunching it."""
-import json,re,shlex,subprocess,time
+import base64,json,re,shlex,subprocess,time
 
 def read_publication(folder):
  if not re.fullmatch('/tmp/dachapar-consent-[a-f0-9]{12}',folder):raise RuntimeError('Invalid publication folder')
  code="from pathlib import Path; import json; p=Path("+repr(folder)+"); s=p/'publication-status.json'; r=p/'publication-result.json'; print(json.dumps({'status':json.loads(s.read_text()) if s.exists() else {'status':'not_started'},'result':json.loads(r.read_text()) if r.exists() else None}))"
- result=subprocess.run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=10','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar','python3 -c '+shlex.quote(code)],capture_output=True,timeout=30,check=True)
+ command='exec(__import__("base64").b64decode("'+base64.b64encode(code.encode()).decode()+'"))'
+ result=subprocess.run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=10','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar','python3 -c '+shlex.quote(command)],capture_output=True,timeout=30,check=True)
  return json.loads(result.stdout)
 
 def wait_publication(folder,progress=lambda data:None,timeout=900):

@@ -50,7 +50,7 @@ try:
  state('waiting_sudo',release=release);password=getpass.getpass('Введите пароль сервера (sudo): ');state('publishing',release=release)
  if 'deploy-reviewed-job.py' in config.get('support_files',{}):
   try:
-   launched=subprocess.run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar','sudo -S -p "" python3 '+folder+'/deploy-reviewed-job.py --start'],input=(password+'\n').encode(),capture_output=True,timeout=40)
+   launched=subprocess.run(['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar','sudo -S -p DachaPar-sudo: python3 '+folder+'/deploy-reviewed-job.py --start'],input=(password+'\n').encode(),capture_output=True,timeout=40)
   except subprocess.TimeoutExpired:launched=None
   finally:password=None
   if launched is not None:
