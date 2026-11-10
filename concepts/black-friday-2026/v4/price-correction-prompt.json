@@ -1,0 +1,9 @@
+{
+  "prompt": "Edit this exact existing landing-page mockup. This is a precise two-number text correction, NOT a redesign. In the DELUXE price card on the left (the second card), replace the line \"Скидка 55 000 ₽\" with the EXACT text \"Скидка 35 000 ₽\". Replace its large final price \"от 629 000 ₽\" with the EXACT text \"от 649 000 ₽\". Its struck-out reference price stays EXACTLY \"от 684 000 ₽\". Correct arithmetic is 684000 - 35000 = 649000. Do not include or add any extra 20000 discount anywhere. The COMFORT card stays exactly as it is: reference 550000, discount30000, final520000. Preserve EVERY OTHER PIXEL AND ELEMENT as closely as possible: bath shape and scale, smaller painter scale and pose, roof, smoke stack, all background lettering, model and size selectors, header, neutral light card backgrounds, graphite text, orange CTA, dates, fine print. Keep the same font style, sizes, alignment, spacing, and color for the two corrected text lines. Sharp readable Cyrillic. Output same landscape composition.",
+  "source": "mockup-v4.png",
+  "deluxe": {
+    "reference": 684000,
+    "discount": 35000,
+    "final": 649000
+  }
+}

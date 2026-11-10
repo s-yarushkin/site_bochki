@@ -5,7 +5,7 @@
   "endExclusive": "2026-11-22T00:00:00+03:00",
   "timeZone": "Europe/Moscow",
   "contractRequired": true,
-  "additionalDeluxeDiscountPreserved": true,
+  "additionalDeluxeDiscountIncluded": false,
   "referenceLabel": "Цена вне акции — новый прайс на утверждение, не историческая цена",
   "sourcePricebookSha256": "97c785d48cb3cd2fdb23829a622169099ca295a34fb7ca5be54fca607a758e7e",
   "rows": [
@@ -35,9 +35,9 @@
       "proposedReferencePriceRub": 549000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 514000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 494000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 514000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "kvadro",
@@ -65,9 +65,9 @@
       "proposedReferencePriceRub": 580000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 545000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 525000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 545000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "kvadro",
@@ -95,9 +95,9 @@
       "proposedReferencePriceRub": 627000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 592000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 572000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 592000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "kvadro",
@@ -125,9 +125,9 @@
       "proposedReferencePriceRub": 653000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 618000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 598000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 618000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "kvadro",
@@ -155,9 +155,9 @@
       "proposedReferencePriceRub": 669000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 634000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 614000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 634000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "parus",
@@ -185,9 +185,9 @@
       "proposedReferencePriceRub": 590000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 555000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 535000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 555000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "parus",
@@ -215,9 +215,9 @@
       "proposedReferencePriceRub": 612000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 577000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 557000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 577000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "parus",
@@ -245,9 +245,9 @@
       "proposedReferencePriceRub": 667000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 632000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 612000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 632000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "parus",
@@ -275,9 +275,9 @@
       "proposedReferencePriceRub": 684000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 649000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 629000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 649000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "parus",
@@ -305,9 +305,9 @@
       "proposedReferencePriceRub": 695000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 660000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 640000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 660000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "viking",
@@ -335,9 +335,9 @@
       "proposedReferencePriceRub": 634000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 599000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 579000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 599000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "viking",
@@ -365,9 +365,9 @@
       "proposedReferencePriceRub": 676000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 641000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 621000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 641000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "viking",
@@ -395,9 +395,9 @@
       "proposedReferencePriceRub": 777000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 742000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 722000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 742000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "viking",
@@ -425,9 +425,9 @@
       "proposedReferencePriceRub": 794000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 759000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 739000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 759000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "viking",
@@ -455,9 +455,9 @@
       "proposedReferencePriceRub": 805000,
       "blackFridayDiscountRub": 35000,
       "blackFridayPriceRub": 770000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 750000,
-      "totalDiscountFromProposedReferenceRub": 55000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 770000,
+      "totalDiscountFromProposedReferenceRub": 35000
     },
     {
       "model": "kvadro-house",
@@ -485,9 +485,9 @@
       "proposedReferencePriceRub": 880000,
       "blackFridayDiscountRub": 55000,
       "blackFridayPriceRub": 825000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 805000,
-      "totalDiscountFromProposedReferenceRub": 75000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 825000,
+      "totalDiscountFromProposedReferenceRub": 55000
     },
     {
       "model": "kvadro-house",
@@ -515,9 +515,9 @@
       "proposedReferencePriceRub": 996000,
       "blackFridayDiscountRub": 55000,
       "blackFridayPriceRub": 941000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 921000,
-      "totalDiscountFromProposedReferenceRub": 75000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 941000,
+      "totalDiscountFromProposedReferenceRub": 55000
     },
     {
       "model": "kvadro-house",
@@ -545,9 +545,9 @@
       "proposedReferencePriceRub": 1052000,
       "blackFridayDiscountRub": 55000,
       "blackFridayPriceRub": 997000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 977000,
-      "totalDiscountFromProposedReferenceRub": 75000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 997000,
+      "totalDiscountFromProposedReferenceRub": 55000
     },
     {
       "model": "kvadro-house",
@@ -575,9 +575,9 @@
       "proposedReferencePriceRub": 1122000,
       "blackFridayDiscountRub": 55000,
       "blackFridayPriceRub": 1067000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 1047000,
-      "totalDiscountFromProposedReferenceRub": 75000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 1067000,
+      "totalDiscountFromProposedReferenceRub": 55000
     },
     {
       "model": "kvadro-house",
@@ -605,9 +605,9 @@
       "proposedReferencePriceRub": 1192000,
       "blackFridayDiscountRub": 55000,
       "blackFridayPriceRub": 1137000,
-      "additionalDeluxeDiscountRub": 20000,
-      "finalPriceRub": 1117000,
-      "totalDiscountFromProposedReferenceRub": 75000
+      "additionalDeluxeDiscountRub": 0,
+      "finalPriceRub": 1137000,
+      "totalDiscountFromProposedReferenceRub": 55000
     }
   ]
 }

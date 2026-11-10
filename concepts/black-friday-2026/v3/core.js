@@ -6,7 +6,8 @@
  function quote(data,state,pack=state.package){
   const row=data.rows.find(r=>r.model===state.model&&r.size===state.size&&r.package===pack);
   if(!row)throw Error('Unknown model / size / package');
-  const discount=row.blackFridayDiscountRub+row.additionalDeluxeDiscountRub;
+  if(row.additionalDeluxeDiscountRub)throw Error('Additional discounts are excluded from this campaign');
+  const discount=row.blackFridayDiscountRub;
   if(row.proposedReferencePriceRub-discount!==row.finalPriceRub)throw Error('Inconsistent discount');
   return {...row,discountRub:discount};
  }
