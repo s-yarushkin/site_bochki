@@ -20,6 +20,7 @@ for model in ['kvadro','parus','viking','kvadro-house']:
 css=(ROOT/'concepts/black-friday-2026/v4/style.css').read_text('utf8').replace("url('assets/manrope-","url('/assets/manrope-")
 css+='\n.primary:disabled{opacity:.65;cursor:wait}.campaign-status{margin:0 0 14px;color:#a45123;font-size:13px;font-weight:650}.review-footer{font-size:12px}.review-footer a{margin-left:16px}.inquiry-help{font-size:13px;color:#625b51}.bf-page .lead-success-shown,.bf-page #receipt-success{color:#2d2b28}.bf-page .lead-success-shown .btn{background:#b65b27}.bf-page .receipt-success-icon{color:#a45123;background:#f2e6d6}.bf-page .receipt-success-steps p,.bf-page .receipt-success-intro{color:#625b51}@media(min-width:1101px){.offer{width:37%;max-width:640px}.scene img{mask-image:linear-gradient(to bottom,transparent 0,#000 6%,#000 95%,transparent 100%)}}\n'
 css+='\n@media(max-width:1100px){.scene{height:auto;aspect-ratio:1672/941}.scene img{position:absolute;width:100%;height:auto;right:0;top:0;object-fit:contain;transform:none}}@media(max-width:560px){.scene{aspect-ratio:1672/1411.5}.scene img{width:150%}}\n'
+css+='\n'+(ROOT/'content/blackfriday-scene.css').read_text('utf8')
 write('blackfriday/style.css',css)
 html=(ROOT/'concepts/black-friday-2026/v4/index.template.html').read_text('utf8')
 html=html.replace('noindex,nofollow','noindex,follow').replace('<body>','<body class="bf-page">').replace('href="style.css"','href="/blackfriday/style.css?v=20261110"')

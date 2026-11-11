@@ -1,7 +1,7 @@
 """Resumable binary SSH upload of reviewed artifacts, then read-only remote preflight."""
-import base64,gzip,hashlib,io,json,shlex,subprocess,tarfile,time
+import base64,gzip,hashlib,io,json,os,shlex,subprocess,tarfile,time
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/blackfriday-20261110'
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_BF_PACKAGE','blackfriday-20261110')
 c=json.loads((OUT/'deployment.json').read_text('utf8'));folder='/tmp/dachapar-blackfriday-'+c['release'].removeprefix('BF-')
 files={'deployment.json':(OUT/'deployment.json').read_bytes(),'payload.tar.gz':(OUT/'payload.tar.gz').read_bytes()}
 for name,digest in c['support_files'].items():

@@ -1,7 +1,7 @@
 """One password prompt; publication is detached and reconnects to its persisted receipt."""
-import base64,getpass,json,re,shlex,subprocess,time
+import base64,getpass,json,os,re,shlex,subprocess,time
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/blackfriday-20261110'
+ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local'/os.environ.get('DACHAPAR_BF_PACKAGE','blackfriday-20261110')
 ssh=['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar']
 def state(status,**values):(OUT/'terminal-state.json').write_bytes(json.dumps({'status':status,**values},ensure_ascii=False,indent=2).encode())
 def call(code):

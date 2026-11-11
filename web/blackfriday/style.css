@@ -12,3 +12,8 @@
 .primary:disabled{opacity:.65;cursor:wait}.campaign-status{margin:0 0 14px;color:#a45123;font-size:13px;font-weight:650}.review-footer{font-size:12px}.review-footer a{margin-left:16px}.inquiry-help{font-size:13px;color:#625b51}.bf-page .lead-success-shown,.bf-page #receipt-success{color:#2d2b28}.bf-page .lead-success-shown .btn{background:#b65b27}.bf-page .receipt-success-icon{color:#a45123;background:#f2e6d6}.bf-page .receipt-success-steps p,.bf-page .receipt-success-intro{color:#625b51}@media(min-width:1101px){.offer{width:37%;max-width:640px}.scene img{mask-image:linear-gradient(to bottom,transparent 0,#000 6%,#000 95%,transparent 100%)}}
 
 @media(max-width:1100px){.scene{height:auto;aspect-ratio:1672/941}.scene img{position:absolute;width:100%;height:auto;right:0;top:0;object-fit:contain;transform:none}}@media(max-width:560px){.scene{aspect-ratio:1672/1411.5}.scene img{width:150%}}
+
+/* Blend the real image edges, rather than the letterboxed img element. */
+@media(min-width:1101px){
+ .scene img{position:absolute;right:0;top:50%;width:auto;height:min(100%,56.28vw);max-width:none;object-fit:fill;transform:translateY(-50%);-webkit-mask-image:linear-gradient(to right,transparent 0,#000 18%,#000 100%),linear-gradient(to bottom,transparent 0,#000 4%,#000 97%,transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 18%,#000 100%),linear-gradient(to bottom,transparent 0,#000 4%,#000 97%,transparent 100%);-webkit-mask-composite:source-in;mask-composite:intersect}
+}

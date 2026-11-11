@@ -1,8 +1,8 @@
 """Capture public production sources and prepare a narrow, hash-guarded web overlay."""
-import argparse,base64,gzip,hashlib,io,json,shutil,subprocess,tarfile
+import argparse,base64,gzip,hashlib,io,json,os,shutil,subprocess,tarfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'.local/blackfriday-20261110'
+OUT=ROOT/'.local'/os.environ.get('DACHAPAR_BF_PACKAGE','blackfriday-20261110')
 SOURCE='''import pathlib,json,hashlib,base64
 w=pathlib.Path('/srv/sites/dachapar-preview/current').resolve(strict=True);a=pathlib.Path('/srv/services/garant-bani-relay/current').resolve(strict=True)
 assert w.parent==pathlib.Path('/srv/sites/dachapar-preview/releases') and a.parent==pathlib.Path('/srv/services/garant-bani-relay/releases')
