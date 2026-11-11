@@ -37,9 +37,10 @@ with tarfile.open(a) as tar:
   assert member.isfile() and member.name in NAMES
   target=p/member.name;assert not target.is_symlink();target.write_bytes(tar.extractfile(member).read());target.chmod(0o600)
 r=subprocess.run(['python3',str(p/'deploy-blackfriday-remote.py'),'--check'],capture_output=True,timeout=240)
-if r.returncode:raise RuntimeError(r.stdout.decode()[-500:]+r.stderr.decode()[-200:])
-print(r.stdout.decode().strip().splitlines()[-1])
+if r.stdout.strip():print(r.stdout.decode().strip().splitlines()[-1])
+else:print(json.dumps({'ok':False,'message':r.stderr.decode()[-500:]}))
 '''.replace('FOLDER',repr(folder)).replace('ARCHIVE',repr(archive)).replace('DIGEST',repr(digest)).replace('NAMES',repr(list(files)))
-result=call(code,timeout=280);assert result.get('ok') and result.get('preflight')=='PASS'
+result=call(code,timeout=280)
+if not result.get('ok') or result.get('preflight')!='PASS':raise RuntimeError(json.dumps(result))
 (OUT/'preflight.json').write_bytes((json.dumps({**result,'release':c['release'],'folder':folder},indent=2)+'\n').encode())
 print(json.dumps(result),flush=True)

@@ -21,7 +21,10 @@ def baseline(c):
  return active(WEB)
 def allowed(name):
  return name in ['web/index.html','web/choice/app.mjs','web/choice/state.mjs','web/choice/home-hero/model-request.mjs','web/campaigns/blackfriday.mjs','web/campaigns/blackfriday-data.mjs','web/campaigns/blackfriday.css'] or bool(re.fullmatch(r'web/blackfriday/(?:index\.html|style\.css|app\.mjs|state\.mjs|lead-data\.mjs|assets/scene-(?:kvadro|parus|viking|kvadro-house)\.webp)',name))
-def run(args):return subprocess.run(args,capture_output=True,check=True,timeout=90)
+def run(args):
+ r=subprocess.run(args,capture_output=True,timeout=90)
+ if r.returncode:raise RuntimeError(r.stderr.decode('utf8',errors='replace')[-1500:])
+ return r
 def stage(dest,c):
  if sha((HERE/'payload.tar.gz').read_bytes())!=c['payload_sha256']:raise RuntimeError('Archive checksum mismatch')
  if any(not allowed(n) for n in c['overlay']):raise RuntimeError('File outside campaign scope')
@@ -45,17 +48,17 @@ def stage(dest,c):
     dependency=(dest/url.lstrip('/') if url.startswith('/') else p.parent/url).resolve()
     if not dependency.is_relative_to(dest.resolve()) or not dependency.is_file():raise RuntimeError('Missing module dependency: '+url)
   if p.suffix=='.webp' and (p.read_bytes()[:4]!=b'RIFF' or p.read_bytes()[8:12]!=b'WEBP'):raise RuntimeError('Invalid WebP image')
- smoke='''const {CAMPAIGN,campaignQuote,campaignPhase}=await import(process.argv[1]);
+ smoke='''const {CAMPAIGN,campaignQuote,campaignPhase}=await import(process.argv[2]);
  const expected={kvadro:{comfort:25000,deluxe:35000},parus:{comfort:30000,deluxe:35000},viking:{comfort:30000,deluxe:35000},'kvadro-house':{comfort:45000,deluxe:55000}};
  if(CAMPAIGN.rows.length!==40)throw Error('PRICE_ROWS');const start=Date.parse(CAMPAIGN.start),end=Date.parse(CAMPAIGN.end);
  if(campaignPhase(start-1)!=='upcoming'||campaignPhase(start)!=='active'||campaignPhase(end-1)!=='active'||campaignPhase(end)!=='ended')throw Error('CAMPAIGN_WINDOW');
  for(const r of CAMPAIGN.rows){const q=campaignQuote(r.model,r.size,r.package,{now:start});if(q.discountRub!==expected[r.model][r.package]||q.priceRub!==r.source-5000)throw Error('CAMPAIGN_PRICE');}
- const {validateBaniLead,formatBaniLead}=await import(process.argv[2]);const {campaignLeadFields}=await import(process.argv[3]);
+ const {validateBaniLead,formatBaniLead}=await import(process.argv[3]);const {campaignLeadFields}=await import(process.argv[4]);
  for(const channel of ['max','telegram','whatsapp','phone']){const state={model:'parus',size:'550',package:'deluxe'},q=campaignQuote('parus','550','deluxe',{now:start});
  const p={requestId:'00000000-0000-4000-8000-000000000001',flow:'callback',phone:'+79990000001',name:'',consent:true,consentVersion:'2026-10-21',consentMethod:'submit-button-v2',...campaignLeadFields(state,q,'model',channel)};
  const lead=validateBaniLead(p);if(!formatBaniLead(lead).includes('649000'))throw Error('LEAD_CONTRACT');}
  console.log(JSON.stringify({prices:40,channels:4,persisted:0,max_messages:0}));'''
- run(['/usr/bin/node','--input-type=module','-e',smoke,(dest/'campaigns/blackfriday.mjs').as_uri(),(active(API)/'server/garant-bani-relay.mjs').as_uri(),(dest/'blackfriday/lead-data.mjs').as_uri()])
+ run(['/usr/bin/node','--input-type=module','-e',smoke,'/usr/bin/node',(dest/'campaigns/blackfriday.mjs').as_uri(),(active(API)/'server/garant-bani-relay.mjs').as_uri(),(dest/'blackfriday/lead-data.mjs').as_uri()])
  return expected
 def switch(target):
  if target.parent!=WEB.parent/'releases' or not target.is_dir():raise RuntimeError('Unsafe web switch')
