@@ -3,7 +3,7 @@ import {buildCallback, submitLead} from '/lead-client.mjs?v=quiz-overview-202611
 import {attachPhoneMask} from '/phone-mask.mjs';
 import {analytics} from '/analytics-core.mjs?v=quiz-overview-20261106';
 
-export function openModelRequest({name,size,layout,packageName,reason,opener}){
+export function openModelRequest({name,size,layout,packageName,reason,opener,campaignOffer}){
   journeyFormOpened(opener,reason??'quote');
   const dialog = document.createElement('dialog');
   dialog.className = 'hh-bath-dialog';
@@ -41,6 +41,7 @@ export function openModelRequest({name,size,layout,packageName,reason,opener}){
     dialog.querySelector('h2 + p').textContent=action.intro;
     submit.textContent=action.button;
   }
+  if(campaignOffer?.phase==='active'){if(!action)dialog.querySelector('h2 + p').textContent='Пришлём варианты планировок и комплектаций с ценами.';dialog.querySelector('h2 + p').textContent+=' Чёрная пятница: скидка '+new Intl.NumberFormat('ru-RU').format(campaignOffer.discountRub)+' ₽ при заключении договора 11–21 ноября 2026.';}
   attachPhoneMask(form.elements.phone);
   form.addEventListener('input',()=>{requestId=undefined;});
   close.addEventListener('click',()=>dialog.close());
@@ -58,11 +59,12 @@ export function openModelRequest({name,size,layout,packageName,reason,opener}){
       const payload = buildCallback({phone:form.elements.phone.value},requestId ??= crypto.randomUUID());
       payload.purpose = 'quiz_catalog';
       payload.contactChannel = form.elements.channel.value;
-      payload.comment = 'Источник: карточка модели. На экране показано: '+selection+'. '+(layout ? 'Пример планировки: '+layout.toUpperCase()+'. ' : '')+'Прислать расширенные планировки, комплектации и цены. Скидка 20 000 ₽ при выборе «Делюкса».';
+      payload.comment = 'Источник: карточка модели. На экране показано: '+selection+'. '+(layout ? 'Пример планировки: '+layout.toUpperCase()+'. ' : '')+'Прислать расширенные планировки, комплектации и цены. '+(campaignOffer?.phase==='active'?'Чёрная пятница: цена по прайсу '+campaignOffer.reference+' ₽; скидка '+campaignOffer.discountRub+' ₽; цена модели от '+campaignOffer.priceRub+' ₽; договор 11–21.11.2026.':'Скидка 20 000 ₽ при выборе «Делюкса».');
       if(reason==='production')payload.comment+=' Пожелание: онлайн-показ производства.';
       if(reason==='foundation')payload.comment+=' Пожелание: консультация по основанию и установке.';
       if(reason==='quote')payload.comment+=' Пожелание: расчёт доставки и установки.';
       if(reason==='layout_quote')payload.comment+=' Пожелание: точный расчёт выбранной планировки и комплектации, доставки и установки.';
+      payload.comment=payload.comment.slice(0,500);
       payload.journeyContext = {purpose:'selection_help',pagePath:location.pathname};
       const attribution = analytics?.attribution?.();
       if(attribution) payload.attribution = attribution;

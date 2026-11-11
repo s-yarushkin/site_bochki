@@ -2,6 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {calculateSelection} from '../web/r85-pricing.mjs';
+import {CAMPAIGN} from '../web/campaigns/blackfriday.mjs';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const contract = JSON.parse(read('./fixtures/pricing-parity-2026-10-31.json'));
@@ -68,11 +69,18 @@ test('20 structured-data offers on model pages match approved Comfort prices',()
     for(const row of expected)assert.equal(offers.get('dp-'+model+'-'+row.size),row.comfortRub,model+':'+row.size+' JSON-LD');
   }
 });
-test('Four home model cards and 15 compare-page offers match approved Comfort prices',()=>{
+test('Four home model entries retain approved base prices; 15 comparison offers match them',()=>{
   const home=read('../web/index.html');
   const cards=[...home.matchAll(/<div class="model-heading"><h3>([^<]+)<\/h3><p>Комфорт · от <strong>([\d\s\u00a0]+) ₽<\/strong>/g)];
   const names={Квадро:'kvadro',Викинг:'viking',Парус:'parus','Квадро Хаус':'kvadro-house'};
-  assert.equal(cards.length,4);
+  if(home.includes('data-model-card=')){
+    const models=[...home.matchAll(/data-model-card="([a-z-]+)"/g)].map(m=>m[1]);
+    assert.deepEqual(models.sort(),Object.keys(slugs).sort());
+    const sources=CAMPAIGN.rows.filter(r=>r.package==='comfort');
+    assert.equal(sources.length,20);
+    for(const row of sources)assert.equal(row.source,baseByKey.get(row.model+':'+row.size),'Campaign must derive from the approved base');
+    assert.match(home,/\/choice\/app\.mjs/);
+  }else assert.equal(cards.length,4);
   for(const [,label,visibleRub] of cards){
     const model=names[label];
     const minimum=Math.min(...contract.comfortPrices.filter(x=>x.model===model).map(x=>x.comfortRub));

@@ -1,3 +1,4 @@
+import {campaignChoiceQuote,campaignPhase,syncCampaignClock} from '/campaigns/blackfriday.mjs';
 import {HERO_MODELS} from '../choice/home-hero/catalog.mjs';
 import {roofPoints} from '../choice/home-hero/roof-points.mjs';
 import {createLayoutPanel} from '../choice/home-hero/layout-panel.mjs?v=album-22-20261105';
@@ -12,7 +13,7 @@ const $=selector=>document.querySelector(selector);
 const money=new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0});
 const descriptions={kvadro:'Парная и комната отдыха в компактном корпусе шириной 2,1 м.',parus:'Прямые стены и ширина 2,4 м для удобной расстановки полков и мебели.',viking:'Выразительный арочный фасад и пространство для своего банного вечера.', 'kvadro-house':'Отдельные помещения для парения, душа и отдыха с близкими.'};
 function node(tag,text,className){const el=document.createElement(tag);if(text)el.textContent=text;if(className)el.className=className;return el;}
-async function json(url){const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error('LOAD');return r.json();}
+async function json(url){const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error('LOAD');syncCampaignClock(r);return r.json();}
 
 const [book,registry,photos]=await Promise.all([json('/choice/catalog-pricebook.json'),json('/home-hero/layouts/index.json?album=22-20261105'),json('/choice/photos.json')]);
 const plans=registry.plans;
@@ -46,7 +47,8 @@ for(const [key,label] of Object.entries(PACKAGE_NAMES)){
  const radio=document.createElement('input');radio.type='radio';radio.name='package';radio.value=key;
  const heading=node('h3','Комплектация «'+label+'»');
  const price=node('strong',null,'choice-package-price');price.dataset.packagePrice=key;
- selection.append(radio,heading,price,node('p',PACKAGE_COPY[key],'choice-package-description'));
+ const campaign=node('div',null,'choice-campaign');campaign.dataset.campaign=key;
+ selection.append(radio,heading,campaign,price,node('p',PACKAGE_COPY[key],'choice-package-description'));
  card.append(selection);
  if(key==='deluxe')card.append($('[data-compare]'));
  $('[data-package-cards]').append(card);radio.addEventListener('change',()=>choose({package:key}));
@@ -65,6 +67,12 @@ function render(previous){
  }
  for(const button of document.querySelectorAll('[data-size-picker]'))button.setAttribute('aria-pressed',String(button.dataset.sizePicker===state.size));
  for(const key of ['comfort','deluxe']){
+  const q=campaignChoiceQuote(book,{...state,package:key}),campaign=$('[data-campaign="'+key+'"]');campaign.replaceChildren();
+  if(q&&q.phase!=='ended'){
+   const badge=node('a',q.phase==='active'?'Чёрная пятница':'Чёрная пятница · с 11 ноября','choice-campaign-badge');badge.href='/blackfriday/?model='+state.model+'&size='+state.size+'&package='+key;campaign.append(badge);
+   if(q.phase==='active'){campaign.append(node('del','от '+money.format(q.reference),'choice-campaign-reference'),node('span','Скидка '+money.format(q.discountRub),'choice-campaign-saving'));}
+   campaign.append(node('small','При заключении договора 11–21 ноября 2026.'));
+  }
   $('[data-package-price="'+key+'"]').textContent='от '+money.format(choicePrice(book,{...state,package:key}));
   $('input[name="package"][value="'+key+'"]').checked=state.package===key;
   $('[data-package-card="'+key+'"]').classList.toggle('is-selected',state.package===key);
@@ -97,7 +105,7 @@ function revealPlanning(){
 }
 document.querySelectorAll('[data-model-card]').forEach(button=>button.addEventListener('click',()=>{choose({model:button.dataset.modelCard});}));
 window.addEventListener('popstate',()=>{const previous=state;state=choiceFromUrl(book,plans,location.href);render(previous);});
-function request(opener,reason='quote',plan){const selected=plan?{...state,model:plan.models.includes(state.model)?state.model:plan.models[0],size:plan.size,layout:plan.id}:state;openModelRequest({name:HERO_MODELS[selected.model].name,size:choiceSizeLabel(book,selected.model,selected.size),packageName:PACKAGE_NAMES[selected.package],layout:selected.layout||undefined,reason,opener});}
+function request(opener,reason='quote',plan){const selected=plan?{...state,model:plan.models.includes(state.model)?state.model:plan.models[0],size:plan.size,layout:plan.id}:state;openModelRequest({name:HERO_MODELS[selected.model].name,size:choiceSizeLabel(book,selected.model,selected.size),packageName:PACKAGE_NAMES[selected.package],layout:selected.layout||undefined,reason,opener,campaignOffer:campaignChoiceQuote(book,selected)});}
 $('[data-plan-request]').addEventListener('click',event=>request(event.currentTarget,'quote'));
 $('[data-production]')?.addEventListener('click',event=>request(event.currentTarget,'production'));
 $('[data-foundation]')?.addEventListener('click',event=>request(event.currentTarget,'foundation'));
@@ -117,3 +125,5 @@ document.querySelectorAll('[data-start-quiz]').forEach(button=>button.addEventLi
 }));
 const menu=$('#choice-menu'),menuButton=$('[aria-controls="choice-menu"]');menuButton.addEventListener('click',()=>{menu.hidden=!menu.hidden;menuButton.setAttribute('aria-expanded',String(!menu.hidden));});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.hidden=true;menuButton.setAttribute('aria-expanded','false');}));
 history.replaceState(null,'',choiceUrl(location.href,state));render();
+
+let campaignWindow=campaignPhase();setInterval(()=>{const next=campaignPhase();if(next!==campaignWindow){campaignWindow=next;render(state);}},15000);
