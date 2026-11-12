@@ -1,17 +1,26 @@
 """One password prompt; publication is detached and reconnects to its persisted receipt."""
-import base64,getpass,json,os,re,shlex,subprocess,time
+import base64,getpass,hashlib,json,os,re,shlex,subprocess,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'.local/crm-speed-20261111'
 ssh=['ssh','-T','-o','BatchMode=yes','-o','ConnectTimeout=12','-o','IPQoS=none','-o','ServerAliveInterval=5','-o','ServerAliveCountMax=2','dachapar']
 def state(status,**values):(OUT/'terminal-state.json').write_bytes(json.dumps({'status':status,**values},ensure_ascii=False,indent=2).encode())
 def call(code):
  command='exec(__import__("base64").b64decode("'+base64.b64encode(code.encode()).decode()+'"))'
- r=subprocess.run(ssh+['python3 -c '+shlex.quote(command)],stdin=subprocess.DEVNULL,capture_output=True,check=True,timeout=35)
- return json.loads(r.stdout.strip().splitlines()[-1])
+ for attempt in range(4):
+  try:
+   r=subprocess.run(ssh+['python3 -c '+shlex.quote(command)],stdin=subprocess.DEVNULL,capture_output=True,timeout=35)
+   if r.returncode:
+    if r.returncode==255:raise ConnectionError('SSH temporarily unavailable')
+    raise RuntimeError('Сервер не подтвердил проверку пакета. Изменения не запущены.')
+   return json.loads(r.stdout.strip().splitlines()[-1])
+  except (ConnectionError,subprocess.TimeoutExpired,OSError):
+   if attempt==3:raise RuntimeError('Нет устойчивого SSH-соединения. Публикация не запущена; пароль не сохранён.')
+   print('Связь временно недоступна. Повторное подключение…',flush=True);time.sleep(2)
 password=None
 try:
  print('ДачаПар — кабинет, акция и ускорение\n',flush=True)
  c=json.loads((OUT/'deployment.json').read_text('utf8'));release=c['release'];assert re.fullmatch(r'WORKSPACE-[a-f0-9]{12}',release)
+ if hashlib.sha256((OUT/'payload.tar.gz').read_bytes()).hexdigest()!=c['payload_sha256']:raise RuntimeError('Локальный пакет требует повторной подготовки; публикация не начата.')
  proof=json.loads((OUT/'preflight.json').read_text('utf8'));assert proof.get('ok') and proof['release']==release
  folder=proof['folder'];assert folder=='/tmp/dachapar-workspace-'+release.removeprefix('WORKSPACE-')
  guard="from pathlib import Path;import hashlib,json;p=Path("+repr(folder)+");c=json.loads((p/'deployment.json').read_text());assert c['release']=="+repr(release)+" and c['payload_sha256']=="+repr(c['payload_sha256'])+";assert hashlib.sha256((p/'payload.tar.gz').read_bytes()).hexdigest()==c['payload_sha256'];assert all(hashlib.sha256((p/n).read_bytes()).hexdigest()==v for n,v in c['support_files'].items());r=json.loads((p/'preflight-result.json').read_text());assert r.get('ok');print(json.dumps(r))"
