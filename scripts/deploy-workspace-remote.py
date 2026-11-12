@@ -121,7 +121,10 @@ def main():
   dest={k:Path(temp)/k for k in ['web','api']}
   for k,source in [('web',oldweb),('api',oldapi)]:shutil.copytree(source,dest[k])
   stage(dest,c)
- if args.check:print(json.dumps({'ok':True,'preflight':'PASS','files':len(c['overlay']),'aliases':len(c['aliases']),'database_touched':False,'caddy_syntax':'PASS'}));return
+ if args.check:
+  proof={'ok':True,'release':release,'preflight':'PASS','files':len(c['overlay']),'aliases':len(c['aliases']),'database_touched':False,'caddy_syntax':'PASS'}
+  pending=HERE/'preflight-result.pending';pending.write_text(json.dumps(proof)+'\n');pending.chmod(0o600);os.replace(pending,HERE/'preflight-result.json')
+  print(json.dumps(proof));return
  if os.geteuid()!=0:raise RuntimeError('sudo required')
  with open('/run/lock/dachapar-crm-deploy.lock','w') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);baseline(c)
