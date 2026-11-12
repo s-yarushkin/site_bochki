@@ -2,7 +2,10 @@
 import re
 MARKER='# dachapar-content-addressed-assets-v1'
 def patch_config(text):
- if MARKER in text:raise RuntimeError('Fast cache marker already installed')
+ if MARKER in text:
+  required=['@dachaparContentAddressed {','header @dachaparContentAddressed Cache-Control "public, max-age=31536000, immutable"','encode @dachaparGltf zstd gzip {','not path /api/* /go/* /crm/* /manager.html /assets/fast/* /assets/build/*']
+  if text.count(MARKER)!=1 or not all(s in text for s in required):raise RuntimeError('Existing fast-cache policy differs; review configuration')
+  return text
  root=r'(?m)^([ \t]*)root \* /srv/sites/dachapar-preview/current[ \t]*\n'
  found=list(re.finditer(root,text))
  if len(found)!=1 or 'header Cache-Control "no-store"' not in text:raise RuntimeError('Unexpected DachaPar host structure')

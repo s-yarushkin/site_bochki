@@ -1,6 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtempSync,rmSync} from 'node:fs';
+import {mkdtempSync,rmSync,writeFileSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import {tmpdir} from 'node:os';
 import {join,resolve,dirname,basename} from 'node:path';
 import {randomUUID} from 'node:crypto';
@@ -73,4 +75,14 @@ test('new HTTP routes enforce session, Origin, CSRF and edit permission; conflic
   const role=crm.createRole(owner.id,{key:'custom_reader',name:'Reader',permissions:['view_all_leads']});crm.editUser(owner.id,manager.id,{name:manager.name,roles:[role.key],active:true});
   assert.equal((await call(path+'/activity',{method:'POST',headers,body:JSON.stringify({...note,clientId:randomUUID()})})).status,401);
  }finally{await new Promise(r=>server.close(r));}
+}));
+test('release migration renames existing staff without revoking sessions or changing encrypted MFA and submitted leads',()=>fixture(({file,db,store,crm,owner,manager,create})=>{
+ const {user:third}=crm.createUser(owner.id,{phone:'+79990000003',name:'Третий сотрудник',roles:['manager']});
+ db.exec('CREATE TABLE staff_mfa(user_id TEXT PRIMARY KEY,enabled INTEGER,secret_cipher TEXT,generation INTEGER,last_counter INTEGER,enabled_at TEXT)');
+ db.prepare('INSERT INTO staff_mfa VALUES(?,1,?,3,123,?)').run(manager.id,'ENCRYPTED_SYNTHETIC_TEST_VALUE','2026-11-01T00:00:00Z');
+ const session=crm.createSession(manager.id),lead=create(),original=store.get(lead.id).detail,config=join(dirname(file),'migration-fixture.json');
+ writeFileSync(config,JSON.stringify({staff_names:[{phone:accounts[0].phone,name:'Сергей Ярушкин'},{phone:accounts[1].phone,name:'Юрий Ярушкин'},{phone:third.phone_e164,name:'Михаил Хапов'}]}));
+ const result=spawnSync(process.execPath,[fileURLToPath(new URL('../scripts/migrate-workspace.mjs',import.meta.url)),new URL('../api/server/lead-store.mjs',import.meta.url).href,file,config],{encoding:'utf8'});
+ assert.equal(result.status,0,result.stderr);const proof=JSON.parse(result.stdout);assert.equal(proof.renamed,1);assert.equal(proof.credentials_preserved,true);assert.equal(proof.mfa_preserved,true);
+ assert.equal(crm.session(session.token).id,manager.id);assert.equal(crm.user(third.id).name,'Михаил Хапов');assert.equal(db.prepare('SELECT secret_cipher FROM staff_mfa').get().secret_cipher,'ENCRYPTED_SYNTHETIC_TEST_VALUE');assert.deepEqual(store.get(lead.id).detail,original);
 }));
