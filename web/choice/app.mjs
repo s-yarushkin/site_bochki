@@ -1,4 +1,7 @@
 import {campaignChoiceQuote,campaignPhase,syncCampaignClock} from '/campaigns/blackfriday.mjs';
+import {mountBlackFridayNotice} from '/campaigns/blackfriday-notice.mjs';
+import book from './display-prices.json' with {type:'json'};
+import {fastAsset} from '/performance/media.mjs';
 import {HERO_MODELS} from '../choice/home-hero/catalog.mjs';
 import {roofPoints} from '../choice/home-hero/roof-points.mjs';
 import {createLayoutPanel} from '../choice/home-hero/layout-panel.mjs?v=album-22-20261105';
@@ -15,28 +18,29 @@ const descriptions={kvadro:'Парная и комната отдыха в ко�
 function node(tag,text,className){const el=document.createElement(tag);if(text)el.textContent=text;if(className)el.className=className;return el;}
 async function json(url){const r=await fetch(url,{signal:AbortSignal.timeout(12000)});if(!r.ok)throw Error('LOAD');syncCampaignClock(r);return r.json();}
 
-const [book,registry,photos]=await Promise.all([json('/choice/catalog-pricebook.json'),json('/home-hero/layouts/index.json?album=22-20261105'),json('/choice/photos.json')]);
+const [registry,photos]=await Promise.all([json('/home-hero/layouts/index.json?album=22-20261105'),json('/choice/photos.json')]);
 const plans=registry.plans;
 let state=choiceFromUrl(book,plans,location.href),imageTicket=0;
 const setPlan=createLayoutPanel($('[data-plan-panel]'),{onRequest:(opener,plan)=>request(opener,'layout_quote',plan)});
 const setPhotos=createPhotoGallery($('[data-gallery]'));
 connectHomeContinuation();
+mountBlackFridayNotice($('[data-package-cards]'));
 
 function setHero(model){
  const info=HERO_MODELS[model],ticket=++imageTicket,world=$('#hh-world'),depth=$('#hh-depth-image');
  $('[data-hero-name]').textContent=info.name;
  const ready=()=>{
   if(ticket!==imageTicket)return;
-  world.srcset=`/choice/assets/${info.asset}-640.webp 640w,/choice/assets/${info.asset}-1280.webp 1280w,/choice/assets/${info.asset}-1920.webp 1920w`;
-  world.src=`/choice/assets/${info.asset}-1920.webp`;world.alt=info.name+' в вечернем саду';world.hidden=false;world.classList.remove('is-loading');
+  world.srcset=[640,1280,1920].map(w=>fastAsset(`/choice/assets/${info.asset}-${w}.webp`)+` ${w}w`).join(',');
+  world.src=fastAsset(`/choice/assets/${info.asset}-1920.webp`);world.alt=info.name+' в вечернем саду';world.hidden=false;world.classList.remove('is-loading');
   $('#hh-roof-points').setAttribute('points',roofPoints[model]);
   if(matchMedia('(min-width:1101px)').matches)depth.setAttribute('href',world.currentSrc||world.src);
  };
- if(world.src.endsWith('/'+info.asset+'-1920.webp')&&world.complete){ready();return;}
+ if(world.src.endsWith(fastAsset(`/choice/assets/${info.asset}-1920.webp`))&&world.complete){ready();return;}
  world.classList.add('is-loading');
- const image=new Image();image.srcset=`/choice/assets/${info.asset}-640.webp 640w,/choice/assets/${info.asset}-1280.webp 1280w,/choice/assets/${info.asset}-1920.webp 1920w`;image.sizes='100vw';image.onload=ready;
+ const image=new Image();image.srcset=[640,1280,1920].map(w=>fastAsset(`/choice/assets/${info.asset}-${w}.webp`)+` ${w}w`).join(',');image.sizes='100vw';image.onload=ready;
  image.onerror=()=>{if(ticket===imageTicket){world.hidden=true;depth.removeAttribute('href');}};
- image.src=`/choice/assets/${info.asset}-1920.webp`;
+ image.src=fastAsset(`/choice/assets/${info.asset}-1920.webp`);
 }
 function syncDepth(){const image=$('#hh-world'),depth=$('#hh-depth-image');if(matchMedia('(min-width:1101px)').matches&&!image.hidden)depth.setAttribute('href',image.currentSrc||image.src);else depth.removeAttribute('href');}
 $('#hh-world').addEventListener('load',syncDepth);matchMedia('(min-width:1101px)').addEventListener('change',syncDepth);

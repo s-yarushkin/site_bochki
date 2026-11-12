@@ -1,7 +1,9 @@
 * text=auto eol=lf
 # Release guards compare the served bytes, including existing line endings.
-web/** -text
-api/** -text
+web/** -text whitespace=cr-at-eol
+api/** -text whitespace=cr-at-eol
+web/home-hero/layouts/vendor/** -text linguist-vendored=true whitespace=cr-at-eol,-blank-at-eol,-space-before-tab
+web/assets/build/** -text linguist-generated=true whitespace=cr-at-eol,-blank-at-eol
 r101/vendor/** -text whitespace=cr-at-eol
 *.webp binary
 *.woff2 binary

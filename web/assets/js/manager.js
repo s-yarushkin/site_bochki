@@ -1,9 +1,10 @@
 import {mountManagerExtensions} from '../../crm/manager-extension.mjs?v=entries-20261107';
 import {mountManagerMfa} from '../../crm/manager-mfa.mjs';
 import {mountAggregateReport} from '../../crm/aggregate-report.mjs';
+import {mountLeadWorkspace} from '../../crm/lead-workspace.mjs?v=20261111';
 const $=selector=>document.querySelector(selector);
 const API=new URL('api/manager/',document.baseURI).toString();
-const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,detailTicket:0,csrf:null,user:null};
+const state={offset:0,limit:30,selected:null,busy:false,sessionEpoch:0,detailTicket:0,listTicket:0,csrf:null,user:null};
 const statuses={
   new:'Новая',in_progress:'В работе',awaiting_customer:'Ждём клиента',
   quote_sent:'КП отправлено',won:'Продано',lost:'Закрыто без продажи'
@@ -39,6 +40,7 @@ async function api(path='',options={}){
   return body;
 }
 function clearLeadView(){
+  workspace.clear();
   state.selected=null;
   state.offset=0;
   state.busy=false;
@@ -66,12 +68,14 @@ function showDashboard(phone,session){
   state.sessionEpoch++;
   clearLeadView();
   $('#loginView').hidden=true;$('#dashboard').hidden=false;$('#logoutButton').hidden=false;
-  $('#activeManager').textContent=phone||'';
+  $('#activeManager').textContent=state.user?.name||phone||'';
   $('#activeManager').hidden=!phone;
   extensions.session(session);
+  workspace.session(session);
 }
 function fail(error,target){
   if(error.message==='LOGIN_REQUIRED'){showLogin('Сеанс завершён. Войдите снова.');return;}
+  if(['LEAD_CONFLICT','INVALID_ASSIGNEE','INVALID_DATE','INVALID_FILTER'].includes(error.message)){if(target)target.textContent=workspace.errorText(error);return;}
   if(target)target.textContent='Ошибка: '+({
     RATE_LIMITED:'слишком много попыток, подождите 15 минут',
     REQUEST_FAILED:'не удалось выполнить запрос',
@@ -95,12 +99,14 @@ function renderList(data){
     b.setAttribute('aria-current',String(state.selected===lead.id));
     const top=el('div','lead-top');
     top.append(el('span','lead-id',lead.id),statusPill(lead.status));
-    b.append(top,el('div','lead-main',detail.name||'Без имени'),
+    b.append(top,el('div','lead-main',(lead.customer?.name??detail.name)||'Без имени'),
       el('div','lead-sub',detail.phone+' · '+(channels[detail.contactChannel]||'Звонок')),
       el('div','lead-sub',detail.estimate?
         detail.estimate.modelName+' · '+displaySize(detail.estimate.sizeId)+' · '+money(detail.estimate.total):
-        'Заказ обратного звонка'),
-      el('div','lead-sub',date(lead.createdAt)+' · '+(lead.assignee||'Менеджер не назначен')));
+        lead.metadata?.model?({kvadro:'Квадро',parus:'Парус',viking:'Викинг','kvadro-house':'Квадро Хаус'}[lead.metadata.model]+(lead.metadata.size?' · '+displaySize(lead.metadata.size):'')+(lead.metadata.modelSource==='default'?' · на экране по умолчанию':'')):'Обращение с сайта'),
+      el('div','lead-sub',date(lead.createdAt)+' · '+(lead.assigneeName||lead.assignee||'Менеджер не назначен')));
+    if(lead.customer?.settlement||lead.customer?.region)b.append(el('div','lead-sub',[lead.customer.region,lead.customer.settlement].filter(Boolean).join(' · ')));
+    if(lead.followUpAt)b.append(el('div',Date.parse(lead.followUpAt)<Date.now()&&!['won','lost'].includes(lead.status)?'lead-followup is-overdue':'lead-followup','Следующий контакт: '+date(lead.followUpAt)));
     if(lead.notificationStatus==='failed')b.append(el('div','error','MAX не получил уведомление'));
     if(lead.classification==='test')b.append(el('div','muted','Тестовая · не входит в коммерческие показатели'));
     b.addEventListener('click',()=>loadDetail(lead.id));
@@ -112,16 +118,16 @@ function renderList(data){
   $('#nextButton').disabled=data.offset+data.leads.length>=data.total;
 }
 async function loadList(){
-  if(state.busy)return;
   state.busy=true;
   const epoch=state.sessionEpoch;
+  const ticket=++state.listTicket;
   try{
     const query=new URLSearchParams({
-      limit:String(state.limit),offset:String(state.offset),
+      ...workspace.filters(),limit:String(state.limit),offset:String(state.offset),
       status:$('#statusFilter').value,q:$('#leadSearch').value.trim(),classification:$('#classificationFilter').value
     });
     const data=await api('leads?'+query);
-    if(epoch===state.sessionEpoch)renderList(data);
+    if(epoch===state.sessionEpoch&&ticket===state.listTicket)renderList(data);
   }catch(error){if(epoch===state.sessionEpoch)fail(error,$('#listSummary'));}
   finally{if(epoch===state.sessionEpoch)state.busy=false;}
 }
@@ -129,16 +135,17 @@ function renderDetail(record){
   $('#noSelection').hidden=true;$('#leadDetail').hidden=false;
   $('#leadId').textContent=record.id;
   const lead=record.detail;
-  $('#leadName').textContent=lead.name||'Без имени';
+  $('#leadName').textContent=(record.customer?.name??lead.name)||'Без имени';
   $('#leadCreated').textContent='Получена '+date(record.createdAt);
   $('#leadStatus').replaceWith(statusPill(record.status));
   const statusNode=$('.detail-title .status-pill');statusNode.id='leadStatus';
-  const dl=$('#contactInfo');dl.replaceChildren();
-  pair(dl,'Имя',lead.name);
+  let dl=$('#contactInfo');dl.replaceChildren();
   pair(dl,'Телефон',lead.phone);
   pair(dl,'Связаться',channels[lead.contactChannel]||'Звонок');
-  pair(dl,'Тип заявки',record.flow==='quote'?'Получить расчёт':'Перезвоните мне');
   pair(dl,'Сообщение в MAX',record.notificationStatus==='delivered'?'Доставлено':record.notificationStatus==='failed'?'Не доставлено; заявка сохранена':'Ожидается отправка');
+  dl=$('#originalContactInfo');dl.replaceChildren();
+  pair(dl,'Имя в первичной заявке',lead.name);
+  pair(dl,'Тип заявки',record.flow==='quote'?'Получить расчёт':'Обращение с сайта');
   pair(dl,'Комментарий',lead.comment);
   const intent=lead.intentContext;
   const originNames={model_offer:'Карточка модели',plan_request:'Конкретная планировка',site_capture:'Общая форма',header_callback:'Кнопка в шапке',footer_capture:'Низ сайта',capture_bar:'Закреплённая форма',quiz:'Квиз',calculator:'Расчёт',production:'Производство',foundation:'Основание',delivery:'Доставка',unknown:'Не подтверждено'};
@@ -215,6 +222,7 @@ function renderDetail(record){
   }
   for(const row of document.querySelectorAll('.lead-item'))row.setAttribute('aria-current',String(row.dataset.id===record.id));
   extensions.lead(record);
+  workspace.render(record);
   if(window.matchMedia('(max-width:690px)').matches){
     $('.detail-pane').scrollIntoView({behavior:'smooth',block:'start'});
   }
@@ -250,9 +258,9 @@ async function save(event){
   const button=$('#saveButton');button.disabled=true;
   $('#saveStatus').textContent='Сохраняем…';
   try{
-    const payload={status:$('#editStatus').value,assignee:$('#editAssignee').value,managerNote:$('#editNote').value};
+    const payload={status:$('#editStatus').value,managerNote:$('#editNote').value,...workspace.payload()};
     const response=await api('leads/'+encodeURIComponent(selectedId),{method:'PATCH',body:JSON.stringify(payload)});
-    if(epoch!==state.sessionEpoch)return;
+    if(epoch!==state.sessionEpoch||state.selected!==selectedId)return;
     renderDetail(response.lead);
     $('#saveStatus').textContent='Изменения сохранены.';
     await loadList();
@@ -260,7 +268,8 @@ async function save(event){
   finally{button.disabled=false;}
 }
 let sharedLeadOpened=false;
-async function loadInitial(){await loadList();const id=new URL(location.href).searchParams.get('lead');if(!sharedLeadOpened&&/^GB-\d{8}-[A-F0-9]{8}$/.test(id||'')){sharedLeadOpened=true;await loadDetail(id);}}
+async function loadInitial(){await workspace.ready();await loadList();const id=new URL(location.href).searchParams.get('lead');if(!sharedLeadOpened&&/^GB-\d{8}-[A-F0-9]{8}$/.test(id||'')){sharedLeadOpened=true;await loadDetail(id);}}
+const workspace=mountLeadWorkspace({api,refreshList:async()=>{state.offset=0;await loadList();},openLead:loadDetail});
 const extensions=mountManagerExtensions({api,refresh:loadInitial,openLead:loadDetail});
 const mfa=mountManagerMfa({request:api,back:()=>showLogin(),complete:async session=>{showDashboard(session.phone,session);if(!extensions.needsPasswordChange())await loadInitial();}});
 $('#loginForm').addEventListener('submit',login);

@@ -79,7 +79,7 @@ test('Four home model entries retain approved base prices; 15 comparison offers 
     const sources=CAMPAIGN.rows.filter(r=>r.package==='comfort');
     assert.equal(sources.length,20);
     for(const row of sources)assert.equal(row.source,baseByKey.get(row.model+':'+row.size),'Campaign must derive from the approved base');
-    assert.match(home,/\/choice\/app\.mjs/);
+    assert.match(home,/\/(?:choice\/app\.mjs|assets\/build\/home-entry-[A-Z0-9]+\.mjs)/);
   }else assert.equal(cards.length,4);
   for(const [,label,visibleRub] of cards){
     const model=names[label];

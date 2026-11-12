@@ -8,9 +8,10 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' blob:; font-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'">
 <title>Заявки — Дача Пар · Менеджер</title>
 <link rel="stylesheet" href="assets/css/manager.css">
-<link rel="stylesheet" href="crm/manager-extension.css?v=20261105">
+<link rel="stylesheet" href="crm/manager-extension.css?v=entries-20261107">
 <link rel="stylesheet" href="crm/manager-mfa.css?v=20261106">
-<script type="module" src="assets/js/manager.js?v=mfa-20261106"></script>
+<link rel="stylesheet" href="crm/lead-workspace.css?v=20261111">
+<script type="module" src="assets/js/manager.js?v=workspace-20261111"></script>
 </head>
 <body>
 <header class="topbar">
@@ -99,7 +100,7 @@
                 <option value="won">Продано</option>
                 <option value="lost">Закрыто без продажи</option>
               </select></label>
-              <label>Ответственный менеджер<input id="editAssignee" maxlength="100" placeholder="Например, Иван" autocomplete="off"></label>
+              <label>Ответственный менеджер<select id="editAssignee"><option value="">Не назначен</option></select></label>
               <label>Заметки менеджера<textarea id="editNote" rows="4" maxlength="2000" placeholder="Когда связались, о чём договорились, следующий шаг"></textarea></label>
               <button type="submit" id="saveButton" class="btn primary">Сохранить изменения</button>
               <p id="saveStatus" role="status" class="muted fine"></p>

@@ -9,6 +9,7 @@ export async function crmJson(req,limit=12000){
  if(!data||typeof data!=='object'||Array.isArray(data))throw Error('INVALID_JSON');return data;
 }
 export function createCrmManagerApi({crm,store,auth,origin,insights=null,mfa=null,aggregate=null}){
+ const leadDetail=id=>({...store.workspace.decorate(store.detail(id)),...crm.classification(id),classification_history:crm.classificationHistory(id),activity:store.workspace.activity(id),...(insights?{attribution:insights.leadAttribution(id)}:{})});
  const full=found=>({ok:true,phone:found.user.phone_e164,role:found.user.roles.includes('owner_admin')?'owner_admin':'manager',user:found.user,csrf:found.csrf,...(mfa?{security:found.security,mfa:true}:{}),...(found.recoveryCodes?{recoveryCodes:found.recoveryCodes}:{})});
  const ip=req=>String(req.headers['x-forwarded-for']??'').split(',').at(-1)?.trim()||req.socket.remoteAddress;
  const factorResult=(res,found)=>{if(found.ok)return true;crmAnswer(res,found.limited?429:found.expired?401:400,{ok:false,code:found.limited?'RATE_LIMITED':found.expired?'CHALLENGE_EXPIRED':'INVALID_SECOND_FACTOR'});return false;};
@@ -66,19 +67,24 @@ export function createCrmManagerApi({crm,store,auth,origin,insights=null,mfa=nul
    const role=/^\/api\/manager\/roles\/([a-f\d-]{36})$/.exec(path);
    if(role&&req.method==='PATCH'){crmAnswer(res,200,{ok:true,role:crm.editRole(user.id,role[1],await crmJson(req))});return true;}
    if(path==='/api/manager/audit'&&req.method==='GET'){crmAnswer(res,200,{ok:true,events:crm.audit(user.id)});return true;}
+   if(path==='/api/manager/lead-options'&&req.method==='GET'){
+    crm.requirePermission(user.id,'view_all_leads');crmAnswer(res,200,{ok:true,...store.workspace.options()});return true;
+   }
    if(path==='/api/manager/leads'&&req.method==='GET'){
     crm.requirePermission(user.id,'view_all_leads');
-    const data=store.list({status:url.searchParams.get('status')??'all',q:url.searchParams.get('q')??'',classification:url.searchParams.get('classification')??'real',limit:Number(url.searchParams.get('limit')??30),offset:Number(url.searchParams.get('offset')??0)});
+    const data=store.workspace.list({...Object.fromEntries(url.searchParams),status:url.searchParams.get('status')||'all',q:url.searchParams.get('q')??'',classification:url.searchParams.get('classification')||'real',limit:Number(url.searchParams.get('limit')??30),offset:Number(url.searchParams.get('offset')??0)});
     crmAnswer(res,200,{ok:true,...data,leads:data.leads.map(lead=>({...lead,...crm.classification(lead.id)})),stats:store.stats()});return true;
    }
-   const lead=/^\/api\/manager\/leads\/(GB-\d{8}-[A-F0-9]{8})(?:\/(classification|timeline))?$/.exec(path);
+   const lead=/^\/api\/manager\/leads\/(GB-\d{8}-[A-F0-9]{8})(?:\/(classification|timeline|activity))?$/.exec(path);
    if(lead){
     crm.requirePermission(user.id,'view_all_leads');const id=lead[1];if(!store.get(id))throw Error('NOT_FOUND');
-    if(req.method==='GET'&&!lead[2]){crmAnswer(res,200,{ok:true,lead:{...store.detail(id),...crm.classification(id),classification_history:crm.classificationHistory(id),...(insights?{attribution:insights.leadAttribution(id)}:{})}});return true;}
+    if(req.method==='GET'&&!lead[2]){crmAnswer(res,200,{ok:true,lead:leadDetail(id)});return true;}
     if(req.method==='PATCH'&&!lead[2]){
      crm.requirePermission(user.id,'edit_leads');if(crm.classification(id).classification==='test')throw Error('TEST_LEAD_READ_ONLY');
-     const data=await crmJson(req),updated=store.update(id,{status:data.status,assignee:data.assignee,managerNote:data.managerNote},user.id);crmAnswer(res,200,{ok:true,lead:{...updated,...crm.classification(id),...(insights?{attribution:insights.leadAttribution(id)}:{})}});return true;
+     const data=await crmJson(req);crm.requirePermission(user.id,'edit_leads');store.workspace.update(id,data,user.id);crmAnswer(res,200,{ok:true,lead:leadDetail(id)});return true;
     }
+    if(lead[2]==='activity'&&req.method==='GET'){crmAnswer(res,200,{ok:true,activity:store.workspace.activity(id,{limit:Number(url.searchParams.get('limit')??50),offset:Number(url.searchParams.get('offset')??0)})});return true;}
+    if(lead[2]==='activity'&&req.method==='POST'){const data=await crmJson(req,24000);crm.requirePermission(user.id,'edit_leads');const result=store.workspace.append(id,data,user.id);crmAnswer(res,200,{ok:true,...result});return true;}
     if(req.method==='POST'&&lead[2]==='classification'){crmAnswer(res,200,{ok:true,...crm.classify(user.id,id,await crmJson(req))});return true;}
     if(req.method==='GET'&&lead[2]==='timeline'){crm.requirePermission(user.id,'view_visitor_timeline');crmAnswer(res,200,{ok:true,timeline:insights?insights.leadTimeline(id):[],limited:!insights});return true;}
    }
@@ -87,8 +93,8 @@ export function createCrmManagerApi({crm,store,auth,origin,insights=null,mfa=nul
    crmAnswer(res,404,{ok:false,code:'NOT_FOUND'});return true;
   }catch(error){
    const code=error.message,invalid=['INVALID_SECOND_FACTOR','MFA_ALREADY_ENABLED','INVALID_TEXT','INVALID_PHONE','INVALID_ROLES','INVALID_ACTIVE','INVALID_ROLE_KEY','INVALID_PERMISSIONS','INVALID_CLASSIFICATION','INVALID_STATUS','INVALID_PAGINATION','WEAK_MANAGER_PASSWORD','INVALID_JSON','BODY_TOO_LARGE','JSON_REQUIRED','TEXT_TOO_LONG','SYSTEM_ROLE_IMMUTABLE','LAST_OWNER_PROTECTED','TEST_LEAD_READ_ONLY','INVALID_CREDENTIALS'];
-   const status=code==='FORBIDDEN'?403:code==='NOT_FOUND'?404:invalid.includes(code)||['INVALID_SOURCE','INVALID_REPORT','INVALID_EVENTS','INVALID_DESTINATION'].includes(code)?400:String(error.code).startsWith('ERR_SQLITE')&&String(error.message).includes('UNIQUE')?409:500;
-   crmAnswer(res,status,{ok:false,code:status===500?'REQUEST_FAILED':status===409?'ALREADY_EXISTS':code});return true;
+   const status=code==='FORBIDDEN'?403:code==='NOT_FOUND'?404:['LEAD_CONFLICT','ACTIVITY_CONFLICT'].includes(code)?409:invalid.includes(code)||['INVALID_SOURCE','INVALID_REPORT','INVALID_EVENTS','INVALID_DESTINATION','INVALID_FILTER','INVALID_ASSIGNEE','INVALID_ACTIVITY','INVALID_DATE'].includes(code)?400:String(error.code).startsWith('ERR_SQLITE')&&String(error.message).includes('UNIQUE')?409:500;
+   crmAnswer(res,status,{ok:false,code:status===500?'REQUEST_FAILED':status===409&&!['LEAD_CONFLICT','ACTIVITY_CONFLICT'].includes(code)?'ALREADY_EXISTS':code});return true;
   }
  };
 }

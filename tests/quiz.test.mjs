@@ -77,8 +77,12 @@ test('small parties see standard compact bodies before larger House alternatives
 });
 test('quiz flow is wired into homepage without modifying protected pricebook',()=>{
  const home=readFileSync(new URL('../web/index.html',import.meta.url),'utf8');
- assert.match(home,/quiz\.css\?v=dpq-20261031/);
- assert.match(home,/quiz\.mjs\?v=dpq-20261031/);
+ const css=home.match(/href="(\/assets\/build\/home-[a-f0-9]+\.css)"/);
+ assert.ok(css,'The current home loads a versioned stylesheet');
+ assert.match(readFileSync(new URL('../web'+css[1],import.meta.url),'utf8'),/\.dp-quiz-action/);
+ assert.match(home,/src="\/assets\/build\/home-entry-[A-Z0-9]+\.mjs"/);
+ const boot=readFileSync(new URL('../web/performance/quiz-entry.mjs',import.meta.url),'utf8');
+ assert.match(boot,/import\('\/quiz\.mjs/);assert.match(boot,/requestIdleCallback/);assert.match(boot,/pointerdown/);
  assert.equal(quiz.priceRules.assertComfortPriceFromExistingPricebook,true);
  assert.ok(quiz.plans.every(p=>!Object.hasOwn(p,'priceRub')));
 });
@@ -101,7 +105,7 @@ test('customer-facing quiz text has no internal pricing or development language'
    assert.equal(ui.includes(phrase),false,'Internal commentary visible in quiz: '+phrase);
    assert.equal(engine.includes(phrase),false,'Internal commentary visible in guest messaging: '+phrase);
  }
- assert.match(ui,/Куда прислать ваши планировки\?/);
+ assert.match(ui,/Куда прислать планировки, комплектации и цены\?/);
  assert.match(ui,/Выберите мессенджер/);
  assert.match(ui,/name="channel"/);
  for(const channel of ['max','whatsapp','telegram'])assert.ok(ui.includes("['"+channel+"',"),'Missing messenger '+channel);
@@ -122,19 +126,14 @@ test('model-only results cover all answers with priced unique models and no imag
  }
 });
 
-test('invitation appears earlier but never auto-opens a full-screen quiz',()=>{
+test('current invitation retains its idle delay, dismissal and explicit full quiz launch',()=>{
  const ui=readFileSync(new URL('../web/quiz.mjs',import.meta.url),'utf8');
- assert.match(ui,/const inviteDelayMs=10000,inviteScrollFraction=0\.35;/);
- assert.match(ui,/Date\.now\(\)-startedAt>=inviteDelayMs/);
- assert.match(ui,/scrollY\/height>=inviteScrollFraction/);
- assert.match(ui,/window\.setTimeout\(maybeInvite,inviteDelayMs\+500\)/);
- assert.match(ui,/Date\.now\(\)-startedAt>15000/,'Desktop exit signal remains delayed');
+ assert.match(ui,/const modelsIdleMs=18000;/);
+ assert.match(ui,/setTimeout\(\(\)=>\{modelsIdleTimer=null;maybeInvite\('models-idle'\)\},modelsIdleMs\)/);
+ assert.match(ui,/if\(reason!=='models-idle'&&reason!=='your-bath'\)return false/);
  assert.match(ui,/localStorage\.setItem\(hiddenKey,String\(Date\.now\(\)\+7\*86400000\)\)/);
- assert.match(ui,/invite\.hidden=false/);
+ assert.match(ui,/sessionStorage\.setItem\(inviteShownSessionKey,'1'\)/);
  assert.match(ui,/dialog\.showModal\(\)/);
- const builder=readFileSync(new URL('../r107/build.py',import.meta.url),'utf8');
- assert.match(builder,/r107-invite35/,'New preview must invalidate cached R106 script');
- assert.match(builder,/R107-PREVIEW/);
- const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('function launch('));
- assert.doesNotMatch(trigger,/showModal\(/,'Automated invitation must not open a blocking modal');
+ const trigger=ui.slice(ui.indexOf('const maybeInvite='),ui.indexOf('const armModelsIdle='));
+ assert.doesNotMatch(trigger,/dialog\.showModal\(/,'Only an explicit launch may open the full questionnaire');
 });

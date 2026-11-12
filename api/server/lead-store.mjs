@@ -2,6 +2,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {randomBytes} from 'node:crypto';
 import {mkdirSync} from 'node:fs';
 import {dirname,isAbsolute} from 'node:path';
+import {createLeadWorkspace} from './crm-lead-workspace.mjs';
 
 export const LEAD_STATUSES = Object.freeze([
   'new','in_progress','awaiting_customer','quote_sent','won','lost'
@@ -63,7 +64,9 @@ export function openLeadStore(path,{clock=()=>new Date().toISOString()}={}) {
   const getEvents=db.prepare('SELECT seq,happened_at,actor,action,detail FROM lead_events WHERE lead_id=? ORDER BY seq ASC');
   const total=db.prepare('SELECT count(*) AS n FROM leads');
   const counts=db.prepare('SELECT status,count(*) AS n FROM leads GROUP BY status');
+  const workspace=createLeadWorkspace(db,{clock,statuses:LEAD_STATUSES,toLead:asLead});
   return {
+    workspace,
     close(){db.close();},
     create(lead,requestId){
       if(!/^[a-f0-9-]{16,80}$/i.test(requestId))throw new Error('INVALID_REQUEST_ID');

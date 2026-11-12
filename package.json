@@ -10,9 +10,15 @@
     "test:api": "node --test tests/api.test.mjs",
     "test:pricing": "node --test tests/pricing-parity.test.mjs",
     "test:pricing:live": "node scripts/check-pricing-live.mjs",
-    "test:quiz": "node --test tests/quiz.test.mjs"
+    "test:quiz": "node --test tests/quiz.test.mjs",
+    "build:home": "node scripts/build-workspace-release.mjs",
+    "dev:crm": "node scripts/dev-crm-workspace.mjs",
+    "test:workspace": "node --test tests/crm-workspace.test.mjs tests/workspace-performance.test.mjs"
   },
   "engines": {
     "node": ">=24"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }

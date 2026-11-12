@@ -1,7 +1,8 @@
 import {renderLayoutOverview} from './layout-story.mjs';
+import {fastAsset} from '/performance/media.mjs';
 import {specification} from '/home-hero/layout-panel.mjs?v=album-22-20261105';
 const base = '/home-hero/layouts/';
-function assetPath(plan,key){return plan[key]+'?v='+encodeURIComponent((plan.sha256??'').slice(0,16));}
+function assetPath(plan,key){return fastAsset(base+plan[key])+'?v='+encodeURIComponent((plan.sha256??'').slice(0,16));}
 export async function layoutJson(path, signal = AbortSignal.timeout(10000)){
   const response = await fetch(base+path,{signal,cache:'no-cache'});
   if(!response.ok) throw Error('LAYOUT_UNAVAILABLE');
@@ -44,7 +45,7 @@ function openSpecification(plan,opener,onRequest){
   }
   const drawing = element('img');
   drawing.alt = 'Планировка · '+plan.label;
-  drawing.src = base+assetPath(plan,'drawing');
+  drawing.src = assetPath(plan,'drawing');
   const view=element('div');view.className='hh-plan-view';
   view.id='hh-layout-plan-content';view.setAttribute('role','tabpanel');view.setAttribute('aria-labelledby',planTab.id);
   const tools=element('div');tools.className='hh-plan-tools';
@@ -127,7 +128,7 @@ function openViewer(plan, opener,onRequest){
   document.body.append(dialog);
   dialog.showModal();
   import('/home-hero/layout-viewer.mjs?v=colors-20261106').then(({mountLayoutViewer})=>
-    mountLayoutViewer(stage,base+assetPath(plan,'model'),controller.signal)
+    mountLayoutViewer(stage,assetPath(plan,'model'),controller.signal)
   ).then(()=>{
     if(!dialog.open) return;
     stage.querySelector('.hh-layout-tools').hidden = false;
@@ -137,7 +138,7 @@ function openViewer(plan, opener,onRequest){
     stage.querySelector('canvas').hidden = true;
     stage.querySelector('.hh-layout-hint').hidden = true;
     const image = element('img');
-    image.src = base+assetPath(plan,'preview');
+    image.src = assetPath(plan,'preview');
     image.alt = '3D-ракурс · '+plan.label;
     stage.prepend(image);
     status.textContent = 'Интерактивный просмотр сейчас недоступен.';
@@ -147,10 +148,10 @@ function openViewer(plan, opener,onRequest){
 export function createLayoutPanel(container,{onRequest}={}){
   container.innerHTML = `
     <button type="button" class="hh-layout-tile" data-drawing>
-      <img alt=""><span>Посмотреть план крупнее ↗</span>
+      <img alt="" loading="lazy" decoding="async"><span>Посмотреть план крупнее ↗</span>
     </button>
     <button type="button" class="hh-layout-tile" data-preview>
-      <img alt=""><span>Рассмотреть в 3D ↗</span>
+      <img alt="" loading="lazy" decoding="async"><span>Рассмотреть в 3D ↗</span>
     </button>`;
   const drawing = container.querySelector('[data-drawing]');
   const preview = container.querySelector('[data-preview]');
@@ -164,7 +165,7 @@ export function createLayoutPanel(container,{onRequest}={}){
     for(const [button,path,label] of [[drawing,plan.drawing,'Чертёж'],[preview,plan.preview,'3D-ракурс']]){
       const image = button.querySelector('img');
       image.alt = label+' · '+plan.label;
-      image.src = base+path+'?v='+encodeURIComponent((plan.sha256??'').slice(0,16));
+      image.src = fastAsset(base+path)+'?v='+encodeURIComponent((plan.sha256??'').slice(0,16));
     }
   };
 }
